@@ -1,0 +1,72 @@
+# Enterprise Chart of Accounts — API Catalog
+# See docs/architecture/ENTERPRISE_CHART_OF_ACCOUNTS.md
+
+version: 1
+
+api_prefix: /api/v1/financial-kernel/coa
+
+categories:
+  - asset
+  - liability
+  - equity
+  - revenue
+  - expense
+  - off_balance
+  - statistical
+
+account_groups:
+  - balance_sheet
+  - current_assets
+  - non_current_assets
+  - current_liabilities
+  - long_term_liabilities
+  - equity_capital
+  - operating_revenue
+  - operating_expense
+  - memorandum
+  - kpi_metrics
+
+endpoints:
+  - method: GET
+    path: /tree
+    permission: financial_kernel.coa.read
+    description: Full configurable account tree (unlimited depth)
+  - method: GET
+    path: /templates
+    permission: financial_kernel.coa.read
+    description: List industry and country COA templates
+  - method: POST
+    path: /templates/apply
+    permission: financial_kernel.coa.write
+    description: Apply template with tenant-configurable codes
+  - method: POST
+    path: /accounts
+    permission: financial_kernel.coa.write
+    description: Create tenant-specific child account under parent
+  - method: GET
+    path: /accounts/{id}
+    permission: financial_kernel.coa.read
+    description: Get account by ID
+  - method: GET
+    path: /accounts/{id}/children
+    permission: financial_kernel.coa.read
+    description: List direct children
+  - method: GET
+    path: /resolve/{account_key}
+    permission: financial_kernel.coa.read
+    description: Resolve semantic account_key to tenant code
+
+template_sources:
+  - industry
+  - country
+  - tenant
+
+code_policy:
+  hardcoded_in_application: false
+  tenant_configurable: true
+  semantic_key: account_key
+  display_code: code
+
+companion_files:
+  - financial_kernel/ACCOUNT_TREE_TEMPLATES.v1.yaml
+  - financial_kernel/ACCOUNT_TREE_SCHEMA.v1.json

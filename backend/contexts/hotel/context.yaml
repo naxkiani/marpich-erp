@@ -1,0 +1,19 @@
+context: hotel
+display_name: Hotel
+type: industry
+description: Reservations, rooms, housekeeping, F&B integration
+aggregates:
+- Reservation
+- Room
+- Guest
+- HousekeepingTask
+- RatePlan
+publishes:
+- hotel.reservation.confirmed
+- hotel.checkin.completed
+- hotel.checkout.completed
+subscribes:
+- identity.user.created
+- restaurant.order.placed
+- finance.period.closed
+schema: hotel

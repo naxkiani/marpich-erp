@@ -1,0 +1,129 @@
+# Policy Definition Schema v1 — Marpich Enterprise Policy Engine
+# See docs/architecture/ENTERPRISE_POLICY_ENGINE.md
+
+version: 1
+
+policy_definition:
+  required:
+    - tenant_id
+    - domain
+    - key
+    - name
+    - version
+    - status
+    - effective_from
+    - priority
+    - conditions
+    - rules
+
+  fields:
+    id:
+      type: uuid
+      immutable: true
+    tenant_id:
+      type: string
+    organization_id:
+      type: string
+      optional: true
+    domain:
+      type: enum
+      values: [university, hospital, bank, exchange, tax, construction, government, custom]
+    key:
+      type: string
+      pattern: "^[a-z][a-z0-9_.]*$"
+      description: Stable lookup key e.g. lending.single_exposure_limit
+    name:
+      type: string
+    description:
+      type: string
+      optional: true
+    version:
+      type: integer
+      minimum: 1
+      immutable_per_record: true
+    status:
+      type: enum
+      values: [draft, pending_approval, active, superseded, expired, rolled_back]
+    effective_from:
+      type: datetime
+    expires_at:
+      type: datetime
+      optional: true
+    priority:
+      type: integer
+      default: 100
+      description: Higher number wins on conflict
+    conditions:
+      type: array
+      items:
+        field: string
+        operator: enum
+        value: any
+      operators: [eq, ne, gt, gte, lt, lte, in, not_in, contains, matches]
+    rules:
+      type: array
+      items:
+        outcome: string
+        parameters: object
+    exceptions:
+      type: array
+      optional: true
+      items:
+        id: string
+        name: string
+        conditions: array
+        rules: array
+    approval:
+      type: object
+      fields:
+        required_for_publish: boolean
+        workflow_key: string
+        require_passing_tests: boolean
+    metadata:
+      type: object
+      fields:
+        created_by: string
+        approved_by: string
+        change_reason: string
+    cache_allowed:
+      type: boolean
+      default: true
+
+evaluation_request:
+  required: [domain, policy_key, facts]
+  optional: [as_of, organization_id]
+  fields:
+    domain: string
+    policy_key: string
+    facts: object
+    as_of: datetime
+    organization_id: string
+
+evaluation_response:
+  fields:
+    matched: boolean
+    policy_id: uuid
+    version: integer
+    outcome: string
+    parameters: object
+    applied_exception: string
+    evaluation_trace: array
+
+simulation_request:
+  extends: evaluation_request
+  fields:
+    candidate_versions: array
+
+test_case:
+  fields:
+    name: string
+    facts: object
+    expect:
+      outcome: string
+      parameters: object
+
+rollback_request:
+  required: [target_version, reason]
+  fields:
+    target_version: integer
+    reason: string

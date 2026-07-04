@@ -1,0 +1,204 @@
+# Marpich Enterprise Compliance Framework — Domain Catalog
+# See docs/architecture/ENTERPRISE_COMPLIANCE_FRAMEWORK.md
+
+version: 1
+
+law:
+  continuous_monitoring: true
+  local_compliance_engines_forbidden: true
+  alerts_via_notification_platform: true
+
+compliance_domains:
+  internal_policies:
+    display_name: Internal Policies
+    frameworks: [corporate_governance]
+    source: policy_engine
+    signals:
+      - policy.evaluation.denied
+      - policy.version.activated
+    controls:
+      - id: POL-001
+        name: Required policies active
+        severity: high
+
+  financial_compliance:
+    display_name: Financial Compliance
+    frameworks: [SOX, IFRS]
+    signals:
+      - finance.journal.posted
+      - accounting.journal.posted
+      - accounting.payment.received
+    controls:
+      - id: SOX-001
+        name: Journal posting audit trail
+        severity: critical
+      - id: SOX-002
+        name: Segregation of duties on finance actions
+        severity: critical
+
+  tax_compliance:
+    display_name: Tax Compliance
+    frameworks: [VAT, GST, withholding]
+    source: policy_engine
+    policy_domain: tax
+    signals:
+      - tax.return.filed
+      - tax.liability.calculated
+    controls:
+      - id: TAX-001
+        name: VAT rate policy evaluated before invoice
+        severity: high
+
+  educational_compliance:
+    display_name: Educational Compliance
+    frameworks: [FERPA]
+    signals:
+      - university.student.record.accessed
+      - school.grade.published
+    controls:
+      - id: FERPA-001
+        name: Student record access logged
+        severity: critical
+
+  healthcare_compliance:
+    display_name: Healthcare Compliance
+    frameworks: [HIPAA]
+    signals:
+      - hospital.patient.accessed
+      - hospital.encounter.viewed
+    controls:
+      - id: HIPAA-164.312-b
+        name: PHI access audit with reason on break-glass
+        severity: critical
+        required_fields: [actor_id, reason]
+
+  document_compliance:
+    display_name: Document Compliance
+    frameworks: [records_management]
+    source: document_exchange
+    signals:
+      - documents.document.downloaded
+      - documents.document.signed
+      - documents.retention.applied
+    controls:
+      - id: DOC-001
+        name: Regulated document download audited
+        severity: high
+      - id: DOC-002
+        name: Contract signed before archive
+        severity: medium
+
+  security_compliance:
+    display_name: Security Compliance
+    frameworks: [ISO_27001, SOC-2]
+    source: security_standard
+    signals:
+      - authorization.access.denied
+      - identity.login.failed
+      - authentication.session.revoked
+    controls:
+      - id: SEC-001
+        name: Excessive failed login threshold
+        severity: high
+      - id: SEC-002
+        name: Access denial spike detection
+        severity: medium
+
+  audit_compliance:
+    display_name: Audit Compliance
+    frameworks: [SOX, GDPR]
+    source: audit_platform
+    signals:
+      - audit.export.completed
+      - audit.retention.applied
+    controls:
+      - id: AUD-001
+        name: Audit export integrity
+        severity: critical
+      - id: AUD-002
+        name: Retention purge documented
+        severity: high
+
+  data_privacy:
+    display_name: Data Privacy
+    frameworks: [GDPR, CCPA]
+    signals:
+      - privacy.consent.recorded
+      - privacy.erasure.requested
+      - privacy.erasure.completed
+    controls:
+      - id: GDPR-001
+        name: Erasure request SLA
+        severity: critical
+      - id: GDPR-002
+        name: Consent recorded before processing
+        severity: high
+
+  retention_policies:
+    display_name: Retention Policies
+    frameworks: [legal_hold, industry_retention]
+    sources: [audit_platform, document_exchange]
+    signals:
+      - audit.retention.applied
+      - documents.retention.applied
+    controls:
+      - id: RET-001
+        name: No purge under legal hold
+        severity: critical
+      - id: RET-002
+        name: Document retention schedule applied
+        severity: medium
+
+violation_statuses:
+  - open
+  - investigating
+  - resolved
+  - false_positive
+
+severity_levels:
+  critical:
+    alert: immediate
+    channels: [email, in_app, sms_optional]
+  high:
+    alert: within_1h
+    channels: [email, in_app]
+  medium:
+    alert: within_24h
+    channels: [in_app]
+  low:
+    alert: weekly_digest
+    channels: [dashboard]
+
+report_types:
+  - full
+  - domain
+  - audit
+  - retention
+
+events:
+  published:
+    - compliance.violation.detected
+    - compliance.alert.triggered
+    - compliance.report.generated
+  subscribed:
+    - platform.tenant.provisioned
+    - policy.evaluation.denied
+    - authorization.access.denied
+    - audit.retention.applied
+
+permissions:
+  read: compliance.read
+  violations_read: compliance.violations.read
+  violations_write: compliance.violations.write
+  dashboard: compliance.dashboard.read
+  alerts: compliance.alerts.read
+  reports_write: compliance.reports.write
+  reports_read: compliance.reports.read
+  retention: compliance.retention.read
+  admin: compliance.admin
+
+api_prefix: /api/v1/compliance
+
+seeding:
+  on_event: platform.tenant.provisioned
+  map_industry_pack_to_domains: true

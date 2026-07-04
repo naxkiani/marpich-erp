@@ -1,0 +1,18 @@
+context: identity
+display_name: Identity
+type: platform
+description: Authentication, authorization, RBAC, ABAC, MFA, sessions
+aggregates:
+- User
+- Role
+- Permission
+- Session
+- AbacPolicy
+publishes:
+- identity.user.created
+- identity.user.logged_in
+- identity.role.assigned
+- identity.mfa.enabled
+subscribes:
+- platform.tenant.provisioned
+schema: identity

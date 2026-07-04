@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "marpich.observability.log.v1",
+  "title": "Structured Application Log Envelope",
+  "type": "object",
+  "required": ["timestamp", "level", "logger", "message"],
+  "properties": {
+    "timestamp": { "type": "string" },
+    "level": { "enum": ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] },
+    "logger": { "type": "string" },
+    "message": { "type": "string" },
+    "request_id": { "type": ["string", "null"] },
+    "correlation_id": { "type": ["string", "null"] },
+    "tenant_id": { "type": ["string", "null"] },
+    "organization_id": { "type": ["string", "null"] },
+    "context": { "type": ["string", "null"] },
+    "method": { "type": ["string", "null"] },
+    "path": { "type": ["string", "null"] },
+    "status": { "type": ["integer", "null"] },
+    "duration_ms": { "type": ["number", "null"] },
+    "exception": {
+      "type": ["object", "null"],
+      "properties": {
+        "type": { "type": "string" },
+        "message": { "type": "string" }
+      }
+    }
+  },
+  "additionalProperties": true
+}

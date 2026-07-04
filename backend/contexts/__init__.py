@@ -1,0 +1,1 @@
+"""Marpich bounded contexts namespace."""

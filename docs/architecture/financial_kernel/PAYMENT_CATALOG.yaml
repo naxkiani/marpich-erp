@@ -1,0 +1,78 @@
+# Enterprise Payment Platform — API Catalog
+# See docs/architecture/ENTERPRISE_PAYMENT_PLATFORM.md
+
+version: 1
+
+api_prefix: /api/v1/financial-kernel/payments
+
+payment_methods:
+  - cash
+  - bank_transfer
+  - cheque
+  - card
+  - wallet
+  - mobile_money
+
+payment_kinds:
+  - standard
+  - split
+  - partial
+  - installment
+  - advance
+
+payment_statuses:
+  - pending
+  - partial
+  - allocated
+  - settled
+  - refunded
+  - chargeback
+  - failed
+
+endpoints:
+  - method: POST
+    path: /
+    permission: financial_kernel.payments.write
+  - method: POST
+    path: /split
+    permission: financial_kernel.payments.write
+  - method: POST
+    path: /advance
+    permission: financial_kernel.payments.write
+  - method: POST
+    path: /installments
+    permission: financial_kernel.payments.write
+  - method: POST
+    path: /{id}/partial
+    permission: financial_kernel.payments.write
+  - method: POST
+    path: /{id}/allocate
+    permission: financial_kernel.payments.write
+  - method: POST
+    path: /{id}/settle
+    permission: financial_kernel.payments.write
+  - method: POST
+    path: /{id}/refund
+    permission: financial_kernel.payments.write
+  - method: POST
+    path: /{id}/chargeback
+    permission: financial_kernel.payments.write
+  - method: POST
+    path: /matching
+    permission: financial_kernel.payments.read
+  - method: POST
+    path: /reconciliation
+    permission: financial_kernel.payments.reconcile
+
+integration_events:
+  publishes:
+    - financial_kernel.payment.settled
+    - financial_kernel.payment.allocated
+    - financial_kernel.payment.refunded
+    - financial_kernel.payment.chargeback
+    - financial_kernel.payment.reconciled
+
+permissions:
+  financial_kernel.payments.read: View payments
+  financial_kernel.payments.write: Create and manage payments
+  financial_kernel.payments.reconcile: Payment reconciliation

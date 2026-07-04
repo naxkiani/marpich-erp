@@ -1,0 +1,16 @@
+context: currency_exchange
+display_name: Currency Exchange
+type: specialized
+description: FX rates, deals, vault, compliance
+aggregates:
+- ExchangeRate
+- FxDeal
+- Vault
+- ComplianceCheck
+publishes:
+- currency_exchange.rate.updated
+- currency_exchange.deal.settled
+subscribes:
+- identity.user.created
+- banking.transaction.posted
+schema: currency_exchange

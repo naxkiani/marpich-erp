@@ -1,0 +1,72 @@
+# Marpich Enterprise General Ledger — Catalog
+# See docs/architecture/ENTERPRISE_GENERAL_LEDGER.md
+
+version: 1
+
+law:
+  immutable_journal_entries: true
+  delete_financial_transactions_forbidden: true
+  reverse_only_correction: true
+
+unlimited_entities:
+  - accounts
+  - journals
+  - fiscal_years
+  - periods
+  - organizations
+  - tenants
+  - branches
+
+posting_modes:
+  - automatic
+  - manual
+  - recurring
+  - reversing
+
+journal_statuses:
+  - draft
+  - pending_approval
+  - posted
+  - reversed
+  - rejected
+
+immutable_rules:
+  no_update_after_posted: true
+  no_delete: true
+  reversal_creates_new_entry: true
+  original_marked_reversed: true
+
+multi_currency:
+  transaction_currency: true
+  base_currency_snapshot: true
+  exchange_rate_immutable: true
+
+budget_validation:
+  check_before_expense_posting: true
+  emit_event_on_exceed: financial_kernel.budget.exceeded
+  policy_engine_may_block: true
+
+approval_workflow:
+  manual_posting_requires_approval: true
+  automatic_posting_skips_approval: true
+  recurring_configurable: true
+
+audit:
+  every_posting: true
+  every_reversal: true
+  every_approval: true
+
+permissions:
+  financial_kernel.ledger.accounts.read: View accounts
+  financial_kernel.ledger.accounts.write: Create accounts
+  financial_kernel.ledger.journals.post: Automatic posting
+  financial_kernel.ledger.journals.manual: Manual posting
+  financial_kernel.ledger.journals.approve: Approve manual journals
+  financial_kernel.ledger.journals.reverse: Reverse journals
+  financial_kernel.ledger.journals.read: View journals
+  financial_kernel.ledger.periods.write: Manage fiscal years/periods
+  financial_kernel.ledger.periods.read: View periods
+  financial_kernel.ledger.recurring.write: Manage recurring journals
+  financial_kernel.ledger.recurring.run: Execute recurring
+  financial_kernel.ledger.budgets.write: Manage budgets
+  financial_kernel.ledger.budgets.read: View budgets

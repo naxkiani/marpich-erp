@@ -1,0 +1,19 @@
+context: real_estate
+display_name: Real Estate
+type: industry
+description: Listings, leases, sales, property management
+aggregates:
+- Property
+- Listing
+- Lease
+- SaleTransaction
+- MaintenanceRequest
+publishes:
+- real_estate.listing.published
+- real_estate.lease.signed
+- real_estate.sale.closed
+subscribes:
+- crm.lead.converted
+- documents.document.signed
+- accounting.payment.received
+schema: real_estate

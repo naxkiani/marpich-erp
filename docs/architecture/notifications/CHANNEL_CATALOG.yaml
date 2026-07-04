@@ -1,0 +1,119 @@
+# Marpich Notification Platform — Channel Catalog
+# See docs/architecture/ENTERPRISE_NOTIFICATION_PLATFORM.md
+
+version: 1
+
+channels:
+  inbox:
+    display_name: In-App
+    type: in_app
+    integration_connector: null
+    read_status: true
+    delivery_tracking: sent_only
+    default_priority: normal
+
+  email:
+    display_name: Email
+    type: external
+    integration_connector: email_provider
+    read_status: false
+    delivery_tracking: full
+    default_priority: normal
+    max_body_length: 100000
+
+  sms:
+    display_name: SMS
+    type: external
+    integration_connector: sms_provider
+    read_status: false
+    delivery_tracking: full
+    default_priority: high
+    max_segments: 3
+
+  whatsapp:
+    display_name: WhatsApp
+    type: external
+    integration_connector: whatsapp_provider
+    read_status: false
+    delivery_tracking: full
+    default_priority: normal
+
+  telegram:
+    display_name: Telegram
+    type: external
+    integration_connector: telegram_provider
+    read_status: false
+    delivery_tracking: full
+    default_priority: normal
+
+  push:
+    display_name: Push Notification
+    type: external
+    integration_connector: push_provider
+    providers: [fcm, apns]
+    read_status: false
+    delivery_tracking: full
+    default_priority: high
+
+  voice:
+    display_name: Voice Call
+    type: external
+    integration_connector: voice_provider
+    read_status: false
+    delivery_tracking: call_status
+    default_priority: critical
+
+  system:
+    display_name: System Alert
+    type: composite
+    default_channels: [inbox, email]
+    default_priority: critical
+    bypass_preferences: true
+
+  ai_alert:
+    display_name: AI Alert
+    type: composite
+    source_events:
+      - ai.fraud.detected
+      - ai.insight.generated
+      - analytics.alert.triggered
+    default_channels: [inbox, email]
+    default_priority: high
+
+queue:
+  default_max_attempts: 5
+  default_retry:
+    initial_delay_seconds: 30
+    multiplier: 2.0
+    max_delay_seconds: 3600
+  priorities:
+    - critical
+    - high
+    - normal
+    - low
+  deduplication_window_hours: 24
+  batch_size: 50
+  poll_interval_ms: 1000
+
+delivery_statuses:
+  - pending
+  - processing
+  - sent
+  - delivered
+  - failed
+  - bounced
+  - cancelled
+
+read_statuses:
+  - unread
+  - read
+  - archived
+
+template_variables:
+  reserved:
+    - tenant_id
+    - organization_id
+    - user_display_name
+    - locale
+    - correlation_id
+  syntax: "{{variable_name}}"

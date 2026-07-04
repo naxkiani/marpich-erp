@@ -1,0 +1,88 @@
+# Marpich Enterprise Feature Flag System — Catalog
+# See docs/architecture/ENTERPRISE_FEATURE_FLAG_SYSTEM.md
+
+version: 1
+
+law:
+  evaluate_via_system: true
+  local_flag_stores_forbidden: true
+  emergency_disable_audited: true
+
+evaluation_scopes:
+  - tenant
+  - organization
+  - user
+  - environment
+  - country
+  - industry
+
+priority_order:
+  - emergency_disable
+  - user
+  - organization
+  - tenant
+  - country
+  - industry
+  - environment
+  - rollout_canary
+  - ab_test
+  - default
+
+rollout_stages:
+  - off
+  - canary
+  - full
+
+default_flags:
+  - key: saved_listings
+    default_enabled: false
+    owner: product
+  - key: image_attachments
+    default_enabled: true
+    owner: platform
+  - key: multi_org
+    default_enabled: false
+    industry_overrides:
+      bank: true
+  - key: advanced_analytics
+    default_enabled: false
+    industry_overrides:
+      hospital: true
+      bank: true
+      university: true
+
+module_flags:
+  pattern: "module.{module_id}.enabled"
+  description: Gateway module activation gate
+
+capabilities:
+  feature_rollout: true
+  ab_testing: true
+  canary_deployment: true
+  emergency_disable: true
+  version_control: true
+
+events:
+  published:
+    - feature_flag.created
+    - feature_flag.updated
+    - feature_flag.rollout.updated
+    - feature_flag.emergency_disabled
+    - feature_flag.rollback.applied
+  subscribed:
+    - platform.tenant.provisioned
+    - platform.module.activated
+
+permissions:
+  read: feature_flags.read
+  write: feature_flags.write
+  evaluate: feature_flags.evaluate
+  dashboard: feature_flags.dashboard.read
+  admin: feature_flags.admin
+
+api_prefix: /api/v1/feature-flags
+
+environments:
+  - development
+  - staging
+  - production

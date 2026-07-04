@@ -1,0 +1,19 @@
+context: projects
+display_name: Projects
+type: generic
+description: Project management, tasks, resources, timesheets
+aggregates:
+- Project
+- Task
+- Milestone
+- Timesheet
+- ResourceAllocation
+publishes:
+- projects.project.created
+- projects.task.completed
+- projects.milestone.reached
+subscribes:
+- crm.opportunity.won
+- human_resources.employee.hired
+- sales.order.placed
+schema: projects

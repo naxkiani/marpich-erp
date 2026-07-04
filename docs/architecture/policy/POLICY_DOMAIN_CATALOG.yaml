@@ -1,0 +1,148 @@
+# Marpich Enterprise Policy Engine — Domain Catalog
+# See docs/architecture/ENTERPRISE_POLICY_ENGINE.md
+
+version: 1
+
+law:
+  configurable: true
+  hardcoded_rules_forbidden: true
+  module_reads_from_engine: true
+
+industry_domains:
+  university:
+    display_name: University Policies
+    namespace: education.*
+    industry_packs: [university, school]
+    example_keys:
+      - grading.scale
+      - enrollment.max_credits
+      - academic.integrity.plagiarism_threshold
+      - tuition.payment_deadline
+      - attendance.minimum_percent
+    approval_default: true
+
+  hospital:
+    display_name: Hospital Policies
+    namespace: healthcare.*
+    industry_packs: [hospital, clinic]
+    example_keys:
+      - admission.eligibility
+      - phi.access.tier
+      - clinical.pathway.emergency
+      - billing.copay_rate
+      - medication.high_alert_protocol
+    approval_default: true
+    cache_allowed: false
+
+  bank:
+    display_name: Bank Policies
+    namespace: banking.*
+    industry_packs: [bank, treasury]
+    example_keys:
+      - lending.single_exposure_limit
+      - kyc.verification_threshold
+      - transaction.daily_limit
+      - aml.suspicious_amount
+      - interest.rate.retail
+    approval_default: true
+    cache_allowed: false
+
+  exchange:
+    display_name: Exchange Policies
+    namespace: exchange.*
+    industry_packs: [exchange, capital_markets]
+    example_keys:
+      - trading.hours
+      - margin.maintenance_ratio
+      - settlement.window
+      - circuit_breaker.threshold
+      - order.size_limit
+    approval_default: true
+
+  tax:
+    display_name: Tax Policies
+    namespace: tax.*
+    industry_packs: [tax, accounting]
+    example_keys:
+      - vat.rate
+      - withholding.rate
+      - filing.deadline
+      - exemption.medical
+      - penalty.late_filing
+    approval_default: true
+
+  construction:
+    display_name: Construction Policies
+    namespace: construction.*
+    industry_packs: [construction, project]
+    example_keys:
+      - safety.ppe_required
+      - permit.threshold_amount
+      - milestone.payment_gate
+      - subcontractor.insurance_minimum
+      - inspection.frequency
+    approval_default: true
+
+  government:
+    display_name: Government Policies
+    namespace: government.*
+    industry_packs: [government, municipality]
+    example_keys:
+      - procurement.threshold
+      - citizen.service_sla_hours
+      - classification.public_release
+      - budget.approval_tier
+      - records.retention_years
+    approval_default: true
+
+lifecycle:
+  versioning: immutable_versions
+  effective_date: effective_from
+  expiration: expires_at
+  priority: numeric_desc_wins
+  conditions: fact_matcher
+  exceptions: in_policy_override
+  approval: workflow_engine
+  testing: test_cases_required_regulated
+  simulation: dry_run_no_side_effects
+  rollback: reactivate_prior_version
+
+status_values:
+  - draft
+  - pending_approval
+  - active
+  - superseded
+  - expired
+  - rolled_back
+
+conflict_resolution:
+  - filter_active_window
+  - sort_priority_desc
+  - apply_exceptions_first
+  - log_evaluation_trace
+
+events:
+  published:
+    - policy.version.submitted
+    - policy.version.activated
+    - policy.version.rolled_back
+    - policy.evaluation.denied
+    - policy.simulation.executed
+  subscribed:
+    - platform.tenant.provisioned
+    - workflow.process.completed
+
+permissions:
+  read: policies.read
+  write: policies.write
+  evaluate: policies.evaluate
+  simulate: policies.simulate
+  test: policies.test
+  admin: policies.admin
+
+api_prefix: /api/v1/policies
+
+seeding:
+  on_event: platform.tenant.provisioned
+  source: industry_pack.policy_seeds
+  default_status_regulated: pending_approval

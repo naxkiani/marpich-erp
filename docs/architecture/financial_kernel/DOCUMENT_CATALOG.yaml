@@ -1,0 +1,126 @@
+# Marpich Financial Documents — Document Type Catalog
+# See docs/architecture/ENTERPRISE_FINANCIAL_DOCUMENTS.md
+
+version: 1
+
+document_types:
+  invoice:
+    display_name: Invoice
+    prefix: INV
+    approval_required: false
+    digital_signature: optional
+    qr_verification: true
+
+  bill:
+    display_name: Bill
+    prefix: BILL
+    approval_required: false
+    qr_verification: true
+
+  voucher:
+    display_name: Voucher
+    prefix: VCH
+    approval_required: false
+
+  receipt:
+    display_name: Receipt
+    prefix: RCT
+    approval_required: false
+    qr_verification: true
+
+  payment_order:
+    display_name: Payment Order
+    prefix: PO
+    approval_required: true
+    digital_signature: required
+
+  purchase_invoice:
+    display_name: Purchase Invoice
+    prefix: PI
+    approval_required: true
+    qr_verification: true
+
+  sales_invoice:
+    display_name: Sales Invoice
+    prefix: SI
+    approval_required: true
+    qr_verification: true
+
+  credit_note:
+    display_name: Credit Note
+    prefix: CN
+    approval_required: true
+
+  debit_note:
+    display_name: Debit Note
+    prefix: DN
+    approval_required: true
+
+  journal_voucher:
+    display_name: Journal Voucher
+    prefix: JV
+    approval_required: true
+    digital_signature: required
+
+  cash_voucher:
+    display_name: Cash Voucher
+    prefix: CV
+    approval_required: true
+    digital_signature: required
+
+  bank_voucher:
+    display_name: Bank Voucher
+    prefix: BV
+    approval_required: true
+    digital_signature: required
+
+capabilities:
+  pdf:
+    format: application/pdf
+    generator: financial_document_engine.generate_pdf
+    endpoint: /{id}/pdf
+
+  digital_signature:
+    algorithms: [RS256]
+    endpoint: /{id}/sign
+    event: financial_kernel.document.signed
+
+  qr_verification:
+    signed_payload: true
+    endpoint: /verify/{token}
+
+  versioning:
+    immutable: true
+    checksum: sha256
+    endpoint: /{id}/versions
+    event: financial_kernel.document.version.created
+
+  approval_workflow:
+    engine: ENTERPRISE_WORKFLOW_ENGINE
+    request_endpoint: /{id}/approval
+    complete_endpoint: /{id}/approval/complete
+    event_requested: financial_kernel.document.approval.requested
+    event_approved: financial_kernel.document.approved
+
+statuses:
+  - draft
+  - pending_approval
+  - approved
+  - signed
+  - issued
+  - voided
+
+permissions:
+  financial_kernel.documents.read: View financial documents
+  financial_kernel.documents.write: Create and update documents
+  financial_kernel.documents.approve: Request and complete approval
+  financial_kernel.documents.sign: Apply digital signature
+  financial_kernel.documents.issue: Issue finalized documents
+
+events:
+  - financial_kernel.document.created
+  - financial_kernel.document.version.created
+  - financial_kernel.document.approval.requested
+  - financial_kernel.document.approved
+  - financial_kernel.document.signed
+  - financial_kernel.document.issued

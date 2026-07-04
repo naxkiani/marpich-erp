@@ -1,0 +1,19 @@
+context: ngo
+display_name: NGO
+type: industry
+description: Donors, grants, programs, field operations
+aggregates:
+- Donor
+- Grant
+- Program
+- Beneficiary
+- FieldReport
+publishes:
+- ngo.donation.received
+- ngo.grant.awarded
+- ngo.program.completed
+subscribes:
+- crm.contact.updated
+- finance.period.closed
+- projects.milestone.reached
+schema: ngo

@@ -1,0 +1,60 @@
+# Feature Flag Dashboard — Marpich Enterprise Feature Flag System
+
+version: 1
+dashboard_id: platform.feature-flags
+name: Feature Dashboard
+scope: tenant
+refresh_seconds: 30
+
+rows:
+  - id: overview
+    title: Flag Overview
+    widgets:
+      - id: total_flags
+        type: stat
+        title: Total Flags
+        metric: feature_flags.total
+
+      - id: emergency_disabled
+        type: stat
+        title: Emergency Disabled
+        metric: feature_flags.emergency_disabled
+
+      - id: canary_active
+        type: stat
+        title: Canary Rollouts
+        metric: feature_flags.canary_active
+
+      - id: ab_tests_running
+        type: stat
+        title: A/B Tests Running
+        metric: feature_flags.ab_active
+
+  - id: scopes
+    title: Flags by Scope
+    widgets:
+      - id: scope_breakdown
+        type: bar_chart
+        title: Active Rules by Scope
+        scopes: [tenant, organization, user, environment, country, industry]
+
+  - id: changes
+    title: Recent Activity
+    widgets:
+      - id: recent_changes
+        type: table
+        title: Version Changes (24h)
+        source: GET /api/v1/feature-flags/dashboard
+
+      - id: rollout_progress
+        type: timeseries
+        title: Canary Rollout Progress
+        metric: feature_flags.rollout.percentage
+
+  - id: flags
+    title: Flag Registry
+    widgets:
+      - id: flag_list
+        type: table
+        title: All Flags
+        source: GET /api/v1/feature-flags

@@ -1,0 +1,17 @@
+context: workflow
+display_name: Workflow
+type: platform
+description: "BPM engine \u2014 process definitions, tasks, approvals"
+aggregates:
+- ProcessDefinition
+- ProcessInstance
+- Task
+- ApprovalChain
+publishes:
+- workflow.process.started
+- workflow.task.assigned
+- workflow.task.completed
+- workflow.process.completed
+subscribes:
+- platform.module.activated
+schema: workflow

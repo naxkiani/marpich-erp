@@ -1,0 +1,16 @@
+context: restaurant
+display_name: Restaurant
+type: industry
+description: Tables, orders, kitchen, menu
+aggregates:
+- Table
+- MenuItem
+- RestaurantOrder
+- KitchenTicket
+publishes:
+- restaurant.order.placed
+- restaurant.order.completed
+subscribes:
+- inventory.stock.adjusted
+- hotel.checkin.completed
+schema: restaurant

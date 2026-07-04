@@ -1,0 +1,109 @@
+# Marpich Enterprise Plugin Platform — Catalog
+# See docs/architecture/ENTERPRISE_PLUGIN_PLATFORM.md
+
+version: 1
+
+law:
+  signed_packages_required: true
+  sandbox_enforced: true
+  permission_grants_at_install: true
+  direct_plugin_imports_forbidden: true
+
+plugin_types:
+  - id: module
+    extension_point: platform.module.register
+    sandbox_profile: module
+    description: Full bounded-context-style add-on
+  - id: widget
+    extension_point: ui.dashboard.widget
+    sandbox_profile: strict
+    description: Dashboard KPI / chart widget
+  - id: report
+    extension_point: analytics.report.template
+    sandbox_profile: standard
+    description: Custom report template
+  - id: dashboard
+    extension_point: analytics.dashboard.layout
+    sandbox_profile: standard
+    description: Composed dashboard layout
+  - id: theme
+    extension_point: ui.theme.override
+    sandbox_profile: strict
+    description: Brand / color / typography pack
+  - id: ai_skill
+    extension_point: ai.skill.register
+    sandbox_profile: standard
+    description: Domain-specific AI copilot skill
+  - id: integration
+    extension_point: integration.connector.register
+    sandbox_profile: integration
+    description: External system connector
+  - id: workflow_extension
+    extension_point: workflow.hook.register
+    sandbox_profile: standard
+    description: Custom workflow step / approval hook
+
+trust_levels:
+  - community
+  - verified
+  - enterprise
+
+sandbox_profiles:
+  strict:
+    network: deny
+    filesystem: read_only
+    max_memory_mb: 64
+  standard:
+    network: allowlist
+    filesystem: read_only
+    max_memory_mb: 256
+  integration:
+    network: allowlist
+    filesystem: read_write_temp
+    max_memory_mb: 512
+  module:
+    network: allowlist
+    filesystem: read_write_temp
+    max_memory_mb: 1024
+
+permissions:
+  plugins.read: View registry and installations
+  plugins.publish: Register and submit plugins
+  plugins.install: Install, upgrade, uninstall
+  plugins.invoke: Runtime extension invocation
+  plugins.admin: Verify signatures, revoke plugins
+  plugins.marketplace.read: Browse marketplace
+
+signing:
+  algorithms:
+    - ed25519
+    - rsa-pss-sha256
+  checksum: sha256
+
+upgrade_policy:
+  semver_required: true
+  auto_patch: true
+  auto_minor: false
+  major_requires_approval: true
+
+default_extension_points:
+  - platform.module.register
+  - ui.dashboard.widget
+  - analytics.report.template
+  - analytics.dashboard.layout
+  - ui.theme.override
+  - ai.skill.register
+  - integration.connector.register
+  - workflow.hook.register
+
+seed_listings:
+  - plugin_id: com.marpich.demo-sales-widget
+    plugin_type: widget
+    display_name: Demo Sales KPI Widget
+    trust_level: community
+    version: 1.0.0
+  - plugin_id: com.marpich.demo-report-pack
+    plugin_type: report
+    display_name: Demo Financial Reports
+    trust_level: verified
+    version: 2.1.0

@@ -1,0 +1,45 @@
+context: financial_kernel
+display_name: Enterprise Financial Kernel
+type: platform
+aggregates:
+  - ChartOfAccount
+  - Journal
+  - FiscalPeriod
+  - CostCenter
+  - ProfitCenter
+publishes:
+  - financial_kernel.coa.seeded
+  - financial_kernel.journal.posted
+  - financial_kernel.voucher.approved
+  - financial_kernel.period.closed
+  - financial_kernel.payment.settled
+  - financial_kernel.payment.allocated
+  - financial_kernel.payment.refunded
+  - financial_kernel.payment.chargeback
+  - financial_kernel.payment.reconciled
+  - financial_kernel.document.created
+  - financial_kernel.document.version.created
+  - financial_kernel.document.approval.requested
+  - financial_kernel.document.approved
+  - financial_kernel.document.signed
+  - financial_kernel.document.issued
+  - financial_kernel.cost_center.created
+  - financial_kernel.profit_center.created
+  - financial_kernel.allocation.created
+  - financial_kernel.workflow.started
+  - financial_kernel.workflow.approved
+  - financial_kernel.workflow.rejected
+  - financial_kernel.workflow.escalated
+  - financial_kernel.workflow.signed
+  - financial_kernel.security.maker_checker.submitted
+  - financial_kernel.security.maker_checker.approved
+  - financial_kernel.security.transaction.locked
+  - financial_kernel.security.period.closed
+  - financial_kernel.security.audit.recorded
+  - financial_kernel.security.tamper.detected
+  - financial_kernel.ai.analysis.completed
+  - financial_kernel.ai.dashboard.generated
+  - financial_kernel.ai.chat.completed
+subscribes:
+  - platform.tenant.provisioned
+schema: financial_kernel

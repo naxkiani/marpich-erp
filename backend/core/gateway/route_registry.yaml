@@ -1,0 +1,145 @@
+# Gateway Route Registry
+# Canonical prefix → upstream mapping for Enterprise API Gateway.
+# See docs/architecture/API_GATEWAY_ARCHITECTURE.md
+
+version: 1
+
+defaults:
+  api_version: 1
+  auth: required
+  tenant: required
+  rate_limit_class: standard
+  cache: none
+
+public_routes:
+  - prefix: /api/v1/auth/login
+    auth: public
+    tenant: optional
+  - prefix: /api/v1/auth/register
+    auth: public
+    tenant: optional
+  - prefix: /api/v1/auth/refresh
+    auth: public
+    tenant: optional
+  - prefix: /api/v1/health
+    auth: public
+    tenant: optional
+  - prefix: /api/docs
+    auth: optional
+    tenant: optional
+  - prefix: /api/openapi.json
+    auth: optional
+    tenant: optional
+
+platform_routes:
+  - prefix: /api/v1/auth
+    context_id: identity
+    module: identity
+  - prefix: /api/v1/identity
+    context_id: identity
+    module: identity
+  - prefix: /api/v1/authorization
+    context_id: identity
+    module: identity
+  - prefix: /api/v1/permissions
+    context_id: identity
+    module: identity
+  - prefix: /api/v1/platform
+    context_id: core_platform
+    module: core_platform
+  - prefix: /api/v1/organizations
+    context_id: organization
+    module: organization
+  - prefix: /api/v1/settings
+    context_id: settings
+    module: settings
+  - prefix: /api/v1/localization
+    context_id: localization
+    module: localization
+  - prefix: /api/v1/notifications
+    context_id: notifications
+    module: notifications
+  - prefix: /api/v1/audit
+    context_id: audit
+    module: audit
+  - prefix: /api/v1/documents
+    context_id: documents
+    module: documents
+  - prefix: /api/v1/media
+    context_id: media
+    module: media
+  - prefix: /api/v1/workflow
+    context_id: workflow
+    module: workflow
+  - prefix: /api/v1/integrations
+    context_id: integration
+    module: integration
+  - prefix: /api/v1/integrations/ingress
+    context_id: integration
+    module: integration
+    auth: optional
+    tenant: required
+    rate_limit_class: strict
+  - prefix: /api/v1/analytics
+    context_id: analytics
+    module: analytics
+  - prefix: /api/v1/policies
+    context_id: policy
+    module: policy
+  - prefix: /api/v1/compliance
+    context_id: compliance
+    module: compliance
+  - prefix: /api/v1/feature-flags
+    context_id: feature_flags
+    module: feature_flags
+  - prefix: /api/v1/plugins
+    context_id: plugins
+    module: plugins
+  - prefix: /api/v1/financial-kernel
+    context_id: financial_kernel
+    module: financial_kernel
+  - prefix: /api/v1/search
+    context_id: search
+    module: search
+    cache: short
+
+business_routes:
+  - prefix: /api/v1/hospital
+    context_id: hospital
+    module: hospital
+  - prefix: /api/v1/clinic
+    context_id: clinic
+    module: clinic
+  - prefix: /api/v1/municipality
+    context_id: municipality
+    module: municipality
+  - prefix: /api/v1/pos
+    context_id: pos
+    module: pos
+  - prefix: /api/v1/accounting
+    context_id: accounting
+    module: accounting
+  - prefix: /api/v1/finance
+    context_id: finance
+    module: finance
+
+websocket_routes:
+  - prefix: /api/v1/ws/notifications
+    context_id: notifications
+    module: notifications
+    websocket: true
+  - prefix: /api/v1/ws/workflow
+    context_id: workflow
+    module: workflow
+    websocket: true
+
+rate_limit_classes:
+  standard:
+    tenant_per_minute: 1000
+    user_per_minute: 100
+  auth:
+    ip_per_minute: 20
+    tenant_per_minute: 50
+  strict:
+    tenant_per_minute: 100
+    user_per_minute: 10

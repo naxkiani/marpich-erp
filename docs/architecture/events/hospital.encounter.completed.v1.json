@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "marpich.hospital.encounter.completed.v1",
+  "title": "hospital.encounter.completed",
+  "description": "Clinical encounter finished — triggers billing in Accounting (via ACL)",
+  "type": "object",
+  "required": ["event_name", "event_version", "source_context", "tenant_id", "payload"],
+  "properties": {
+    "event_name": { "const": "hospital.encounter.completed" },
+    "event_version": { "const": 1 },
+    "source_context": { "const": "hospital" },
+    "tenant_id": { "type": "string" },
+    "payload": {
+      "type": "object",
+      "required": ["encounter_id", "patient_id", "admission_id"],
+      "properties": {
+        "encounter_id": { "type": "string", "format": "uuid" },
+        "patient_id": { "type": "string", "format": "uuid" },
+        "admission_id": { "type": "string", "format": "uuid" },
+        "procedure_codes": { "type": "array", "items": { "type": "string" } },
+        "diagnosis_codes": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

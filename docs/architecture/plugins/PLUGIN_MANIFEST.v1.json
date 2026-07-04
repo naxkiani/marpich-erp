@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://marpich.dev/schemas/plugin-manifest/v1",
+  "title": "Marpich Plugin Manifest v1",
+  "description": "Canonical manifest for third-party Marpich plugins. See ENTERPRISE_PLUGIN_PLATFORM.md",
+  "type": "object",
+  "required": [
+    "pluginId",
+    "pluginVersion",
+    "pluginType",
+    "displayName",
+    "publisher",
+    "permissions",
+    "extensionPoints",
+    "sandbox",
+    "signature"
+  ],
+  "properties": {
+    "pluginId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9.-]*\\.[a-z][a-z0-9.-]*\\.[a-z][a-z0-9.-]*$",
+      "description": "Reverse-DNS unique identifier (com.publisher.name)"
+    },
+    "pluginVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(-[a-zA-Z0-9.]+)?$"
+    },
+    "pluginType": {
+      "type": "string",
+      "enum": [
+        "module",
+        "widget",
+        "report",
+        "dashboard",
+        "theme",
+        "ai_skill",
+        "integration",
+        "workflow_extension"
+      ]
+    },
+    "displayName": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "description": { "type": "string", "maxLength": 2048 },
+    "publisher": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "website": { "type": "string", "format": "uri" }
+      }
+    },
+    "permissions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 0
+    },
+    "extensionPoints": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "industryPacks": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "dependencies": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "sandbox": {
+      "type": "object",
+      "required": ["network", "filesystem", "maxMemoryMb"],
+      "properties": {
+        "network": { "type": "string", "enum": ["deny", "allowlist"] },
+        "allowedHosts": { "type": "array", "items": { "type": "string" } },
+        "filesystem": {
+          "type": "string",
+          "enum": ["read_only", "read_write_temp"]
+        },
+        "maxMemoryMb": { "type": "integer", "minimum": 16, "maximum": 2048 }
+      }
+    },
+    "signature": {
+      "type": "object",
+      "required": ["algorithm", "publicKeyFingerprint", "packageChecksum"],
+      "properties": {
+        "algorithm": { "type": "string", "enum": ["ed25519", "rsa-pss-sha256"] },
+        "publicKeyFingerprint": { "type": "string" },
+        "packageChecksum": { "type": "string", "pattern": "^sha256:" },
+        "signedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "configSchema": { "type": "object" },
+    "entrypoint": { "type": "string" }
+  },
+  "additionalProperties": false
+}

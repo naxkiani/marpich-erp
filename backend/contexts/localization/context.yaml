@@ -1,0 +1,16 @@
+context: localization
+display_name: Localization
+type: platform
+description: i18n/l10n — locales, translation keys, RTL/LTR, formats
+aggregates:
+  - Locale
+  - TranslationKey
+  - TranslationBundle
+publishes:
+  - localization.locale.changed
+  - localization.translation.updated
+  - localization.key.missing
+subscribes:
+  - platform.tenant.provisioned
+  - settings.config.updated
+schema: localization

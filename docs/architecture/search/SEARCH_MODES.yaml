@@ -1,0 +1,130 @@
+# Marpich Enterprise Search Engine — Search Modes Catalog
+# See docs/architecture/ENTERPRISE_SEARCH_ENGINE.md
+
+version: 1
+
+modes:
+  global:
+    display_name: Global Search
+    scope: all_entity_types
+    default: true
+    permission: search.query.read
+    engines: [fulltext, semantic]
+    description: Cross-module discovery bar
+
+  module:
+    display_name: Module Search
+    scope: single_entity_type
+    permission: search.query.read
+    engines: [fulltext, semantic]
+    parameter: types
+    description: Scoped to one module partition
+
+  fulltext:
+    display_name: Full Text Search
+    engines: [postgresql, opensearch]
+    fields: [title, body, ocr_text]
+    permission: search.query.read
+
+  semantic:
+    display_name: Semantic Search
+    engines: [vector]
+    requires: ai_embeddings
+    permission: search.query.read
+    similarity: cosine
+
+  ai:
+    display_name: AI Search
+    engines: [nlp_parse, hybrid, ai_rerank]
+    permission: search.ai.read
+    ai_service: /api/v1/ai/search/parse
+
+  document:
+    display_name: Document Search
+    entity_types: [document]
+    fields: [title, body, ocr_text]
+    permission: documents.document.read
+    trigger_events:
+      - documents.document.uploaded
+      - documents.document.indexed
+
+  ocr:
+    display_name: OCR Search
+    fields: [ocr_text]
+    source: ai.documents.extract
+    permission: documents.document.read
+
+  image_metadata:
+    display_name: Image Metadata Search
+    entity_types: [media]
+    fields: [image_metadata.tags, image_metadata.exif, facets]
+    permission: media.asset.read
+    trigger_events:
+      - media.asset.uploaded
+
+features:
+  filters:
+    types: [entity_type, date_range, status, category, organization_id, custom_facet]
+    syntax: query_parameters
+
+  saved_searches:
+    storage: search.saved_queries
+    permissions: owner_only
+    alert_integration: notifications
+
+  suggestions:
+    endpoints:
+      - /api/v1/search/suggest
+      - /api/v1/search/history
+    sources: [prefix_index, query_log, popular_anonymous]
+
+  ranking:
+    signals:
+      - bm25_relevance
+      - semantic_similarity
+      - recency_decay
+      - entity_type_weight
+      - ai_rerank
+    default_weights:
+      bm25: 0.40
+      semantic: 0.30
+      recency: 0.15
+      entity_type: 0.10
+      ai_rerank: 0.05
+
+security:
+  tenant_isolation: mandatory
+  permission_model: per_hit_acl
+  fail_closed: true
+  audit: SearchQuery + user_id
+  permissions:
+    query: search.query.read
+    ai: search.ai.read
+    admin: search.admin.read
+    admin_write: search.admin.write
+    analytics: search.analytics.read
+
+analytics:
+  metrics:
+    - queries_per_day
+    - zero_result_rate
+    - top_queries
+    - click_through_rate
+    - query_latency_p99
+    - index_lag_seconds
+  event: search.analytics.snapshot
+
+history:
+  retention_days_default: 90
+  per_user: true
+  endpoints:
+    - GET /api/v1/search/history
+    - DELETE /api/v1/search/history
+
+indexing:
+  source: integration_events_only
+  forbidden: cross_module_db_query
+  store:
+    dev: postgresql
+    prod: opensearch
+  vector_store: opensearch_knn

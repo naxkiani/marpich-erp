@@ -1,0 +1,332 @@
+# Marpich Financial Kernel — Engine Catalog
+# See docs/architecture/ENTERPRISE_FINANCIAL_KERNEL.md
+
+version: 1
+
+law:
+  single_financial_foundation: true
+  duplicate_financial_logic_forbidden: true
+  every_module_calls_kernel: true
+  not_an_accounting_module: true
+
+engines:
+  general_ledger:
+    id: gl
+    owner: financial_kernel
+    capabilities: [trial_balance, period_close, balance_inquiry]
+    api_prefix: /ledger
+
+  chart_of_accounts:
+    id: coa
+    owner: financial_kernel
+    capabilities: [account_hierarchy, industry_templates, account_types]
+    account_types: [asset, liability, equity, revenue, expense, contra]
+
+  cost_centers:
+    id: cost_center
+    owner: financial_kernel
+    capabilities:
+      - department
+      - project
+      - branch
+      - faculty
+      - hospital_ward
+      - construction_site
+      - warehouse
+      - business_unit
+      - profit_center
+      - budget_allocation
+      - expense_allocation
+      - revenue_allocation
+      - split_allocation
+      - profitability_analysis
+    api_prefix: /cost-centers
+    publishes:
+      - financial_kernel.cost_center.created
+      - financial_kernel.profit_center.created
+      - financial_kernel.allocation.created
+
+  profit_centers:
+    id: profit_center
+    owner: financial_kernel
+    capabilities: [dimension_assignment, revenue_attribution]
+    satellite: cost_centers
+
+  budget:
+    id: budget
+    owner: financial_kernel
+    capabilities: [budget_vs_actual, threshold_alerts, approval_workflow]
+    subscribes: [financial_kernel.journal.posted]
+
+  journal:
+    id: journal
+    owner: financial_kernel
+    capabilities: [double_entry, idempotent_posting, validation, reversal]
+    publishes: [financial_kernel.journal.posted]
+
+  voucher:
+    id: voucher
+    owner: financial_kernel
+    capabilities: [grouped_lines, draft, approve, post]
+    workflow_required: true
+    publishes: [financial_kernel.voucher.approved]
+
+  payment:
+    id: payment
+    owner: financial_kernel
+    capabilities:
+      - initiate
+      - settle
+      - reconcile
+      - refund
+      - chargeback
+      - split
+      - partial
+      - installments
+      - advance
+      - auto_allocation
+      - payment_matching
+    api_prefix: /payments
+    publishes:
+      - financial_kernel.payment.settled
+      - financial_kernel.payment.allocated
+      - financial_kernel.payment.refunded
+      - financial_kernel.payment.chargeback
+      - financial_kernel.payment.reconciled
+    delegates_connector: integration.payment_gateway
+
+  financial_documents:
+    id: financial_documents
+    owner: financial_kernel
+    capabilities:
+      - invoice
+      - bill
+      - voucher
+      - receipt
+      - payment_order
+      - purchase_invoice
+      - sales_invoice
+      - credit_note
+      - debit_note
+      - journal_voucher
+      - cash_voucher
+      - bank_voucher
+      - pdf_generation
+      - digital_signature
+      - qr_verification
+      - versioning
+      - approval_workflow
+    api_prefix: /financial-documents
+    publishes:
+      - financial_kernel.document.created
+      - financial_kernel.document.version.created
+      - financial_kernel.document.approval.requested
+      - financial_kernel.document.approved
+      - financial_kernel.document.signed
+      - financial_kernel.document.issued
+    delegates_workflow: workflow_engine
+
+  currency:
+    id: currency
+    owner: financial_kernel
+    capabilities:
+      - convert
+      - multi_currency_amounts
+      - base_currency_reporting
+      - rate_snapshots
+      - revaluation
+      - gain_loss
+      - exchange_history
+      - auto_update
+    api_prefix: /currency
+    satellite: currency_exchange
+
+  exchange_rates:
+    id: exchange_rate
+    owner: financial_kernel
+    capabilities: [rate_tables, effective_dates, rate_sources]
+    satellite: currency_exchange
+
+  tax:
+    id: tax
+    owner: financial_kernel
+    capabilities: [calculate, accrue, facade]
+    satellite: tax
+    rule: single_tax_owner
+
+  treasury:
+    id: treasury
+    owner: treasury
+    capabilities:
+      - cash_positions
+      - bank_accounts
+      - petty_cash
+      - vault_safe
+      - transfers
+      - bank_reconciliation
+      - cash_forecast
+      - liquidity_analysis
+      - dashboard
+      - approval_workflow
+    api_prefix: /treasury
+    satellite: false
+
+  cash_management:
+    id: cash
+    owner: financial_kernel
+    capabilities: [bank_accounts, cash_flow, reconciliation]
+
+  financial_workflow:
+    id: financial_workflow
+    owner: financial_kernel
+    capabilities:
+      - approval
+      - payment
+      - purchase
+      - expense
+      - transfer
+      - budget
+      - invoice
+      - payroll
+      - tax
+      - treasury
+      - sla
+      - escalation
+      - ai_recommendation
+      - audit
+      - history
+      - digital_signature
+    api_prefix: /workflows
+    publishes:
+      - financial_kernel.workflow.started
+      - financial_kernel.workflow.approved
+      - financial_kernel.workflow.rejected
+      - financial_kernel.workflow.escalated
+      - financial_kernel.workflow.signed
+    delegates: workflow_engine
+
+  financial_security:
+    id: financial_security
+    owner: financial_kernel
+    capabilities:
+      - maker_checker
+      - four_eyes
+      - dual_approval
+      - digital_signature
+      - audit_trail
+      - transaction_locking
+      - period_closing
+      - fiscal_year_closing
+      - rbac
+      - abac
+      - encryption
+      - tamper_detection
+    api_prefix: /security
+    law: no_modification_without_audit
+    publishes:
+      - financial_kernel.security.maker_checker.submitted
+      - financial_kernel.security.maker_checker.approved
+      - financial_kernel.security.transaction.locked
+      - financial_kernel.security.period.closed
+      - financial_kernel.security.audit.recorded
+      - financial_kernel.security.tamper.detected
+    delegates_audit: audit_platform
+
+  financial_reporting:
+    id: reporting
+    owner: financial_kernel
+    capabilities: [profit_loss, balance_sheet, cash_flow, custom_reports]
+
+  financial_analytics:
+    id: analytics
+    owner: financial_kernel
+    capabilities: [kpis, trends, drill_down, dashboard]
+
+  audit:
+    id: audit
+    owner: financial_kernel
+    delegates: audit_platform
+    audit_every_posting: true
+
+  compliance:
+    id: compliance
+    owner: financial_kernel
+    delegates: compliance_framework
+    controls: [sox_segregation, budget_violation, period_close_checklist]
+
+  ai_financial_assistant:
+    id: ai_financial
+    owner: financial_kernel
+    delegates: ai_platform
+    surface: ai.financial.copilot
+    autonomous_posting_forbidden: true
+    capabilities:
+      - fraud_detection
+      - cash_flow_prediction
+      - budget_forecast
+      - expense_analysis
+      - revenue_prediction
+      - financial_summary
+      - risk_analysis
+      - recommendation
+      - invoice_classification
+      - document_ocr
+      - financial_chatbot
+      - dashboard
+      - cfo_assistant
+    api_prefix: /financial-kernel/financial-ai
+
+permissions:
+  financial_kernel.accounts.read: View chart of accounts
+  financial_kernel.accounts.write: Manage accounts
+  financial_kernel.journals.post: Post journal entries
+  financial_kernel.journals.read: View journals
+  financial_kernel.vouchers.write: Create vouchers
+  financial_kernel.vouchers.approve: Approve vouchers
+  financial_kernel.payments.read: View payments
+  financial_kernel.payments.write: Initiate and manage payments
+  financial_kernel.payments.reconcile: Payment reconciliation
+  financial_kernel.documents.read: View financial documents
+  financial_kernel.documents.write: Create and update financial documents
+  financial_kernel.documents.approve: Approve financial documents
+  financial_kernel.documents.sign: Sign financial documents
+  financial_kernel.documents.issue: Issue financial documents
+  financial_kernel.cost_centers.read: View cost centers and allocations
+  financial_kernel.cost_centers.write: Create cost and profit centers
+  financial_kernel.cost_centers.allocate: Create and split allocations
+  financial_kernel.cost_centers.analyze: Profitability analysis
+  financial_kernel.workflows.read: View financial workflows
+  financial_kernel.workflows.write: Start financial workflows
+  financial_kernel.workflows.approve: Approve, reject, complete workflows
+  financial_kernel.workflows.escalate: Escalate workflows
+  financial_kernel.workflows.sign: Sign financial workflows
+  financial_kernel.security.read: View financial security controls
+  financial_kernel.security.write: Submit maker-checker and guarded modifications
+  financial_kernel.security.approve: Approve security requests and period close
+  financial_kernel.security.lock: Transaction locking
+  financial_kernel.security.close: Request period/fiscal year close
+  financial_kernel.security.audit: Audit trail and tamper verification
+  financial_kernel.security.admin: Manage security policies
+  financial_kernel.ai.read: View AI capabilities and jobs
+  financial_kernel.ai.analyze: Run financial AI analysis
+  financial_kernel.ai.chat: Financial chatbot and CFO assistant
+  financial_kernel.ai.dashboard: AI financial dashboard
+  financial_kernel.ledger.read: Trial balance and GL inquiry
+  financial_kernel.reports.read: Financial reports
+  financial_kernel.analytics.read: Financial analytics dashboard
+  financial_kernel.periods.close: Close fiscal periods
+  financial_kernel.budgets.read: View budgets
+  financial_kernel.budgets.write: Manage budgets
+  financial_kernel.currency.read: View exchange rates
+  financial_kernel.currency.write: Manage rates and revaluation
+  financial_kernel.currency.convert: Convert amounts
+  financial_kernel.tax.calculate: Calculate tax
+  financial_kernel.cash.read: Cash management views
+  financial_kernel.dimensions.read: Cost/profit centers
+
+posting_rules:
+  double_entry_required: true
+  open_period_required: true
+  idempotency_key_required: true
+  correlation_id_required: true
+  balanced_lines_required: true

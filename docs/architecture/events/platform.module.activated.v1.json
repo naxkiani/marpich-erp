@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "marpich.platform.module.activated.v1",
+  "title": "platform.module.activated",
+  "allOf": [
+    { "$ref": "_envelope.v1.json" },
+    {
+      "properties": {
+        "event_name": { "const": "platform.module.activated" },
+        "event_version": { "const": 1 },
+        "source_context": { "const": "core_platform" },
+        "payload": {
+          "type": "object",
+          "required": ["tenant_slug", "module_id"],
+          "properties": {
+            "tenant_slug": { "type": "string", "minLength": 1 },
+            "module_id": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    }
+  ]
+}

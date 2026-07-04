@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "marpich.organization.org.created.v1",
+  "title": "organization.org.created",
+  "allOf": [
+    { "$ref": "_envelope.v1.json" },
+    {
+      "properties": {
+        "event_name": { "const": "organization.org.created" },
+        "event_version": { "const": 1 },
+        "source_context": { "const": "organization" },
+        "payload": {
+          "type": "object",
+          "required": ["organization_id", "name"],
+          "properties": {
+            "organization_id": { "type": "string", "format": "uuid" },
+            "name": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    }
+  ]
+}

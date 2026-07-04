@@ -1,0 +1,15 @@
+context: media
+display_name: Media
+type: platform
+description: Asset storage, CDN, image processing, video
+aggregates:
+- MediaAsset
+- MediaCollection
+- TranscodingJob
+publishes:
+- media.asset.uploaded
+- media.transcode.completed
+- media.asset.deleted
+subscribes:
+- documents.document.uploaded
+schema: media

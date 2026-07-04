@@ -1,0 +1,18 @@
+context: pos
+display_name: POS
+type: industry
+description: Point of sale — terminals, shifts, receipts, in-store checkout
+aggregates:
+  - Terminal
+  - Shift
+  - PosSale
+  - Receipt
+publishes:
+  - pos.sale.completed
+  - pos.shift.closed
+  - pos.receipt.issued
+subscribes:
+  - inventory.stock.adjusted
+  - sales.order.confirmed
+  - identity.user.created
+schema: pos

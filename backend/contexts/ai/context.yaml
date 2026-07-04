@@ -1,0 +1,18 @@
+context: ai
+display_name: AI
+type: platform
+description: ML models, predictions, document intelligence, fraud
+aggregates:
+- ModelDeployment
+- Prediction
+- TrainingJob
+- PromptTemplate
+publishes:
+- ai.prediction.completed
+- ai.fraud.detected
+- ai.insight.generated
+subscribes:
+- analytics.metric.updated
+- documents.document.uploaded
+- banking.transaction.posted
+schema: ai

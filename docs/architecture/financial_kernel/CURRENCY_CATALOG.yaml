@@ -1,0 +1,91 @@
+# Enterprise Currency Engine — API Catalog
+# See docs/architecture/ENTERPRISE_CURRENCY_ENGINE.md
+
+version: 1
+
+api_prefix: /api/v1/financial-kernel/currency
+
+rate_types:
+  - spot
+  - historical
+  - average
+  - manual
+  - central_bank
+
+rate_sources:
+  - manual
+  - central_bank
+  - exchange_api
+  - system
+
+currency_roles:
+  - base_currency
+  - reporting_currency
+  - transaction_currency
+
+endpoints:
+  - method: GET
+    path: /config
+    permission: financial_kernel.currency.read
+  - method: PUT
+    path: /config
+    permission: financial_kernel.currency.write
+  - method: GET
+    path: /currencies
+    permission: financial_kernel.currency.read
+  - method: POST
+    path: /currencies
+    permission: financial_kernel.currency.write
+  - method: GET
+    path: /rates
+    permission: financial_kernel.currency.read
+  - method: GET
+    path: /rates/history
+    permission: financial_kernel.currency.read
+  - method: POST
+    path: /rates/manual
+    permission: financial_kernel.currency.write
+  - method: POST
+    path: /rates/central-bank
+    permission: financial_kernel.currency.write
+  - method: POST
+    path: /rates/fetch
+    permission: financial_kernel.currency.write
+  - method: POST
+    path: /convert
+    permission: financial_kernel.currency.convert
+  - method: GET
+    path: /snapshots
+    permission: financial_kernel.currency.read
+  - method: POST
+    path: /revaluation
+    permission: financial_kernel.currency.write
+  - method: GET
+    path: /revaluation
+    permission: financial_kernel.currency.read
+  - method: GET
+    path: /gain-loss
+    permission: financial_kernel.currency.read
+
+snapshot_policy:
+  every_financial_transaction: true
+  immutable: true
+  fields:
+    - transaction_currency
+    - base_currency
+    - reporting_currency
+    - transaction_to_base_rate
+    - transaction_to_reporting_rate
+    - rate_type
+    - rate_source
+    - effective_date
+
+auto_update_providers:
+  - ecb
+  - openexchangerates
+  - fixer
+
+central_banks:
+  - fed
+  - ecb
+  - cbi

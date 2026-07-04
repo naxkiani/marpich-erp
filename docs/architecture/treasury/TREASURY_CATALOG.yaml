@@ -1,0 +1,88 @@
+# Enterprise Treasury — API Catalog
+# See docs/architecture/ENTERPRISE_TREASURY.md
+
+version: 1
+
+api_prefix: /api/v1/treasury
+
+account_types:
+  - cash
+  - bank
+  - petty_cash
+  - vault
+  - safe
+
+payment_instruments:
+  - cheque
+  - electronic_transfer
+  - mobile_money
+  - digital_wallet
+  - cash
+
+forecast_scenarios:
+  - base
+  - optimistic
+  - pessimistic
+
+endpoints:
+  - method: GET
+    path: /dashboard
+    permission: treasury.dashboard.read
+    description: Treasury dashboard with liquidity summary
+  - method: GET
+    path: /liquidity
+    permission: treasury.dashboard.read
+    description: Liquidity analysis
+  - method: GET
+    path: /accounts
+    permission: treasury.accounts.read
+  - method: POST
+    path: /accounts
+    permission: treasury.accounts.write
+  - method: POST
+    path: /transfers
+    permission: treasury.transfers.write
+  - method: POST
+    path: /transfers/{id}/submit
+    permission: treasury.transfers.write
+  - method: POST
+    path: /transfers/{id}/approve
+    permission: treasury.transfers.approve
+  - method: POST
+    path: /transfers/{id}/reject
+    permission: treasury.transfers.approve
+  - method: POST
+    path: /reconciliations
+    permission: treasury.reconciliation.write
+  - method: POST
+    path: /forecasts
+    permission: treasury.forecast.write
+
+workflow:
+  transfer_approval:
+    states: [draft, pending_approval, approved, executed, rejected]
+    events:
+      - treasury.transfer.approval.requested
+      - treasury.transfer.executed
+
+integration_events:
+  publishes:
+    - treasury.transfer.executed
+    - treasury.liquidity.updated
+    - treasury.transfer.approval.requested
+  subscribes:
+    - platform.tenant.provisioned
+    - banking.transaction.posted
+    - currency_exchange.deal.settled
+
+permissions:
+  treasury.dashboard.read: Treasury dashboard and liquidity
+  treasury.accounts.read: View treasury accounts
+  treasury.accounts.write: Manage treasury accounts
+  treasury.transfers.read: View transfers
+  treasury.transfers.write: Create and submit transfers
+  treasury.transfers.approve: Approve or reject transfers
+  treasury.reconciliation.read: View reconciliations
+  treasury.reconciliation.write: Run bank reconciliation
+  treasury.forecast.read: View cash forecasts
+  treasury.forecast.write: Create cash forecasts

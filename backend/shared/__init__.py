@@ -1,0 +1,1 @@
+"""Marpich shared kernel."""

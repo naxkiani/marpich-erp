@@ -1,0 +1,156 @@
+# Marpich Enterprise Observability — Metrics Catalog
+# See docs/architecture/ENTERPRISE_OBSERVABILITY_PLATFORM.md
+
+version: 1
+
+signal_layers:
+  application_logs:
+    format: json_structured
+    schema: LOG_ENVELOPE.v1.json
+    export: otlp_logs
+    retention_days: 90
+
+  api_logs:
+    source: platform_gateway_middleware
+    logger: marpich.gateway
+    fields: [request_id, correlation_id, method, path, status, duration_ms, tenant_id]
+    retention_days: 30
+
+  performance_metrics:
+    backend: opentelemetry
+    slo:
+      api_p95_ms: 300
+      api_p99_ms: 1000
+
+  business_metrics:
+    owner: analytics_context
+    api: /api/v1/analytics/metrics
+    subscription: integration_events_wildcard
+
+  distributed_tracing:
+    backend: opentelemetry
+    propagation: W3C_tracecontext
+    header: X-Correlation-ID
+
+  health_checks:
+    platform: GET /api/v1/health
+    context_pattern: GET /api/v1/{context}/health
+
+infrastructure_metrics:
+  cpu:
+    - name: process.cpu.utilization
+      type: gauge
+      unit: percent
+      alert_threshold: 80
+  memory:
+    - name: process.memory.usage
+      type: gauge
+      unit: bytes
+      alert_threshold_percent: 85
+  database:
+    - name: db.connections.active
+      type: gauge
+    - name: db.connections.max
+      type: gauge
+    - name: db.transactions.rate
+      type: counter
+    - name: db.deadlocks.total
+      type: counter
+    - name: db.client.duration
+      type: histogram
+      unit: ms
+  queue:
+    - name: queue.outbox.pending
+      type: gauge
+    - name: queue.outbox.lag_seconds
+      type: gauge
+      alert_threshold: 300
+    - name: queue.outbox.failures
+      type: counter
+    - name: queue.consumer.throughput
+      type: counter
+  cache:
+    - name: cache.hit_ratio
+      type: gauge
+    - name: cache.memory.used
+      type: gauge
+    - name: cache.connections.active
+      type: gauge
+    - name: cache.evictions.total
+      type: counter
+
+http_metrics:
+  - name: http.server.duration
+    type: histogram
+    unit: ms
+    labels: [http.method, http.route, http.status_code]
+    status: implemented
+  - name: http.server.requests
+    type: counter
+    labels: [http.method, http.route, http.status_code]
+    status: planned
+
+error_tracking:
+  counter: errors.total
+  labels: [exception.type, context, tenant_id]
+  export: sentry_compatible
+  retention_days: 90
+
+slow_query:
+  threshold_ms: 500
+  alert_threshold_ms: 2000
+  metric: db.query.slow
+  log_level: WARNING
+
+business_metrics_defaults:
+  - key: events.total
+    pattern: "*"
+  - key: users.created
+    pattern: identity.user.created
+  - key: users.logged_in
+    pattern: identity.user.logged_in
+  - key: encounters.completed
+    pattern: hospital.encounter.completed
+  - key: workflows.completed
+    pattern: workflow.process.completed
+  - key: documents.uploaded
+    pattern: documents.document.uploaded
+
+alerting:
+  business:
+    owner: analytics
+    api: POST /api/v1/analytics/alerts
+    event: analytics.alert.triggered
+  infrastructure:
+    owner: prometheus_alertmanager
+    route: notification_platform
+
+ai_health_analysis:
+  endpoints:
+    analyze: POST /api/v1/ai/health/analyze
+    insights: GET /api/v1/ai/insights?category=health
+  capabilities:
+    - anomaly_detection
+    - root_cause_analysis
+    - predictive_alert
+    - slo_breach_forecast
+    - incident_summary
+  events:
+    - ai.health.anomaly.detected
+    - ai.health.rca.completed
+
+permissions:
+  metrics: analytics.metrics.read
+  dashboards: analytics.dashboards.read
+  alerts: analytics.alerts.write
+  logs: observability.logs.read
+  traces: observability.traces.read
+  platform_dashboard: observability.dashboard.read
+  admin: observability.admin
+
+otel_config:
+  enabled_env: OTEL_ENABLED
+  service_name_env: OTEL_SERVICE_NAME
+  endpoint_env: OTEL_EXPORTER_OTLP_ENDPOINT
+  excluded_urls: /api/v1/health,/api/docs,/api/redoc,/api/openapi.json
+  install_extra: marpich-backend[observability]

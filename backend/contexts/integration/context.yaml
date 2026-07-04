@@ -1,0 +1,18 @@
+context: integration
+display_name: Integration
+type: platform
+description: Webhooks, connectors, and external system sync
+aggregates:
+- Connector
+- WebhookSubscription
+- SyncJob
+- IntegrationLog
+publishes:
+- integration.webhook.delivered
+- integration.webhook.failed
+- integration.sync.completed
+- integration.connector.registered
+subscribes:
+- "*"
+- platform.tenant.provisioned
+schema: integration

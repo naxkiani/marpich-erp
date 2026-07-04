@@ -1,0 +1,15 @@
+context: analytics
+display_name: Analytics
+type: platform
+description: Data warehouse projections, dashboards, KPIs
+aggregates:
+- Dashboard
+- Report
+- Metric
+- DataProjection
+publishes:
+- analytics.report.generated
+- analytics.alert.triggered
+subscribes:
+- '*'
+schema: analytics

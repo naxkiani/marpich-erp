@@ -1,0 +1,1 @@
+"""school — domain layer."""

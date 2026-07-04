@@ -1,0 +1,19 @@
+context: government
+display_name: Government
+type: industry
+description: Citizen services, permits, procurement, public finance
+aggregates:
+- Citizen
+- ServiceRequest
+- Permit
+- PublicTender
+- CaseFile
+publishes:
+- government.service.submitted
+- government.permit.issued
+- government.tender.awarded
+subscribes:
+- identity.user.created
+- workflow.process.approved
+- documents.document.signed
+schema: government

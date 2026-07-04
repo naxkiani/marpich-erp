@@ -1,0 +1,12 @@
+context: module_id
+architecture_version: "1.0"
+display_name: Module Display Name
+type: enterprise
+description: One-sentence capability description
+aggregates:
+  - ExampleAggregate
+publishes:
+  - module_id.example.created
+subscribes:
+  - identity.user.created
+schema: module_id

@@ -1,0 +1,88 @@
+# Compliance Dashboard — Marpich Enterprise Compliance Framework
+
+version: 1
+dashboard_id: platform.compliance
+name: Compliance Dashboard
+scope: tenant
+refresh_seconds: 60
+
+rows:
+  - id: overview
+    title: Compliance Overview
+    widgets:
+      - id: compliance_score
+        type: gauge
+        title: Overall Compliance Score
+        metric: compliance.score.overall
+        unit: percent
+        target: 95
+
+      - id: open_violations
+        type: stat
+        title: Open Violations
+        metric: compliance.violations.open
+
+      - id: critical_alerts_24h
+        type: stat
+        title: Critical Alerts (24h)
+        metric: compliance.alerts.critical_24h
+
+      - id: controls_passing
+        type: ratio
+        title: Controls Passing
+        metric: compliance.controls.pass_rate
+
+  - id: domains
+    title: Domain Heatmap
+    widgets:
+      - id: domain_heatmap
+        type: heatmap
+        title: Compliance by Domain
+        domains:
+          - internal_policies
+          - financial_compliance
+          - tax_compliance
+          - educational_compliance
+          - healthcare_compliance
+          - document_compliance
+          - security_compliance
+          - audit_compliance
+          - data_privacy
+          - retention_policies
+        source: GET /api/v1/compliance/dashboard
+
+  - id: violations
+    title: Violations & Alerts
+    widgets:
+      - id: violations_by_domain
+        type: bar_chart
+        title: Open Violations by Domain
+        metric: compliance.violations.by_domain
+
+      - id: recent_violations
+        type: table
+        title: Recent Violations
+        source: GET /api/v1/compliance/violations?limit=10
+
+      - id: active_alerts
+        type: alert_list
+        title: Active Compliance Alerts
+        source: GET /api/v1/compliance/alerts
+
+  - id: retention
+    title: Retention & Privacy
+    widgets:
+      - id: retention_status
+        type: status_matrix
+        title: Retention Compliance
+        source: GET /api/v1/compliance/retention/status
+
+      - id: policy_coverage
+        type: metric
+        title: Required Policies Active
+        metric: compliance.policies.coverage
+
+      - id: recent_reports
+        type: table
+        title: Recent Compliance Reports
+        source: GET /api/v1/compliance/reports

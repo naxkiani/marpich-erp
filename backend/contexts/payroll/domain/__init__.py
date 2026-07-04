@@ -1,0 +1,1 @@
+"""payroll — domain layer."""

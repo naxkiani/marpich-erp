@@ -1,0 +1,1 @@
+"""ngo — presentation layer."""

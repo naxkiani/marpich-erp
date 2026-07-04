@@ -1,0 +1,15 @@
+context: feature_flags
+display_name: Feature Flag System
+type: platform
+description: Multi-scope feature flags, rollout, A/B, emergency disable
+aggregates:
+  - FeatureFlag
+publishes:
+  - feature_flag.created
+  - feature_flag.updated
+  - feature_flag.rollout.updated
+  - feature_flag.emergency_disabled
+  - feature_flag.rollback.applied
+subscribes:
+  - platform.tenant.provisioned
+schema: feature_flags

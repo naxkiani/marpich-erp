@@ -1,0 +1,20 @@
+context: accounting
+display_name: Accounting
+type: generic
+description: Journal entries, AP/AR, general ledger postings
+aggregates:
+- JournalEntry
+- Account
+- Invoice
+- Payment
+- VendorBill
+publishes:
+- accounting.journal.posted
+- accounting.invoice.issued
+- accounting.payment.received
+subscribes:
+- sales.order.fulfilled
+- procurement.po.received
+- payroll.run.completed
+- hospital.encounter.completed
+schema: accounting

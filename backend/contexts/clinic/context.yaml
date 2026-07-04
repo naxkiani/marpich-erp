@@ -1,0 +1,17 @@
+context: clinic
+display_name: Clinic
+type: industry
+description: Ambulatory care — appointments, outpatient encounters, referrals
+aggregates:
+  - Patient
+  - Appointment
+  - OutpatientEncounter
+  - Referral
+publishes:
+  - clinic.appointment.scheduled
+  - clinic.encounter.completed
+  - clinic.referral.sent
+subscribes:
+  - identity.user.created
+  - laboratory.result.finalized
+schema: clinic

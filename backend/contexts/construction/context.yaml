@@ -1,0 +1,18 @@
+context: construction
+display_name: Construction
+type: industry
+description: Construction sites, BOQ, subcontractors, equipment
+aggregates:
+- ConstructionSite
+- BillOfQuantities
+- Subcontractor
+- Equipment
+publishes:
+- construction.site.opened
+- construction.boq.approved
+- construction.milestone.completed
+subscribes:
+- projects.task.completed
+- procurement.po.approved
+- human_resources.employee.hired
+schema: construction

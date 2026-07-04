@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://marpich.dev/schemas/coa/account-tree/v1",
+  "title": "Marpich Enterprise Chart of Accounts Tree Node",
+  "description": "Configurable account tree node — no hardcoded account numbers in application code",
+  "type": "object",
+  "required": ["account_key", "name", "category"],
+  "properties": {
+    "account_key": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "Stable semantic identifier for integrations"
+    },
+    "name": { "type": "string", "minLength": 1 },
+    "category": {
+      "type": "string",
+      "enum": [
+        "asset",
+        "liability",
+        "equity",
+        "revenue",
+        "expense",
+        "off_balance",
+        "statistical"
+      ]
+    },
+    "group": {
+      "type": "string",
+      "description": "Account group within category"
+    },
+    "is_posting": {
+      "type": "boolean",
+      "default": true,
+      "description": "False for summary/parent accounts"
+    },
+    "code_suggestion": {
+      "type": "string",
+      "description": "Optional default code — tenant overrides on apply"
+    },
+    "country_code": { "type": "string", "minLength": 2, "maxLength": 3 },
+    "children": {
+      "type": "array",
+      "items": { "$ref": "#" },
+      "description": "Unlimited nesting depth"
+    }
+  },
+  "additionalProperties": false
+}

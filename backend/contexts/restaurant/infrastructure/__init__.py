@@ -1,0 +1,1 @@
+"""restaurant — infrastructure layer."""

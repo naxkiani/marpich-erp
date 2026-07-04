@@ -1,0 +1,595 @@
+# Enterprise Chart of Accounts — Configurable Account Trees
+# See docs/architecture/ENTERPRISE_CHART_OF_ACCOUNTS.md
+# Law: code_suggestion is optional tenant default — NOT hardcoded in application code.
+
+version: 1
+
+categories:
+  - asset
+  - liability
+  - equity
+  - revenue
+  - expense
+  - off_balance
+  - statistical
+
+account_groups:
+  - balance_sheet
+  - current_assets
+  - non_current_assets
+  - current_liabilities
+  - long_term_liabilities
+  - equity_capital
+  - operating_revenue
+  - operating_expense
+  - memorandum
+  - kpi_metrics
+
+industry_templates:
+  coa.education:
+    name: Education
+    industries: [university, school]
+    description: Universities, schools, and academic institutions
+    tree:
+      - account_key: assets
+        name: Assets
+        category: asset
+        group: balance_sheet
+        is_posting: false
+        children:
+          - account_key: cash
+            name: Cash and Equivalents
+            category: asset
+            group: current_assets
+            code_suggestion: "1100"
+          - account_key: accounts_receivable
+            name: Accounts Receivable
+            category: asset
+            group: current_assets
+            code_suggestion: "1200"
+          - account_key: grants_receivable
+            name: Grants Receivable
+            category: asset
+            group: current_assets
+            code_suggestion: "1300"
+      - account_key: liabilities
+        name: Liabilities
+        category: liability
+        group: balance_sheet
+        is_posting: false
+        children:
+          - account_key: accounts_payable
+            name: Accounts Payable
+            category: liability
+            group: current_liabilities
+            code_suggestion: "2100"
+          - account_key: student_deposits
+            name: Student Deposits
+            category: liability
+            group: current_liabilities
+            code_suggestion: "2200"
+      - account_key: revenue
+        name: Revenue
+        category: revenue
+        group: operating_revenue
+        is_posting: false
+        children:
+          - account_key: tuition_revenue
+            name: Tuition Revenue
+            category: revenue
+            group: operating_revenue
+            code_suggestion: "4100"
+          - account_key: grant_revenue
+            name: Grant Revenue
+            category: revenue
+            group: operating_revenue
+            code_suggestion: "4200"
+      - account_key: expenses
+        name: Expenses
+        category: expense
+        group: operating_expense
+        is_posting: false
+        children:
+          - account_key: faculty_salaries
+            name: Faculty Salaries
+            category: expense
+            group: operating_expense
+            code_suggestion: "5100"
+          - account_key: facilities
+            name: Facilities
+            category: expense
+            group: operating_expense
+            code_suggestion: "5200"
+
+  coa.healthcare:
+    name: Healthcare
+    industries: [hospital, clinic, laboratory]
+    description: Hospitals, clinics, and laboratories
+    tree:
+      - account_key: assets
+        name: Assets
+        category: asset
+        group: balance_sheet
+        is_posting: false
+        children:
+          - account_key: cash
+            name: Cash
+            category: asset
+            group: current_assets
+            code_suggestion: "1100"
+          - account_key: patient_receivables
+            name: Patient Receivables
+            category: asset
+            group: current_assets
+            code_suggestion: "1200"
+          - account_key: insurance_receivables
+            name: Insurance Receivables
+            category: asset
+            group: current_assets
+            code_suggestion: "1300"
+      - account_key: revenue
+        name: Revenue
+        category: revenue
+        group: operating_revenue
+        is_posting: false
+        children:
+          - account_key: patient_service_revenue
+            name: Patient Service Revenue
+            category: revenue
+            group: operating_revenue
+            code_suggestion: "4100"
+          - account_key: lab_revenue
+            name: Lab Revenue
+            category: revenue
+            group: operating_revenue
+            code_suggestion: "4200"
+      - account_key: expenses
+        name: Expenses
+        category: expense
+        group: operating_expense
+        is_posting: false
+        children:
+          - account_key: clinical_staff
+            name: Clinical Staff
+            category: expense
+            group: operating_expense
+            code_suggestion: "5100"
+          - account_key: medical_supplies
+            name: Medical Supplies
+            category: expense
+            group: operating_expense
+            code_suggestion: "5200"
+      - account_key: statistical
+        name: Statistical KPIs
+        category: statistical
+        group: kpi_metrics
+        is_posting: false
+        children:
+          - account_key: patient_visits
+            name: Patient Visits
+            category: statistical
+            group: kpi_metrics
+            code_suggestion: "STAT.VISITS"
+
+  coa.banking:
+    name: Banking
+    industries: [bank, microfinance]
+    tree:
+      - account_key: assets
+        name: Assets
+        category: asset
+        group: balance_sheet
+        is_posting: false
+        children:
+          - account_key: cash_reserves
+            name: Cash and Reserves
+            category: asset
+            group: current_assets
+            code_suggestion: "1100"
+          - account_key: loans_receivable
+            name: Loans Receivable
+            category: asset
+            group: current_assets
+            code_suggestion: "1200"
+      - account_key: liabilities
+        name: Liabilities
+        category: liability
+        group: balance_sheet
+        is_posting: false
+        children:
+          - account_key: customer_deposits
+            name: Customer Deposits
+            category: liability
+            group: current_liabilities
+            code_suggestion: "2100"
+      - account_key: revenue
+        name: Revenue
+        category: revenue
+        group: operating_revenue
+        is_posting: false
+        children:
+          - account_key: interest_income
+            name: Interest Income
+            category: revenue
+            group: operating_revenue
+            code_suggestion: "4100"
+
+  coa.islamic_banking:
+    name: Islamic Banking
+    industries: [islamic_bank]
+    tree:
+      - account_key: assets
+        name: Assets
+        category: asset
+        group: balance_sheet
+        is_posting: false
+        children:
+          - account_key: murabaha_receivables
+            name: Murabaha Receivables
+            category: asset
+            group: current_assets
+            code_suggestion: "1200"
+      - account_key: revenue
+        name: Revenue
+        category: revenue
+        group: operating_revenue
+        is_posting: false
+        children:
+          - account_key: murabaha_profit
+            name: Profit from Murabaha
+            category: revenue
+            group: operating_revenue
+            code_suggestion: "4100"
+
+  coa.retail:
+    name: Retail & POS
+    industries: [retail, pos]
+    tree:
+      - account_key: assets
+        name: Assets
+        category: asset
+        group: balance_sheet
+        is_posting: false
+        children:
+          - account_key: pos_cash
+            name: POS Cash Drawer
+            category: asset
+            group: current_assets
+            code_suggestion: "1110"
+      - account_key: revenue
+        name: Revenue
+        category: revenue
+        group: operating_revenue
+        is_posting: false
+        children:
+          - account_key: sales_revenue
+            name: Sales Revenue
+            category: revenue
+            group: operating_revenue
+            code_suggestion: "4100"
+      - account_key: expenses
+        name: Expenses
+        category: expense
+        group: operating_expense
+        is_posting: false
+        children:
+          - account_key: cogs
+            name: Cost of Goods Sold
+            category: expense
+            group: operating_expense
+            code_suggestion: "5100"
+
+  coa.government:
+    name: Government
+    industries: [government]
+    tree:
+      - account_key: assets
+        name: Assets
+        category: asset
+        group: balance_sheet
+        is_posting: false
+        children:
+          - account_key: treasury_cash
+            name: Treasury Cash
+            category: asset
+            group: current_assets
+            code_suggestion: "1100"
+      - account_key: revenue
+        name: Revenue
+        category: revenue
+        group: operating_revenue
+        is_posting: false
+        children:
+          - account_key: tax_revenue
+            name: Tax Revenue
+            category: revenue
+            group: operating_revenue
+            code_suggestion: "4100"
+
+  coa.ngo:
+    name: NGO
+    industries: [ngo]
+    tree:
+      - account_key: assets
+        name: Assets
+        category: asset
+        group: balance_sheet
+        is_posting: false
+        children:
+          - account_key: cash
+            name: Cash
+            category: asset
+            group: current_assets
+            code_suggestion: "1100"
+      - account_key: revenue
+        name: Revenue
+        category: revenue
+        group: operating_revenue
+        is_posting: false
+        children:
+          - account_key: donations
+            name: Donations
+            category: revenue
+            group: operating_revenue
+            code_suggestion: "4100"
+
+  coa.hospitality:
+    name: Hospitality
+    industries: [hotel, restaurant]
+    tree:
+      - account_key: assets
+        name: Assets
+        category: asset
+        group: balance_sheet
+        is_posting: false
+        children:
+          - account_key: cash
+            name: Cash
+            category: asset
+            group: current_assets
+            code_suggestion: "1100"
+      - account_key: revenue
+        name: Revenue
+        category: revenue
+        group: operating_revenue
+        is_posting: false
+        children:
+          - account_key: room_revenue
+            name: Room Revenue
+            category: revenue
+            group: operating_revenue
+            code_suggestion: "4100"
+          - account_key: fb_revenue
+            name: F&B Revenue
+            category: revenue
+            group: operating_revenue
+            code_suggestion: "4110"
+
+  coa.real_estate:
+    name: Real Estate
+    industries: [real_estate]
+    tree:
+      - account_key: assets
+        name: Assets
+        category: asset
+        group: balance_sheet
+        is_posting: false
+        children:
+          - account_key: cash
+            name: Cash
+            category: asset
+            group: current_assets
+            code_suggestion: "1100"
+      - account_key: revenue
+        name: Revenue
+        category: revenue
+        group: operating_revenue
+        is_posting: false
+        children:
+          - account_key: rental_income
+            name: Rental Income
+            category: revenue
+            group: operating_revenue
+            code_suggestion: "4100"
+
+  coa.construction:
+    name: Construction
+    industries: [construction]
+    tree:
+      - account_key: wip
+        name: Work in Progress
+        category: asset
+        group: current_assets
+        is_posting: false
+        children:
+          - account_key: wip_materials
+            name: WIP Materials
+            category: asset
+            group: current_assets
+            code_suggestion: "1210"
+      - account_key: revenue
+        name: Revenue
+        category: revenue
+        group: operating_revenue
+        is_posting: false
+        children:
+          - account_key: contract_revenue
+            name: Contract Revenue
+            category: revenue
+            group: operating_revenue
+            code_suggestion: "4100"
+
+  coa.manufacturing:
+    name: Manufacturing
+    industries: [manufacturing]
+    tree:
+      - account_key: inventory
+        name: Inventory
+        category: asset
+        group: current_assets
+        is_posting: false
+        children:
+          - account_key: raw_materials
+            name: Raw Materials
+            category: asset
+            group: current_assets
+            code_suggestion: "1310"
+      - account_key: expenses
+        name: Expenses
+        category: expense
+        group: operating_expense
+        is_posting: false
+        children:
+          - account_key: manufacturing_overhead
+            name: Manufacturing Overhead
+            category: expense
+            group: operating_expense
+            code_suggestion: "5100"
+
+  coa.forex:
+    name: Currency Exchange
+    industries: [currency_exchange]
+    tree:
+      - account_key: cash_positions
+        name: Cash Positions
+        category: asset
+        group: current_assets
+        is_posting: false
+        children:
+          - account_key: vault_cash_usd
+            name: Vault Cash USD
+            category: asset
+            group: current_assets
+            code_suggestion: "1110"
+      - account_key: revenue
+        name: Revenue
+        category: revenue
+        group: operating_revenue
+        is_posting: false
+        children:
+          - account_key: fx_spread_revenue
+            name: FX Spread Revenue
+            category: revenue
+            group: operating_revenue
+            code_suggestion: "4100"
+
+  coa.professional_services:
+    name: Professional Services
+    industries: [accounting_firm]
+    tree:
+      - account_key: revenue
+        name: Revenue
+        category: revenue
+        group: operating_revenue
+        is_posting: false
+        children:
+          - account_key: audit_fees
+            name: Audit Fees
+            category: revenue
+            group: operating_revenue
+            code_suggestion: "4100"
+          - account_key: advisory_fees
+            name: Advisory Fees
+            category: revenue
+            group: operating_revenue
+            code_suggestion: "4200"
+
+  coa.tax_services:
+    name: Tax Services
+    industries: [tax_consulting]
+    tree:
+      - account_key: revenue
+        name: Revenue
+        category: revenue
+        group: operating_revenue
+        is_posting: false
+        children:
+          - account_key: tax_prep_fees
+            name: Tax Preparation Fees
+            category: revenue
+            group: operating_revenue
+            code_suggestion: "4100"
+
+country_templates:
+  coa.country.us_gaap:
+    name: US GAAP Overlay
+    country_code: US
+    description: US GAAP statutory account overlay for any industry
+    tree:
+      - account_key: equity
+        name: Equity
+        category: equity
+        group: equity_capital
+        is_posting: false
+        children:
+          - account_key: retained_earnings
+            name: Retained Earnings
+            category: equity
+            group: equity_capital
+            code_suggestion: "RE-US"
+          - account_key: accumulated_oci
+            name: Accumulated Other Comprehensive Income
+            category: equity
+            group: equity_capital
+            code_suggestion: "OCI-US"
+      - account_key: off_balance
+        name: Off-Balance Sheet
+        category: off_balance
+        group: memorandum
+        is_posting: false
+        children:
+          - account_key: contingent_liabilities
+            name: Contingent Liabilities
+            category: off_balance
+            group: memorandum
+            code_suggestion: "OBS-CONT"
+
+  coa.country.ir_ifrs:
+    name: Iran IFRS Adaptation
+    country_code: IR
+    description: Iran statutory overlay with Rial presentation
+    tree:
+      - account_key: equity
+        name: Equity
+        category: equity
+        group: equity_capital
+        is_posting: false
+        children:
+          - account_key: legal_reserve
+            name: Legal Reserve
+            category: equity
+            group: equity_capital
+            code_suggestion: "IR-LEGAL"
+      - account_key: statistical
+        name: Statistical
+        category: statistical
+        group: kpi_metrics
+        is_posting: false
+        children:
+          - account_key: inflation_adjustment
+            name: Inflation Adjustment Memo
+            category: statistical
+            group: kpi_metrics
+            code_suggestion: "IR-INFL"
+
+  coa.country.eu_ifrs:
+    name: EU IFRS Overlay
+    country_code: EU
+    description: European IFRS statutory overlay
+    tree:
+      - account_key: equity
+        name: Equity
+        category: equity
+        group: equity_capital
+        is_posting: false
+        children:
+          - account_key: share_capital
+            name: Share Capital
+            category: equity
+            group: equity_capital
+            code_suggestion: "EU-SC"
+          - account_key: revaluation_reserve
+            name: Revaluation Reserve
+            category: equity
+            group: equity_capital
+            code_suggestion: "EU-REV"

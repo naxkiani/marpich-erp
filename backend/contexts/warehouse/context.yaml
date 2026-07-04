@@ -1,0 +1,19 @@
+context: warehouse
+display_name: Warehouse
+type: generic
+description: "WMS \u2014 picking, receiving, locations, shipments"
+aggregates:
+- Warehouse
+- Location
+- PickList
+- Shipment
+- Receipt
+publishes:
+- warehouse.picklist.created
+- warehouse.shipment.dispatched
+- warehouse.receipt.confirmed
+subscribes:
+- sales.order.placed
+- procurement.po.approved
+- inventory.stock.reserved
+schema: warehouse

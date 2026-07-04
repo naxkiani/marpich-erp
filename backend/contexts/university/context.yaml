@@ -1,0 +1,20 @@
+context: university
+display_name: University
+type: industry
+description: "Higher education \u2014 admissions, academics, research"
+aggregates:
+- Student
+- Program
+- Course
+- Enrollment
+- Grade
+- ResearchProject
+publishes:
+- university.student.enrolled
+- university.grade.published
+- university.course.completed
+subscribes:
+- identity.user.created
+- finance.period.closed
+- human_resources.employee.hired
+schema: university

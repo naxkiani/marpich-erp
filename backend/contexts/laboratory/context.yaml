@@ -1,0 +1,17 @@
+context: laboratory
+display_name: Laboratory
+type: industry
+description: "LIMS \u2014 samples, tests, results, QC"
+aggregates:
+- Sample
+- TestOrder
+- TestResult
+- QualityControl
+publishes:
+- laboratory.sample.received
+- laboratory.result.available
+- laboratory.qc.failed
+subscribes:
+- hospital.encounter.started
+- hospital.clinical.order.placed
+schema: laboratory

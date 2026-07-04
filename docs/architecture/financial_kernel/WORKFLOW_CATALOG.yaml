@@ -1,0 +1,91 @@
+# Marpich Financial Workflow — Catalog
+# See docs/architecture/ENTERPRISE_FINANCIAL_WORKFLOW.md
+
+version: 1
+
+workflow_types:
+  approval:
+    display_name: Approval
+    default_sla_hours: 24
+    modules: [all]
+
+  payment:
+    display_name: Payment
+    default_sla_hours: 8
+    modules: [finance, treasury, pos]
+
+  purchase:
+    display_name: Purchase
+    default_sla_hours: 48
+    modules: [procurement, retail]
+
+  expense:
+    display_name: Expense
+    default_sla_hours: 24
+    modules: [hr, finance]
+
+  transfer:
+    display_name: Transfer
+    default_sla_hours: 4
+    modules: [treasury, banking]
+
+  budget:
+    display_name: Budget
+    default_sla_hours: 72
+    modules: [finance, fp_and_a]
+
+  invoice:
+    display_name: Invoice
+    default_sla_hours: 24
+    modules: [sales, accounting]
+
+  payroll:
+    display_name: Payroll
+    default_sla_hours: 48
+    modules: [hr, payroll]
+
+  tax:
+    display_name: Tax
+    default_sla_hours: 72
+    modules: [tax, accounting]
+
+  treasury:
+    display_name: Treasury
+    default_sla_hours: 4
+    modules: [treasury, banking]
+
+universal_capabilities:
+  - sla
+  - escalation
+  - ai_recommendation
+  - audit
+  - history
+  - digital_signature
+
+statuses:
+  - pending
+  - in_progress
+  - escalated
+  - approved
+  - rejected
+  - signed
+  - completed
+
+permissions:
+  financial_kernel.workflows.read: View workflows, history, AI recommendations
+  financial_kernel.workflows.write: Start workflows
+  financial_kernel.workflows.approve: Approve, reject, complete
+  financial_kernel.workflows.escalate: Manual and SLA auto-escalation
+  financial_kernel.workflows.sign: Digital signature
+
+events:
+  - financial_kernel.workflow.started
+  - financial_kernel.workflow.approved
+  - financial_kernel.workflow.rejected
+  - financial_kernel.workflow.escalated
+  - financial_kernel.workflow.signed
+
+delegates:
+  runtime: workflow_engine
+  ai: ai_platform
+  audit: audit_platform

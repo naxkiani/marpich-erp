@@ -1,0 +1,16 @@
+context: finance
+display_name: Finance
+type: generic
+description: General ledger orchestration, financial periods, chart of accounts coordination
+aggregates:
+- FiscalPeriod
+- ChartOfAccounts
+- FinancialReport
+publishes:
+- finance.period.closed
+- finance.report.generated
+subscribes:
+- accounting.journal.posted
+- banking.transaction.posted
+- sales.invoice.issued
+schema: finance

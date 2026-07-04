@@ -1,0 +1,46 @@
+# Marpich Plugin Sandbox Profiles v1
+# See docs/architecture/ENTERPRISE_PLUGIN_PLATFORM.md
+
+version: 1
+
+profiles:
+  strict:
+    network: deny
+    allowed_hosts: []
+    filesystem: read_only
+    max_memory_mb: 64
+    max_cpu_ms: 500
+    max_invoke_timeout_sec: 5
+    plugin_types: [widget, theme]
+
+  standard:
+    network: allowlist
+    allowed_hosts: ["api.marpich.dev"]
+    filesystem: read_only
+    max_memory_mb: 256
+    max_cpu_ms: 2000
+    max_invoke_timeout_sec: 15
+    plugin_types: [report, dashboard, ai_skill, workflow_extension]
+
+  integration:
+    network: allowlist
+    allowed_hosts: []
+    filesystem: read_write_temp
+    max_memory_mb: 512
+    max_cpu_ms: 5000
+    max_invoke_timeout_sec: 30
+    plugin_types: [integration]
+
+  module:
+    network: allowlist
+    allowed_hosts: []
+    filesystem: read_write_temp
+    max_memory_mb: 1024
+    max_cpu_ms: 10000
+    max_invoke_timeout_sec: 60
+    plugin_types: [module]
+
+violation_actions:
+  - log
+  - emit_event
+  - auto_disable_after: 3

@@ -1,0 +1,198 @@
+# Marpich Workflow Definition Schema v1
+# Canonical graph model for Visual Workflow Designer (drag & drop) and Runtime Engine.
+# See docs/architecture/ENTERPRISE_WORKFLOW_ENGINE.md
+
+version: 1
+
+definition:
+  required:
+    - key
+    - name
+    - version
+    - nodes
+    - edges
+  properties:
+    key:
+      type: string
+      pattern: "^[a-z][a-z0-9_.-]+$"
+      example: procurement.po.approval
+    name:
+      type: string
+    version:
+      type: integer
+      minimum: 1
+    description:
+      type: string
+    module_id:
+      type: string
+      description: Owning module for permissions and triggers
+    permissions:
+      type: object
+      properties:
+        deploy: { type: string, default: workflow.definitions.write }
+        start: { type: string }
+        admin: { type: string, default: workflow.instances.admin }
+    triggers:
+      type: array
+      items:
+        type: object
+        required: [event_name]
+        properties:
+          event_name: { type: string }
+          condition: { type: string }
+    nodes:
+      type: array
+      minItems: 2
+    edges:
+      type: array
+      minItems: 1
+
+node_types:
+  start:
+    category: flow
+    max_outgoing: 1
+    config: {}
+
+  end:
+    category: flow
+    max_incoming: null
+    config:
+      outcome: { enum: [completed, rejected] }
+
+  approval:
+    category: human
+    config:
+      assignee_id: { type: string, optional: true }
+      assignee_role: { type: string, optional: true }
+      assignee_expression: { type: string, optional: true }
+      required_outcome: { enum: [approved, rejected], default: approved }
+      allow_delegate: { type: boolean, default: true }
+      sla_hours: { type: number, optional: true }
+      escalation:
+        type: object
+        properties:
+          after_hours: { type: number }
+          reassign_to_role: { type: string }
+          reassign_to_user: { type: string }
+          notify: { type: boolean, default: true }
+
+  exclusive_gateway:
+    category: control
+    description: Branch — first matching condition wins
+    config: {}
+
+  inclusive_gateway:
+    category: control
+    description: Multi-branch — one or more paths
+    config:
+      min_branches: { type: integer, default: 1 }
+
+  parallel_gateway:
+    category: control
+    description: Fork or join — mode inferred from edge direction
+    config:
+      join_type: { enum: [and, n_of_m], default: and }
+      required_count: { type: integer, optional: true }
+
+  timer:
+    category: time
+    config:
+      duration_hours: { type: number, optional: true }
+      until_expression: { type: string, optional: true }
+
+  sla:
+    category: time
+    config:
+      deadline_hours: { type: number }
+      on_breach: { enum: [escalate, notify, reject, custom], default: escalate }
+
+  notification:
+    category: action
+    config:
+      template_key: { type: string }
+      recipients: { type: array, items: { type: string } }
+      channel: { enum: [email, sms, in_app, push], default: in_app }
+
+  signature:
+    category: action
+    config:
+      document_ref: { type: string }
+      signers: { type: array, items: { type: string } }
+      wait_for_event: { default: documents.document.signed }
+
+  ai_decision:
+    category: action
+    config:
+      model_ref: { type: string }
+      input_mapping: { type: object }
+      outcomes: { type: array }
+      fallback_node: { type: string, optional: true }
+
+  service_task:
+    category: action
+    config:
+      service: { type: string }
+      operation: { type: string }
+      input_mapping: { type: object }
+
+  rollback:
+    category: recovery
+    config:
+      compensation_event: { type: string }
+      target_module: { type: string }
+
+  compensation:
+    category: recovery
+    config:
+      handler: { type: string }
+
+edge:
+  required: [from, to]
+  properties:
+    from: { type: string }
+    to: { type: string }
+    condition:
+      type: string
+      description: Expression evaluated against instance context
+    label: { type: string }
+    is_default: { type: boolean, default: false }
+
+expression_language:
+  sandbox: true
+  allowed_operators: ["==", "!=", ">", "<", ">=", "<=", "&&", "||", "!"]
+  root: context
+  forbidden: [import, exec, eval, __]
+
+designer:
+  canvas: react-flow
+  features:
+    - drag_drop
+    - snap_to_grid
+    - minimap
+    - undo_redo
+    - validate_on_save
+    - simulate
+  export_format: json
+
+runtime:
+  engine: graph_interpreter
+  persistence:
+    - ProcessDefinition
+    - ProcessInstance
+    - Task
+    - WorkflowHistory
+    - WorkflowTimer
+  integrations:
+    notifications: Notification Service
+    signature: Documents Service
+    ai: AI Service
+    timers: Scheduling Platform
+    audit: Audit Service + Event Bus
+
+example_triggers:
+  - event_name: procurement.po.submitted
+    definition_key: procurement.po.approval
+  - event_name: human_resources.leave.requested
+    definition_key: hr.leave.approval
+  - event_name: sales.order.placed
+    definition_key: sales.order.approval

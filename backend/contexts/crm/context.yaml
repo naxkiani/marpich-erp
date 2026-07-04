@@ -1,0 +1,18 @@
+context: crm
+display_name: CRM
+type: generic
+description: Contacts, leads, opportunities, customer 360
+aggregates:
+- Contact
+- Lead
+- Opportunity
+- Account
+- Activity
+publishes:
+- crm.lead.converted
+- crm.opportunity.won
+- crm.contact.updated
+subscribes:
+- sales.order.placed
+- identity.user.created
+schema: crm

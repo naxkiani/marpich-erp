@@ -1,0 +1,10 @@
+body {
+  min-height: 100vh;
+}
+
+.mp-nav-muted {
+  display: block;
+  margin-top: 1.5rem;
+  font-size: 0.75rem;
+  color: var(--mp-fg-muted);
+}

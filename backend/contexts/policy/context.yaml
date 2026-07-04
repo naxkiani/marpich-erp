@@ -1,0 +1,21 @@
+context: policy
+display_name: Policy Engine
+type: platform
+description: Configurable business rules — versioning, evaluation, simulation
+aggregates:
+  - Policy
+  - PolicyVersion
+publishes:
+  - policy.version.submitted
+  - policy.version.activated
+  - policy.version.rolled_back
+  - policy.evaluation.denied
+  - policy.simulation.executed
+subscribes:
+  - platform.tenant.provisioned
+  - workflow.process.completed
+schema: policy
+policies:
+  domain: platform
+  keys:
+    - policy.publish.approval

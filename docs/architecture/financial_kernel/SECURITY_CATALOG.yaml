@@ -1,0 +1,75 @@
+# Marpich Financial Security — Catalog
+# See docs/architecture/ENTERPRISE_FINANCIAL_SECURITY.md
+
+version: 1
+
+law:
+  no_modification_without_audit: true
+  maker_cannot_approve: true
+  dual_approval_required_for_close: true
+
+controls:
+  maker_checker:
+    description: Maker submits, different checker approves
+    approvers: 1
+
+  four_eyes:
+    description: Two independent approvers required
+    approvers: 2
+
+  dual_approval:
+    description: Sequential dual sign-off
+    approvers: 2
+
+capabilities:
+  digital_signature:
+    algorithm: RS256
+    on: maker_checker.approved
+
+  encryption:
+    method: AES-256-XOR-stub
+    on: maker_checker.submit
+
+  audit_trail:
+    chained_tamper_hash: true
+    immutable: true
+
+  transaction_locking:
+    blocks_guarded_modification: true
+
+  period_closing:
+    dual_approval: true
+    types: [period, fiscal_year]
+
+  fiscal_year_closing:
+    closes_all_periods: true
+    dual_approval: true
+
+  rbac:
+    policy_type: rbac
+    evaluate: /policies/evaluate
+
+  abac:
+    policy_type: abac
+    evaluate: /policies/evaluate
+
+  tamper_detection:
+    endpoint: /audit/{id}/verify-tamper
+    chained: true
+
+permissions:
+  financial_kernel.security.read: View security requests and policies
+  financial_kernel.security.write: Submit maker-checker and guarded modifications
+  financial_kernel.security.approve: Approve maker-checker and period close
+  financial_kernel.security.lock: Lock and release transactions
+  financial_kernel.security.close: Request period/fiscal year close
+  financial_kernel.security.audit: View audit trail and verify tamper
+  financial_kernel.security.admin: Manage security policies
+
+events:
+  - financial_kernel.security.maker_checker.submitted
+  - financial_kernel.security.maker_checker.approved
+  - financial_kernel.security.transaction.locked
+  - financial_kernel.security.period.closed
+  - financial_kernel.security.audit.recorded
+  - financial_kernel.security.tamper.detected

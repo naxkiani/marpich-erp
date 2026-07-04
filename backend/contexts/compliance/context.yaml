@@ -1,0 +1,18 @@
+context: compliance
+display_name: Compliance Framework
+type: platform
+description: Compliance monitoring, violations, reports, alerts
+aggregates:
+  - ComplianceControl
+  - ComplianceViolation
+  - ComplianceReport
+publishes:
+  - compliance.violation.detected
+  - compliance.alert.triggered
+  - compliance.report.generated
+subscribes:
+  - platform.tenant.provisioned
+  - policy.evaluation.denied
+  - authorization.access.denied
+  - audit.retention.applied
+schema: compliance

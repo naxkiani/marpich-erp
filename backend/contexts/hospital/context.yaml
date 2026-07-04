@@ -1,0 +1,19 @@
+context: hospital
+display_name: Hospital
+type: industry
+description: EMR, admissions, encounters, clinical workflows
+aggregates:
+- Patient
+- Admission
+- Encounter
+- ClinicalOrder
+- Bed
+publishes:
+- hospital.admission.registered
+- hospital.encounter.started
+- hospital.encounter.completed
+subscribes:
+- identity.user.created
+- laboratory.result.available
+- pharmacy.dispense.completed
+schema: hospital

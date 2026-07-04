@@ -1,0 +1,83 @@
+# Marpich Enterprise Cost Centers — Catalog
+# See docs/architecture/ENTERPRISE_COST_CENTERS.md
+
+version: 1
+
+center_types:
+  department:
+    display_name: Department
+    hierarchy: true
+    modules: [hr, finance, government]
+
+  project:
+    display_name: Project
+    hierarchy: true
+    modules: [construction, consulting, ngo]
+
+  branch:
+    display_name: Branch
+    hierarchy: true
+    modules: [banking, retail, insurance]
+
+  faculty:
+    display_name: Faculty
+    hierarchy: true
+    modules: [university, school]
+
+  hospital_ward:
+    display_name: Hospital Ward
+    hierarchy: true
+    modules: [hospital, clinic]
+
+  construction_site:
+    display_name: Construction Site
+    hierarchy: true
+    modules: [construction]
+
+  warehouse:
+    display_name: Warehouse
+    hierarchy: true
+    modules: [manufacturing, retail, logistics]
+
+  business_unit:
+    display_name: Business Unit
+    hierarchy: true
+    modules: [enterprise, conglomerate]
+
+allocation_types:
+  budget:
+    display_name: Budget Allocation
+    use: planned_spend
+
+  expense:
+    display_name: Expense Allocation
+    use: actual_cost_distribution
+
+  revenue:
+    display_name: Revenue Allocation
+    use: revenue_attribution
+
+capabilities:
+  profit_center:
+    linked_to: business_unit
+    endpoint: /profit-centers
+
+  split_allocation:
+    weighted: true
+    endpoint: /allocations/split
+
+  profitability_analysis:
+    metrics: [revenue, expenses, profit, margin_percent]
+    endpoint: /profitability
+    sources: [posted_journals, allocations]
+
+permissions:
+  financial_kernel.cost_centers.read: View cost centers and allocations
+  financial_kernel.cost_centers.write: Create cost and profit centers
+  financial_kernel.cost_centers.allocate: Create and split allocations
+  financial_kernel.cost_centers.analyze: Run profitability analysis
+
+events:
+  - financial_kernel.cost_center.created
+  - financial_kernel.profit_center.created
+  - financial_kernel.allocation.created

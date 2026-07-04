@@ -1,0 +1,17 @@
+context: islamic_banking
+display_name: Islamic Banking
+type: specialized
+description: "Sharia-compliant products \u2014 Murabaha, Ijara, Sukuk, Musharaka"
+aggregates:
+- MurabahaContract
+- IjaraContract
+- SukukIssue
+- ShariaComplianceReview
+publishes:
+- islamic_banking.murabaha.approved
+- islamic_banking.murabaha.executed
+- islamic_banking.ijara.started
+subscribes:
+- banking.account.opened
+- identity.user.created
+schema: islamic_banking

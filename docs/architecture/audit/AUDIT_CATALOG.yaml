@@ -1,0 +1,136 @@
+# Marpich Enterprise Audit Platform — Event Catalog
+# See docs/architecture/ENTERPRISE_AUDIT_PLATFORM.md
+
+version: 1
+
+categories:
+  login:
+    severity: security
+    events:
+      - identity.login.succeeded
+      - identity.login.failed
+      - authentication.login.succeeded
+      - authentication.login.failed
+    required_fields: [actor_id, ip_address, user_agent]
+
+  logout:
+    severity: security
+    events:
+      - identity.session.revoked
+      - authentication.logout
+      - authentication.session.expired
+
+  api_calls:
+    severity: info
+    events:
+      - api.request.completed
+    source: api_gateway
+    required_fields: [method, path, status, duration_ms, ip_address]
+
+  database_changes:
+    severity: info
+    pattern: "*.created|*.updated|*.deleted|*.posted|*.recorded"
+    required_fields: [old_value, new_value]
+    note: Prefer domain integration events over raw CDC
+
+  permission_changes:
+    severity: security
+    events:
+      - identity.role.assigned
+      - identity.role.revoked
+      - permission.role.created
+      - permission.role.assigned
+      - permission.role.revoked
+      - authorization.policy.created
+      - authorization.access.denied
+    required_fields: [old_value, new_value, actor_id]
+
+  workflow_actions:
+    severity: info
+    pattern: "workflow.*"
+    events:
+      - workflow.process.started
+      - workflow.task.assigned
+      - workflow.task.completed
+      - workflow.task.delegated
+      - workflow.process.completed
+      - workflow.process.rejected
+      - workflow.sla.breached
+
+  financial_transactions:
+    severity: compliance
+    retention_years: 7
+    events:
+      - finance.journal.recorded
+      - finance.journal.posted
+      - accounting.journal.posted
+      - accounting.payment.received
+      - accounting.invoice.issued
+      - treasury.transfer.executed
+      - payroll.run.completed
+    required_fields: [old_value, new_value, reason]
+
+  medical_records_access:
+    severity: compliance
+    retention_years: 10
+    hipaa: true
+    events:
+      - hospital.patient.accessed
+      - hospital.encounter.viewed
+      - hospital.admission.registered
+      - clinic.patient.record.viewed
+    required_fields: [actor_id, resource_id, reason]
+    direct_audit_required: true
+
+  academic_records_access:
+    severity: compliance
+    retention_years: 10
+    ferpa: true
+    events:
+      - university.student.record.accessed
+      - university.grade.viewed
+      - school.student.enrolled
+      - school.grade.published
+    required_fields: [actor_id, resource_id]
+
+  document_downloads:
+    severity: compliance
+    events:
+      - documents.document.downloaded
+      - documents.document.viewed
+    source: document_exchange
+    required_fields: [actor_id, document_id, version_id]
+
+  ai_actions:
+    severity: info
+    events:
+      - ai.inference.completed
+      - ai.job.completed
+      - ai.job.failed
+      - ai.fraud.detected
+      - ai.insight.generated
+    pii_in_payload: forbidden
+    required_fields: [model_ref, correlation_id]
+
+retention_defaults:
+  info_years: 3
+  security_years: 7
+  compliance_years: 10
+
+immutability:
+  append_only: true
+  allow_update: false
+  allow_delete: false
+  retention_purge_event: audit.retention.applied
+  integrity_chain: sha256
+
+ingestion:
+  primary: integration_events_wildcard
+  secondary: api_gateway
+  tertiary: direct_post_audit_entries
+
+permissions:
+  read: audit.entries.read
+  write: audit.entries.write
+  export: audit.exports.write
+  admin: audit.admin

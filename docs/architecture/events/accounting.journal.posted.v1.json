@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "marpich.accounting.journal.posted.v1",
+  "title": "accounting.journal.posted",
+  "allOf": [
+    { "$ref": "_envelope.v1.json" },
+    {
+      "properties": {
+        "event_name": { "const": "accounting.journal.posted" },
+        "event_version": { "const": 1 },
+        "source_context": { "const": "accounting" },
+        "payload": {
+          "type": "object",
+          "required": ["journal_id", "source_type", "source_id", "currency", "lines"],
+          "properties": {
+            "journal_id": { "type": "string", "format": "uuid" },
+            "source_type": { "type": "string" },
+            "source_id": { "type": "string" },
+            "currency": { "type": "string", "minLength": 3, "maxLength": 8 },
+            "lines": { "type": "array" }
+          }
+        }
+      }
+    }
+  ]
+}

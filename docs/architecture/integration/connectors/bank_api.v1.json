@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://marpich.dev/schemas/integration/connectors/bank_api.v1.json",
+  "title": "Bank API Connector Config",
+  "type": "object",
+  "required": ["base_url", "bank_code", "environment"],
+  "additionalProperties": false,
+  "properties": {
+    "base_url": { "type": "string", "format": "uri" },
+    "bank_code": { "type": "string", "minLength": 2, "maxLength": 32 },
+    "environment": { "type": "string", "enum": ["sandbox", "production"] },
+    "account_ref": { "type": "string", "description": "Internal account reference — not account number" },
+    "secret_ref": { "type": "string", "description": "Vault reference for API credentials" }
+  }
+}

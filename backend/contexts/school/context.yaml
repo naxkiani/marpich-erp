@@ -1,0 +1,18 @@
+context: school
+display_name: School
+type: industry
+description: "K-12 \u2014 classes, attendance, grading, parent portal"
+aggregates:
+- Student
+- Class
+- AttendanceRecord
+- GradeBook
+- ParentGuardian
+publishes:
+- school.student.enrolled
+- school.attendance.recorded
+- school.grade.published
+subscribes:
+- identity.user.created
+- notifications.template.send
+schema: school

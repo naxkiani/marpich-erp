@@ -1,0 +1,154 @@
+# System Health Dashboard — Marpich Enterprise Observability
+# Rendered by Analytics + platform ops UI; data from OTel + health probes
+
+version: 1
+dashboard_id: platform.system-health
+name: System Health Dashboard
+scope: platform
+refresh_seconds: 30
+
+rows:
+  - id: overview
+    title: Platform Overview
+    widgets:
+      - id: platform_status
+        type: status_tile
+        title: Platform Status
+        source: GET /api/v1/health
+        healthy_values: [ok, healthy]
+        severity_map:
+          ok: green
+          degraded: yellow
+          unhealthy: red
+
+      - id: uptime_slo
+        type: gauge
+        title: Uptime SLO (30d)
+        metric: platform.uptime.ratio
+        unit: percent
+        target: 99.9
+
+      - id: error_rate
+        type: timeseries
+        title: Error Rate
+        metric: errors.total
+        aggregation: rate_5m
+        alert_threshold: 0.01
+
+      - id: p95_latency
+        type: timeseries
+        title: API p95 Latency
+        metric: http.server.duration
+        aggregation: p95
+        unit: ms
+        slo: 300
+
+  - id: infrastructure
+    title: Infrastructure
+    widgets:
+      - id: cpu_usage
+        type: timeseries
+        title: CPU Usage
+        metric: process.cpu.utilization
+        unit: percent
+        alert_threshold: 80
+
+      - id: memory_usage
+        type: timeseries
+        title: Memory Usage
+        metric: process.memory.usage
+        unit: bytes
+        alert_threshold_percent: 85
+
+      - id: db_health
+        type: status_matrix
+        title: Database Health
+        checks:
+          - name: connections
+            metric: db.connections.active
+            max: db.connections.max
+          - name: deadlocks
+            metric: db.deadlocks.total
+          - name: replication_lag
+            metric: db.replication.lag
+
+      - id: cache_hit_ratio
+        type: gauge
+        title: Cache Hit Ratio
+        metric: cache.hit_ratio
+        unit: percent
+        target: 90
+
+  - id: pipeline
+    title: Event Pipeline
+    widgets:
+      - id: queue_lag
+        type: timeseries
+        title: Outbox Lag
+        metric: queue.outbox.lag_seconds
+        unit: seconds
+        alert_threshold: 300
+
+      - id: event_throughput
+        type: timeseries
+        title: Event Throughput
+        metric: queue.consumer.throughput
+        aggregation: rate_1m
+
+      - id: slow_queries
+        type: counter
+        title: Slow Queries (1h)
+        metric: db.query.slow
+        window: 1h
+
+      - id: active_traces
+        type: stat
+        title: Active Traces
+        metric: traces.active
+        source: tempo
+
+  - id: business
+    title: Business Pulse
+    widgets:
+      - id: events_total
+        type: metric
+        title: Total Events (24h)
+        metric_key: events.total
+        source: analytics
+
+      - id: logins
+        type: metric
+        title: User Logins (24h)
+        metric_key: users.logged_in
+        source: analytics
+
+      - id: active_alerts
+        type: alert_list
+        title: Active Alerts
+        sources:
+          - analytics.alert.triggered
+          - prometheus_firing
+
+      - id: ai_health_summary
+        type: ai_insight
+        title: AI Health Analysis
+        source: GET /api/v1/ai/insights?category=health
+        refresh_seconds: 300
+
+tenant_dashboard:
+  dashboard_id: tenant.overview
+  name: Overview
+  provision_on: platform.tenant.provisioned
+  widgets:
+    - type: metric
+      metric_key: events.total
+      title: Total Events
+    - type: metric
+      metric_key: users.created
+      title: New Users
+    - type: metric
+      metric_key: users.logged_in
+      title: Logins
+    - type: metric
+      metric_key: encounters.completed
+      title: Encounters

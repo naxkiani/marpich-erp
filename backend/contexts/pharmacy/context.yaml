@@ -1,0 +1,16 @@
+context: pharmacy
+display_name: Pharmacy
+type: industry
+description: Prescriptions, dispensing, drug inventory
+aggregates:
+- Prescription
+- DispenseRecord
+- DrugInteraction
+- PharmacyStock
+publishes:
+- pharmacy.prescription.received
+- pharmacy.dispense.completed
+subscribes:
+- hospital.encounter.started
+- inventory.stock.adjusted
+schema: pharmacy

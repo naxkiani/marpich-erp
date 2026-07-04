@@ -1,0 +1,15 @@
+context: plugins
+display_name: Plugin Platform
+type: platform
+aggregates:
+  - Plugin
+  - PluginInstallation
+publishes:
+  - plugin.registered
+  - plugin.published
+  - plugin.installed
+  - plugin.upgraded
+  - plugin.uninstalled
+  - plugin.sandbox.violation
+subscribes: []
+schema: plugins

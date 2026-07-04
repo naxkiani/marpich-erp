@@ -1,0 +1,14 @@
+context: notifications
+display_name: Notifications
+type: platform
+description: Email, SMS, push, in-app notifications
+aggregates:
+- NotificationTemplate
+- NotificationQueue
+- DeliveryLog
+publishes:
+- notifications.message.sent
+- notifications.message.failed
+subscribes:
+- '*'
+schema: notifications

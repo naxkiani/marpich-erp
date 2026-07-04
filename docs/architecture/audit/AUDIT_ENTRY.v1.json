@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "marpich.audit.entry.v1",
+  "title": "Immutable Audit Entry",
+  "description": "Canonical append-only audit log record",
+  "type": "object",
+  "required": [
+    "id",
+    "tenant_id",
+    "correlation_id",
+    "occurred_at",
+    "recorded_at",
+    "action",
+    "event_name",
+    "source_context",
+    "resource_type",
+    "severity"
+  ],
+  "properties": {
+    "id": { "type": "string", "format": "uuid" },
+    "tenant_id": { "type": "string" },
+    "organization_id": { "type": ["string", "null"] },
+    "correlation_id": { "type": "string" },
+    "occurred_at": { "type": "string" },
+    "recorded_at": { "type": "string" },
+    "actor_id": { "type": ["string", "null"] },
+    "actor_display_name": { "type": ["string", "null"] },
+    "ip_address": { "type": ["string", "null"] },
+    "user_agent": { "type": ["string", "null"] },
+    "geo_location": {
+      "type": ["object", "null"],
+      "properties": {
+        "country": { "type": "string" },
+        "region": { "type": "string" },
+        "city": { "type": "string" }
+      }
+    },
+    "action": { "type": "string" },
+    "event_name": { "type": "string" },
+    "source_context": { "type": "string" },
+    "resource_type": { "type": "string" },
+    "resource_id": { "type": ["string", "null"] },
+    "severity": { "enum": ["info", "security", "compliance"] },
+    "old_value": {},
+    "new_value": {},
+    "reason": { "type": ["string", "null"] },
+    "payload": { "type": "object" },
+    "integrity_hash": { "type": ["string", "null"] },
+    "previous_entry_hash": { "type": ["string", "null"] }
+  },
+  "additionalProperties": false
+}

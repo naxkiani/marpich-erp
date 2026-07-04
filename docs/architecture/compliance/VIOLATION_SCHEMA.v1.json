@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "marpich.compliance.violation.v1",
+  "title": "Compliance Violation",
+  "type": "object",
+  "required": [
+    "id",
+    "tenant_id",
+    "domain",
+    "control_id",
+    "severity",
+    "status",
+    "title",
+    "detected_at"
+  ],
+  "properties": {
+    "id": { "type": "string", "format": "uuid" },
+    "tenant_id": { "type": "string" },
+    "organization_id": { "type": ["string", "null"] },
+    "domain": { "type": "string" },
+    "control_id": { "type": "string" },
+    "severity": { "enum": ["critical", "high", "medium", "low"] },
+    "status": { "enum": ["open", "investigating", "resolved", "false_positive"] },
+    "title": { "type": "string" },
+    "description": { "type": ["string", "null"] },
+    "source_event": { "type": ["string", "null"] },
+    "correlation_id": { "type": ["string", "null"] },
+    "detected_at": { "type": "string" },
+    "resolved_at": { "type": ["string", "null"] },
+    "resolved_by": { "type": ["string", "null"] },
+    "resolution_notes": { "type": ["string", "null"] },
+    "payload": { "type": "object" }
+  },
+  "additionalProperties": false
+}

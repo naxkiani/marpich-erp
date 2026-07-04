@@ -1,0 +1,18 @@
+context: manufacturing
+display_name: Manufacturing
+type: generic
+description: MRP, BOM, production orders, quality
+aggregates:
+- BillOfMaterials
+- ProductionOrder
+- WorkCenter
+- QualityInspection
+publishes:
+- manufacturing.order.started
+- manufacturing.order.completed
+- manufacturing.quality.failed
+subscribes:
+- sales.order.placed
+- inventory.stock.adjusted
+- procurement.goods.received
+schema: manufacturing

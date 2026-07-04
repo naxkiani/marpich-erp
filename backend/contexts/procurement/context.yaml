@@ -1,0 +1,16 @@
+context: procurement
+display_name: Procurement
+type: generic
+description: Purchase requisitions, POs, vendor management
+aggregates:
+- PurchaseRequisition
+- PurchaseOrder
+- Vendor
+- GoodsReceipt
+publishes:
+- procurement.po.approved
+- procurement.goods.received
+subscribes:
+- inventory.reorder.triggered
+- workflow.process.approved
+schema: procurement

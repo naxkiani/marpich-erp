@@ -1,0 +1,1 @@
+"""payroll — infrastructure layer."""

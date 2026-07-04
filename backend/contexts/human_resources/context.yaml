@@ -1,0 +1,18 @@
+context: human_resources
+display_name: Human Resources
+type: generic
+description: Employees, org structure, leave, recruitment
+aggregates:
+- Employee
+- Department
+- LeaveRequest
+- JobOpening
+- Candidate
+publishes:
+- human_resources.employee.hired
+- human_resources.employee.terminated
+- human_resources.attendance.closed
+subscribes:
+- identity.user.created
+- workflow.process.approved
+schema: hr

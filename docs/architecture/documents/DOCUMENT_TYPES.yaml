@@ -1,0 +1,155 @@
+# Marpich Document Exchange — Document Type Catalog
+# See docs/architecture/ENTERPRISE_DOCUMENT_EXCHANGE.md
+
+version: 1
+
+document_types:
+  internal:
+    display_name: Internal Document
+    category: general
+    default_retention_years: 3
+    encryption_tier: standard
+    watermark_on_draft: true
+    approval_workflow: null
+    qr_verification: false
+    permissions:
+      read: documents.read
+      write: documents.write
+
+  official_letter:
+    display_name: Official Letter
+    category: government
+    default_retention_years: 10
+    encryption_tier: standard
+    watermark_on_draft: true
+    approval_workflow: documents.official_letter.approval
+    qr_verification: true
+    immutable_after_sign: true
+
+  contract:
+    display_name: Contract
+    category: legal
+    default_retention_years: 7
+    encryption_tier: enhanced
+    approval_workflow: documents.contract.approval
+    digital_signature: required
+    qr_verification: false
+
+  invoice:
+    display_name: Invoice
+    category: financial
+    default_retention_years: 7
+    encryption_tier: standard
+    approval_workflow: documents.invoice.approval
+    modules: [accounting, finance, sales]
+
+  report:
+    display_name: Report
+    category: analytics
+    default_retention_years: 5
+    encryption_tier: standard
+    versioning: snapshot
+    ai_summary: true
+
+  certificate:
+    display_name: Certificate
+    category: credential
+    default_retention_years: 99
+    encryption_tier: standard
+    digital_signature: required
+    qr_verification: true
+    watermark_on_draft: false
+
+  academic:
+    display_name: Academic Document
+    category: education
+    default_retention_years: 99
+    encryption_tier: standard
+    qr_verification: true
+    modules: [university, school]
+    types: [transcript, diploma, enrollment_letter]
+
+  medical:
+    display_name: Medical Document
+    category: healthcare
+    default_retention_years: 10
+    encryption_tier: medical  # field-level AES
+    watermark: CONFIDENTIAL
+    modules: [hospital, clinic, pharmacy]
+    hipaa_mode: true
+
+  tax:
+    display_name: Tax Document
+    category: regulatory
+    default_retention_years: 10
+    encryption_tier: enhanced
+    legal_hold_default: false
+    modules: [tax, accounting]
+
+  financial_statement:
+    display_name: Financial Statement
+    category: financial
+    default_retention_years: 7
+    encryption_tier: enhanced
+    approval_workflow: documents.financial_statement.approval
+    watermark: tenant_branded
+    modules: [finance, banking, treasury]
+
+capabilities:
+  versioning:
+    immutable: true
+    checksum: sha256
+    event: documents.version.created
+
+  approval_workflow:
+    engine: ENTERPRISE_WORKFLOW_ENGINE
+    trigger_event: documents.approval.requested
+
+  digital_signature:
+    algorithms: [RS256, RSA-SHA256]
+    event: documents.document.signed
+
+  qr_verification:
+    public_endpoint: /api/v1/documents/verify/{token}
+    signed_payload: true
+
+  encryption:
+    standard: AES-256-GCM
+    enhanced: AES-256-GCM + tenant KMS
+    medical: field_level + at_rest
+
+  watermark:
+    apply_on: [preview, download]
+    never_mutate_stored_version: true
+
+  comments:
+    aggregate: DocumentComment
+    api: /documents/{id}/comments
+
+  history:
+    aggregate: DocumentHistory
+    audit_mirror: true
+
+  ai_summary:
+    service: AI Platform
+    event: documents.summary.generated
+
+  translation:
+    service: Localization + AI
+    event: documents.translation.completed
+
+  ocr:
+    service: AI documents/extract
+    event: documents.ocr.completed
+    search_index: true
+
+  retention:
+    scheduler: Core Scheduling Platform
+    event_purge: documents.retention.purged
+    legal_hold_blocks_purge: true
+
+exchange:
+  internal: folder_permissions
+  external:
+    integration_connectors: [email_provider, government_api, cloud_storage]
+    event: documents.exchange.delivered

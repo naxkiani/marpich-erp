@@ -1,0 +1,17 @@
+{
+  "name": "@marpich/plugin-sdk",
+  "version": "0.1.0",
+  "description": "Marpich Plugin SDK — build sandboxed third-party extensions",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "marpich-plugin": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "validate": "node dist/cli.js validate"
+  },
+  "keywords": ["marpich", "plugin", "marketplace", "erp"],
+  "license": "MIT"
+}

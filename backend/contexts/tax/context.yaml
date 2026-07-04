@@ -1,0 +1,17 @@
+context: tax
+display_name: Tax
+type: generic
+description: Tax rules, filings, VAT/GST, withholding
+aggregates:
+- TaxRule
+- TaxReturn
+- TaxFiling
+- WithholdingRecord
+publishes:
+- tax.return.filed
+- tax.liability.calculated
+subscribes:
+- accounting.journal.posted
+- payroll.run.completed
+- sales.invoice.issued
+schema: tax

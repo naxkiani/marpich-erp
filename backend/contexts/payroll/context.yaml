@@ -1,0 +1,17 @@
+context: payroll
+display_name: Payroll
+type: generic
+description: Salary processing, deductions, payslips
+aggregates:
+- PayrollRun
+- Payslip
+- SalaryStructure
+- Deduction
+publishes:
+- payroll.run.completed
+- payroll.payslip.issued
+subscribes:
+- human_resources.employee.hired
+- human_resources.attendance.closed
+- tax.rule.updated
+schema: payroll

@@ -1,0 +1,137 @@
+# Marpich Financial Kernel — Industry Financial Packs
+# See docs/architecture/ENTERPRISE_FINANCIAL_KERNEL.md
+
+version: 1
+
+industries:
+  - pack_id: university
+    display_name: University
+    coa_template: coa.education
+    cost_centers: [academic, administration, research, student_services]
+    satellite_contexts: []
+    module_posting_events:
+      - education.enrollment.confirmed
+      - education.tuition.invoiced
+
+  - pack_id: school
+    display_name: School
+    coa_template: coa.education
+    cost_centers: [teaching, administration, facilities]
+    satellite_contexts: []
+
+  - pack_id: hospital
+    display_name: Hospital
+    coa_template: coa.healthcare
+    cost_centers: [emergency, surgery, radiology, pharmacy, administration]
+    profit_centers: [inpatient, outpatient, emergency]
+    module_posting_events:
+      - hospital.encounter.completed
+      - hospital.admission.registered
+
+  - pack_id: clinic
+    display_name: Clinic
+    coa_template: coa.healthcare
+    cost_centers: [consultation, diagnostics, pharmacy]
+
+  - pack_id: laboratory
+    display_name: Laboratory
+    coa_template: coa.healthcare
+    cost_centers: [pathology, microbiology, administration]
+    profit_centers: [hospital_contracts, direct_patients]
+
+  - pack_id: bank
+    display_name: Bank
+    coa_template: coa.banking
+    satellite_contexts: [banking, treasury]
+    policy_domains: [banking.lending, banking.kyc]
+
+  - pack_id: islamic_bank
+    display_name: Islamic Bank
+    coa_template: coa.islamic_banking
+    satellite_contexts: [islamic_banking, banking, treasury]
+    policy_domains: [banking.sharia, banking.lending]
+    sharia_review_required: true
+
+  - pack_id: microfinance
+    display_name: Micro Finance
+    coa_template: coa.banking
+    satellite_contexts: [banking]
+    policy_domains: [banking.microfinance]
+
+  - pack_id: currency_exchange
+    display_name: Currency Exchange
+    coa_template: coa.forex
+    satellite_contexts: [currency_exchange, treasury]
+    multi_currency: true
+
+  - pack_id: accounting_firm
+    display_name: Accounting Firms
+    coa_template: coa.professional_services
+    satellite_contexts: [accounting]
+    multi_entity: true
+
+  - pack_id: tax_consulting
+    display_name: Tax Companies
+    coa_template: coa.tax_services
+    satellite_contexts: [tax, accounting]
+
+  - pack_id: construction
+    display_name: Construction
+    coa_template: coa.construction
+    cost_centers: [project_site, equipment, administration]
+    profit_centers: [project_contracts]
+
+  - pack_id: manufacturing
+    display_name: Manufacturing
+    coa_template: coa.manufacturing
+    cost_centers: [production_line_a, production_line_b, quality, warehouse]
+
+  - pack_id: retail
+    display_name: Retail
+    coa_template: coa.retail
+    profit_centers: [store_locations]
+
+  - pack_id: pos
+    display_name: POS
+    coa_template: coa.retail
+    satellite_contexts: [pos]
+    module_posting_events:
+      - pos.sale.completed
+      - pos.shift.closed
+
+  - pack_id: government
+    display_name: Government
+    coa_template: coa.government
+    cost_centers: [department_budgets]
+    compliance_controls: [public_sector_audit, procurement_threshold]
+
+  - pack_id: ngo
+    display_name: NGO
+    coa_template: coa.ngo
+    cost_centers: [programs, fundraising, administration]
+    fund_accounting: true
+
+  - pack_id: hotel
+    display_name: Hotel
+    coa_template: coa.hospitality
+    profit_centers: [rooms, food_beverage, events]
+
+  - pack_id: restaurant
+    display_name: Restaurant
+    coa_template: coa.hospitality
+    profit_centers: [dining, catering, delivery]
+
+  - pack_id: real_estate
+    display_name: Property Management
+    coa_template: coa.real_estate
+    profit_centers: [residential, commercial, parking]
+
+provision_flow:
+  trigger: platform.tenant.provisioned
+  steps:
+    - seed_coa_from_template
+    - seed_cost_centers
+    - seed_profit_centers
+    - open_default_fiscal_period
+    - register_compliance_controls
+    - emit_financial_kernel.coa.seeded

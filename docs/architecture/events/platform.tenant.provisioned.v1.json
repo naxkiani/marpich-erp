@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "marpich.platform.tenant.provisioned.v1",
+  "title": "platform.tenant.provisioned",
+  "allOf": [
+    { "$ref": "_envelope.v1.json" },
+    {
+      "properties": {
+        "event_name": { "const": "platform.tenant.provisioned" },
+        "event_version": { "const": 1 },
+        "source_context": { "const": "core_platform" },
+        "payload": {
+          "type": "object",
+          "required": ["tenant_slug", "name", "industry_pack", "enabled_modules"],
+          "properties": {
+            "tenant_slug": { "type": "string", "minLength": 1 },
+            "name": { "type": "string", "minLength": 1 },
+            "industry_pack": { "type": "string", "minLength": 1 },
+            "enabled_modules": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    }
+  ]
+}

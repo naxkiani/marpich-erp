@@ -1,0 +1,637 @@
+{
+  "university": {
+    "packId": "university",
+    "displayName": "Higher Education",
+    "description": "Universities — admissions, academics, finance, HR, research",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "platform.finance",
+      "platform.hr",
+      "education.student-information",
+      "education.academics",
+      "education.admissions"
+    ],
+    "optionalModules": [
+      "education.research",
+      "education.library",
+      "platform.crm",
+      "ai.insights"
+    ],
+    "complianceFrameworks": [
+      "FERPA",
+      "GDPR",
+      "ISO-27001"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "school": {
+    "packId": "school",
+    "displayName": "K-12 Education",
+    "description": "Schools — enrollment, grading, attendance, parent portal",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "education.student-information",
+      "education.grading",
+      "education.attendance"
+    ],
+    "optionalModules": [
+      "platform.finance",
+      "platform.crm",
+      "ai.insights"
+    ],
+    "complianceFrameworks": [
+      "FERPA",
+      "COPPA",
+      "GDPR"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "hospital": {
+    "packId": "hospital",
+    "displayName": "Hospital",
+    "description": "Hospitals — EMR, billing, pharmacy, lab, HR",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "healthcare.patient-management",
+      "healthcare.clinical",
+      "healthcare.billing",
+      "platform.finance",
+      "platform.hr"
+    ],
+    "optionalModules": [
+      "healthcare.pharmacy",
+      "healthcare.laboratory",
+      "healthcare.radiology",
+      "ai.clinical-assist"
+    ],
+    "complianceFrameworks": [
+      "HIPAA",
+      "HL7-FHIR",
+      "ISO-27001",
+      "GDPR"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "clinic": {
+    "packId": "clinic",
+    "displayName": "Clinic",
+    "description": "Outpatient clinics — appointments, EMR lite, billing",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "healthcare.patient-management",
+      "healthcare.appointments",
+      "healthcare.billing"
+    ],
+    "optionalModules": [
+      "healthcare.pharmacy",
+      "platform.crm",
+      "ai.insights"
+    ],
+    "complianceFrameworks": [
+      "HIPAA",
+      "HL7-FHIR",
+      "GDPR"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "laboratory": {
+    "packId": "laboratory",
+    "displayName": "Laboratory",
+    "description": "Labs — LIMS, sample tracking, results, QC",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "healthcare.laboratory",
+      "platform.inventory"
+    ],
+    "optionalModules": [
+      "healthcare.patient-management",
+      "platform.finance"
+    ],
+    "complianceFrameworks": [
+      "CLIA",
+      "ISO-15189",
+      "GDPR"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "pharmacy": {
+    "packId": "pharmacy",
+    "displayName": "Pharmacy",
+    "description": "Pharmacies — dispensing, inventory, prescriptions",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "healthcare.pharmacy",
+      "platform.inventory",
+      "retail.pos"
+    ],
+    "optionalModules": [
+      "healthcare.patient-management",
+      "platform.finance"
+    ],
+    "complianceFrameworks": [
+      "HIPAA",
+      "GDPR"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "bank": {
+    "packId": "bank",
+    "displayName": "Commercial Bank",
+    "description": "Banks — core banking, loans, treasury, compliance",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "finance.core-banking",
+      "finance.treasury",
+      "finance.compliance",
+      "platform.crm"
+    ],
+    "optionalModules": [
+      "finance.trade-finance",
+      "ai.fraud-detection"
+    ],
+    "complianceFrameworks": [
+      "PCI-DSS",
+      "Basel-III",
+      "AML",
+      "KYC",
+      "ISO-27001"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "islamic_bank": {
+    "packId": "islamic_bank",
+    "displayName": "Islamic Bank",
+    "description": "Sharia-compliant banking — Murabaha, Ijara, Sukuk, Zakat",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "finance.core-banking",
+      "finance.islamic-products",
+      "finance.sharia-compliance",
+      "finance.compliance"
+    ],
+    "optionalModules": [
+      "finance.treasury",
+      "ai.fraud-detection"
+    ],
+    "complianceFrameworks": [
+      "AAOIFI",
+      "IFSB",
+      "AML",
+      "KYC",
+      "ISO-27001"
+    ],
+    "defaultLocale": "ar-SA"
+  },
+  "microfinance": {
+    "packId": "microfinance",
+    "displayName": "Microfinance",
+    "description": "Microfinance — group lending, field operations, collections",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "finance.lending",
+      "finance.collections",
+      "platform.crm"
+    ],
+    "optionalModules": [
+      "finance.mobile-money",
+      "ai.credit-scoring"
+    ],
+    "complianceFrameworks": [
+      "AML",
+      "KYC",
+      "GDPR"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "currency_exchange": {
+    "packId": "currency_exchange",
+    "displayName": "Currency Exchange",
+    "description": "FX companies — rates, transactions, compliance, vault",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "finance.forex",
+      "finance.compliance",
+      "platform.inventory"
+    ],
+    "optionalModules": [
+      "retail.pos",
+      "ai.fraud-detection"
+    ],
+    "complianceFrameworks": [
+      "AML",
+      "KYC",
+      "OFAC",
+      "ISO-27001"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "tax_consulting": {
+    "packId": "tax_consulting",
+    "displayName": "Tax Consulting",
+    "description": "Tax firms — client management, filings, compliance",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "finance.accounting",
+      "finance.tax",
+      "platform.crm",
+      "platform.documents"
+    ],
+    "optionalModules": [
+      "ai.document-intelligence",
+      "platform.workflow"
+    ],
+    "complianceFrameworks": [
+      "GDPR",
+      "SOC-2"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "accounting_firm": {
+    "packId": "accounting_firm",
+    "displayName": "Accounting Firm",
+    "description": "Accounting — GL, AP/AR, audit, client portal",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "finance.accounting",
+      "finance.audit",
+      "platform.crm",
+      "platform.documents"
+    ],
+    "optionalModules": [
+      "finance.tax",
+      "ai.insights"
+    ],
+    "complianceFrameworks": [
+      "GAAP",
+      "IFRS",
+      "SOC-2",
+      "GDPR"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "government": {
+    "packId": "government",
+    "displayName": "Government",
+    "description": "Government — citizen services, procurement, HR, finance",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "government.citizen-services",
+      "government.procurement",
+      "platform.finance",
+      "platform.hr",
+      "platform.workflow"
+    ],
+    "optionalModules": [
+      "platform.documents",
+      "ai.insights"
+    ],
+    "complianceFrameworks": [
+      "FedRAMP",
+      "ISO-27001",
+      "GDPR"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "ngo": {
+    "packId": "ngo",
+    "displayName": "NGO",
+    "description": "NGOs — donors, programs, grants, field operations",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "platform.crm",
+      "platform.finance",
+      "ngo.grants",
+      "ngo.programs"
+    ],
+    "optionalModules": [
+      "platform.hr",
+      "platform.documents",
+      "ai.insights"
+    ],
+    "complianceFrameworks": [
+      "GDPR",
+      "SOC-2"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "construction": {
+    "packId": "construction",
+    "displayName": "Construction",
+    "description": "Construction — projects, BOQ, subcontractors, equipment",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "construction.projects",
+      "construction.boq",
+      "platform.finance",
+      "platform.inventory"
+    ],
+    "optionalModules": [
+      "platform.hr",
+      "platform.documents",
+      "ai.insights"
+    ],
+    "complianceFrameworks": [
+      "ISO-9001",
+      "OSHA"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "engineering": {
+    "packId": "engineering",
+    "displayName": "Engineering",
+    "description": "Engineering firms — projects, design, resources, billing",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "construction.projects",
+      "platform.finance",
+      "platform.hr",
+      "platform.documents"
+    ],
+    "optionalModules": [
+      "platform.crm",
+      "ai.insights"
+    ],
+    "complianceFrameworks": [
+      "ISO-9001",
+      "ISO-27001"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "manufacturing": {
+    "packId": "manufacturing",
+    "displayName": "Manufacturing",
+    "description": "Manufacturing — MRP, BOM, production, quality",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "manufacturing.mrp",
+      "manufacturing.production",
+      "manufacturing.quality",
+      "platform.inventory",
+      "platform.finance"
+    ],
+    "optionalModules": [
+      "logistics.warehouse",
+      "ai.predictive-maintenance"
+    ],
+    "complianceFrameworks": [
+      "ISO-9001",
+      "ISO-14001"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "logistics": {
+    "packId": "logistics",
+    "displayName": "Logistics",
+    "description": "Logistics — fleet, routing, shipments, tracking",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "logistics.fleet",
+      "logistics.shipments",
+      "logistics.tracking",
+      "platform.inventory"
+    ],
+    "optionalModules": [
+      "logistics.warehouse",
+      "ai.route-optimization"
+    ],
+    "complianceFrameworks": [
+      "ISO-28000",
+      "GDPR"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "warehouse": {
+    "packId": "warehouse",
+    "displayName": "Warehouse",
+    "description": "Warehouses — WMS, picking, receiving, inventory",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "logistics.warehouse",
+      "platform.inventory"
+    ],
+    "optionalModules": [
+      "logistics.shipments",
+      "retail.pos",
+      "ai.insights"
+    ],
+    "complianceFrameworks": [
+      "ISO-9001"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "retail": {
+    "packId": "retail",
+    "displayName": "Retail",
+    "description": "Retail — catalog, inventory, POS, e-commerce",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "retail.catalog",
+      "retail.pos",
+      "platform.inventory",
+      "platform.finance"
+    ],
+    "optionalModules": [
+      "platform.crm",
+      "ai.recommendations"
+    ],
+    "complianceFrameworks": [
+      "PCI-DSS",
+      "GDPR"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "pos": {
+    "packId": "pos",
+    "displayName": "Point of Sale",
+    "description": "POS — checkout, payments, receipts, offline sync",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "retail.pos",
+      "platform.finance"
+    ],
+    "optionalModules": [
+      "retail.catalog",
+      "platform.inventory"
+    ],
+    "complianceFrameworks": [
+      "PCI-DSS"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "hotel": {
+    "packId": "hotel",
+    "displayName": "Hotel",
+    "description": "Hotels — reservations, housekeeping, F&B, billing",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "hospitality.reservations",
+      "hospitality.housekeeping",
+      "hospitality.fnb",
+      "platform.finance"
+    ],
+    "optionalModules": [
+      "platform.crm",
+      "retail.pos",
+      "ai.insights"
+    ],
+    "complianceFrameworks": [
+      "PCI-DSS",
+      "GDPR"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "restaurant": {
+    "packId": "restaurant",
+    "displayName": "Restaurant",
+    "description": "Restaurants — orders, kitchen, tables, inventory",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "hospitality.fnb",
+      "retail.pos",
+      "platform.inventory"
+    ],
+    "optionalModules": [
+      "platform.hr",
+      "platform.finance"
+    ],
+    "complianceFrameworks": [
+      "PCI-DSS",
+      "HACCP"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "real_estate": {
+    "packId": "real_estate",
+    "displayName": "Real Estate",
+    "description": "Real estate — listings, sales, leases, commissions",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "real-estate.listings",
+      "real-estate.transactions",
+      "platform.crm",
+      "platform.finance"
+    ],
+    "optionalModules": [
+      "real-estate.property-management",
+      "platform.documents"
+    ],
+    "complianceFrameworks": [
+      "GDPR",
+      "AML"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "property_management": {
+    "packId": "property_management",
+    "displayName": "Property Management",
+    "description": "Property management — units, tenants, maintenance, rent",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "real-estate.property-management",
+      "platform.finance",
+      "platform.crm"
+    ],
+    "optionalModules": [
+      "platform.documents",
+      "platform.workflow"
+    ],
+    "complianceFrameworks": [
+      "GDPR"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "hr_company": {
+    "packId": "hr_company",
+    "displayName": "HR Services",
+    "description": "HR companies — payroll, recruitment, outsourcing",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "platform.hr",
+      "platform.finance",
+      "platform.crm"
+    ],
+    "optionalModules": [
+      "platform.documents",
+      "ai.insights"
+    ],
+    "complianceFrameworks": [
+      "GDPR",
+      "SOC-2",
+      "ISO-27001"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "municipality": {
+    "packId": "municipality",
+    "displayName": "Municipality",
+    "description": "Municipal government — permits, utilities, citizen services, local tax",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "government.citizen-services",
+      "government.permits",
+      "platform.finance",
+      "platform.crm"
+    ],
+    "optionalModules": [
+      "tax.management",
+      "platform.workflow",
+      "platform.documents",
+      "ai.insights"
+    ],
+    "complianceFrameworks": [
+      "GDPR",
+      "ISO-27001"
+    ],
+    "defaultLocale": "en-US"
+  },
+  "transportation": {
+    "packId": "transportation",
+    "displayName": "Transportation",
+    "description": "Transportation — fleet, routes, freight, dispatch",
+    "requiredModules": [
+      "platform.core",
+      "platform.identity",
+      "logistics.fleet",
+      "logistics.routing",
+      "inventory.management",
+      "platform.finance"
+    ],
+    "optionalModules": [
+      "logistics.warehouse",
+      "platform.crm",
+      "ai.insights"
+    ],
+    "complianceFrameworks": [
+      "GDPR",
+      "DOT"
+    ],
+    "defaultLocale": "en-US"
+  }
+}

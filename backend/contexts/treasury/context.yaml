@@ -1,0 +1,18 @@
+context: treasury
+display_name: Treasury
+type: generic
+description: Cash management, liquidity, investments, FX hedging
+aggregates:
+- TreasuryAccount
+- TreasuryTransfer
+- BankReconciliation
+- CashForecast
+publishes:
+- treasury.liquidity.updated
+- treasury.transfer.executed
+- treasury.transfer.approval.requested
+subscribes:
+- banking.transaction.posted
+- currency_exchange.deal.settled
+- finance.period.closed
+schema: treasury

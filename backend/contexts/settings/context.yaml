@@ -1,0 +1,16 @@
+context: settings
+display_name: Settings
+type: platform
+description: Tenant config, feature flags, localization, industry pack
+aggregates:
+- TenantSettings
+- FeatureFlag
+- LocaleConfig
+- IndustryPackConfig
+publishes:
+- settings.config.updated
+- settings.feature.toggled
+subscribes:
+- platform.tenant.provisioned
+- platform.module.activated
+schema: settings

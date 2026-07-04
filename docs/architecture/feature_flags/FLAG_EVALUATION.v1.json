@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "marpich.feature_flags.evaluation.v1",
+  "title": "Feature Flag Evaluation",
+  "type": "object",
+  "properties": {
+    "request": {
+      "type": "object",
+      "required": ["flags", "context"],
+      "properties": {
+        "flags": { "type": "array", "items": { "type": "string" } },
+        "context": {
+          "type": "object",
+          "properties": {
+            "tenant_id": { "type": "string" },
+            "organization_id": { "type": ["string", "null"] },
+            "user_id": { "type": ["string", "null"] },
+            "environment": { "type": "string" },
+            "country": { "type": ["string", "null"] },
+            "industry_pack": { "type": ["string", "null"] }
+          }
+        }
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["enabled", "reason", "flag_version"],
+        "properties": {
+          "enabled": { "type": "boolean" },
+          "variant_id": { "type": ["string", "null"] },
+          "reason": {
+            "enum": [
+              "emergency_disabled",
+              "user",
+              "organization",
+              "tenant",
+              "country",
+              "industry",
+              "environment",
+              "rollout",
+              "ab_test",
+              "default"
+            ]
+          },
+          "flag_version": { "type": "integer" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+context: organization
+display_name: Organization
+type: platform
+description: Multi-org hierarchy — companies, branches, departments, memberships
+aggregates:
+- Organization
+- OrgUnit
+- Membership
+publishes:
+- organization.org.created
+- organization.unit.created
+- organization.member.added
+- organization.member.removed
+subscribes:
+- platform.tenant.provisioned
+- identity.user.created
+schema: organization

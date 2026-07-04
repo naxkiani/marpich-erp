@@ -1,0 +1,41 @@
+# Marpich Plugin Marketplace Dashboard v1
+# See docs/architecture/plugins/MARKETPLACE_ARCHITECTURE.md
+
+version: 1
+
+widgets:
+  - id: listings_by_type
+    title: Listings by Type
+    type: bar_chart
+    source: marketplace.listings_by_type
+
+  - id: installed_count
+    title: Installed Plugins
+    type: stat
+    source: tenant.installed_count
+
+  - id: pending_submissions
+    title: Pending Submissions
+    type: stat
+    source: marketplace.pending_submissions
+
+  - id: sandbox_violations_24h
+    title: Sandbox Violations (24h)
+    type: stat
+    source: runtime.sandbox_violations_24h
+    alert_threshold: 1
+
+  - id: top_publishers
+    title: Top Publishers
+    type: table
+    source: marketplace.top_publishers
+    columns: [publisher, listings, installs]
+
+  - id: upgrade_backlog
+    title: Upgrade Backlog
+    type: table
+    source: tenant.upgrade_backlog
+    columns: [plugin_id, current_version, latest_version]
+
+permissions:
+  read: plugins.marketplace.read

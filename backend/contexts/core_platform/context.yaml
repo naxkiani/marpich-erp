@@ -1,0 +1,15 @@
+context: core_platform
+display_name: Core Platform
+type: platform
+description: Tenant lifecycle, module activation, platform configuration
+aggregates:
+- Tenant
+- Subscription
+- ModuleActivation
+- IndustryPack
+publishes:
+- platform.tenant.provisioned
+- platform.module.activated
+- platform.tenant.suspended
+subscribes: []
+schema: platform

@@ -1,0 +1,14 @@
+context: audit
+display_name: Audit
+type: platform
+description: Immutable append-only audit trail for compliance
+aggregates:
+- AuditEntry
+- AuditExport
+- RetentionPolicy
+publishes:
+- audit.export.completed
+- audit.retention.applied
+subscribes:
+- "*"
+schema: audit

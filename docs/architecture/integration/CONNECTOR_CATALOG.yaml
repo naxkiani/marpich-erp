@@ -1,0 +1,223 @@
+# Marpich Integration Platform — Connector Catalog
+# Canonical registry of supported external system types.
+# See docs/architecture/INTEGRATION_PLATFORM.md
+
+version: 1
+
+default_retry:
+  max_attempts: 5
+  initial_delay_ms: 1000
+  multiplier: 2.0
+  max_delay_ms: 300000
+  jitter: 0.2
+
+connectors:
+  bank_api:
+    display_name: Bank API
+    category: financial
+    direction: outbound
+    auth: [oauth2_client, api_key, mtls]
+    operations: [transfer, statement_import, balance_inquiry]
+    config_schema: connectors/bank_api.v1.json
+    consumers: [finance, treasury, banking]
+
+  payment_gateway:
+    display_name: Payment Gateway
+    category: financial
+    direction: bidirectional
+    auth: [api_key, webhook_hmac]
+    operations: [charge, refund, capture, webhook_verify]
+    config_schema: connectors/payment_gateway.v1.json
+    consumers: [finance, pos, sales]
+
+  email_provider:
+    display_name: Email Provider
+    category: messaging
+    direction: outbound
+    auth: [api_key, smtp_credentials]
+    operations: [send_email, bounce_webhook]
+    config_schema: connectors/email_provider.v1.json
+    consumers: [notifications]
+
+  whatsapp_provider:
+    display_name: WhatsApp Business
+    category: messaging
+    direction: outbound
+    auth: [api_key, oauth2]
+    operations: [send_message, delivery_status]
+    config_schema: connectors/whatsapp_provider.v1.json
+    consumers: [notifications]
+
+  telegram_provider:
+    display_name: Telegram Bot
+    category: messaging
+    direction: outbound
+    auth: [bot_token]
+    operations: [send_message]
+    config_schema: connectors/telegram_provider.v1.json
+    consumers: [notifications]
+
+  push_provider:
+    display_name: Push Notifications
+    category: messaging
+    direction: outbound
+    auth: [service_account, api_key]
+    operations: [send_push, register_device]
+    config_schema: connectors/push_provider.v1.json
+    consumers: [notifications]
+
+  voice_provider:
+    display_name: Voice Call
+    category: messaging
+    direction: outbound
+    auth: [api_key]
+    operations: [place_call, tts_message, call_status]
+    config_schema: connectors/voice_provider.v1.json
+    consumers: [notifications]
+
+  sms_provider:
+    display_name: SMS Provider
+    category: messaging
+    direction: outbound
+    auth: [api_key]
+    operations: [send_sms, delivery_status]
+    config_schema: connectors/sms_provider.v1.json
+    consumers: [notifications]
+    note: Modules use Notification Service; Integration owns provider adapter
+
+  email_provider:
+    display_name: Email Provider
+    category: messaging
+    direction: outbound
+    auth: [api_key, smtp_credentials]
+    operations: [send_email, bounce_webhook]
+    config_schema: connectors/email_provider.v1.json
+    consumers: [notifications]
+
+  government_api:
+    display_name: Government API
+    category: regulatory
+    direction: bidirectional
+    auth: [api_key, mtls, digital_signature]
+    operations: [verify_id, submit_filing, status_poll]
+    config_schema: connectors/government_api.v1.json
+    consumers: [government, municipality, hospital]
+
+  tax_api:
+    display_name: Tax API
+    category: regulatory
+    direction: bidirectional
+    auth: [oauth2_client, api_key]
+    operations: [validate_vat, file_return, fetch_assessment]
+    config_schema: connectors/tax_api.v1.json
+    consumers: [tax, accounting, payroll]
+
+  currency_api:
+    display_name: Currency / FX API
+    category: financial
+    direction: outbound
+    auth: [api_key]
+    operations: [fetch_rates, historical_rates]
+    config_schema: connectors/currency_api.v1.json
+    polling_default_interval: 3600
+    consumers: [finance, treasury, currency_exchange]
+
+  moodle:
+    display_name: Moodle LMS
+    category: education
+    direction: bidirectional
+    auth: [api_token, oauth2]
+    operations: [courses_sync, enrollments_sync, grades_push]
+    config_schema: connectors/moodle.v1.json
+    consumers: [university, school]
+
+  google_classroom:
+    display_name: Google Classroom
+    category: education
+    direction: bidirectional
+    auth: [oauth2, service_account]
+    operations: [courses_sync, rosters_sync, assignments_sync]
+    config_schema: connectors/google_classroom.v1.json
+    consumers: [school, university]
+
+  microsoft_365:
+    display_name: Microsoft 365
+    category: productivity
+    direction: bidirectional
+    auth: [oauth2, service_principal]
+    operations: [users_sync, calendar_sync, sharepoint_files]
+    config_schema: connectors/microsoft_365.v1.json
+    consumers: [organization, hr, documents]
+
+  google_workspace:
+    display_name: Google Workspace
+    category: productivity
+    direction: bidirectional
+    auth: [oauth2, service_account]
+    operations: [users_sync, drive_sync, calendar_sync]
+    config_schema: connectors/google_workspace.v1.json
+    consumers: [organization, documents]
+
+  ldap:
+    display_name: LDAP Directory
+    category: directory
+    direction: outbound
+    auth: [bind_credentials]
+    operations: [users_sync, groups_sync, test_bind]
+    config_schema: connectors/ldap.v1.json
+    consumers: [identity]
+
+  active_directory:
+    display_name: Active Directory
+    category: directory
+    direction: bidirectional
+    auth: [ldap_bind, kerberos, oauth2]
+    operations: [users_sync, groups_sync, password_reset_hook]
+    config_schema: connectors/active_directory.v1.json
+    consumers: [identity]
+
+  erp_connector:
+    display_name: ERP Connector
+    category: enterprise
+    direction: bidirectional
+    auth: [oauth2_client, api_key, basic]
+    operations: [items_sync, orders_sync, invoices_sync, inventory_push]
+    config_schema: connectors/erp_connector.v1.json
+    consumers: [procurement, inventory, finance, manufacturing]
+
+  crm_connector:
+    display_name: CRM Connector
+    category: enterprise
+    direction: bidirectional
+    auth: [oauth2, api_key]
+    operations: [contacts_sync, deals_sync, activities_push]
+    config_schema: connectors/crm_connector.v1.json
+    consumers: [crm, sales]
+
+  cloud_storage:
+    display_name: Cloud Storage
+    category: storage
+    direction: bidirectional
+    auth: [iam_role, access_key, service_account]
+    operations: [upload, download, list, delete, sync_folder]
+    config_schema: connectors/cloud_storage.v1.json
+    consumers: [documents, media, integration]
+
+  custom:
+    display_name: Custom REST / GraphQL
+    category: custom
+    direction: bidirectional
+    auth: [api_key, oauth2, basic, custom_header]
+    operations: [invoke]
+    config_schema: connectors/custom.v1.json
+    consumers: [integration]
+
+webhook_defaults:
+  signature_header: X-Marpich-Signature
+  signature_algorithm: HMAC-SHA256
+  timeout_ms: 30000
+
+monitoring:
+  webhook_success_rate_alert_threshold: 0.95
+  dlq_depth_alert_threshold: 100
+  connector_health_check_interval_minutes: 15

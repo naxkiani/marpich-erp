@@ -1,0 +1,1 @@
+"""hospital — domain layer."""

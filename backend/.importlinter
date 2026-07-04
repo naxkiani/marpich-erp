@@ -1,0 +1,16 @@
+# Import boundaries — enforce bounded context isolation
+# Tool: import-linter (pip install import-linter)
+
+[importlinter]
+root_packages =
+    contexts
+    shared
+
+[[contracts]]
+name = "Bounded contexts must not import each other's domain layers"
+type = forbidden
+source_modules =
+    contexts.*.domain
+    contexts.*.application
+forbidden_modules =
+    contexts.*.domain

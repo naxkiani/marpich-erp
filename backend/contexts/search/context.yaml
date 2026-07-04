@@ -1,0 +1,13 @@
+context: search
+display_name: Search
+type: platform
+description: Full-text search, indexing, facets
+aggregates:
+- SearchIndex
+- IndexDocument
+- SearchQuery
+publishes:
+- search.index.updated
+subscribes:
+- '*'
+schema: search

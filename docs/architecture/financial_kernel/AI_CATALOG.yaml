@@ -1,0 +1,73 @@
+# Marpich Financial AI — Catalog
+# See docs/architecture/ENTERPRISE_FINANCIAL_AI.md
+
+version: 1
+
+law:
+  autonomous_posting_forbidden: true
+  delegates_inference_to: ai_platform
+  surface: ai.financial.copilot
+
+capabilities:
+  fraud_detection:
+    description: Scan payments for unusual amounts and chargeback patterns
+    endpoint: POST /analyze/fraud_detection
+
+  cash_flow_prediction:
+    description: Project net cash flow from journal history
+    endpoint: POST /analyze/cash_flow_prediction
+
+  budget_forecast:
+    description: Forecast budget utilization and overrun risk
+    endpoint: POST /analyze/budget_forecast
+
+  expense_analysis:
+    description: Expense breakdown by cost center
+    endpoint: POST /analyze/expense_analysis
+
+  revenue_prediction:
+    description: Revenue trend and forward projection
+    endpoint: POST /analyze/revenue_prediction
+
+  financial_summary:
+    description: P&L summary from journals and payments
+    endpoint: POST /analyze/financial_summary
+
+  risk_analysis:
+    description: Aggregate payment, budget, and data risks
+    endpoint: POST /analyze/risk_analysis
+
+  recommendation:
+    description: Actionable recommendations from financial signals
+    endpoint: POST /analyze/recommendation
+
+  invoice_classification:
+    description: Classify invoice document type from text
+    endpoint: POST /invoice/classify
+
+  document_ocr:
+    description: Extract fields from document text (OCR stub)
+    endpoint: POST /document/ocr
+
+  financial_chatbot:
+    description: Conversational financial assistant
+    endpoint: POST /chat
+
+  dashboard:
+    description: AI dashboard with KPIs and widgets
+    endpoint: GET /dashboard
+
+  cfo_assistant:
+    description: Executive CFO copilot with KPIs and recommendations
+    endpoint: POST /cfo-assistant
+
+permissions:
+  financial_kernel.ai.read: View AI capabilities and job history
+  financial_kernel.ai.analyze: Run analysis, classify, OCR
+  financial_kernel.ai.chat: Financial chatbot and CFO assistant
+  financial_kernel.ai.dashboard: Generate AI dashboard
+
+integration_events:
+  - financial_kernel.ai.analysis.completed
+  - financial_kernel.ai.dashboard.generated
+  - financial_kernel.ai.chat.completed

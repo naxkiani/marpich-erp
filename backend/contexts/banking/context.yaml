@@ -1,0 +1,18 @@
+context: banking
+display_name: Banking
+type: specialized
+description: "Core banking \u2014 accounts, loans, cards, transfers"
+aggregates:
+- BankAccount
+- Loan
+- Card
+- Transfer
+- CustomerKYC
+publishes:
+- banking.account.opened
+- banking.transaction.posted
+- banking.loan.disbursed
+subscribes:
+- identity.user.created
+- islamic_banking.murabaha.executed
+schema: banking

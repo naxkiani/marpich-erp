@@ -1,0 +1,17 @@
+context: documents
+display_name: Documents
+type: platform
+description: "DMS \u2014 upload, version, sign, archive"
+aggregates:
+- Document
+- Folder
+- DocumentVersion
+- Signature
+publishes:
+- documents.document.uploaded
+- documents.document.signed
+- documents.document.archived
+- documents.version.created
+subscribes:
+- platform.tenant.provisioned
+schema: documents

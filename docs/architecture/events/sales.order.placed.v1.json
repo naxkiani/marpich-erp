@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "marpich.sales.order.placed.v1",
+  "title": "sales.order.placed",
+  "description": "Sales order confirmed — triggers inventory reservation and finance",
+  "type": "object",
+  "required": ["event_name", "event_version", "source_context", "tenant_id", "payload"],
+  "properties": {
+    "event_name": { "const": "sales.order.placed" },
+    "event_version": { "const": 1 },
+    "source_context": { "const": "sales" },
+    "payload": {
+      "type": "object",
+      "required": ["order_id", "customer_id", "lines", "total_amount", "currency"],
+      "properties": {
+        "order_id": { "type": "string", "format": "uuid" },
+        "customer_id": { "type": "string", "format": "uuid" },
+        "lines": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["item_id", "quantity", "unit_price"],
+            "properties": {
+              "item_id": { "type": "string", "format": "uuid" },
+              "quantity": { "type": "number" },
+              "unit_price": { "type": "number" }
+            }
+          }
+        },
+        "total_amount": { "type": "number" },
+        "currency": { "type": "string", "minLength": 3, "maxLength": 3 }
+      }
+    }
+  }
+}

@@ -1,0 +1,110 @@
+.mp-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.mp-shell-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--mp-bg-elevated);
+  border-bottom: 1px solid var(--mp-border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.mp-shell-brand strong {
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+}
+
+.mp-shell-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-inline-start: auto;
+}
+
+.mp-shell-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.mp-shell-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  padding: 1rem;
+  border-inline-end: 1px solid var(--mp-border);
+  background: var(--mp-bg-elevated);
+}
+
+.mp-shell-sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.mp-shell-sidebar a {
+  padding: 0.55rem 0.75rem;
+  border-radius: var(--mp-radius-sm);
+  color: var(--mp-fg);
+  text-decoration: none;
+  transition: background var(--mp-transition);
+}
+
+.mp-shell-sidebar a:hover,
+.mp-shell-sidebar a[aria-current="page"] {
+  background: var(--mp-bg-muted);
+  color: var(--mp-accent);
+}
+
+.mp-shell-main {
+  flex: 1;
+  padding: 1.25rem;
+  overflow: auto;
+}
+
+.mp-page-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.mp-page-header h1 {
+  margin: 0.35rem 0 0;
+  font-size: 1.75rem;
+  letter-spacing: -0.03em;
+}
+
+.mp-page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.mp-page-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .mp-shell-header {
+    flex-wrap: wrap;
+  }
+
+  .mp-shell-sidebar {
+    display: none;
+  }
+
+  .mp-shell-actions {
+    flex-wrap: wrap;
+  }
+}

@@ -1,0 +1,18 @@
+context: sales
+display_name: Sales
+type: generic
+description: Quotes, orders, pricing, commissions
+aggregates:
+- Quote
+- SalesOrder
+- PriceList
+- Commission
+publishes:
+- sales.order.placed
+- sales.order.fulfilled
+- sales.quote.accepted
+subscribes:
+- crm.opportunity.won
+- inventory.stock.reserved
+- warehouse.shipment.dispatched
+schema: sales

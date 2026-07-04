@@ -1,0 +1,17 @@
+context: municipality
+display_name: Municipality
+type: industry
+description: Local government — permits, utilities, citizen services, local tax
+aggregates:
+  - Permit
+  - ServiceRequest
+  - UtilityAccount
+  - LocalTaxAssessment
+publishes:
+  - municipality.permit.issued
+  - municipality.service.request.closed
+  - municipality.utility.bill.issued
+subscribes:
+  - government.permit.issued
+  - identity.user.created
+schema: municipality
