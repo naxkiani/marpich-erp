@@ -1,0 +1,79 @@
+# Enterprise Loan Platform — API Catalog
+# See docs/adr/091-loan-management.md
+
+version: 1
+owner: banking
+module: loan_management
+api_prefix: /api/v1/banking/loans
+adr: docs/adr/091-loan-management.md
+
+loan_types:
+  - personal
+  - business
+  - education
+  - construction
+  - mortgage
+  - microfinance
+  - agriculture
+
+capabilities:
+  - loan_origination
+  - approval_workflow
+  - collateral
+  - guarantors
+  - repayment_schedule
+  - installments
+  - penalty_rules
+  - restructuring
+  - settlement
+  - early_closure
+  - automatic_gl_posting
+  - ai_credit_risk_analysis
+  - audit_trail
+
+policy_domain: bank
+policy_keys:
+  - loan.interest.rate
+  - loan.approval.required_level
+  - loan.penalty.late_payment
+  - loan.restructure.rules
+  - loan.settlement.discount
+  - loan.early_closure.penalty
+  - loan.credit_risk.threshold
+  - lending.debt_to_income_ratio
+  - lending.collateral.haircut
+  - lending.single_exposure_limit
+
+events_published:
+  - banking.loan.disbursed
+  - banking.loan.repayment.posted
+  - banking.loan.credit_risk.analyzed
+
+posting_rules:
+  - loan_disbursement
+  - loan_repayment
+
+permissions:
+  - banking.lending.read
+  - banking.lending.write
+  - banking.lending.approve
+
+endpoints:
+  - GET /catalog
+  - GET /policy-keys
+  - GET /dashboard
+  - POST /apply
+  - GET /
+  - GET /{loan_id}
+  - POST /{loan_id}/submit
+  - POST /{loan_id}/approve
+  - POST /{loan_id}/collateral
+  - POST /{loan_id}/guarantors
+  - POST /{loan_id}/credit-risk
+  - POST /{loan_id}/disburse
+  - GET /{loan_id}/schedule
+  - POST /{loan_id}/installments/pay
+  - POST /{loan_id}/restructure
+  - POST /{loan_id}/settle
+  - POST /{loan_id}/early-close
+  - GET /{loan_id}/audit
