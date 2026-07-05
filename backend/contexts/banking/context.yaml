@@ -20,6 +20,12 @@ aggregates:
   - DepositCertificate
   - DepositStatement
   - ProfitDistributionRule
+  - LoanProfile
+  - LoanCollateral
+  - LoanGuarantor
+  - LoanInstallment
+  - LoanTransaction
+  - LoanCreditRiskAnalysis
 
 banking_segments:
   - retail_banking
@@ -53,6 +59,7 @@ publishes:
   - banking.transaction.posted
   - banking.loan.disbursed
   - banking.loan.repayment.posted
+  - banking.loan.credit_risk.analyzed
   - banking.kyc.verified
   - banking.kyc.case.opened
   - banking.kyc.case.approved

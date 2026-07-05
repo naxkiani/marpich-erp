@@ -53,9 +53,11 @@ capability_domains:
     gl_rules: [bank_deposit, bank_withdrawal]
   lending:
     label: Lending
-    status: planned
-    aggregates: [Loan, CreditFacility, RepaymentSchedule]
-    gl_rules: [loan_disbursement, loan_repayment, interest_accrual]
+    status: implemented
+    aggregates: [LoanProfile, LoanCollateral, LoanGuarantor, LoanInstallment, LoanTransaction, LoanCreditRiskAnalysis]
+    catalog: docs/architecture/banking/LOAN_MANAGEMENT_CATALOG.yaml
+    adr: docs/adr/091-loan-management.md
+    gl_rules: [loan_disbursement, loan_repayment]
   cards:
     label: Cards
     status: planned

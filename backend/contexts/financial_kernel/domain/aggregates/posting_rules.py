@@ -20,6 +20,8 @@ class EnterprisePostingRuleType(StrEnum):
     BANK_DEPOSIT = "bank_deposit"
     BANK_WITHDRAWAL = "bank_withdrawal"
     INTEREST_ACCRUAL = "interest_accrual"
+    LOAN_DISBURSEMENT = "loan_disbursement"
+    LOAN_REPAYMENT = "loan_repayment"
     TREASURY_TRANSFER = "treasury_transfer"
     TREASURY_INTERNAL_TRANSFER = "treasury_internal_transfer"
     TREASURY_BANK_TRANSFER = "treasury_bank_transfer"
@@ -238,6 +240,32 @@ PLATFORM_POSTING_RULES: dict[str, PostingRuleDefinition] = {
         line_templates=(_line("debit", "debit"), _line("credit", "credit")),
         approval_required=False,
         description="Deposit interest accrual",
+    ),
+    EnterprisePostingRuleType.LOAN_DISBURSEMENT.value: PostingRuleDefinition(
+        rule_id="loan_disbursement",
+        label="Customer Loan Disbursement",
+        module="banking",
+        journal_type="general",
+        account_slots=(
+            _slot("debit", "Loans receivable", account_key="loans_receivable", role="asset"),
+            _slot("credit", "Cash reserves", account_key="cash_reserves", role="asset"),
+        ),
+        line_templates=(_line("debit", "debit"), _line("credit", "credit")),
+        approval_required=False,
+        description="Customer loan disbursement — Dr loans receivable / Cr cash",
+    ),
+    EnterprisePostingRuleType.LOAN_REPAYMENT.value: PostingRuleDefinition(
+        rule_id="loan_repayment",
+        label="Customer Loan Repayment",
+        module="banking",
+        journal_type="general",
+        account_slots=(
+            _slot("debit", "Cash reserves", account_key="cash_reserves", role="asset"),
+            _slot("credit", "Loans receivable", account_key="loans_receivable", role="asset"),
+        ),
+        line_templates=(_line("debit", "debit"), _line("credit", "credit")),
+        approval_required=False,
+        description="Customer loan repayment — Dr cash / Cr loans receivable",
     ),
     EnterprisePostingRuleType.TREASURY_TRANSFER.value: PostingRuleDefinition(
         rule_id="treasury_transfer",

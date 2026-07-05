@@ -146,3 +146,59 @@ class BankingPostingBridge:
         )
         if not result.succeeded:
             logger.error("Banking interest accrual GL post failed for %s: %s", accrual_id, result.error)
+
+    async def handle_loan_disbursed(self, envelope: dict) -> None:
+        tenant_id = str(envelope.get("tenant_id", ""))
+        payload = envelope.get("payload", envelope)
+        transaction_id = payload.get("transaction_id", "")
+        amount = float(payload.get("amount", 0))
+        currency = payload.get("currency", "USD")
+        gl_code = payload.get("gl_account_code") or await self._resolve_gl_code(tenant_id, "loans_receivable")
+        credit_code = await self._resolve_gl_code(tenant_id, "cash_reserves")
+        if not gl_code or not credit_code:
+            logger.warning("Banking loan disburse post skipped — no COA mapping for tenant %s", tenant_id)
+            return
+
+        result = await self._kernel.execute_posting(
+            tenant_id=tenant_id,
+            rule_id="loan_disbursement",
+            source_context="banking",
+            source_document_id=transaction_id,
+            amount=amount,
+            currency=currency,
+            correlation_id=envelope.get("correlation_id", f"banking-loan-disburse-{transaction_id}"),
+            idempotency_key=f"posting:loan_disbursement:{payload.get('transaction_ref', transaction_id)}",
+            description=f"Loan disbursement — ref {payload.get('transaction_ref', transaction_id)}",
+            account_mappings={"debit": gl_code, "credit": credit_code},
+            require_approval=False,
+        )
+        if not result.succeeded:
+            logger.error("Banking loan disburse GL post failed for %s: %s", transaction_id, result.error)
+
+    async def handle_loan_repayment_posted(self, envelope: dict) -> None:
+        tenant_id = str(envelope.get("tenant_id", ""))
+        payload = envelope.get("payload", envelope)
+        transaction_id = payload.get("transaction_id", "")
+        amount = float(payload.get("amount", 0))
+        currency = payload.get("currency", "USD")
+        gl_code = payload.get("gl_account_code") or await self._resolve_gl_code(tenant_id, "loans_receivable")
+        debit_code = await self._resolve_gl_code(tenant_id, "cash_reserves")
+        if not gl_code or not debit_code:
+            logger.warning("Banking loan repayment post skipped — no COA mapping for tenant %s", tenant_id)
+            return
+
+        result = await self._kernel.execute_posting(
+            tenant_id=tenant_id,
+            rule_id="loan_repayment",
+            source_context="banking",
+            source_document_id=transaction_id,
+            amount=amount,
+            currency=currency,
+            correlation_id=envelope.get("correlation_id", f"banking-loan-repay-{transaction_id}"),
+            idempotency_key=f"posting:loan_repayment:{payload.get('transaction_ref', transaction_id)}",
+            description=f"Loan repayment — ref {payload.get('transaction_ref', transaction_id)}",
+            account_mappings={"debit": debit_code, "credit": gl_code},
+            require_approval=False,
+        )
+        if not result.succeeded:
+            logger.error("Banking loan repayment GL post failed for %s: %s", transaction_id, result.error)

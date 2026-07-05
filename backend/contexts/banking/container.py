@@ -1,4 +1,4 @@
-"""Banking DI — Customer Account + KYC Platform + Deposit Management."""
+"""Banking DI — Customer Account + KYC Platform + Deposit Management + Loan Platform."""
 from __future__ import annotations
 
 from contexts.banking.application.customer_account_service import (
@@ -9,6 +9,9 @@ from contexts.banking.application.deposit_management_service import (
 )
 from contexts.banking.application.kyc_platform_service import (
     BankingKycPlatformApplicationService,
+)
+from contexts.banking.application.loan_management_service import (
+    BankingLoanManagementApplicationService,
 )
 from contexts.banking.infrastructure.persistence.customer_account_memory_store import (
     InMemoryAccountAuditRepository,
@@ -37,6 +40,16 @@ from contexts.banking.infrastructure.persistence.kyc_platform_memory_store impor
     InMemoryKycScreeningRepository,
     InMemoryKycWorkflowRepository,
 )
+from contexts.banking.infrastructure.persistence.loan_management_memory_store import (
+    InMemoryLoanAuditRepository,
+    InMemoryLoanCollateralRepository,
+    InMemoryLoanCreditRiskRepository,
+    InMemoryLoanGuarantorRepository,
+    InMemoryLoanInstallmentRepository,
+    InMemoryLoanProfileRepository,
+    InMemoryLoanTransactionRepository,
+    InMemoryLoanWorkflowRepository,
+)
 from contexts.financial_kernel.container import get_financial_kernel
 from contexts.policy.container import get_policy_evaluator
 from shared.infrastructure.messaging.event_bus import InProcessEventBus
@@ -47,9 +60,11 @@ _account_repo = InMemoryAccountRepository()
 _service: BankingCustomerAccountApplicationService | None = None
 _kyc_service: BankingKycPlatformApplicationService | None = None
 _deposit_service: BankingDepositManagementApplicationService | None = None
+_loan_service: BankingLoanManagementApplicationService | None = None
 _registered = False
 _kyc_registered = False
 _deposit_registered = False
+_loan_registered = False
 
 
 def get_banking_customer_account_service() -> BankingCustomerAccountApplicationService:
@@ -124,14 +139,44 @@ def get_banking_deposit_management_service() -> BankingDepositManagementApplicat
     return _deposit_service
 
 
+def get_banking_loan_management_service() -> BankingLoanManagementApplicationService:
+    global _loan_service, _loan_registered
+    if _loan_service is None:
+        get_banking_customer_account_service()
+        _loan_service = BankingLoanManagementApplicationService(
+            loans=InMemoryLoanProfileRepository(),
+            collaterals=InMemoryLoanCollateralRepository(),
+            guarantors=InMemoryLoanGuarantorRepository(),
+            installments=InMemoryLoanInstallmentRepository(),
+            transactions=InMemoryLoanTransactionRepository(),
+            risk_analyses=InMemoryLoanCreditRiskRepository(),
+            workflows=InMemoryLoanWorkflowRepository(),
+            audits=InMemoryLoanAuditRepository(),
+            accounts=_account_repo,
+            customers=_customer_repo,
+            kernel=get_financial_kernel(),
+            policy=get_policy_evaluator(),
+        )
+    if not _loan_registered:
+        InProcessEventBus.subscribe(
+            "platform.tenant.provisioned",
+            _loan_service.handle_tenant_provisioned,
+        )
+        _loan_registered = True
+    return _loan_service
+
+
 def reset_banking_customer_account_service() -> None:
-    global _service, _kyc_service, _deposit_service, _registered, _kyc_registered, _deposit_registered
+    global _service, _kyc_service, _deposit_service, _loan_service
+    global _registered, _kyc_registered, _deposit_registered, _loan_registered
     _service = None
     _kyc_service = None
     _deposit_service = None
+    _loan_service = None
     _registered = False
     _kyc_registered = False
     _deposit_registered = False
+    _loan_registered = False
     InMemoryCustomerRepository.reset()
     InMemoryKycRepository.reset()
     InMemoryAccountProductRepository.reset()
@@ -153,3 +198,11 @@ def reset_banking_customer_account_service() -> None:
     InMemoryDepositWorkflowRepository.reset()
     InMemoryDepositAuditRepository.reset()
     InMemoryProfitRuleRepository.reset()
+    InMemoryLoanProfileRepository.reset()
+    InMemoryLoanCollateralRepository.reset()
+    InMemoryLoanGuarantorRepository.reset()
+    InMemoryLoanInstallmentRepository.reset()
+    InMemoryLoanTransactionRepository.reset()
+    InMemoryLoanCreditRiskRepository.reset()
+    InMemoryLoanWorkflowRepository.reset()
+    InMemoryLoanAuditRepository.reset()
