@@ -202,3 +202,31 @@ class BankingPostingBridge:
         )
         if not result.succeeded:
             logger.error("Banking loan repayment GL post failed for %s: %s", transaction_id, result.error)
+
+    async def handle_transfer_posted(self, envelope: dict) -> None:
+        tenant_id = str(envelope.get("tenant_id", ""))
+        payload = envelope.get("payload", envelope)
+        transfer_id = payload.get("transfer_id", "")
+        amount = float(payload.get("amount", 0))
+        currency = payload.get("currency", "USD")
+        source_gl = payload.get("source_gl_code") or await self._resolve_gl_code(tenant_id, "customer_deposits")
+        dest_gl = payload.get("destination_gl_code") or source_gl
+        if not source_gl or not dest_gl:
+            logger.warning("Banking transfer post skipped — no COA mapping for tenant %s", tenant_id)
+            return
+
+        result = await self._kernel.execute_posting(
+            tenant_id=tenant_id,
+            rule_id="bank_transfer",
+            source_context="banking",
+            source_document_id=transfer_id,
+            amount=amount,
+            currency=currency,
+            correlation_id=envelope.get("correlation_id", f"banking-transfer-{transfer_id}"),
+            idempotency_key=f"posting:bank_transfer:{payload.get('transfer_ref', transfer_id)}",
+            description=f"Bank transfer — ref {payload.get('transfer_ref', transfer_id)}",
+            account_mappings={"debit": source_gl, "credit": dest_gl},
+            require_approval=False,
+        )
+        if not result.succeeded:
+            logger.error("Banking transfer GL post failed for %s: %s", transfer_id, result.error)
