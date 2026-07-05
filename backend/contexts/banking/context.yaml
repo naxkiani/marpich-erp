@@ -39,6 +39,13 @@ aggregates:
   - BankReconciliationRun
   - SettlementException
   - SettlementAdjustment
+  - BranchOffice
+  - BranchExtension
+  - BranchVault
+  - BranchEmployeeAssignment
+  - BranchKPIRecord
+  - SecurityApprovalRequest
+  - SecurityAuditEntry
 
 banking_segments:
   - retail_banking
@@ -90,6 +97,15 @@ publishes:
   - banking.settlement.posted
   - banking.reconciliation.completed
   - banking.settlement.exception.raised
+  - banking.branch.opened
+  - banking.branch.closed
+  - banking.vault.movement
+  - banking.branch.kpi.recorded
+  - banking.security.approval.submitted
+  - banking.security.approval.completed
+  - banking.security.freeze.activated
+  - banking.security.alert.raised
+  - banking.security.audit.recorded
   - banking.deposit.matured
   - banking.fee.charged
 

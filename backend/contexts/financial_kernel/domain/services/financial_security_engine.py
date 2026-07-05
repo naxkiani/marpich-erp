@@ -77,7 +77,10 @@ def verify_tamper(
 def evaluate_rbac_policy(*, rules: dict, permission: str, role: str) -> bool:
     allowed_roles = rules.get("allowed_roles", [])
     allowed_permissions = rules.get("allowed_permissions", [])
-    if permission in allowed_permissions:
+    wildcard = "*" in allowed_permissions
+    if wildcard or permission in allowed_permissions:
+        if allowed_roles:
+            return role in allowed_roles
         return True
     return role in allowed_roles and permission in rules.get("role_permissions", {}).get(role, [])
 
