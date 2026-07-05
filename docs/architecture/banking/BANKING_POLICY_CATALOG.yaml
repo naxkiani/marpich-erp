@@ -1,0 +1,284 @@
+# Banking Policy Catalog — Configurable Regulations
+# See docs/architecture/ENTERPRISE_BANKING_PLATFORM.md
+# Law: No hardcoded country-specific rules. All keys evaluated via Policy Engine.
+
+version: 1
+owner: banking
+domain: banking
+policy_engine: docs/architecture/ENTERPRISE_POLICY_ENGINE.md
+
+law:
+  hardcoded_regulations_forbidden: true
+  tenant_configures_all_parameters: true
+  simulation_before_activation: true
+  versioned_with_rollback: true
+
+# Keys are jurisdiction-agnostic. Tenants configure parameters per deployment.
+# Example: banking.transaction.daily_limit → { "max_amount": 50000, "currency": "USD" }
+
+policy_namespaces:
+  banking.core:
+    description: Cross-segment banking policies
+    keys:
+      - key: kyc.verification_threshold
+        description: Amount above which KYC tier is required
+        facts: [amount, currency, kyc_tier, customer_id]
+        outcomes: [allow, require_kyc_upgrade, deny]
+      - key: transaction.daily_limit
+        description: Per-customer daily transaction limit
+        facts: [customer_id, amount, currency, channel, segment]
+        outcomes: [allow, deny, require_approval]
+      - key: transaction.single_limit
+        description: Maximum single transaction amount
+        facts: [amount, currency, channel, product_code]
+        outcomes: [allow, deny, require_approval]
+      - key: aml.suspicious_amount
+        description: Amount triggering AML review
+        facts: [amount, currency, channel, customer_id, counterparty_country]
+        outcomes: [allow, flag_for_review, block]
+      - key: aml.velocity_threshold
+        description: Transaction count threshold in time window
+        facts: [customer_id, transaction_count, window_hours]
+        outcomes: [allow, flag_for_review]
+      - key: interest.rate.deposit
+        description: Deposit interest rate by product
+        facts: [product_code, tenure_days, currency, segment]
+        outcomes: [apply_rate]
+        parameters: [annual_rate_pct]
+      - key: interest.rate.lending
+        description: Lending interest rate by product
+        facts: [product_code, tenure_months, segment, collateral_type]
+        outcomes: [apply_rate]
+        parameters: [annual_rate_pct]
+      - key: fee.account_maintenance
+        description: Account maintenance fee
+        facts: [product_code, balance, segment]
+        outcomes: [apply_fee, waive]
+        parameters: [fee_amount, currency]
+
+  banking.retail:
+    description: Retail banking segment policies
+    keys:
+      - key: retail.account.minimum_balance
+        description: Minimum balance requirement
+        facts: [product_code, balance]
+        outcomes: [compliant, charge_fee, restrict]
+      - key: retail.overdraft.limit
+        description: Retail overdraft ceiling
+        facts: [customer_id, amount, account_id]
+        outcomes: [allow, deny]
+      - key: retail.card.daily_limit
+        description: Card daily spend limit
+        facts: [card_id, amount, currency]
+        outcomes: [allow, deny]
+
+  banking.corporate:
+    description: Corporate banking segment policies
+    keys:
+      - key: corporate.facility.exposure_limit
+        description: Total corporate credit exposure
+        facts: [organization_id, total_exposure, currency]
+        outcomes: [allow, deny, require_board_approval]
+      - key: corporate.signatory.required_count
+        description: Required signatories for corporate transactions
+        facts: [organization_id, amount, transaction_type]
+        outcomes: [require_signatories]
+        parameters: [min_signatories]
+      - key: corporate.trade_finance.limit
+        description: Trade finance instrument limit
+        facts: [organization_id, instrument_type, amount]
+        outcomes: [allow, deny]
+
+  banking.microfinance:
+    description: Microfinance segment policies
+    keys:
+      - key: microfinance.group.size_limit
+        description: Maximum members in lending group
+        facts: [group_id, member_count]
+        outcomes: [allow, deny]
+        parameters: [max_members]
+      - key: microfinance.loan.max_amount
+        description: Maximum microfinance loan per member
+        facts: [customer_id, amount, group_id]
+        outcomes: [allow, deny]
+      - key: microfinance.repayment.grace_period_days
+        description: Grace period before default classification
+        facts: [loan_id, days_overdue]
+        outcomes: [grace, classify_default]
+        parameters: [grace_days]
+
+  banking.digital:
+    description: Digital banking channel policies
+    keys:
+      - key: digital.session.inactivity_timeout_minutes
+        description: Session timeout for digital channels
+        facts: [channel, session_age_minutes]
+        outcomes: [continue, expire_session]
+        parameters: [timeout_minutes]
+      - key: digital.device.trust_required
+        description: Trusted device required for high-value ops
+        facts: [device_verified, amount, channel]
+        outcomes: [allow, require_step_up]
+      - key: digital.instant_transfer.limit
+        description: Instant transfer limit for digital channel
+        facts: [amount, currency, beneficiary_type]
+        outcomes: [allow, deny, delay_settlement]
+
+  banking.branch:
+    description: Branch banking policies
+    keys:
+      - key: branch.cash.drawer.limit
+        description: Teller cash drawer maximum
+        facts: [branch_id, drawer_balance, currency]
+        outcomes: [allow, require_vault_transfer]
+        parameters: [max_drawer_balance]
+      - key: branch.large_cash.transaction_threshold
+        description: Cash transaction requiring supervisor approval
+        facts: [amount, currency, branch_id]
+        outcomes: [allow, require_supervisor]
+
+  banking.agency:
+    description: Agency banking policies
+    keys:
+      - key: agency.float.limit
+        description: Agent cash float maximum
+        facts: [agency_id, float_balance, currency]
+        outcomes: [allow, suspend_agent, require_settlement]
+        parameters: [max_float]
+      - key: agency.commission.rate
+        description: Agent commission rate per transaction type
+        facts: [agency_id, transaction_type, amount]
+        outcomes: [apply_commission]
+        parameters: [commission_pct]
+      - key: agency.transaction.daily_limit
+        description: Agent daily transaction volume limit
+        facts: [agency_id, daily_volume, currency]
+        outcomes: [allow, suspend_agent]
+
+  banking.kyc:
+    description: Enterprise KYC Platform policies (configurable via Policy Engine)
+    catalog: docs/architecture/banking/KYC_PLATFORM_CATALOG.yaml
+    adr: docs/adr/089-enterprise-kyc-platform.md
+    keys:
+      - key: kyc.identity.verification_required
+        description: Required identity documents by customer segment
+        facts: [customer_type, segment, document_types]
+        outcomes: [require_documents]
+      - key: kyc.document.passport_validity
+        description: Minimum passport validity in days
+        facts: [document_type, expiry_date, days_until_expiry]
+        outcomes: [reject_expired, allow]
+      - key: kyc.risk.classification
+        description: Risk class assignment rules
+        facts: [customer_type, country, pep_status, transaction_volume]
+        outcomes: [low_risk, medium_risk, high_risk]
+      - key: kyc.dd.enhanced_threshold
+        description: Conditions triggering Enhanced Due Diligence
+        facts: [risk_class, pep_status, amount, country_risk]
+        outcomes: [enhanced_due_diligence, standard]
+      - key: kyc.pep.screening
+        description: PEP screening outcome rules
+        facts: [match_score, customer_type, role]
+        outcomes: [clear, potential_match, confirmed_pep]
+      - key: kyc.sanctions.screening
+        description: Sanctions screening outcome rules
+        facts: [match_score, list_name, country]
+        outcomes: [clear, potential_match, block]
+      - key: kyc.periodic.review_interval
+        description: Periodic KYC review interval by risk class
+        facts: [risk_class, due_diligence_level]
+        outcomes: [schedule_review]
+        parameters: [interval_days]
+      - key: kyc.approval.required_level
+        description: Approval levels required for KYC case completion
+        facts: [risk_class, due_diligence_level, pep_status]
+        outcomes: [approve]
+        parameters: [required_levels]
+
+  banking.deposits:
+    description: Deposit Management policies (configurable via Policy Engine)
+    catalog: docs/architecture/banking/DEPOSIT_MANAGEMENT_CATALOG.yaml
+    adr: docs/adr/090-deposit-management.md
+    keys:
+      - key: deposit.interest.rate
+        description: Interest rate by deposit type and principal
+        facts: [deposit_type, principal, currency]
+        outcomes: [apply_rate]
+        parameters: [rate_annual]
+      - key: deposit.early_withdrawal.penalty
+        description: Early withdrawal penalty for term deposits
+        facts: [deposit_type, amount, tenure_months, days_to_maturity]
+        outcomes: [apply_penalty, waive_penalty]
+        parameters: [penalty_pct]
+      - key: deposit.approval.required_level
+        description: Approval levels for deposit transactions
+        facts: [transaction_type, amount]
+        outcomes: [approve]
+        parameters: [required_levels]
+      - key: deposit.term.maturity_notice
+        description: Maturity notice period in days
+        facts: [deposit_type, days_to_maturity]
+        outcomes: [notify]
+        parameters: [notice_days]
+      - key: deposit.recurring.schedule
+        description: Recurring deposit schedule rules
+        facts: [deposit_type, recurring_day]
+        outcomes: [schedule]
+        parameters: [frequency, grace_days]
+      - key: deposit.profit.distribution
+        description: Profit sharing distribution rules
+        facts: [deposit_type, profit_share_pct]
+        outcomes: [distribute]
+        parameters: [profit_share_pct]
+
+  banking.sharia:
+    description: Islamic banking policies (extension-ready)
+    keys:
+      - key: sharia.product_eligibility
+        description: Product approved by sharia board
+        facts: [product_code, sharia_board_approved]
+        outcomes: [allow, deny]
+      - key: sharia.profit_rate.cap
+        description: Maximum profit rate for Islamic products
+        facts: [product_code, profit_rate_pct]
+        outcomes: [allow, deny]
+        parameters: [max_profit_rate_pct]
+      - key: sharia.asset.backing_required
+        description: Asset-backing requirement for contracts
+        facts: [contract_type, asset_value, financing_amount]
+        outcomes: [compliant, non_compliant]
+
+  banking.lending:
+    description: Cross-segment lending policies
+    keys:
+      - key: lending.single_exposure_limit
+        description: Maximum exposure per customer
+        facts: [customer_id, amount, currency, segment]
+        outcomes: [allow, deny]
+      - key: lending.debt_to_income_ratio
+        description: DTI ratio ceiling
+        facts: [customer_id, dti_ratio, segment]
+        outcomes: [allow, deny, require_collateral]
+        parameters: [max_dti_ratio]
+      - key: lending.collateral.haircut
+        description: Collateral valuation haircut
+        facts: [collateral_type, collateral_value]
+        outcomes: [apply_haircut]
+        parameters: [haircut_pct]
+
+evaluation_contract:
+  api: POST /api/v1/policies/evaluate
+  port: IPolicyEvaluator
+  required_envelope:
+    - tenant_id
+    - domain: banking
+    - policy_key
+    - facts
+    - organization_id
+    - as_of
+
+provisioning:
+  on_tenant_provisioned:
+    seed_templates: true
+    seed_parameters: empty
+    tenant_configures: all

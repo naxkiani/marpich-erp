@@ -199,4 +199,84 @@ async def test_list_templates(client):
     assert resp.status_code == 200
     data = resp.json()["data"]
     assert any(t["template_key"] == "coa.healthcare" for t in data["industry"])
+    assert any(t["template_key"] == "coa.enterprise" for t in data["industry"])
     assert any(t["template_key"] == "coa.country.ir_ifrs" for t in data["country"])
+
+
+@pytest.mark.asyncio
+async def test_enterprise_template_deep_hierarchy(client):
+    slug = "coa-ent"
+    headers = await _auth_headers(client, slug)
+    resp = await client.post(
+        "/api/v1/financial-kernel/coa/templates/apply",
+        headers=headers,
+        json={"template_key": "coa.enterprise", "template_type": "industry"},
+    )
+    assert resp.status_code == 201
+    tree = resp.json()["data"]["tree"]
+    flat = flatten_tree(tree)
+    keys = {n["account_key"] for n in flat}
+    assert "current_assets" in keys
+    assert "bank" in keys
+    assert "petty_cash" in keys
+    assert "receivables" in keys
+    assert "inventory" in keys
+    assert "fixed_assets" in keys
+    assert "long_term_liabilities" in keys
+    assert "off_balance" in keys
+    assert "statistical" in keys
+    bank = next(n for n in flat if n["account_key"] == "bank")
+    assert bank["level"] == 3
+    assert bank["account_type"] == "bank"
+    assert bank["reconciliation_required"] is True
+    assert bank["is_control_account"] is True
+    assert bank["is_summary"] is False
+
+
+@pytest.mark.asyncio
+async def test_account_categories_endpoint(client):
+    headers = await _auth_headers(client, "coa-cat")
+    resp = await client.get("/api/v1/financial-kernel/coa/categories", headers=headers)
+    assert resp.status_code == 200
+    cats = {c["category"] for c in resp.json()["data"]}
+    assert "asset" in cats
+    assert "off_balance" in cats
+    assert "statistical" in cats
+
+
+@pytest.mark.asyncio
+async def test_create_account_with_metadata(client):
+    slug = "coa-meta"
+    headers = await _auth_headers(client, slug)
+    await client.post(
+        "/api/v1/financial-kernel/coa/templates/apply",
+        headers=headers,
+        json={"template_key": "coa.enterprise", "template_type": "industry"},
+    )
+    tree = (await client.get("/api/v1/financial-kernel/coa/tree", headers=headers)).json()["data"]
+    cash = next(
+        n for n in flatten_tree(tree) if n["account_key"] == "cash"
+    )
+    resp = await client.post(
+        "/api/v1/financial-kernel/coa/accounts",
+        headers=headers,
+        json={
+            "code": "1030",
+            "name": "Regional Bank",
+            "account_category": "asset",
+            "account_key": "regional_bank",
+            "parent_account_id": cash["id"],
+            "reconciliation_required": True,
+            "is_control_account": True,
+            "tax_code": "N/A",
+            "budget_code": "CASH-REG",
+            "currency": "USD",
+            "effective_date": "2025-01-01",
+        },
+    )
+    assert resp.status_code == 201
+    data = resp.json()["data"]
+    assert data["level"] == 3
+    assert data["reconciliation_required"] is True
+    assert data["currency"] == "USD"
+    assert data["budget_code"] == "CASH-REG"

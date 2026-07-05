@@ -61,6 +61,13 @@ class InMemoryChartOfAccountRepository(IChartOfAccountRepository):
             if a.tenant_id == tenant_id and a.parent_account_id == parent_account_id
         ]
 
+    async def list_by_tree(self, tenant_id: str, tree_id: str) -> list[ChartOfAccount]:
+        return [
+            a
+            for a in self._accounts.values()
+            if a.tenant_id == tenant_id and (a.tree_id == tree_id or a.tree_id is None)
+        ]
+
 
 class InMemoryJournalRepository(IJournalRepository):
     _journals: dict[str, Journal] = {}
@@ -132,6 +139,12 @@ class InMemoryFiscalPeriodRepository(IFiscalPeriodRepository):
 
     async def list_by_tenant(self, tenant_id: str) -> list[FiscalPeriod]:
         return [p for p in self._periods.values() if p.tenant_id == tenant_id]
+
+    async def list_by_fiscal_year(self, tenant_id: str, fiscal_year_id: str) -> list[FiscalPeriod]:
+        return [
+            p for p in self._periods.values()
+            if p.tenant_id == tenant_id and p.fiscal_year_id == fiscal_year_id
+        ]
 
 
 class InMemoryDimensionRepository(IDimensionRepository):

@@ -53,6 +53,239 @@ DEFAULT_POLICY_TEMPLATES: dict[str, list[dict]] = {
             ],
             "approval_required": False,
         },
+        {
+            "key": "kyc.identity.verification_required",
+            "name": "Identity Verification Requirements",
+            "priority": 100,
+            "conditions": [],
+            "rules": [
+                {
+                    "outcome": "require_documents",
+                    "parameters": {
+                        "required_documents": ["passport", "national_id"],
+                        "business_documents": ["business_registration", "tax_number"],
+                    },
+                }
+            ],
+            "approval_required": False,
+        },
+        {
+            "key": "kyc.document.passport_validity",
+            "name": "Passport Validity Minimum",
+            "priority": 100,
+            "conditions": [{"field": "days_until_expiry", "operator": "lt", "value": 90}],
+            "rules": [{"outcome": "reject_expired", "parameters": {"min_validity_days": 90}}],
+            "approval_required": False,
+        },
+        {
+            "key": "kyc.risk.classification",
+            "name": "KYC Risk Classification",
+            "priority": 100,
+            "conditions": [],
+            "rules": [
+                {
+                    "outcome": "low_risk",
+                    "parameters": {"risk_class": "low", "requires_edd": False},
+                }
+            ],
+            "exceptions": [
+                {
+                    "id": "pep_high_risk",
+                    "name": "PEP high risk override",
+                    "conditions": [{"field": "pep_status", "operator": "eq", "value": "confirmed"}],
+                    "rules": [
+                        {
+                            "outcome": "high_risk",
+                            "parameters": {"risk_class": "high", "requires_edd": True},
+                        }
+                    ],
+                }
+            ],
+            "approval_required": False,
+        },
+        {
+            "key": "kyc.dd.enhanced_threshold",
+            "name": "Enhanced Due Diligence Threshold",
+            "priority": 100,
+            "conditions": [{"field": "pep_status", "operator": "in", "value": ["potential_match", "confirmed"]}],
+            "rules": [{"outcome": "enhanced_due_diligence", "parameters": {"requires_edd": True}}],
+            "approval_required": False,
+        },
+        {
+            "key": "kyc.pep.screening",
+            "name": "PEP Screening Rules",
+            "priority": 100,
+            "conditions": [],
+            "rules": [{"outcome": "clear", "parameters": {}}],
+            "exceptions": [
+                {
+                    "id": "pep_confirmed",
+                    "name": "PEP confirmed match",
+                    "conditions": [{"field": "match_score", "operator": "gte", "value": 0.85}],
+                    "rules": [{"outcome": "confirmed_pep", "parameters": {"review_required": True}}],
+                },
+                {
+                    "id": "pep_potential",
+                    "name": "PEP potential match",
+                    "conditions": [{"field": "match_score", "operator": "gte", "value": 0.7}],
+                    "rules": [{"outcome": "potential_match", "parameters": {"review_required": True}}],
+                },
+            ],
+            "approval_required": False,
+        },
+        {
+            "key": "kyc.sanctions.screening",
+            "name": "Sanctions Screening Rules",
+            "priority": 100,
+            "conditions": [],
+            "rules": [{"outcome": "clear", "parameters": {}}],
+            "exceptions": [
+                {
+                    "id": "sanctions_block",
+                    "name": "Sanctions block",
+                    "conditions": [{"field": "match_score", "operator": "gte", "value": 0.9}],
+                    "rules": [{"outcome": "block", "parameters": {"action": "block_onboarding"}}],
+                },
+                {
+                    "id": "sanctions_potential",
+                    "name": "Sanctions potential match",
+                    "conditions": [{"field": "match_score", "operator": "gte", "value": 0.75}],
+                    "rules": [{"outcome": "potential_match", "parameters": {"review_required": True}}],
+                },
+            ],
+            "approval_required": False,
+        },
+        {
+            "key": "kyc.periodic.review_interval",
+            "name": "Periodic KYC Review Interval",
+            "priority": 100,
+            "conditions": [],
+            "rules": [{"outcome": "schedule_review", "parameters": {"interval_days": 365}}],
+            "exceptions": [
+                {
+                    "id": "high_risk_review",
+                    "name": "High risk shorter interval",
+                    "conditions": [{"field": "risk_class", "operator": "eq", "value": "high"}],
+                    "rules": [{"outcome": "schedule_review", "parameters": {"interval_days": 180}}],
+                },
+                {
+                    "id": "edd_review",
+                    "name": "EDD shorter interval",
+                    "conditions": [{"field": "due_diligence_level", "operator": "eq", "value": "enhanced"}],
+                    "rules": [{"outcome": "schedule_review", "parameters": {"interval_days": 90}}],
+                },
+            ],
+            "approval_required": False,
+        },
+        {
+            "key": "kyc.approval.required_level",
+            "name": "KYC Approval Levels",
+            "priority": 100,
+            "conditions": [],
+            "rules": [{"outcome": "approve", "parameters": {"required_levels": 1}}],
+            "exceptions": [
+                {
+                    "id": "edd_approval",
+                    "name": "EDD requires two levels",
+                    "conditions": [{"field": "due_diligence_level", "operator": "eq", "value": "enhanced"}],
+                    "rules": [{"outcome": "approve", "parameters": {"required_levels": 2}}],
+                },
+                {
+                    "id": "pep_approval",
+                    "name": "PEP requires three levels",
+                    "conditions": [{"field": "pep_status", "operator": "eq", "value": "confirmed"}],
+                    "rules": [{"outcome": "approve", "parameters": {"required_levels": 3}}],
+                },
+            ],
+            "approval_required": False,
+        },
+        {
+            "key": "deposit.interest.rate",
+            "name": "Deposit Interest Rate",
+            "priority": 100,
+            "conditions": [],
+            "rules": [{"outcome": "apply_rate", "parameters": {"rate_annual": 2.5}}],
+            "exceptions": [
+                {
+                    "id": "term_rate",
+                    "name": "Term deposit higher rate",
+                    "conditions": [{"field": "deposit_type", "operator": "eq", "value": "term"}],
+                    "rules": [{"outcome": "apply_rate", "parameters": {"rate_annual": 5.0}}],
+                },
+                {
+                    "id": "current_rate",
+                    "name": "Current account lower rate",
+                    "conditions": [{"field": "deposit_type", "operator": "eq", "value": "current"}],
+                    "rules": [{"outcome": "apply_rate", "parameters": {"rate_annual": 0.5}}],
+                },
+            ],
+            "approval_required": False,
+        },
+        {
+            "key": "deposit.early_withdrawal.penalty",
+            "name": "Early Withdrawal Penalty",
+            "priority": 100,
+            "conditions": [],
+            "rules": [{"outcome": "apply_penalty", "parameters": {"penalty_pct": 1.0}}],
+            "exceptions": [
+                {
+                    "id": "near_maturity_waive",
+                    "name": "Waive penalty near maturity",
+                    "conditions": [{"field": "days_to_maturity", "operator": "lte", "value": 7}],
+                    "rules": [{"outcome": "waive_penalty", "parameters": {"penalty_pct": 0.0}}],
+                },
+                {
+                    "id": "large_early_withdrawal",
+                    "name": "Higher penalty for large early withdrawal",
+                    "conditions": [{"field": "amount", "operator": "gte", "value": 50000}],
+                    "rules": [{"outcome": "apply_penalty", "parameters": {"penalty_pct": 2.5}}],
+                },
+            ],
+            "approval_required": False,
+        },
+        {
+            "key": "deposit.approval.required_level",
+            "name": "Deposit Transaction Approval Levels",
+            "priority": 100,
+            "conditions": [],
+            "rules": [{"outcome": "approve", "parameters": {"required_levels": 1}}],
+            "exceptions": [
+                {
+                    "id": "large_withdrawal",
+                    "name": "Large withdrawal requires two levels",
+                    "conditions": [
+                        {"field": "transaction_type", "operator": "eq", "value": "withdrawal"},
+                        {"field": "amount", "operator": "gte", "value": 10000},
+                    ],
+                    "rules": [{"outcome": "approve", "parameters": {"required_levels": 2}}],
+                },
+            ],
+            "approval_required": False,
+        },
+        {
+            "key": "deposit.term.maturity_notice",
+            "name": "Term Deposit Maturity Notice",
+            "priority": 100,
+            "conditions": [],
+            "rules": [{"outcome": "notify", "parameters": {"notice_days": 14}}],
+            "approval_required": False,
+        },
+        {
+            "key": "deposit.recurring.schedule",
+            "name": "Recurring Deposit Schedule",
+            "priority": 100,
+            "conditions": [],
+            "rules": [{"outcome": "schedule", "parameters": {"frequency": "monthly", "grace_days": 3}}],
+            "approval_required": False,
+        },
+        {
+            "key": "deposit.profit.distribution",
+            "name": "Profit Distribution Rules",
+            "priority": 100,
+            "conditions": [],
+            "rules": [{"outcome": "distribute", "parameters": {"profit_share_pct": 3.0}}],
+            "approval_required": False,
+        },
     ],
     "tax": [
         {

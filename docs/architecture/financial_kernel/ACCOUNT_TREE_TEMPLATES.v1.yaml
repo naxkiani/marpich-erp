@@ -26,6 +26,180 @@ account_groups:
   - kpi_metrics
 
 industry_templates:
+  coa.enterprise:
+    name: Enterprise Universal
+    industries: [all]
+    description: Canonical enterprise account tree — unlimited depth, all categories
+    tree:
+      - account_key: assets
+        name: Assets
+        category: asset
+        group: balance_sheet
+        is_posting: false
+        children:
+          - account_key: current_assets
+            name: Current Assets
+            category: asset
+            group: current_assets
+            is_posting: false
+            children:
+              - account_key: cash
+                name: Cash
+                category: asset
+                group: current_assets
+                is_posting: false
+                children:
+                  - account_key: bank
+                    name: Bank
+                    category: asset
+                    account_type: bank
+                    group: current_assets
+                    code_suggestion: "1010"
+                    reconciliation_required: true
+                    is_control_account: true
+                  - account_key: petty_cash
+                    name: Petty Cash
+                    category: asset
+                    account_type: cash
+                    group: current_assets
+                    code_suggestion: "1020"
+              - account_key: receivables
+                name: Receivables
+                category: asset
+                group: current_assets
+                is_posting: false
+                children:
+                  - account_key: accounts_receivable
+                    name: Accounts Receivable
+                    category: asset
+                    account_type: customer
+                    group: current_assets
+                    code_suggestion: "1100"
+                    reconciliation_required: true
+                    is_control_account: true
+              - account_key: inventory
+                name: Inventory
+                category: asset
+                group: current_assets
+                code_suggestion: "1200"
+          - account_key: fixed_assets
+            name: Fixed Assets
+            category: asset
+            group: non_current_assets
+            is_posting: false
+            children:
+              - account_key: property_plant_equipment
+                name: Property, Plant & Equipment
+                category: asset
+                group: non_current_assets
+                code_suggestion: "1500"
+              - account_key: accumulated_depreciation
+                name: Accumulated Depreciation
+                category: asset
+                account_type: contra_asset
+                group: non_current_assets
+                code_suggestion: "1590"
+      - account_key: liabilities
+        name: Liabilities
+        category: liability
+        group: balance_sheet
+        is_posting: false
+        children:
+          - account_key: current_liabilities
+            name: Current Liabilities
+            category: liability
+            group: current_liabilities
+            is_posting: false
+            children:
+              - account_key: accounts_payable
+                name: Accounts Payable
+                category: liability
+                account_type: vendor
+                group: current_liabilities
+                code_suggestion: "2100"
+                reconciliation_required: true
+                is_control_account: true
+              - account_key: accrued_expenses
+                name: Accrued Expenses
+                category: liability
+                group: current_liabilities
+                code_suggestion: "2200"
+          - account_key: long_term_liabilities
+            name: Long Term Liabilities
+            category: liability
+            group: long_term_liabilities
+            is_posting: false
+            children:
+              - account_key: long_term_debt
+                name: Long Term Debt
+                category: liability
+                group: long_term_liabilities
+                code_suggestion: "2500"
+      - account_key: equity
+        name: Equity
+        category: equity
+        group: equity_capital
+        is_posting: false
+        children:
+          - account_key: share_capital
+            name: Share Capital
+            category: equity
+            group: equity_capital
+            code_suggestion: "3100"
+          - account_key: retained_earnings
+            name: Retained Earnings
+            category: equity
+            group: equity_capital
+            code_suggestion: "3200"
+      - account_key: revenue
+        name: Revenue
+        category: revenue
+        group: operating_revenue
+        is_posting: false
+        children:
+          - account_key: operating_revenue
+            name: Operating Revenue
+            category: revenue
+            group: operating_revenue
+            code_suggestion: "4100"
+            tax_code: "VAT_OUTPUT"
+            budget_code: "REV-OPS"
+      - account_key: expenses
+        name: Expenses
+        category: expense
+        group: operating_expense
+        is_posting: false
+        children:
+          - account_key: operating_expenses
+            name: Operating Expenses
+            category: expense
+            group: operating_expense
+            code_suggestion: "5100"
+            tax_code: "VAT_INPUT"
+            budget_code: "EXP-OPS"
+      - account_key: off_balance
+        name: Off Balance Sheet
+        category: off_balance
+        group: memorandum
+        is_posting: false
+        children:
+          - account_key: contingent_liabilities
+            name: Contingent Liabilities
+            category: off_balance
+            group: memorandum
+            code_suggestion: "9000"
+      - account_key: statistical
+        name: Statistical Accounts
+        category: statistical
+        group: kpi_metrics
+        is_posting: false
+        children:
+          - account_key: headcount
+            name: Headcount
+            category: statistical
+            group: kpi_metrics
+            code_suggestion: "STAT-01"
+
   coa.education:
     name: Education
     industries: [university, school]
@@ -213,6 +387,17 @@ industry_templates:
             category: revenue
             group: operating_revenue
             code_suggestion: "4100"
+      - account_key: expenses
+        name: Expenses
+        category: expense
+        group: operating_expenses
+        is_posting: false
+        children:
+          - account_key: interest_expense
+            name: Interest Expense
+            category: expense
+            group: operating_expenses
+            code_suggestion: "5100"
 
   coa.islamic_banking:
     name: Islamic Banking

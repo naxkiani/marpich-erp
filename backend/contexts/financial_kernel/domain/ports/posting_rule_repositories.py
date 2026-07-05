@@ -1,0 +1,13 @@
+"""Posting rule repository port."""
+from __future__ import annotations
+
+from typing import Protocol
+
+from contexts.financial_kernel.domain.aggregates.posting_rules import ConfigurablePostingRule
+
+
+class IPostingRuleRepository(Protocol):
+    async def save(self, rule: ConfigurablePostingRule) -> None: ...
+    async def find_by_rule_id(self, tenant_id: str, rule_id: str) -> ConfigurablePostingRule | None: ...
+    async def list_by_tenant(self, tenant_id: str) -> list[ConfigurablePostingRule]: ...
+    async def delete(self, tenant_id: str, rule_id: str) -> bool: ...

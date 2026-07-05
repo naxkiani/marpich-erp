@@ -1,0 +1,13 @@
+"""General Ledger AI repository ports."""
+from __future__ import annotations
+
+from typing import Protocol
+
+from contexts.financial_kernel.domain.aggregates.gl_ai import GLAIJob
+
+
+class IGLAIJobRepository(Protocol):
+    async def save(self, job: GLAIJob) -> None: ...
+    async def find_by_id(self, job_id: str) -> GLAIJob | None: ...
+    async def list_by_tenant(self, tenant_id: str) -> list[GLAIJob]: ...
+    async def list_by_capability(self, tenant_id: str, capability: str) -> list[GLAIJob]: ...

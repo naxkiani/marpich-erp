@@ -1,0 +1,71 @@
+# Enterprise KYC Platform — API Catalog
+# See docs/adr/089-enterprise-kyc-platform.md
+
+version: 1
+owner: banking
+module: kyc_platform
+api_prefix: /api/v1/banking/kyc
+adr: docs/adr/089-enterprise-kyc-platform.md
+
+capabilities:
+  - identity_verification
+  - passport
+  - national_id
+  - business_registration
+  - tax_number
+  - address_verification
+  - risk_classification
+  - customer_due_diligence
+  - enhanced_due_diligence
+  - pep_flag
+  - sanctions_screening_hook
+  - document_verification
+  - biometric_extension_hook
+  - workflow_approval
+  - periodic_review
+  - audit_trail
+  - policy_engine_rules
+
+policy_domain: bank
+policy_keys:
+  - kyc.identity.verification_required
+  - kyc.document.passport_validity
+  - kyc.risk.classification
+  - kyc.dd.enhanced_threshold
+  - kyc.pep.screening
+  - kyc.sanctions.screening
+  - kyc.periodic.review_interval
+  - kyc.approval.required_level
+
+events_published:
+  - banking.kyc.case.opened
+  - banking.kyc.case.approved
+  - banking.kyc.pep.flagged
+  - banking.kyc.sanctions.hit
+  - banking.kyc.review.due
+  - banking.kyc.biometric.requested
+
+endpoints:
+  - GET /catalog
+  - GET /policy-keys
+  - GET /workflow
+  - GET /dashboard
+  - POST /cases
+  - GET /cases
+  - GET /cases/{case_id}
+  - POST /cases/{case_id}/documents
+  - POST /documents/{document_id}/verify
+  - POST /cases/{case_id}/addresses
+  - POST /addresses/{address_id}/verify
+  - POST /cases/{case_id}/screening/pep
+  - POST /cases/{case_id}/screening/sanctions
+  - POST /cases/{case_id}/classify-risk
+  - POST /cases/{case_id}/submit
+  - POST /cases/{case_id}/approve
+  - POST /cases/{case_id}/reject
+  - POST /cases/{case_id}/reviews
+  - POST /reviews/{review_id}/complete
+  - POST /cases/{case_id}/biometric
+  - POST /biometric/{hook_id}/complete
+  - GET /cases/{case_id}/audit
+  - POST /policies/evaluate

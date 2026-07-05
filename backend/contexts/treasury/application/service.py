@@ -314,6 +314,8 @@ class TreasuryApplicationService:
                 transfer_id=str(transfer.id),
                 from_account_id=transfer.from_account_id,
                 to_account_id=transfer.to_account_id,
+                from_account_type=from_acc.account_type,
+                to_account_type=to_acc.account_type,
                 amount=transfer.amount,
                 currency=transfer.currency,
                 instrument=transfer.instrument,

@@ -64,7 +64,7 @@ class FinancialAIApplicationService:
     async def _account_types(self, tenant_id: str) -> dict[str, str]:
         accounts = await self._accounts.list_by_tenant(tenant_id)
         return {
-            a.code: (a.account_type.value if a.account_type else "")
+            a.code: a.account_category.value
             for a in accounts
         }
 

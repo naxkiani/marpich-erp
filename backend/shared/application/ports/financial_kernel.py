@@ -50,6 +50,24 @@ class TrialBalanceLine:
 
 
 class IFinancialKernel(Protocol):
+    async def execute_posting(
+        self,
+        *,
+        tenant_id: str,
+        rule_id: str,
+        source_context: str,
+        source_document_id: str,
+        currency: str,
+        correlation_id: str,
+        amount: float | None = None,
+        account_mappings: dict[str, str] | None = None,
+        lines: list[JournalLine] | None = None,
+        description: str = "",
+        dimensions: dict[str, str] | None = None,
+        tax_amount: float | None = None,
+        idempotency_key: str | None = None,
+    ) -> JournalPostResult: ...
+
     async def post_journal(
         self,
         *,

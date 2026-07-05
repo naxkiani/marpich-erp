@@ -1,0 +1,16 @@
+"""Financial audit repository ports — append-only, no delete."""
+from __future__ import annotations
+
+from typing import Protocol
+
+from contexts.financial_kernel.domain.aggregates.financial_audit import FinancialAuditEntry
+
+
+class IFinancialAuditRepository(Protocol):
+    async def save(self, entry: FinancialAuditEntry) -> None: ...
+    async def find_by_id(self, entry_id: str) -> FinancialAuditEntry | None: ...
+    async def list_by_tenant(self, tenant_id: str) -> list[FinancialAuditEntry]: ...
+    async def list_by_resource(
+        self, tenant_id: str, resource_type: str, resource_id: str
+    ) -> list[FinancialAuditEntry]: ...
+    async def last_tamper_hash(self, tenant_id: str) -> str | None: ...

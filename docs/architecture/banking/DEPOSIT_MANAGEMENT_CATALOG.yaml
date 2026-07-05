@@ -1,0 +1,65 @@
+# Deposit Management — API Catalog
+# See docs/adr/090-deposit-management.md
+
+version: 1
+owner: banking
+module: deposit_management
+api_prefix: /api/v1/banking/deposits
+adr: docs/adr/090-deposit-management.md
+
+capabilities:
+  - savings
+  - current
+  - term
+  - recurring
+  - profit_distribution_rules
+  - interest_calculation
+  - interest_accrual
+  - maturity
+  - renewal
+  - early_withdrawal_rules
+  - deposit_certificates
+  - deposit_statements
+  - automatic_gl_posting
+  - approval_workflow
+  - audit_trail
+
+policy_domain: bank
+policy_keys:
+  - deposit.interest.rate
+  - deposit.early_withdrawal.penalty
+  - deposit.term.maturity_notice
+  - deposit.recurring.schedule
+  - deposit.profit.distribution
+  - deposit.approval.required_level
+
+events_published:
+  - banking.deposit.posted
+  - banking.withdrawal.posted
+  - banking.interest.accrued
+  - banking.deposit.matured
+
+posting_rules:
+  - bank_deposit
+  - bank_withdrawal
+  - interest_accrual
+
+endpoints:
+  - GET /catalog
+  - GET /policy-keys
+  - GET /dashboard
+  - POST /open
+  - GET /
+  - GET /{deposit_id}
+  - POST /{deposit_id}/approve
+  - POST /transactions
+  - POST /transactions/{transaction_id}/approve
+  - POST /interest/accrue
+  - POST /interest/post
+  - POST /{deposit_id}/maturity
+  - POST /{deposit_id}/renew
+  - POST /{deposit_id}/certificate
+  - POST /{deposit_id}/statement
+  - POST /profit-rules
+  - GET /profit-rules/list
+  - GET /{deposit_id}/audit
