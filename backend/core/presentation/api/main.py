@@ -71,9 +71,11 @@ from contexts.banking.container import (
     get_banking_deposit_management_service,
     get_banking_kyc_platform_service,
     get_banking_loan_management_service,
+    get_banking_interest_calculation_service,
 )
 from contexts.banking.presentation.banking_customer_account_router import banking_customer_account_router
 from contexts.banking.presentation.banking_deposit_router import banking_deposit_router
+from contexts.banking.presentation.banking_interest_router import banking_interest_router
 from contexts.banking.presentation.banking_kyc_router import banking_kyc_router
 from contexts.banking.presentation.banking_loan_router import banking_loan_router
 from contexts.financial_kernel.container import (
@@ -139,6 +141,7 @@ async def lifespan(_app: FastAPI):
     get_banking_kyc_platform_service()
     get_banking_deposit_management_service()
     get_banking_loan_management_service()
+    get_banking_interest_calculation_service()
     get_financial_kernel_service()
     get_payment_service()
     get_financial_document_service()
@@ -235,6 +238,7 @@ app.include_router(banking_customer_account_router, prefix="/api/v1")
 app.include_router(banking_kyc_router, prefix="/api/v1")
 app.include_router(banking_deposit_router, prefix="/api/v1")
 app.include_router(banking_loan_router, prefix="/api/v1")
+app.include_router(banking_interest_router, prefix="/api/v1")
 
 
 @app.get("/api/v1/health", tags=["Monitoring"])

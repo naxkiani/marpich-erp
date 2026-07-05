@@ -1,4 +1,4 @@
-"""Banking DI — Customer Account + KYC Platform + Deposit Management + Loan Platform."""
+"""Banking DI — Customer Account + KYC + Deposit + Loan + Interest Calculation."""
 from __future__ import annotations
 
 from contexts.banking.application.customer_account_service import (
@@ -9,6 +9,9 @@ from contexts.banking.application.deposit_management_service import (
 )
 from contexts.banking.application.kyc_platform_service import (
     BankingKycPlatformApplicationService,
+)
+from contexts.banking.application.interest_calculation_service import (
+    BankingInterestCalculationApplicationService,
 )
 from contexts.banking.application.loan_management_service import (
     BankingLoanManagementApplicationService,
@@ -40,6 +43,11 @@ from contexts.banking.infrastructure.persistence.kyc_platform_memory_store impor
     InMemoryKycScreeningRepository,
     InMemoryKycWorkflowRepository,
 )
+from contexts.banking.infrastructure.persistence.interest_calculation_memory_store import (
+    InMemoryInterestCalculationAuditRepository,
+    InMemoryInterestRateChangeRepository,
+    InMemoryInterestRateProfileRepository,
+)
 from contexts.banking.infrastructure.persistence.loan_management_memory_store import (
     InMemoryLoanAuditRepository,
     InMemoryLoanCollateralRepository,
@@ -61,10 +69,12 @@ _service: BankingCustomerAccountApplicationService | None = None
 _kyc_service: BankingKycPlatformApplicationService | None = None
 _deposit_service: BankingDepositManagementApplicationService | None = None
 _loan_service: BankingLoanManagementApplicationService | None = None
+_interest_service: BankingInterestCalculationApplicationService | None = None
 _registered = False
 _kyc_registered = False
 _deposit_registered = False
 _loan_registered = False
+_interest_registered = False
 
 
 def get_banking_customer_account_service() -> BankingCustomerAccountApplicationService:
@@ -166,17 +176,37 @@ def get_banking_loan_management_service() -> BankingLoanManagementApplicationSer
     return _loan_service
 
 
+def get_banking_interest_calculation_service() -> BankingInterestCalculationApplicationService:
+    global _interest_service, _interest_registered
+    if _interest_service is None:
+        _interest_service = BankingInterestCalculationApplicationService(
+            profiles=InMemoryInterestRateProfileRepository(),
+            rate_changes=InMemoryInterestRateChangeRepository(),
+            audits=InMemoryInterestCalculationAuditRepository(),
+            policy=get_policy_evaluator(),
+        )
+    if not _interest_registered:
+        InProcessEventBus.subscribe(
+            "platform.tenant.provisioned",
+            _interest_service.handle_tenant_provisioned,
+        )
+        _interest_registered = True
+    return _interest_service
+
+
 def reset_banking_customer_account_service() -> None:
-    global _service, _kyc_service, _deposit_service, _loan_service
-    global _registered, _kyc_registered, _deposit_registered, _loan_registered
+    global _service, _kyc_service, _deposit_service, _loan_service, _interest_service
+    global _registered, _kyc_registered, _deposit_registered, _loan_registered, _interest_registered
     _service = None
     _kyc_service = None
     _deposit_service = None
     _loan_service = None
+    _interest_service = None
     _registered = False
     _kyc_registered = False
     _deposit_registered = False
     _loan_registered = False
+    _interest_registered = False
     InMemoryCustomerRepository.reset()
     InMemoryKycRepository.reset()
     InMemoryAccountProductRepository.reset()
@@ -206,3 +236,6 @@ def reset_banking_customer_account_service() -> None:
     InMemoryLoanCreditRiskRepository.reset()
     InMemoryLoanWorkflowRepository.reset()
     InMemoryLoanAuditRepository.reset()
+    InMemoryInterestRateProfileRepository.reset()
+    InMemoryInterestRateChangeRepository.reset()
+    InMemoryInterestCalculationAuditRepository.reset()

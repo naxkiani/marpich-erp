@@ -26,6 +26,9 @@ aggregates:
   - LoanInstallment
   - LoanTransaction
   - LoanCreditRiskAnalysis
+  - InterestRateProfile
+  - InterestRateChange
+  - InterestCalculationAudit
 
 banking_segments:
   - retail_banking
@@ -70,6 +73,9 @@ publishes:
   - banking.aml.alert.raised
   - banking.card.issued
   - banking.interest.accrued
+  - banking.interest.calculated
+  - banking.interest.simulated
+  - banking.interest.rate.changed
   - banking.deposit.matured
   - banking.fee.charged
 
