@@ -58,6 +58,13 @@ capability_domains:
     catalog: docs/architecture/banking/LOAN_MANAGEMENT_CATALOG.yaml
     adr: docs/adr/091-loan-management.md
     gl_rules: [loan_disbursement, loan_repayment]
+  interest_calculation:
+    label: Interest Calculation
+    status: implemented
+    aggregates: [InterestRateProfile, InterestRateChange, InterestCalculationAudit]
+    catalog: docs/architecture/banking/INTEREST_CALCULATION_CATALOG.yaml
+    adr: docs/adr/092-interest-calculation-engine.md
+    gl_rules: [interest_accrual]
   cards:
     label: Cards
     status: planned
@@ -141,6 +148,8 @@ permissions:
   banking.lending.read: View loans and facilities
   banking.lending.write: Create loan applications
   banking.lending.approve: Approve and disburse loans
+  banking.interest.read: View interest profiles, calculations, and audit history
+  banking.interest.write: Create rate profiles and run calculations
   banking.cards.read: View cards
   banking.cards.write: Issue and manage cards
   banking.transfers.read: View transfers
@@ -164,6 +173,9 @@ integration_events:
     - banking.aml.alert.raised
     - banking.card.issued
     - banking.interest.accrued
+    - banking.interest.calculated
+    - banking.interest.simulated
+    - banking.interest.rate.changed
     - banking.fee.charged
   subscribes:
     - platform.tenant.provisioned

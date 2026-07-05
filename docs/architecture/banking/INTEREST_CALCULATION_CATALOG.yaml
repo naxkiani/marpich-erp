@@ -1,0 +1,61 @@
+# Interest Calculation Engine — API Catalog
+# See docs/adr/092-interest-calculation-engine.md
+
+version: 1
+owner: banking
+module: interest_calculation
+api_prefix: /api/v1/banking/interest
+adr: docs/adr/092-interest-calculation-engine.md
+
+capabilities:
+  - daily
+  - monthly
+  - annual
+  - simple
+  - compound
+  - profit_sharing
+  - grace_period
+  - penalty_interest
+  - fixed
+  - floating
+  - promotional
+  - historical_rate_changes
+  - calculation_audit_history
+  - simulation_mode
+  - configurable_policies
+
+policy_domain: bank
+policy_keys:
+  - interest.calculation.method
+  - interest.compounding.frequency
+  - interest.rate.fixed
+  - interest.rate.floating
+  - interest.rate.promotional
+  - interest.grace.period
+  - interest.penalty.rate
+  - interest.profit_sharing
+  - deposit.interest.rate
+  - loan.interest.rate
+
+events_published:
+  - banking.interest.calculated
+  - banking.interest.simulated
+  - banking.interest.rate.changed
+
+permissions:
+  - banking.interest.read
+  - banking.interest.write
+
+endpoints:
+  - GET /catalog
+  - GET /policy-keys
+  - GET /dashboard
+  - POST /profiles
+  - GET /profiles
+  - GET /profiles/{profile_id}
+  - POST /profiles/{profile_id}/rate-changes
+  - GET /profiles/{profile_id}/rate-history
+  - POST /calculate
+  - POST /simulate
+  - GET /audit
+  - GET /audit/{audit_id}

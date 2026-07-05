@@ -389,6 +389,83 @@ DEFAULT_POLICY_TEMPLATES: dict[str, list[dict]] = {
             "rules": [{"outcome": "apply_haircut", "parameters": {"haircut_pct": 10.0}}],
             "approval_required": False,
         },
+        {
+            "key": "interest.calculation.method",
+            "name": "Interest Calculation Method",
+            "priority": 100,
+            "conditions": [],
+            "rules": [{"outcome": "apply_method", "parameters": {"method": "simple"}}],
+            "exceptions": [
+                {
+                    "id": "term_compound",
+                    "name": "Term deposits use compound",
+                    "conditions": [{"field": "product_context", "operator": "eq", "value": "deposit"}],
+                    "rules": [{"outcome": "apply_method", "parameters": {"method": "compound"}}],
+                },
+            ],
+            "approval_required": False,
+        },
+        {
+            "key": "interest.compounding.frequency",
+            "name": "Compounding Frequency",
+            "priority": 100,
+            "conditions": [],
+            "rules": [{"outcome": "apply", "parameters": {"periods_per_year": 12}}],
+            "approval_required": False,
+        },
+        {
+            "key": "interest.rate.fixed",
+            "name": "Fixed Interest Rate",
+            "priority": 100,
+            "conditions": [],
+            "rules": [{"outcome": "apply_rate", "parameters": {"rate_annual": 5.0}}],
+            "approval_required": False,
+        },
+        {
+            "key": "interest.rate.floating",
+            "name": "Floating Interest Rate",
+            "priority": 100,
+            "conditions": [],
+            "rules": [
+                {
+                    "outcome": "apply_rate",
+                    "parameters": {"index_rate_annual": 4.0, "spread_bps": 150, "index_ref": "SOFR"},
+                }
+            ],
+            "approval_required": False,
+        },
+        {
+            "key": "interest.rate.promotional",
+            "name": "Promotional Interest Rate",
+            "priority": 100,
+            "conditions": [],
+            "rules": [{"outcome": "apply_rate", "parameters": {"promotional_rate_annual": 3.5, "duration_days": 90}}],
+            "approval_required": False,
+        },
+        {
+            "key": "interest.grace.period",
+            "name": "Interest Grace Period",
+            "priority": 100,
+            "conditions": [],
+            "rules": [{"outcome": "apply_grace", "parameters": {"grace_days": 7}}],
+            "approval_required": False,
+        },
+        {
+            "key": "interest.penalty.rate",
+            "name": "Penalty Interest Rate",
+            "priority": 100,
+            "conditions": [],
+            "rules": [{"outcome": "apply_penalty", "parameters": {"penalty_multiplier": 1.5}}],
+            "approval_required": False,
+        },
+        {
+            "key": "interest.profit_sharing",
+            "name": "Profit Sharing Allocation",
+            "priority": 100,
+            "conditions": [],
+            "rules": [{"outcome": "distribute", "parameters": {"profit_share_pct": 0.0}}],
+            "approval_required": False,
+        },
     ],
     "tax": [
         {
