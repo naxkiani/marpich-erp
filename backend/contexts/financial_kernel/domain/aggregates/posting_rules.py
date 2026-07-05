@@ -22,6 +22,7 @@ class EnterprisePostingRuleType(StrEnum):
     INTEREST_ACCRUAL = "interest_accrual"
     LOAN_DISBURSEMENT = "loan_disbursement"
     LOAN_REPAYMENT = "loan_repayment"
+    BANK_TRANSFER = "bank_transfer"
     TREASURY_TRANSFER = "treasury_transfer"
     TREASURY_INTERNAL_TRANSFER = "treasury_internal_transfer"
     TREASURY_BANK_TRANSFER = "treasury_bank_transfer"
@@ -266,6 +267,19 @@ PLATFORM_POSTING_RULES: dict[str, PostingRuleDefinition] = {
         line_templates=(_line("debit", "debit"), _line("credit", "credit")),
         approval_required=False,
         description="Customer loan repayment — Dr cash / Cr loans receivable",
+    ),
+    EnterprisePostingRuleType.BANK_TRANSFER.value: PostingRuleDefinition(
+        rule_id="bank_transfer",
+        label="Customer Bank Transfer",
+        module="banking",
+        journal_type="bank",
+        account_slots=(
+            _slot("debit", "Source deposits", account_key="customer_deposits", role="liability"),
+            _slot("credit", "Destination deposits", account_key="customer_deposits", role="liability"),
+        ),
+        line_templates=(_line("debit", "debit"), _line("credit", "credit")),
+        approval_required=False,
+        description="Customer transfer — Dr source deposits / Cr destination deposits",
     ),
     EnterprisePostingRuleType.TREASURY_TRANSFER.value: PostingRuleDefinition(
         rule_id="treasury_transfer",

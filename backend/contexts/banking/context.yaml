@@ -29,6 +29,11 @@ aggregates:
   - InterestRateProfile
   - InterestRateChange
   - InterestCalculationAudit
+  - PaymentBeneficiary
+  - PaymentTransfer
+  - PaymentBatch
+  - StandingOrder
+  - PaymentFraudCheck
 
 banking_segments:
   - retail_banking
@@ -76,6 +81,7 @@ publishes:
   - banking.interest.calculated
   - banking.interest.simulated
   - banking.interest.rate.changed
+  - banking.payment.fraud.flagged
   - banking.deposit.matured
   - banking.fee.charged
 

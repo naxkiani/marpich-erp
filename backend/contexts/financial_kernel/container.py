@@ -184,6 +184,10 @@ def get_financial_kernel_service() -> FinancialKernelApplicationService:
             "banking.loan.repayment.posted",
             _banking_bridge.handle_loan_repayment_posted,
         )
+        InProcessEventBus.subscribe(
+            "banking.transfer.posted",
+            _banking_bridge.handle_transfer_posted,
+        )
         _registered = True
     return _service
 

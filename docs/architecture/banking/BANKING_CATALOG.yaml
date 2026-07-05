@@ -71,9 +71,11 @@ capability_domains:
     aggregates: [Card, CardTransaction]
     gl_rules: [card_settlement, bank_fee]
   transfers:
-    label: Transfers
-    status: planned
-    aggregates: [Transfer, Beneficiary]
+    label: Transfers & Payments
+    status: implemented
+    aggregates: [PaymentTransfer, PaymentBeneficiary, PaymentBatch, StandingOrder, PaymentFraudCheck]
+    catalog: docs/architecture/banking/PAYMENT_PLATFORM_CATALOG.yaml
+    adr: docs/adr/093-banking-payment-platform.md
     gl_rules: [bank_transfer]
   branch_operations:
     label: Branch Banking
