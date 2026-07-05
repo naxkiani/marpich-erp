@@ -6,11 +6,13 @@ from typing import Any
 
 import yaml
 
+from contexts.financial_kernel.domain.aggregates.account_types import AccountCategory
 from contexts.financial_kernel.domain.aggregates.chart_of_account import (
-    AccountCategory,
+    AccountStatus,
     ChartOfAccount,
     TemplateSource,
 )
+from contexts.financial_kernel.domain.services.coa_engine import template_node_metadata
 
 _REPO_ROOT = Path(__file__).resolve().parents[5]
 _TEMPLATE_PATH = _REPO_ROOT / "docs/architecture/financial_kernel/ACCOUNT_TREE_TEMPLATES.v1.yaml"
@@ -165,11 +167,14 @@ def _materialize_nodes(
     for node in nodes:
         account_key = node["account_key"]
         path = f"{parent_path}/{account_key}" if parent_path else account_key
+        meta = template_node_metadata(node)
+        node_type = node.get("account_type")
         account = ChartOfAccount.create(
             tenant_id=tenant_id,
             code=resolve_account_code(node, code_overrides=code_overrides, code_prefix=code_prefix),
             name=node["name"],
             account_category=AccountCategory(node["category"]),
+            account_type=node_type,
             account_key=account_key,
             parent_account_id=parent_id,
             level=level,
@@ -179,6 +184,13 @@ def _materialize_nodes(
             template_source=template_source,
             template_key=template_key,
             country_code=country_code or node.get("country_code"),
+            currency=meta["currency"],
+            is_control_account=meta["is_control_account"],
+            reconciliation_required=meta["reconciliation_required"],
+            tax_code=meta["tax_code"],
+            budget_code=meta["budget_code"],
+            status=meta["status"],
+            effective_date=meta["effective_date"],
         )
         accounts.append(account)
         children = node.get("children") or []

@@ -1,0 +1,238 @@
+# Enterprise Banking Platform — API Catalog
+# See docs/architecture/ENTERPRISE_BANKING_PLATFORM.md
+
+version: 1
+owner: banking
+kernel_satellite: false
+industry_extension: true
+gl_bridge: docs/architecture/banking/BANKING_GL_BRIDGE.md
+adr: docs/adr/087-enterprise-banking-platform.md
+
+law:
+  kernel_owns_gl: true
+  treasury_not_banking: true
+  policy_engine_owns_regulations: true
+  hardcoded_country_rules_forbidden: true
+  islamic_compose_not_fork: true
+  autonomous_gl_posting: true
+  gl_owner: financial_kernel
+
+platform_position:
+  owner: banking
+  gl_posting: financial_kernel
+  payments: financial_kernel
+  currency: financial_kernel
+  workflow: financial_kernel
+  security: financial_kernel
+  audit: financial_kernel
+  regulations: policy_engine
+  corporate_liquidity: treasury
+
+banking_segments:
+  - retail_banking
+  - corporate_banking
+  - islamic_banking
+  - microfinance
+  - digital_banking
+  - branch_banking
+  - agency_banking
+
+capability_domains:
+  customer_kyc:
+    label: Customer & KYC
+    status: implemented
+    aggregates: [BankingCustomer, BankingCustomerKYC, KycCase, KycDocument]
+    catalog: docs/architecture/banking/KYC_PLATFORM_CATALOG.yaml
+    adr: docs/adr/089-enterprise-kyc-platform.md
+    gl_rules: []
+  deposits:
+    label: Deposits
+    status: partial
+    aggregates: [BankingAccount, BankingAccountProduct]
+    catalog: docs/architecture/banking/BANKING_CUSTOMER_ACCOUNT_CATALOG.yaml
+    gl_rules: [bank_deposit, bank_withdrawal]
+  lending:
+    label: Lending
+    status: planned
+    aggregates: [Loan, CreditFacility, RepaymentSchedule]
+    gl_rules: [loan_disbursement, loan_repayment, interest_accrual]
+  cards:
+    label: Cards
+    status: planned
+    aggregates: [Card, CardTransaction]
+    gl_rules: [card_settlement, bank_fee]
+  transfers:
+    label: Transfers
+    status: planned
+    aggregates: [Transfer, Beneficiary]
+    gl_rules: [bank_transfer]
+  branch_operations:
+    label: Branch Banking
+    status: planned
+    aggregates: [BankBranch, ChannelSession]
+    gl_rules: []
+  agency_operations:
+    label: Agency Banking
+    status: planned
+    aggregates: [AgencyAgent, ChannelSession]
+    gl_rules: []
+  product_catalog:
+    label: Product Catalog
+    status: planned
+    aggregates: [DepositProduct]
+    gl_rules: []
+
+kernel_delegation:
+  general_ledger:
+    port: IFinancialKernel
+    methods: [execute_posting, post_journal]
+  payments:
+    api: /api/v1/financial-kernel/payments
+    events: [financial_kernel.payment.settled]
+  currency:
+    api: /api/v1/financial-kernel/currency
+    events: [currency_exchange.deal.settled]
+  workflow:
+    api: /api/v1/financial-kernel/workflows
+    events: [workflow.approval.completed]
+  security:
+    api: /api/v1/financial-kernel/security
+  audit:
+    events: [financial_kernel.audit.recorded]
+  policy:
+    port: IPolicyEvaluator
+    api: /api/v1/policies/evaluate
+    domain: banking
+
+api_prefix: /api/v1/banking
+
+account_types:
+  - savings
+  - current
+  - fixed_deposit
+  - corporate_current
+  - microfinance_group
+  - islamic_deposit
+
+loan_types:
+  - personal
+  - corporate_facility
+  - microfinance_group
+  - murabaha
+  - ijara
+
+channels:
+  - retail
+  - corporate
+  - digital
+  - branch
+  - agency
+  - microfinance
+  - atm
+
+permissions:
+  banking.dashboard.read: Banking dashboard and catalog
+  banking.customers.read: View customers and KYC
+  banking.customers.write: Create and update customers
+  banking.accounts.read: View accounts and balances
+  banking.accounts.write: Open accounts, deposit, withdraw
+  banking.lending.read: View loans and facilities
+  banking.lending.write: Create loan applications
+  banking.lending.approve: Approve and disburse loans
+  banking.cards.read: View cards
+  banking.cards.write: Issue and manage cards
+  banking.transfers.read: View transfers
+  banking.transfers.write: Initiate transfers
+  banking.transfers.execute: Execute approved transfers
+  banking.branch.operate: Branch teller operations
+  banking.agency.operate: Agency agent operations
+  banking.admin: Product and policy administration
+  banking.compliance.review: AML and compliance review
+
+integration_events:
+  publishes:
+    - banking.account.opened
+    - banking.deposit.posted
+    - banking.withdrawal.posted
+    - banking.transfer.posted
+    - banking.transaction.posted
+    - banking.loan.disbursed
+    - banking.loan.repayment.posted
+    - banking.kyc.verified
+    - banking.aml.alert.raised
+    - banking.card.issued
+    - banking.interest.accrued
+    - banking.fee.charged
+  subscribes:
+    - platform.tenant.provisioned
+    - identity.user.created
+    - financial_kernel.payment.settled
+    - financial_kernel.journal.posted
+    - workflow.approval.completed
+    - islamic_banking.murabaha.executed
+    - islamic_banking.ijara.executed
+
+gl_posting_rules:
+  - bank_deposit
+  - bank_withdrawal
+  - bank_transfer
+  - loan_disbursement
+  - loan_repayment
+  - interest_accrual
+  - bank_fee
+  - card_settlement
+  - exchange_transaction
+
+endpoints:
+  planned:
+    - method: GET
+      path: /catalog
+      permission: banking.dashboard.read
+    - method: GET
+      path: /dashboard
+      permission: banking.dashboard.read
+    - method: POST
+      path: /customers
+      permission: banking.customers.write
+    - method: GET
+      path: /customers/{id}
+      permission: banking.customers.read
+    - method: POST
+      path: /customers/{id}/kyc
+      permission: banking.customers.write
+    - method: POST
+      path: /accounts
+      permission: banking.accounts.write
+    - method: GET
+      path: /accounts
+      permission: banking.accounts.read
+    - method: POST
+      path: /accounts/{id}/deposit
+      permission: banking.accounts.write
+    - method: POST
+      path: /accounts/{id}/withdraw
+      permission: banking.accounts.write
+    - method: POST
+      path: /loans
+      permission: banking.lending.write
+    - method: POST
+      path: /loans/{id}/disburse
+      permission: banking.lending.approve
+    - method: POST
+      path: /loans/{id}/repay
+      permission: banking.accounts.write
+    - method: POST
+      path: /transfers
+      permission: banking.transfers.write
+    - method: POST
+      path: /transfers/{id}/execute
+      permission: banking.transfers.execute
+    - method: GET
+      path: /branches
+      permission: banking.branch.operate
+    - method: GET
+      path: /agencies
+      permission: banking.agency.operate
+    - method: POST
+      path: /policies/evaluate
+      permission: banking.dashboard.read

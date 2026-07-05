@@ -1,18 +1,78 @@
 context: banking
-display_name: Banking
-type: specialized
-description: "Core banking \u2014 accounts, loans, cards, transfers"
+display_name: Enterprise Banking Platform
+type: industry_extension
+description: >
+  Core banking industry extension — retail, corporate, microfinance, digital,
+  branch, and agency banking. Built on Financial Kernel. Does NOT duplicate GL,
+  treasury, payments, currency, workflow, security, or audit.
+kernel_satellite: false
+financial_kernel_extension: true
+
 aggregates:
-- BankAccount
-- Loan
-- Card
-- Transfer
-- CustomerKYC
+  - BankingCustomer
+  - BankingCustomerKYC
+  - BankingAccount
+  - BankingAccountProduct
+  - BankingAccountAudit
+  - DepositProfile
+  - DepositTransaction
+  - DepositInterestAccrual
+  - DepositCertificate
+  - DepositStatement
+  - ProfitDistributionRule
+
+banking_segments:
+  - retail_banking
+  - corporate_banking
+  - islamic_banking
+  - microfinance
+  - digital_banking
+  - branch_banking
+  - agency_banking
+
+kernel_delegation:
+  gl: financial_kernel
+  payments: financial_kernel
+  currency: financial_kernel
+  workflow: financial_kernel
+  security: financial_kernel
+  audit: financial_kernel
+  corporate_liquidity: treasury
+
+policies:
+  domain: banking
+  catalog: docs/architecture/banking/BANKING_POLICY_CATALOG.yaml
+  evaluate_via: policy_engine_port
+  hardcoded_regulations_forbidden: true
+
 publishes:
-- banking.account.opened
-- banking.transaction.posted
-- banking.loan.disbursed
+  - banking.account.opened
+  - banking.deposit.posted
+  - banking.withdrawal.posted
+  - banking.transfer.posted
+  - banking.transaction.posted
+  - banking.loan.disbursed
+  - banking.loan.repayment.posted
+  - banking.kyc.verified
+  - banking.kyc.case.opened
+  - banking.kyc.case.approved
+  - banking.kyc.pep.flagged
+  - banking.kyc.sanctions.hit
+  - banking.kyc.review.due
+  - banking.kyc.biometric.requested
+  - banking.aml.alert.raised
+  - banking.card.issued
+  - banking.interest.accrued
+  - banking.deposit.matured
+  - banking.fee.charged
+
 subscribes:
-- identity.user.created
-- islamic_banking.murabaha.executed
+  - platform.tenant.provisioned
+  - identity.user.created
+  - financial_kernel.payment.settled
+  - financial_kernel.journal.posted
+  - workflow.approval.completed
+  - islamic_banking.murabaha.executed
+  - islamic_banking.ijara.executed
+
 schema: banking

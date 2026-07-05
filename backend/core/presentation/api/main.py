@@ -51,7 +51,29 @@ from contexts.feature_flags.presentation.router import router as feature_flags_r
 from contexts.plugins.container import get_plugin_service
 from contexts.plugins.presentation.router import router as plugins_router
 from contexts.treasury.container import get_treasury_service
+from contexts.treasury.presentation.bank_account_router import bank_account_router
+from contexts.treasury.presentation.banks_router import banks_router
+from contexts.treasury.presentation.cash_management_router import cash_management_router
+from contexts.treasury.presentation.bank_reconciliation_router import bank_reconciliation_router
+from contexts.treasury.presentation.cash_reconciliation_router import cash_reconciliation_router
+from contexts.treasury.presentation.investments_router import investments_router
+from contexts.treasury.presentation.treasury_workflow_router import treasury_workflow_router
+from contexts.treasury.presentation.treasury_security_router import treasury_security_router
+from contexts.treasury.presentation.treasury_analytics_router import treasury_analytics_router
+from contexts.treasury.presentation.multi_currency_router import multi_currency_router
+from contexts.treasury.presentation.risk_router import risk_router
+from contexts.treasury.presentation.cash_forecast_router import cash_forecast_router
+from contexts.treasury.presentation.liquidity_router import liquidity_router
+from contexts.treasury.presentation.treasury_transaction_router import treasury_transaction_router
 from contexts.treasury.presentation.router import router as treasury_router
+from contexts.banking.container import (
+    get_banking_customer_account_service,
+    get_banking_deposit_management_service,
+    get_banking_kyc_platform_service,
+)
+from contexts.banking.presentation.banking_customer_account_router import banking_customer_account_router
+from contexts.banking.presentation.banking_deposit_router import banking_deposit_router
+from contexts.banking.presentation.banking_kyc_router import banking_kyc_router
 from contexts.financial_kernel.container import (
     get_cost_center_service,
     get_financial_document_service,
@@ -62,6 +84,7 @@ from contexts.financial_kernel.container import (
     get_payment_service,
 )
 from contexts.financial_kernel.presentation.financial_ai_router import financial_ai_router
+from contexts.financial_kernel.presentation.gl_ai_router import gl_ai_router
 from contexts.financial_kernel.presentation.financial_security_router import financial_security_router
 from contexts.financial_kernel.presentation.coa_router import coa_router
 from contexts.financial_kernel.presentation.cost_centers_router import cost_centers_router
@@ -70,6 +93,15 @@ from contexts.financial_kernel.presentation.financial_workflows_router import fi
 from contexts.financial_kernel.presentation.payments_router import payments_router
 from contexts.financial_kernel.presentation.currency_router import currency_router
 from contexts.financial_kernel.presentation.ledger_router import ledger_router
+from contexts.financial_kernel.presentation.journal_router import journal_router
+from contexts.financial_kernel.presentation.fiscal_calendar_router import fiscal_calendar_router
+from contexts.financial_kernel.presentation.account_hierarchy_router import account_hierarchy_router
+from contexts.financial_kernel.presentation.financial_audit_router import financial_audit_router
+from contexts.financial_kernel.presentation.financial_validation_router import financial_validation_router
+from contexts.financial_kernel.presentation.financial_dimensions_router import financial_dimensions_router
+from contexts.financial_kernel.presentation.reconciliation_router import reconciliation_router
+from contexts.financial_kernel.presentation.subledger_router import subledger_router
+from contexts.financial_kernel.presentation.posting_rules_router import posting_rules_router
 from contexts.financial_kernel.presentation.router import router as financial_kernel_router
 from contexts.workflow.container import get_workflow_service
 from contexts.workflow.presentation.router import router as workflow_router
@@ -101,6 +133,9 @@ async def lifespan(_app: FastAPI):
     get_feature_flag_service()
     get_plugin_service()
     get_treasury_service()
+    get_banking_customer_account_service()
+    get_banking_kyc_platform_service()
+    get_banking_deposit_management_service()
     get_financial_kernel_service()
     get_payment_service()
     get_financial_document_service()
@@ -160,6 +195,15 @@ app.include_router(feature_flags_router, prefix="/api/v1")
 app.include_router(plugins_router, prefix="/api/v1")
 app.include_router(financial_kernel_router, prefix="/api/v1")
 app.include_router(ledger_router, prefix="/api/v1")
+app.include_router(journal_router, prefix="/api/v1")
+app.include_router(posting_rules_router, prefix="/api/v1")
+app.include_router(fiscal_calendar_router, prefix="/api/v1")
+app.include_router(account_hierarchy_router, prefix="/api/v1")
+app.include_router(subledger_router, prefix="/api/v1")
+app.include_router(reconciliation_router, prefix="/api/v1")
+app.include_router(financial_dimensions_router, prefix="/api/v1")
+app.include_router(financial_validation_router, prefix="/api/v1")
+app.include_router(financial_audit_router, prefix="/api/v1")
 app.include_router(coa_router, prefix="/api/v1")
 app.include_router(currency_router, prefix="/api/v1")
 app.include_router(payments_router, prefix="/api/v1")
@@ -168,7 +212,25 @@ app.include_router(cost_centers_router, prefix="/api/v1")
 app.include_router(financial_workflows_router, prefix="/api/v1")
 app.include_router(financial_security_router, prefix="/api/v1")
 app.include_router(financial_ai_router, prefix="/api/v1")
+app.include_router(gl_ai_router, prefix="/api/v1")
 app.include_router(treasury_router, prefix="/api/v1")
+app.include_router(banks_router, prefix="/api/v1")
+app.include_router(bank_account_router, prefix="/api/v1")
+app.include_router(cash_management_router, prefix="/api/v1")
+app.include_router(treasury_transaction_router, prefix="/api/v1")
+app.include_router(liquidity_router, prefix="/api/v1")
+app.include_router(cash_forecast_router, prefix="/api/v1")
+app.include_router(bank_reconciliation_router, prefix="/api/v1")
+app.include_router(cash_reconciliation_router, prefix="/api/v1")
+app.include_router(investments_router, prefix="/api/v1")
+app.include_router(risk_router, prefix="/api/v1")
+app.include_router(multi_currency_router, prefix="/api/v1")
+app.include_router(treasury_workflow_router, prefix="/api/v1")
+app.include_router(treasury_security_router, prefix="/api/v1")
+app.include_router(treasury_analytics_router, prefix="/api/v1")
+app.include_router(banking_customer_account_router, prefix="/api/v1")
+app.include_router(banking_kyc_router, prefix="/api/v1")
+app.include_router(banking_deposit_router, prefix="/api/v1")
 
 
 @app.get("/api/v1/health", tags=["Monitoring"])

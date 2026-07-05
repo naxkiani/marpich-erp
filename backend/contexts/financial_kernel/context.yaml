@@ -40,6 +40,8 @@ publishes:
   - financial_kernel.ai.analysis.completed
   - financial_kernel.ai.dashboard.generated
   - financial_kernel.ai.chat.completed
+  - financial_kernel.gl_ai.analysis.completed
+  - financial_kernel.gl_ai.cfo_dashboard.generated
 subscribes:
   - platform.tenant.provisioned
 schema: financial_kernel

@@ -14,6 +14,42 @@ class FinancialKernelClient(IFinancialKernel):
     def __init__(self, service: FinancialKernelApplicationService) -> None:
         self._service = service
 
+    async def execute_posting(
+        self,
+        *,
+        tenant_id: str,
+        rule_id: str,
+        source_context: str,
+        source_document_id: str,
+        currency: str,
+        correlation_id: str,
+        amount: float | None = None,
+        account_mappings: dict[str, str] | None = None,
+        lines: list[JournalLine] | None = None,
+        description: str = "",
+        dimensions: dict[str, str] | None = None,
+        tax_amount: float | None = None,
+        idempotency_key: str | None = None,
+    ) -> JournalPostResult:
+        result = await self._service.execute_posting(
+            tenant_id=tenant_id,
+            rule_id=rule_id,
+            source_context=source_context,
+            source_document_id=source_document_id,
+            currency=currency,
+            correlation_id=correlation_id,
+            amount=amount,
+            account_mappings=account_mappings,
+            lines=[line.to_dict() for line in lines] if lines else None,
+            description=description,
+            dimensions=dimensions,
+            tax_amount=tax_amount,
+            idempotency_key=idempotency_key,
+        )
+        if not result.succeeded:
+            raise ValueError(result.error or "post_failed")
+        return _to_post_result(result.unwrap())
+
     async def post_journal(
         self,
         *,
@@ -36,13 +72,7 @@ class FinancialKernelClient(IFinancialKernel):
         )
         if not result.succeeded:
             raise ValueError(result.error or "post_failed")
-        data = result.unwrap()
-        return JournalPostResult(
-            journal_id=data["id"],
-            status=data["status"],
-            total_debit=str(data["total_debits"]),
-            total_credit=str(data["total_credits"]),
-        )
+        return _to_post_result(result.unwrap())
 
     async def get_trial_balance(self, *, tenant_id: str) -> list[TrialBalanceLine]:
         rows = (await self._service.get_trial_balance(tenant_id)).unwrap()
@@ -82,3 +112,12 @@ class FinancialKernelClient(IFinancialKernel):
                 jurisdiction=jurisdiction,
             )
         ).unwrap()
+
+
+def _to_post_result(data: dict) -> JournalPostResult:
+    return JournalPostResult(
+        journal_id=data["id"],
+        status=data["status"],
+        total_debit=str(data["total_debits"]),
+        total_credit=str(data["total_credits"]),
+    )

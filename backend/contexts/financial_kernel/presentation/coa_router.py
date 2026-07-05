@@ -18,6 +18,34 @@ from contexts.identity.presentation.dependencies import (
 coa_router = APIRouter(prefix="/financial-kernel/coa", tags=["Chart of Accounts"])
 
 
+@coa_router.get("/categories")
+async def list_account_categories(
+    _tenant_id: Annotated[str, Depends(get_tenant_id)],
+    _user: Annotated[dict, Depends(require_permissions("financial_kernel.coa.read"))],
+):
+    return {"data": (await get_financial_kernel_service().list_account_categories()).unwrap()}
+
+
+@coa_router.get("/account-types")
+async def list_enterprise_account_types(
+    _tenant_id: Annotated[str, Depends(get_tenant_id)],
+    _user: Annotated[dict, Depends(require_permissions("financial_kernel.coa.read"))],
+):
+    return {"data": (await get_financial_kernel_service().list_enterprise_account_types()).unwrap()}
+
+
+@coa_router.get("/account-types/{account_type}/posting-rules")
+async def get_account_type_posting_rules(
+    account_type: str,
+    _tenant_id: Annotated[str, Depends(get_tenant_id)],
+    _user: Annotated[dict, Depends(require_permissions("financial_kernel.coa.read"))],
+):
+    result = await get_financial_kernel_service().get_account_type_posting_rules(account_type)
+    if not result.succeeded:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, result.error)
+    return {"data": result.unwrap()}
+
+
 @coa_router.get("/tree")
 async def get_account_tree(
     tenant_id: Annotated[str, Depends(get_tenant_id)],
@@ -69,6 +97,12 @@ async def create_coa_account(
         parent_account_id=body.parent_account_id,
         account_group=body.account_group,
         is_posting=body.is_posting,
+        currency=body.currency,
+        is_control_account=body.is_control_account,
+        reconciliation_required=body.reconciliation_required,
+        tax_code=body.tax_code,
+        budget_code=body.budget_code,
+        effective_date=body.effective_date,
     )
     if not result.succeeded:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, result.error)

@@ -1,0 +1,134 @@
+# Banking Customer and Account Platform — API Catalog
+# See docs/adr/088-banking-customer-account-platform.md
+
+version: 1
+owner: banking
+module: customer_account
+api_prefix: /api/v1/banking
+adr: docs/adr/088-banking-customer-account-platform.md
+
+capabilities:
+  customer_types:
+    - individual
+    - business
+    - government
+    - ngo
+  account_types:
+    - joint
+    - savings
+    - current
+    - fixed_deposit
+    - loan
+    - virtual
+  account_statuses:
+    - pending_approval
+    - active
+    - dormant
+    - blocked
+    - frozen
+    - closed
+  features:
+    - multi_currency
+    - interest_configuration
+    - minimum_balance_rules
+    - overdraft_rules
+    - account_status_workflow
+    - kyc_status
+    - risk_rating
+    - approval_workflow
+    - kernel_integration
+
+endpoints:
+  - method: GET
+    path: /catalog
+    permission: banking.read
+  - method: GET
+    path: /account-status-workflow
+    permission: banking.read
+  - method: GET
+    path: /dashboard
+    permission: banking.read
+  - method: POST
+    path: /customers
+    permission: banking.customers.write
+  - method: GET
+    path: /customers
+    permission: banking.read
+  - method: GET
+    path: /customers/{customer_id}
+    permission: banking.read
+  - method: POST
+    path: /customers/{customer_id}/submit
+    permission: banking.customers.write
+  - method: POST
+    path: /customers/{customer_id}/approve
+    permission: banking.approve
+  - method: POST
+    path: /customers/{customer_id}/reject
+    permission: banking.approve
+  - method: PATCH
+    path: /customers/{customer_id}/kyc-status
+    permission: banking.kyc.write
+  - method: PATCH
+    path: /customers/{customer_id}/risk-rating
+    permission: banking.risk.write
+  - method: POST
+    path: /customers/{customer_id}/kyc
+    permission: banking.kyc.write
+  - method: GET
+    path: /customers/{customer_id}/kyc
+    permission: banking.read
+  - method: POST
+    path: /kyc/{kyc_id}/verify
+    permission: banking.kyc.verify
+  - method: POST
+    path: /products
+    permission: banking.products.write
+  - method: GET
+    path: /products
+    permission: banking.read
+  - method: POST
+    path: /accounts
+    permission: banking.accounts.write
+  - method: GET
+    path: /accounts
+    permission: banking.read
+  - method: GET
+    path: /accounts/{account_id}
+    permission: banking.read
+  - method: POST
+    path: /accounts/{account_id}/approve
+    permission: banking.approve
+  - method: POST
+    path: /accounts/{account_id}/reject
+    permission: banking.approve
+  - method: POST
+    path: /accounts/{account_id}/status
+    permission: banking.accounts.write
+  - method: GET
+    path: /accounts/{account_id}/minimum-balance
+    permission: banking.read
+  - method: POST
+    path: /accounts/{account_id}/overdraft-check
+    permission: banking.read
+  - method: GET
+    path: /accounts/{account_id}/audit
+    permission: banking.read
+
+kernel_integration:
+  port: IFinancialKernel
+  link_on_approve: true
+  gl_account_keys:
+    deposit: customer_deposits
+    loan: loans_receivable
+  posting_rules:
+    opening_balance: bank_deposit
+  events_published:
+    - banking.customer.created
+    - banking.kyc.verified
+    - banking.account.opened
+    - banking.account.status.changed
+
+policy_keys:
+  - retail.account.minimum_balance
+  - retail.overdraft.limit

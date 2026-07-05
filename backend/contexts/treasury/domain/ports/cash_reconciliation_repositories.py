@@ -1,0 +1,23 @@
+"""Enterprise Cash Reconciliation repository ports."""
+from __future__ import annotations
+
+from typing import Protocol
+
+from contexts.treasury.domain.aggregates.cash_reconciliation_engine import (
+    CashReconciliationAudit,
+    CashReconciliationRun,
+)
+
+
+class ICashReconciliationRunRepository(Protocol):
+    async def save(self, run: CashReconciliationRun) -> None: ...
+    async def find_by_id(self, run_id: str) -> CashReconciliationRun | None: ...
+    async def list_by_tenant(self, tenant_id: str) -> list[CashReconciliationRun]: ...
+    async def list_by_location(self, location_id: str) -> list[CashReconciliationRun]: ...
+    async def list_by_branch(self, tenant_id: str, branch_id: str) -> list[CashReconciliationRun]: ...
+
+
+class ICashReconciliationAuditRepository(Protocol):
+    async def save(self, entry: CashReconciliationAudit) -> None: ...
+    async def list_by_reconciliation(self, reconciliation_id: str) -> list[CashReconciliationAudit]: ...
+    async def list_by_tenant(self, tenant_id: str) -> list[CashReconciliationAudit]: []

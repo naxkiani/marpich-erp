@@ -311,7 +311,7 @@ class CostCenterApplicationService:
         journal_dicts = [j.to_dict() for j in journals]
         accounts = await self._accounts.list_by_tenant(tenant_id)
         account_types = {
-            a.code: (a.account_type.value if a.account_type else a.account_category.value)
+            a.code: a.account_category.value
             for a in accounts
         }
 

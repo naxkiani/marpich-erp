@@ -1,18 +1,73 @@
 context: treasury
-display_name: Treasury
-type: generic
-description: Cash management, liquidity, investments, FX hedging
+display_name: Enterprise Treasury Platform
+type: financial_kernel_satellite
+description: Enterprise liquidity — bank accounts, pools, operations, risk, investments, borrowing, funding, forecasting, analytics, AI. NOT Cash Register.
 aggregates:
-- TreasuryAccount
-- TreasuryTransfer
-- BankReconciliation
-- CashForecast
+  - TreasuryAccount
+  - TreasuryTransfer
+  - BankReconciliation
+  - CashForecast
+  - Bank
+  - BankBranch
+  - BankAccount
+  - AuthorizedSignatory
+  - BankAccountDocument
+  - CashLocation
+  - CashTransaction
+  - CashCount
+  - CashClosing
+  - CashReconciliation
+  - TreasuryTransaction
+  - CashPool
+  - LiquiditySnapshot
+  - FundingNeed
+  - CashForecastPlan
+  - ForecastSimulation
+  - EnterpriseBankReconciliation
+  - BankStatementImport
+  - ReconciliationAuditEntry
+  - CashReconciliationRun
+  - CashReconciliationAudit
+  - Investment
+  - InvestmentTransaction
+  - TreasuryRiskLimit
+  - RiskAlert
+  - StressTestRun
+  - ExchangeRate
+  - FxTransaction
+  - TreasuryWorkflowDefinition
+  - TreasuryWorkflowRequest
+  - TreasuryWorkflowLimit
+  - TreasuryWorkflowAudit
+  - TreasurySecurityPolicy
+  - TreasuryTransactionLimit
+  - TreasuryApprovalMatrix
+  - TreasuryAccessRule
+  - TreasurySecurityLock
+  - TreasurySecurityOperation
+  - TreasurySecurityAudit
 publishes:
-- treasury.liquidity.updated
-- treasury.transfer.executed
-- treasury.transfer.approval.requested
+  - treasury.transfer.executed
+  - treasury.transaction.executed
+  - treasury.transaction.approval.requested
+  - treasury.liquidity.updated
+  - treasury.transfer.approval.requested
+  - treasury.pool.sweep.executed
+  - treasury.investment.purchased
+  - treasury.investment.matured
+  - treasury.borrowing.drawdown
+  - treasury.funding.received
+  - treasury.risk.breach
+  - treasury.ai.analysis.completed
+  - treasury.bank_account.approval.requested
+  - treasury.bank_account.activated
+  - treasury.security.access.denied
+  - treasury.security.policy.violated
+  - treasury.security.freeze.activated
 subscribes:
-- banking.transaction.posted
-- currency_exchange.deal.settled
-- finance.period.closed
+  - platform.tenant.provisioned
+  - banking.transaction.posted
+  - currency_exchange.deal.settled
+  - finance.period.closed
+  - pos.settlement.ready
 schema: treasury

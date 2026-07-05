@@ -954,3 +954,49 @@ class FinancialAIChatCompletedIntegration(IntegrationEvent):
 
     def to_payload(self) -> dict:
         return {"session_id": self.session_id, "session_type": self.session_type}
+
+
+@dataclass(frozen=True, kw_only=True)
+class GLAIAnalysisCompletedIntegration(IntegrationEvent):
+    job_id: str
+    capability: str
+    confidence: float
+
+    @property
+    def event_name(self) -> str:
+        return "financial_kernel.gl_ai.analysis.completed"
+
+    @property
+    def source_context(self) -> str:
+        return "financial_kernel"
+
+    @property
+    def event_version(self) -> int:
+        return 1
+
+    def to_payload(self) -> dict:
+        return {
+            "job_id": self.job_id,
+            "capability": self.capability,
+            "confidence": self.confidence,
+        }
+
+
+@dataclass(frozen=True, kw_only=True)
+class GLAICFODashboardGeneratedIntegration(IntegrationEvent):
+    job_id: str
+
+    @property
+    def event_name(self) -> str:
+        return "financial_kernel.gl_ai.cfo_dashboard.generated"
+
+    @property
+    def source_context(self) -> str:
+        return "financial_kernel"
+
+    @property
+    def event_version(self) -> int:
+        return 1
+
+    def to_payload(self) -> dict:
+        return {"job_id": self.job_id}

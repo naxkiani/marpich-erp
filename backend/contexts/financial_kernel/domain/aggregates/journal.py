@@ -16,6 +16,18 @@ class PostingMode(StrEnum):
     REVERSING = "reversing"
 
 
+class JournalEntryType(StrEnum):
+    STANDARD = "standard"
+    SINGLE_ENTRY = "single_entry"
+    COMPOUND = "compound"
+    RECURRING = "recurring"
+    ADJUSTING = "adjusting"
+    CLOSING = "closing"
+    OPENING_BALANCE = "opening_balance"
+    REVERSING = "reversing"
+    INTERCOMPANY = "intercompany"
+
+
 class JournalStatus(StrEnum):
     DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
@@ -39,6 +51,7 @@ class Journal(AggregateRoot):
     exchange_rate: float
     lines: list[dict]
     posting_mode: str
+    journal_entry_type: str = "standard"
     status: str
     reporting_currency: str = ""
     reporting_exchange_rate: float = 1.0
@@ -48,6 +61,15 @@ class Journal(AggregateRoot):
     reverses_journal_id: str | None = None
     reversed_by_journal_id: str | None = None
     recurring_template_id: str | None = None
+    journal_type: str = "general"
+    version: int = 1
+    parent_version_id: str | None = None
+    is_locked: bool = False
+    locked_at: datetime | None = None
+    digital_signature: dict | None = None
+    ai_review: dict | None = None
+    approval_workflow_id: str | None = None
+    batch_id: str | None = None
     immutable_hash: str = ""
     posted_at: datetime | None = None
     created_at: datetime = field(default_factory=lambda: datetime.now(UTC))
@@ -76,6 +98,11 @@ class Journal(AggregateRoot):
         rate_type: str = "spot",
         recurring_template_id: str | None = None,
         reverses_journal_id: str | None = None,
+        journal_entry_type: str = "standard",
+        journal_type: str = "general",
+        version: int = 1,
+        parent_version_id: str | None = None,
+        batch_id: str | None = None,
     ) -> Journal:
         return cls(
             id=UniqueId.generate(),
@@ -100,25 +127,48 @@ class Journal(AggregateRoot):
             correlation_id=correlation_id,
             recurring_template_id=recurring_template_id,
             reverses_journal_id=reverses_journal_id,
+            journal_entry_type=journal_entry_type,
+            journal_type=journal_type,
+            version=version,
+            parent_version_id=parent_version_id,
+            batch_id=batch_id,
             posted_at=None if posting_mode == PostingMode.MANUAL else datetime.now(UTC),
         )
 
     def submit_for_approval(self) -> None:
+        if self.is_locked:
+            raise ValueError("Locked journals cannot be submitted")
         if self.status != JournalStatus.DRAFT:
             raise ValueError("Only draft journals can be submitted")
         self.status = JournalStatus.PENDING_APPROVAL
 
-    def approve_and_post(self) -> None:
+    def lock(self) -> None:
+        if self.is_locked:
+            return
+        self.is_locked = True
+        self.locked_at = datetime.now(UTC)
+
+    def attach_signature(self, signature: dict) -> None:
+        self.digital_signature = signature
+
+    def attach_ai_review(self, review: dict) -> None:
+        self.ai_review = review
+
+    def approve_and_post(self, *, lock_on_post: bool = True) -> None:
         if self.status != JournalStatus.PENDING_APPROVAL:
             raise ValueError("Only pending journals can be approved")
         self.status = JournalStatus.POSTED
         self.posted_at = datetime.now(UTC)
         self.immutable_hash = self._compute_hash()
+        if lock_on_post:
+            self.lock()
 
-    def mark_posted(self) -> None:
+    def mark_posted(self, *, lock_on_post: bool = True) -> None:
         self.status = JournalStatus.POSTED
         self.posted_at = datetime.now(UTC)
         self.immutable_hash = self._compute_hash()
+        if lock_on_post:
+            self.lock()
 
     def mark_reversed(self, reversal_journal_id: str) -> None:
         if self.status != JournalStatus.POSTED:
@@ -163,12 +213,22 @@ class Journal(AggregateRoot):
             "rate_type": self.rate_type,
             "lines": self.lines,
             "posting_mode": self.posting_mode,
+            "journal_entry_type": self.journal_entry_type,
             "status": self.status,
             "total_debits": self.total_debits,
             "total_credits": self.total_credits,
             "reverses_journal_id": self.reverses_journal_id,
             "reversed_by_journal_id": self.reversed_by_journal_id,
             "recurring_template_id": self.recurring_template_id,
+            "journal_type": self.journal_type,
+            "version": self.version,
+            "parent_version_id": self.parent_version_id,
+            "is_locked": self.is_locked,
+            "locked_at": self.locked_at.isoformat() if self.locked_at else None,
+            "digital_signature": self.digital_signature,
+            "ai_review": self.ai_review,
+            "approval_workflow_id": self.approval_workflow_id,
+            "batch_id": self.batch_id,
             "immutable_hash": self.immutable_hash,
             "is_immutable": self.is_immutable,
             "correlation_id": self.correlation_id,

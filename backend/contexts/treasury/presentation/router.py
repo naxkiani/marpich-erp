@@ -11,6 +11,11 @@ from contexts.identity.presentation.dependencies import (
     require_permissions,
 )
 from contexts.treasury.container import get_treasury_service
+from contexts.treasury.domain.services.treasury_platform_engine import (
+    list_gl_rule_map,
+    list_platform_catalog,
+    pos_boundary_statement,
+)
 from contexts.treasury.presentation.schemas import (
     ApproveTransferRequest,
     CreateForecastRequest,
@@ -20,6 +25,21 @@ from contexts.treasury.presentation.schemas import (
 )
 
 router = APIRouter(prefix="/treasury", tags=["Enterprise Treasury"])
+
+
+@router.get("/platform/catalog")
+async def treasury_platform_catalog(
+    _tenant_id: Annotated[str, Depends(get_tenant_id)],
+    _user: Annotated[dict, Depends(require_permissions("treasury.dashboard.read"))],
+):
+    return {
+        "data": list_platform_catalog(),
+        "meta": {
+            "gl_rule_map": list_gl_rule_map(),
+            "pos_boundary": pos_boundary_statement(),
+            "law": "treasury_manages_liquidity_gl_owned_by_kernel",
+        },
+    }
 
 
 @router.get("/dashboard")
