@@ -1,0 +1,68 @@
+# Banking Analytics Platform — API Catalog
+# See docs/adr/097-banking-analytics-platform.md
+
+version: 1
+owner: banking
+module: banking_analytics
+api_prefix: /api/v1/banking/analytics
+adr: docs/adr/097-banking-analytics-platform.md
+
+capabilities:
+  - liquidity_kpis
+  - deposit_trends
+  - loan_portfolio
+  - customer_segmentation
+  - branch_performance
+  - revenue_analysis
+  - risk_indicators
+  - portfolio_quality
+  - delinquency_analysis
+  - forecasting
+  - fraud_detection
+  - customer_insights
+  - executive_dashboard
+  - ai_banking_assistant
+
+policy_domain: bank
+policy_keys:
+  - analytics.liquidity.threshold
+  - analytics.delinquency.warning
+  - analytics.fraud.alert_threshold
+  - analytics.forecast.horizon
+  - analytics.segmentation.rules
+  - analytics.revenue.target
+  - analytics.risk.indicator_threshold
+  - analytics.portfolio.quality_minimum
+
+events_published:
+  - banking.analytics.report.generated
+  - banking.analytics.insight.raised
+  - banking.analytics.recommendation.generated
+  - banking.analytics.forecast.completed
+
+permissions:
+  - banking.analytics.read
+  - banking.analytics.write
+
+endpoints:
+  - GET /catalog
+  - GET /policy-keys
+  - GET /dashboard
+  - GET /liquidity-kpis
+  - GET /deposit-trends
+  - GET /loan-portfolio
+  - GET /customer-segmentation
+  - GET /branch-performance
+  - GET /revenue-analysis
+  - GET /risk-indicators
+  - GET /portfolio-quality
+  - GET /delinquency-analysis
+  - GET /forecasting
+  - GET /fraud-detection
+  - GET /customer-insights
+  - GET /executive-dashboard
+  - GET /recommendations
+  - POST /ai-assistant
+  - POST /analyze/{capability}
+  - GET /jobs
+  - GET /jobs/{job_id}

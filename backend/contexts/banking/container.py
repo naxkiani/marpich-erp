@@ -1,4 +1,4 @@
-"""Banking DI — Customer Account + KYC + Deposit + Loan + Interest + Payments + Settlement + Branch."""
+"""Banking DI — Customer Account + KYC + Deposit + Loan + Interest + Payments + Settlement + Branch + Security + Analytics."""
 from __future__ import annotations
 
 from contexts.banking.application.customer_account_service import (
@@ -15,6 +15,9 @@ from contexts.banking.application.payment_platform_service import (
 )
 from contexts.banking.application.branch_banking_service import (
     BankingBranchPlatformApplicationService,
+)
+from contexts.banking.application.banking_analytics_service import (
+    BankingAnalyticsPlatformApplicationService,
 )
 from contexts.banking.application.banking_security_service import (
     BankingSecurityPlatformApplicationService,
@@ -63,6 +66,9 @@ from contexts.banking.infrastructure.persistence.payment_platform_memory_store i
     InMemoryPaymentTransferRepository,
     InMemoryPaymentWorkflowRepository,
     InMemoryStandingOrderRepository,
+)
+from contexts.banking.infrastructure.persistence.banking_analytics_memory_store import (
+    InMemoryBankingAnalyticsJobRepository,
 )
 from contexts.banking.infrastructure.persistence.banking_security_memory_store import (
     InMemoryEmergencyFreezeRepository,
@@ -126,6 +132,7 @@ _payment_service: BankingPaymentPlatformApplicationService | None = None
 _settlement_service: BankingSettlementEngineApplicationService | None = None
 _branch_service: BankingBranchPlatformApplicationService | None = None
 _security_service: BankingSecurityPlatformApplicationService | None = None
+_analytics_service: BankingAnalyticsPlatformApplicationService | None = None
 _registered = False
 _kyc_registered = False
 _deposit_registered = False
@@ -135,6 +142,7 @@ _payment_registered = False
 _settlement_registered = False
 _branch_registered = False
 _security_registered = False
+_analytics_registered = False
 _transfer_repo = InMemoryPaymentTransferRepository()
 
 
@@ -353,9 +361,39 @@ def get_banking_security_platform_service() -> BankingSecurityPlatformApplicatio
     return _security_service
 
 
+def get_banking_analytics_platform_service() -> BankingAnalyticsPlatformApplicationService:
+    global _analytics_service, _analytics_registered
+    if _analytics_service is None:
+        _analytics_service = BankingAnalyticsPlatformApplicationService(
+            jobs=InMemoryBankingAnalyticsJobRepository(),
+            customers=_customer_repo,
+            accounts=_account_repo,
+            deposits=InMemoryDepositProfileRepository(),
+            deposit_transactions=InMemoryDepositTransactionRepository(),
+            interest_accruals=InMemoryDepositAccrualRepository(),
+            loans=InMemoryLoanProfileRepository(),
+            installments=InMemoryLoanInstallmentRepository(),
+            loan_transactions=InMemoryLoanTransactionRepository(),
+            credit_risks=InMemoryLoanCreditRiskRepository(),
+            transfers=_transfer_repo,
+            fraud_checks=InMemoryPaymentFraudRepository(),
+            branch_offices=InMemoryBranchOfficeRepository(),
+            branch_kpis=InMemoryBranchKPIRepository(),
+            security_alerts=InMemoryTransactionMonitorRepository(),
+            policy=get_policy_evaluator(),
+        )
+    if not _analytics_registered:
+        InProcessEventBus.subscribe(
+            "platform.tenant.provisioned",
+            _analytics_service.handle_tenant_provisioned,
+        )
+        _analytics_registered = True
+    return _analytics_service
+
+
 def reset_banking_customer_account_service() -> None:
-    global _service, _kyc_service, _deposit_service, _loan_service, _interest_service, _payment_service, _settlement_service, _branch_service, _security_service
-    global _registered, _kyc_registered, _deposit_registered, _loan_registered, _interest_registered, _payment_registered, _settlement_registered, _branch_registered, _security_registered
+    global _service, _kyc_service, _deposit_service, _loan_service, _interest_service, _payment_service, _settlement_service, _branch_service, _security_service, _analytics_service
+    global _registered, _kyc_registered, _deposit_registered, _loan_registered, _interest_registered, _payment_registered, _settlement_registered, _branch_registered, _security_registered, _analytics_registered
     _service = None
     _kyc_service = None
     _deposit_service = None
@@ -365,6 +403,7 @@ def reset_banking_customer_account_service() -> None:
     _settlement_service = None
     _branch_service = None
     _security_service = None
+    _analytics_service = None
     _registered = False
     _kyc_registered = False
     _deposit_registered = False
@@ -374,6 +413,7 @@ def reset_banking_customer_account_service() -> None:
     _settlement_registered = False
     _branch_registered = False
     _security_registered = False
+    _analytics_registered = False
     InMemoryCustomerRepository.reset()
     InMemoryKycRepository.reset()
     InMemoryAccountProductRepository.reset()
@@ -438,3 +478,4 @@ def reset_banking_customer_account_service() -> None:
     InMemoryEmergencyFreezeRepository.reset()
     InMemorySecurityAuditRepository.reset()
     InMemoryLimitUsageRepository.reset()
+    InMemoryBankingAnalyticsJobRepository.reset()

@@ -46,6 +46,7 @@ aggregates:
   - BranchKPIRecord
   - SecurityApprovalRequest
   - SecurityAuditEntry
+  - BankingAnalyticsJob
 
 banking_segments:
   - retail_banking
@@ -106,6 +107,10 @@ publishes:
   - banking.security.freeze.activated
   - banking.security.alert.raised
   - banking.security.audit.recorded
+  - banking.analytics.report.generated
+  - banking.analytics.insight.raised
+  - banking.analytics.recommendation.generated
+  - banking.analytics.forecast.completed
   - banking.deposit.matured
   - banking.fee.charged
 

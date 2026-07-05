@@ -1,0 +1,13 @@
+"""Banking Analytics Platform repository ports."""
+from __future__ import annotations
+
+from typing import Protocol
+
+from contexts.banking.domain.aggregates.banking_analytics_engine import BankingAnalyticsJob
+
+
+class IBankingAnalyticsJobRepository(Protocol):
+    async def save(self, job: BankingAnalyticsJob) -> None: ...
+    async def find_by_id(self, job_id: str) -> BankingAnalyticsJob | None: ...
+    async def list_by_tenant(self, tenant_id: str, capability: str | None = None) -> list[BankingAnalyticsJob]: ...
+    def next_job_ref(self, tenant_id: str) -> str: ...

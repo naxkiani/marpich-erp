@@ -76,6 +76,7 @@ from contexts.banking.container import (
     get_banking_settlement_engine_service,
     get_banking_branch_platform_service,
     get_banking_security_platform_service,
+    get_banking_analytics_platform_service,
 )
 from contexts.banking.presentation.banking_customer_account_router import banking_customer_account_router
 from contexts.banking.presentation.banking_deposit_router import banking_deposit_router
@@ -85,6 +86,7 @@ from contexts.banking.presentation.banking_loan_router import banking_loan_route
 from contexts.banking.presentation.banking_payment_router import banking_payment_router
 from contexts.banking.presentation.banking_settlement_router import banking_settlement_router
 from contexts.banking.presentation.banking_branch_router import banking_branch_router
+from contexts.banking.presentation.banking_analytics_router import banking_analytics_router
 from contexts.banking.presentation.banking_security_router import banking_security_router
 from contexts.financial_kernel.container import (
     get_cost_center_service,
@@ -154,6 +156,7 @@ async def lifespan(_app: FastAPI):
     get_banking_settlement_engine_service()
     get_banking_branch_platform_service()
     get_banking_security_platform_service()
+    get_banking_analytics_platform_service()
     get_financial_kernel_service()
     get_payment_service()
     get_financial_document_service()
@@ -255,6 +258,7 @@ app.include_router(banking_payment_router, prefix="/api/v1")
 app.include_router(banking_settlement_router, prefix="/api/v1")
 app.include_router(banking_branch_router, prefix="/api/v1")
 app.include_router(banking_security_router, prefix="/api/v1")
+app.include_router(banking_analytics_router, prefix="/api/v1")
 
 
 @app.get("/api/v1/health", tags=["Monitoring"])

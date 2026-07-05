@@ -98,6 +98,13 @@ capability_domains:
     catalog: docs/architecture/banking/BANKING_SECURITY_CATALOG.yaml
     adr: docs/adr/096-banking-security-platform.md
     gl_rules: []
+  banking_analytics:
+    label: Banking Analytics
+    status: implemented
+    aggregates: [BankingAnalyticsJob]
+    catalog: docs/architecture/banking/BANKING_ANALYTICS_CATALOG.yaml
+    adr: docs/adr/097-banking-analytics-platform.md
+    gl_rules: []
   agency_operations:
     label: Agency Banking
     status: planned
@@ -185,6 +192,8 @@ permissions:
   banking.security.write: Register devices, sessions, and submit approvals
   banking.security.approve: Approve maker-checker and four-eyes requests
   banking.security.admin: Emergency freeze and security administration
+  banking.analytics.read: View banking analytics and executive dashboard
+  banking.analytics.write: Run AI assistant and analytics jobs
   banking.agency.operate: Agency agent operations
   banking.admin: Product and policy administration
   banking.compliance.review: AML and compliance review
@@ -218,6 +227,10 @@ integration_events:
     - banking.security.freeze.activated
     - banking.security.alert.raised
     - banking.security.audit.recorded
+    - banking.analytics.report.generated
+    - banking.analytics.insight.raised
+    - banking.analytics.recommendation.generated
+    - banking.analytics.forecast.completed
   subscribes:
     - platform.tenant.provisioned
     - identity.user.created
