@@ -86,8 +86,17 @@ capability_domains:
     gl_rules: [bank_settlement, interbank_settlement, clearing_settlement]
   branch_operations:
     label: Branch Banking
-    status: planned
-    aggregates: [BankBranch, ChannelSession]
+    status: implemented
+    aggregates: [BranchOffice, BranchExtension, BranchVault, BranchEmployeeAssignment, BranchKPIRecord]
+    catalog: docs/architecture/banking/BRANCH_BANKING_CATALOG.yaml
+    adr: docs/adr/095-banking-branch-platform.md
+    gl_rules: []
+  banking_security:
+    label: Banking Security
+    status: implemented
+    aggregates: [SecurityApprovalRequest, SecurityDevice, SecuritySession, TransactionMonitorAlert, EmergencyFreeze, SecurityAuditEntry]
+    catalog: docs/architecture/banking/BANKING_SECURITY_CATALOG.yaml
+    adr: docs/adr/096-banking-security-platform.md
     gl_rules: []
   agency_operations:
     label: Agency Banking
@@ -168,7 +177,14 @@ permissions:
   banking.settlement.write: Create settlement batches and reconciliation runs
   banking.settlement.execute: Execute settlement and retry exceptions
   banking.settlement.approve: Approve reconciliation and manual adjustments
+  banking.branch.read: View branch offices and analytics
+  banking.branch.write: Create offices, extensions, limits, assignments
   banking.branch.operate: Branch teller operations
+  banking.branch.admin: Branch platform administration
+  banking.security.read: View security controls and audit trail
+  banking.security.write: Register devices, sessions, and submit approvals
+  banking.security.approve: Approve maker-checker and four-eyes requests
+  banking.security.admin: Emergency freeze and security administration
   banking.agency.operate: Agency agent operations
   banking.admin: Product and policy administration
   banking.compliance.review: AML and compliance review
@@ -193,6 +209,15 @@ integration_events:
     - banking.settlement.posted
     - banking.reconciliation.completed
     - banking.settlement.exception.raised
+    - banking.branch.opened
+    - banking.branch.closed
+    - banking.vault.movement
+    - banking.branch.kpi.recorded
+    - banking.security.approval.submitted
+    - banking.security.approval.completed
+    - banking.security.freeze.activated
+    - banking.security.alert.raised
+    - banking.security.audit.recorded
   subscribes:
     - platform.tenant.provisioned
     - identity.user.created

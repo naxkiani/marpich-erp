@@ -1,0 +1,75 @@
+# Banking Security Platform — API Catalog
+# See docs/adr/096-banking-security-platform.md
+
+version: 1
+owner: banking
+module: banking_security
+api_prefix: /api/v1/banking/security
+adr: docs/adr/096-banking-security-platform.md
+
+capabilities:
+  - role_based_access
+  - attribute_based_access
+  - maker_checker
+  - four_eyes_principle
+  - transaction_limits
+  - daily_limits
+  - velocity_checks
+  - device_verification
+  - session_monitoring
+  - transaction_monitoring
+  - digital_signature
+  - encryption
+  - risk_based_authentication
+  - emergency_freeze
+  - immutable_audit_trail
+  - policy_driven_approval
+
+policy_domain: bank
+policy_keys:
+  - security.critical.approval_required
+  - security.transaction.limit
+  - security.daily.limit
+  - security.velocity.limit
+  - security.device.trust
+  - security.risk.threshold
+  - security.emergency.freeze
+  - security.maker_checker.rules
+  - security.four_eyes.levels
+  - security.session.timeout
+  - security.monitoring.threshold
+
+events_published:
+  - banking.security.approval.submitted
+  - banking.security.approval.completed
+  - banking.security.freeze.activated
+  - banking.security.alert.raised
+  - banking.security.audit.recorded
+
+permissions:
+  - banking.security.read
+  - banking.security.write
+  - banking.security.approve
+  - banking.security.admin
+
+endpoints:
+  - GET /catalog
+  - GET /policy-keys
+  - GET /dashboard
+  - POST /access/evaluate
+  - POST /limits/check
+  - POST /devices/register
+  - POST /devices/verify
+  - POST /sessions/register
+  - POST /sessions/{session_id}/heartbeat
+  - POST /transactions/monitor
+  - POST /risk/assess
+  - POST /approvals
+  - POST /approvals/{request_id}/approve
+  - POST /authorize
+  - POST /sign
+  - POST /encrypt
+  - POST /freeze
+  - POST /freeze/release
+  - GET /audit
+  - GET /audit/verify
