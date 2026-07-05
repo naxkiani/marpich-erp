@@ -23,6 +23,9 @@ class EnterprisePostingRuleType(StrEnum):
     LOAN_DISBURSEMENT = "loan_disbursement"
     LOAN_REPAYMENT = "loan_repayment"
     BANK_TRANSFER = "bank_transfer"
+    BANK_SETTLEMENT = "bank_settlement"
+    INTERBANK_SETTLEMENT = "interbank_settlement"
+    CLEARING_SETTLEMENT = "clearing_settlement"
     TREASURY_TRANSFER = "treasury_transfer"
     TREASURY_INTERNAL_TRANSFER = "treasury_internal_transfer"
     TREASURY_BANK_TRANSFER = "treasury_bank_transfer"
@@ -280,6 +283,45 @@ PLATFORM_POSTING_RULES: dict[str, PostingRuleDefinition] = {
         line_templates=(_line("debit", "debit"), _line("credit", "credit")),
         approval_required=False,
         description="Customer transfer — Dr source deposits / Cr destination deposits",
+    ),
+    EnterprisePostingRuleType.BANK_SETTLEMENT.value: PostingRuleDefinition(
+        rule_id="bank_settlement",
+        label="Internal Bank Settlement",
+        module="banking",
+        journal_type="bank",
+        account_slots=(
+            _slot("debit", "Settlement debit", account_key="customer_deposits", role="liability"),
+            _slot("credit", "Settlement credit", account_key="customer_deposits", role="liability"),
+        ),
+        line_templates=(_line("debit", "debit"), _line("credit", "credit")),
+        approval_required=False,
+        description="Internal settlement netting — Dr/Cr customer deposits",
+    ),
+    EnterprisePostingRuleType.INTERBANK_SETTLEMENT.value: PostingRuleDefinition(
+        rule_id="interbank_settlement",
+        label="Interbank Settlement",
+        module="banking",
+        journal_type="bank",
+        account_slots=(
+            _slot("debit", "Cash reserves", account_key="cash_reserves", role="asset"),
+            _slot("credit", "Nostro bank", account_key="bank", role="asset"),
+        ),
+        line_templates=(_line("debit", "debit"), _line("credit", "credit")),
+        approval_required=True,
+        description="Interbank settlement — Dr cash reserves / Cr nostro",
+    ),
+    EnterprisePostingRuleType.CLEARING_SETTLEMENT.value: PostingRuleDefinition(
+        rule_id="clearing_settlement",
+        label="Clearing Settlement",
+        module="banking",
+        journal_type="bank",
+        account_slots=(
+            _slot("debit", "Customer deposits", account_key="customer_deposits", role="liability"),
+            _slot("credit", "Cash reserves", account_key="cash_reserves", role="asset"),
+        ),
+        line_templates=(_line("debit", "debit"), _line("credit", "credit")),
+        approval_required=False,
+        description="Clearing batch settlement — Dr deposits / Cr cash reserves",
     ),
     EnterprisePostingRuleType.TREASURY_TRANSFER.value: PostingRuleDefinition(
         rule_id="treasury_transfer",

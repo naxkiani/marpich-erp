@@ -188,6 +188,10 @@ def get_financial_kernel_service() -> FinancialKernelApplicationService:
             "banking.transfer.posted",
             _banking_bridge.handle_transfer_posted,
         )
+        InProcessEventBus.subscribe(
+            "banking.settlement.posted",
+            _banking_bridge.handle_settlement_posted,
+        )
         _registered = True
     return _service
 

@@ -230,3 +230,36 @@ class BankingPostingBridge:
         )
         if not result.succeeded:
             logger.error("Banking transfer GL post failed for %s: %s", transfer_id, result.error)
+
+    async def handle_settlement_posted(self, envelope: dict) -> None:
+        tenant_id = str(envelope.get("tenant_id", ""))
+        payload = envelope.get("payload", envelope)
+        batch_id = payload.get("batch_id", "")
+        amount = float(payload.get("amount", 0))
+        currency = payload.get("currency", "USD")
+        settlement_type = payload.get("settlement_type", "internal_settlement")
+        rule_id = {
+            "internal_settlement": "bank_settlement",
+            "interbank_settlement": "interbank_settlement",
+            "clearing": "clearing_settlement",
+        }.get(settlement_type, "bank_settlement")
+        debit_gl = payload.get("debit_gl_code") or await self._resolve_gl_code(tenant_id, "customer_deposits")
+        credit_gl = payload.get("credit_gl_code") or await self._resolve_gl_code(tenant_id, "cash_reserves")
+        if not debit_gl or not credit_gl:
+            logger.warning("Banking settlement post skipped — no COA mapping for tenant %s", tenant_id)
+            return
+
+        result = await self._kernel.execute_posting(
+            tenant_id=tenant_id,
+            rule_id=rule_id,
+            source_context="banking",
+            source_document_id=batch_id,
+            amount=amount,
+            currency=currency,
+            correlation_id=envelope.get("correlation_id", f"banking-settlement-{batch_id}"),
+            idempotency_key=f"posting:{rule_id}:{payload.get('batch_ref', batch_id)}",
+            description=f"Settlement — ref {payload.get('batch_ref', batch_id)}",
+            account_mappings={"debit": debit_gl, "credit": credit_gl},
+        )
+        if not result.succeeded:
+            logger.error("Banking settlement GL post failed for %s: %s", batch_id, result.error)

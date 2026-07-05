@@ -77,6 +77,13 @@ capability_domains:
     catalog: docs/architecture/banking/PAYMENT_PLATFORM_CATALOG.yaml
     adr: docs/adr/093-banking-payment-platform.md
     gl_rules: [bank_transfer]
+  settlement:
+    label: Settlement & Reconciliation
+    status: implemented
+    aggregates: [SettlementBatch, SettlementItem, BankReconciliationRun, SettlementException, SettlementAdjustment]
+    catalog: docs/architecture/banking/SETTLEMENT_ENGINE_CATALOG.yaml
+    adr: docs/adr/094-banking-settlement-engine.md
+    gl_rules: [bank_settlement, interbank_settlement, clearing_settlement]
   branch_operations:
     label: Branch Banking
     status: planned
@@ -157,6 +164,10 @@ permissions:
   banking.transfers.read: View transfers
   banking.transfers.write: Initiate transfers
   banking.transfers.execute: Execute approved transfers
+  banking.settlement.read: View settlement batches and reconciliation
+  banking.settlement.write: Create settlement batches and reconciliation runs
+  banking.settlement.execute: Execute settlement and retry exceptions
+  banking.settlement.approve: Approve reconciliation and manual adjustments
   banking.branch.operate: Branch teller operations
   banking.agency.operate: Agency agent operations
   banking.admin: Product and policy administration
@@ -179,6 +190,9 @@ integration_events:
     - banking.interest.simulated
     - banking.interest.rate.changed
     - banking.fee.charged
+    - banking.settlement.posted
+    - banking.reconciliation.completed
+    - banking.settlement.exception.raised
   subscribes:
     - platform.tenant.provisioned
     - identity.user.created
@@ -192,6 +206,9 @@ gl_posting_rules:
   - bank_deposit
   - bank_withdrawal
   - bank_transfer
+  - bank_settlement
+  - interbank_settlement
+  - clearing_settlement
   - loan_disbursement
   - loan_repayment
   - interest_accrual

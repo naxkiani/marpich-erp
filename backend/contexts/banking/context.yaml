@@ -34,6 +34,11 @@ aggregates:
   - PaymentBatch
   - StandingOrder
   - PaymentFraudCheck
+  - SettlementBatch
+  - SettlementItem
+  - BankReconciliationRun
+  - SettlementException
+  - SettlementAdjustment
 
 banking_segments:
   - retail_banking
@@ -82,6 +87,9 @@ publishes:
   - banking.interest.simulated
   - banking.interest.rate.changed
   - banking.payment.fraud.flagged
+  - banking.settlement.posted
+  - banking.reconciliation.completed
+  - banking.settlement.exception.raised
   - banking.deposit.matured
   - banking.fee.charged
 
