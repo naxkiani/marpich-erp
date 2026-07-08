@@ -1,0 +1,23 @@
+context: risk
+display_name: Enterprise Risk Platform
+type: platform
+description: "Unified enterprise risk — register, matrix, heatmap, AI prediction"
+api: /api/v1/risk
+aggregates:
+  - RiskTenantProfile
+  - EnterpriseRiskItem
+  - RiskMatrixSnapshot
+  - RiskPrediction
+publishes:
+  - risk.item.registered
+  - risk.item.escalated
+  - risk.prediction.generated
+  - risk.matrix.updated
+subscribes:
+  - platform.tenant.provisioned
+delegates:
+  - treasury_risk
+  - fx_risk
+  - grc
+  - policy_engine
+schema: risk
