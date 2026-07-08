@@ -1,0 +1,27 @@
+context: business_continuity
+display_name: Enterprise Business Continuity Platform
+type: platform
+description: "Unified DR/BCP — RPO, RTO, failover, HA, replication, recovery testing"
+api: /api/v1/business-continuity
+aggregates:
+  - ContinuityTenantProfile
+  - ContinuityPlan
+  - BackupStrategy
+  - FailoverRecord
+  - RecoveryTest
+publishes:
+  - continuity.plan.created
+  - continuity.failover.initiated
+  - continuity.failover.completed
+  - continuity.test.completed
+  - continuity.emergency_ops.activated
+subscribes:
+  - platform.tenant.provisioned
+delegates:
+  - data_protection
+  - security_incident
+  - workflow
+  - treasury
+  - audit
+  - policy_engine
+schema: business_continuity

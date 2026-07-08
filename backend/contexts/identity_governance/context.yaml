@@ -1,0 +1,28 @@
+context: identity_governance
+display_name: Enterprise Identity Governance Platform
+type: platform
+description: "IGA — access requests, reviews, SoD, certification, emergency access"
+api: /api/v1/identity-governance
+aggregates:
+  - IdentityGovernanceProfile
+  - AccessRequest
+  - AccessReview
+  - PrivilegeCertification
+  - TemporaryAccessGrant
+  - EmergencyAccessGrant
+  - GovernanceAuditEntry
+publishes:
+  - identity_governance.access_request.submitted
+  - identity_governance.access_request.approved
+  - identity_governance.access_review.completed
+  - identity_governance.sod.violation_detected
+  - identity_governance.emergency_access.granted
+subscribes:
+  - platform.tenant.provisioned
+delegates:
+  - identity
+  - workflow
+  - audit
+  - security_incident
+  - policy_engine
+schema: identity_governance

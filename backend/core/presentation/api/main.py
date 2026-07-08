@@ -55,6 +55,14 @@ from contexts.data_protection.container import get_data_protection_service
 from contexts.data_protection.presentation.router import data_protection_router
 from contexts.risk.container import get_risk_service
 from contexts.risk.presentation.router import risk_router as enterprise_risk_router
+from contexts.security_incident.container import get_security_incident_service
+from contexts.security_incident.presentation.router import security_incident_router
+from contexts.business_continuity.container import get_business_continuity_service
+from contexts.business_continuity.presentation.router import business_continuity_router
+from contexts.regulatory_reporting.container import get_enterprise_regulatory_reporting_service
+from contexts.regulatory_reporting.presentation.router import enterprise_regulatory_reporting_router
+from contexts.identity_governance.container import get_identity_governance_service
+from contexts.identity_governance.presentation.router import identity_governance_router
 from contexts.fraud_detection.container import get_fraud_detection_service
 from contexts.fraud_detection.presentation.router import fraud_detection_router
 from contexts.grc.container import get_grc_service
@@ -267,6 +275,10 @@ async def lifespan(_app: FastAPI):
     get_fraud_detection_service()
     get_data_protection_service()
     get_risk_service()
+    get_security_incident_service()
+    get_business_continuity_service()
+    get_enterprise_regulatory_reporting_service()
+    get_identity_governance_service()
     get_grc_service()
     get_security_service()
     get_feature_flag_service()
@@ -392,6 +404,10 @@ app.include_router(enterprise_compliance_router, prefix="/api/v1")
 app.include_router(fraud_detection_router, prefix="/api/v1")
 app.include_router(data_protection_router, prefix="/api/v1")
 app.include_router(enterprise_risk_router, prefix="/api/v1")
+app.include_router(security_incident_router, prefix="/api/v1")
+app.include_router(business_continuity_router, prefix="/api/v1")
+app.include_router(enterprise_regulatory_reporting_router, prefix="/api/v1")
+app.include_router(identity_governance_router, prefix="/api/v1")
 app.include_router(grc_router, prefix="/api/v1")
 app.include_router(security_router, prefix="/api/v1")
 app.include_router(feature_flags_router, prefix="/api/v1")

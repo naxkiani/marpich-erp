@@ -1,0 +1,25 @@
+context: regulatory_reporting
+display_name: Enterprise Regulatory Reporting Platform
+type: platform
+description: "Unified regulatory reporting — country adapters, digital submission, XML/JSON/PDF"
+api: /api/v1/regulatory-reporting
+aggregates:
+  - RegulatoryTenantProfile
+  - CountryAdapter
+  - DigitalSubmission
+publishes:
+  - regulatory.adapter.configured
+  - regulatory.submission.created
+  - regulatory.submission.submitted
+subscribes:
+  - platform.tenant.provisioned
+delegates:
+  - reporting
+  - tax
+  - compliance
+  - risk
+  - currency_exchange
+  - banking
+  - audit
+  - policy_engine
+schema: regulatory_reporting
