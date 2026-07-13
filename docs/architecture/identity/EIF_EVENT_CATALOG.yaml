@@ -1,0 +1,205 @@
+# Enterprise Digital Identity Fabric — Event & Command Catalog
+# Version: 1.0 | Pattern: marpich.{context}.{aggregate}.{verb}
+
+version: 1
+fabric: enterprise_digital_identity_fabric
+transport:
+  primary: kafka
+  dev_fallback: in_process_event_bus
+  outbox: required_in_production
+  idempotency: consumer_key_per_handler
+
+defaults:
+  event_version: 1
+  envelope_fields:
+    - event_id
+    - event_name
+    - event_version
+    - source_context
+    - tenant_id
+    - organization_id
+    - correlation_id
+    - causation_id
+    - occurred_at
+    - user_id
+    - security_context
+    - payload
+
+kafka_topics:
+  - name: marpich.identity.commands
+    type: command
+    partitions: 12
+    retention_days: 7
+  - name: marpich.identity.events
+    type: event
+    partitions: 24
+    retention_days: 90
+  - name: marpich.authentication.events
+    type: event
+    partitions: 12
+  - name: marpich.authorization.events
+    type: event
+    partitions: 12
+  - name: marpich.directory.events
+    type: event
+    partitions: 12
+  - name: marpich.federation.events
+    type: event
+    partitions: 6
+  - name: marpich.trust.events
+    type: event
+    partitions: 12
+  - name: marpich.session.events
+    type: event
+    partitions: 12
+  - name: marpich.audit.events
+    type: event
+    partitions: 24
+    retention_days: 2555  # 7 years regulatory
+  - name: marpich.identity.dlq
+    type: dlq
+    partitions: 6
+
+commands:
+  - name: identity.register_user
+    topic: marpich.identity.commands
+    handler: identity
+    saga: identity_registration
+  - name: identity.verify_user
+    topic: marpich.identity.commands
+    handler: identity
+  - name: identity.activate_user
+    topic: marpich.identity.commands
+    handler: identity
+  - name: identity.suspend_user
+    topic: marpich.identity.commands
+    handler: identity
+  - name: identity.deprovision_user
+    topic: marpich.identity.commands
+    handler: identity
+    saga: identity_deprovisioning
+  - name: directory.sync_directory
+    topic: marpich.identity.commands
+    handler: directory
+  - name: credential.rotate_secret
+    topic: marpich.identity.commands
+    handler: credential
+  - name: trust.evaluate_session
+    topic: marpich.identity.commands
+    handler: trust
+
+events:
+  # Identity Core
+  - name: identity.user.created
+    topic: marpich.identity.events
+    schema: docs/architecture/events/identity.user.created.v1.json
+    subscribers: [permission_registry, data_isolation, audit, trust]
+  - name: identity.user.verified
+    topic: marpich.identity.events
+  - name: identity.user.activated
+    topic: marpich.identity.events
+  - name: identity.user.suspended
+    topic: marpich.identity.events
+  - name: identity.user.deprovisioned
+    topic: marpich.identity.events
+    subscribers: [directory, session, credential, audit]
+  - name: identity.organization.created
+    topic: marpich.identity.events
+  - name: identity.tenant.provisioned
+    topic: marpich.identity.events
+    alias: platform.tenant.provisioned
+
+  # Authentication (P4)
+  - name: authentication.passkey.registered
+    topic: marpich.authentication.events
+  - name: authentication.login.success
+    topic: marpich.authentication.events
+    subscribers: [identity_risk, trust, audit]
+  - name: authentication.oidc.provider.registered
+    topic: marpich.authentication.events
+
+  # Authorization (P1)
+  - name: authorization.access.granted
+    topic: marpich.authorization.events
+  - name: authorization.access.denied
+    topic: marpich.authorization.events
+    subscribers: [identity_risk, audit]
+
+  # Directory (P6)
+  - name: directory.sync.completed
+    topic: marpich.directory.events
+    subscribers: [identity_risk, identity_resilience, data_isolation]
+  - name: integration.directory.synced
+    topic: marpich.directory.events
+    subscribers: [identity, identity_risk]
+  - name: directory.scim.user.provisioned
+    topic: marpich.directory.events
+
+  # Trust / Risk (P7)
+  - name: identity_risk.score.computed
+    topic: marpich.trust.events
+    subscribers: [identity_resilience, authorization]
+  - name: identity_risk.step_up.recommended
+    topic: marpich.trust.events
+    subscribers: [authentication, session]
+  - name: identity_risk.anomaly.detected
+    topic: marpich.trust.events
+
+  # Resilience (P8)
+  - name: identity_resilience.failover.completed
+    topic: marpich.identity.events
+
+  # Session (planned)
+  - name: session.created
+    topic: marpich.session.events
+  - name: session.revoked
+    topic: marpich.session.events
+  - name: session.step_up.completed
+    topic: marpich.session.events
+
+  # Consent (planned)
+  - name: consent.granted
+    topic: marpich.identity.events
+  - name: consent.revoked
+    topic: marpich.identity.events
+
+  # Device (planned)
+  - name: device.registered
+    topic: marpich.trust.events
+  - name: device.trust.changed
+    topic: marpich.trust.events
+
+sagas:
+  identity_registration:
+    steps:
+      - command: identity.register_user
+      - event: identity.user.created
+      - command: permission_registry.bind_default_roles
+      - command: data_isolation.sync_principal
+      - event: identity.user.activated
+    compensation:
+      - command: identity.deprovision_user
+  identity_deprovisioning:
+    steps:
+      - command: session.revoke_all
+      - command: credential.revoke_all
+      - command: directory.unlink_external
+      - command: identity.deprovision_user
+      - event: identity.user.deprovisioned
+  directory_sync_with_risk:
+    steps:
+      - command: directory.sync_directory
+      - event: directory.sync.completed
+      - command: identity_risk.evaluate_directory_sync
+      - event: identity_risk.score.computed
+
+outbox:
+  table: platform.outbox_events
+  poll_interval_ms: 500
+  batch_size: 100
+  dispatch: at_least_once
+
+event_versioning:
+  strategy: additive_schema_evolution
+  compatibility: backward
+  breaking_change: new_event_name_suffix  # e.g. identity.user.created.v2
