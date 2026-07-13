@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@marpich/auth-provider": "workspace:*",
     "@marpich/core": "workspace:*",
     "@marpich/shared": "workspace:*",
     "next": "^15.1.0",

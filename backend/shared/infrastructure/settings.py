@@ -23,6 +23,15 @@ class Settings(BaseSettings):
     # Kafka fan-out (optional — external consumers)
     kafka_enabled: bool = False
     kafka_bootstrap_servers: str = ""
+    kafka_topic_prefix: str = "marpich"
+
+    # RabbitMQ fan-out (optional — queue-oriented delivery)
+    rabbitmq_enabled: bool = False
+    rabbitmq_url: str = ""
+    rabbitmq_exchange: str = "marpich"
+
+    # orchestration broker defaults: kafka | rabbitmq | auto
+    marpich_orchestration_broker_mode: str = "auto"
 
     # OpenTelemetry (optional — production observability)
     otel_enabled: bool = False
@@ -33,9 +42,40 @@ class Settings(BaseSettings):
     otel_console_export: bool = False
     otel_excluded_urls: str = "/api/v1/health,/api/docs,/api/redoc,/api/openapi.json"
 
+    # startup: lazy (dev/tests) loads identity+policy+platform only; eager loads all services
+    marpich_startup_mode: str = "lazy"
+    # WebAuthn / passkeys (Phase P4)
+    webauthn_rp_id: str = "localhost"
+    webauthn_rp_name: str = "Marpich ERP"
+    webauthn_origin: str = "http://localhost:3001"
+    webauthn_challenge_ttl_seconds: int = 120
+    # OIDC federation defaults
+    oidc_default_scopes: str = "openid profile email"
+    # SAML federation (Phase P6)
+    saml_sp_entity_id: str = "urn:marpich:sp"
+    saml_acs_url: str = "http://localhost:3001/login/saml/acs"
+    saml_relay_state_ttl_seconds: int = 300
+    # Multi-region identity resilience (Phase P8)
+    marpich_region_id: str = "eu-west-1"
+    # app profile: core | enterprise | financial | banking | industry | test | full
+    marpich_app_profile: str = "full"
+    # event discovery: cached (manifest) | scan (filesystem import on demand)
+    marpich_event_discovery_mode: str = "cached"
+    # PostgreSQL RLS (Phase P5) — defense-in-depth tenant isolation
+    marpich_rls_enabled: bool = False
+    marpich_principal_partition_modulus: int = 8
+    # orchestration worker: polls retry/delayed/scheduled queues
+    marpich_orchestration_worker_enabled: bool = True
+    marpich_orchestration_worker_poll_interval_ms: int = 1000
+    marpich_orchestration_worker_batch_size: int = 50
+
 
 settings = Settings()
 
 
 def use_postgres() -> bool:
     return settings.persistence_backend.lower() == "postgres"
+
+
+def use_rls() -> bool:
+    return use_postgres() and settings.marpich_rls_enabled

@@ -1,0 +1,22 @@
+context: permission_registry
+display_name: Permission Registry
+type: platform
+description: "Enterprise Permission Registry — catalog, roles, bindings, and module permission sets"
+api: /api/v1/permissions
+aggregates:
+  - RegistryProfile
+  - Permission
+  - RegistryRole
+  - RoleBinding
+  - PermissionSet
+publishes:
+  - permission_registry.permission.registered
+  - permission_registry.role.created
+  - permission_registry.role.assigned
+  - permission_registry.dashboard.generated
+subscribes:
+  - platform.tenant.provisioned
+delegates:
+  - identity
+  - policy
+schema: permission_registry

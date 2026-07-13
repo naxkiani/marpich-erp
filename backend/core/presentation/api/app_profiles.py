@@ -3,6 +3,13 @@ from __future__ import annotations
 
 CORE_CONTEXTS = frozenset({
     "identity",
+    "authorization",
+    "permission_registry",
+    "authentication",
+    "data_isolation",
+    "directory",
+    "identity_risk",
+    "identity_resilience",
     "core_platform",
     "policy",
     "settings",
@@ -82,6 +89,13 @@ INDUSTRY_CONTEXTS = frozenset({
 # Minimal slice for integration smoke tests.
 TEST_CONTEXTS = frozenset({
     "identity",
+    "authorization",
+    "permission_registry",
+    "authentication",
+    "data_isolation",
+    "directory",
+    "identity_risk",
+    "identity_resilience",
     "core_platform",
     "policy",
     "enterprise_api_gateway",

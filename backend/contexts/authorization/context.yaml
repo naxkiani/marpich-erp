@@ -1,0 +1,19 @@
+context: authorization
+display_name: Authorization PDP
+type: platform
+description: "Enterprise Authorization PDP — RBAC, ABAC, and PBAC evaluation for all Marpich modules"
+api: /api/v1/authorization
+aggregates:
+  - AuthorizationProfile
+  - AbacPolicy
+  - AccessDecision
+publishes:
+  - authorization.access.granted
+  - authorization.access.denied
+  - authorization.dashboard.generated
+subscribes:
+  - platform.tenant.provisioned
+delegates:
+  - identity
+  - policy
+schema: authorization

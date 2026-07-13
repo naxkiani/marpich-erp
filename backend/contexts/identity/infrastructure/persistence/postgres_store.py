@@ -27,7 +27,7 @@ def _uuid(value: UniqueId | str | UUID) -> UUID:
 
 class PostgresUserRepository(IUserRepository):
     async def find_by_email(self, tenant_id: str, email: str) -> User | None:
-        async with session_scope() as session:
+        async with session_scope(tenant_id=tenant_id) as session:
             row = await session.scalar(
                 select(UserRow).where(
                     UserRow.tenant_id == tenant_id,
@@ -37,14 +37,14 @@ class PostgresUserRepository(IUserRepository):
             return _user_from_row(row) if row else None
 
     async def find_by_id(self, tenant_id: str, user_id: UniqueId) -> User | None:
-        async with session_scope() as session:
+        async with session_scope(tenant_id=tenant_id) as session:
             row = await session.get(UserRow, _uuid(user_id))
             if row and row.tenant_id == tenant_id:
                 return _user_from_row(row)
             return None
 
     async def save(self, user: User) -> None:
-        async with session_scope() as session:
+        async with session_scope(tenant_id=tenant_id) as session:
             row = await session.get(UserRow, _uuid(user.id))
             if row is None:
                 row = UserRow(id=_uuid(user.id), tenant_id=user.tenant_id, email=user.email)
@@ -76,7 +76,7 @@ class PostgresUserRepository(IUserRepository):
         limit: int = 50,
         offset: int = 0,
     ) -> list[User]:
-        async with session_scope() as session:
+        async with session_scope(tenant_id=tenant_id) as session:
             stmt = select(UserRow).where(UserRow.tenant_id == tenant_id)
             rows = (await session.scalars(stmt)).all()
         users = [_user_from_row(r) for r in rows]
@@ -88,21 +88,21 @@ class PostgresUserRepository(IUserRepository):
 
 class PostgresRoleRepository(IRoleRepository):
     async def find_by_id(self, tenant_id: str, role_id: UniqueId) -> Role | None:
-        async with session_scope() as session:
+        async with session_scope(tenant_id=tenant_id) as session:
             row = await session.get(RoleRow, _uuid(role_id))
             if row and row.tenant_id == tenant_id:
                 return _role_from_row(row)
             return None
 
     async def find_by_code(self, tenant_id: str, code: str) -> Role | None:
-        async with session_scope() as session:
+        async with session_scope(tenant_id=tenant_id) as session:
             row = await session.scalar(
                 select(RoleRow).where(RoleRow.tenant_id == tenant_id, RoleRow.code == code.lower())
             )
             return _role_from_row(row) if row else None
 
     async def save(self, role: Role) -> None:
-        async with session_scope() as session:
+        async with session_scope(tenant_id=tenant_id) as session:
             row = await session.get(RoleRow, _uuid(role.id))
             if row is None:
                 row = RoleRow(
@@ -120,7 +120,7 @@ class PostgresRoleRepository(IRoleRepository):
             row.updated_at = role.updated_at
 
     async def list_roles(self, tenant_id: str) -> list[Role]:
-        async with session_scope() as session:
+        async with session_scope(tenant_id=tenant_id) as session:
             rows = (await session.scalars(select(RoleRow).where(RoleRow.tenant_id == tenant_id))).all()
         return [_role_from_row(r) for r in rows]
 
@@ -137,7 +137,7 @@ class PostgresSessionRepository(ISessionRepository):
         ip_address: str | None = None,
         user_agent: str | None = None,
     ) -> None:
-        async with session_scope() as session:
+        async with session_scope(tenant_id=tenant_id) as session:
             session.add(
                 SessionRow(
                     id=UUID(session_id),
@@ -151,7 +151,7 @@ class PostgresSessionRepository(ISessionRepository):
             )
 
     async def find_by_refresh_hash(self, refresh_hash: str) -> dict | None:
-        async with session_scope() as session:
+        async with session_scope(tenant_id=tenant_id) as session:
             row = await session.scalar(
                 select(SessionRow).where(
                     SessionRow.refresh_token_hash == refresh_hash,
@@ -172,7 +172,7 @@ class PostgresSessionRepository(ISessionRepository):
             }
 
     async def revoke(self, session_id: str) -> None:
-        async with session_scope() as session:
+        async with session_scope(tenant_id=tenant_id) as session:
             await session.execute(
                 update(SessionRow)
                 .where(SessionRow.id == UUID(session_id))
@@ -180,7 +180,7 @@ class PostgresSessionRepository(ISessionRepository):
             )
 
     async def revoke_all_for_user(self, tenant_id: str, user_id: str) -> None:
-        async with session_scope() as session:
+        async with session_scope(tenant_id=tenant_id) as session:
             await session.execute(
                 update(SessionRow)
                 .where(

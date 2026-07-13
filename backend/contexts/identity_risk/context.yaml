@@ -1,0 +1,24 @@
+context: identity_risk
+display_name: Identity Risk Platform
+type: platform
+description: "AI-assisted identity risk scoring for authentication and directory events"
+api: /api/v1/identity-risk
+aggregates:
+  - RiskProfile
+  - RiskScore
+  - RiskSignal
+  - AnomalyAlert
+publishes:
+  - identity_risk.score.computed
+  - identity_risk.anomaly.detected
+  - identity_risk.step_up.recommended
+subscribes:
+  - platform.tenant.provisioned
+  - authentication.login.success
+  - directory.sync.completed
+  - integration.directory.synced
+  - directory.scim.user.provisioned
+delegates:
+  - policy
+  - authorization
+schema: identity_risk

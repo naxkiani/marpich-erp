@@ -21,6 +21,18 @@ public_routes:
   - prefix: /api/v1/auth/refresh
     auth: public
     tenant: optional
+  - prefix: /api/v1/authentication/webauthn/login
+    auth: public
+    tenant: required
+  - prefix: /api/v1/authentication/federation/oidc
+    auth: public
+    tenant: required
+  - prefix: /api/v1/directory/federation/saml
+    auth: public
+    tenant: required
+  - prefix: /api/v1/directory/scim/v2
+    auth: public
+    tenant: required
   - prefix: /api/v1/health
     auth: public
     tenant: optional
@@ -39,11 +51,26 @@ platform_routes:
     context_id: identity
     module: identity
   - prefix: /api/v1/authorization
-    context_id: identity
-    module: identity
+    context_id: authorization
+    module: authorization
   - prefix: /api/v1/permissions
-    context_id: identity
-    module: identity
+    context_id: permission_registry
+    module: permission_registry
+  - prefix: /api/v1/authentication
+    context_id: authentication
+    module: authentication
+  - prefix: /api/v1/data-isolation
+    context_id: data_isolation
+    module: data_isolation
+  - prefix: /api/v1/directory
+    context_id: directory
+    module: directory
+  - prefix: /api/v1/identity-risk
+    context_id: identity_risk
+    module: identity_risk
+  - prefix: /api/v1/identity-resilience
+    context_id: identity_resilience
+    module: identity_resilience
   - prefix: /api/v1/platform
     context_id: core_platform
     module: core_platform

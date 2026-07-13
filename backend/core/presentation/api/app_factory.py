@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from core.presentation.api.startup_registry import configure_application
 from core.presentation.middleware.platform_gateway import PlatformGatewayMiddleware
+from core.presentation.middleware.tenant_rls import TenantRlsMiddleware
 from contexts.enterprise_message_orchestration.infrastructure.workers.orchestration_worker import (
     get_orchestration_worker,
 )
@@ -56,6 +57,7 @@ def create_app(
     )
 
     application.add_middleware(PlatformGatewayMiddleware)
+    application.add_middleware(TenantRlsMiddleware)
     application.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],

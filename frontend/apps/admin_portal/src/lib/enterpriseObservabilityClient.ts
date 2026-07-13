@@ -1,10 +1,16 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000";
+import {
+  type ApiSession,
+  apiGet,
+  apiPost,
+  createClientLogin,
+  loadSession as loadEobSession,
+  saveSession as saveEobSession,
+} from "./clientAuth";
 
-export type ApiSession = {
-  tenantId: string;
-  accessToken: string;
-};
+export type { ApiSession };
 
+export const loginEobSession = createClientLogin("Observability Admin");
+export { loadEobSession, saveEobSession };
 export type EobCapability = {
   capability: string;
   label: string;
@@ -64,80 +70,6 @@ export type EobHealthChecks = {
   checks: Array<Record<string, unknown>>;
 };
 
-const SESSION_KEY = "marpich_eob_session";
-
-export function loadEobSession(): ApiSession | null {
-  if (typeof window === "undefined") return null;
-  try {
-    const raw = window.sessionStorage.getItem(SESSION_KEY);
-    if (!raw) return null;
-    return JSON.parse(raw) as ApiSession;
-  } catch {
-    return null;
-  }
-}
-
-export function saveEobSession(session: ApiSession): void {
-  window.sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
-}
-
-function headers(session: ApiSession): HeadersInit {
-  return {
-    "Content-Type": "application/json",
-    "X-Tenant-ID": session.tenantId,
-    Authorization: `Bearer ${session.accessToken}`,
-  };
-}
-
-async function apiGet<T>(path: string, session: ApiSession): Promise<T> {
-  const res = await fetch(`${API_URL}${path}`, { headers: headers(session) });
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    throw new Error(body.detail ?? body.message ?? `HTTP ${res.status}`);
-  }
-  const json = await res.json();
-  return json.data as T;
-}
-
-async function apiPost<T>(path: string, session: ApiSession, body: unknown = {}): Promise<T> {
-  const res = await fetch(`${API_URL}${path}`, {
-    method: "POST",
-    headers: headers(session),
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.detail ?? `HTTP ${res.status}`);
-  }
-  const json = await res.json();
-  return json.data as T;
-}
-
-export async function loginEobSession(
-  tenantId: string,
-  email: string,
-  password: string,
-): Promise<ApiSession> {
-  const tenantHeaders = { "Content-Type": "application/json", "X-Tenant-ID": tenantId };
-  await fetch(`${API_URL}/api/v1/auth/register`, {
-    method: "POST",
-    headers: tenantHeaders,
-    body: JSON.stringify({ email, password, display_name: "Observability Admin" }),
-  }).catch(() => undefined);
-
-  const login = await fetch(`${API_URL}/api/v1/auth/login`, {
-    method: "POST",
-    headers: tenantHeaders,
-    body: JSON.stringify({ email, password }),
-  });
-  if (!login.ok) {
-    throw new Error("Login failed — check tenant, email, and password");
-  }
-  const json = await login.json();
-  const session: ApiSession = { tenantId, accessToken: json.data.access_token };
-  saveEobSession(session);
-  return session;
-}
 
 export async function fetchEobCatalog(session: ApiSession): Promise<EobCatalog> {
   return apiGet("/api/v1/enterprise-observability/catalog", session);

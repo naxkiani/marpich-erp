@@ -1,0 +1,20 @@
+context: authentication
+display_name: Authentication Platform
+type: platform
+description: "Enterprise Authentication — WebAuthn passkeys and OIDC federation"
+api: /api/v1/authentication
+aggregates:
+  - AuthenticationProfile
+  - WebAuthnCredential
+  - OidcProvider
+publishes:
+  - authentication.passkey.registered
+  - authentication.passkey.revoked
+  - authentication.oidc.provider.registered
+  - authentication.login.success
+subscribes:
+  - platform.tenant.provisioned
+delegates:
+  - identity
+  - policy
+schema: authentication

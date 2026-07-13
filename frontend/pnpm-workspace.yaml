@@ -1,5 +1,6 @@
 packages:
   - "apps/*"
+  - "auth-provider"
   - "core"
   - "shared"
   - "modules/**"

@@ -1,5 +1,6 @@
 "use client";
 
+import { LoginGate, useAuth, type AuthSession } from "@marpich/auth-provider";
 import { PageLayout } from "@marpich/core";
 import { DataTable, EmptyState, ProgressBar, SkeletonTable, useToast } from "@marpich/shared";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -11,14 +12,10 @@ import {
   fetchSchHistory,
   fetchSchJobs,
   fetchSchMonitoring,
-  loadSchSession,
-  loginSchSession,
   pauseSchJob,
   resumeSchJob,
-  saveSchSession,
   seedSch,
   triggerSchJob,
-  type ApiSession,
   type SchCatalog,
   type SchDashboard,
   type SchMonitoring,
@@ -49,13 +46,10 @@ const JOB_TYPE_LABELS: Record<string, string> = {
 
 export function EnterpriseSchedulerDashboardPage() {
   const { push } = useToast();
+  const { session, isAuthenticated, isLoading: authLoading } = useAuth();
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(15);
   const [error, setError] = useState<string | null>(null);
-  const [session, setSession] = useState<ApiSession | null>(null);
-  const [tenantId, setTenantId] = useState("sch-demo");
-  const [email, setEmail] = useState("admin@sch.dev");
-  const [password, setPassword] = useState("SecurePass123!");
 
   const [catalog, setCatalog] = useState<SchCatalog | null>(null);
   const [dashboard, setDashboard] = useState<SchDashboard | null>(null);
@@ -65,7 +59,7 @@ export function EnterpriseSchedulerDashboardPage() {
   const [dependencies, setDependencies] = useState<Array<Record<string, unknown>>>([]);
   const [lastAction, setLastAction] = useState<string | null>(null);
 
-  const loadData = useCallback(async (active: ApiSession) => {
+  const loadData = useCallback(async (active: AuthSession) => {
     setLoading(true);
     setProgress(30);
     setError(null);
@@ -94,15 +88,14 @@ export function EnterpriseSchedulerDashboardPage() {
   }, []);
 
   useEffect(() => {
-    const stored = loadSchSession();
-    if (stored) {
-      setSession(stored);
-      void loadData(stored);
+    if (authLoading) return;
+    if (session) {
+      void loadData(session);
       return;
     }
     setLoading(false);
     setProgress(100);
-  }, [loadData]);
+  }, [authLoading, loadData, session]);
 
   const stats = useMemo(() => {
     if (!dashboard) return [];
@@ -162,19 +155,7 @@ export function EnterpriseSchedulerDashboardPage() {
     [dependencies],
   );
 
-  async function onConnect() {
-    try {
-      const next = await loginSchSession(tenantId, email, password);
-      setSession(next);
-      saveSchSession(next);
-      push({ message: `Connected to tenant ${tenantId}` });
-      await loadData(next);
-    } catch (err) {
-      push({ message: err instanceof Error ? err.message : "Connection failed" });
-    }
-  }
-
-  async function runAction(label: string, fn: (s: ApiSession) => Promise<unknown>) {
+  async function runAction(label: string, fn: (s: AuthSession) => Promise<unknown>) {
     if (!session) return;
     try {
       await fn(session);
@@ -197,7 +178,7 @@ export function EnterpriseSchedulerDashboardPage() {
         { label: "Scheduler" },
       ]}
       actions={
-        session ? (
+        isAuthenticated && session ? (
           <>
             <button type="button" className="mp-btn" onClick={() => void runAction("Seed", seedSch)}>
               Seed
@@ -235,36 +216,21 @@ export function EnterpriseSchedulerDashboardPage() {
 
       <ProgressBar value={progress} label={loading ? "Loading scheduler dashboard…" : "Dashboard ready"} />
 
-      {!session ? (
-        <section className="sch-connect" aria-labelledby="connect-heading">
-          <h2 id="connect-heading">Connect to API</h2>
-          <div className="sch-form">
-            <label>
-              Tenant ID
-              <input className="mp-input" value={tenantId} onChange={(e) => setTenantId(e.target.value)} />
-            </label>
-            <label>
-              Email
-              <input className="mp-input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            </label>
-            <label>
-              Password
-              <input className="mp-input" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            </label>
-            <button type="button" className="mp-btn mp-btn-primary" onClick={() => void onConnect()}>
-              Connect
-            </button>
-          </div>
-        </section>
+      {!isAuthenticated ? (
+        <LoginGate
+          title="Connect to API"
+          defaultTenantId="sch-demo"
+          defaultEmail="admin@sch.dev"
+        />
       ) : null}
 
       {error ? <p className="sch-error" role="alert">{error}</p> : null}
-      {session && loading ? <SkeletonTable rows={4} cols={4} /> : null}
+      {isAuthenticated && loading ? <SkeletonTable rows={4} cols={4} /> : null}
 
-      {session && dashboard && !loading ? (
+      {isAuthenticated && dashboard && !loading ? (
         <>
           <p className="sch-muted">
-            Tenant <strong>{session.tenantId}</strong>
+            Tenant <strong>{session?.tenantId}</strong>
             {lastAction ? ` · Last action: ${lastAction}` : ""}
             {monitoring ? ` · ${monitoring.success_rate_pct}% success` : ""}
           </p>

@@ -16,6 +16,7 @@ dependencies = [
     "python-jose[cryptography]>=3.3.0",
     "bcrypt>=4.2.0",
     "pyotp>=2.9.0",
+    "webauthn>=2.5.0",
     "email-validator>=2.2.0",
     "pyyaml>=6.0.0",
 ]
@@ -76,6 +77,13 @@ testpaths = [
     "contexts/enterprise_observability/tests",
     "contexts/enterprise_scheduler/tests",
     "contexts/enterprise_integration_studio/tests",
+    "contexts/authorization/tests",
+    "contexts/permission_registry/tests",
+    "contexts/authentication/tests",
+    "contexts/data_isolation/tests",
+    "contexts/directory/tests",
+    "contexts/identity_risk/tests",
+    "contexts/identity_resilience/tests",
 ]
 
 [build-system]

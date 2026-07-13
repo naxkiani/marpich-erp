@@ -1,0 +1,24 @@
+context: identity_resilience
+display_name: Identity Resilience Platform
+type: platform
+description: "Multi-region HA for directory sync and identity risk scoring workers"
+api: /api/v1/identity-resilience
+aggregates:
+  - ResilienceProfile
+  - RegionDescriptor
+  - WorkerDeployment
+  - FailoverEvent
+publishes:
+  - identity_resilience.worker.registered
+  - identity_resilience.failover.initiated
+  - identity_resilience.failover.completed
+  - identity_resilience.region.health_changed
+subscribes:
+  - platform.tenant.provisioned
+  - directory.sync.completed
+  - identity_risk.score.computed
+delegates:
+  - directory
+  - identity_risk
+  - policy
+schema: identity_resilience

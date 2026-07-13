@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useAuth } from "@marpich/auth-provider";
 import { useLocale } from "@marpich/shared";
 
 const LINKS = [
@@ -14,7 +15,14 @@ const LINKS = [
 
 export function ShellNav() {
   const pathname = usePathname();
+  const router = useRouter();
   const { t } = useLocale();
+  const { isAuthenticated, isLoading, session, user, logout } = useAuth();
+
+  async function onLogout() {
+    await logout();
+    router.push("/login");
+  }
 
   return (
     <nav aria-label="Main">
@@ -28,6 +36,22 @@ export function ShellNav() {
         </Link>
       ))}
       <span className="mp-nav-muted">{t("app.name")}</span>
+      <div className="mp-shell-auth">
+        {isLoading ? (
+          <span className="mp-nav-muted">Checking session…</span>
+        ) : isAuthenticated && session ? (
+          <>
+            <span className="mp-nav-muted">
+              {user?.email ?? "Signed in"} · {session.tenantId}
+            </span>
+            <button type="button" className="mp-btn" onClick={() => void onLogout()}>
+              Sign out
+            </button>
+          </>
+        ) : (
+          <Link href="/login">Sign in</Link>
+        )}
+      </div>
     </nav>
   );
 }

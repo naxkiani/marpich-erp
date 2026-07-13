@@ -1,6 +1,7 @@
 """Identity application services."""
 from __future__ import annotations
 
+import secrets
 import uuid
 from dataclasses import dataclass
 
@@ -154,6 +155,67 @@ class IdentityApplicationService:
             user_agent=user_agent,
         )
 
+    async def issue_tokens_for_user(
+        self,
+        *,
+        tenant_id: str,
+        user_id: str,
+        correlation_id: str,
+        ip_address: str | None = None,
+        user_agent: str | None = None,
+    ) -> Result[AuthTokens]:
+        user = await self._users.find_by_id(tenant_id, UniqueId.from_string(user_id))
+        if not user:
+            return Result.fail("identity.errors.user_not_found")
+        if user.status != UserStatus.ACTIVE:
+            return Result.fail("identity.errors.user_inactive")
+        if user.is_locked():
+            return Result.fail("identity.errors.account_locked")
+        return await self._issue_tokens(
+            user=user,
+            tenant_id=tenant_id,
+            correlation_id=correlation_id,
+            ip_address=ip_address,
+            user_agent=user_agent,
+        )
+
+    async def find_user_id_by_email(self, tenant_id: str, email: str) -> str | None:
+        user = await self._users.find_by_email(tenant_id, email)
+        return str(user.id) if user else None
+
+    async def provision_directory_user(
+        self,
+        *,
+        tenant_id: str,
+        email: str,
+        display_name: str,
+        external_id: str,
+        correlation_id: str,
+    ) -> Result[dict]:
+        existing = await self._users.find_by_email(tenant_id, email)
+        if existing:
+            return Result.ok(existing.to_dict())
+
+        password_hash = await self._hasher.hash(secrets.token_urlsafe(48))
+        user, event = User.register(
+            tenant_id=tenant_id,
+            email=email,
+            password_hash=password_hash,
+            display_name=display_name,
+            correlation_id=correlation_id,
+        )
+        await self._users.save(user)
+        await self._outbox.publish(event)
+        await self._audit.log(
+            tenant_id=tenant_id,
+            correlation_id=correlation_id,
+            action="identity.user.provisioned",
+            resource_type="user",
+            resource_id=str(user.id),
+            payload={"email": user.email, "external_id": external_id, "source": "directory"},
+        )
+        return Result.ok(user.to_dict())
+
     async def refresh(
         self,
         *,
@@ -228,6 +290,10 @@ class IdentityApplicationService:
         data["permissions"] = perms
         data["roles"] = role_codes
         return Result.ok(data)
+
+    async def list_users(self, tenant_id: str, *, limit: int = 1000) -> Result[list[dict]]:
+        users = await self._users.list_users(tenant_id, limit=limit)
+        return Result.ok([user.to_dict() for user in users])
 
     async def setup_mfa(
         self,

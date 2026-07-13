@@ -14,6 +14,13 @@ API_PREFIX = "/api/v1"
 # Eager-loaded at startup in lazy mode (auth, policy, platform shell).
 CORE_SERVICE_SPECS: list[tuple[str, str]] = [
     ("contexts.identity.container", "get_identity_service"),
+    ("contexts.authorization.container", "get_authorization_service"),
+    ("contexts.permission_registry.container", "get_permission_registry_service"),
+    ("contexts.authentication.container", "get_authentication_service"),
+    ("contexts.data_isolation.container", "get_data_isolation_service"),
+    ("contexts.directory.container", "get_directory_service"),
+    ("contexts.identity_risk.container", "get_identity_risk_service"),
+    ("contexts.identity_resilience.container", "get_identity_resilience_service"),
     ("contexts.policy.container", "get_policy_service"),
     ("contexts.core_platform.container", "get_platform_service"),
 ]
@@ -145,6 +152,13 @@ ALL_SERVICE_SPECS: list[tuple[str, str]] = [
 
 ROUTER_SPECS: list[tuple[str, str]] = [
     ("contexts.identity.presentation.router", "router"),
+    ("contexts.authorization.presentation.router", "authorization_router"),
+    ("contexts.permission_registry.presentation.router", "permission_registry_router"),
+    ("contexts.authentication.presentation.router", "authentication_router"),
+    ("contexts.data_isolation.presentation.router", "data_isolation_router"),
+    ("contexts.directory.presentation.router", "directory_router"),
+    ("contexts.identity_risk.presentation.router", "identity_risk_router"),
+    ("contexts.identity_resilience.presentation.router", "identity_resilience_router"),
     ("contexts.core_platform.presentation.router", "router"),
     ("contexts.hospital.presentation.router", "router"),
     ("contexts.accounting.presentation.router", "router"),
