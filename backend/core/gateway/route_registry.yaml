@@ -123,6 +123,18 @@ business_routes:
     context_id: finance
     module: finance
 
+  - prefix: /api/v1/enterprise-observability
+    context_id: enterprise_observability
+    module: enterprise_observability
+
+  - prefix: /api/v1/enterprise-scheduler
+    context_id: enterprise_scheduler
+    module: enterprise_scheduler
+
+  - prefix: /api/v1/enterprise-integration-studio
+    context_id: enterprise_integration_studio
+    module: enterprise_integration_studio
+
 websocket_routes:
   - prefix: /api/v1/ws/notifications
     context_id: notifications

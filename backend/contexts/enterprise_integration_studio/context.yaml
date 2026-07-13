@@ -1,0 +1,27 @@
+context: enterprise_integration_studio
+display_name: Enterprise Integration Studio
+type: platform
+description: "Enterprise Integration Studio — visual API, connector, workflow, event designers, data mapping, transformation, testing, mocks, API docs, connector marketplace, versioning, deployment, developer portal, citizen developer workspace"
+api: /api/v1/enterprise-integration-studio
+aggregates:
+  - StudioProfile
+  - StudioProject
+  - StudioArtifact
+  - StudioVersion
+  - StudioDeployment
+  - StudioTestRun
+  - MarketplaceListing
+publishes:
+  - enterprise_integration_studio.artifact.created
+  - enterprise_integration_studio.test.completed
+  - enterprise_integration_studio.version.published
+  - enterprise_integration_studio.deployment.completed
+  - enterprise_integration_studio.dashboard.generated
+subscribes:
+  - platform.tenant.provisioned
+delegates:
+  - enterprise_api_gateway
+  - enterprise_connector_framework
+  - workflow
+  - enterprise_event_bus
+schema: enterprise_integration_studio

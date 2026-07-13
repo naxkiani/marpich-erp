@@ -73,6 +73,9 @@ testpaths = [
     "tests/integration",
     "tests/contracts",
     "tests/architecture",
+    "contexts/enterprise_observability/tests",
+    "contexts/enterprise_scheduler/tests",
+    "contexts/enterprise_integration_studio/tests",
 ]
 
 [build-system]

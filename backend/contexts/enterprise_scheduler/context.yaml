@@ -1,0 +1,24 @@
+context: enterprise_scheduler
+display_name: Enterprise Scheduler
+type: platform
+description: "Enterprise Scheduler — cron, calendar, recurring, event and workflow triggered jobs with retry, priority, dependency, distributed scheduling, job history, and monitoring"
+api: /api/v1/enterprise-scheduler
+aggregates:
+  - SchedulerProfile
+  - ScheduledJob
+  - JobDependency
+  - JobExecution
+publishes:
+  - enterprise_scheduler.job.scheduled
+  - enterprise_scheduler.job.started
+  - enterprise_scheduler.job.completed
+  - enterprise_scheduler.job.failed
+  - enterprise_scheduler.dashboard.generated
+subscribes:
+  - platform.tenant.provisioned
+  - workflow.process.completed
+delegates:
+  - workflow
+  - enterprise_message_orchestration
+  - enterprise_observability
+schema: enterprise_scheduler
