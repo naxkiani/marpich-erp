@@ -50,6 +50,23 @@ default_flags:
       hospital: true
       bank: true
       university: true
+  # Digital Twin (P199-D1 / ADR-209) — evaluate via Feature Flag System; Helm mirrors only
+  - key: twin.enabled
+    default_enabled: false
+    owner: platform
+    module: identity_digital_twin
+  - key: twin.sync.enabled
+    default_enabled: false
+    owner: platform
+    module: identity_digital_twin
+  - key: twin.intelligence.enabled
+    default_enabled: false
+    owner: platform
+    module: identity_digital_twin
+  - key: twin.edge.cache.enabled
+    default_enabled: false
+    owner: platform
+    module: identity_digital_twin
 
 module_flags:
   pattern: "module.{module_id}.enabled"

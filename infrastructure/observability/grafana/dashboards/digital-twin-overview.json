@@ -1,0 +1,32 @@
+{
+  "title": "Marpich Digital Twin Overview",
+  "uid": "marpich-twin-overview-p199d22",
+  "tags": ["digital-twin", "sre", "p199-d2.2"],
+  "panels": [
+    {
+      "title": "Twin API Availability",
+      "type": "stat",
+      "targets": [{ "expr": "up{job=\"marpich-iam-twin\"}" }]
+    },
+    {
+      "title": "Open Drift Alerts",
+      "type": "stat",
+      "targets": [{ "expr": "marpich_twin_drift_open" }]
+    },
+    {
+      "title": "Open Anomalies",
+      "type": "stat",
+      "targets": [{ "expr": "marpich_twin_anomaly_open" }]
+    },
+    {
+      "title": "Twin Coverage (Analytics KPI)",
+      "type": "gauge",
+      "targets": [{ "expr": "marpich_twin_coverage_ratio" }]
+    },
+    {
+      "title": "Request Success Ratio",
+      "type": "timeseries",
+      "targets": [{ "expr": "rate(marpich_twin_api_success_total[5m]) / clamp_min(rate(marpich_twin_api_requests_total[5m]), 0.001)" }]
+    }
+  ]
+}

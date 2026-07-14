@@ -1,0 +1,167 @@
+# Twin Intelligence API — OpenAPI 3.1 (architecture source, Prompt 199-C)
+openapi: 3.1.0
+info:
+  title: Marpich Twin AI Intelligence API
+  version: 1.0.0
+  description: |
+    Prediction, graph, simulation, reasoning, and recommendation surfaces for Digital Twins.
+    Implementation lives under /api/v1/identity-twins. Gateway may alias /api/v1/twin-intelligence/*.
+servers:
+  - url: /api/v1/identity-twins
+paths:
+  /{twin_ref}/predict:
+    post:
+      operationId: predictTwin
+      summary: Request AI Platform prediction for twin
+      security: [{ bearerAuth: [] }]
+      x-permission: twin.ai.infer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PredictRequest"
+      responses:
+        "202":
+          description: Prediction accepted / completed envelope
+  /{twin_ref}/simulate:
+    post:
+      operationId: simulateTwinIntelligence
+      x-permission: twin.write
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SimulateRequest"
+  /{twin_ref}/reason:
+    post:
+      operationId: reasonTwin
+      x-permission: twin.ai.infer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReasonRequest"
+  /{twin_ref}/recommend:
+    post:
+      operationId: recommendTwin
+      x-permission: twin.ai.infer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecommendRequest"
+  /predictions:
+    get:
+      operationId: listPredictions
+      x-permission: twin.read
+      parameters:
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/Cursor"
+  /{twin_ref}/predictions:
+    get:
+      operationId: listTwinPredictions
+      x-permission: twin.read
+  /models:
+    get:
+      operationId: listTwinBoundModels
+      summary: List model approval refs bound for twin intelligence (proxy to governance)
+      x-permission: twin.ai.read
+  /graph:
+    get:
+      operationId: getKnowledgeGraphOverview
+      x-permission: twin.read
+  /graph/search:
+    get:
+      operationId: searchKnowledgeGraph
+      x-permission: twin.read
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema: { type: string }
+        - $ref: "#/components/parameters/Limit"
+  /graph/path:
+    get:
+      operationId: getGraphPath
+      x-permission: twin.read
+      parameters:
+        - name: from
+          in: query
+          required: true
+          schema: { type: string }
+        - name: to
+          in: query
+          required: true
+          schema: { type: string }
+        - name: max_hops
+          in: query
+          schema: { type: integer, maximum: 20 }
+  /graph/entity:
+    get:
+      operationId: getGraphEntity
+      x-permission: twin.read
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema: { type: string }
+  /graph/relationship:
+    get:
+      operationId: getGraphRelationship
+      x-permission: twin.read
+      parameters:
+        - name: edge_ref
+          in: query
+          required: true
+          schema: { type: string }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  parameters:
+    Limit:
+      name: limit
+      in: query
+      schema: { type: integer, maximum: 100, default: 50 }
+    Cursor:
+      name: cursor
+      in: query
+      schema: { type: string }
+  schemas:
+    PredictRequest:
+      type: object
+      required: [prediction_key, horizon]
+      properties:
+        prediction_key: { type: string }
+        horizon: { type: string, description: ISO-8601 duration or catalog horizon code }
+        model_approval_ref: { type: string }
+        as_of: { type: string, format: date-time }
+    SimulateRequest:
+      type: object
+      required: [scenario_key]
+      properties:
+        scenario_key: { type: string }
+        parameters: { type: object, additionalProperties: true }
+        monte_carlo_trials: { type: integer, maximum: 10000 }
+    ReasonRequest:
+      type: object
+      required: [mode, question]
+      properties:
+        mode:
+          type: string
+          enum: [rule, knowledge, graph, llm, hybrid, probabilistic]
+        question: { type: string }
+        evidence_refs:
+          type: array
+          items: { type: string }
+    RecommendRequest:
+      type: object
+      required: [intent]
+      properties:
+        intent: { type: string }
+        max_impact:
+          type: string
+          enum: [advisory, guarded, critical]
+        require_workflow: { type: boolean, default: true }

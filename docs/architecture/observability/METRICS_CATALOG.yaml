@@ -115,6 +115,68 @@ business_metrics_defaults:
     pattern: workflow.process.completed
   - key: documents.uploaded
     pattern: documents.document.uploaded
+  - key: federation.login.total
+    pattern: federation.*.succeeded
+    owner: identity_federation
+  - key: federation.token.total
+    pattern: federation.token.*
+    owner: identity_federation
+  - key: federation.scim.sync
+    pattern: federation.sync.*
+    owner: identity_federation
+  - key: federation.trust.score
+    pattern: federation.trust.*
+    owner: identity_federation
+
+identity_federation_metrics:
+  scrape_paths:
+    - /api/v1/federation/metrics
+    - /api/v1/federation/fabric/metrics
+    - /api/v1/federation/intelligence/metrics
+  prometheus_prefix: marpich_federation_
+  alerts: infrastructure/observability/prometheus/alerts/identity-federation.yml
+  grafana_dashboards:
+    - identity-federation
+    - identity-federation-trust
+  slo:
+    login_p95_ms: 200
+    token_p95_ms: 100
+    jit_p95_ms: 500
+    availability: 0.9999
+
+identity_digital_twin_metrics:
+  prompt: V03-C02-P199-D2.2
+  adr: 210
+  scrape_paths:
+    - /api/v1/identity-twins/metrics
+  prometheus_prefix: marpich_twin_
+  alerts: infrastructure/observability/prometheus/alerts/digital-twin.yml
+  grafana_dashboards:
+    - digital-twin-overview
+    - digital-twin-sync
+    - digital-twin-intelligence
+  sre_catalog: docs/architecture/identity/TWIN_SRE_CATALOG.v1.yaml
+  observability_profile: docs/architecture/identity/TWIN_OBSERVABILITY_PROFILE.v1.yaml
+  slo:
+    sync_lag_p95_seconds: 30
+    sync_lag_alert_seconds: 120
+    graph_query_p95_ms: 500
+    prediction_p95_ms: 2000
+    availability: 0.9999
+  metric_keys:
+    - marpich_twin_sync_lag_seconds
+    - marpich_twin_sync_runs_total
+    - marpich_twin_conflicts_total
+    - marpich_twin_dlq_depth
+    - marpich_twin_prediction_requests_total
+    - marpich_twin_prediction_failures_total
+    - marpich_twin_inference_latency_ms
+    - marpich_twin_graph_query_seconds
+    - marpich_twin_graph_nodes
+    - marpich_twin_graph_edges
+    - marpich_twin_anomaly_detected_total
+    - marpich_twin_drift_open
+    - marpich_twin_coverage_ratio
 
 alerting:
   business:

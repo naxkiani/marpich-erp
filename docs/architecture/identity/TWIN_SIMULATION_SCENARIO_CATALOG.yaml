@@ -1,0 +1,63 @@
+# Twin Simulation scenario catalog (Prompt 199-C)
+version: 1
+prompt: V03-C02-P199-C
+adr: 208
+owner_context: identity_digital_twin
+law: |
+  All scenarios are non-mutating. mutation_applied must always be false.
+  AI may synthesize scenario parameters; execution never writes SoR.
+
+defaults:
+  mutation_applied: false
+  max_monte_carlo_trials: 10000
+  trials_policy_key: twin.simulation.monte_carlo.max_trials
+
+scenario_domains:
+  - key: business
+    name: Business Simulation
+  - key: identity
+    name: Identity Simulation
+    built_in: [access, lifecycle, federation]
+  - key: financial
+    name: Financial Simulation
+    never_posts_to: financial_kernel
+  - key: risk
+    name: Risk Simulation
+  - key: fraud
+    name: Fraud Simulation
+  - key: attack
+    name: Attack Simulation
+  - key: policy
+    name: Policy Simulation
+    delegates: [policy]
+  - key: capacity
+    name: Capacity Simulation
+  - key: growth
+    name: Growth Simulation
+  - key: banking
+    name: Banking Simulation
+  - key: treasury
+    name: Treasury Simulation
+  - key: tax
+    name: Tax Simulation
+  - key: healthcare
+    name: Healthcare Simulation
+    data_class: health_sensitive
+  - key: university
+    name: University Simulation
+  - key: erp
+    name: ERP Simulation
+
+components:
+  - scenario_builder
+  - simulation_runner
+  - scenario_comparison
+  - monte_carlo
+  - digital_sandbox
+
+events:
+  completed: identity_twin.simulation.completed
+
+policy_gates:
+  - twin.simulation.enabled
+  - twin.simulation.{domain}.enabled

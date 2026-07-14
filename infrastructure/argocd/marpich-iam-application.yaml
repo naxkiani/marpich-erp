@@ -1,0 +1,55 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: marpich-iam
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: marpich-platform
+  source:
+    repoURL: https://github.com/marpich/marpich-erp.git
+    targetRevision: main
+    path: infrastructure/kubernetes/helm/marpich-iam
+    helm:
+      valueFiles:
+        - values-production.yaml
+      parameters:
+        - name: image.tag
+          value: "7.0.0"
+        - name: featureFlags.federationEnabled
+          value: "true"
+        - name: featureFlags.federationAiEnabled
+          value: "true"
+        - name: featureFlags.federationMeshEnabled
+          value: "true"
+        - name: featureFlags.twinEnabled
+          value: "true"
+        - name: featureFlags.twinSyncEnabled
+          value: "true"
+        - name: featureFlags.twinIntelligenceEnabled
+          value: "true"
+        - name: twinWorkers.enabled
+          value: "true"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: marpich
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+        - /spec/replicas

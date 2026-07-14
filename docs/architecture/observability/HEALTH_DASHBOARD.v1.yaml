@@ -135,6 +135,37 @@ rows:
         source: GET /api/v1/ai/insights?category=health
         refresh_seconds: 300
 
+  - id: digital_twin
+    title: Digital Twin Health
+    prompt: V03-C02-P199-D2.2
+    adr: 210
+    widgets:
+      - id: twin_api_up
+        type: status_tile
+        title: Twin API Scrape
+        metric: up{job="marpich-iam-twin"}
+      - id: twin_sync_lag
+        type: timeseries
+        title: Twin Sync Lag p95
+        metric: marpich_twin_sync_lag_seconds
+        unit: seconds
+        target: 30
+        alert_threshold: 120
+      - id: twin_dlq
+        type: stat
+        title: Twin DLQ Depth
+        metric: marpich_twin_dlq_depth
+      - id: twin_drift
+        type: stat
+        title: Open Drift
+        metric: marpich_twin_drift_open
+      - id: twin_coverage
+        type: gauge
+        title: Twin Coverage
+        metric: marpich_twin_coverage_ratio
+        unit: percent
+        source: analytics
+
 tenant_dashboard:
   dashboard_id: tenant.overview
   name: Overview

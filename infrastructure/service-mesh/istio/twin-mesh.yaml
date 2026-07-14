@@ -1,0 +1,37 @@
+# Istio — Digital Twin mesh policies (ADR-209)
+# Mesh engine is cluster-selectable; this is the Istio profile.
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: marpich-iam-twin
+  namespace: marpich
+spec:
+  host: marpich-iam.marpich.svc.cluster.local
+  trafficPolicy:
+    connectionPool:
+      http:
+        http1MaxPendingRequests: 1000
+        maxRequestsPerConnection: 100
+    outlierDetection:
+      consecutive5xxErrors: 5
+      interval: 30s
+      baseEjectionTime: 30s
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: twin-api-access
+  namespace: marpich
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: marpich-iam
+  rules:
+    - to:
+        - operation:
+            paths:
+              - /api/v1/identity-twins*
+              - /api/v1/identity-twins/*
+      when:
+        - key: request.auth.principal
+          notValues: [""]

@@ -1,0 +1,57 @@
+# Azure DevOps — Digital Twin enterprise deploy (parity with GHA)
+# Prompt: V03-C02-P199-D1 · ADR-209
+trigger:
+  branches:
+    include: [main]
+  paths:
+    include:
+      - backend/contexts/identity_digital_twin/**
+      - infrastructure/kubernetes/helm/marpich-iam/**
+      - infrastructure/azure-pipelines/digital-twin.yml
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  - stage: Test
+    jobs:
+      - job: TwinPytest
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: "3.12"
+          - script: |
+              cd backend
+              pip install -e ".[dev]"
+              if [ -d contexts/identity_digital_twin/tests ]; then
+                python -m pytest contexts/identity_digital_twin/tests/ -q
+              fi
+            displayName: Twin unit tests
+
+  - stage: Security
+    dependsOn: Test
+    jobs:
+      - job: Trivy
+        steps:
+          - script: |
+              curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+              trivy fs --severity CRITICAL,HIGH --exit-code 1 backend/contexts/identity_digital_twin
+            displayName: Trivy twin context
+
+  - stage: DeployStaging
+    dependsOn: Security
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    jobs:
+      - deployment: HelmStaging
+        environment: staging
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: |
+                    helm upgrade --install marpich-iam infrastructure/kubernetes/helm/marpich-iam \
+                      --namespace marpich --create-namespace \
+                      --set featureFlags.twinEnabled=true \
+                      --set twinWorkers.enabled=true \
+                      --wait --timeout 10m
+                  displayName: Helm upgrade with twin flags

@@ -1,0 +1,75 @@
+{{- if .Values.twinWorkers.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "marpich-iam.fullname" . }}-twin-sync-workers
+  labels:
+    {{- include "marpich-iam.labels" . | nindent 4 }}
+    app.kubernetes.io/component: digital-twin-sync
+spec:
+  replicas: {{ .Values.twinWorkers.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "marpich-iam.name" . }}
+      app.kubernetes.io/component: digital-twin-sync
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "marpich-iam.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/component: digital-twin-sync
+    spec:
+      serviceAccountName: {{ include "marpich-iam.serviceAccountName" . }}
+      containers:
+        - name: twin-sync-worker
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            - worker
+            - twin-sync
+          env:
+            - name: MARPICH_WORKER_ROLE
+              value: twin-sync
+            - name: OTEL_SERVICE_NAME
+              value: marpich-twin-sync-worker
+            {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
+          envFrom:
+            - secretRef:
+                name: marpich-twin-job-credentials
+                optional: true
+          resources:
+            {{- toYaml .Values.twinWorkers.resources | nindent 12 }}
+          readinessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: {{ .Values.service.port }}
+            initialDelaySeconds: 10
+            periodSeconds: 15
+---
+{{- if .Values.twinWorkers.autoscaling.enabled }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "marpich-iam.fullname" . }}-twin-sync-workers
+  labels:
+    {{- include "marpich-iam.labels" . | nindent 4 }}
+    app.kubernetes.io/component: digital-twin-sync
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "marpich-iam.fullname" . }}-twin-sync-workers
+  minReplicas: {{ .Values.twinWorkers.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.twinWorkers.autoscaling.maxReplicas }}
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.twinWorkers.autoscaling.targetCPUUtilizationPercentage }}
+{{- end }}
+{{- end }}

@@ -1,0 +1,71 @@
+{{- if .Values.federationJobs.scimSync.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "marpich-iam.fullname" . }}-federation-scim-sync
+  labels:
+    {{- include "marpich-iam.labels" . | nindent 4 }}
+    app.kubernetes.io/component: identity-federation
+spec:
+  schedule: {{ .Values.federationJobs.scimSync.schedule | quote }}
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 5
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: scim-sync
+              image: curlimages/curl:8.5.0
+              envFrom:
+                - secretRef:
+                    name: marpich-federation-job-credentials
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  set -euo pipefail
+                  curl -fsS -X POST \
+                    -H "Content-Type: application/json" \
+                    -H "X-Tenant-ID: ${X_TENANT_ID:-platform}" \
+                    -H "Authorization: Bearer ${FEDERATION_JOB_TOKEN}" \
+                    "http://{{ include "marpich-iam.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.port }}/api/v1/federation/jobs/sync" \
+                    -d '{"source":"cron","job_type":"scim"}'
+{{- end }}
+---
+{{- if .Values.federationJobs.trustRevalidate.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "marpich-iam.fullname" . }}-federation-trust-revalidate
+  labels:
+    {{- include "marpich-iam.labels" . | nindent 4 }}
+    app.kubernetes.io/component: identity-federation
+spec:
+  schedule: {{ .Values.federationJobs.trustRevalidate.schedule | quote }}
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: trust-revalidate
+              image: curlimages/curl:8.5.0
+              envFrom:
+                - secretRef:
+                    name: marpich-federation-job-credentials
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  set -euo pipefail
+                  curl -fsS -X POST \
+                    -H "Content-Type: application/json" \
+                    -H "X-Tenant-ID: ${X_TENANT_ID:-platform}" \
+                    -H "Authorization: Bearer ${FEDERATION_JOB_TOKEN}" \
+                    "http://{{ include "marpich-iam.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.port }}/api/v1/federation/fabric/trust/recalculate" \
+                    -d '{"source":"cron"}'
+{{- end }}

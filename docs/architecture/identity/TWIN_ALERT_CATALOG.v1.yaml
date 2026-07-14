@@ -1,0 +1,63 @@
+# Twin Alert Catalog — Prompt 199-D2.2 · ADR-210
+apiVersion: marpich.io/v1
+kind: AlertCatalog
+metadata:
+  id: twin-alerts
+  version: "1.0.0"
+  adr: 210
+
+law:
+  delivery: notification_platform
+  never: module_smtp_or_chat_webhooks
+  thresholds: policy_or_catalog_only
+
+priorities:
+  - id: P1
+    severity: critical
+    page: true
+  - id: P2
+    severity: warning
+    page: false
+  - id: P3
+    severity: info
+    page: false
+
+alerts:
+  - id: TwinSyncLagHigh
+    priority: P1
+    metric: twin_sync_lag_seconds
+    runbook: docs/operations/runbooks/digital-twin-sync-lag.md
+  - id: TwinDlqDepth
+    priority: P1
+    runbook: docs/operations/runbooks/digital-twin-dlq.md
+  - id: TwinConflictSpike
+    priority: P2
+  - id: TwinApiDown
+    priority: P1
+    runbook: docs/operations/runbooks/digital-twin-incident-response.md
+  - id: TwinGraphLatencyHigh
+    priority: P2
+    runbook: docs/operations/runbooks/digital-twin-graph-latency.md
+  - id: TwinPredictionErrorBudget
+    priority: P2
+    runbook: docs/operations/runbooks/digital-twin-prediction-budget.md
+  - id: TwinAnomalyBurst
+    priority: P1
+  - id: TwinWorkersNotReady
+    priority: P1
+
+routing:
+  default_channel: notification_center
+  adapters: [email, sms, microsoft_teams, slack]
+  escalation: on_call_platform_twin
+  maintenance_windows: policy_key twin.alerts.maintenance
+
+correlation:
+  group_by: [tenant_id, component, alertname]
+  suppress_during: deployment_maintenance_window
+
+notification_templates:
+  - twin.alert.sync_lag
+  - twin.alert.dlq
+  - twin.alert.api_down
+  - twin.alert.anomaly

@@ -1,0 +1,66 @@
+# Twin Ops Center catalog — Prompt 199-D1 / D2.2 · ADR-209 / 210
+apiVersion: marpich.io/v1
+kind: OpsCenterCatalog
+metadata:
+  id: twin-ops-center
+  version: "1.1.0"
+  adr: [209, 210]
+
+dashboards:
+  - id: twin-overview
+    grafana: infrastructure/observability/grafana/dashboards/digital-twin-overview.json
+  - id: twin-sync
+    grafana: infrastructure/observability/grafana/dashboards/digital-twin-sync.json
+  - id: twin-intelligence
+    grafana: infrastructure/observability/grafana/dashboards/digital-twin-intelligence.json
+  - id: health-platform-twin-row
+    source: docs/architecture/observability/HEALTH_DASHBOARD.v1.yaml
+
+runbooks:
+  - id: incident
+    path: docs/operations/runbooks/digital-twin-incident-response.md
+  - id: sync-lag
+    path: docs/operations/runbooks/digital-twin-sync-lag.md
+  - id: dlq
+    path: docs/operations/runbooks/digital-twin-dlq.md
+  - id: rollback
+    path: docs/operations/runbooks/digital-twin-rollback.md
+  - id: graph-latency
+    path: docs/operations/runbooks/digital-twin-graph-latency.md
+  - id: prediction-budget
+    path: docs/operations/runbooks/digital-twin-prediction-budget.md
+  - id: recover
+    path: docs/operations/runbooks/digital-twin-recover.md
+
+guides:
+  - docs/operations/DIGITAL_TWIN_OBSERVABILITY_ADMIN_GUIDE.md
+  - docs/operations/DIGITAL_TWIN_BUSINESS_CONTINUITY.md
+  - docs/operations/DIGITAL_TWIN_DISASTER_RECOVERY.md
+  - docs/operations/DIGITAL_TWIN_DR_BCP.md
+  - docs/operations/DIGITAL_TWIN_OPERATOR_GUIDE.md
+
+cli:
+  - command: marpich twin diagnose
+  - command: marpich twin sync --mode incremental
+  - command: marpich twin migrate --job 031
+  - command: marpich twin recover --twin-ref <ref>
+
+lifecycle_ops:
+  - provision
+  - activate
+  - suspend
+  - migrate
+  - synchronize
+  - recover
+  - archive
+  - retire
+  - version_upgrade
+  - diagnostics
+
+on_call:
+  rotation: platform-twin
+  severity_paging: [sev1, sev2]
+
+alerts:
+  catalog: docs/architecture/identity/TWIN_ALERT_CATALOG.v1.yaml
+  prometheus: infrastructure/observability/prometheus/alerts/digital-twin.yml

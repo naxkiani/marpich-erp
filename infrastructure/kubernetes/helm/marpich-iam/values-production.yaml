@@ -1,0 +1,80 @@
+global:
+  environment: production
+  region: eu-west-1
+
+replicaCount: 6
+
+ingress:
+  className: nginx
+  hosts:
+    - host: auth.marpich.io
+      paths:
+        - path: /api/v1/adaptive-auth
+          pathType: Prefix
+        - path: /api/v1/authentication
+          pathType: Prefix
+        - path: /api/v1/federation
+          pathType: Prefix
+        - path: /api/v1/identity/providers
+          pathType: Prefix
+        - path: /api/v1/identity/claims
+          pathType: Prefix
+        - path: /api/v1/identity/metadata
+          pathType: Prefix
+        - path: /api/v1/identity-twins
+          pathType: Prefix
+  tls:
+    - secretName: marpich-iam-prod-tls
+      hosts:
+        - auth.marpich.io
+
+autoscaling:
+  minReplicas: 6
+  maxReplicas: 100
+
+canary:
+  enabled: true
+  weight: 5
+
+env:
+  OTEL_ENVIRONMENT: production
+  MARPICH_REGION_ID: eu-west-1
+
+featureFlags:
+  federationEnabled: true
+  federationAiEnabled: true
+  federationMeshEnabled: true
+  emergencyFederationEnabled: true
+  twinEnabled: true
+  twinSyncEnabled: true
+  twinIntelligenceEnabled: true
+
+performance:
+  authLatencyTargetMs: 150
+  riskEvalTargetMs: 100
+  federationLoginTargetMs: 200
+  federationTokenTargetMs: 100
+  federationJitTargetMs: 500
+  twinSyncLagTargetSeconds: 30
+  twinPredictionTargetMs: 2000
+  twinGraphQueryTargetMs: 500
+
+twinWorkers:
+  enabled: true
+  replicaCount: 6
+  autoscaling:
+    enabled: true
+    minReplicas: 6
+    maxReplicas: 200
+    targetCPUUtilizationPercentage: 70
+
+twinJobs:
+  snapshot:
+    enabled: true
+    schedule: "0 */2 * * *"
+  driftScan:
+    enabled: true
+    schedule: "*/15 * * * *"
+  retention:
+    enabled: true
+    schedule: "0 2 * * *"

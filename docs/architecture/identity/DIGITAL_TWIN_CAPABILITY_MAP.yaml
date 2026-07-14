@@ -1,0 +1,77 @@
+# CAP-PLT-TWIN — Business capability registry extract
+version: 4
+prompts: [V03-C02-P199-A, V03-C02-P199-B, V03-C02-P199-C, V03-C02-P199-D1, V03-C02-P199-D2.2]
+platform: Marpich
+domain_type: Supporting / Platform
+adr: [203, 203a, 207, 208, 209, 210]
+
+capabilities:
+  - id: CAP-PLT-TWIN-001
+    name: Twin Registry
+    owns_context: identity_digital_twin
+  - id: CAP-PLT-TWIN-002
+    name: Continuous Synchronization
+    owns_context: identity_digital_twin
+  - id: CAP-PLT-TWIN-003
+    name: Twin History and Versioning
+    owns_context: identity_digital_twin
+  - id: CAP-PLT-TWIN-004
+    name: Twin Prediction
+    owns_context: identity_digital_twin
+    delegates: [ai, ai_governance, financial_data_science]
+    delivery: P199-C
+  - id: CAP-PLT-TWIN-005
+    name: Twin Simulation
+    owns_context: identity_digital_twin
+    delivery: P199-C
+  - id: CAP-PLT-TWIN-006
+    name: Twin Health and Drift
+    owns_context: identity_digital_twin
+  - id: CAP-PLT-TWIN-007
+    name: Twin Relationship Graph
+    owns_context: identity_digital_twin
+    delegates: [directory]
+    delivery: P199-C
+  - id: CAP-PLT-TWIN-008
+    name: Twin Governance
+    owns_context: identity_digital_twin
+    delegates: [policy, workflow, audit, ai_governance]
+  - id: CAP-PLT-TWIN-009
+    name: Twin Security and Trust Facets
+    owns_context: identity_digital_twin
+    consumes_events_from: [identity_risk, authorization, consent, compliance]
+  - id: CAP-PLT-TWIN-010
+    name: Twin Analytics and KPI
+    owns_context: identity_digital_twin
+    delegates: [analytics]
+  - id: CAP-PLT-TWIN-011
+    name: Twin Reasoning and Recommendations
+    owns_context: identity_digital_twin
+    delegates: [ai, policy, workflow]
+    delivery: P199-C
+  - id: CAP-PLT-TWIN-012
+    name: Twin Anomaly Projection and Response
+    owns_context: identity_digital_twin
+    delegates: [notifications, workflow]
+    consumes_events_from: [financial_anomaly_detection, ai_security, banking]
+    delivery: P199-C
+  - id: CAP-PLT-TWIN-013
+    name: Twin AI Copilot Surface
+    owns_context: identity_digital_twin
+    delegates: [ai, search, natural_language_analytics]
+    delivery: P199-C
+  - id: CAP-PLT-TWIN-014
+    name: Twin Platform Engineering and DevSecOps
+    owns_context: identity_digital_twin
+    delegates: [feature_flags, secrets, observability, api_gateway]
+    delivery: P199-D1
+    ships_as: marpich-iam_helm_profile
+  - id: CAP-PLT-TWIN-015
+    name: Twin Observability IR BCP DR
+    owns_context: identity_digital_twin
+    delegates: [enterprise_observability, notifications, business_continuity, reporting, analytics, ai]
+    delivery: P199-D2.2
+
+anti_duplication:
+  - never_own: [identity_soR, hospital_phi, bank_ledger, authz_pdp, policy_pdp, consent_ledger, llm_runtime, model_registry, vector_db, data_lake]
+  - communicate_via: [integration_events, public_rest_contracts]

@@ -1,0 +1,27 @@
+apiVersion: v2
+name: marpich-iam
+description: Marpich Enterprise Identity, Adaptive Authentication & Federation Platform
+type: application
+version: 1.1.0
+appVersion: "7.0.0"
+keywords:
+  - identity
+  - authentication
+  - adaptive-auth
+  - federation
+  - sso
+  - oidc
+  - saml
+  - zero-trust
+maintainers:
+  - name: Marpich Platform Engineering
+    email: platform@marpich.io
+dependencies:
+  - name: postgresql
+    version: "15.x.x"
+    condition: postgresql.enabled
+    repository: https://charts.bitnami.com/bitnami
+  - name: redis
+    version: "18.x.x"
+    condition: redis.enabled
+    repository: https://charts.bitnami.com/bitnami

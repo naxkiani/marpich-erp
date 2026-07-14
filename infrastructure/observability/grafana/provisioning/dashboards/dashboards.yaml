@@ -1,0 +1,27 @@
+apiVersion: 1
+
+providers:
+  - name: default
+    orgId: 1
+    folder: Marpich IAM
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 30
+    options:
+      path: /var/lib/grafana/dashboards
+  - name: federation
+    orgId: 1
+    folder: Marpich Identity Federation
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 30
+    options:
+      path: /var/lib/grafana/dashboards
+  - name: digital-twin
+    orgId: 1
+    folder: Marpich Digital Twin
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 30
+    options:
+      path: /var/lib/grafana/dashboards

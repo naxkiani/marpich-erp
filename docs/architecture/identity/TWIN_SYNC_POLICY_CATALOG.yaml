@@ -1,0 +1,81 @@
+# Twin synchronization Policy Engine keys — never hardcoded in workers
+version: 1
+prompt: V03-C02-P199-B
+owner_context: identity_digital_twin
+policy_domain: platform
+evaluator: IPolicyEvaluator
+
+global:
+  - key: twin.sync.enabled
+    description: Master switch for twin synchronization engine
+    parameters: { enabled: boolean }
+  - key: twin.sync.mode.default
+    description: Default sync mode when intent omits mode
+    parameters: { mode: string }
+    allowed_modes:
+      - realtime
+      - near_realtime
+      - batch
+      - scheduled
+      - manual
+      - incremental
+      - full
+  - key: twin.sync.max_lag_seconds
+    description: Freshness SLO; alert when exceeded
+    parameters: { seconds: integer }
+  - key: twin.sync.conflict.strategy
+    description: Default conflict resolution
+    parameters: { strategy: string }
+    allowed_strategies:
+      - source_wins
+      - twin_wins
+      - merge_json
+      - manual_escalate
+      - workflow
+  - key: twin.sync.full.cooldown_seconds
+    description: Minimum interval between full syncs per twin
+    parameters: { seconds: integer }
+  - key: twin.sync.cross_tenant.allowed
+    parameters: { allowed: boolean }
+  - key: twin.sync.cross_region.allowed
+    parameters: { allowed: boolean }
+  - key: twin.sync.retry.max_attempts
+    parameters: { max_attempts: integer }
+  - key: twin.sync.retry.backoff_ms
+    parameters: { initial_ms: integer, max_ms: integer }
+
+source_classes:
+  - key: twin.sync.identity.enabled
+    source: identity
+  - key: twin.sync.permission.enabled
+    source: permission_registry
+  - key: twin.sync.device.enabled
+    source: mfa
+  - key: twin.sync.certificate.enabled
+    source: identity_federation
+  - key: twin.sync.organization.enabled
+    source: organization
+  - key: twin.sync.account.enabled
+    source: banking
+  - key: twin.sync.branch.enabled
+    source: banking
+  - key: twin.sync.pack.banking.enabled
+    source: banking
+  - key: twin.sync.pack.university.enabled
+    source: university
+  - key: twin.sync.pack.hospital.enabled
+    source: hospital
+  - key: twin.sync.pack.tax.enabled
+    source: tax
+  - key: twin.sync.pack.currency_exchange.enabled
+    source: currency_exchange
+  - key: twin.sync.ai_agent.enabled
+    source: ai_governance
+  - key: twin.sync.iot.enabled
+    source: integration
+
+worker:
+  - key: twin.sync.worker.concurrency
+    parameters: { max_concurrent: integer }
+  - key: twin.sync.near_realtime.window_seconds
+    parameters: { seconds: integer }

@@ -1,0 +1,86 @@
+context: identity_digital_twin
+display_name: Enterprise Identity Digital Twin Platform
+type: platform
+description: Tenant-isolated digital twin projections for identities and catalog-driven twin kinds — sync, simulate, drift, facets (P199-A).
+api: /api/v1/identity-twins
+schema: identity_twin
+aggregates:
+  - DigitalTwin
+  - TwinSnapshot
+  - TwinSimulation
+  - TwinDriftAlert
+  - TwinKindDefinition
+publishes:
+  - identity_twin.created
+  - identity_twin.updated
+  - identity_twin.deleted
+  - identity_twin.synchronized
+  - identity_twin.predicted
+  - identity_twin.compromised
+  - identity_twin.recovered
+  - identity_twin.archived
+  - identity_twin.activated
+  - identity_twin.suspended
+  - identity_twin.simulation.completed
+  - identity_twin.drift.detected
+subscribes:
+  - identity.user.created
+  - identity.role.assigned
+  - identity.login.succeeded
+  - federation.identity.linked
+  - lifecycle.state.changed
+  - identity_risk.score.updated
+  - consent.granted
+  - consent.revoked
+  - organization.unit.changed
+delegates:
+  - identity
+  - identity_federation
+  - identity_lifecycle
+  - identity_risk
+  - policy
+  - audit
+  - ai
+  - consent
+  - authorization
+  - workflow
+permissions:
+  - twin.read
+  - twin.write
+  - twin.admin
+  - twin.ai.read
+  - twin.ai.infer
+ai:
+  enabled: true
+  surfaces:
+    insights: true
+    predictions: true
+    recommendations: true
+    summaries: true
+    search: true
+    assistant: true
+    automation: true
+    document_intelligence: true
+    voice_commands: true
+    chat: true
+    report_explanation: true
+    anomaly_detection: true
+    forecasting: true
+    optimization: true
+  prompt_templates:
+    - id: identity_twin.foresight
+      purpose: Identity state foresight through the platform AI service
+  event_publications:
+    - ai.insight.generated
+    - ai.prediction.completed
+    - ai.anomaly.detected
+policies:
+  domain: platform
+  keys:
+    - twin.enabled
+    - twin.simulation.enabled
+    - twin.prediction.enabled
+    - twin.drift.threshold
+    - twin.sync.max_lag_seconds
+    - twin.retention.snapshot_days
+    - twin.deletion.workflow_required
