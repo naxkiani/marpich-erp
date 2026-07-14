@@ -8,6 +8,8 @@ import { useLocale } from "@marpich/shared";
 const LINKS = [
   { href: "/", label: "Dashboard" },
   { href: "/modules", label: "Modules" },
+  { href: "/enterprise/federation", label: "Federation" },
+  { href: "/account/security", label: "My Security" },
   { href: "/enterprise/observability", label: "Observability" },
   { href: "/enterprise/scheduler", label: "Scheduler" },
   { href: "/enterprise/integration-studio", label: "Integration Studio" },

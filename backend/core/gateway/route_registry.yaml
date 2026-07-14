@@ -33,6 +33,42 @@ public_routes:
   - prefix: /api/v1/directory/scim/v2
     auth: public
     tenant: required
+  - prefix: /api/v1/federation/login
+    auth: public
+    tenant: required
+  - prefix: /api/v1/federation/logout
+    auth: public
+    tenant: required
+  - prefix: /api/v1/federation/token
+    auth: public
+    tenant: required
+  - prefix: /api/v1/federation/introspect
+    auth: public
+    tenant: required
+  - prefix: /api/v1/federation/revoke
+    auth: public
+    tenant: required
+  - prefix: /api/v1/federation/provision
+    auth: public
+    tenant: required
+  - prefix: /api/v1/federation/sync
+    auth: public
+    tenant: required
+  - prefix: /api/v1/federation/.well-known
+    auth: public
+    tenant: required
+  - prefix: /api/v1/federation/jwks
+    auth: public
+    tenant: required
+  - prefix: /api/v1/identity/providers
+    auth: public
+    tenant: required
+  - prefix: /api/v1/identity/claims
+    auth: public
+    tenant: required
+  - prefix: /api/v1/identity/metadata
+    auth: public
+    tenant: required
   - prefix: /api/v1/health
     auth: public
     tenant: optional
@@ -44,6 +80,9 @@ public_routes:
     tenant: optional
 
 platform_routes:
+  - prefix: /api/v1/federation
+    context_id: identity_federation
+    module: identity_federation
   - prefix: /api/v1/auth
     context_id: identity
     module: identity

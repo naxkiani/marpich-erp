@@ -1,0 +1,41 @@
+# Federation BPMN Workflow Catalog (P198-B)
+version: "1.0"
+engine: Camunda / Marpich Workflow Platform
+
+workflows:
+  - id: federation.external_login
+    name: External Login
+    steps: [discover_idp, negotiate_protocol, authenticate, map_claims, evaluate_trust, provision_jit, create_session]
+  - id: federation.enterprise_sso
+    name: Enterprise SSO
+    steps: [resolve_session, validate_token, renew_session, emit_sso_event]
+  - id: federation.partner_login
+    name: Partner Login
+    steps: [load_partner_trust, authenticate, map_claims, evaluate_trust, link_or_provision]
+  - id: federation.government_login
+    name: Government Login
+    steps: [load_eidas_profile, authenticate, attribute_assurance, map_claims, provision]
+  - id: federation.university_login
+    name: University Login
+    steps: [edu_federation_discovery, authenticate, affiliation_claims, provision]
+  - id: federation.hospital_login
+    name: Hospital Login
+    steps: [hipaa_trust_check, authenticate, specialty_claims, provision]
+  - id: federation.bank_login
+    name: Bank Login
+    steps: [psd2_assurance, authenticate, strong_customer_auth, map_claims, provision]
+  - id: federation.account_linking
+    name: Account Linking
+    steps: [authenticate_primary, authenticate_secondary, resolve_conflict, link_accounts]
+  - id: federation.provisioning
+    name: Provisioning
+    steps: [evaluate_policy, create_or_update_user, assign_roles, emit_provisioned]
+  - id: federation.synchronization
+    name: Synchronization
+    steps: [open_connector, incremental_fetch, conflict_resolve, apply_changes]
+  - id: federation.certificate_rotation
+    name: Certificate Rotation
+    steps: [generate_key, publish_jwks, retain_previous, revoke_expired, emit_rotated]
+  - id: federation.trust_approval
+    name: Trust Approval
+    steps: [submit_trust_request, risk_review, approve_or_deny, activate_trust]

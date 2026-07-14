@@ -1,0 +1,11 @@
+{
+  "title": "Marpich Identity Fabric Trust",
+  "uid": "marpich-federation-p198c1",
+  "panels": [
+    {"title": "Trust Evaluations", "type": "stat", "targets": [{"expr": "marpich_trust_eval_total"}]},
+    {"title": "Zero Trust Decisions", "type": "stat", "targets": [{"expr": "marpich_zt_decision_total"}]},
+    {"title": "Mesh Routes", "type": "stat", "targets": [{"expr": "marpich_mesh_route_total"}]},
+    {"title": "High Risk Federations", "type": "stat", "targets": [{"expr": "marpich_high_risk_total"}]},
+    {"title": "Trust Propagations", "type": "stat", "targets": [{"expr": "marpich_trust_propagate_total"}]}
+  ]
+}

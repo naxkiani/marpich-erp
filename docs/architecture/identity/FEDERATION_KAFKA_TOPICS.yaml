@@ -1,0 +1,98 @@
+# Federation Event Platform — Kafka topics, schema registry, outbox/inbox
+version: "1.0"
+context: identity_federation
+prompt_id: V03-C01-S03-P198-B
+
+topics:
+  commands:
+    - name: federation.commands.register-identity-provider
+      partitions: 6
+      retention_ms: 604800000
+    - name: federation.commands.authenticate-external-user
+      partitions: 12
+      retention_ms: 86400000
+    - name: federation.commands.provision-identity
+      partitions: 6
+    - name: federation.commands.synchronize-identity
+      partitions: 6
+    - name: federation.commands.map-claims
+      partitions: 6
+    - name: federation.commands.exchange-token
+      partitions: 12
+    - name: federation.commands.link-account
+      partitions: 3
+    - name: federation.commands.unlink-account
+      partitions: 3
+    - name: federation.commands.rotate-certificate
+      partitions: 3
+
+  events:
+    - name: federation.events.identity-provider-registered
+      key: tenant_id
+    - name: federation.events.external-authentication-succeeded
+      key: tenant_id
+    - name: federation.events.external-authentication-failed
+      key: tenant_id
+    - name: federation.events.claims-mapped
+      key: tenant_id
+    - name: federation.events.identity-provisioned
+      key: tenant_id
+    - name: federation.events.identity-updated
+      key: tenant_id
+    - name: federation.events.identity-deleted
+      key: tenant_id
+    - name: federation.events.federation-established
+      key: tenant_id
+    - name: federation.events.federation-removed
+      key: tenant_id
+    - name: federation.events.token-exchanged
+      key: client_id
+    - name: federation.events.certificate-rotated
+      key: tenant_id
+    - name: federation.events.trust-decision
+      key: tenant_id
+    - name: federation.events.mesh-route-resolved
+      key: tenant_id
+    - name: federation.events.zero-trust-decision
+      key: tenant_id
+
+schema_registry:
+  subject_strategy: TopicNameStrategy
+  compatibility: BACKWARD
+  value_format: avro
+  subjects:
+    - federation.events.external-authentication-succeeded-value
+    - federation.events.token-exchanged-value
+    - federation.events.certificate-rotated-value
+
+outbox:
+  pattern: transactional_outbox
+  table: federation_outbox
+  poll_interval_ms: 500
+  batch_size: 100
+
+inbox:
+  pattern: idempotent_consumer
+  table: federation_inbox
+  dedupe_window_hours: 72
+
+retry_policy:
+  max_attempts: 5
+  backoff: exponential
+  initial_delay_ms: 1000
+  max_delay_ms: 60000
+  jitter: true
+
+dead_letter:
+  topic: federation.events.dlq
+  include_headers: true
+  alert_on_write: true
+
+saga:
+  types:
+    - ExternalLoginSaga
+    - AccountLinkingSaga
+    - ProvisioningSaga
+    - CertificateRotationSaga
+    - TrustApprovalSaga
+  store: federation_saga_instances

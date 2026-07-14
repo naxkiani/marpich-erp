@@ -1,0 +1,26 @@
+{
+  "title": "Marpich Identity Federation",
+  "uid": "marpich-federation-p198b",
+  "panels": [
+    {
+      "title": "Federation Logins",
+      "type": "stat",
+      "targets": [{ "expr": "marpich_federation_login_total" }]
+    },
+    {
+      "title": "Token Exchanges",
+      "type": "stat",
+      "targets": [{ "expr": "marpich_federation_token_total" }]
+    },
+    {
+      "title": "SSO Success Rate",
+      "type": "gauge",
+      "targets": [{ "expr": "marpich_federation_sso_total / marpich_federation_login_total" }]
+    },
+    {
+      "title": "SCIM Operations",
+      "type": "stat",
+      "targets": [{ "expr": "marpich_federation_scim_total" }]
+    }
+  ]
+}

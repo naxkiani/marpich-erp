@@ -135,6 +135,35 @@ def score_scim_provision_event(*, is_new_user: bool) -> tuple[int, list[dict], s
     return score, factors, explanation
 
 
+def score_federation_event(
+    *,
+    protocol: str = "oidc",
+    partner_unverified: bool = False,
+    certificate_untrusted: bool = False,
+    cross_border: bool = False,
+    is_new_user: bool = False,
+) -> tuple[int, list[dict], str]:
+    """Federation-specific risk scoring (FEDERATION_RISK_SCORING capability)."""
+    protocol_weights = {"oidc": 12, "saml": 18, "ldap": 22, "oauth2": 14, "scim": 10}
+    factors: list[dict] = []
+    score = protocol_weights.get(protocol, 15)
+    factors.append({"factor": "federation_protocol", "weight": score, "value": protocol})
+    if partner_unverified:
+        factors.append({"factor": "partner_unverified", "weight": 20, "value": True})
+        score += 20
+    if certificate_untrusted:
+        factors.append({"factor": "certificate_untrusted", "weight": 25, "value": True})
+        score += 25
+    if cross_border:
+        factors.append({"factor": "cross_border", "weight": 10, "value": True})
+        score += 10
+    if is_new_user:
+        factors.append({"factor": "jit_new_user", "weight": 12, "value": True})
+        score += 12
+    explanation = f"Federation via {protocol} scored {score} across {len(factors)} factor(s)."
+    return score, factors, explanation
+
+
 def build_dashboard(
     *,
     profile: dict | None,

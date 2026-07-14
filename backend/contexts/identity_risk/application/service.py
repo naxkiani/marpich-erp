@@ -318,6 +318,46 @@ class IdentityRiskApplicationService:
             raw_payload={"email": email, "is_new_user": is_new_user},
         )
 
+    async def score_federation(
+        self,
+        tenant_id: str,
+        *,
+        auth_method: str = "oidc",
+        protocol: str | None = None,
+        is_new_user: bool = False,
+        partner_unverified: bool = False,
+        certificate_untrusted: bool = False,
+        cross_border: bool = False,
+        user_id: str | None = None,
+        correlation_id: str = "",
+    ) -> Result[dict]:
+        await self._ensure_profile(tenant_id)
+        proto = protocol or auth_method
+        score_value, factors, explanation = engine.score_federation_event(
+            protocol=proto,
+            partner_unverified=partner_unverified,
+            certificate_untrusted=certificate_untrusted,
+            cross_border=cross_border,
+            is_new_user=is_new_user,
+        )
+        return await self._persist_score(
+            tenant_id,
+            source="federation",
+            event_name="federation.external_auth.succeeded",
+            user_id=user_id,
+            score_value=score_value,
+            factors=factors,
+            explanation=explanation,
+            raw_payload={
+                "protocol": proto,
+                "is_new_user": is_new_user,
+                "partner_unverified": partner_unverified,
+                "certificate_untrusted": certificate_untrusted,
+                "cross_border": cross_border,
+                "correlation_id": correlation_id,
+            },
+        )
+
     async def evaluate_manual(self, tenant_id: str, *, event_type: str, payload: dict) -> Result[dict]:
         if event_type == "authentication":
             return await self.score_authentication(
