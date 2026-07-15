@@ -1,0 +1,19 @@
+# P201-A Definition of Done
+version: "1.0"
+prompt_id: P201-A
+
+phase_dod:
+  - adr_227_accepted
+  - law_doc_published
+  - catalogs_present
+  - no_contexts_eilmp
+  - registration_aggregate_runtime
+  - duplicate_detection_engine
+  - zt_policy_gates_on_register
+  - events_published
+  - rest_api_registration_surface
+  - shared_IIdentityLifecycleStatus_port
+  - registry_entry
+  - foundation_tests_green
+
+series_dod_deferred: P201-A7

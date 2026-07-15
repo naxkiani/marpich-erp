@@ -1,0 +1,40 @@
+# P201-A Registration & Onboarding Architecture
+version: "1.0"
+prompt_id: P201-A
+adr: "227"
+sor_context: identity_lifecycle
+forbidden_sibling_bc: eilmp
+
+aggregates:
+  IdentityRegistration:
+    entities: [RegistrationRequest, RegistrationForm, RegistrationChannel, RegistrationSession, RegistrationApproval]
+    value_objects: [RegistrationId, IdentityType, RegistrationSource, RegistrationStatus, RegistrationMethod]
+  IdentityOnboarding:
+    entities: [OnboardingWorkflow, OnboardingChecklist, WelcomePackage, InitialAssignments, ProvisioningRequest]
+  IdentityProfileInit:
+    entities: [PersonalInformation, OrganizationInformation, ContactInformation, Preferences, Locale]
+
+channels:
+  - web_portal
+  - mobile_app
+  - rest_api
+  - graphql_api
+  - scim
+  - ldap
+  - active_directory
+  - hr_system
+  - erp_system
+  - crm_system
+  - partner_system
+  - bulk_import
+  - csv_import
+  - event_driven
+
+delegates:
+  approvals: workflow
+  policies: policy
+  user_records: identity
+  sync: directory
+  trust_facts: identity_federation
+  permit_deny: authorization
+  credentials: authentication

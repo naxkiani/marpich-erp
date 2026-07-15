@@ -1,0 +1,27 @@
+# Registration / onboarding events — P201-A
+version: "1.0"
+prompt_id: P201-A
+
+events:
+  - name: identity_lifecycle.registration.requested
+    version: 1
+  - name: identity_lifecycle.registration.validated
+    version: 1
+  - name: identity_lifecycle.registration.duplicate_detected
+    version: 1
+  - name: identity_lifecycle.registration.approved
+    version: 1
+  - name: identity_lifecycle.registration.rejected
+    version: 1
+  - name: identity_lifecycle.identity.created
+    version: 1
+  - name: identity_lifecycle.profile.initialized
+    version: 1
+  - name: identity_lifecycle.onboarding.started
+    version: 1
+  - name: identity_lifecycle.provisioning.requested
+    version: 1
+  - name: identity_lifecycle.welcome.generated
+    version: 1
+  - name: identity_lifecycle.activation.requested
+    version: 1

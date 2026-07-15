@@ -1,0 +1,24 @@
+# EILMP capability map — P201-A
+version: "1.0"
+prompt_id: P201-A
+
+capabilities:
+  - id: CAP-IDF-LIFE-001
+    name: Identity Registration
+    phase: P201-A
+  - id: CAP-IDF-LIFE-002
+    name: Enterprise Onboarding
+    phase: P201-A
+  - id: CAP-IDF-LIFE-003
+    name: Duplicate Detection
+    phase: P201-A
+  - id: CAP-IDF-LIFE-004
+    name: Registration Validation
+    phase: P201-A
+  - id: CAP-IDF-LIFE-005
+    name: Profile Initialization
+    phase: P201-A
+  - id: CAP-IDF-LIFE-006
+    name: Provisioning Request (intent)
+    phase: P201-A
+    note: Execution via identity + directory in P201-A2

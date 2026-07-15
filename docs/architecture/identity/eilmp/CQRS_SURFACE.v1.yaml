@@ -1,0 +1,21 @@
+# P201-A CQRS surface
+version: "1.0"
+prompt_id: P201-A
+
+commands:
+  - RegisterIdentity
+  - ValidateRegistration
+  - DetectDuplicateIdentity
+  - ApproveRegistration
+  - RejectRegistration
+  - InitializeProfile
+  - StartOnboarding
+  - RequestProvisioning
+
+queries:
+  - GetRegistration
+  - GetRegistrationStatus
+  - GetOnboardingStatus
+  - GetDuplicateAnalysis
+  - GetProfileInitialization
+  - GetEilmpSurface

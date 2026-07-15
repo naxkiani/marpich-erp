@@ -1,0 +1,47 @@
+context: identity_lifecycle
+display_name: Enterprise Identity Lifecycle Management Platform (EILMP)
+type: platform
+description: "P201 EILMP — registration, onboarding, verification, JML, archive/recovery, deletion"
+api: /api/v1/identity-lifecycle
+aggregates:
+  - LifecycleProfile
+  - LifecycleCase
+  - LifecycleTransition
+  - VerificationTask
+  - ConsentRecord
+  - LifecycleAuditEntry
+  - LifecycleInvitation
+  - IdentityRegistration
+publishes:
+  - identity_lifecycle.case.opened
+  - identity_lifecycle.state.changed
+  - identity_lifecycle.verification.completed
+  - identity_lifecycle.consent.recorded
+  - identity_lifecycle.identity.deleted
+  - identity_lifecycle.registration.requested
+  - identity_lifecycle.registration.validated
+  - identity_lifecycle.registration.duplicate_detected
+  - identity_lifecycle.registration.approved
+  - identity_lifecycle.registration.rejected
+  - identity_lifecycle.identity.created
+  - identity_lifecycle.profile.initialized
+  - identity_lifecycle.onboarding.started
+  - identity_lifecycle.provisioning.requested
+  - identity_lifecycle.welcome.generated
+  - identity_lifecycle.activation.requested
+subscribes:
+  - platform.tenant.provisioned
+delegates:
+  - identity
+  - policy
+  - directory
+  - workflow
+  - authorization
+schema: identity_lifecycle
+ai:
+  surfaces:
+    - registration_assistant
+    - duplicate_prediction
+    - risk_prediction
+    - onboarding_recommendation
+  note: Infer via AI Platform ACL — no embedded LLM

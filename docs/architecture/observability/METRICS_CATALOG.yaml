@@ -128,6 +128,18 @@ business_metrics_defaults:
     pattern: federation.trust.*
     owner: identity_federation
 
+identity_lifecycle_metrics:
+  prompt: P201-A
+  adr: 227
+  scrape_paths:
+    - /api/v1/identity-lifecycle/dashboard
+    - /api/v1/identity-lifecycle/eilmp/surface
+  prometheus_prefix: marpich_lifecycle_
+  slo:
+    registration_p95_ms: 500
+    onboarding_start_p95_ms: 1000
+  catalog: docs/architecture/identity/eilmp/REGISTRATION_ARCHITECTURE.v1.yaml
+
 identity_federation_metrics:
   scrape_paths:
     - /api/v1/federation/metrics

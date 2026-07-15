@@ -218,6 +218,33 @@ POLICY = BoundedContext(
     subscribes=("platform.tenant.provisioned", "workflow.process.completed"),
 )
 
+IDENTITY_LIFECYCLE = BoundedContext(
+    id="identity_lifecycle",
+    display_name="Enterprise Identity Lifecycle Management Platform (EILMP)",
+    context_type=BoundedContextType.PLATFORM,
+    schema_name="identity_lifecycle",
+    description="Registration, onboarding, verification, JML, archive/deletion — SoR for P201 EILMP",
+    publishes=(
+        "identity_lifecycle.case.opened",
+        "identity_lifecycle.state.changed",
+        "identity_lifecycle.verification.completed",
+        "identity_lifecycle.consent.recorded",
+        "identity_lifecycle.identity.deleted",
+        "identity_lifecycle.registration.requested",
+        "identity_lifecycle.registration.validated",
+        "identity_lifecycle.registration.duplicate_detected",
+        "identity_lifecycle.registration.approved",
+        "identity_lifecycle.registration.rejected",
+        "identity_lifecycle.identity.created",
+        "identity_lifecycle.profile.initialized",
+        "identity_lifecycle.onboarding.started",
+        "identity_lifecycle.provisioning.requested",
+        "identity_lifecycle.welcome.generated",
+        "identity_lifecycle.activation.requested",
+    ),
+    subscribes=("platform.tenant.provisioned",),
+)
+
 COMPLIANCE = BoundedContext(
     id="compliance",
     display_name="Compliance Framework",
@@ -715,6 +742,7 @@ ALL_CONTEXTS: tuple[BoundedContext, ...] = (
     ORGANIZATION,
     AUDIT,
     POLICY,
+    IDENTITY_LIFECYCLE,
     COMPLIANCE,
     FEATURE_FLAGS,
     PLUGINS,
