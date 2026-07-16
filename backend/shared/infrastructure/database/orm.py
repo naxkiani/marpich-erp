@@ -1055,3 +1055,102 @@ class MessengerMessageRow(Base):
     ciphertext: Mapped[str | None] = mapped_column(Text)
     ciphertext_type: Mapped[str | None] = mapped_column(String(64))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+# --- Pharmacy (CAP-HLT-008) ---
+
+
+class PharmacyPrescriptionRow(Base):
+    __tablename__ = "prescriptions"
+    __table_args__ = {"schema": "pharmacy"}
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    rx_number: Mapped[str] = mapped_column(String(32), nullable=False)
+    patient_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    drug_code: Mapped[str] = mapped_column(String(32), nullable=False)
+    drug_name: Mapped[str] = mapped_column(String(128), nullable=False)
+    quantity: Mapped[float] = mapped_column(Numeric(18, 4), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="received")
+    source_encounter_ref: Mapped[str | None] = mapped_column(String(64))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class PharmacyDispenseRow(Base):
+    __tablename__ = "dispenses"
+    __table_args__ = {"schema": "pharmacy"}
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    prescription_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
+    patient_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    drug_code: Mapped[str] = mapped_column(String(32), nullable=False)
+    quantity_dispensed: Mapped[float] = mapped_column(Numeric(18, 4), nullable=False)
+    dispensed_by: Mapped[str | None] = mapped_column(String(64))
+    dispensed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+# --- Laboratory (CAP-HLT-007) ---
+
+
+class LaboratoryTestOrderRow(Base):
+    __tablename__ = "test_orders"
+    __table_args__ = {"schema": "laboratory"}
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    order_number: Mapped[str] = mapped_column(String(32), nullable=False)
+    patient_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    test_code: Mapped[str] = mapped_column(String(32), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="ordered")
+    result_value: Mapped[str | None] = mapped_column(Text)
+    result_unit: Mapped[str | None] = mapped_column(String(32))
+    source_encounter_ref: Mapped[str | None] = mapped_column(String(64))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    finalized_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class LaboratorySampleRow(Base):
+    __tablename__ = "samples"
+    __table_args__ = {"schema": "laboratory"}
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    order_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
+    accession_number: Mapped[str] = mapped_column(String(32), nullable=False)
+    specimen_type: Mapped[str] = mapped_column(String(64), nullable=False)
+    patient_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    received_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+# --- Hospital / Clinic lab result projections (peer IDs only) ---
+
+
+class HospitalLabResultProjectionRow(Base):
+    __tablename__ = "lab_result_projections"
+    __table_args__ = {"schema": "hospital"}
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    order_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    patient_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    test_code: Mapped[str] = mapped_column(String(32), nullable=False)
+    result_value: Mapped[str] = mapped_column(Text, nullable=False)
+    result_unit: Mapped[str | None] = mapped_column(String(32))
+    source_event_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    projected_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class ClinicLabResultProjectionRow(Base):
+    __tablename__ = "lab_result_projections"
+    __table_args__ = {"schema": "clinic"}
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    order_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    patient_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    test_code: Mapped[str] = mapped_column(String(32), nullable=False)
+    result_value: Mapped[str] = mapped_column(Text, nullable=False)
+    result_unit: Mapped[str | None] = mapped_column(String(32))
+    source_event_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    projected_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())

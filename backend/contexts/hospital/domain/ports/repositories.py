@@ -6,6 +6,7 @@ from abc import ABC, abstractmethod
 from contexts.hospital.domain.aggregates.admission import Admission
 from contexts.hospital.domain.aggregates.encounter import Encounter
 from contexts.hospital.domain.aggregates.patient import Patient
+from contexts.hospital.domain.entities.lab_result_projection import LabResultProjection
 from shared.domain.value_objects.unique_id import UniqueId
 
 
@@ -46,3 +47,16 @@ class IEncounterRepository(ABC):
 
     @abstractmethod
     async def list_encounters(self, tenant_id: str) -> list[Encounter]: ...
+
+
+class ILabResultProjectionRepository(ABC):
+    @abstractmethod
+    async def save(self, projection: LabResultProjection) -> None: ...
+
+    @abstractmethod
+    async def find_by_event_id(
+        self, tenant_id: str, source_event_id: str
+    ) -> LabResultProjection | None: ...
+
+    @abstractmethod
+    async def list_projections(self, tenant_id: str) -> list[LabResultProjection]: ...

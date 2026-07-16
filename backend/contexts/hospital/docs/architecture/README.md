@@ -24,3 +24,9 @@ No clinic-style walk-in encounters.
 - Documents / Workflow / Audit via platform events
 - Events: `hospital.patient.registered`, `hospital.admission.registered`,
   `hospital.encounter.started`, `hospital.encounter.completed`
+
+## Lab result projection (ACL)
+
+Subscribes to `laboratory.result.available` → local `lab_result_projections`
+(peer `order_id` / `patient_ref` only). List: `GET /hospital/lab-results`.
+Idempotent on `source_event_id`. Never merges laboratory or clinic schemas.

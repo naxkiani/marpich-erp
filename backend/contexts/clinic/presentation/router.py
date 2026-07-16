@@ -156,3 +156,16 @@ async def create_referral(
     if not result.succeeded:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, result.error)
     return {"data": result.unwrap(), "meta": {"correlation_id": correlation_id}}
+
+
+@router.get("/lab-results")
+async def list_lab_results(
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    _user: Annotated[dict, Depends(require_permissions("clinic.lab_results.read"))],
+    limit: Annotated[int, Query(ge=1, le=100)] = 50,
+    offset: Annotated[int, Query(ge=0)] = 0,
+):
+    result = await get_clinic_service().list_lab_result_projections(
+        tenant_id, limit=limit, offset=offset
+    )
+    return {"data": result.unwrap()}

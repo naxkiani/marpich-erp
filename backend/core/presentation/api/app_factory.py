@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
+from typing import Any
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -9,13 +10,16 @@ from fastapi.middleware.cors import CORSMiddleware
 from core.presentation.api.startup_registry import configure_application
 from core.presentation.middleware.platform_gateway import PlatformGatewayMiddleware
 from core.presentation.middleware.tenant_rls import TenantRlsMiddleware
-from contexts.enterprise_message_orchestration.infrastructure.workers.orchestration_worker import (
-    get_orchestration_worker,
-)
 from shared.infrastructure.messaging.dispatcher import get_outbox_dispatcher
-from shared.infrastructure.messaging.transport_registry import get_transport_registry
 from shared.infrastructure.observability.telemetry import setup_observability, shutdown_observability
 from shared.infrastructure.settings import settings
+
+try:
+    from contexts.enterprise_message_orchestration.infrastructure.workers.orchestration_worker import (
+        get_orchestration_worker,
+    )
+except ImportError:  # optional platform WIP — must not block core/healthcare boot
+    get_orchestration_worker = None  # type: ignore[assignment,misc]
 
 
 def create_app(
@@ -35,15 +39,16 @@ def create_app(
             startup_mode=app_startup_mode,
         )
         dispatcher = get_outbox_dispatcher()
-        await get_transport_registry().start()
         await dispatcher.start()
-        orchestration_worker = get_orchestration_worker()
-        await orchestration_worker.start()
+        orchestration_worker: Any | None = None
+        if get_orchestration_worker is not None:
+            orchestration_worker = get_orchestration_worker()
+            await orchestration_worker.start()
         setup_observability(app)
         yield
-        await orchestration_worker.stop()
+        if orchestration_worker is not None:
+            await orchestration_worker.stop()
         await dispatcher.stop()
-        await get_transport_registry().stop()
         shutdown_observability()
 
     application = FastAPI(

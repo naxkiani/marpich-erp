@@ -30,6 +30,7 @@ permissions:
   - clinic.encounters.write
   - clinic.referrals.read
   - clinic.referrals.write
+  - clinic.lab_results.read
 ai:
   surfaces:
     - insights

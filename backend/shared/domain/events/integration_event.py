@@ -51,13 +51,14 @@ class IntegrationEvent(ABC):
         }
 
     def envelope(self) -> dict:
+        org_id = self.organization_id
         return {
             "event_id": str(self.event_id),
             "event_name": self.event_name,
             "event_version": self.event_version,
             "source_context": self.source_context,
             "tenant_id": str(self.tenant_id),
-            "organization_id": self.organization_id,
+            "organization_id": str(org_id) if org_id is not None else None,
             "correlation_id": self.correlation_id,
             "causation_id": self.causation_id,
             "occurred_at": self.occurred_at.isoformat(),

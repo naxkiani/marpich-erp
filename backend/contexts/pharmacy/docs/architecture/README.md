@@ -20,3 +20,13 @@ Peer patient IDs only — no shared patient tables with hospital/clinic.
 ## Events
 
 `pharmacy.prescription.received` · `pharmacy.dispense.completed`
+
+## Persistence
+
+Postgres when `use_postgres()` — schemas `pharmacy.prescriptions` / `pharmacy.dispenses`
+(migration `036_pharmacy_laboratory_postgres.sql`). Memory store otherwise.
+
+## Cross-context ACL
+
+Inventory subscribes to `pharmacy.dispense.completed` and decrements stock by
+`drug_code` → SKU (idempotent on `dispense_id`). No shared tables; peer IDs only.

@@ -8,6 +8,7 @@ from contexts.clinic.domain.aggregates.appointment import Appointment
 from contexts.clinic.domain.aggregates.outpatient_encounter import OutpatientEncounter
 from contexts.clinic.domain.aggregates.patient import ClinicPatient
 from contexts.clinic.domain.aggregates.referral import Referral
+from contexts.clinic.domain.entities.lab_result_projection import LabResultProjection
 from shared.domain.value_objects.unique_id import UniqueId
 
 
@@ -56,3 +57,16 @@ class IReferralRepository(ABC):
 
     @abstractmethod
     async def find_by_id(self, tenant_id: str, referral_id: UniqueId) -> Referral | None: ...
+
+
+class ILabResultProjectionRepository(ABC):
+    @abstractmethod
+    async def save(self, projection: LabResultProjection) -> None: ...
+
+    @abstractmethod
+    async def find_by_event_id(
+        self, tenant_id: str, source_event_id: str
+    ) -> LabResultProjection | None: ...
+
+    @abstractmethod
+    async def list_projections(self, tenant_id: str) -> list[LabResultProjection]: ...
