@@ -2,15 +2,20 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { SESSION_COOKIE_NAME, SESSION_COOKIE_VALUE } from "@marpich/auth-provider";
 
-const PROTECTED_PREFIXES = ["/enterprise", "/tax", "/currency-exchange"];
+const PROTECTED_PREFIXES = ["/enterprise", "/tax", "/currency-exchange", "/banking", "/account"];
 
 const PUBLIC_PATHS = new Set(["/login"]);
+
+function isPublicPath(pathname: string): boolean {
+  if (PUBLIC_PATHS.has(pathname)) return true;
+  return pathname.startsWith("/login/");
+}
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const hasSession = request.cookies.get(SESSION_COOKIE_NAME)?.value === SESSION_COOKIE_VALUE;
   const isProtected = PROTECTED_PREFIXES.some((prefix) => pathname.startsWith(prefix));
-  const isPublic = PUBLIC_PATHS.has(pathname);
+  const isPublic = isPublicPath(pathname);
 
   if (isProtected && !hasSession && !isPublic) {
     const url = request.nextUrl.clone();
@@ -29,5 +34,13 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/enterprise/:path*", "/tax/:path*", "/currency-exchange/:path*", "/login"],
+  matcher: [
+    "/enterprise/:path*",
+    "/tax/:path*",
+    "/currency-exchange/:path*",
+    "/banking/:path*",
+    "/login",
+    "/login/:path*",
+    "/account/:path*",
+  ],
 };

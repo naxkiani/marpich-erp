@@ -8,11 +8,13 @@ import { useLocale } from "@marpich/shared";
 const LINKS = [
   { href: "/", label: "Dashboard" },
   { href: "/modules", label: "Modules" },
+  { href: "/banking/analytics", label: "Banking Analytics" },
   { href: "/enterprise/federation", label: "Federation" },
-  { href: "/account/security", label: "My Security" },
+  { href: "/enterprise/ai-security", label: "AI Security" },
   { href: "/enterprise/observability", label: "Observability" },
   { href: "/enterprise/scheduler", label: "Scheduler" },
   { href: "/enterprise/integration-studio", label: "Integration Studio" },
+  { href: "/account/security", label: "My Security" },
 ];
 
 export function ShellNav() {
@@ -46,6 +48,7 @@ export function ShellNav() {
             <span className="mp-nav-muted">
               {user?.email ?? "Signed in"} · {session.tenantId}
             </span>
+            <Link href="/account/change-password">Change password</Link>
             <button type="button" className="mp-btn" onClick={() => void onLogout()}>
               Sign out
             </button>
