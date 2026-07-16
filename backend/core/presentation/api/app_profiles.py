@@ -9,8 +9,13 @@ CORE_CONTEXTS = frozenset({
     "data_isolation",
     "directory",
     "identity_risk",
+    "mfa",
+    "adaptive_authentication",
     "identity_federation",
+    "identity_digital_twin",
+    "consent",
     "identity_resilience",
+    "identity_lifecycle",
     "core_platform",
     "policy",
     "settings",
@@ -25,6 +30,8 @@ CORE_CONTEXTS = frozenset({
     "plugins",
     "workflow",
     "localization",
+    "ai",
+    "messenger",
 })
 
 ENTERPRISE_PLATFORM_CONTEXTS = frozenset({
@@ -84,7 +91,11 @@ INDUSTRY_CONTEXTS = frozenset({
     "clinic",
     "municipality",
     "pos",
+    "inventory",
+    "financial_kernel",
     "analytics",
+    "university",
+    "enterprise_connector_framework",
 })
 
 # Minimal slice for integration smoke tests.
@@ -96,8 +107,14 @@ TEST_CONTEXTS = frozenset({
     "data_isolation",
     "directory",
     "identity_risk",
+    "mfa",
+    "adaptive_authentication",
     "identity_federation",
     "identity_resilience",
+    "identity_lifecycle",
+    "identity_digital_twin",
+    "consent",
+    "organization",
     "core_platform",
     "policy",
     "enterprise_api_gateway",

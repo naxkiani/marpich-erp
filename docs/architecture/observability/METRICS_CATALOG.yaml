@@ -145,11 +145,17 @@ identity_federation_metrics:
     - /api/v1/federation/metrics
     - /api/v1/federation/fabric/metrics
     - /api/v1/federation/intelligence/metrics
+    - /api/v1/federation/ops/metrics
+    - /api/v1/federation/qa/metrics
   prometheus_prefix: marpich_federation_
   alerts: infrastructure/observability/prometheus/alerts/identity-federation.yml
   grafana_dashboards:
     - identity-federation
     - identity-federation-trust
+  ops_profile: docs/architecture/identity/eiftp/OPS_ARCHITECTURE.v1.yaml
+  sre_catalog: docs/architecture/identity/eiftp/OPS_SRE_CATALOG.v1.yaml
+  qa_profile: docs/architecture/identity/eiftp/QA_ARCHITECTURE.v1.yaml
+  dod_checklist: docs/architecture/identity/eiftp/QA_DOD_CHECKLIST.v1.yaml
   slo:
     login_p95_ms: 200
     token_p95_ms: 100

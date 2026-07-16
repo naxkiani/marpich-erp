@@ -8,6 +8,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from contexts.documents.container import get_documents_service
 from contexts.documents.presentation.schemas import (
     AddVersionRequest,
+    AssignPhysicalLocationRequest,
     CreateDocumentRequest,
     CreateFolderRequest,
     SignDocumentRequest,
@@ -20,6 +21,15 @@ from contexts.identity.presentation.dependencies import (
 )
 
 router = APIRouter(prefix="/documents", tags=["Documents"])
+
+
+@router.get("/verify/{token}")
+async def verify_document_public(token: str):
+    """Public QR authenticity check — no auth; token embeds tenant binding."""
+    result = await get_documents_service().verify_public_token(token)
+    if not result.succeeded:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, result.error)
+    return {"data": result.unwrap()}
 
 
 @router.get("/folders/root")
@@ -131,6 +141,27 @@ async def download_document(
     return {"data": result.unwrap()}
 
 
+@router.get("/documents/{document_id}/preview")
+async def preview_document(
+    document_id: str,
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    user: Annotated[dict, Depends(require_permissions("documents.read"))],
+):
+    result = await get_documents_service().preview_document(
+        tenant_id=tenant_id,
+        document_id=document_id,
+        principal_id=user["sub"],
+    )
+    if not result.succeeded:
+        code = (
+            status.HTTP_403_FORBIDDEN
+            if "forbidden" in (result.error or "")
+            else status.HTTP_404_NOT_FOUND
+        )
+        raise HTTPException(code, result.error)
+    return {"data": result.unwrap()}
+
+
 @router.post("/documents/{document_id}/sign", status_code=status.HTTP_201_CREATED)
 async def sign_document(
     document_id: str,
@@ -163,4 +194,69 @@ async def archive_document(
     )
     if not result.succeeded:
         raise HTTPException(status.HTTP_404_NOT_FOUND, result.error)
+    return {"data": result.unwrap(), "meta": {"correlation_id": correlation_id}}
+
+
+@router.put("/documents/{document_id}/physical-location")
+async def assign_physical_location(
+    document_id: str,
+    body: AssignPhysicalLocationRequest,
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    correlation_id: Annotated[str, Depends(get_correlation_id)],
+    _user: Annotated[dict, Depends(require_permissions("documents.write"))],
+):
+    result = await get_documents_service().assign_physical_location(
+        tenant_id=tenant_id,
+        correlation_id=correlation_id,
+        document_id=document_id,
+        site_code=body.site_code,
+        room=body.room,
+        cabinet=body.cabinet,
+        shelf=body.shelf,
+        box=body.box,
+        file_ref=body.file_ref,
+    )
+    if not result.succeeded:
+        code = (
+            status.HTTP_404_NOT_FOUND
+            if "not_found" in (result.error or "")
+            else status.HTTP_400_BAD_REQUEST
+        )
+        raise HTTPException(code, result.error)
+    return {"data": result.unwrap(), "meta": {"correlation_id": correlation_id}}
+
+
+@router.get("/documents/{document_id}/physical-location")
+async def get_physical_location(
+    document_id: str,
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    _user: Annotated[dict, Depends(require_permissions("documents.read"))],
+):
+    result = await get_documents_service().get_physical_location(tenant_id, document_id)
+    if not result.succeeded:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, result.error)
+    return {"data": result.unwrap()}
+
+
+@router.delete("/documents/{document_id}")
+async def delete_document(
+    document_id: str,
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    correlation_id: Annotated[str, Depends(get_correlation_id)],
+    user: Annotated[dict, Depends(require_permissions("documents.file.delete"))],
+):
+    """Owner-only delete — AuthZ ReBAC PEP in application service."""
+    result = await get_documents_service().delete_document(
+        tenant_id=tenant_id,
+        correlation_id=correlation_id,
+        document_id=document_id,
+        principal_id=user["sub"],
+    )
+    if not result.succeeded:
+        code = (
+            status.HTTP_403_FORBIDDEN
+            if "forbidden" in (result.error or "")
+            else status.HTTP_404_NOT_FOUND
+        )
+        raise HTTPException(code, result.error)
     return {"data": result.unwrap(), "meta": {"correlation_id": correlation_id}}

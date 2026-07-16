@@ -12,6 +12,7 @@ publishes:
 - documents.document.signed
 - documents.document.archived
 - documents.version.created
+- documents.physical_location.assigned
 subscribes:
 - platform.tenant.provisioned
 schema: documents

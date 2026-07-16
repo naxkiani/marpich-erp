@@ -116,6 +116,36 @@ class EnterpriseObservabilityApplicationService:
     async def get_dependency_map(self) -> Result[dict]:
         return Result.ok(engine.dependency_map())
 
+    async def get_threat_map(self, tenant_id: str) -> Result[dict]:
+        """Read-only security/ops threat projection — no parallel analytics store."""
+        incidents = [i.to_dict() for i in await self._incidents.list_by_tenant(tenant_id)]
+        alerts = [a.to_dict() for a in await self._alerts.list_by_tenant(tenant_id)]
+        nodes = []
+        for alert in alerts[:50]:
+            nodes.append({
+                "id": alert.get("alert_ref") or alert.get("id"),
+                "kind": "alert",
+                "severity": alert.get("severity") or alert.get("level") or "warning",
+                "label": alert.get("title") or alert.get("name") or "alert",
+                "region": (alert.get("metadata") or {}).get("region", "global"),
+            })
+        for incident in incidents[:50]:
+            nodes.append({
+                "id": incident.get("incident_ref") or incident.get("id"),
+                "kind": "incident",
+                "severity": incident.get("severity") or "critical",
+                "label": incident.get("title") or "incident",
+                "region": (incident.get("metadata") or {}).get("region", "global"),
+            })
+        return Result.ok({
+            "tenant_id": tenant_id,
+            "generated_at": datetime.now(UTC).isoformat(),
+            "node_count": len(nodes),
+            "nodes": nodes,
+            "source": "enterprise_observability",
+            "note": "Threat map projects alerts/incidents; not a local security DB.",
+        })
+
     async def get_service_dependency_graph(self) -> Result[dict]:
         return Result.ok(engine.build_service_dependency_graph())
 

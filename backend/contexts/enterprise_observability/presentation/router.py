@@ -37,6 +37,14 @@ async def dependency_map(
     return {"data": (await get_enterprise_observability_service().get_dependency_map()).unwrap()}
 
 
+@enterprise_observability_router.get("/threat-map")
+async def threat_map(
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    _user: Annotated[dict, Depends(require_permissions("enterprise_observability.read"))],
+):
+    return {"data": (await get_enterprise_observability_service().get_threat_map(tenant_id)).unwrap()}
+
+
 @enterprise_observability_router.get("/service-dependency-graph")
 async def service_dependency_graph(
     _tenant_id: Annotated[str, Depends(get_tenant_id)],

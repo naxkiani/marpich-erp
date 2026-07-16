@@ -3,17 +3,18 @@ display_name: Inventory
 type: generic
 description: Stock levels, items, batches, valuation
 aggregates:
-- Item
-- StockLevel
-- Batch
-- StockMovement
+  - StockLevel
 publishes:
-- inventory.stock.reserved
-- inventory.stock.adjusted
-- inventory.reorder.triggered
+  - inventory.stock.adjusted
+  - inventory.stock.reserved
+  - inventory.reorder.triggered
 subscribes:
-- sales.order.placed
-- procurement.goods.received
-- manufacturing.order.completed
-- pharmacy.dispense.completed
+  - pos.sale.completed
+  - sales.order.placed
+  - procurement.goods.received
+  - manufacturing.order.completed
+  - pharmacy.dispense.completed
 schema: inventory
+permissions:
+  - inventory.stock.read
+  - inventory.stock.write

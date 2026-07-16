@@ -34,8 +34,10 @@ PERMISSION_CODES = [
     "permissions.roles.write",
     "authentication.read",
     "authentication.write",
+    "authentication.admin",
     "authentication.webauthn.manage",
     "authentication.federation.write",
+    "authentication.principals.write",
     "data_isolation.read",
     "data_isolation.write",
     "data_isolation.principals.write",
@@ -46,10 +48,20 @@ PERMISSION_CODES = [
     "directory.ldap.write",
     "directory.scim.write",
     "directory.sync.execute",
+    "directory.catalog.write",
+    "directory.graph.write",
+    "directory.graph.analytics",
     "identity_risk.read",
     "identity_risk.write",
     "identity_risk.score",
     "identity_risk.anomalies.read",
+    "mfa.read",
+    "mfa.write",
+    "mfa.admin",
+    "adaptive_auth.read",
+    "adaptive_auth.evaluate",
+    "adaptive_auth.write",
+    "adaptive_auth.admin",
     "federation.read",
     "federation.write",
     "federation.admin",
@@ -62,12 +74,53 @@ PERMISSION_CODES = [
     "federation.ai.read",
     "federation.ai.infer",
     "federation.ai.admin",
+    "twin.read",
+    "twin.write",
+    "twin.admin",
+    "twin.ai.read",
+    "twin.ai.infer",
+    "consent.read",
+    "consent.write",
+    "consent.admin",
+    "consent.check",
+    "consent.dsar.read",
+    "consent.dsar.write",
+    "consent.ai.read",
+    "consent.ai.infer",
     "identity_resilience.read",
     "identity_resilience.write",
     "identity_resilience.regions.write",
     "identity_resilience.workers.write",
     "identity_resilience.workers.execute",
     "identity_resilience.failover.execute",
+    "identity_lifecycle.read",
+    "identity_lifecycle.write",
+    "identity_lifecycle.cases.write",
+    "identity_lifecycle.verify.execute",
+    "identity_lifecycle.consent.write",
+    "identity_lifecycle.merge.execute",
+    "identity_lifecycle.recovery.execute",
+    "identity_lifecycle.delete.execute",
+    "identity_lifecycle.audit.read",
+    "identity_lifecycle.assistant.read",
+    "organization.orgs.read",
+    "organization.units.write",
+    "organization.members.write",
+    "organization.inheritance.read",
+    "organization.inheritance.write",
+    "organization.delegation.write",
+    "university.students.read",
+    "university.students.write",
+    "university.courses.read",
+    "university.courses.write",
+    "university.grades.read",
+    "university.grades.write",
+    "university.enrollment.manage",
+    "documents.file.read",
+    "documents.file.write",
+    "workflow.tasks.complete",
+    "workflow.instances.read",
+    "audit.entries.read",
 ]
 
 
@@ -162,6 +215,7 @@ class InMemorySessionRepository(ISessionRepository):
             "ip_address": ip_address,
             "user_agent": user_agent,
             "revoked": False,
+            "created_at": datetime.now(UTC),
         }
         self._by_refresh[refresh_hash] = session_id
 
@@ -186,6 +240,31 @@ class InMemorySessionRepository(ISessionRepository):
             if isinstance(session, dict) and session.get("tenant_id") == tenant_id:
                 if session.get("user_id") == user_id:
                     session["revoked"] = True
+
+    async def list_for_user(self, tenant_id: str, user_id: str) -> list[dict]:
+        now = datetime.now(UTC)
+        sessions = []
+        for session in InMemoryStore.sessions.values():
+            if not isinstance(session, dict):
+                continue
+            if session.get("tenant_id") != tenant_id or session.get("user_id") != user_id:
+                continue
+            if session.get("revoked"):
+                continue
+            if session["expires_at"] < now:
+                continue
+            sessions.append(
+                {
+                    "id": session["id"],
+                    "ip_address": session.get("ip_address"),
+                    "user_agent": session.get("user_agent"),
+                    "expires_at": session["expires_at"].isoformat(),
+                    "created_at": session.get("created_at", session["expires_at"]).isoformat()
+                    if hasattr(session.get("created_at", session["expires_at"]), "isoformat")
+                    else None,
+                }
+            )
+        return sessions
 
 
 class InMemoryPermissionCatalog(IPermissionCatalog):

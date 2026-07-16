@@ -38,12 +38,21 @@ class PosSale(AggregateRoot):
         correlation_id: str,
     ) -> tuple[PosSale, SaleCompletedIntegration]:
         total = subtotal + tax
+        normalized_items = tuple(
+            {
+                "sku": str(item.get("sku", "")),
+                "name": str(item.get("name", "")),
+                "quantity": int(item.get("quantity", 0)),
+                "unit_price": str(item.get("unit_price", "0")),
+            }
+            for item in items
+        )
         sale = cls(
             id=UniqueId.generate(),
             tenant_id=tenant_id,
             shift_id=shift_id,
             terminal_id=terminal_id,
-            items=items,
+            items=list(normalized_items),
             subtotal=subtotal,
             tax=tax,
             total=total,
@@ -56,7 +65,11 @@ class PosSale(AggregateRoot):
             shift_id=shift_id,
             terminal_id=terminal_id,
             total=str(total),
+            subtotal=str(subtotal),
+            tax=str(tax),
+            currency="USD",
             payment_method=payment_method,
+            items=normalized_items,
         )
         return sale, event
 

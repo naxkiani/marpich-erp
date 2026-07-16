@@ -31,6 +31,52 @@ class Role(AggregateRoot):
             permission_ids=["*"],
         )
 
+    @classmethod
+    def create_education_staff(cls, tenant_id: str) -> Role:
+        """Staff persona — ERP education surfaces (not LMS-only)."""
+        return cls(
+            id=UniqueId.generate(),
+            tenant_id=tenant_id,
+            code="staff",
+            name="Education Staff",
+            description="Staff ERP access for university/school modules",
+            is_system=True,
+            permission_ids=[
+                "university.students.read",
+                "university.students.write",
+                "university.courses.read",
+                "university.courses.write",
+                "university.grades.read",
+                "university.grades.write",
+                "university.enrollment.manage",
+                "documents.read",
+                "documents.write",
+                "documents.file.read",
+                "documents.file.write",
+                "workflow.definitions.read",
+                "workflow.tasks.complete",
+                "workflow.instances.read",
+                "audit.entries.read",
+            ],
+        )
+
+    @classmethod
+    def create_education_student(cls, tenant_id: str) -> Role:
+        """Student persona — LMS/read surfaces only (no ERP write)."""
+        return cls(
+            id=UniqueId.generate(),
+            tenant_id=tenant_id,
+            code="student",
+            name="Student",
+            description="Student portal — read academics only; no ERP core write",
+            is_system=True,
+            permission_ids=[
+                "university.students.read",
+                "university.courses.read",
+                "university.grades.read",
+            ],
+        )
+
     def to_dict(self) -> dict:
         return {
             "id": str(self.id),

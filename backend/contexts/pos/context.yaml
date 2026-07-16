@@ -16,3 +16,7 @@ subscribes:
   - sales.order.confirmed
   - identity.user.created
 schema: pos
+permissions:
+  - pos.terminals.write
+  - pos.shifts.write
+  - pos.sales.write

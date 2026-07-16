@@ -23,6 +23,9 @@ class SignatureRequest(AggregateRoot):
     requester_id: str
     signers: list[str]
     status: SignatureStatus
+    algorithm: str | None = None
+    signature_hash: str | None = None
+    content_checksum: str | None = None
     created_at: datetime = field(default_factory=lambda: datetime.now(UTC))
     completed_at: datetime | None = None
 
@@ -46,8 +49,17 @@ class SignatureRequest(AggregateRoot):
             status=SignatureStatus.PENDING,
         )
 
-    def mark_signed(self) -> None:
+    def mark_signed(
+        self,
+        *,
+        algorithm: str,
+        signature_hash: str,
+        content_checksum: str,
+    ) -> None:
         self.status = SignatureStatus.SIGNED
+        self.algorithm = algorithm
+        self.signature_hash = signature_hash
+        self.content_checksum = content_checksum
         self.completed_at = datetime.now(UTC)
 
     def to_dict(self) -> dict:
@@ -59,6 +71,9 @@ class SignatureRequest(AggregateRoot):
             "requester_id": self.requester_id,
             "signers": self.signers,
             "status": self.status.value,
+            "algorithm": self.algorithm,
+            "signature_hash": self.signature_hash,
+            "content_checksum": self.content_checksum,
             "created_at": self.created_at.isoformat(),
             "completed_at": self.completed_at.isoformat() if self.completed_at else None,
         }

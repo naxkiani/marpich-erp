@@ -15,7 +15,7 @@ from contexts.identity.domain.ports.repositories import (
     IUserRepository,
 )
 from contexts.identity.domain.ports.security import IMfaService, IPasswordHasher, ITokenService
-from contexts.identity.domain.services.session_policy import session_expiry
+from contexts.identity.domain.services.session_policy import remember_me_expiry, session_expiry
 from shared.application.result import Result
 from shared.domain.permissions import PermissionEvaluator
 from shared.domain.value_objects.unique_id import UniqueId
@@ -163,6 +163,8 @@ class IdentityApplicationService:
         correlation_id: str,
         ip_address: str | None = None,
         user_agent: str | None = None,
+        remember_me: bool = False,
+        remember_me_days: int = 30,
     ) -> Result[AuthTokens]:
         user = await self._users.find_by_id(tenant_id, UniqueId.from_string(user_id))
         if not user:
@@ -177,6 +179,8 @@ class IdentityApplicationService:
             correlation_id=correlation_id,
             ip_address=ip_address,
             user_agent=user_agent,
+            remember_me=remember_me,
+            remember_me_days=remember_me_days,
         )
 
     async def find_user_id_by_email(self, tenant_id: str, email: str) -> str | None:
@@ -348,6 +352,8 @@ class IdentityApplicationService:
         correlation_id: str,
         ip_address: str | None,
         user_agent: str | None = None,
+        remember_me: bool = False,
+        remember_me_days: int = 30,
     ) -> Result[AuthTokens]:
         perms = await self._permissions.resolve_permissions(tenant_id, user.role_ids)
         roles = await self._roles.list_roles(tenant_id)
@@ -365,12 +371,13 @@ class IdentityApplicationService:
         refresh = self._tokens.sign_refresh(token_payload)
 
         session_id = str(uuid.uuid4())
+        expiry = remember_me_expiry(remember_me_days) if remember_me else session_expiry()
         await self._sessions.create(
             session_id=session_id,
             tenant_id=tenant_id,
             user_id=str(user.id),
             refresh_hash=self._tokens.hash_refresh_token(refresh),
-            expires_at=session_expiry(),
+            expires_at=expiry,
             ip_address=ip_address,
             user_agent=user_agent,
         )
@@ -402,3 +409,212 @@ class IdentityApplicationService:
 
     def verify_access_token(self, token: str) -> dict:
         return self._tokens.verify_access(token)
+
+    async def get_user_credential(self, tenant_id: str, user_id: str) -> Result[dict]:
+        user = await self._users.find_by_id(tenant_id, UniqueId.from_string(user_id))
+        if not user:
+            return Result.fail("identity.errors.user_not_found")
+        return Result.ok(
+            {
+                "user_id": str(user.id),
+                "email": user.email,
+                "password_hash": user.password_hash,
+                "password_hash_algorithm": user.password_hash_algorithm,
+                "status": user.status.value,
+                "failed_login_attempts": user.failed_login_attempts,
+                "locked_until": user.locked_until.isoformat() if user.locked_until else None,
+                "password_must_change": user.password_must_change,
+                "password_changed_at": (
+                    user.password_changed_at.isoformat() if user.password_changed_at else None
+                ),
+                "mfa_enabled": user.mfa_enabled,
+            }
+        )
+
+    async def update_password_hash(
+        self,
+        *,
+        tenant_id: str,
+        user_id: str,
+        password_hash: str,
+        hash_algorithm: str,
+        must_change_password: bool = False,
+        correlation_id: str,
+        ip_address: str | None = None,
+    ) -> Result[dict]:
+        user = await self._users.find_by_id(tenant_id, UniqueId.from_string(user_id))
+        if not user:
+            return Result.fail("identity.errors.user_not_found")
+        user.update_password(
+            password_hash=password_hash,
+            hash_algorithm=hash_algorithm,
+            must_change=must_change_password,
+        )
+        await self._users.save(user)
+        await self._audit.log(
+            tenant_id=tenant_id,
+            correlation_id=correlation_id,
+            action="identity.password.updated",
+            resource_type="user",
+            resource_id=user_id,
+            actor_id=user_id,
+            ip_address=ip_address,
+        )
+        return Result.ok({"user_id": user_id, "password_must_change": user.password_must_change})
+
+    async def record_failed_login_policy(
+        self,
+        *,
+        tenant_id: str,
+        user_id: str,
+        max_attempts: int,
+        lock_minutes: int,
+    ) -> Result[dict]:
+        user = await self._users.find_by_id(tenant_id, UniqueId.from_string(user_id))
+        if not user:
+            return Result.fail("identity.errors.user_not_found")
+        user.record_failed_login(max_attempts=max_attempts, lock_minutes=lock_minutes)
+        await self._users.save(user)
+        return Result.ok(
+            {
+                "failed_login_attempts": user.failed_login_attempts,
+                "status": user.status.value,
+                "locked_until": user.locked_until.isoformat() if user.locked_until else None,
+            }
+        )
+
+    async def unlock_user(
+        self,
+        *,
+        tenant_id: str,
+        user_id: str,
+        correlation_id: str,
+        ip_address: str | None = None,
+    ) -> Result[dict]:
+        user = await self._users.find_by_id(tenant_id, UniqueId.from_string(user_id))
+        if not user:
+            return Result.fail("identity.errors.user_not_found")
+        user.unlock_account()
+        await self._users.save(user)
+        await self._audit.log(
+            tenant_id=tenant_id,
+            correlation_id=correlation_id,
+            action="identity.account.unlocked",
+            resource_type="user",
+            resource_id=user_id,
+            ip_address=ip_address,
+        )
+        return Result.ok({"user_id": user_id, "status": user.status.value})
+
+    async def list_sessions(self, tenant_id: str, user_id: str) -> Result[list[dict]]:
+        sessions = await self._sessions.list_for_user(tenant_id, user_id)
+        return Result.ok(sessions)
+
+    async def revoke_session(self, tenant_id: str, user_id: str, session_id: str) -> Result[dict]:
+        sessions = await self._sessions.list_for_user(tenant_id, user_id)
+        if not any(s["id"] == session_id for s in sessions):
+            return Result.fail("identity.errors.session_not_found")
+        await self._sessions.revoke(session_id)
+        return Result.ok({"revoked": True, "session_id": session_id})
+
+    async def begin_mfa_login(self, tenant_id: str, user_id: str) -> Result[str]:
+        user = await self._users.find_by_id(tenant_id, UniqueId.from_string(user_id))
+        if not user or not user.mfa_enabled:
+            return Result.fail("identity.errors.invalid_mfa")
+        challenge = str(uuid.uuid4())
+        self._mfa_challenges[challenge] = str(user.id)
+        return Result.ok(challenge)
+
+    async def verify_mfa_login(
+        self,
+        *,
+        tenant_id: str,
+        user_id: str,
+        mfa_code: str | None,
+        mfa_token: str | None,
+        correlation_id: str,
+        ip_address: str | None = None,
+        user_agent: str | None = None,
+        remember_me: bool = False,
+        remember_me_days: int = 30,
+    ) -> Result[AuthTokens]:
+        user = await self._users.find_by_id(tenant_id, UniqueId.from_string(user_id))
+        if not user:
+            return Result.fail("identity.errors.user_not_found")
+        if mfa_token:
+            uid = self._mfa_challenges.pop(mfa_token, None)
+            if uid != str(user.id):
+                return Result.fail("identity.errors.invalid_mfa")
+        if mfa_code and user.mfa_secret:
+            valid = self._mfa.verify(user.mfa_secret, mfa_code)
+            if not valid and not user.verify_backup_code(mfa_code):
+                return Result.fail("identity.errors.invalid_mfa")
+        elif not mfa_code:
+            return Result.fail("identity.errors.invalid_mfa")
+        return await self._issue_tokens(
+            user=user,
+            tenant_id=tenant_id,
+            correlation_id=correlation_id,
+            ip_address=ip_address,
+            user_agent=user_agent,
+            remember_me=remember_me,
+            remember_me_days=remember_me_days,
+        )
+
+    async def seed_education_personas(self, tenant_id: str) -> Result[dict]:
+        """Ensure staff/student system roles exist for education industry tenants."""
+        created: list[str] = []
+        staff = await self._roles.find_by_code(tenant_id, "staff")
+        if not staff:
+            staff = Role.create_education_staff(tenant_id)
+            await self._roles.save(staff)
+            created.append("staff")
+        student = await self._roles.find_by_code(tenant_id, "student")
+        if not student:
+            student = Role.create_education_student(tenant_id)
+            await self._roles.save(student)
+            created.append("student")
+        return Result.ok(
+            {
+                "staff_role_id": str(staff.id),
+                "student_role_id": str(student.id),
+                "created": created,
+            }
+        )
+
+    async def assign_user_roles(
+        self,
+        *,
+        tenant_id: str,
+        user_id: str,
+        role_codes: list[str],
+        correlation_id: str,
+        actor_id: str | None = None,
+    ) -> Result[dict]:
+        user = await self._users.find_by_id(tenant_id, UniqueId.from_string(user_id))
+        if not user:
+            return Result.fail("identity.errors.user_not_found")
+
+        role_ids: list[str] = []
+        for code in role_codes:
+            role = await self._roles.find_by_code(tenant_id, code.strip().lower())
+            if not role:
+                return Result.fail(f"identity.errors.role_not_found:{code}")
+            role_ids.append(str(role.id))
+
+        user.assign_roles(role_ids)
+        await self._users.save(user)
+        await self._audit.log(
+            tenant_id=tenant_id,
+            correlation_id=correlation_id,
+            action="identity.user.roles_assigned",
+            resource_type="user",
+            resource_id=user_id,
+            actor_id=actor_id,
+            payload={"role_codes": [c.strip().lower() for c in role_codes]},
+        )
+        return Result.ok(user.to_dict())
+
+    async def list_roles(self, tenant_id: str) -> Result[list[dict]]:
+        roles = await self._roles.list_roles(tenant_id)
+        return Result.ok([r.to_dict() for r in roles])

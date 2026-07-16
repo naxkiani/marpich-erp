@@ -71,6 +71,9 @@ class ISessionRepository(ABC):
     @abstractmethod
     async def revoke_all_for_user(self, tenant_id: str, user_id: str) -> None: ...
 
+    @abstractmethod
+    async def list_for_user(self, tenant_id: str, user_id: str) -> list[dict]: ...
+
 
 class IPermissionCatalog(Protocol):
     async def resolve_permissions(self, tenant_id: str, role_ids: list[str]) -> list[str]: ...

@@ -78,6 +78,9 @@ class PostgresDocumentRepository(IDocumentRepository):
         async with session_scope() as session:
             row = await session.get(DocumentRow, UUID(str(document.id)))
             if row is None:
+                meta = dict(document.metadata or {})
+                if document.qr_token:
+                    meta["qr_token"] = document.qr_token
                 session.add(
                     DocumentRow(
                         id=UUID(str(document.id)),
@@ -91,7 +94,7 @@ class PostgresDocumentRepository(IDocumentRepository):
                             else None
                         ),
                         status=document.status.value,
-                        doc_metadata=document.metadata,
+                        doc_metadata=meta,
                         created_by=document.created_by,
                         created_at=document.created_at,
                     )
@@ -103,13 +106,25 @@ class PostgresDocumentRepository(IDocumentRepository):
                     UUID(str(document.current_version_id)) if document.current_version_id else None
                 )
                 row.status = document.status.value
-                row.doc_metadata = document.metadata
+                meta = dict(document.metadata or {})
+                if document.qr_token:
+                    meta["qr_token"] = document.qr_token
+                row.doc_metadata = meta
 
     async def find_by_id(self, tenant_id: str, document_id: UniqueId) -> Document | None:
         async with session_scope() as session:
             row = await session.get(DocumentRow, UUID(str(document_id)))
             if row and row.tenant_id == tenant_id:
                 return _document_from_row(row)
+            return None
+
+    async def find_by_qr_token(self, qr_token: str) -> Document | None:
+        async with session_scope() as session:
+            rows = (await session.scalars(select(DocumentRow))).all()
+            for row in rows:
+                meta = row.doc_metadata or {}
+                if meta.get("qr_token") == qr_token:
+                    return _document_from_row(row)
             return None
 
     async def list_by_folder(self, tenant_id: str, folder_id: UniqueId) -> list[Document]:
@@ -227,6 +242,7 @@ def _folder_from_row(row: FolderRow) -> Folder:
 
 
 def _document_from_row(row: DocumentRow) -> Document:
+    meta = dict(row.doc_metadata or {})
     return Document(
         id=UniqueId(str(row.id)),
         tenant_id=row.tenant_id,
@@ -235,8 +251,9 @@ def _document_from_row(row: DocumentRow) -> Document:
         description=row.description,
         current_version_id=UniqueId(str(row.current_version_id)) if row.current_version_id else None,
         status=DocumentStatus(row.status),
-        metadata=row.doc_metadata,
+        metadata=meta,
         created_by=row.created_by,
+        qr_token=meta.get("qr_token"),
         created_at=row.created_at,
     )
 

@@ -25,6 +25,9 @@ _registered = False
 def get_documents_service() -> DocumentsApplicationService:
     global _service, _registered
     if _service is None:
+        from contexts.authorization.container import get_authorization_evaluator
+
+        authz = get_authorization_evaluator()
         if use_postgres():
             _service = DocumentsApplicationService(
                 folders=PostgresFolderRepository(),
@@ -32,6 +35,7 @@ def get_documents_service() -> DocumentsApplicationService:
                 versions=PostgresVersionRepository(),
                 signatures=PostgresSignatureRepository(),
                 platform_events=DocumentsPlatformAdapter(),
+                authz=authz,
             )
         else:
             _service = DocumentsApplicationService(
@@ -40,6 +44,7 @@ def get_documents_service() -> DocumentsApplicationService:
                 versions=InMemoryVersionRepository(),
                 signatures=InMemorySignatureRepository(),
                 platform_events=DocumentsPlatformAdapter(),
+                authz=authz,
             )
     if not _registered:
         InProcessEventBus.subscribe(

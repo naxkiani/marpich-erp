@@ -1,91 +1,411 @@
-# Marpich Financial Workflow — Catalog
+# Marpich Enterprise Financial Workflow Platform — Process Catalog
 # See docs/architecture/ENTERPRISE_FINANCIAL_WORKFLOW.md
 
-version: 1
+version: 2
 
+platform:
+  name: Enterprise Financial Workflow Platform
+  api: /api/v1/financial-kernel/workflows
+  owner_context: financial_kernel
+  specialized: true  # NOT generic BPM — financial semantics only
+  generic_bpm_delegate: workflow
+
+scope_dimensions:
+  - tenant_id
+  - organization_id
+  - branch_id
+  - legal_entity_id
+  - cost_center_id
+  - currency
+  - locale
+
+capabilities:
+  - multi_tenant
+  - multi_organization
+  - multi_branch
+  - multi_currency
+  - multi_language
+  - auditable
+  - configurable
+  - versioned
+  - event_driven
+  - sla_tracking
+  - escalation
+  - approval_workflow
+  - sequential_approval
+  - parallel_approval
+  - delegation
+  - digital_signature
+  - ai_recommendation
+  - compliance_checkpoints
+  - posting_authorization
+  - process_catalog
+  - dependency_graph
+  - definition_versioning
+  - hash_chain_audit
+
+# v1 universal types (category aliases)
 workflow_types:
   approval:
     display_name: Approval
     default_sla_hours: 24
     modules: [all]
+    posting_impact: optional
 
   payment:
     display_name: Payment
     default_sla_hours: 8
-    modules: [finance, treasury, pos]
+    modules: [finance, treasury, ap]
+    posting_impact: required
+    posting_rules: [ap_payment, payment]
 
   purchase:
     display_name: Purchase
     default_sla_hours: 48
-    modules: [procurement, retail]
+    modules: [procurement]
+    posting_impact: required
+    posting_rules: [purchase]
 
   expense:
     display_name: Expense
     default_sla_hours: 24
     modules: [hr, finance]
+    posting_impact: required
+    posting_rules: [expense]
 
   transfer:
     display_name: Transfer
     default_sla_hours: 4
     modules: [treasury, banking]
+    posting_impact: required
+    posting_rules: [treasury_transfer, banking_transfer]
 
   budget:
     display_name: Budget
     default_sla_hours: 72
     modules: [finance, fp_and_a]
+    posting_impact: optional
+    posting_rules: [budget]
 
   invoice:
     display_name: Invoice
     default_sla_hours: 24
-    modules: [sales, accounting]
+    modules: [sales, accounting, ar, ap]
+    posting_impact: required
+    posting_rules: [invoice, ar_invoice, ap_invoice]
 
   payroll:
     display_name: Payroll
     default_sla_hours: 48
     modules: [hr, payroll]
+    posting_impact: required
+    posting_rules: [payroll, payroll_tax]
 
   tax:
     display_name: Tax
     default_sla_hours: 72
     modules: [tax, accounting]
+    posting_impact: required
+    posting_rules: [tax, withholding]
 
   treasury:
     display_name: Treasury
     default_sla_hours: 4
     modules: [treasury, banking]
+    posting_impact: required
+    posting_rules: [treasury_transfer, treasury_internal_transfer]
 
-universal_capabilities:
-  - sla
-  - escalation
-  - ai_recommendation
-  - audit
-  - history
-  - digital_signature
+# v2 domain process types (map to category above)
+process_types:
+  general_ledger:
+    - key: journal_adjustment
+      category: approval
+      posting_rules: [manual_journal]
+      trigger: financial_kernel.journal.approval.requested
+    - key: period_close
+      category: approval
+      posting_rules: [period_close]
+      trigger: financial_kernel.period.close.requested
+    - key: reversal
+      category: approval
+      posting_rules: [reversal]
+      trigger: financial_kernel.journal.reversal.requested
+
+  treasury:
+    - key: transfer
+      category: transfer
+      posting_rules: [treasury_transfer]
+      trigger: treasury.transfer.approval.requested
+    - key: fund_request
+      category: treasury
+      posting_rules: [treasury_internal_transfer]
+      trigger: treasury.fund_request.approval.requested
+    - key: investment
+      category: treasury
+      posting_rules: [treasury_investment]
+      trigger: treasury.investment.approval.requested
+    - key: cash_request
+      category: treasury
+      posting_rules: [treasury_transfer]
+      trigger: treasury.cash_request.approval.requested
+
+  banking:
+    - key: account_opening
+      category: approval
+      posting_rules: [banking_account]
+      trigger: banking.account.approval.requested
+    - key: loan_disbursement
+      category: payment
+      posting_rules: [banking_loan_disbursement]
+      trigger: banking.loan.disbursement.requested
+    - key: loan_repayment
+      category: payment
+      posting_rules: [banking_loan_repayment]
+      trigger: banking.loan.repayment.requested
+
+  currency_exchange:
+    - key: fx_deal
+      category: transfer
+      posting_rules: [fx_deal]
+      trigger: currency_exchange.deal.approval.requested
+    - key: fx_settlement
+      category: transfer
+      posting_rules: [fx_settlement]
+      trigger: currency_exchange.deal.settled
+    - key: remittance
+      category: payment
+      posting_rules: [fx_remittance]
+      trigger: currency_exchange.remittance.approval.requested
+
+  tax_engine:
+    - key: tax_return
+      category: tax
+      posting_rules: [tax]
+      trigger: tax.return.submitted
+    - key: withholding
+      category: tax
+      posting_rules: [withholding]
+      trigger: tax.withholding.approval.requested
+    - key: einvoice
+      category: invoice
+      posting_rules: [tax]
+      trigger: tax.einvoice.approval.requested
+
+  budgeting:
+    - key: budget_allocation
+      category: budget
+      posting_rules: [budget]
+      trigger: budget.allocation.approval.requested
+    - key: budget_transfer
+      category: budget
+      posting_rules: [budget_transfer]
+      trigger: budget.transfer.approval.requested
+    - key: budget_revision
+      category: budget
+      posting_rules: []
+      trigger: budget.revision.approval.requested
+
+  procurement:
+    - key: requisition
+      category: purchase
+      posting_rules: []
+      trigger: procurement.requisition.approval.requested
+    - key: purchase_order
+      category: purchase
+      posting_rules: [purchase]
+      trigger: procurement.po.approval.requested
+    - key: goods_receipt
+      category: purchase
+      posting_rules: [purchase_gr]
+      trigger: procurement.gr.approval.requested
+    - key: invoice_match
+      category: invoice
+      posting_rules: [ap_invoice]
+      trigger: procurement.invoice_match.approval.requested
+
+  payroll:
+    - key: payroll_run
+      category: payroll
+      posting_rules: [payroll, payroll_tax]
+      trigger: payroll.run.approval.requested
+    - key: payroll_adjustment
+      category: payroll
+      posting_rules: [payroll]
+      trigger: payroll.adjustment.approval.requested
+    - key: payout
+      category: payment
+      posting_rules: [payroll_payment]
+      trigger: payroll.payout.approval.requested
+
+  accounts_receivable:
+    - key: credit_memo
+      category: invoice
+      posting_rules: [ar_credit]
+      trigger: ar.credit_memo.approval.requested
+    - key: write_off
+      category: approval
+      posting_rules: [ar_write_off]
+      trigger: ar.write_off.approval.requested
+    - key: dunning_escalation
+      category: approval
+      posting_rules: []
+      trigger: ar.dunning.escalation.requested
+
+  accounts_payable:
+    - key: vendor_invoice
+      category: invoice
+      posting_rules: [ap_invoice]
+      trigger: ap.invoice.approval.requested
+    - key: payment_batch
+      category: payment
+      posting_rules: [ap_payment]
+      trigger: ap.payment_batch.approval.requested
+    - key: prepayment
+      category: payment
+      posting_rules: [ap_prepayment]
+      trigger: ap.prepayment.approval.requested
+
+  asset_management:
+    - key: capitalization
+      category: approval
+      posting_rules: [asset_capitalization]
+      trigger: assets.capitalization.approval.requested
+    - key: depreciation_run
+      category: approval
+      posting_rules: [asset_depreciation]
+      trigger: assets.depreciation.approval.requested
+    - key: disposal
+      category: approval
+      posting_rules: [asset_disposal]
+      trigger: assets.disposal.approval.requested
+
+  reporting:
+    - key: regulatory_submission
+      category: approval
+      posting_rules: []
+      trigger: reporting.regulatory.submission.requested
+    - key: consolidation_run
+      category: approval
+      posting_rules: []
+      trigger: financial_kernel.consolidation.approval.requested
+    - key: report_publish
+      category: approval
+      posting_rules: []
+      trigger: reporting.lifecycle.publish.requested
+
+integrations:
+  general_ledger:
+    context: financial_kernel
+    delegation: native
+    posting_bridge: direct
+  treasury:
+    context: treasury
+    delegation: financial_kernel
+    posting_bridge: TreasuryPostingBridge
+  banking:
+    context: banking
+    delegation: financial_kernel
+    posting_bridge: BankingPostingBridge
+  currency_exchange:
+    context: currency_exchange
+    delegation: financial_kernel
+    posting_bridge: ExchangePostingBridge
+  tax_engine:
+    context: tax
+    delegation: financial_kernel
+    posting_bridge: direct_execute_posting
+  budgeting:
+    context: finance
+    delegation: financial_kernel
+    posting_bridge: planned
+  procurement:
+    context: procurement
+    delegation: financial_kernel
+    posting_bridge: planned
+  payroll:
+    context: payroll
+    delegation: financial_kernel
+    posting_bridge: planned
+  accounts_receivable:
+    context: ar
+    delegation: financial_kernel
+    posting_bridge: planned
+  accounts_payable:
+    context: ap
+    delegation: financial_kernel
+    posting_bridge: planned
+  asset_management:
+    context: assets
+    delegation: financial_kernel
+    posting_bridge: planned
+  reporting:
+    context: reporting
+    delegation: financial_kernel
+    posting_bridge: none
+  policy_engine:
+    context: policy
+    integration: evaluate_routing_and_thresholds
+  compliance_engine:
+    context: compliance
+    integration: sod_and_regulatory_checkpoints
 
 statuses:
+  - draft
   - pending
   - in_progress
   - escalated
   - approved
-  - rejected
   - signed
+  - posting_authorized
   - completed
+  - rejected
+  - failed
+
+policy_keys:
+  - financial_workflow.approval.required
+  - financial_workflow.payment.threshold.levels
+  - financial_workflow.sla.default_hours
+  - financial_workflow.escalation.target_role
+  - financial_workflow.signature.required
+  - financial_workflow.compliance.sod.enabled
+  - financial_workflow.posting.auto_on_approve
+  - financial_workflow.versioning.enabled
 
 permissions:
-  financial_kernel.workflows.read: View workflows, history, AI recommendations
-  financial_kernel.workflows.write: Start workflows
+  financial_kernel.workflows.read: View catalog, instances, history, audit
+  financial_kernel.workflows.write: Start instances, delegate
   financial_kernel.workflows.approve: Approve, reject, complete
-  financial_kernel.workflows.escalate: Manual and SLA auto-escalation
+  financial_kernel.workflows.escalate: Escalate, SLA auto-escalate
   financial_kernel.workflows.sign: Digital signature
+  financial_kernel.workflows.admin: Definitions, seed, version management
 
-events:
+events_publishes:
   - financial_kernel.workflow.started
   - financial_kernel.workflow.approved
   - financial_kernel.workflow.rejected
   - financial_kernel.workflow.escalated
   - financial_kernel.workflow.signed
+  - financial_kernel.workflow.completed
+  - financial_kernel.posting.authorized
+  - financial_kernel.posting.completed
+  - financial_kernel.workflow.definition.versioned
+
+events_subscribes:
+  - treasury.*.approval.requested
+  - banking.*.approval.requested
+  - currency_exchange.*.approval.requested
+  - tax.*.approval.requested
+  - tax.return.submitted
+  - budget.*.approval.requested
+  - procurement.*.approval.requested
+  - payroll.*.approval.requested
+  - ar.*.approval.requested
+  - ap.*.approval.requested
+  - assets.*.approval.requested
+  - reporting.*.approval.requested
 
 delegates:
-  runtime: workflow_engine
-  ai: ai_platform
-  audit: audit_platform
+  complex_bpm: workflow_engine
+  ai_risk: ai_platform
+  audit_export: audit_platform
+  notifications: communication_platform

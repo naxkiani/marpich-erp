@@ -7,6 +7,17 @@ aggregates:
   - FiscalPeriod
   - CostCenter
   - ProfitCenter
+  - PaymentWorkflowConfig
+  - PaymentWorkflowRun
+  - ProcurementWorkflowConfig
+  - ProcurementWorkflowRun
+  - BudgetWorkflowConfig
+  - BudgetWorkflowRun
+  - TreasuryWorkflowTemplate
+  - TreasuryWorkflowConfig
+  - TreasuryWorkflowRun
+  - TaxWorkflowConfig
+  - TaxWorkflowRun
 publishes:
   - financial_kernel.coa.seeded
   - financial_kernel.journal.posted
@@ -38,10 +49,176 @@ publishes:
   - financial_kernel.security.audit.recorded
   - financial_kernel.security.tamper.detected
   - financial_kernel.ai.analysis.completed
+  - financial_kernel.statement.generated
   - financial_kernel.ai.dashboard.generated
   - financial_kernel.ai.chat.completed
   - financial_kernel.gl_ai.analysis.completed
   - financial_kernel.gl_ai.cfo_dashboard.generated
+  - financial_kernel.consolidation.run.completed
+  - financial_kernel.consolidation.elimination.posted
+  - financial_kernel.consolidation.approved
+  - financial_kernel.payment_workflow.started
+  - financial_kernel.payment_workflow.authorized
+  - financial_kernel.payment_workflow.settled
+  - financial_kernel.payment_workflow.gl_posted
+  - financial_kernel.payment_workflow.completed
+  - financial_kernel.procurement_workflow.started
+  - financial_kernel.procurement_workflow.po_approved
+  - financial_kernel.procurement_workflow.received
+  - financial_kernel.procurement_workflow.matched
+  - financial_kernel.procurement_workflow.payment_approved
+  - financial_kernel.procurement_workflow.gl_posted
+  - financial_kernel.procurement_workflow.completed
+  - financial_kernel.budget_workflow.started
+  - financial_kernel.budget_workflow.approved
+  - financial_kernel.budget_workflow.revised
+  - financial_kernel.budget_workflow.transferred
+  - financial_kernel.budget_workflow.frozen
+  - financial_kernel.budget_workflow.released
+  - financial_kernel.budget_workflow.completed
+  - financial_kernel.treasury_workflow.started
+  - financial_kernel.treasury_workflow.liquidity_approved
+  - financial_kernel.treasury_workflow.transfer_executed
+  - financial_kernel.treasury_workflow.reconciled
+  - financial_kernel.treasury_workflow.completed
+  - financial_kernel.tax_workflow.started
+  - financial_kernel.tax_workflow.approved
+  - financial_kernel.tax_workflow.submitted
+  - financial_kernel.tax_workflow.paid
+  - financial_kernel.tax_workflow.settled
+  - financial_kernel.tax_workflow.appeal_filed
+  - financial_kernel.tax_workflow.completed
+
+financial_statements_platform:
+  api: /api/v1/financial-kernel/statements
+  capabilities:
+    - trial_balance
+    - general_ledger
+    - balance_sheet
+    - income_statement
+    - cash_flow_statement
+    - statement_of_changes_in_equity
+    - budget_vs_actual
+    - cost_center_statement
+    - profit_center_statement
+    - department_statement
+    - project_statement
+    - fund_statement
+    - grant_statement
+    - branch_statement
+    - multi_currency_statement
+    - consolidated_statement
+    - comparative_statement
+    - drill_down
+    - automatic_validation
+    - configurable_templates
+
+financial_consolidation_platform:
+  api: /api/v1/financial-kernel/consolidation
+  capabilities:
+    - multi_company_consolidation
+    - intercompany_elimination
+    - currency_translation
+    - minority_interest
+    - consolidated_balance_sheet
+    - consolidated_income_statement
+    - consolidated_cash_flow
+    - disclosure_notes
+    - reporting_packages
+    - approval_workflow
+    - audit_trail
+    - configurable_consolidation_rules
+    - reconciliation_reports
+
+payment_workflow_platform:
+  api: /api/v1/financial-kernel/payment-workflow
+  capabilities:
+    - payment_request
+    - payment_review
+    - compliance_validation
+    - treasury_approval
+    - budget_validation
+    - tax_validation
+    - financial_approval
+    - final_authorization
+    - payment_execution
+    - settlement
+    - notification
+    - audit
+    - automatic_gl_posting
+    - configurable_workflow
+    - workflow_dashboard
+
+procurement_financial_workflow_platform:
+  api: /api/v1/financial-kernel/procurement-workflow
+  capabilities:
+    - purchase_request
+    - quotation_approval
+    - purchase_order_approval
+    - budget_verification
+    - vendor_validation
+    - receiving
+    - invoice_matching
+    - payment_approval
+    - treasury_execution
+    - financial_posting
+    - audit
+    - ai_procurement_recommendations
+    - configurable_workflow
+    - workflow_dashboard
+
+budget_workflow_platform:
+  api: /api/v1/financial-kernel/budget-workflow
+  capabilities:
+    - budget_creation
+    - budget_review
+    - department_approval
+    - finance_approval
+    - executive_approval
+    - revision
+    - transfer
+    - increase
+    - reduction
+    - budget_freeze
+    - budget_release
+    - workflow_audit
+    - approval_history
+    - configurable_workflow
+    - workflow_dashboard
+
+treasury_workflow_platform:
+  api: /api/v1/financial-kernel/treasury-workflow
+  capabilities:
+    - cash_request
+    - cash_transfer
+    - fund_allocation
+    - liquidity_approval
+    - investment_approval
+    - bank_transfer
+    - foreign_currency_approval
+    - vault_transfer
+    - cash_closing
+    - treasury_reconciliation
+    - treasury_workflow_templates
+    - configurable_workflow
+    - workflow_dashboard
+
+tax_workflow_platform:
+  api: /api/v1/financial-kernel/tax-workflow
+  capabilities:
+    - tax_calculation
+    - tax_review
+    - compliance_validation
+    - tax_approval
+    - government_submission
+    - tax_payment
+    - refund
+    - correction
+    - appeal
+    - settlement
+    - tax_workflow_monitoring
+    - configurable_workflow
+    - workflow_dashboard
 subscribes:
   - platform.tenant.provisioned
 schema: financial_kernel

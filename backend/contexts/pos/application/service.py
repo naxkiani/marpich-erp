@@ -1,8 +1,7 @@
 """POS application service."""
 from __future__ import annotations
 
-import json
-from datetime import UTC, datetime
+import logging
 from decimal import Decimal
 
 from contexts.pos.domain.aggregates.pos_sale import PosSale
@@ -19,11 +18,7 @@ from shared.application.result import Result
 from shared.domain.value_objects.unique_id import UniqueId
 from shared.infrastructure.messaging.event_bus import publish_integration_event
 
-
-class ConsolePosAudit:
-    async def log(self, **kwargs: object) -> None:
-        entry = {"type": "audit", "context": "pos", **kwargs, "occurred_at": datetime.now(UTC).isoformat()}
-        print(json.dumps(entry, default=str))
+logger = logging.getLogger(__name__)
 
 
 class PosApplicationService:
@@ -33,13 +28,11 @@ class PosApplicationService:
         shifts: IShiftRepository,
         sales: IPosSaleRepository,
         receipts: IReceiptRepository,
-        audit: ConsolePosAudit | None = None,
     ) -> None:
         self._terminals = terminals
         self._shifts = shifts
         self._sales = sales
         self._receipts = receipts
-        self._audit = audit or ConsolePosAudit()
 
     async def register_terminal(
         self, *, tenant_id: str, terminal_code: str, store_name: str, correlation_id: str
@@ -50,12 +43,11 @@ class PosApplicationService:
             tenant_id=tenant_id, terminal_code=terminal_code, store_name=store_name
         )
         await self._terminals.save(terminal)
-        await self._audit.log(
-            tenant_id=tenant_id,
-            correlation_id=correlation_id,
-            action="pos.terminal.registered",
-            resource_type="terminal",
-            resource_id=str(terminal.id),
+        logger.info(
+            "pos.terminal.registered tenant=%s terminal=%s correlation_id=%s",
+            tenant_id,
+            terminal.id,
+            correlation_id,
         )
         return Result.ok(terminal.to_dict())
 
@@ -119,12 +111,11 @@ class PosApplicationService:
             await publish_integration_event(receipt_event)
             result["receipt"] = receipt.to_dict()
 
-        await self._audit.log(
-            tenant_id=tenant_id,
-            correlation_id=correlation_id,
-            action="pos.sale.completed",
-            resource_type="sale",
-            resource_id=str(sale.id),
+        logger.info(
+            "pos.sale.completed tenant=%s sale=%s correlation_id=%s",
+            tenant_id,
+            sale.id,
+            correlation_id,
         )
         return Result.ok(result)
 

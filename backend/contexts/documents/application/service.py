@@ -13,6 +13,7 @@ from contexts.documents.domain.events.integration_events import (
     DocumentArchivedIntegration,
     DocumentSignedIntegration,
     DocumentUploadedIntegration,
+    PhysicalLocationAssignedIntegration,
     VersionCreatedIntegration,
 )
 from contexts.documents.domain.ports.repositories import (
@@ -21,11 +22,18 @@ from contexts.documents.domain.ports.repositories import (
     ISignatureRepository,
     IVersionRepository,
 )
+from contexts.documents.domain.services.document_verification_engine import (
+    build_watermark,
+    generate_qr_token,
+    sign_content_integrity,
+    verify_qr_token,
+)
+from contexts.documents.domain.value_objects.physical_location import PhysicalLocation
+from shared.application.ports.authorization import IAuthorizationEvaluator
 from shared.application.result import Result
 from shared.domain.value_objects.tenant_id import TenantId
 from shared.domain.value_objects.unique_id import UniqueId
 from shared.infrastructure.messaging.event_bus import publish_integration_event
-
 
 def _checksum(content: str) -> str:
     return hashlib.sha256(content.encode()).hexdigest()
@@ -39,12 +47,14 @@ class DocumentsApplicationService:
         versions: IVersionRepository,
         signatures: ISignatureRepository,
         platform_events: IDocumentsPlatformAdapter,
+        authz: IAuthorizationEvaluator | None = None,
     ) -> None:
         self._folders = folders
         self._documents = documents
         self._versions = versions
         self._signatures = signatures
         self._platform_events = platform_events
+        self._authz = authz
 
     async def handle_tenant_provisioned(self, envelope: dict) -> None:
         command = await self._platform_events.parse_tenant_provisioned(envelope)
@@ -139,9 +149,27 @@ class DocumentsApplicationService:
             created_by=created_by,
         )
         document.set_current_version(version.id)
+        document.set_qr_token(
+            generate_qr_token(
+                tenant_id=tenant_id,
+                document_id=str(document.id),
+                version_number=version.version_number,
+                checksum=version.checksum,
+            )
+        )
 
         await self._documents.save(document)
         await self._versions.save(version)
+
+        if self._authz and created_by:
+            await self._authz.write_relation(
+                tenant_id,
+                subject_type="user",
+                subject_id=created_by,
+                relation="owner",
+                object_type="document",
+                object_id=str(document.id),
+            )
 
         await publish_integration_event(
             DocumentUploadedIntegration(
@@ -200,6 +228,14 @@ class DocumentsApplicationService:
             created_by=created_by,
         )
         document.set_current_version(version.id)
+        document.set_qr_token(
+            generate_qr_token(
+                tenant_id=tenant_id,
+                document_id=str(document.id),
+                version_number=version.version_number,
+                checksum=version.checksum,
+            )
+        )
         await self._versions.save(version)
         await self._documents.save(document)
 
@@ -222,11 +258,13 @@ class DocumentsApplicationService:
 
         versions = await self._versions.list_by_document(tenant_id, document.id)
         signatures = await self._signatures.find_by_document(tenant_id, document.id)
+        token = document.qr_token or document.metadata.get("qr_token")
         return Result.ok(
             {
                 "document": document.to_dict(),
                 "versions": [v.to_dict() for v in versions],
                 "signatures": [s.to_dict() for s in signatures],
+                "verify_path": f"/api/v1/documents/verify/{token}" if token else None,
             }
         )
 
@@ -245,6 +283,97 @@ class DocumentsApplicationService:
                 "content_type": version.content_type,
                 "checksum": version.checksum,
                 "content": version.content,
+                "qr_token": document.qr_token or document.metadata.get("qr_token"),
+            }
+        )
+
+    async def preview_document(
+        self,
+        *,
+        tenant_id: str,
+        document_id: str,
+        principal_id: str,
+        sensitivity: str = "high",
+    ) -> Result[dict]:
+        """Serve-time preview — watermark via AuthZ obligation; never mutates stored bytes."""
+        download = await self.download_current(tenant_id, document_id)
+        if not download.succeeded:
+            return download
+        payload = download.unwrap()
+        watermark = None
+        obligations: list[str] = []
+        if self._authz:
+            decision = await self._authz.check_access(
+                tenant_id,
+                principal_id=principal_id,
+                resource=f"marpich://documents/file/{document_id}",
+                action="export",
+                permission_code="documents.read",
+                context={"export": True, "sensitivity": sensitivity},
+            )
+            if not decision.allowed:
+                return Result.fail("documents.errors.forbidden")
+            obligations = list(decision.obligations)
+            if "data.watermark" in obligations:
+                watermark = build_watermark(
+                    tenant_id=tenant_id,
+                    actor_id=principal_id,
+                    document_id=document_id,
+                )
+        else:
+            # Fail-safe for demos without AuthZ wiring: apply watermark on high sensitivity
+            if sensitivity in {"high", "critical"}:
+                watermark = build_watermark(
+                    tenant_id=tenant_id,
+                    actor_id=principal_id,
+                    document_id=document_id,
+                )
+                obligations = ["data.watermark"]
+        return Result.ok(
+            {
+                **payload,
+                "watermark": watermark,
+                "obligations": obligations,
+                "stored_mutated": False,
+            }
+        )
+
+    async def verify_public_token(self, token: str) -> Result[dict]:
+        parsed = verify_qr_token(token)
+        if not parsed:
+            return Result.fail("documents.errors.invalid_qr_token")
+
+        document = await self._documents.find_by_qr_token(token)
+        if not document:
+            # Token HMAC valid but document missing / rotated — still report integrity failure
+            return Result.fail("documents.errors.document_not_found")
+
+        version = None
+        if document.current_version_id:
+            version = await self._versions.find_by_id(document.tenant_id, document.current_version_id)
+        if not version:
+            return Result.fail("documents.errors.version_not_found")
+
+        checksum_ok = (
+            version.checksum == parsed["checksum"]
+            and version.version_number == parsed["version_number"]
+            and str(document.id) == parsed["document_id"]
+            and document.tenant_id == parsed["tenant_id"]
+        )
+        signatures = await self._signatures.find_by_document(document.tenant_id, document.id)
+        latest_sig = signatures[-1].to_dict() if signatures else None
+        return Result.ok(
+            {
+                "valid": bool(checksum_ok),
+                "tenant_id": document.tenant_id,
+                "document_id": str(document.id),
+                "title": document.title,
+                "status": document.status.value,
+                "version_number": version.version_number,
+                "checksum": version.checksum,
+                "checksum_matches": bool(checksum_ok),
+                "signature": latest_sig,
+                "qr_token": token,
             }
         )
 
@@ -265,6 +394,15 @@ class DocumentsApplicationService:
         if not signers:
             return Result.fail("documents.errors.signers_required")
 
+        version = await self._versions.find_by_id(tenant_id, document.current_version_id)
+        if not version:
+            return Result.fail("documents.errors.version_not_found")
+
+        evidence = sign_content_integrity(
+            document_id=str(document.id),
+            version_checksum=version.checksum,
+            signer_id=requester_id,
+        )
         request = SignatureRequest.create(
             tenant_id=tenant_id,
             document_id=document.id,
@@ -272,8 +410,25 @@ class DocumentsApplicationService:
             requester_id=requester_id,
             signers=signers,
         )
-        request.mark_signed()
+        request.mark_signed(
+            algorithm=evidence["algorithm"],
+            signature_hash=evidence["signature"],
+            content_checksum=version.checksum,
+        )
+        document.set_qr_token(
+            generate_qr_token(
+                tenant_id=tenant_id,
+                document_id=str(document.id),
+                version_number=version.version_number,
+                checksum=version.checksum,
+            )
+        )
+        document.metadata = {
+            **document.metadata,
+            "last_signature": evidence,
+        }
         await self._signatures.save(request)
+        await self._documents.save(document)
 
         await publish_integration_event(
             DocumentSignedIntegration(
@@ -284,7 +439,7 @@ class DocumentsApplicationService:
                 signers=signers,
             )
         )
-        return Result.ok(request.to_dict())
+        return Result.ok({**request.to_dict(), "qr_token": document.qr_token, "evidence": evidence})
 
     async def archive_document(
         self, tenant_id: str, correlation_id: str, document_id: str
@@ -307,6 +462,92 @@ class DocumentsApplicationService:
             )
         )
         return Result.ok(document.to_dict())
+
+    async def delete_document(
+        self,
+        *,
+        tenant_id: str,
+        correlation_id: str,
+        document_id: str,
+        principal_id: str,
+        context: dict | None = None,
+    ) -> Result[dict]:
+        """Owner-only delete (ReBAC) via AuthZ PEP — soft-deletes via archive."""
+        if self._authz:
+            ctx = {
+                "object_type": "document",
+                "object_id": document_id,
+                "relation": "owner",
+                "mutating": True,
+                **(context or {}),
+            }
+            decision = await self._authz.check_access(
+                tenant_id,
+                principal_id=principal_id,
+                resource=f"marpich://documents/file/{document_id}",
+                action="delete",
+                permission_code="documents.file.delete",
+                context=ctx,
+            )
+            if not decision.allowed:
+                return Result.fail("documents.errors.forbidden")
+        return await self.archive_document(tenant_id, correlation_id, document_id)
+
+    async def assign_physical_location(
+        self,
+        *,
+        tenant_id: str,
+        correlation_id: str,
+        document_id: str,
+        site_code: str,
+        room: str = "",
+        cabinet: str = "",
+        shelf: str = "",
+        box: str = "",
+        file_ref: str = "",
+    ) -> Result[dict]:
+        document = await self._documents.find_by_id(tenant_id, UniqueId.from_string(document_id))
+        if not document:
+            return Result.fail("documents.errors.document_not_found")
+        try:
+            location = PhysicalLocation(
+                site_code=site_code,
+                room=room,
+                cabinet=cabinet,
+                shelf=shelf,
+                box=box,
+                file_ref=file_ref,
+            )
+            document.assign_physical_location(location)
+        except ValueError as exc:
+            return Result.fail(str(exc))
+        await self._documents.save(document)
+        await publish_integration_event(
+            PhysicalLocationAssignedIntegration(
+                tenant_id=TenantId.create(tenant_id),
+                correlation_id=correlation_id,
+                document_id=document.id,
+                site_code=location.site_code,
+                room=location.room,
+                cabinet=location.cabinet,
+                shelf=location.shelf,
+                box=location.box,
+                file_ref=location.file_ref,
+            )
+        )
+        return Result.ok(document.to_dict())
+
+    async def get_physical_location(self, tenant_id: str, document_id: str) -> Result[dict]:
+        document = await self._documents.find_by_id(tenant_id, UniqueId.from_string(document_id))
+        if not document:
+            return Result.fail("documents.errors.document_not_found")
+        location = document.physical_location()
+        return Result.ok(
+            {
+                "document_id": str(document.id),
+                "physical_location": location.to_dict() if location else None,
+            }
+        )
 
     async def get_root_folder(self, tenant_id: str) -> Result[dict]:
         root = await self._folders.find_root(tenant_id)

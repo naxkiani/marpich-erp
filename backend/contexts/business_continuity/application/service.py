@@ -249,6 +249,35 @@ class BusinessContinuityApplicationService:
         await self._backups.save(strategy)
         return Result.ok(strategy.to_dict())
 
+    async def schedule_nightly_cloud_backup(
+        self,
+        tenant_id: str,
+        *,
+        name: str = "Nightly AES cloud backup",
+        retention_days: int = 30,
+        rpo_hours: int = 24,
+    ) -> Result[dict]:
+        """Register 02:00 daily backup strategy; execution via cloud_storage connector + scheduler."""
+        strategy_ref = self._backups.next_strategy_ref(tenant_id)
+        strategy = BackupStrategy.define(
+            tenant_id=tenant_id,
+            strategy_ref=strategy_ref,
+            name=name,
+            backup_type="full",
+            frequency_hours=24,
+            retention_days=retention_days,
+            rpo_hours=rpo_hours,
+            encrypted=True,
+            metadata={
+                "cron_expression": "0 2 * * *",
+                "destination_connector": "cloud_storage",
+                "encryption": "AES-256",
+                "execution": "integration_platform",
+            },
+        )
+        await self._backups.save(strategy)
+        return Result.ok(strategy.to_dict())
+
     async def get_rpo_rto(self, tenant_id: str) -> Result[dict]:
         profile = await self._profiles.find_by_tenant(tenant_id)
         plans = [p.to_dict() for p in await self._plans.list_by_tenant(tenant_id)]

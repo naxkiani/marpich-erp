@@ -29,6 +29,10 @@ class MfaVerifyRequest(BaseModel):
     code: str = Field(min_length=6, max_length=8)
 
 
+class AssignRolesRequest(BaseModel):
+    role_codes: list[str] = Field(min_length=1, max_length=16)
+
+
 class ApiResponse(BaseModel):
     data: dict | list
     meta: dict | None = None

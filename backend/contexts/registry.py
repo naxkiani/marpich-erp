@@ -83,6 +83,7 @@ DOCUMENTS = BoundedContext(
         "documents.document.signed",
         "documents.document.archived",
         "documents.version.created",
+        "documents.physical_location.assigned",
     ),
     subscribes=("platform.tenant.provisioned",),
 )
@@ -127,6 +128,19 @@ AI = BoundedContext(
         "banking.transaction.posted",
         "hospital.encounter.completed",
     ),
+)
+
+MESSENGER = BoundedContext(
+    id="messenger",
+    display_name="Messenger",
+    context_type=BoundedContextType.SUPPORTING,
+    schema_name="messenger",
+    description="Internal chat; LiveKit A/V via Integration connectors",
+    publishes=(
+        "messenger.conversation.opened",
+        "messenger.message.sent",
+    ),
+    subscribes=(),
 )
 
 MEDIA = BoundedContext(
@@ -207,15 +221,36 @@ POLICY = BoundedContext(
     display_name="Policy Engine",
     context_type=BoundedContextType.PLATFORM,
     schema_name="policy",
-    description="Configurable business rules — versioning, evaluation, simulation",
+    description="Configurable business rules — versioning, evaluation, simulation, decision platform",
     publishes=(
         "policy.version.submitted",
         "policy.version.activated",
         "policy.version.rolled_back",
         "policy.evaluation.denied",
         "policy.simulation.executed",
+        "policy.decision.recorded",
+        "policy.decision_cache.invalidated",
+        "policy.continuous.recheck_required",
     ),
     subscribes=("platform.tenant.provisioned", "workflow.process.completed"),
+)
+
+IDENTITY_FEDERATION = BoundedContext(
+    id="identity_federation",
+    display_name="Identity Federation Platform",
+    context_type=BoundedContextType.PLATFORM,
+    schema_name="federation",
+    description="Enterprise SSO, protocol gateway, fabric mesh, trust graph, AI identity intelligence",
+    publishes=(
+        "federation.identity_provider.registered",
+        "federation.external_auth.succeeded",
+        "federation.external_auth.failed",
+        "federation.identity.provisioned",
+        "federation.trust.established",
+        "federation.ai.insight.generated",
+        "federation.ai.prediction.completed",
+    ),
+    subscribes=("platform.tenant.provisioned", "identity.user.created"),
 )
 
 IDENTITY_LIFECYCLE = BoundedContext(
@@ -243,6 +278,68 @@ IDENTITY_LIFECYCLE = BoundedContext(
         "identity_lifecycle.activation.requested",
     ),
     subscribes=("platform.tenant.provisioned",),
+)
+
+IDENTITY_DIGITAL_TWIN = BoundedContext(
+    id="identity_digital_twin",
+    display_name="Enterprise Identity Digital Twin Platform",
+    context_type=BoundedContextType.PLATFORM,
+    schema_name="identity_twin",
+    description="Tenant-isolated identity projections, simulations, and drift detection",
+    publishes=("identity_twin.created", "identity_twin.synchronized", "identity_twin.simulation.completed", "identity_twin.drift.detected"),
+    subscribes=("identity.user.created", "identity.role.assigned", "federation.identity.linked", "lifecycle.state.changed", "identity_risk.score.updated"),
+)
+
+CONSENT = BoundedContext(
+    id="consent",
+    display_name="Enterprise Consent & Privacy Platform",
+    context_type=BoundedContextType.PLATFORM,
+    schema_name="consent",
+    description="Consent ledger, preferences, DSAR, privacy notices, retention metadata, DPIA hooks",
+    publishes=(
+        "consent.granted",
+        "consent.revoked",
+        "consent.preference.updated",
+        "consent.dsar.requested",
+        "consent.dsar.completed",
+        "consent.notice.published",
+        "consent.dpia.recorded",
+        "privacy.consent.recorded",
+        "privacy.erasure.requested",
+        "privacy.erasure.completed",
+    ),
+    subscribes=("platform.tenant.provisioned",),
+)
+
+AUTHORIZATION = BoundedContext(
+    id="authorization",
+    display_name="Enterprise Authorization Platform",
+    context_type=BoundedContextType.PLATFORM,
+    schema_name="authorization",
+    description="RBAC, ReBAC, ABAC, PBAC PDP with obligations, explainability, and decision cache",
+    publishes=(
+        "authorization.access.granted",
+        "authorization.access.denied",
+        "authorization.obligation.required",
+        "authorization.relation.changed",
+        "authorization.decision.explained",
+        "authorization.dashboard.generated",
+    ),
+    subscribes=("platform.tenant.provisioned",),
+)
+
+PERMISSION_REGISTRY = BoundedContext(
+    id="permission_registry",
+    display_name="Permission Registry",
+    context_type=BoundedContextType.PLATFORM,
+    schema_name="permission_registry",
+    description="Permission catalog, roles, bindings — PDP consumed by authorization",
+    publishes=(
+        "permissions.catalog.updated",
+        "permissions.role.assigned",
+        "permissions.binding.revoked",
+    ),
+    subscribes=("platform.tenant.provisioned", "platform.module.activated"),
 )
 
 COMPLIANCE = BoundedContext(
@@ -393,14 +490,65 @@ CURRENCY_EXCHANGE = BoundedContext(
     subscribes=("identity.user.created",),
 )
 
+DIGITAL_EXCHANGE = BoundedContext(
+    id="digital_exchange",
+    display_name="Digital Exchange Layer",
+    context_type=BoundedContextType.FINANCE,
+    schema_name="digital_exchange",
+    description="Modular digital wallets, CBDC, stablecoins, ISO 20022 — flag and policy gated",
+    publishes=(
+        "digital_exchange.extension.registered",
+        "digital_exchange.extension.enabled",
+        "digital_exchange.extension.invoked",
+        "digital_exchange.settlement.real_time.requested",
+        "digital_exchange.messaging.iso20022.dispatched",
+    ),
+    subscribes=(
+        "platform.tenant.provisioned",
+        "currency_exchange.deal.settled",
+        "financial_kernel.payment.settled",
+    ),
+)
+
 TAX = BoundedContext(
     id="tax",
-    display_name="Tax",
+    display_name="Enterprise Tax Engine",
     context_type=BoundedContextType.FINANCE,
     schema_name="tax",
-    description="Tax codes, filings, VAT/GST, withholding",
-    publishes=("tax.return.filed", "tax.liability.calculated"),
-    subscribes=("accounting.journal.posted", "payroll.run.completed"),
+    description="Policy-driven tax determination, withholding, returns — industry extension on Financial Kernel",
+    publishes=(
+        "tax.return.filed",
+        "tax.liability.calculated",
+        "tax.withholding.recorded",
+        "tax.accrual.posted",
+        "tax.withholding.transaction.created",
+        "tax.withholding.certificate.issued",
+        "tax.withholding.settlement.posted",
+        "tax.withholding.refund.approved",
+        "tax.withholding.gl.posted",
+        "tax.payroll_tax.run.calculated",
+        "tax.payroll_tax.gl.posted",
+        "tax.payroll_tax.audit.recorded",
+        "tax.einvoice.created",
+        "tax.einvoice.issued",
+        "tax.einvoice.submitted",
+        "tax.einvoice.cancelled",
+        "tax.einvoice.archived",
+        "tax.gov_integration.request.submitted",
+        "tax.gov_integration.acknowledgement.received",
+        "tax.gov_integration.request.completed",
+        "tax.gov_integration.request.failed",
+        "tax.gov_integration.audit.recorded",
+        "tax.report.generated",
+        "tax.report.exported",
+    ),
+    subscribes=(
+        "platform.tenant.provisioned",
+        "accounting.journal.posted",
+        "payroll.run.completed",
+        "sales.invoice.issued",
+        "financial_kernel.payment.settled",
+    ),
 )
 
 # ── HR & Commercial ──────────────────────────────────────────────────────
@@ -484,6 +632,7 @@ INVENTORY = BoundedContext(
         "inventory.reorder.triggered",
     ),
     subscribes=(
+        "pos.sale.completed",
         "procurement.goods.received",
         "sales.order.confirmed",
         "manufacturing.production.completed",
@@ -554,7 +703,7 @@ UNIVERSITY = BoundedContext(
     description="Higher ed — admissions, academics, research",
     publishes=(
         "university.student.enrolled",
-        "university.course.completed",
+        "university.course.offered",
         "university.grade.posted",
     ),
     subscribes=("identity.user.created", "finance.budget.approved"),
@@ -735,6 +884,7 @@ ALL_CONTEXTS: tuple[BoundedContext, ...] = (
     NOTIFICATIONS,
     ANALYTICS,
     AI,
+    MESSENGER,
     MEDIA,
     SEARCH,
     SETTINGS,
@@ -742,7 +892,12 @@ ALL_CONTEXTS: tuple[BoundedContext, ...] = (
     ORGANIZATION,
     AUDIT,
     POLICY,
+    IDENTITY_FEDERATION,
     IDENTITY_LIFECYCLE,
+    IDENTITY_DIGITAL_TWIN,
+    CONSENT,
+    AUTHORIZATION,
+    PERMISSION_REGISTRY,
     COMPLIANCE,
     FEATURE_FLAGS,
     PLUGINS,
@@ -753,6 +908,7 @@ ALL_CONTEXTS: tuple[BoundedContext, ...] = (
     ISLAMIC_BANKING,
     TREASURY,
     CURRENCY_EXCHANGE,
+    DIGITAL_EXCHANGE,
     TAX,
     PAYROLL,
     HUMAN_RESOURCES,

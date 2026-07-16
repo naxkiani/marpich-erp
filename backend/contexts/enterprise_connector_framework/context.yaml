@@ -1,0 +1,24 @@
+context: enterprise_connector_framework
+display_name: Enterprise Connector Framework
+type: platform
+description: "Enterprise Connector Framework — banking, payments, government, tax, ERP, CRM, education, productivity, directory, messaging, storage, DMS; plug-in architecture; Connector SDK"
+api: /api/v1/enterprise-connector-framework
+aggregates:
+  - ConnectorFrameworkProfile
+  - ConnectorInstance
+  - ConnectorHealthRecord
+  - OperationExecution
+  - PluginConnectorBinding
+publishes:
+  - enterprise_connector_framework.instance.registered
+  - enterprise_connector_framework.operation.executed
+  - enterprise_connector_framework.health.checked
+  - enterprise_connector_framework.dashboard.generated
+subscribes:
+  - platform.tenant.provisioned
+delegates:
+  - integration
+  - plugins
+  - enterprise_event_bus
+  - connector_sdk
+schema: enterprise_connector_framework

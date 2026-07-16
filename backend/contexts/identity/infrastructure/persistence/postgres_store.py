@@ -191,6 +191,29 @@ class PostgresSessionRepository(ISessionRepository):
                 .values(revoked_at=datetime.now(UTC))
             )
 
+    async def list_for_user(self, tenant_id: str, user_id: str) -> list[dict]:
+        async with session_scope(tenant_id=tenant_id) as session:
+            rows = (
+                await session.scalars(
+                    select(SessionRow).where(
+                        SessionRow.tenant_id == tenant_id,
+                        SessionRow.user_id == UUID(user_id),
+                        SessionRow.revoked_at.is_(None),
+                        SessionRow.expires_at > datetime.now(UTC),
+                    )
+                )
+            ).all()
+        return [
+            {
+                "id": str(row.id),
+                "ip_address": row.ip_address,
+                "user_agent": row.user_agent,
+                "expires_at": row.expires_at.isoformat(),
+                "created_at": row.created_at.isoformat() if row.created_at else None,
+            }
+            for row in rows
+        ]
+
 
 class PostgresPermissionCatalog(IPermissionCatalog):
     def __init__(self, roles: IRoleRepository) -> None:

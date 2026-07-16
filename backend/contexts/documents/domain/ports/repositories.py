@@ -32,6 +32,9 @@ class IDocumentRepository(ABC):
     async def find_by_id(self, tenant_id: str, document_id: UniqueId) -> Document | None: ...
 
     @abstractmethod
+    async def find_by_qr_token(self, qr_token: str) -> Document | None: ...
+
+    @abstractmethod
     async def list_by_folder(self, tenant_id: str, folder_id: UniqueId) -> list[Document]: ...
 
 

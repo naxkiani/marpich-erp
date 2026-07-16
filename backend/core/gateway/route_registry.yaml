@@ -21,7 +21,25 @@ public_routes:
   - prefix: /api/v1/auth/refresh
     auth: public
     tenant: optional
+  - prefix: /api/v1/authentication/password/login
+    auth: public
+    tenant: required
+  - prefix: /api/v1/authentication/login
+    auth: public
+    tenant: required
+  - prefix: /api/v1/authentication/password/refresh
+    auth: public
+    tenant: required
+  - prefix: /api/v1/authentication/password/forgot-password
+    auth: public
+    tenant: required
+  - prefix: /api/v1/authentication/password/reset-password
+    auth: public
+    tenant: required
   - prefix: /api/v1/authentication/webauthn/login
+    auth: public
+    tenant: required
+  - prefix: /api/v1/authentication/passkeys/authenticate
     auth: public
     tenant: required
   - prefix: /api/v1/authentication/federation/oidc
@@ -80,9 +98,6 @@ public_routes:
     tenant: optional
 
 platform_routes:
-  - prefix: /api/v1/federation
-    context_id: identity_federation
-    module: identity_federation
   - prefix: /api/v1/auth
     context_id: identity
     module: identity
@@ -107,9 +122,30 @@ platform_routes:
   - prefix: /api/v1/identity-risk
     context_id: identity_risk
     module: identity_risk
+  - prefix: /api/v1/mfa
+    context_id: mfa
+    module: mfa
+  - prefix: /api/v1/adaptive-auth
+    context_id: adaptive_authentication
+    module: adaptive_authentication
+  - prefix: /api/v1/federation
+    context_id: identity_federation
+    module: identity_federation
+  - prefix: /api/v1/trusted-devices
+    context_id: mfa
+    module: mfa
   - prefix: /api/v1/identity-resilience
     context_id: identity_resilience
     module: identity_resilience
+  - prefix: /api/v1/identity-lifecycle
+    context_id: identity_lifecycle
+    module: identity_lifecycle
+  - prefix: /api/v1/identity-twins
+    context_id: identity_digital_twin
+    module: identity_digital_twin
+  - prefix: /api/v1/consent
+    context_id: consent
+    module: consent
   - prefix: /api/v1/platform
     context_id: core_platform
     module: core_platform
@@ -176,12 +212,24 @@ business_routes:
   - prefix: /api/v1/clinic
     context_id: clinic
     module: clinic
+  - prefix: /api/v1/university
+    context_id: university
+    module: university
+  - prefix: /api/v1/messenger
+    context_id: messenger
+    module: messenger
+  - prefix: /api/v1/ai
+    context_id: ai
+    module: ai
   - prefix: /api/v1/municipality
     context_id: municipality
     module: municipality
   - prefix: /api/v1/pos
     context_id: pos
     module: pos
+  - prefix: /api/v1/inventory
+    context_id: inventory
+    module: inventory
   - prefix: /api/v1/accounting
     context_id: accounting
     module: accounting

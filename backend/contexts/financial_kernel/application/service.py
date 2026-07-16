@@ -3930,15 +3930,30 @@ class FinancialKernelApplicationService:
     async def calculate_tax(
         self, *, tenant_id: str, amount: str, tax_code: str, jurisdiction: str
     ) -> Result[dict]:
-        rate = divmod(hash(tax_code + jurisdiction) % 20, 100)[0] / 100 + 0.05
-        tax_amount = round(float(amount) * rate, 2)
+        from contexts.tax.container import get_tax_calculation_service
+
+        result = await get_tax_calculation_service().calculate(
+            tenant_id=tenant_id,
+            amount=float(amount),
+            tax_type=tax_code,
+            jurisdiction=jurisdiction,
+            record_audit=True,
+        )
+        if not result.succeeded:
+            return Result.fail(result.error or "tax_calculation_failed")
+        data = result.unwrap()
         return Result.ok({
             "tenant_id": tenant_id,
             "amount": amount,
             "tax_code": tax_code,
             "jurisdiction": jurisdiction,
-            "tax_rate": rate,
-            "tax_amount": str(tax_amount),
+            "tax_rate": data.get("effective_rate", 0),
+            "tax_amount": str(data.get("tax_amount", 0)),
+            "total_amount": str(data.get("total_amount", 0)),
+            "calculation_mode": data.get("calculation_mode"),
+            "audit_ref": data.get("audit_ref"),
+            "validation_status": (data.get("validation") or {}).get("status"),
+            "hardcoded_regulations": False,
         })
 
     async def _post(

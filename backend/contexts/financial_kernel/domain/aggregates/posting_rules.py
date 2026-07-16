@@ -45,6 +45,7 @@ class EnterprisePostingRuleType(StrEnum):
     LOAN = "loan"
     INSURANCE = "insurance"
     GENERAL_MANUAL = "general_manual"
+    RETAIL_POS_SALE = "retail_pos_sale"
 
 
 class PostingPattern(StrEnum):
@@ -137,6 +138,19 @@ PLATFORM_POSTING_RULES: dict[str, PostingRuleDefinition] = {
         dimensions=("profit_center",),
         description="Debit AR, credit revenue",
     ),
+    EnterprisePostingRuleType.RETAIL_POS_SALE.value: PostingRuleDefinition(
+        rule_id="retail_pos_sale",
+        label="Retail POS Sale",
+        module="pos",
+        journal_type="sales",
+        account_slots=(
+            _slot("debit", "POS cash / card clearing", account_key="pos_cash", role="asset"),
+            _slot("credit", "Sales revenue", account_key="sales_revenue", role="revenue"),
+        ),
+        line_templates=(_line("debit", "debit"), _line("credit", "credit")),
+        approval_required=False,
+        description="Immediate paid POS checkout — debit cash/card, credit sales revenue",
+    ),
     EnterprisePostingRuleType.PAYROLL.value: PostingRuleDefinition(
         rule_id="payroll",
         label="Payroll Posting",
@@ -149,6 +163,21 @@ PLATFORM_POSTING_RULES: dict[str, PostingRuleDefinition] = {
         line_templates=(_line("debit", "debit"), _line("credit", "credit")),
         approval_required=True,
         description="Debit payroll expense, credit payroll payable",
+    ),
+    "payroll_tax": PostingRuleDefinition(
+        rule_id="payroll_tax",
+        label="Payroll Tax Posting",
+        module="tax",
+        journal_type="payroll",
+        account_slots=(
+            _slot("debit", "Payroll tax expense", account_key="tax_expense", role="expense"),
+            _slot("credit", "Payroll tax payable", account_key="tax_payable", role="liability"),
+        ),
+        line_templates=(_line("debit", "debit"), _line("credit", "credit")),
+        approval_required=True,
+        tax_amount_field="tax_amount",
+        tax_account_slot="credit",
+        description="Payroll tax accrual posting — employee, employer, social security, pension, etc.",
     ),
     EnterprisePostingRuleType.INVENTORY.value: PostingRuleDefinition(
         rule_id="inventory",

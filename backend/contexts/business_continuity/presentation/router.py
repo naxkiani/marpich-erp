@@ -110,6 +110,17 @@ async def create_backup(
     return {"data": result.unwrap()}
 
 
+@business_continuity_router.post("/backups/nightly-cloud", status_code=status.HTTP_201_CREATED)
+async def schedule_nightly_cloud_backup(
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    _user: Annotated[dict, Depends(require_permissions("continuity.write"))],
+):
+    result = await get_business_continuity_service().schedule_nightly_cloud_backup(tenant_id)
+    if not result.succeeded:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, result.error)
+    return {"data": result.unwrap()}
+
+
 @business_continuity_router.get("/rpo-rto")
 async def get_rpo_rto(
     tenant_id: Annotated[str, Depends(get_tenant_id)],

@@ -79,6 +79,14 @@ class Settings(BaseSettings):
     marpich_orchestration_worker_enabled: bool = True
     marpich_orchestration_worker_poll_interval_ms: int = 1000
     marpich_orchestration_worker_batch_size: int = 50
+    # Document Exchange integrity (HMAC until Secrets/HSM RSA)
+    document_signing_secret: str = Field(
+        default="",
+        validation_alias=AliasChoices(
+            "document_signing_secret",
+            "DOCUMENT_SIGNING_SECRET",
+        ),
+    )
 
 
 settings = Settings()

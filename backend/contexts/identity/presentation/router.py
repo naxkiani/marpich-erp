@@ -16,6 +16,7 @@ from contexts.identity.presentation.dependencies import (
     require_permissions,
 )
 from contexts.identity.presentation.schemas import (
+    AssignRolesRequest,
     LoginRequest,
     LogoutRequest,
     MfaVerifyRequest,
@@ -173,3 +174,43 @@ async def mfa_verify(
 @router.get("/identity/health", tags=["Monitoring"])
 async def identity_health():
     return {"status": "ok", "context": "identity", "version": "0.1.0"}
+
+
+@router.post("/identity/personas/education/seed", tags=["Identity", "RBAC"])
+async def seed_education_personas(
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    _user: Annotated[dict, Depends(require_permissions("identity.roles.write"))],
+):
+    result = await get_identity_service().seed_education_personas(tenant_id)
+    if not result.succeeded:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, result.error)
+    return {"data": result.unwrap()}
+
+
+@router.get("/identity/roles", tags=["Identity", "RBAC"])
+async def list_roles(
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    _user: Annotated[dict, Depends(require_permissions("identity.roles.read"))],
+):
+    result = await get_identity_service().list_roles(tenant_id)
+    return {"data": result.unwrap()}
+
+
+@router.post("/identity/users/{user_id}/roles", tags=["Identity", "RBAC"])
+async def assign_user_roles(
+    user_id: str,
+    body: AssignRolesRequest,
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    user: Annotated[dict, Depends(require_permissions("identity.roles.write"))],
+    correlation_id: Annotated[str, Depends(get_correlation_id)],
+):
+    result = await get_identity_service().assign_user_roles(
+        tenant_id=tenant_id,
+        user_id=user_id,
+        role_codes=body.role_codes,
+        correlation_id=correlation_id,
+        actor_id=user.get("sub"),
+    )
+    if not result.succeeded:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, result.error)
+    return {"data": result.unwrap(), "meta": {"correlation_id": correlation_id}}
