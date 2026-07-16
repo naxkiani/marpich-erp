@@ -8,6 +8,7 @@ from __future__ import annotations
 from contexts.hospital.domain.aggregates.admission import Admission
 from contexts.hospital.domain.aggregates.encounter import Encounter
 from contexts.hospital.domain.aggregates.patient import Patient
+from contexts.hospital.domain.entities.lab_result_projection import LabResultProjection
 from contexts.hospital.domain.events.integration_events import (
     EncounterStartedIntegration,
     PatientRegisteredIntegration,
@@ -15,6 +16,7 @@ from contexts.hospital.domain.events.integration_events import (
 from contexts.hospital.domain.ports.repositories import (
     IAdmissionRepository,
     IEncounterRepository,
+    ILabResultProjectionRepository,
     IPatientRepository,
 )
 from shared.application.result import Result
@@ -29,10 +31,12 @@ class HospitalApplicationService:
         patients: IPatientRepository,
         admissions: IAdmissionRepository,
         encounters: IEncounterRepository,
+        lab_projections: ILabResultProjectionRepository,
     ) -> None:
         self._patients = patients
         self._admissions = admissions
         self._encounters = encounters
+        self._lab_projections = lab_projections
 
     async def register_patient(
         self,
@@ -204,3 +208,49 @@ class HospitalApplicationService:
         if not encounter:
             return Result.fail("hospital.errors.encounter_not_found")
         return Result.ok(encounter.to_dict())
+
+    async def project_laboratory_result(
+        self,
+        *,
+        tenant_id: str,
+        order_id: str,
+        patient_ref: str,
+        test_code: str,
+        result_value: str,
+        result_unit: str | None,
+        source_event_id: str,
+    ) -> Result[dict]:
+        """Idempotent ACL projection of laboratory.result.available (peer IDs only)."""
+        existing = await self._lab_projections.find_by_event_id(tenant_id, source_event_id)
+        if existing:
+            return Result.ok(existing.to_dict())
+        if not order_id or not patient_ref or not test_code or not source_event_id:
+            return Result.fail("hospital.errors.invalid_lab_result_projection")
+
+        projection = LabResultProjection.from_lab_event(
+            tenant_id=tenant_id,
+            order_id=order_id,
+            patient_ref=patient_ref,
+            test_code=test_code,
+            result_value=result_value,
+            result_unit=result_unit,
+            source_event_id=source_event_id,
+        )
+        await self._lab_projections.save(projection)
+        return Result.ok(projection.to_dict())
+
+    async def list_lab_result_projections(
+        self, tenant_id: str, *, limit: int = 50, offset: int = 0
+    ) -> Result[dict]:
+        limit = max(1, min(limit, 100))
+        offset = max(0, offset)
+        rows = await self._lab_projections.list_projections(tenant_id)
+        page = rows[offset : offset + limit]
+        return Result.ok(
+            {
+                "items": [r.to_dict() for r in page],
+                "total": len(rows),
+                "limit": limit,
+                "offset": offset,
+            }
+        )

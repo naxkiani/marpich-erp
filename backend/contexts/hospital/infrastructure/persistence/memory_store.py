@@ -4,9 +4,11 @@ from __future__ import annotations
 from contexts.hospital.domain.aggregates.admission import Admission
 from contexts.hospital.domain.aggregates.encounter import Encounter
 from contexts.hospital.domain.aggregates.patient import Patient
+from contexts.hospital.domain.entities.lab_result_projection import LabResultProjection
 from contexts.hospital.domain.ports.repositories import (
     IAdmissionRepository,
     IEncounterRepository,
+    ILabResultProjectionRepository,
     IPatientRepository,
 )
 from shared.domain.value_objects.unique_id import UniqueId
@@ -16,12 +18,14 @@ class HospitalMemoryStore:
     patients: dict[str, Patient] = {}
     admissions: dict[str, Admission] = {}
     encounters: dict[str, Encounter] = {}
+    lab_projections: dict[str, LabResultProjection] = {}
 
     @classmethod
     def reset(cls) -> None:
         cls.patients.clear()
         cls.admissions.clear()
         cls.encounters.clear()
+        cls.lab_projections.clear()
 
 
 class InMemoryPatientRepository(IPatientRepository):
@@ -73,3 +77,20 @@ class InMemoryEncounterRepository(IEncounterRepository):
     async def list_encounters(self, tenant_id: str) -> list[Encounter]:
         items = [e for e in HospitalMemoryStore.encounters.values() if e.tenant_id == tenant_id]
         return sorted(items, key=lambda e: e.started_at, reverse=True)
+
+
+class InMemoryLabResultProjectionRepository(ILabResultProjectionRepository):
+    async def save(self, projection: LabResultProjection) -> None:
+        HospitalMemoryStore.lab_projections[str(projection.id)] = projection
+
+    async def find_by_event_id(
+        self, tenant_id: str, source_event_id: str
+    ) -> LabResultProjection | None:
+        for row in HospitalMemoryStore.lab_projections.values():
+            if row.tenant_id == tenant_id and row.source_event_id == source_event_id:
+                return row
+        return None
+
+    async def list_projections(self, tenant_id: str) -> list[LabResultProjection]:
+        rows = [r for r in HospitalMemoryStore.lab_projections.values() if r.tenant_id == tenant_id]
+        return sorted(rows, key=lambda r: r.projected_at, reverse=True)

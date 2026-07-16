@@ -27,6 +27,11 @@
 
 ## API
 
-`/api/v1/clinic/patients|appointments|encounters|referrals`
+`/api/v1/clinic/patients|appointments|encounters|referrals|lab-results`
 
 Walk-in encounters: `POST /encounters` with `patient_id` (no appointment).
+
+## Lab result projection (ACL)
+
+Subscribes to `laboratory.result.available` → local `clinic.lab_result_projections`
+(peer IDs only). Idempotent on `source_event_id`. Never merges hospital or laboratory.

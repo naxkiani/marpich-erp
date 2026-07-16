@@ -636,6 +636,7 @@ INVENTORY = BoundedContext(
         "procurement.goods.received",
         "sales.order.confirmed",
         "manufacturing.production.completed",
+        "pharmacy.dispense.completed",
     ),
 )
 

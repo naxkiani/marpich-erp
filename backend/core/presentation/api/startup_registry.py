@@ -2,12 +2,15 @@
 from __future__ import annotations
 
 import importlib
+import logging
 from typing import TYPE_CHECKING
 
 from core.presentation.api.app_profiles import filter_specs_by_profile
 
 if TYPE_CHECKING:
     from fastapi import FastAPI
+
+logger = logging.getLogger(__name__)
 
 API_PREFIX = "/api/v1"
 
@@ -62,6 +65,7 @@ ALL_SERVICE_SPECS: list[tuple[str, str]] = [
     ("contexts.messenger.container", "get_messenger_service"),
     ("contexts.ai.container", "get_ai_service"),
     ("contexts.clinic.container", "get_clinic_service"),
+    ("contexts.hospital.container", "get_hospital_service"),
     ("contexts.pharmacy.container", "get_pharmacy_service"),
     ("contexts.laboratory.container", "get_laboratory_service"),
     ("contexts.university.container", "get_university_service"),
@@ -375,6 +379,15 @@ def _resolve(module_path: str, attr: str):
     return _cache[key]
 
 
+def _try_resolve(module_path: str, attr: str) -> object | None:
+    """Resolve a module attribute; skip WIP modules missing from the tree."""
+    try:
+        return _resolve(module_path, attr)
+    except (ImportError, AttributeError, ModuleNotFoundError) as exc:
+        logger.warning("Skipping unavailable module %s.%s (%s)", module_path, attr, exc)
+        return None
+
+
 def resolve_service(module_path: str, getter: str):
     return _resolve(module_path, getter)()
 
@@ -405,18 +418,28 @@ def register_routers(app: "FastAPI", *, profile: str = "full") -> int:
     if _registered_profiles.get(app_id) == profile:
         return len(router_specs_for_profile(profile))
     specs = router_specs_for_profile(profile)
+    registered = 0
     for module_path, attr in specs:
-        app.include_router(resolve_router(module_path, attr), prefix=API_PREFIX)
+        router = _try_resolve(module_path, attr)
+        if router is None:
+            continue
+        app.include_router(router, prefix=API_PREFIX)
+        registered += 1
     _registered_profiles[app_id] = profile
-    return len(specs)
+    return registered
 
 
 def warmup_services(app: "FastAPI", specs: list[tuple[str, str]]) -> int:
     app_id = id(app)
+    warmed = 0
     for module_path, getter in specs:
-        resolve_service(module_path, getter)
+        resolved = _try_resolve(module_path, getter)
+        if resolved is None:
+            continue
+        resolved()  # type: ignore[operator]
+        warmed += 1
     _services_warmed_for[app_id] = "done"
-    return len(specs)
+    return warmed
 
 
 def configure_application(

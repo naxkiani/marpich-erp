@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from contexts.inventory.application.service import InventoryApplicationService
+from contexts.inventory.infrastructure.acl.pharmacy_events import make_pharmacy_dispense_handler
 from contexts.inventory.infrastructure.acl.pos_events import handle_pos_sale_completed
 from contexts.inventory.infrastructure.persistence.memory_store import InMemoryStockLevelRepository
 from contexts.inventory.infrastructure.persistence.postgres_store import PostgresStockLevelRepository
@@ -21,6 +22,10 @@ def get_inventory_service() -> InventoryApplicationService:
             _service = InventoryApplicationService(stock=InMemoryStockLevelRepository())
     if not _registered:
         InProcessEventBus.subscribe("pos.sale.completed", handle_pos_sale_completed)
+        InProcessEventBus.subscribe(
+            "pharmacy.dispense.completed",
+            make_pharmacy_dispense_handler(get_inventory_service),
+        )
         _registered = True
     return _service
 

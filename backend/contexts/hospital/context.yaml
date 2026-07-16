@@ -18,7 +18,6 @@ publishes:
 subscribes:
   - identity.user.created
   - laboratory.result.available
-  - pharmacy.dispense.completed
 schema: hospital
 permissions:
   - hospital.patients.read
@@ -27,6 +26,7 @@ permissions:
   - hospital.admissions.write
   - hospital.encounters.read
   - hospital.encounters.write
+  - hospital.lab_results.read
 ai:
   surfaces:
     - insights

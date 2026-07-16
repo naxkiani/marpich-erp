@@ -93,3 +93,45 @@ class InventoryApplicationService:
 
         self._processed_sales.add(dedupe)
         return Result.ok(adjusted)
+
+    async def apply_pharmacy_dispense_decrement(
+        self,
+        *,
+        tenant_id: str,
+        dispense_id: str,
+        drug_code: str,
+        quantity_dispensed: float,
+        correlation_id: str,
+    ) -> Result[dict]:
+        """Idempotent stock decrement for pharmacy.dispense.completed (drug_code → sku)."""
+        dedupe = f"{tenant_id}:pharmacy:{dispense_id}"
+        if dedupe in self._processed_sales:
+            return Result.ok({})
+
+        sku = str(drug_code or "").strip().upper()
+        qty = Decimal(str(quantity_dispensed or 0))
+        if not sku or qty <= 0:
+            return Result.fail("inventory.errors.invalid_pharmacy_dispense")
+
+        row = await self._stock.find_by_sku(tenant_id, sku)
+        if not row:
+            return Result.fail(f"inventory.errors.sku_not_found:{sku}")
+        try:
+            row.decrement(qty)
+        except ValueError as exc:
+            return Result.fail(str(exc))
+        await self._stock.save(row)
+        await publish_integration_event(
+            StockAdjustedIntegration(
+                tenant_id=TenantId.create(tenant_id),
+                correlation_id=correlation_id,
+                stock_id=row.id,
+                sku=sku,
+                quantity_delta=str(-qty),
+                quantity_on_hand=str(row.quantity_on_hand),
+                reason="pharmacy.dispense.completed",
+                source_document_id=dispense_id,
+            )
+        )
+        self._processed_sales.add(dedupe)
+        return Result.ok(row.to_dict())

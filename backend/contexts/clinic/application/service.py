@@ -10,10 +10,12 @@ from contexts.clinic.domain.aggregates.appointment import Appointment
 from contexts.clinic.domain.aggregates.outpatient_encounter import OutpatientEncounter
 from contexts.clinic.domain.aggregates.patient import ClinicPatient
 from contexts.clinic.domain.aggregates.referral import Referral
+from contexts.clinic.domain.entities.lab_result_projection import LabResultProjection
 from contexts.clinic.domain.events.integration_events import PatientRegisteredIntegration
 from contexts.clinic.domain.ports.repositories import (
     IAppointmentRepository,
     IClinicPatientRepository,
+    ILabResultProjectionRepository,
     IOutpatientEncounterRepository,
     IReferralRepository,
 )
@@ -30,11 +32,13 @@ class ClinicApplicationService:
         appointments: IAppointmentRepository,
         encounters: IOutpatientEncounterRepository,
         referrals: IReferralRepository,
+        lab_projections: ILabResultProjectionRepository,
     ) -> None:
         self._patients = patients
         self._appointments = appointments
         self._encounters = encounters
         self._referrals = referrals
+        self._lab_projections = lab_projections
 
     async def register_patient(
         self,
@@ -234,3 +238,49 @@ class ClinicApplicationService:
 
         await self._referrals.save(referral)
         return Result.ok(referral.to_dict())
+
+    async def project_laboratory_result(
+        self,
+        *,
+        tenant_id: str,
+        order_id: str,
+        patient_ref: str,
+        test_code: str,
+        result_value: str,
+        result_unit: str | None,
+        source_event_id: str,
+    ) -> Result[dict]:
+        """Idempotent ACL projection of laboratory.result.available (peer IDs only)."""
+        existing = await self._lab_projections.find_by_event_id(tenant_id, source_event_id)
+        if existing:
+            return Result.ok(existing.to_dict())
+        if not order_id or not patient_ref or not test_code or not source_event_id:
+            return Result.fail("clinic.errors.invalid_lab_result_projection")
+
+        projection = LabResultProjection.from_lab_event(
+            tenant_id=tenant_id,
+            order_id=order_id,
+            patient_ref=patient_ref,
+            test_code=test_code,
+            result_value=result_value,
+            result_unit=result_unit,
+            source_event_id=source_event_id,
+        )
+        await self._lab_projections.save(projection)
+        return Result.ok(projection.to_dict())
+
+    async def list_lab_result_projections(
+        self, tenant_id: str, *, limit: int = 50, offset: int = 0
+    ) -> Result[dict]:
+        limit = max(1, min(limit, 100))
+        offset = max(0, offset)
+        rows = await self._lab_projections.list_projections(tenant_id)
+        page = rows[offset : offset + limit]
+        return Result.ok(
+            {
+                "items": [r.to_dict() for r in page],
+                "total": len(rows),
+                "limit": limit,
+                "offset": offset,
+            }
+        )

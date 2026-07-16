@@ -7,9 +7,11 @@ from contexts.clinic.domain.aggregates.appointment import Appointment
 from contexts.clinic.domain.aggregates.outpatient_encounter import OutpatientEncounter
 from contexts.clinic.domain.aggregates.patient import ClinicPatient
 from contexts.clinic.domain.aggregates.referral import Referral
+from contexts.clinic.domain.entities.lab_result_projection import LabResultProjection
 from contexts.clinic.domain.ports.repositories import (
     IAppointmentRepository,
     IClinicPatientRepository,
+    ILabResultProjectionRepository,
     IOutpatientEncounterRepository,
     IReferralRepository,
 )
@@ -21,6 +23,7 @@ class ClinicMemoryStore:
     appointments: dict[str, Appointment] = {}
     encounters: dict[str, OutpatientEncounter] = {}
     referrals: dict[str, Referral] = {}
+    lab_projections: dict[str, LabResultProjection] = {}
 
     @classmethod
     def reset(cls) -> None:
@@ -28,6 +31,7 @@ class ClinicMemoryStore:
         cls.appointments.clear()
         cls.encounters.clear()
         cls.referrals.clear()
+        cls.lab_projections.clear()
 
 
 class InMemoryClinicPatientRepository(IClinicPatientRepository):
@@ -90,3 +94,20 @@ class InMemoryReferralRepository(IReferralRepository):
     async def find_by_id(self, tenant_id: str, referral_id: UniqueId) -> Referral | None:
         r = ClinicMemoryStore.referrals.get(str(referral_id))
         return r if r and r.tenant_id == tenant_id else None
+
+
+class InMemoryLabResultProjectionRepository(ILabResultProjectionRepository):
+    async def save(self, projection: LabResultProjection) -> None:
+        ClinicMemoryStore.lab_projections[str(projection.id)] = projection
+
+    async def find_by_event_id(
+        self, tenant_id: str, source_event_id: str
+    ) -> LabResultProjection | None:
+        for row in ClinicMemoryStore.lab_projections.values():
+            if row.tenant_id == tenant_id and row.source_event_id == source_event_id:
+                return row
+        return None
+
+    async def list_projections(self, tenant_id: str) -> list[LabResultProjection]:
+        rows = [r for r in ClinicMemoryStore.lab_projections.values() if r.tenant_id == tenant_id]
+        return sorted(rows, key=lambda r: r.projected_at, reverse=True)

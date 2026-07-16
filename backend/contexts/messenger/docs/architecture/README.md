@@ -24,6 +24,22 @@
 
 Env: `LIVEKIT_URL`, `LIVEKIT_API_KEY`, `LIVEKIT_API_SECRET`, `LIVEKIT_TOKEN_TTL_SECONDS`
 
+### Secrets smoke (real A/V only)
+
+Simulated tokens are enough for messaging. When you need real LiveKit A/V:
+
+```bash
+cd backend
+# exit 0 = simulated OK (no secrets) OR real JWT mint+verify passed
+.venv/bin/python scripts/smoke_livekit_secrets.py
+
+# optional pytest (skips without env secrets)
+LIVEKIT_API_KEY=… LIVEKIT_API_SECRET=… LIVEKIT_URL=wss://… \
+  .venv/bin/pytest contexts/messenger/tests/test_livekit_secrets_smoke.py -q
+```
+
+Does not join a room (no LiveKit client SDK). Verifies Integration connector mint + HS256.
+
 ## Persistence
 
 Schema `messenger.*` — conversations (member_ids, e2ee, room) + messages (body/ciphertext). Memory default; Postgres when `PERSISTENCE_BACKEND=postgres`.
