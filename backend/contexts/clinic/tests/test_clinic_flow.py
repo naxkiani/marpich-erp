@@ -6,8 +6,10 @@ import contexts.identity.container as identity_container
 from contexts.clinic.container import reset_clinic_service
 from contexts.clinic.infrastructure.persistence.memory_store import ClinicMemoryStore
 from contexts.identity.infrastructure.persistence.memory_store import InMemoryStore
-from core.presentation.api.main import app
+from core.presentation.api.app_factory import create_app
+from core.presentation.api.startup_registry import configure_application
 from shared.infrastructure.messaging.event_bus import InProcessEventBus
+from shared.infrastructure.messaging.event_fabric import EventFabric
 
 
 @pytest.fixture(autouse=True)
@@ -16,13 +18,16 @@ def reset_all():
     InMemoryStore.reset()
     ClinicMemoryStore.reset()
     InProcessEventBus.reset()
+    EventFabric.reset_dev_state()
     reset_clinic_service()
     yield
 
 
 @pytest.fixture
 async def client():
-    transport = ASGITransport(app=app)
+    application = create_app(profile="industry", startup_mode="lazy")
+    configure_application(application, profile="industry", startup_mode="lazy")
+    transport = ASGITransport(app=application)
     async with AsyncClient(transport=transport, base_url="http://test") as ac:
         yield ac
 
@@ -38,6 +43,7 @@ async def _auth_headers(client: AsyncClient, tenant: str) -> dict[str, str]:
         json={"email": "clinic@dev.io", "password": "SecurePass123!"},
         headers={"X-Tenant-ID": tenant},
     )
+    assert login.status_code == 200, login.text
     token = login.json()["data"]["access_token"]
     return {"X-Tenant-ID": tenant, "Authorization": f"Bearer {token}"}
 
@@ -57,7 +63,7 @@ async def test_clinic_appointment_to_referral_flow(client):
         },
         headers=headers,
     )
-    assert patient.status_code == 201
+    assert patient.status_code == 201, patient.text
     patient_id = patient.json()["data"]["id"]
 
     appointment = await client.post(
@@ -69,7 +75,7 @@ async def test_clinic_appointment_to_referral_flow(client):
         },
         headers=headers,
     )
-    assert appointment.status_code == 201
+    assert appointment.status_code == 201, appointment.text
     appointment_id = appointment.json()["data"]["id"]
 
     encounter = await client.post(
@@ -77,7 +83,7 @@ async def test_clinic_appointment_to_referral_flow(client):
         json={"appointment_id": appointment_id},
         headers=headers,
     )
-    assert encounter.status_code == 201
+    assert encounter.status_code == 201, encounter.text
     encounter_id = encounter.json()["data"]["id"]
 
     complete = await client.post(
@@ -85,7 +91,7 @@ async def test_clinic_appointment_to_referral_flow(client):
         json={"diagnosis_codes": ["J06.9"]},
         headers=headers,
     )
-    assert complete.status_code == 200
+    assert complete.status_code == 200, complete.text
 
     referral = await client.post(
         "/api/v1/clinic/referrals",
@@ -97,5 +103,5 @@ async def test_clinic_appointment_to_referral_flow(client):
         },
         headers=headers,
     )
-    assert referral.status_code == 201
+    assert referral.status_code == 201, referral.text
     assert referral.json()["data"]["status"] == "sent"

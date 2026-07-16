@@ -201,7 +201,19 @@ connectors:
     auth: [iam_role, access_key, service_account]
     operations: [upload, download, list, delete, sync_folder]
     config_schema: connectors/cloud_storage.v1.json
-    consumers: [documents, media, integration]
+    consumers: [documents, media, integration, business_continuity]
+
+  livekit:
+    display_name: LiveKit
+    category: realtime
+    direction: outbound
+    auth: [api_key]
+    operations: [create_room_token, create_room, test_connection]
+    config_schema: connectors/livekit.v1.json
+    consumers: [messenger]
+    notes: >
+      Real AccessToken JWT when LIVEKIT_API_KEY + LIVEKIT_API_SECRET (or connector
+      config api_key/api_secret) are set; otherwise sandbox returns simulated lk_ tokens.
 
   custom:
     display_name: Custom REST / GraphQL

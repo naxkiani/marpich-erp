@@ -26,6 +26,7 @@ class SignatureRequest(AggregateRoot):
     algorithm: str | None = None
     signature_hash: str | None = None
     content_checksum: str | None = None
+    key_id: str | None = None
     created_at: datetime = field(default_factory=lambda: datetime.now(UTC))
     completed_at: datetime | None = None
 
@@ -55,11 +56,13 @@ class SignatureRequest(AggregateRoot):
         algorithm: str,
         signature_hash: str,
         content_checksum: str,
+        key_id: str | None = None,
     ) -> None:
         self.status = SignatureStatus.SIGNED
         self.algorithm = algorithm
         self.signature_hash = signature_hash
         self.content_checksum = content_checksum
+        self.key_id = key_id
         self.completed_at = datetime.now(UTC)
 
     def to_dict(self) -> dict:
@@ -74,6 +77,7 @@ class SignatureRequest(AggregateRoot):
             "algorithm": self.algorithm,
             "signature_hash": self.signature_hash,
             "content_checksum": self.content_checksum,
+            "key_id": self.key_id,
             "created_at": self.created_at.isoformat(),
             "completed_at": self.completed_at.isoformat() if self.completed_at else None,
         }

@@ -77,6 +77,64 @@ class Role(AggregateRoot):
             ],
         )
 
+    @classmethod
+    def create_clinic_staff(cls, tenant_id: str) -> Role:
+        """Clinic staff — outpatient ERP surfaces (not hospital acute)."""
+        return cls(
+            id=UniqueId.generate(),
+            tenant_id=tenant_id,
+            code="clinic_staff",
+            name="Clinic Staff",
+            description="Outpatient clinic staff — patients, appointments, encounters",
+            is_system=True,
+            permission_ids=[
+                "clinic.patients.read",
+                "clinic.patients.write",
+                "clinic.appointments.read",
+                "clinic.appointments.write",
+                "clinic.encounters.read",
+                "clinic.encounters.write",
+                "clinic.referrals.read",
+                "clinic.referrals.write",
+                "documents.read",
+                "documents.write",
+                "documents.file.read",
+                "documents.file.write",
+                "workflow.definitions.read",
+                "workflow.tasks.complete",
+                "workflow.instances.read",
+                "audit.entries.read",
+            ],
+        )
+
+    @classmethod
+    def create_hospital_staff(cls, tenant_id: str) -> Role:
+        """Hospital staff — acute CAP-HLT-001 surfaces (not clinic ambulatory)."""
+        return cls(
+            id=UniqueId.generate(),
+            tenant_id=tenant_id,
+            code="hospital_staff",
+            name="Hospital Staff",
+            description="Acute hospital staff — patients, admissions, encounters",
+            is_system=True,
+            permission_ids=[
+                "hospital.patients.read",
+                "hospital.patients.write",
+                "hospital.admissions.read",
+                "hospital.admissions.write",
+                "hospital.encounters.read",
+                "hospital.encounters.write",
+                "documents.read",
+                "documents.write",
+                "documents.file.read",
+                "documents.file.write",
+                "workflow.definitions.read",
+                "workflow.tasks.complete",
+                "workflow.instances.read",
+                "audit.entries.read",
+            ],
+        )
+
     def to_dict(self) -> dict:
         return {
             "id": str(self.id),

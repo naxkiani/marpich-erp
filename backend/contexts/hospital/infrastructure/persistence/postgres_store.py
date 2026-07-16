@@ -83,6 +83,17 @@ class PostgresAdmissionRepository(IAdmissionRepository):
                 return _admission_from_row(row)
             return None
 
+    async def list_admissions(self, tenant_id: str) -> list[Admission]:
+        async with session_scope() as session:
+            rows = (
+                await session.scalars(
+                    select(AdmissionRow)
+                    .where(AdmissionRow.tenant_id == tenant_id)
+                    .order_by(AdmissionRow.admitted_at.desc())
+                )
+            ).all()
+        return [_admission_from_row(r) for r in rows]
+
 
 class PostgresEncounterRepository(IEncounterRepository):
     async def save(self, encounter: Encounter) -> None:
@@ -122,6 +133,17 @@ class PostgresEncounterRepository(IEncounterRepository):
                         EncounterRow.tenant_id == tenant_id,
                         EncounterRow.admission_id == UUID(str(admission_id)),
                     )
+                )
+            ).all()
+        return [_encounter_from_row(r) for r in rows]
+
+    async def list_encounters(self, tenant_id: str) -> list[Encounter]:
+        async with session_scope() as session:
+            rows = (
+                await session.scalars(
+                    select(EncounterRow)
+                    .where(EncounterRow.tenant_id == tenant_id)
+                    .order_by(EncounterRow.started_at.desc())
                 )
             ).all()
         return [_encounter_from_row(r) for r in rows]

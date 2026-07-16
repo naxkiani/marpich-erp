@@ -187,6 +187,28 @@ async def seed_education_personas(
     return {"data": result.unwrap()}
 
 
+@router.post("/identity/personas/clinic/seed", tags=["Identity", "RBAC"])
+async def seed_clinic_personas(
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    _user: Annotated[dict, Depends(require_permissions("identity.roles.write"))],
+):
+    result = await get_identity_service().seed_clinic_personas(tenant_id)
+    if not result.succeeded:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, result.error)
+    return {"data": result.unwrap()}
+
+
+@router.post("/identity/personas/hospital/seed", tags=["Identity", "RBAC"])
+async def seed_hospital_personas(
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    _user: Annotated[dict, Depends(require_permissions("identity.roles.write"))],
+):
+    result = await get_identity_service().seed_hospital_personas(tenant_id)
+    if not result.succeeded:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, result.error)
+    return {"data": result.unwrap()}
+
+
 @router.get("/identity/roles", tags=["Identity", "RBAC"])
 async def list_roles(
     tenant_id: Annotated[str, Depends(get_tenant_id)],

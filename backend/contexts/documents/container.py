@@ -3,6 +3,10 @@ from __future__ import annotations
 
 from contexts.documents.application.service import DocumentsApplicationService
 from contexts.documents.infrastructure.acl.platform_events import DocumentsPlatformAdapter
+from contexts.documents.infrastructure.crypto.pem_rsa_signer import (
+    PemRsaPssContentSigner,
+    reset_signer_cache,
+)
 from contexts.documents.infrastructure.persistence.memory_store import (
     InMemoryDocumentRepository,
     InMemoryFolderRepository,
@@ -28,6 +32,7 @@ def get_documents_service() -> DocumentsApplicationService:
         from contexts.authorization.container import get_authorization_evaluator
 
         authz = get_authorization_evaluator()
+        content_signer = PemRsaPssContentSigner()
         if use_postgres():
             _service = DocumentsApplicationService(
                 folders=PostgresFolderRepository(),
@@ -35,6 +40,7 @@ def get_documents_service() -> DocumentsApplicationService:
                 versions=PostgresVersionRepository(),
                 signatures=PostgresSignatureRepository(),
                 platform_events=DocumentsPlatformAdapter(),
+                content_signer=content_signer,
                 authz=authz,
             )
         else:
@@ -44,6 +50,7 @@ def get_documents_service() -> DocumentsApplicationService:
                 versions=InMemoryVersionRepository(),
                 signatures=InMemorySignatureRepository(),
                 platform_events=DocumentsPlatformAdapter(),
+                content_signer=content_signer,
                 authz=authz,
             )
     if not _registered:
@@ -59,3 +66,4 @@ def reset_documents_service() -> None:
     global _service, _registered
     _service = None
     _registered = False
+    reset_signer_cache()

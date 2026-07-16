@@ -78,6 +78,10 @@ class InMemoryOutpatientEncounterRepository(IOutpatientEncounterRepository):
         e = ClinicMemoryStore.encounters.get(str(encounter_id))
         return e if e and e.tenant_id == tenant_id else None
 
+    async def list_encounters(self, tenant_id: str) -> list[OutpatientEncounter]:
+        items = [e for e in ClinicMemoryStore.encounters.values() if e.tenant_id == tenant_id]
+        return sorted(items, key=lambda e: e.started_at, reverse=True)
+
 
 class InMemoryReferralRepository(IReferralRepository):
     async def save(self, referral: Referral) -> None:

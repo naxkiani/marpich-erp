@@ -50,6 +50,10 @@ class InMemoryAdmissionRepository(IAdmissionRepository):
         a = HospitalMemoryStore.admissions.get(str(admission_id))
         return a if a and a.tenant_id == tenant_id else None
 
+    async def list_admissions(self, tenant_id: str) -> list[Admission]:
+        items = [a for a in HospitalMemoryStore.admissions.values() if a.tenant_id == tenant_id]
+        return sorted(items, key=lambda a: a.admitted_at, reverse=True)
+
 
 class InMemoryEncounterRepository(IEncounterRepository):
     async def save(self, encounter: Encounter) -> None:
@@ -65,3 +69,7 @@ class InMemoryEncounterRepository(IEncounterRepository):
             for e in HospitalMemoryStore.encounters.values()
             if e.tenant_id == tenant_id and str(e.admission_id) == str(admission_id)
         ]
+
+    async def list_encounters(self, tenant_id: str) -> list[Encounter]:
+        items = [e for e in HospitalMemoryStore.encounters.values() if e.tenant_id == tenant_id]
+        return sorted(items, key=lambda e: e.started_at, reverse=True)

@@ -1,10 +1,10 @@
-"""Clinic FastAPI router."""
+"""Clinic FastAPI router — CAP-HLT-002/003."""
 from __future__ import annotations
 
 from datetime import datetime
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 
 from contexts.clinic.container import get_clinic_service
 from contexts.clinic.presentation.schemas import (
@@ -37,6 +37,7 @@ async def register_patient(
         last_name=body.last_name,
         date_of_birth=body.date_of_birth,
         correlation_id=correlation_id,
+        document_id=body.document_id,
     )
     if not result.succeeded:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, result.error)
@@ -47,8 +48,10 @@ async def register_patient(
 async def list_patients(
     tenant_id: Annotated[str, Depends(get_tenant_id)],
     _user: Annotated[dict, Depends(require_permissions("clinic.patients.read"))],
+    limit: Annotated[int, Query(ge=1, le=100)] = 50,
+    offset: Annotated[int, Query(ge=0)] = 0,
 ):
-    result = await get_clinic_service().list_patients(tenant_id)
+    result = await get_clinic_service().list_patients(tenant_id, limit=limit, offset=offset)
     return {"data": result.unwrap()}
 
 
@@ -80,8 +83,10 @@ async def schedule_appointment(
 async def list_appointments(
     tenant_id: Annotated[str, Depends(get_tenant_id)],
     _user: Annotated[dict, Depends(require_permissions("clinic.appointments.read"))],
+    limit: Annotated[int, Query(ge=1, le=100)] = 50,
+    offset: Annotated[int, Query(ge=0)] = 0,
 ):
-    result = await get_clinic_service().list_appointments(tenant_id)
+    result = await get_clinic_service().list_appointments(tenant_id, limit=limit, offset=offset)
     return {"data": result.unwrap()}
 
 
@@ -95,11 +100,23 @@ async def start_encounter(
     result = await get_clinic_service().start_encounter(
         tenant_id=tenant_id,
         appointment_id=body.appointment_id,
+        patient_id=body.patient_id,
         correlation_id=correlation_id,
     )
     if not result.succeeded:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, result.error)
     return {"data": result.unwrap(), "meta": {"correlation_id": correlation_id}}
+
+
+@router.get("/encounters")
+async def list_encounters(
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    _user: Annotated[dict, Depends(require_permissions("clinic.encounters.read"))],
+    limit: Annotated[int, Query(ge=1, le=100)] = 50,
+    offset: Annotated[int, Query(ge=0)] = 0,
+):
+    result = await get_clinic_service().list_encounters(tenant_id, limit=limit, offset=offset)
+    return {"data": result.unwrap()}
 
 
 @router.post("/encounters/{encounter_id}/complete")

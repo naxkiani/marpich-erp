@@ -582,6 +582,36 @@ class IdentityApplicationService:
             }
         )
 
+    async def seed_clinic_personas(self, tenant_id: str) -> Result[dict]:
+        """Ensure clinic_staff system role for outpatient industry tenants."""
+        created: list[str] = []
+        staff = await self._roles.find_by_code(tenant_id, "clinic_staff")
+        if not staff:
+            staff = Role.create_clinic_staff(tenant_id)
+            await self._roles.save(staff)
+            created.append("clinic_staff")
+        return Result.ok(
+            {
+                "clinic_staff_role_id": str(staff.id),
+                "created": created,
+            }
+        )
+
+    async def seed_hospital_personas(self, tenant_id: str) -> Result[dict]:
+        """Ensure hospital_staff system role for acute industry tenants."""
+        created: list[str] = []
+        staff = await self._roles.find_by_code(tenant_id, "hospital_staff")
+        if not staff:
+            staff = Role.create_hospital_staff(tenant_id)
+            await self._roles.save(staff)
+            created.append("hospital_staff")
+        return Result.ok(
+            {
+                "hospital_staff_role_id": str(staff.id),
+                "created": created,
+            }
+        )
+
     async def assign_user_roles(
         self,
         *,

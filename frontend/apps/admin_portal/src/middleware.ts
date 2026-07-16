@@ -2,7 +2,15 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { SESSION_COOKIE_NAME, SESSION_COOKIE_VALUE } from "@marpich/auth-provider";
 
-const PROTECTED_PREFIXES = ["/enterprise", "/tax", "/currency-exchange", "/banking", "/account"];
+const PROTECTED_PREFIXES = [
+  "/enterprise",
+  "/tax",
+  "/currency-exchange",
+  "/banking",
+  "/education",
+  "/healthcare",
+  "/account",
+];
 
 const PUBLIC_PATHS = new Set(["/login"]);
 
@@ -39,6 +47,8 @@ export const config = {
     "/tax/:path*",
     "/currency-exchange/:path*",
     "/banking/:path*",
+    "/education/:path*",
+    "/healthcare/:path*",
     "/login",
     "/login/:path*",
     "/account/:path*",

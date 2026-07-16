@@ -730,9 +730,10 @@ HOSPITAL = BoundedContext(
     schema_name="hospital",
     description="EMR, encounters, clinical workflows",
     publishes=(
-        "hospital.patient.admitted",
+        "hospital.patient.registered",
+        "hospital.admission.registered",
+        "hospital.encounter.started",
         "hospital.encounter.completed",
-        "hospital.discharge.summary",
     ),
     subscribes=("identity.user.created", "laboratory.result.finalized"),
 )
@@ -744,6 +745,7 @@ CLINIC = BoundedContext(
     schema_name="clinic",
     description="Ambulatory care — appointments, outpatient encounters, referrals",
     publishes=(
+        "clinic.patient.registered",
         "clinic.appointment.scheduled",
         "clinic.encounter.completed",
         "clinic.referral.sent",

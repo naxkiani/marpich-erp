@@ -1,13 +1,19 @@
 context: clinic
+architecture_version: "1.0"
 display_name: Clinic
 type: industry
-description: Ambulatory care — appointments, outpatient encounters, referrals
+description: "Outpatient care — CAP-HLT-002/003 patients, appointments, encounters (never merge with hospital)"
+capability_ids:
+  - CAP-HLT-002
+  - CAP-HLT-003
+  - CAP-HLT-006
 aggregates:
   - Patient
   - Appointment
   - OutpatientEncounter
   - Referral
 publishes:
+  - clinic.patient.registered
   - clinic.appointment.scheduled
   - clinic.encounter.completed
   - clinic.referral.sent
@@ -15,3 +21,31 @@ subscribes:
   - identity.user.created
   - laboratory.result.finalized
 schema: clinic
+permissions:
+  - clinic.patients.read
+  - clinic.patients.write
+  - clinic.appointments.read
+  - clinic.appointments.write
+  - clinic.encounters.read
+  - clinic.encounters.write
+  - clinic.referrals.read
+  - clinic.referrals.write
+ai:
+  surfaces:
+    - insights
+    - recommendations
+    - summaries
+    - search
+    - assistant
+    - automation
+    - document_intelligence
+    - voice_commands
+    - chat
+    - report_explanation
+    - anomaly_detection
+    - forecasting
+    - optimization
+    - predictions
+  prompt_templates:
+    - clinic.encounter.summary
+    - clinic.patient.risk_flags

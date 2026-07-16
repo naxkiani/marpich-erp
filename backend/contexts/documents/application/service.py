@@ -16,6 +16,7 @@ from contexts.documents.domain.events.integration_events import (
     PhysicalLocationAssignedIntegration,
     VersionCreatedIntegration,
 )
+from contexts.documents.domain.ports.content_signer import IDocumentContentSigner
 from contexts.documents.domain.ports.repositories import (
     IDocumentRepository,
     IFolderRepository,
@@ -25,7 +26,6 @@ from contexts.documents.domain.ports.repositories import (
 from contexts.documents.domain.services.document_verification_engine import (
     build_watermark,
     generate_qr_token,
-    sign_content_integrity,
     verify_qr_token,
 )
 from contexts.documents.domain.value_objects.physical_location import PhysicalLocation
@@ -47,6 +47,7 @@ class DocumentsApplicationService:
         versions: IVersionRepository,
         signatures: ISignatureRepository,
         platform_events: IDocumentsPlatformAdapter,
+        content_signer: IDocumentContentSigner,
         authz: IAuthorizationEvaluator | None = None,
     ) -> None:
         self._folders = folders
@@ -54,6 +55,7 @@ class DocumentsApplicationService:
         self._versions = versions
         self._signatures = signatures
         self._platform_events = platform_events
+        self._content_signer = content_signer
         self._authz = authz
 
     async def handle_tenant_provisioned(self, envelope: dict) -> None:
@@ -362,9 +364,20 @@ class DocumentsApplicationService:
         )
         signatures = await self._signatures.find_by_document(document.tenant_id, document.id)
         latest_sig = signatures[-1].to_dict() if signatures else None
+        crypto_ok = True
+        if latest_sig and latest_sig.get("signature_hash"):
+            crypto_ok = self._content_signer.verify(
+                document_id=str(document.id),
+                version_checksum=latest_sig.get("content_checksum") or version.checksum,
+                signer_id=latest_sig.get("requester_id") or "",
+                signature=latest_sig["signature_hash"],
+                algorithm=latest_sig.get("algorithm"),
+                key_id=latest_sig.get("key_id")
+                or (document.metadata.get("last_signature") or {}).get("key_id"),
+            )
         return Result.ok(
             {
-                "valid": bool(checksum_ok),
+                "valid": bool(checksum_ok and crypto_ok),
                 "tenant_id": document.tenant_id,
                 "document_id": str(document.id),
                 "title": document.title,
@@ -372,6 +385,7 @@ class DocumentsApplicationService:
                 "version_number": version.version_number,
                 "checksum": version.checksum,
                 "checksum_matches": bool(checksum_ok),
+                "signature_valid": bool(crypto_ok) if latest_sig else None,
                 "signature": latest_sig,
                 "qr_token": token,
             }
@@ -398,7 +412,7 @@ class DocumentsApplicationService:
         if not version:
             return Result.fail("documents.errors.version_not_found")
 
-        evidence = sign_content_integrity(
+        evidence = self._content_signer.sign(
             document_id=str(document.id),
             version_checksum=version.checksum,
             signer_id=requester_id,
@@ -414,6 +428,7 @@ class DocumentsApplicationService:
             algorithm=evidence["algorithm"],
             signature_hash=evidence["signature"],
             content_checksum=version.checksum,
+            key_id=evidence.get("key_id"),
         )
         document.set_qr_token(
             generate_qr_token(
@@ -437,6 +452,9 @@ class DocumentsApplicationService:
                 document_id=document.id,
                 signature_request_id=request.id,
                 signers=signers,
+                algorithm=evidence["algorithm"],
+                key_id=evidence.get("key_id"),
+                content_checksum=version.checksum,
             )
         )
         return Result.ok({**request.to_dict(), "qr_token": document.qr_token, "evidence": evidence})

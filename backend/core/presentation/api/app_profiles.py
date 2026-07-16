@@ -93,6 +93,7 @@ INDUSTRY_CONTEXTS = frozenset({
     "pos",
     "inventory",
     "financial_kernel",
+    "accounting",
     "analytics",
     "university",
     "enterprise_connector_framework",

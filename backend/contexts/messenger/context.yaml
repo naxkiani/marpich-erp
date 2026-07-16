@@ -8,9 +8,30 @@ aggregates:
 publishes:
   - messenger.conversation.opened
   - messenger.message.sent
+  - messenger.livekit.token_issued
 subscribes: []
 schema: messenger
 permissions:
   - messenger.conversations.write
   - messenger.messages.read
   - messenger.messages.write
+ai:
+  surfaces:
+    - insights
+    - predictions
+    - recommendations
+    - summaries
+    - search
+    - assistant
+    - automation
+    - document_intelligence
+    - voice_commands
+    - chat_interface
+    - report_explanation
+    - anomaly_detection
+    - forecasting
+    - optimization_suggestions
+  prompt_templates:
+    assistant: messenger.assistant.v1
+    summaries: messenger.summaries.v1
+    anomaly_detection: messenger.anomaly.v1

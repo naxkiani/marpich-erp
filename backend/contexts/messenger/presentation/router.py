@@ -7,7 +7,6 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 
 from contexts.identity.presentation.dependencies import (
     get_correlation_id,
-    get_current_user,
     get_tenant_id,
     require_permissions,
 )
@@ -34,9 +33,33 @@ async def open_conversation(
         correlation_id=correlation_id,
         e2ee_enabled=body.e2ee_enabled,
         issue_livekit_token=body.issue_livekit_token,
+        requester_id=user.get("sub"),
     )
     if not result.succeeded:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, result.error)
+    return {"data": result.unwrap(), "meta": {"correlation_id": correlation_id}}
+
+
+@router.post("/conversations/{conversation_id}/livekit-token", status_code=status.HTTP_200_OK)
+async def issue_livekit_token(
+    conversation_id: str,
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    correlation_id: Annotated[str, Depends(get_correlation_id)],
+    user: Annotated[dict, Depends(require_permissions("messenger.conversations.write"))],
+):
+    result = await get_messenger_service().issue_livekit_token(
+        tenant_id=tenant_id,
+        conversation_id=conversation_id,
+        requester_id=user["sub"],
+        correlation_id=correlation_id,
+    )
+    if not result.succeeded:
+        code = (
+            status.HTTP_404_NOT_FOUND
+            if "not_found" in (result.error or "")
+            else status.HTTP_400_BAD_REQUEST
+        )
+        raise HTTPException(code, result.error)
     return {"data": result.unwrap(), "meta": {"correlation_id": correlation_id}}
 
 
@@ -53,6 +76,8 @@ async def send_message(
         conversation_id=conversation_id,
         sender_id=user["sub"],
         body=body.body,
+        ciphertext=body.ciphertext,
+        ciphertext_type=body.ciphertext_type,
         correlation_id=correlation_id,
     )
     if not result.succeeded:

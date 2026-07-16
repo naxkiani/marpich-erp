@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "clinic.patient.registered",
+  "type": "object",
+  "required": ["patient_id", "patient_number", "full_name"],
+  "properties": {
+    "patient_id": { "type": "string", "format": "uuid" },
+    "patient_number": { "type": "string" },
+    "full_name": { "type": "string" }
+  }
+}

@@ -79,12 +79,53 @@ class Settings(BaseSettings):
     marpich_orchestration_worker_enabled: bool = True
     marpich_orchestration_worker_poll_interval_ms: int = 1000
     marpich_orchestration_worker_batch_size: int = 50
-    # Document Exchange integrity (HMAC until Secrets/HSM RSA)
+    # Document Exchange — QR token MAC (HMAC) + content RSA-PSS (PEMs; HSM via Secrets later)
     document_signing_secret: str = Field(
         default="",
         validation_alias=AliasChoices(
             "document_signing_secret",
             "DOCUMENT_SIGNING_SECRET",
+        ),
+    )
+    document_signing_private_key_pem: str = Field(
+        default="",
+        validation_alias=AliasChoices(
+            "document_signing_private_key_pem",
+            "DOCUMENT_SIGNING_PRIVATE_KEY_PEM",
+        ),
+    )
+    document_signing_public_key_pem: str = Field(
+        default="",
+        validation_alias=AliasChoices(
+            "document_signing_public_key_pem",
+            "DOCUMENT_SIGNING_PUBLIC_KEY_PEM",
+        ),
+    )
+    document_signing_key_id: str = Field(
+        default="documents-signing-v1",
+        validation_alias=AliasChoices(
+            "document_signing_key_id",
+            "DOCUMENT_SIGNING_KEY_ID",
+        ),
+    )
+    # LiveKit realtime (Integration connector — never call from business modules)
+    livekit_url: str = Field(
+        default="",
+        validation_alias=AliasChoices("livekit_url", "LIVEKIT_URL"),
+    )
+    livekit_api_key: str = Field(
+        default="",
+        validation_alias=AliasChoices("livekit_api_key", "LIVEKIT_API_KEY"),
+    )
+    livekit_api_secret: str = Field(
+        default="",
+        validation_alias=AliasChoices("livekit_api_secret", "LIVEKIT_API_SECRET"),
+    )
+    livekit_token_ttl_seconds: int = Field(
+        default=3600,
+        validation_alias=AliasChoices(
+            "livekit_token_ttl_seconds",
+            "LIVEKIT_TOKEN_TTL_SECONDS",
         ),
     )
 

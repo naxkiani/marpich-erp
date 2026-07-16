@@ -30,6 +30,9 @@ class IAdmissionRepository(ABC):
     @abstractmethod
     async def find_by_id(self, tenant_id: str, admission_id: UniqueId) -> Admission | None: ...
 
+    @abstractmethod
+    async def list_admissions(self, tenant_id: str) -> list[Admission]: ...
+
 
 class IEncounterRepository(ABC):
     @abstractmethod
@@ -40,3 +43,6 @@ class IEncounterRepository(ABC):
 
     @abstractmethod
     async def list_by_admission(self, tenant_id: str, admission_id: UniqueId) -> list[Encounter]: ...
+
+    @abstractmethod
+    async def list_encounters(self, tenant_id: str) -> list[Encounter]: ...

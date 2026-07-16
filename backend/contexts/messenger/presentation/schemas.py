@@ -10,4 +10,6 @@ class OpenConversationRequest(BaseModel):
 
 
 class SendMessageRequest(BaseModel):
-    body: str = Field(min_length=1, max_length=4000)
+    body: str = Field(default="", max_length=4000)
+    ciphertext: str | None = Field(default=None, max_length=65536)
+    ciphertext_type: str | None = Field(default=None, max_length=64)

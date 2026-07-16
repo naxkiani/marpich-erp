@@ -1,4 +1,4 @@
-"""P1 Document Exchange — QR verify, HMAC sign evidence, watermarked preview."""
+"""P1 Document Exchange — QR verify, RSA-PSS sign evidence, watermarked preview."""
 from __future__ import annotations
 
 import pytest
@@ -75,6 +75,7 @@ async def _auth_headers(client: AsyncClient, tenant: str) -> dict[str, str]:
 
 @pytest.mark.asyncio
 async def test_sign_hmac_evidence_and_public_qr_verify(client):
+    """Legacy name — content seal is RSA-PSS-SHA256 (P5.1)."""
     slug = "docs-p1-verify"
     await client.post(
         "/api/v1/platform/tenants",
@@ -105,7 +106,7 @@ async def test_sign_hmac_evidence_and_public_qr_verify(client):
     )
     assert signed.status_code == 201, signed.text
     body = signed.json()["data"]
-    assert body["algorithm"] == "HMAC-SHA256"
+    assert body["algorithm"] == "RSA-PSS-SHA256"
     assert body["signature_hash"]
     assert body["content_checksum"]
     qr_token = body["qr_token"] or qr_token
@@ -116,7 +117,8 @@ async def test_sign_hmac_evidence_and_public_qr_verify(client):
     assert data["valid"] is True
     assert data["document_id"] == document_id
     assert data["checksum_matches"] is True
-    assert data["signature"]["algorithm"] == "HMAC-SHA256"
+    assert data["signature_valid"] is True
+    assert data["signature"]["algorithm"] == "RSA-PSS-SHA256"
 
     # Tampered token must fail
     bad = await client.get(f"/api/v1/documents/verify/{qr_token}xx")
