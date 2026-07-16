@@ -1,0 +1,28 @@
+context: enterprise_observability
+display_name: Enterprise Observability
+type: platform
+description: "Enterprise Observability — distributed tracing, centralized logging, metrics, health checks, business KPIs, event/queue/API/workflow/AI monitoring, alerting, incident management, service dependency graph, operational dashboard"
+api: /api/v1/enterprise-observability
+aggregates:
+  - ObservabilityProfile
+  - TraceSpan
+  - LogEntry
+  - MetricSnapshot
+  - HealthCheckResult
+  - MonitoringAlert
+  - ObservabilityIncident
+publishes:
+  - enterprise_observability.alert.triggered
+  - enterprise_observability.incident.created
+  - enterprise_observability.incident.resolved
+  - enterprise_observability.dashboard.generated
+subscribes:
+  - platform.tenant.provisioned
+  - analytics.alert.triggered
+  - workflow.process.completed
+  - enterprise_message_orchestration.message.dispatched
+delegates:
+  - analytics
+  - notifications
+  - security_incident
+schema: enterprise_observability

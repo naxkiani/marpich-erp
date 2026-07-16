@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://marpich.dev/schemas/integration/connectors/google_classroom.v1.json",
+  "title": "Google Classroom Connector Config",
+  "type": "object",
+  "required": ["environment"],
+  "additionalProperties": true,
+  "properties": {
+    "environment": { "type": "string", "enum": ["sandbox", "production"] },
+    "customer_id": { "type": "string" },
+    "service_account_ref": { "type": "string", "description": "Vault ref for service account JSON" },
+    "fixtures": {
+      "type": "object",
+      "description": "Sandbox fixture overrides for courses/rosters/assignments"
+    }
+  }
+}

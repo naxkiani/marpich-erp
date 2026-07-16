@@ -10,8 +10,14 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@marpich/auth-provider": "workspace:*",
     "@marpich/core": "workspace:*",
     "@marpich/shared": "workspace:*",
+    "@tiptap/extension-placeholder": "^2.27.2",
+    "@tiptap/extension-underline": "^2.27.2",
+    "@tiptap/pm": "^2.27.2",
+    "@tiptap/react": "^2.27.2",
+    "@tiptap/starter-kit": "^2.27.2",
     "next": "^15.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

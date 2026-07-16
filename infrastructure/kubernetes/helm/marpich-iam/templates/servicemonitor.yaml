@@ -1,0 +1,21 @@
+{{- if .Values.serviceMonitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "marpich-iam.fullname" . }}
+  labels:
+    {{- include "marpich-iam.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "marpich-iam.selectorLabels" . | nindent 6 }}
+  endpoints:
+    - port: http
+      path: {{ .Values.serviceMonitor.scrapePath }}
+      interval: {{ .Values.serviceMonitor.interval }}
+    {{- range .Values.serviceMonitor.additionalEndpoints }}
+    - port: http
+      path: {{ .path }}
+      interval: {{ .interval | default $.Values.serviceMonitor.interval }}
+    {{- end }}
+{{- end }}

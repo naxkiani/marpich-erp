@@ -1,21 +1,44 @@
 # Marpich Enterprise General Ledger — Catalog
 # See docs/architecture/ENTERPRISE_GENERAL_LEDGER.md
 
-version: 1
+version: 2
 
 law:
+  every_transaction_posts_to_gl: true
   immutable_journal_entries: true
   delete_financial_transactions_forbidden: true
   reverse_only_correction: true
+  no_demo_accounting_logic: true
 
 unlimited_entities:
-  - accounts
-  - journals
+  - tenants
+  - organizations
+  - branches
   - fiscal_years
   - periods
-  - organizations
-  - tenants
-  - branches
+  - accounts
+  - journals
+  - currencies
+  - cost_centers
+  - profit_centers
+  - departments
+  - projects
+
+supported_industries:
+  - university
+  - hospital
+  - bank
+  - islamic_bank
+  - currency_exchange
+  - accounting_firm
+  - tax_consulting
+  - construction
+  - manufacturing
+  - retail
+  - government
+  - ngo
+  - real_estate
+  - hotel
 
 posting_modes:
   - automatic
@@ -35,11 +58,43 @@ immutable_rules:
   no_delete: true
   reversal_creates_new_entry: true
   original_marked_reversed: true
+  database_triggers_required: true
+
+posting_guard_chain:
+  - idempotency_check
+  - line_validation
+  - account_resolution
+  - dimension_validation
+  - period_open_check
+  - rate_snapshot_freeze
+  - budget_check
+  - security_lock_check
+  - double_entry_balance
+  - immutable_hash
+  - append_only_persist
+  - emit_journal_posted
+  - audit_record
+
+analytical_dimensions:
+  - cost_center
+  - profit_center
+  - department
+  - project
 
 multi_currency:
   transaction_currency: true
   base_currency_snapshot: true
+  reporting_currency: true
   exchange_rate_immutable: true
+  rate_snapshot_id: true
+
+subledgers:
+  - accounts_receivable
+  - accounts_payable
+  - banking
+  - treasury
+  - inventory
+  - payroll
 
 budget_validation:
   check_before_expense_posting: true
@@ -51,10 +106,28 @@ approval_workflow:
   automatic_posting_skips_approval: true
   recurring_configurable: true
 
+period_close:
+  blocks_new_postings: true
+  dual_approval_required: true
+  reopen_requires_exception_approval: true
+
 audit:
   every_posting: true
   every_reversal: true
   every_approval: true
+  every_period_close: true
+
+integration_events:
+  - financial_kernel.journal.posted
+  - financial_kernel.journal.reversed
+  - financial_kernel.journal.approval.requested
+  - financial_kernel.journal.approved
+  - financial_kernel.recurring.executed
+  - financial_kernel.budget.exceeded
+  - financial_kernel.period.closed
+  - financial_kernel.subledger.reconciliation.failed
+
+api_prefix: /api/v1/financial-kernel/ledger
 
 permissions:
   financial_kernel.ledger.accounts.read: View accounts
@@ -66,6 +139,7 @@ permissions:
   financial_kernel.ledger.journals.read: View journals
   financial_kernel.ledger.periods.write: Manage fiscal years/periods
   financial_kernel.ledger.periods.read: View periods
+  financial_kernel.ledger.periods.close: Close fiscal periods
   financial_kernel.ledger.recurring.write: Manage recurring journals
   financial_kernel.ledger.recurring.run: Execute recurring
   financial_kernel.ledger.budgets.write: Manage budgets

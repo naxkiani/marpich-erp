@@ -25,3 +25,12 @@ class AddVersionRequest(BaseModel):
 
 class SignDocumentRequest(BaseModel):
     signers: list[str] = Field(min_length=1)
+
+
+class AssignPhysicalLocationRequest(BaseModel):
+    site_code: str = Field(min_length=1, max_length=64)
+    room: str = Field(default="", max_length=64)
+    cabinet: str = Field(default="", max_length=64)
+    shelf: str = Field(default="", max_length=64)
+    box: str = Field(default="", max_length=64)
+    file_ref: str = Field(default="", max_length=128)

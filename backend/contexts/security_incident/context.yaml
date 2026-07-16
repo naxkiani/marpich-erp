@@ -1,0 +1,30 @@
+context: security_incident
+display_name: Enterprise Security Incident Platform
+type: platform
+description: "Unified security incident response — detection through recovery"
+api: /api/v1/security-incidents
+aggregates:
+  - IncidentTenantProfile
+  - SecurityIncident
+  - IncidentEvidence
+  - IncidentNotification
+  - IncidentLessonLearned
+publishes:
+  - incident.detected
+  - incident.classified
+  - incident.escalated
+  - incident.contained
+  - incident.resolved
+  - incident.evidence.collected
+  - incident.notification.sent
+subscribes:
+  - platform.tenant.provisioned
+  - security.attack.detected
+delegates:
+  - security
+  - workflow
+  - audit
+  - grc
+  - data_protection
+  - policy_engine
+schema: security_incident

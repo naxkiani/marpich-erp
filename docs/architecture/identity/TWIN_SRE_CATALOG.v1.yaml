@@ -1,0 +1,86 @@
+# Marpich Digital Twin — SRE Catalog
+# Prompt: V03-C02-P199-D1 · ADR-209
+apiVersion: marpich.io/v1
+kind: SRECatalog
+metadata:
+  id: twin-sre
+  version: "1.0.0"
+  prompt: V03-C02-P199-D1
+  adr: 209
+
+slis:
+  - id: twin_api_availability
+    description: Successful twin API requests / attempts
+  - id: twin_sync_lag_p95
+    unit: seconds
+  - id: twin_sync_success_ratio
+  - id: twin_conflict_rate
+  - id: twin_dlq_depth
+  - id: twin_prediction_latency_p95
+    unit: ms
+  - id: twin_graph_query_latency_p95
+    unit: ms
+  - id: twin_simulation_duration_p95
+    unit: ms
+
+slos:
+  - sli: twin_api_availability
+    target: 0.9999
+  - sli: twin_sync_lag_p95
+    target: 30
+    alert_at: 120
+  - sli: twin_sync_success_ratio
+    target: 0.999
+  - sli: twin_prediction_latency_p95
+    target: 2000
+  - sli: twin_graph_query_latency_p95
+    target: 500
+
+sla:
+  availability_percent: 99.99
+  support_class: enterprise_digital_twin
+  capacity_north_star:
+    twins: 100000000
+    concurrent_users: 10000000
+    events_per_day: 1000000000
+
+capacity_planning:
+  formula: peak_sync_events_per_second * headroom_1_5
+  hpa_cpu_target: 70
+  hpa_memory_target: 80
+  keda_consumer_lag_target: 1000
+  cluster_autoscaler: enabled
+  region_scaling: geo_dns_weighted
+  ai_quota: ai_platform_tenant_quotas
+
+scaling_policies:
+  horizontal_api: Helm HPA on marpich-iam
+  horizontal_workers: HPA/KEDA on twin-sync-workers
+  vertical: VPA updateMode Auto
+  cluster: Cluster Autoscaler / Karpenter (env-configurable)
+  queue: Event Mesh partitions + Orchestration concurrency
+  graph: max_hops policy + connection pool
+  database: tenant_id partitioning + read replicas
+  cache: Redis cluster when policy enabled
+
+alerts:
+  - name: TwinSyncLagHigh
+    expr: histogram_quantile(0.95, twin_sync_lag_seconds) > 120
+  - name: TwinDlqDepth
+    expr: twin_dlq_depth > 100
+  - name: TwinConflictSpike
+    expr: rate(twin_conflicts_total[5m]) > threshold_from_policy
+  - name: TwinPredictionErrorBudget
+    expr: burn_rate_on_prediction_slo
+
+incident_response:
+  runbook: docs/operations/runbooks/digital-twin-incident-response.md
+  problem_management: postmortem_required_sev1_sev2
+
+auto_remediation:
+  - trigger: sync_lag_burn
+    action: scale_out_twin_sync_workers
+  - trigger: dlq_depth_high
+    action: page_oncall_and_pause_noncritical_consumers
+  - trigger: prediction_ai_timeout
+    action: fail_closed_and_circuit_break_ai_path

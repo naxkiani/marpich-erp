@@ -1,0 +1,70 @@
+version: "1.0"
+prompt_id: V03-C01-S03-P198-C2
+standard: "Enterprise Architecture Governance Standard 9.0"
+
+gates:
+  - id: security
+    criteria:
+      - JWT + permissions on intelligence routes
+      - tenant_id required
+      - no secrets in source
+      - AI predictions audited
+    fail_closed: true
+  - id: architecture
+    criteria:
+      - no cross-domain domain imports
+      - AI via module ACL (ai_service)
+      - no hardcoded AI thresholds (policy-driven)
+      - DDD layers respected
+    fail_closed: true
+  - id: performance
+    targets:
+      authentication_decision_ms: 150
+      federation_routing_ms: 120
+      token_exchange_ms: 100
+      provisioning_sec: 5
+      availability: "99.99%"
+    fail_closed: false
+  - id: compliance
+    frameworks: [ISO_27001, ISO_27701, SOC_2, PCI_DSS, GDPR, HIPAA, NIST_CSF, OWASP_ASVS, OpenID_Foundation]
+    criteria:
+      - retention policies registered
+      - PIA available
+      - consent records supported
+      - audit export manifest
+    fail_closed: true
+  - id: accessibility
+    criteria:
+      - WCAG_2_2_AA
+      - keyboard_navigation
+      - aria_landmarks
+      - dark_light_modes
+      - rtl_ltr
+    fail_closed: false
+  - id: documentation
+    criteria:
+      - ADR_202d
+      - operator_guide
+      - developer_guide
+      - compliance_matrix
+      - runbook
+    fail_closed: true
+  - id: ai_explainability
+    criteria:
+      - every_prediction_has_explanation
+      - feature_contributions_present
+      - confidence_score_present
+      - feedback_loop_enabled
+      - no_black_box_deny_without_rationale
+    fail_closed: true
+
+test_strategy:
+  unit: contexts/identity_federation/tests/test_ai_intelligence.py
+  integration: contexts/identity_federation/tests/test_ai_intelligence_api.py
+  contracts: backend/tests/contracts/
+  ui: manual + future Playwright
+  accessibility: axe-core checklist
+  security: authz negative tests
+  performance: documented targets
+  chaos: session revocation + IdP outage runbook
+  interop: OIDC/OAuth/SAML/SCIM/LDAP suites (P198-B + directory)

@@ -1,18 +1,22 @@
 context: ai
 display_name: AI
 type: platform
-description: ML models, predictions, document intelligence, fraud
+description: ML models, predictions, document intelligence, mentor assist
 aggregates:
-- ModelDeployment
-- Prediction
-- TrainingJob
-- PromptTemplate
+  - AssistSession
+  - ModelDeployment
+  - Prediction
+  - TrainingJob
+  - PromptTemplate
 publishes:
-- ai.prediction.completed
-- ai.fraud.detected
-- ai.insight.generated
+  - ai.prediction.completed
+  - ai.fraud.detected
+  - ai.insight.generated
 subscribes:
-- analytics.metric.updated
-- documents.document.uploaded
-- banking.transaction.posted
+  - analytics.metric.updated
+  - documents.document.uploaded
+  - banking.transaction.posted
 schema: ai
+permissions:
+  - ai.assist.infer
+  - ai.assist.read

@@ -1,0 +1,37 @@
+# P201 EILMP — Master Series Roadmap
+version: "1.0"
+prompt_track: P201
+module: Enterprise Identity Lifecycle Management Platform
+sor_context: identity_lifecycle
+forbidden_sibling_bc: eilmp
+
+phases:
+  - id: P201-A
+    title: Registration & Onboarding
+    status: done
+    adr: "227"
+    law: ENTERPRISE_IDENTITY_LIFECYCLE_MANAGEMENT_PLATFORM.md
+    api: /api/v1/identity-lifecycle/registration/*
+    note: Authoritative identity entry; approvals/rules delegated to Workflow/Policy
+  - id: P201-A2
+    title: Provisioning ACL + Workflow approvals
+    status: next
+  - id: P201-A3
+    title: Credential lifecycle orchestration
+    status: pending
+  - id: P201-A4
+    title: Directory sync + conflict resolution
+    status: pending
+  - id: P201-A5
+    title: Zero Trust continuous evaluation
+    status: pending
+  - id: P201-A6
+    title: AI / Knowledge Graph / Digital Twin
+    status: pending
+  - id: P201-A7
+    title: Ops + series Definition of Done
+    status: pending
+
+collision_note: |
+  P200-B = EIFTP (identity_federation).
+  P201 = EILMP (identity_lifecycle). Do not merge BCs.

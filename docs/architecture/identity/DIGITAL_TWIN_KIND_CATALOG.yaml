@@ -1,0 +1,146 @@
+# Digital Twin Kind Catalog — metadata driven (never hardcoded in Core)
+version: 1
+prompt: V03-C02-P199-A
+owner_context: identity_digital_twin
+schema: identity_twin
+
+kinds:
+  - id: identity.user
+    label: User Identity Twin
+    subject_context: identity
+    facets: [attributes, roles, sessions, federation, lifecycle, trust, risk, compliance, security, behavior]
+    lifecycle: [created, registered, active, synchronized, suspended, archived, deleted]
+  - id: identity.employee
+    label: Employee Twin
+    subject_context: human_resources
+    facets: [employment, org_unit, lifecycle, trust, risk]
+  - id: identity.student
+    label: Student Twin
+    subject_context: university
+    facets: [enrollment, lifecycle, compliance]
+  - id: identity.customer
+    label: Customer Twin
+    subject_context: crm
+    facets: [segment, consent, lifecycle]
+  - id: identity.patient
+    label: Patient Twin
+    subject_context: hospital
+    facets: [care_relationship, consent, compliance]
+    constraints: [no_phi_blobs]
+  - id: identity.citizen
+    label: Citizen Twin
+    subject_context: government
+    facets: [case_refs, compliance]
+  - id: organization
+    label: Organization Twin
+    subject_context: organization
+    facets: [structure, status, operational]
+  - id: department
+    label: Department Twin
+    subject_context: organization
+    facets: [parent_org, status]
+  - id: branch
+    label: Branch Twin
+    subject_context: banking
+    facets: [operational, risk, compliance]
+  - id: tenant
+    label: Tenant Twin
+    subject_context: core_platform
+    facets: [packs, region, operational]
+  - id: device
+    label: Device Twin
+    subject_context: mfa
+    facets: [trust, posture, security]
+  - id: browser
+    label: Browser Twin
+    subject_context: authentication
+    facets: [fingerprint_ref, trust]
+  - id: session
+    label: Session Twin
+    subject_context: identity
+    facets: [expiry_ref, risk]
+    constraints: [no_token_storage]
+  - id: application
+    label: Application Twin
+    subject_context: identity
+    facets: [client_metadata, security]
+  - id: service
+    label: Service Twin
+    subject_context: core_platform
+    facets: [service_account_ref, security]
+  - id: api_client
+    label: API Client Twin
+    subject_context: identity
+    facets: [scopes_metadata, security]
+    constraints: [no_api_secrets]
+  - id: certificate
+    label: Certificate Twin
+    subject_context: identity_federation
+    facets: [fingerprint, validity]
+  - id: role
+    label: Role Twin
+    subject_context: permission_registry
+    facets: [permission_set_hash]
+  - id: permission
+    label: Permission Twin
+    subject_context: permission_registry
+    facets: [risk_tier]
+  - id: ai_agent
+    label: AI Agent Twin
+    subject_context: ai_governance
+    facets: [model_approval_ref, trust, compliance]
+  - id: iot_device
+    label: IoT Device Twin
+    subject_context: integration
+    facets: [registry_ref, posture, operational]
+  - id: bank
+    label: Bank Twin
+    subject_context: banking
+    pack: banking
+    facets: [institution_status, risk, compliance]
+  - id: currency_exchange
+    label: Currency Exchange Twin
+    subject_context: currency_exchange
+    pack: currency_exchange
+    facets: [operational, aml, risk]
+  - id: university
+    label: University Twin
+    subject_context: university
+    pack: education
+    facets: [institution_status, compliance]
+  - id: hospital
+    label: Hospital Twin
+    subject_context: hospital
+    pack: healthcare
+    facets: [facility_status, compliance]
+    constraints: [no_phi_blobs]
+  - id: government_agency
+    label: Government Agency Twin
+    subject_context: government
+    pack: government
+    facets: [agency_status, compliance]
+  - id: tax_authority
+    label: Tax Authority Twin
+    subject_context: tax
+    pack: tax
+    facets: [authority_status, compliance]
+
+graph_edge_types:
+  - member_of
+  - employs
+  - owns_device
+  - has_session
+  - grants_role
+  - trusts
+  - partners_with
+  - operates_branch
+  - governs
+
+activation:
+  policy_key_pattern: "twin.kinds.{kind}.enabled"
+  default_enabled:
+    - identity.user
+    - device
+    - session
+    - organization
+    - tenant

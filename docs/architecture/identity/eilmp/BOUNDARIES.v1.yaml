@@ -1,0 +1,28 @@
+# EILMP boundaries — P201
+version: "1.0"
+prompt_id: P201-A
+
+owns:
+  - identity_registration
+  - onboarding_orchestration
+  - lifecycle_state_machine
+  - jml_workflows
+  - verification_orchestration
+
+never:
+  - authorization_permit_deny
+  - federation_idp_sdk
+  - iga_access_reviews
+  - password_hashing
+  - scim_vendor_connectors_in_domain
+  - contexts_eilmp
+
+peers:
+  identity: user_records
+  directory: catalog_sync
+  identity_governance: access_certification
+  identity_federation: trust_facts
+  authorization: pdp
+  workflow: approvals
+  policy: rules
+  audit: immutable_trail

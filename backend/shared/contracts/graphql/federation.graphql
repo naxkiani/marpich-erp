@@ -1,0 +1,69 @@
+"""Identity Federation Protocol Gateway subgraph."""
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type FederationProvider {
+  providerRef: ID!
+  name: String!
+  protocol: String!
+  enabled: Boolean!
+}
+
+type FederationToken {
+  accessToken: String!
+  tokenType: String!
+  expiresIn: Int!
+  refreshToken: String
+  scope: String
+  idToken: String
+}
+
+type OidcDiscovery {
+  issuer: String!
+  authorizationEndpoint: String!
+  tokenEndpoint: String!
+  jwksUri: String!
+}
+
+type IdentityMetadata {
+  tenantId: String!
+  issuer: String!
+}
+
+input FederationLoginInput {
+  protocol: String
+  email: String
+  providerRef: String
+  clientId: String
+  redirectUri: String
+  scope: String
+  state: String
+}
+
+input FederationTokenInput {
+  grantType: String!
+  clientId: String!
+  clientSecret: String
+  code: String
+  redirectUri: String
+  codeVerifier: String
+  refreshToken: String
+  scope: String
+}
+
+type Query {
+  identityProviders: [FederationProvider!]!
+  identityClaims: String
+  identityMetadata: IdentityMetadata!
+  oidcDiscovery: OidcDiscovery!
+}
+
+type Mutation {
+  federationLogin(input: FederationLoginInput!): String
+  federationToken(input: FederationTokenInput!): FederationToken
+  federationLogout(sessionRef: ID): Boolean
+  federationProvision(resourceType: String!, operation: String!, payload: String): String
+  federationSync(providerRef: ID!): String
+}

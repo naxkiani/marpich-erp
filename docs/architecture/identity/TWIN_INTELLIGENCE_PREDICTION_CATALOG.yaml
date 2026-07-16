@@ -1,0 +1,104 @@
+# Twin Intelligence — Prediction catalog (Prompt 199-C)
+version: 1
+prompt: V03-C02-P199-C
+adr: 208
+owner_context: identity_digital_twin
+inference_owner: ai
+governance_owner: ai_governance
+feature_store_owner: financial_data_science
+
+law: |
+  Prediction types are catalog keys only. Twin stores outcomes + refs.
+  Models must carry model_approval_ref from AI Governance before production use.
+
+defaults:
+  max_horizon_days: 90
+  min_confidence_publish: 0.0  # Policy overrides
+  require_explanation: true
+  batch_page_size_max: 100
+
+prediction_classes:
+  - key: behavior.trajectory
+    name: Behavior Prediction
+    twin_kinds: [user, session, device]
+    ai_surface: predictions
+    policy_gate: twin.prediction.behavior.enabled
+  - key: risk.score.horizon
+    name: Risk Prediction
+    twin_kinds: [user, organization, account]
+    consumes: [identity_risk]
+    policy_gate: twin.prediction.risk.enabled
+  - key: fraud.probability
+    name: Fraud Prediction
+    twin_kinds: [user, account, transaction]
+    consumes: [banking, currency_exchange, financial_anomaly_detection]
+    policy_gate: twin.prediction.fraud.enabled
+  - key: compliance.violation.likelihood
+    name: Compliance Prediction
+    twin_kinds: [organization, user, contract]
+    consumes: [compliance]
+  - key: finance.cashflow
+    name: Cash Flow Prediction
+    twin_kinds: [organization, account]
+    consumes: [accounting, treasury]
+    never_posts_to: financial_kernel
+  - key: finance.revenue
+    name: Revenue Prediction
+    twin_kinds: [organization]
+    consumes: [analytics, accounting]
+  - key: identity.trust.forecast
+    name: Identity Trust Prediction
+    twin_kinds: [user, device, ai_agent]
+  - key: growth.users
+    name: User Growth Prediction
+    twin_kinds: [organization, tenant]
+  - key: ops.resource.consumption
+    name: Resource Consumption Prediction
+    twin_kinds: [application, organization]
+  - key: ops.health.forecast
+    name: Operational Health Prediction
+    twin_kinds: [application, device, organization]
+  - key: ops.failure
+    name: System Failure Prediction
+    twin_kinds: [application, device]
+  - key: ops.latency
+    name: Performance Prediction
+    twin_kinds: [application, api]
+  - key: security.threat.probability
+    name: Security Threat Prediction
+    twin_kinds: [user, device, session, application]
+    consumes: [ai_security, identity_risk]
+  - key: customer.churn
+    name: Customer Churn Prediction
+    twin_kinds: [customer, user]
+    consumes: [crm]
+  - key: employee.attrition
+    name: Employee Attrition Prediction
+    twin_kinds: [employee]
+    consumes: [hr]
+  - key: student.dropout
+    name: Student Dropout Prediction
+    twin_kinds: [student]
+    consumes: [university]
+  - key: patient.risk
+    name: Patient Risk Prediction
+    twin_kinds: [patient]
+    consumes: [hospital, clinic]
+    data_class: health_sensitive
+  - key: tax.risk
+    name: Tax Risk Prediction
+    twin_kinds: [organization, tax_record]
+    consumes: [tax]
+
+pipelines:
+  feature_engineering: fds_feature_map
+  training: fds_training_pipeline
+  offline_batch: scheduler_plus_ai_jobs
+  online_realtime: ai_inference
+  online_learning: fds_feedback_events
+  explainability: ai_governance_explain
+
+anti_duplication:
+  - no_local_model_weights
+  - no_local_model_registry
+  - no_peer_domain_imports

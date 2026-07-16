@@ -1,0 +1,1 @@
+"""Documents value objects."""

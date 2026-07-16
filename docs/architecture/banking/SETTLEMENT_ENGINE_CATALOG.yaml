@@ -1,0 +1,71 @@
+# Banking Settlement Engine — API Catalog
+# See docs/adr/094-banking-settlement-engine.md
+
+version: 1
+owner: banking
+module: settlement_engine
+api_prefix: /api/v1/banking/settlement
+adr: docs/adr/094-banking-settlement-engine.md
+
+settlement_types:
+  - internal_settlement
+  - interbank_settlement
+  - clearing
+
+capabilities:
+  - bank_reconciliation
+  - settlement_reports
+  - exception_management
+  - difference_analysis
+  - retry_mechanism
+  - automatic_matching
+  - manual_adjustment_approval
+  - settlement_dashboard
+  - reconciliation_audit
+
+policy_domain: bank
+policy_keys:
+  - settlement.interbank.cutoff
+  - settlement.clearing.window
+  - settlement.match.tolerance
+  - settlement.retry.max_attempts
+  - settlement.adjustment.approval_level
+  - settlement.reconciliation.auto_match
+  - settlement.exception.escalation
+
+events_published:
+  - banking.settlement.posted
+  - banking.reconciliation.completed
+  - banking.settlement.exception.raised
+
+posting_rules:
+  - bank_settlement
+  - interbank_settlement
+  - clearing_settlement
+
+permissions:
+  - banking.settlement.read
+  - banking.settlement.write
+  - banking.settlement.execute
+  - banking.settlement.approve
+
+endpoints:
+  - GET /catalog
+  - GET /policy-keys
+  - GET /dashboard
+  - POST /batches
+  - GET /batches
+  - GET /batches/{batch_id}
+  - POST /batches/{batch_id}/submit
+  - POST /batches/{batch_id}/clear
+  - POST /batches/{batch_id}/settle
+  - POST /reconciliation/runs
+  - POST /reconciliation/runs/{run_id}/match
+  - POST /reconciliation/runs/{run_id}/analyze-differences
+  - POST /reconciliation/runs/{run_id}/approve
+  - GET /reconciliation/runs/{run_id}/audit
+  - POST /exceptions
+  - POST /exceptions/{exception_id}/retry
+  - POST /adjustments
+  - POST /adjustments/{adjustment_id}/approve
+  - POST /reports

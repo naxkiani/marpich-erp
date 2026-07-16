@@ -1,0 +1,99 @@
+groups:
+  - name: digital_twin_alerts
+    rules:
+      - alert: TwinSyncLagHigh
+        expr: histogram_quantile(0.95, sum(rate(marpich_twin_sync_lag_seconds_bucket[5m])) by (le)) > 120
+        for: 5m
+        labels:
+          severity: critical
+          service: marpich-iam
+          component: digital-twin
+          priority: P1
+        annotations:
+          summary: Twin sync lag p95 exceeds 120s
+          runbook: docs/operations/runbooks/digital-twin-sync-lag.md
+
+      - alert: TwinDlqDepth
+        expr: marpich_twin_dlq_depth > 100
+        for: 5m
+        labels:
+          severity: critical
+          service: marpich-iam
+          component: digital-twin
+          priority: P1
+        annotations:
+          summary: Twin DLQ depth exceeds 100
+          runbook: docs/operations/runbooks/digital-twin-dlq.md
+
+      - alert: TwinConflictSpike
+        expr: rate(marpich_twin_conflicts_total[5m]) > 1
+        for: 10m
+        labels:
+          severity: warning
+          service: marpich-iam
+          component: digital-twin
+          priority: P2
+        annotations:
+          summary: Twin conflict rate elevated
+
+      - alert: TwinApiDown
+        expr: up{job="marpich-iam-twin"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: marpich-iam
+          component: digital-twin
+          priority: P1
+        annotations:
+          summary: Twin metrics scrape endpoint unreachable
+          runbook: docs/operations/runbooks/digital-twin-incident-response.md
+
+      - alert: TwinGraphLatencyHigh
+        expr: histogram_quantile(0.95, sum(rate(marpich_twin_graph_query_seconds_bucket[5m])) by (le)) > 0.5
+        for: 5m
+        labels:
+          severity: warning
+          service: marpich-iam
+          component: digital-twin
+          priority: P2
+        annotations:
+          summary: Twin graph query p95 exceeds 500ms
+          runbook: docs/operations/runbooks/digital-twin-graph-latency.md
+
+      - alert: TwinPredictionErrorBudget
+        expr: |
+          (
+            rate(marpich_twin_prediction_failures_total[5m])
+            / clamp_min(rate(marpich_twin_prediction_requests_total[5m]), 0.001)
+          ) > 0.05
+        for: 10m
+        labels:
+          severity: warning
+          service: marpich-iam
+          component: digital-twin-intelligence
+          priority: P2
+        annotations:
+          summary: Twin prediction failure ratio exceeds 5%
+          runbook: docs/operations/runbooks/digital-twin-prediction-budget.md
+
+      - alert: TwinAnomalyBurst
+        expr: increase(marpich_twin_anomaly_detected_total[5m]) > 20
+        for: 5m
+        labels:
+          severity: critical
+          service: marpich-iam
+          component: digital-twin
+          priority: P1
+        annotations:
+          summary: Twin anomaly burst detected
+
+      - alert: TwinWorkersNotReady
+        expr: kube_deployment_status_replicas_available{deployment=~".*twin-sync-workers"} == 0
+        for: 2m
+        labels:
+          severity: critical
+          service: marpich-iam
+          component: digital-twin-sync
+          priority: P1
+        annotations:
+          summary: Twin sync workers have zero available replicas

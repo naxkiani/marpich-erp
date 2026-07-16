@@ -1,0 +1,16 @@
+context: messenger
+display_name: Messenger
+type: supporting
+description: Internal chat conversations; LiveKit A/V via Integration connector
+aggregates:
+  - Conversation
+  - Message
+publishes:
+  - messenger.conversation.opened
+  - messenger.message.sent
+subscribes: []
+schema: messenger
+permissions:
+  - messenger.conversations.write
+  - messenger.messages.read
+  - messenger.messages.write

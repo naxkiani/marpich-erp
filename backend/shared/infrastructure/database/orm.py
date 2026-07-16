@@ -65,6 +65,40 @@ class SessionRow(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
+class PrincipalRow(Base):
+    __tablename__ = "principals"
+    __table_args__ = {"schema": "identity"}
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    principal_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    principal_type: Mapped[str] = mapped_column(String(32), nullable=False)
+    email: Mapped[str | None] = mapped_column(String(256))
+    display_name: Mapped[str] = mapped_column(String(128), nullable=False, default="")
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="active")
+    partition_bucket: Mapped[int] = mapped_column(Integer, nullable=False)
+    principal_metadata: Mapped[dict] = mapped_column("metadata", JSONB, nullable=False, default=dict)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class AccessDecisionRow(Base):
+    __tablename__ = "access_decisions"
+    __table_args__ = {"schema": "authorization"}
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    decided_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), primary_key=True)
+    decision_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    principal_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
+    resource: Mapped[str] = mapped_column(String(512), nullable=False, default="")
+    action: Mapped[str] = mapped_column(String(128), nullable=False, default="")
+    permission_code: Mapped[str | None] = mapped_column(String(256))
+    decision: Mapped[str] = mapped_column(String(16), nullable=False)
+    reason: Mapped[str | None] = mapped_column(Text)
+    context: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+
+
 class TenantRow(Base):
     __tablename__ = "tenants"
     __table_args__ = {"schema": "tenant"}

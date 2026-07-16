@@ -1,0 +1,53 @@
+# Twin API Gateway registration — Prompt 199-D1 · ADR-209
+apiVersion: marpich.io/v1
+kind: ApiGatewayProfile
+metadata:
+  id: twin-api-gateway
+  version: "1.0.0"
+  adr: 209
+
+base_path: /api/v1/identity-twins
+upstream: marpich-iam.marpich.svc.cluster.local:8000
+
+routes:
+  - path: /api/v1/identity-twins
+    methods: [GET, POST]
+    auth: required
+    rate_limit_policy: twin.api.rate_limit
+  - path: /api/v1/identity-twins/*
+    methods: [GET, PUT, POST, DELETE]
+    auth: required
+  - path: /api/v1/identity-twins/*/predict
+    methods: [POST]
+    auth: required
+    permission: twin.ai.infer
+  - path: /api/v1/identity-twins/*/simulate
+    methods: [POST]
+    auth: required
+  - path: /api/v1/identity-twins/graph/**
+    methods: [GET]
+    auth: required
+    permission: twin.read
+
+fail_fast:
+  - bad_tenant_header
+  - missing_jwt
+  - module_disabled
+  - rate_limit_exceeded
+
+aliases:
+  - from: /api/v1/twin-intelligence/prediction
+    to: /api/v1/identity-twins/{twin_ref}/predict
+    note: Optional gateway rewrite only — one implementation
+
+headers_propagated:
+  - X-Tenant-ID
+  - X-Request-ID
+  - X-Correlation-ID
+  - Authorization
+
+edge_adapters:
+  - kong
+  - envoy
+  - nginx
+  - traefik

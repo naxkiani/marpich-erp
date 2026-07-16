@@ -1,0 +1,110 @@
+# Twin Knowledge Graph ontology (Prompt 199-C)
+version: 1
+prompt: V03-C02-P199-C
+adr: 208
+owner_context: identity_digital_twin
+identity_graph_authority: directory  # ADR-194
+law: |
+  Nodes are twin_kind projections or subject_ref pointers.
+  Industry entities are never SoR rows in twin graph store.
+
+node_kinds:
+  - code: USER
+    twin_kind: user
+  - code: ORGANIZATION
+    twin_kind: organization
+  - code: DEPARTMENT
+    twin_kind: department
+  - code: BRANCH
+    twin_kind: branch
+  - code: DEVICE
+    twin_kind: device
+  - code: APPLICATION
+    twin_kind: application
+  - code: SESSION
+    twin_kind: session
+  - code: BANK
+    subject_namespace: banking.bank
+  - code: ACCOUNT
+    subject_namespace: banking.account
+  - code: TRANSACTION
+    subject_namespace: banking.transaction
+  - code: INVOICE
+    subject_namespace: accounting.invoice
+  - code: PAYMENT
+    subject_namespace: finance.payment
+  - code: EMPLOYEE
+    twin_kind: employee
+  - code: STUDENT
+    twin_kind: student
+  - code: PATIENT
+    twin_kind: patient
+  - code: COURSE
+    subject_namespace: university.course
+  - code: HOSPITAL
+    twin_kind: hospital
+  - code: CURRENCY
+    subject_namespace: fx.currency
+  - code: TAX_RECORD
+    subject_namespace: tax.record
+  - code: ASSET
+    subject_namespace: asset.asset
+  - code: CONTRACT
+    subject_namespace: documents.contract
+  - code: AI_AGENT
+    twin_kind: ai_agent
+
+relationship_types:
+  - code: OWNS
+  - code: WORKS_FOR
+  - code: STUDIES_AT
+  - code: BELONGS_TO
+  - code: CONNECTED_TO
+  - code: AUTHORIZES
+  - code: APPROVES
+  - code: CREATED
+  - code: UPDATED
+  - code: SIGNED
+  - code: MANAGES
+  - code: TRANSFERRED
+  - code: USES
+  - code: VISITED
+  - code: TRUSTS
+  - code: DEPENDS_ON
+  - code: RELATED_TO
+
+lifecycle:
+  create: event_driven_upsert
+  update: event_driven_upsert
+  soft_delete: policy_retention
+  hard_delete: workflow_approved
+  rebuild: snapshot_plus_event_replay
+
+query_capabilities:
+  - path_analysis
+  - relationship_discovery
+  - dependency_mapping
+  - knowledge_search
+  - similarity_search
+  - community_detection
+  - shortest_path
+  - centrality_analysis
+  - impact_analysis
+  - root_cause_assist
+
+dialect_adapters:
+  - cypher
+  - gremlin
+  - graphql
+
+security:
+  tenant_isolation: required
+  authz_per_hit: required
+  fail_closed: true
+  max_hops_default: 5
+  max_hops_policy_key: twin.graph.max_hops
+
+anti_duplication:
+  - no_crm_hospital_bank_kg_sor
+  - hydrate_identity_from_directory_graph
+  - no_cross_schema_joins

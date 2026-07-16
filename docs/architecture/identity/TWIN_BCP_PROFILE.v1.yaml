@@ -1,0 +1,48 @@
+# Twin BCP Profile — Prompt 199-D2.2 · ADR-210
+apiVersion: marpich.io/v1
+kind: BusinessContinuityProfile
+metadata:
+  id: twin-bcp
+  version: "1.0.0"
+  adr: 210
+  continuity_engine: business_continuity  # ADR-159
+
+critical_functions:
+  - id: twin_api
+    rto_class: warm_default
+    depends_on: [postgres, event_mesh, api_gateway]
+  - id: twin_sync
+    rto_class: warm_default
+    depends_on: [event_mesh, twin_workers]
+  - id: twin_facets_for_authz
+    rto_class: hot_regulated
+    note: Prefer Identity/Auth continuity; twin is projection
+  - id: twin_intelligence
+    rto_class: degradable
+    degrade_action: feature_flag_off
+
+bia:
+  - scenario: region_loss
+    impact: sync_lag_unbounded_until_failover
+  - scenario: event_mesh_outage
+    impact: projections_stale
+  - scenario: ai_platform_outage
+    impact: prediction_fail_closed
+
+industry_continuity_delegates:
+  identity: adaptive_auth_federation_bc
+  financial: financial_kernel_bc
+  banking: banking_bc
+  healthcare: healthcare_bc
+  university: university_bc
+  government: government_bc
+
+workflows:
+  - emergency_ops_twin_readonly
+  - disable_twin_intelligence
+  - promote_dr_region
+  - twin_rebuild_from_sor
+
+policies:
+  - twin.bcp.mode
+  - twin.bcp.fail_closed_authz_facets

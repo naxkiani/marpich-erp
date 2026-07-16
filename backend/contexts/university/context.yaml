@@ -1,20 +1,47 @@
 context: university
+architecture_version: "1.0"
 display_name: University
 type: industry
-description: "Higher education \u2014 admissions, academics, research"
+description: "Higher education — CAP-EDU-001 student lifecycle (students, courses, grades)"
+capability_ids:
+  - CAP-EDU-001
 aggregates:
-- Student
-- Program
-- Course
-- Enrollment
-- Grade
-- ResearchProject
+  - Student
+  - Course
+  - Grade
 publishes:
-- university.student.enrolled
-- university.grade.published
-- university.course.completed
+  - university.student.enrolled
+  - university.course.offered
+  - university.grade.posted
 subscribes:
-- identity.user.created
-- finance.period.closed
-- human_resources.employee.hired
+  - identity.user.created
+  - finance.budget.approved
+  - integration.moodle.batch.synced
+  - integration.google_classroom.batch.synced
 schema: university
+permissions:
+  - university.students.read
+  - university.students.write
+  - university.courses.read
+  - university.courses.write
+  - university.grades.read
+  - university.grades.write
+  - university.enrollment.manage
+ai:
+  surfaces:
+    - insights
+    - recommendations
+    - summaries
+    - search
+    - assistant
+    - automation
+    - document_intelligence
+    - voice_commands
+    - chat
+    - report_explanation
+    - anomaly_detection
+    - forecasting
+    - optimization
+    - predictions
+  prompt_templates:
+    - university.student.risk_summary

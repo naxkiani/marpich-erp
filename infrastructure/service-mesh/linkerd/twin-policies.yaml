@@ -1,0 +1,16 @@
+# Linkerd — Twin ServiceProfile stub (ADR-209)
+apiVersion: linkerd.io/v1alpha2
+kind: ServiceProfile
+metadata:
+  name: marpich-iam
+  namespace: marpich
+spec:
+  routes:
+    - name: twin-api
+      condition:
+        pathRegex: /api/v1/identity-twins.*
+      timeout: 30s
+      retryBudget:
+        retryRatio: 0.2
+        minRetriesPerSecond: 10
+        ttl: 10s

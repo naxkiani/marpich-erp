@@ -1,0 +1,54 @@
+# Twin IR / Self-healing / Backup catalog — Prompt 199-D2.2 · ADR-210
+apiVersion: marpich.io/v1
+kind: TwinOperationalResilienceCatalog
+metadata:
+  id: twin-ir-selfheal-backup
+  version: "1.0.0"
+  adr: 210
+
+incident_severity:
+  - sev: 1
+    examples: [api_multi_region_down, compromise_burst, authz_facet_corruption]
+    owner: [platform-twin, security_incident]
+  - sev: 2
+    examples: [sync_lag_burn, dlq_depth_high]
+    owner: [platform-twin]
+  - sev: 3
+    examples: [prediction_budget_burn, graph_latency]
+    owner: [platform-twin]
+  - sev: 4
+    examples: [single_tenant_drift]
+    owner: [tenant_ops]
+
+self_healing:
+  - id: scale_sync_workers
+    trigger: sync_lag_burn
+    executor: hpa_keda
+  - id: pause_noncritical_consumers
+    trigger: dlq_depth_high
+    executor: orchestration_policy
+  - id: circuit_break_ai
+    trigger: prediction_ai_timeout
+    executor: feature_flag
+  - id: gitops_self_heal
+    trigger: config_drift
+    executor: argo_flux
+  - id: cert_renew
+    trigger: cert_expiry_window
+    executor: cert_manager
+  - id: twin_recover
+    trigger: projection_corrupt
+    executor: twin_recover_api_plus_full_sync
+
+backup:
+  - class: postgres_pitr
+    scope: identity_twin_schema
+  - class: incremental
+    scope: snapshots_object_store
+  - class: continuous
+    scope: event_mesh_retention
+  encryption: required
+  validation: restore_probe_quarterly
+  legal_hold: policy_key twin.backup.legal_hold
+
+dr_modes: [cold, warm, hot, active_active, active_passive]

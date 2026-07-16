@@ -38,6 +38,9 @@ class User(AggregateRoot):
     failed_login_attempts: int = 0
     locked_until: datetime | None = None
     last_login_at: datetime | None = None
+    password_changed_at: datetime | None = None
+    password_must_change: bool = False
+    password_hash_algorithm: str = "bcrypt"
     created_at: datetime = field(default_factory=lambda: datetime.now(UTC))
     updated_at: datetime = field(default_factory=lambda: datetime.now(UTC))
 
@@ -76,12 +79,42 @@ class User(AggregateRoot):
             return self.locked_until > datetime.now(UTC)
         return self.status == UserStatus.LOCKED
 
-    def record_failed_login(self) -> None:
+    def record_failed_login(
+        self,
+        *,
+        max_attempts: int = 5,
+        lock_minutes: int = 15,
+    ) -> None:
         self.failed_login_attempts += 1
-        if self.failed_login_attempts >= 5:
+        if self.failed_login_attempts >= max_attempts:
             self.status = UserStatus.LOCKED
-            self.locked_until = datetime.now(UTC) + timedelta(minutes=15)
+            self.locked_until = datetime.now(UTC) + timedelta(minutes=lock_minutes)
         self.updated_at = datetime.now(UTC)
+
+    def unlock_account(self) -> None:
+        self.failed_login_attempts = 0
+        self.locked_until = None
+        if self.status == UserStatus.LOCKED:
+            self.status = UserStatus.ACTIVE
+        self.updated_at = datetime.now(UTC)
+
+    def update_password(
+        self,
+        *,
+        password_hash: str,
+        hash_algorithm: str = "argon2id",
+        must_change: bool = False,
+    ) -> None:
+        self.password_hash = password_hash
+        self.password_hash_algorithm = hash_algorithm
+        self.password_changed_at = datetime.now(UTC)
+        self.password_must_change = must_change
+        self.updated_at = datetime.now(UTC)
+
+    def password_is_expired(self, expiry_days: int) -> bool:
+        if expiry_days <= 0 or not self.password_changed_at:
+            return False
+        return self.password_changed_at + timedelta(days=expiry_days) < datetime.now(UTC)
 
     def record_successful_login(
         self,
@@ -127,6 +160,11 @@ class User(AggregateRoot):
             return True
         return False
 
+    def assign_roles(self, role_ids: list[str]) -> None:
+        """Replace assigned roles (admin/ops path — audited in application layer)."""
+        self.role_ids = list(dict.fromkeys(role_ids))
+        self.updated_at = datetime.now(UTC)
+
     def to_dict(self) -> dict:
         return {
             "id": str(self.id),
@@ -138,6 +176,10 @@ class User(AggregateRoot):
             "mfa_enabled": self.mfa_enabled,
             "role_ids": self.role_ids,
             "last_login_at": self.last_login_at.isoformat() if self.last_login_at else None,
+            "password_must_change": self.password_must_change,
+            "password_changed_at": (
+                self.password_changed_at.isoformat() if self.password_changed_at else None
+            ),
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat(),
         }

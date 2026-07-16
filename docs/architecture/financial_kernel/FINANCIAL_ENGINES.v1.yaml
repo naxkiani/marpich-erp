@@ -61,7 +61,37 @@ engines:
   journal:
     id: journal
     owner: financial_kernel
-    capabilities: [double_entry, idempotent_posting, validation, reversal]
+    capabilities:
+      - double_entry
+      - idempotent_posting
+      - validation
+      - reversal
+      - enterprise_types
+      - approval_workflow
+      - digital_signature
+      - ai_review
+      - batch_posting
+      - rollback
+      - locking
+      - versioning
+    journal_types:
+      - general
+      - cash
+      - bank
+      - purchase
+      - sales
+      - inventory
+      - payroll
+      - tax
+      - adjustment
+      - opening
+      - closing
+      - reversing
+      - recurring
+      - foreign_currency
+      - intercompany
+    api_prefix: /journals
+    catalog: financial_kernel/JOURNAL_CATALOG.yaml
     publishes: [financial_kernel.journal.posted]
 
   voucher:
@@ -157,23 +187,74 @@ engines:
   treasury:
     id: treasury
     owner: treasury
+    kernel_satellite: true
+    gl_bridge: treasury/TREASURY_GL_BRIDGE.md
+    catalog: treasury/TREASURY_CATALOG.yaml
+    adr: 073-enterprise-treasury-platform
+    law: treasury_manages_liquidity_kernel_owns_gl
     capabilities:
-      - cash_positions
       - bank_accounts
-      - petty_cash
-      - vault_safe
+      - cash_pools
+      - liquidity_management
+      - treasury_operations
+      - financial_risk
+      - investments
+      - borrowing
+      - funding
+      - cash_forecasting
+      - treasury_dashboard
+      - treasury_analytics
+      - treasury_ai_assistant
+    - gl_auto_posting
+    - enterprise_bank_accounts
+    - enterprise_cash_management
+    - treasury_transaction_engine
+    - enterprise_liquidity_engine
+    - enterprise_cash_forecast
+    - enterprise_bank_reconciliation
+    - enterprise_cash_reconciliation
+    - enterprise_investment_management
+    - enterprise_treasury_risk_platform
+    - multi_currency_treasury
+    - enterprise_treasury_workflow
+    - enterprise_treasury_security
+    - treasury_analytics_platform
+  api_prefix: /treasury
+    satellite: false
+    not_pos: true
+
+  banking_platform:
+    id: banking
+    owner: banking
+    type: industry_extension
+    capabilities:
+      - customer_kyc
+      - deposits
+      - lending
+      - cards
       - transfers
-      - bank_reconciliation
-      - cash_forecast
-      - liquidity_analysis
-      - dashboard
-      - approval_workflow
-    api_prefix: /treasury
+      - branch_banking
+      - agency_banking
+      - retail_banking
+      - corporate_banking
+      - microfinance
+      - digital_banking
+      - islamic_banking_compose
+    api_prefix: /banking
+    delegates_to:
+      - general_ledger
+      - payment
+      - currency
+      - financial_workflow
+      - financial_security
+      - financial_audit
+      - policy_engine
     satellite: false
 
   cash_management:
     id: cash
     owner: financial_kernel
+    deprecated_by: treasury
     capabilities: [bank_accounts, cash_flow, reconciliation]
 
   financial_workflow:
@@ -322,7 +403,8 @@ permissions:
   financial_kernel.currency.convert: Convert amounts
   financial_kernel.tax.calculate: Calculate tax
   financial_kernel.cash.read: Cash management views
-  financial_kernel.dimensions.read: Cost/profit centers
+  financial_kernel.dimensions.read: View financial dimensions and validate journal lines
+  financial_kernel.dimensions.write: Manage dimension master data
 
 posting_rules:
   double_entry_required: true
@@ -330,3 +412,210 @@ posting_rules:
   idempotency_key_required: true
   correlation_id_required: true
   balanced_lines_required: true
+
+posting_rule_engine:
+  id: posting_rules
+  owner: financial_kernel
+  law: business_modules_never_post_directly
+  api_prefix: /posting-rules
+  catalog: financial_kernel/POSTING_RULE_CATALOG.yaml
+  capabilities:
+    - rule_builder
+    - preview
+    - execute_posting
+    - tenant_overrides
+  platform_rules:
+    - purchase
+    - sales
+    - payroll
+    - inventory
+    - hospital_billing
+    - university_tuition
+    - construction_cost
+    - bank_deposit
+    - exchange_transaction
+    - tax
+    - asset
+    - loan
+    - insurance
+
+fiscal_calendar_engine:
+  id: fiscal_calendar
+  owner: financial_kernel
+  api_prefix: /fiscal-calendar
+  catalog: financial_kernel/FISCAL_CALENDAR_CATALOG.yaml
+  capabilities:
+    - unlimited_fiscal_years
+    - multiple_calendars
+    - monthly_closing
+    - quarter_closing
+    - year_closing
+    - adjustment_period
+    - soft_close
+    - hard_close
+    - reopen_period
+    - approval_required
+    - audit_log
+    - financial_lock
+    - closing_assistant
+    - ai_closing_checklist
+
+account_hierarchy_engine:
+  id: account_hierarchy
+  owner: financial_kernel
+  api_prefix: /account-hierarchy
+  catalog: financial_kernel/ACCOUNT_HIERARCHY_CATALOG.yaml
+  capabilities:
+    - unlimited_tree_levels
+    - drag_and_drop
+    - tree_versioning
+    - multiple_trees
+    - industry_templates
+    - country_templates
+    - ai_optimization
+    - search
+    - filters
+    - bulk_import
+    - bulk_export
+    - automatic_validation
+    - duplicate_detection
+    - parent_child_integrity
+    - visual_account_tree
+
+subledger_engine:
+  id: subledger
+  owner: financial_kernel
+  api_prefix: /subledgers
+  catalog: financial_kernel/SUBLEDGER_CATALOG.yaml
+  law: subledgers_never_post_directly
+  capabilities:
+    - accounts_receivable
+    - accounts_payable
+    - inventory
+    - payroll
+    - treasury
+    - assets
+    - loans
+    - projects
+    - students
+    - patients
+    - taxes
+    - currency_exchange
+    - automatic_gl_posting
+    - idempotent_entries
+    - reconciliation_engine
+
+reconciliation_engine:
+  id: reconciliation
+  owner: financial_kernel
+  api_prefix: /reconciliation
+  catalog: financial_kernel/RECONCILIATION_CATALOG.yaml
+  capabilities:
+    - bank_reconciliation
+    - cash_reconciliation
+    - intercompany_reconciliation
+    - subledger_reconciliation
+    - general_ledger_reconciliation
+    - automatic_matching
+    - manual_matching
+    - exception_queue
+    - ai_suggestions
+    - difference_analysis
+    - reconciliation_reports
+    - approval_workflow
+    - audit_history
+
+financial_dimensions_engine:
+  id: financial_dimensions
+  owner: financial_kernel
+  api_prefix: /dimensions
+  catalog: financial_kernel/DIMENSION_CATALOG.yaml
+  law: unlimited_dimensions_per_journal_line
+  capabilities:
+    - company
+    - branch
+    - department
+    - project
+    - cost_center
+    - profit_center
+    - fund
+    - grant
+    - faculty
+    - hospital
+    - ward
+    - construction_site
+    - warehouse
+    - country
+    - currency
+    - business_unit
+    - unlimited_dimensions_per_line
+    - master_data_registry
+    - post_time_validation
+    - legacy_field_merge
+    - audit_history
+
+financial_validation_engine:
+  id: financial_validation
+  owner: financial_kernel
+  api_prefix: /validation
+  catalog: financial_kernel/VALIDATION_CATALOG.yaml
+  law: reject_invalid_before_post
+  capabilities:
+    - balanced_journals
+    - posting_permissions
+    - fiscal_period
+    - currency
+    - tax
+    - budget
+    - account_status
+    - duplicate_posting
+    - approval_status
+    - dimension_rules
+    - business_rules
+    - validation_report
+    - reject_invalid_transactions
+    - audit_history
+
+financial_audit_platform:
+  id: financial_audit
+  owner: financial_kernel
+  api_prefix: /audit
+  catalog: financial_kernel/FINANCIAL_AUDIT_CATALOG.yaml
+  law: immutable_audit_no_deletion
+  capabilities:
+    - who_created
+    - who_approved
+    - who_posted
+    - who_modified
+    - who_reversed
+    - timestamp_tracking
+    - device_tracking
+    - ip_tracking
+    - tenant_tracking
+    - organization_tracking
+    - reason_tracking
+    - immutable_audit_history
+    - tamper_evident_chain
+    - deletion_forbidden
+    - lifecycle_report
+
+gl_ai_assistant:
+  id: gl_ai
+  owner: financial_kernel
+  api_prefix: /gl-ai
+  catalog: financial_kernel/GL_AI_CATALOG.yaml
+  law: ai_suggests_humans_approve
+  capabilities:
+    - posting_suggestions
+    - account_suggestions
+    - duplicate_detection
+    - fraud_detection
+    - closing_assistant
+    - anomaly_detection
+    - financial_insights
+    - automatic_classification
+    - forecasting
+    - journal_explanation
+    - variance_analysis
+    - ai_cfo_dashboard
+    - explainable_recommendations

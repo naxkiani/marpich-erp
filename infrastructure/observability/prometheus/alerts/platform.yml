@@ -1,0 +1,20 @@
+groups:
+  - name: marpich-platform
+    rules:
+      - alert: MarpichBackendDown
+        expr: up{job="marpich-backend-health"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: Marpich backend health endpoint is down
+          description: The /api/v1/health scrape target has been unreachable for 2 minutes.
+
+      - alert: MarpichHighErrorRate
+        expr: rate(http_server_request_duration_seconds_count{http_status_code=~"5.."}[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: Elevated 5xx error rate on Marpich backend
+          description: Backend 5xx responses exceeded threshold over the last 5 minutes.

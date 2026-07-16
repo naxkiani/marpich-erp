@@ -1,0 +1,32 @@
+{
+  "title": "Marpich Digital Twin Sync",
+  "uid": "marpich-twin-sync-p199d22",
+  "tags": ["digital-twin", "sync", "p199-d2.2"],
+  "panels": [
+    {
+      "title": "Sync Lag p95 (seconds)",
+      "type": "timeseries",
+      "targets": [{ "expr": "histogram_quantile(0.95, sum(rate(marpich_twin_sync_lag_seconds_bucket[5m])) by (le))" }]
+    },
+    {
+      "title": "Sync Runs",
+      "type": "stat",
+      "targets": [{ "expr": "increase(marpich_twin_sync_runs_total[1h])" }]
+    },
+    {
+      "title": "Conflicts",
+      "type": "timeseries",
+      "targets": [{ "expr": "rate(marpich_twin_conflicts_total[5m])" }]
+    },
+    {
+      "title": "DLQ Depth",
+      "type": "stat",
+      "targets": [{ "expr": "marpich_twin_dlq_depth" }]
+    },
+    {
+      "title": "Worker Replicas Available",
+      "type": "stat",
+      "targets": [{ "expr": "kube_deployment_status_replicas_available{deployment=~\".*twin-sync-workers\"}" }]
+    }
+  ]
+}

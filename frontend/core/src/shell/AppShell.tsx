@@ -115,21 +115,29 @@ export function AppShell({
 
 export function PageLayout({
   title,
+  subtitle,
   breadcrumb,
   actions,
   children,
 }: {
   title: string;
-  breadcrumb: BreadcrumbItem[];
+  subtitle?: string;
+  breadcrumb?: BreadcrumbItem[];
   actions?: ReactNode;
   children: ReactNode;
 }) {
+  const crumbs = breadcrumb ?? [
+    { label: "Marpich", href: "/" },
+    { label: title },
+  ];
+
   return (
     <div className="mp-page mp-animate-in">
       <header className="mp-page-header">
         <div>
-          <Breadcrumb items={breadcrumb} />
+          <Breadcrumb items={crumbs} />
           <h1>{title}</h1>
+          {subtitle ? <p className="mp-page-subtitle">{subtitle}</p> : null}
         </div>
         {actions ? <div className="mp-page-actions">{actions}</div> : null}
       </header>

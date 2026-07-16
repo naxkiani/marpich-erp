@@ -34,6 +34,19 @@ aggregates:
   - PaymentBatch
   - StandingOrder
   - PaymentFraudCheck
+  - SettlementBatch
+  - SettlementItem
+  - BankReconciliationRun
+  - SettlementException
+  - SettlementAdjustment
+  - BranchOffice
+  - BranchExtension
+  - BranchVault
+  - BranchEmployeeAssignment
+  - BranchKPIRecord
+  - SecurityApprovalRequest
+  - SecurityAuditEntry
+  - BankingAnalyticsJob
 
 banking_segments:
   - retail_banking
@@ -82,6 +95,22 @@ publishes:
   - banking.interest.simulated
   - banking.interest.rate.changed
   - banking.payment.fraud.flagged
+  - banking.settlement.posted
+  - banking.reconciliation.completed
+  - banking.settlement.exception.raised
+  - banking.branch.opened
+  - banking.branch.closed
+  - banking.vault.movement
+  - banking.branch.kpi.recorded
+  - banking.security.approval.submitted
+  - banking.security.approval.completed
+  - banking.security.freeze.activated
+  - banking.security.alert.raised
+  - banking.security.audit.recorded
+  - banking.analytics.report.generated
+  - banking.analytics.insight.raised
+  - banking.analytics.recommendation.generated
+  - banking.analytics.forecast.completed
   - banking.deposit.matured
   - banking.fee.charged
 

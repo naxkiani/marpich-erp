@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package marpich.federation.v1;
+
+message FederationLoginRequest {
+  string tenant_id = 1;
+  string protocol = 2;
+  string email = 3;
+  string provider_ref = 4;
+  string client_id = 5;
+  string redirect_uri = 6;
+  string scope = 7;
+  string state = 8;
+}
+
+message FederationLoginResponse {
+  string protocol = 1;
+  string authorization_code = 2;
+  string redirect_uri = 3;
+  string state = 4;
+  string authorize_url = 5;
+}
+
+message FederationTokenRequest {
+  string tenant_id = 1;
+  string grant_type = 2;
+  string client_id = 3;
+  string client_secret = 4;
+  string code = 5;
+  string redirect_uri = 6;
+  string code_verifier = 7;
+  string refresh_token = 8;
+  string scope = 9;
+}
+
+message FederationTokenResponse {
+  string access_token = 1;
+  string token_type = 2;
+  int32 expires_in = 3;
+  string refresh_token = 4;
+  string scope = 5;
+  string id_token = 6;
+}
+
+message IntrospectRequest {
+  string tenant_id = 1;
+  string token = 2;
+}
+
+message IntrospectResponse {
+  bool active = 1;
+  string sub = 2;
+  string client_id = 3;
+  string scope = 4;
+  int64 exp = 5;
+}
+
+message RevokeRequest {
+  string tenant_id = 1;
+  string token = 2;
+  string token_type_hint = 3;
+}
+
+message RevokeResponse {
+  bool revoked = 1;
+}
+
+service FederationService {
+  rpc Login(FederationLoginRequest) returns (FederationLoginResponse);
+  rpc Token(FederationTokenRequest) returns (FederationTokenResponse);
+  rpc Introspect(IntrospectRequest) returns (IntrospectResponse);
+  rpc Revoke(RevokeRequest) returns (RevokeResponse);
+}

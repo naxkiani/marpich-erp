@@ -1,0 +1,44 @@
+# Twin GitOps profile — Prompt 199-D1 · ADR-209
+apiVersion: marpich.io/v1
+kind: GitOpsProfile
+metadata:
+  id: twin-gitops
+  version: "1.0.0"
+  adr: 209
+
+engines:
+  - id: argocd
+    path: infrastructure/argocd/marpich-iam-application.yaml
+  - id: fluxcd
+    path: infrastructure/fluxcd/marpich-iam-helmrelease.yaml
+
+chart: infrastructure/kubernetes/helm/marpich-iam
+release: marpich-iam
+namespace: marpich
+
+parameters:
+  - name: featureFlags.twinEnabled
+    value: "true"
+  - name: featureFlags.twinSyncEnabled
+    value: "true"
+  - name: featureFlags.twinIntelligenceEnabled
+    value: "true"
+  - name: twinWorkers.enabled
+    value: "true"
+  - name: twinJobs.snapshot.enabled
+    value: "true"
+
+sync_policy:
+  automated: true
+  prune: true
+  selfHeal: true
+  serverSideApply: true
+
+progressive_delivery:
+  canary_via: service_mesh_or_argo_rollouts
+  blue_green_via: helm_or_argo_rollouts
+  approval: environment_protection_or_workflow
+
+rollback:
+  on_slo_burn: automatic
+  on_failed_smoke: automatic

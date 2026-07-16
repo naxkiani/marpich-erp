@@ -1,0 +1,20 @@
+context: data_isolation
+display_name: Data Isolation Platform
+type: platform
+description: "PostgreSQL RLS enforcement and HASH-partitioned principal registry"
+api: /api/v1/data-isolation
+aggregates:
+  - IsolationProfile
+  - Principal
+  - RlsPolicyDescriptor
+publishes:
+  - data_isolation.principal.synced
+  - data_isolation.rls.verified
+  - data_isolation.dashboard.generated
+subscribes:
+  - platform.tenant.provisioned
+  - identity.user.registered
+delegates:
+  - identity
+  - policy
+schema: identity

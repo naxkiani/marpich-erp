@@ -1,0 +1,48 @@
+# FluxCD GitOps — Marpich IAM + Identity Federation (P198-D1)
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: marpich-erp
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: https://github.com/marpich/marpich-erp.git
+  ref:
+    branch: main
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: marpich-iam
+  namespace: marpich
+spec:
+  interval: 5m
+  releaseName: marpich-iam
+  chart:
+    spec:
+      chart: ./infrastructure/kubernetes/helm/marpich-iam
+      sourceRef:
+        kind: GitRepository
+        name: marpich-erp
+        namespace: flux-system
+      interval: 5m
+  values:
+    featureFlags:
+      federationEnabled: true
+      federationAiEnabled: true
+      federationMeshEnabled: true
+      twinEnabled: true
+      twinSyncEnabled: true
+      twinIntelligenceEnabled: true
+    twinWorkers:
+      enabled: true
+  valuesFrom:
+    - kind: ConfigMap
+      name: marpich-iam-flux-values
+      optional: true
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      retries: 3
+  rollback:
+    cleanupOnFail: true

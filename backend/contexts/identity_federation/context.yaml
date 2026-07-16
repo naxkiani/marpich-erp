@@ -1,0 +1,82 @@
+context: identity_federation
+display_name: Enterprise Identity Federation & SSO Platform
+type: platform
+description: "Central identity fabric — federation, SSO, broker, mesh, trust, AI intelligence"
+api: /api/v1/federation
+aggregates:
+  - FederationProfile
+  - IdentityProvider
+  - FederationPartner
+  - TrustRelationship
+  - ClaimsMapping
+  - IdentityLink
+  - ProvisioningPolicy
+  - SynchronizationJob
+  - FederationSession
+  - TenantFederation
+publishes:
+  - federation.provider.registered
+  - federation.identity.federated
+  - federation.identity.linked
+  - federation.identity.provisioned
+  - federation.logout.completed
+  - federation.trust.established
+  - federation.trust.decision
+  - federation.mesh.route_resolved
+  - federation.zero_trust.decision
+  - federation.external_auth.succeeded
+  - federation.external_auth.failed
+  - federation.token.exchanged
+  - federation.certificate.rotated
+  - federation.ai.prediction.completed
+  - federation.ai.insight.generated
+subscribes:
+  - platform.tenant.provisioned
+delegates:
+  - policy
+  - identity
+  - identity_lifecycle
+  - directory
+  - authentication
+  - adaptive_authentication
+  - identity_risk
+  - audit
+  - ai
+schema: federation
+ai:
+  enabled: true
+  surfaces:
+    insights: true
+    predictions: true
+    recommendations: true
+    summaries: true
+    search: true
+    assistant: true
+    automation: true
+    document_intelligence: true
+    voice_commands: true
+    chat: true
+    report_explanation: true
+    anomaly_detection: true
+    forecasting: true
+    optimization: true
+  prompt_templates:
+    - id: "identity_federation.assistant"
+      purpose: "Identity Copilot for federation administrators"
+    - id: "identity_federation.summarize"
+      purpose: "Summarize federation audit and analytics"
+    - id: "identity_federation.recommendations"
+      purpose: "Security and policy recommendations"
+    - id: "identity_federation.report.explain"
+      purpose: "Explain executive and operational reports"
+  event_subscriptions:
+    - federation.external_auth.succeeded
+    - federation.trust.decision
+    - federation.zero_trust.decision
+  event_publications:
+    - federation.ai.insight.generated
+    - federation.ai.prediction.completed
+  permissions:
+    - "federation.ai.read"
+    - "federation.ai.infer"
+    - "federation.ai.admin"

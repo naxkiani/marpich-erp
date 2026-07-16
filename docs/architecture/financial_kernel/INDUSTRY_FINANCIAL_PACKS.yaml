@@ -56,7 +56,22 @@ industries:
     display_name: Micro Finance
     coa_template: coa.banking
     satellite_contexts: [banking]
-    policy_domains: [banking.microfinance]
+    policy_domains: [banking.microfinance, banking.lending]
+    banking_segments: [microfinance, agency_banking]
+
+  - pack_id: digital_bank
+    display_name: Digital Bank
+    coa_template: coa.banking
+    satellite_contexts: [banking, treasury]
+    policy_domains: [banking.digital, banking.retail]
+    banking_segments: [digital_banking, retail_banking]
+
+  - pack_id: corporate_bank
+    display_name: Corporate Bank
+    coa_template: coa.banking
+    satellite_contexts: [banking, treasury]
+    policy_domains: [banking.corporate, banking.lending]
+    banking_segments: [corporate_banking, branch_banking]
 
   - pack_id: currency_exchange
     display_name: Currency Exchange

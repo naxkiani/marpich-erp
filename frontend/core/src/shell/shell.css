@@ -83,6 +83,13 @@
   letter-spacing: -0.03em;
 }
 
+.mp-page-subtitle {
+  margin: 0.35rem 0 0;
+  color: var(--mp-text-muted, #64748b);
+  font-size: 0.95rem;
+  max-width: 52rem;
+}
+
 .mp-page-actions {
   display: flex;
   flex-wrap: wrap;

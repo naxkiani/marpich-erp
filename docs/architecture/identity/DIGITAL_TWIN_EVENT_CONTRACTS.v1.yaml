@@ -1,0 +1,265 @@
+# Digital Twin integration event contracts v1
+# Prompts: V03-C02-P199-A + V03-C02-P199-B + V03-C02-P199-C + V03-C02-P199-D2.2
+version: 3
+prompts: [V03-C02-P199-A, V03-C02-P199-B, V03-C02-P199-C, V03-C02-P199-D1, V03-C02-P199-D2.2]
+source_context: identity_digital_twin
+envelope: docs/architecture/events/_envelope.v1.json
+adr: [203, 203a, 207, 208, 209, 210]
+
+kafka_topics:
+  - name: marpich.twin.lifecycle.v1
+    consumer_groups: [twin-lifecycle-projector, audit-ingest, search-indexer]
+    events:
+      - identity_twin.created
+      - identity_twin.updated
+      - identity_twin.deleted
+      - identity_twin.archived
+      - identity_twin.activated
+      - identity_twin.suspended
+      - identity_twin.recovered
+      - identity_twin.merged
+      - identity_twin.split
+  - name: marpich.twin.sync.v1
+    consumer_groups: [twin-sync-workers, twin-snapshotters, twin-metrics]
+    events:
+      - identity_twin.synchronized
+      - identity_twin.synchronization.started
+      - identity_twin.synchronization.completed
+      - identity_twin.synchronization.failed
+      - identity_twin.conflict.detected
+      - identity_twin.conflict.resolved
+      - identity_twin.snapshot.created
+  - name: marpich.twin.intelligence.v1
+    consumer_groups:
+      - twin-intelligence
+      - ai-governance-listener
+      - analytics-twin-kpi
+      - search-indexer
+      - notification-twin-alerts
+      - observability-twin-aiops
+    events:
+      - identity_twin.predicted
+      - identity_twin.simulation.completed
+      - identity_twin.drift.detected
+      - identity_twin.health.changed
+      - identity_twin.anomaly.detected
+      - identity_twin.recommendation.created
+      - identity_twin.decision.requested
+      - identity_twin.decision.applied
+      - identity_twin.reasoning.completed
+  - name: marpich.twin.ops.v1
+    consumer_groups:
+      - twin-ops
+      - business-continuity-listener
+      - notification-twin-alerts
+      - audit-ingest
+    events:
+      - identity_twin.recovery.started
+      - identity_twin.recovery.completed
+      - identity_twin.dr.failover
+      - identity_twin.incident.opened
+      - identity_twin.incident.resolved
+      - identity_twin.self_heal.executed
+  - name: marpich.twin.security.v1
+    consumer_groups: [twin-security, identity-risk-listener]
+    events:
+      - identity_twin.compromised
+      - identity_twin.trust.changed
+      - identity_twin.risk.changed
+  - name: marpich.twin.graph.v1
+    consumer_groups: [twin-graph]
+    events:
+      - identity_twin.relationship.changed
+  - name: marpich.twin.compliance.v1
+    consumer_groups: [compliance-ingest]
+    events:
+      - identity_twin.compliance.changed
+  - name: marpich.twin.dlq.v1
+    consumer_groups: [twin-dlq-ops]
+    events: []
+
+versioning:
+  strategy: additive_within_version
+  breaking_change: new_topic_suffix_vN_plus_dual_publish
+  unknown_fields: ignore
+
+events:
+  identity_twin.created:
+    version: 1
+    payload:
+      required: [twin_ref, kind, subject_ref]
+  identity_twin.updated:
+    version: 1
+    payload:
+      required: [twin_ref, kind, changed_facets]
+  identity_twin.deleted:
+    version: 1
+    payload:
+      required: [twin_ref, kind, subject_ref]
+  identity_twin.activated:
+    version: 1
+    payload:
+      required: [twin_ref]
+  identity_twin.suspended:
+    version: 1
+    payload:
+      required: [twin_ref, reason]
+  identity_twin.recovered:
+    version: 1
+    payload:
+      required: [twin_ref, recovery_mode]
+  identity_twin.merged:
+    version: 1
+    payload:
+      required: [survivor_twin_ref, merged_twin_refs]
+  identity_twin.split:
+    version: 1
+    payload:
+      required: [source_twin_ref, new_twin_refs]
+  identity_twin.archived:
+    version: 1
+    payload:
+      required: [twin_ref]
+  identity_twin.synchronized:
+    version: 1
+    payload:
+      required: [twin_ref, source_event]
+      properties:
+        source_version: { type: string }
+        mode: { type: string }
+  identity_twin.synchronization.started:
+    version: 1
+    payload:
+      required: [sync_run_ref, mode]
+      properties:
+        twin_ref: { type: string }
+        scope: { type: string }
+  identity_twin.synchronization.completed:
+    version: 1
+    payload:
+      required: [sync_run_ref, mode, stats]
+  identity_twin.synchronization.failed:
+    version: 1
+    payload:
+      required: [sync_run_ref, mode, error_code]
+  identity_twin.conflict.detected:
+    version: 1
+    payload:
+      required: [conflict_ref, twin_ref, facet, strategy_candidates]
+  identity_twin.conflict.resolved:
+    version: 1
+    payload:
+      required: [conflict_ref, twin_ref, strategy_applied]
+  identity_twin.snapshot.created:
+    version: 1
+    payload:
+      required: [snapshot_ref, twin_ref]
+  identity_twin.predicted:
+    version: 1
+    payload:
+      required: [prediction_ref, twin_ref, horizon, prediction_key]
+      properties:
+        confidence: { type: number }
+        model_approval_ref: { type: string }
+        explanation_ref: { type: string }
+        feature_snapshot_ref: { type: string }
+  identity_twin.trust.changed:
+    version: 1
+    payload:
+      required: [twin_ref, band, score]
+  identity_twin.risk.changed:
+    version: 1
+    payload:
+      required: [twin_ref, band, score]
+  identity_twin.health.changed:
+    version: 1
+    payload:
+      required: [twin_ref, status, score]
+  identity_twin.relationship.changed:
+    version: 1
+    payload:
+      required: [edge_ref, from_twin_ref, to_twin_ref, edge_type, change]
+  identity_twin.compliance.changed:
+    version: 1
+    payload:
+      required: [twin_ref, status]
+  identity_twin.anomaly.detected:
+    version: 1
+    payload:
+      required: [anomaly_ref, twin_ref, severity]
+  identity_twin.simulation.completed:
+    version: 1
+    payload:
+      required: [simulation_ref, twin_ref, scenario_type]
+      properties:
+        mutation_applied: { const: false }
+  identity_twin.drift.detected:
+    version: 1
+    payload:
+      required: [alert_ref, twin_ref, severity, drift_fields]
+  identity_twin.compromised:
+    version: 1
+    payload:
+      required: [twin_ref, severity, signal_refs]
+  identity_twin.recommendation.created:
+    version: 1
+    payload:
+      required: [recommendation_ref, twin_ref, intent, impact_band]
+      properties:
+        confidence: { type: number }
+        explanation_ref: { type: string }
+  identity_twin.decision.requested:
+    version: 1
+    payload:
+      required: [decision_ref, twin_ref, recommendation_ref, workflow_ref]
+  identity_twin.decision.applied:
+    version: 1
+    payload:
+      required: [decision_ref, twin_ref, outcome]
+      properties:
+        mutation_targets: { type: array }
+  identity_twin.reasoning.completed:
+    version: 1
+    payload:
+      required: [reasoning_ref, twin_ref, mode]
+      properties:
+        confidence: { type: number }
+        explanation_ref: { type: string }
+  identity_twin.recovery.started:
+    version: 1
+    payload:
+      required: [recovery_ref, twin_ref, mode]
+  identity_twin.recovery.completed:
+    version: 1
+    payload:
+      required: [recovery_ref, twin_ref, outcome]
+  identity_twin.dr.failover:
+    version: 1
+    payload:
+      required: [failover_ref, from_region, to_region, mode]
+  identity_twin.incident.opened:
+    version: 1
+    payload:
+      required: [incident_ref, severity, alert_ids]
+  identity_twin.incident.resolved:
+    version: 1
+    payload:
+      required: [incident_ref, resolution]
+  identity_twin.self_heal.executed:
+    version: 1
+    payload:
+      required: [action_id, trigger, executor]
+      properties:
+        success: { type: boolean }
+
+consumes:
+  - identity.user.created
+  - identity.role.assigned
+  - identity.login.succeeded
+  - federation.identity.linked
+  - lifecycle.state.changed
+  - identity_risk.score.updated
+  - consent.granted
+  - consent.revoked
+  - organization.unit.changed
+  - integration.sync.completed

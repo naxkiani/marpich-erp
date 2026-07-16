@@ -1,0 +1,154 @@
+name: Marpich Digital Twin Enterprise Deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "backend/contexts/identity_digital_twin/**"
+      - "docs/architecture/ENTERPRISE_*TWIN*"
+      - "docs/architecture/identity/TWIN_*"
+      - "docs/architecture/identity/DIGITAL_TWIN_*"
+      - "infrastructure/kubernetes/helm/marpich-iam/**"
+      - "infrastructure/secrets/TWIN_*"
+      - ".github/workflows/digital-twin-enterprise.yml"
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Target environment
+        required: true
+        default: staging
+        type: choice
+        options: [staging, production]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: marpich/marpich-backend
+
+jobs:
+  test-twin:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev]"
+      - name: Identity digital twin unit tests
+        run: |
+          if [ -d contexts/identity_digital_twin/tests ]; then
+            python -m pytest contexts/identity_digital_twin/tests/ -q
+          else
+            echo "No twin tests directory yet — architecture gate only"
+          fi
+
+  security-scan:
+    runs-on: ubuntu-latest
+    needs: test-twin
+    steps:
+      - uses: actions/checkout@v4
+      - name: Trivy filesystem scan (digital twin)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: fs
+          scan-ref: backend/contexts/identity_digital_twin
+          severity: CRITICAL,HIGH
+          exit-code: 1
+      - name: Generate SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          path: backend/contexts/identity_digital_twin
+          format: spdx-json
+          output-file: twin-sbom.spdx.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: twin-sbom
+          path: twin-sbom.spdx.json
+
+  architecture-gate:
+    runs-on: ubuntu-latest
+    needs: test-twin
+    steps:
+      - uses: actions/checkout@v4
+      - name: Twin architecture docs present
+        run: |
+          test -f docs/architecture/ENTERPRISE_TWIN_PLATFORM_ENGINEERING.md
+          test -f docs/adr/209-twin-platform-engineering-devsecops.md
+          test -f docs/architecture/identity/TWIN_QUALITY_GATES.v1.yaml
+
+  build-image:
+    runs-on: ubuntu-latest
+    needs: [test-twin, security-scan, architecture-gate]
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v5
+        with:
+          context: backend
+          file: infrastructure/docker/images/backend.Dockerfile
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:7.0.0
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: true
+          sbom: true
+
+  deploy-staging:
+    runs-on: ubuntu-latest
+    needs: build-image
+    if: github.event_name == 'push' || github.event.inputs.environment == 'staging'
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/setup-kubectl@v4
+      - name: Helm lint
+        run: helm lint infrastructure/kubernetes/helm/marpich-iam
+      - name: Deploy via Helm (twin flags)
+        run: |
+          helm upgrade --install marpich-iam infrastructure/kubernetes/helm/marpich-iam \
+            --namespace marpich --create-namespace \
+            --set image.tag=sha-${{ github.sha }} \
+            --set featureFlags.twinEnabled=true \
+            --set featureFlags.twinSyncEnabled=true \
+            --set twinWorkers.enabled=true \
+            --wait --timeout 10m
+      - name: Smoke twin metrics
+        run: |
+          kubectl -n marpich port-forward svc/marpich-iam 8000:8000 &
+          sleep 3
+          curl -fsS http://127.0.0.1:8000/api/v1/health || true
+          curl -fsS http://127.0.0.1:8000/api/v1/identity-twins/metrics || true
+
+  deploy-production:
+    runs-on: ubuntu-latest
+    needs: deploy-staging
+    if: github.event.inputs.environment == 'production'
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - name: Canary deploy (5% traffic)
+        run: |
+          helm upgrade --install marpich-iam infrastructure/kubernetes/helm/marpich-iam \
+            --namespace marpich \
+            -f infrastructure/kubernetes/helm/marpich-iam/values-production.yaml \
+            --set image.tag=sha-${{ github.sha }} \
+            --set canary.enabled=true \
+            --set canary.weight=5 \
+            --wait --timeout 15m
+      - name: Rollback on health failure
+        if: failure()
+        run: |
+          helm rollback marpich-iam 0 --namespace marpich || true

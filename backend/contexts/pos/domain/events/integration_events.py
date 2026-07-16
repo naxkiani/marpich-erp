@@ -14,6 +14,10 @@ class SaleCompletedIntegration(IntegrationEvent):
     terminal_id: UniqueId
     total: str
     payment_method: str
+    subtotal: str = "0"
+    tax: str = "0"
+    currency: str = "USD"
+    items: tuple[dict, ...] = ()
 
     @property
     def event_name(self) -> str:
@@ -25,7 +29,7 @@ class SaleCompletedIntegration(IntegrationEvent):
 
     @property
     def event_version(self) -> int:
-        return 1
+        return 2
 
     def to_payload(self) -> dict:
         return {
@@ -33,7 +37,11 @@ class SaleCompletedIntegration(IntegrationEvent):
             "shift_id": str(self.shift_id),
             "terminal_id": str(self.terminal_id),
             "total": self.total,
+            "subtotal": self.subtotal,
+            "tax": self.tax,
+            "currency": self.currency,
             "payment_method": self.payment_method,
+            "items": list(self.items),
         }
 
 

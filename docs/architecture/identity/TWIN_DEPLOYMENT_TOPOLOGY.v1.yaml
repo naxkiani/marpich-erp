@@ -1,0 +1,133 @@
+# Marpich Digital Twin — Deployment Topology Catalog
+# Prompt: V03-C02-P199-D1 · ADR-209
+apiVersion: marpich.io/v1
+kind: DeploymentTopologyCatalog
+metadata:
+  id: twin-deployment-topology
+  version: "1.0.0"
+  context_id: identity_digital_twin
+  adr: 209
+
+supported_topologies:
+  - id: single_region
+    description: One region, multi-AZ
+    rpo_minutes: 5
+    rto_minutes: 30
+  - id: multi_region
+    description: Active-active or active-passive geo DNS
+    rpo_minutes: 1
+    rto_minutes: 5
+  - id: hybrid_cloud
+    description: Public API plane + private SoR/edge sync
+  - id: private_cloud
+    description: Fully private Kubernetes / OpenShift
+  - id: public_cloud
+    description: EKS / AKS / GKE (provider via IaC profile)
+  - id: on_premise
+    description: Bare-metal, VMware Tanzu, OpenShift
+  - id: edge
+    description: Branch/campus/hospital/retail edge caches + offline sync
+
+networks:
+  public:
+    purpose: Admin/UI clients to API Gateway
+    trust_zone: dmz
+  dmz:
+    purpose: Ingress / Gateway
+    allows: [identity_twins_api, health]
+  private:
+    purpose: marpich-iam, twin workers, Postgres, Redis, Kafka/Pulsar
+    trust_zone: workload
+  management:
+    purpose: GitOps, bastion, observability
+    trust_zone: management
+
+trust_zones:
+  - id: untrusted_internet
+  - id: dmz_edge
+  - id: twin_workloads
+  - id: data_plane
+  - id: management_plane
+  - id: edge_sites
+
+service_topology:
+  edge:
+    - component: ingress_nginx_or_traefik
+    - component: api_gateway_kong_envoy
+  identity_twin_plane:
+    - component: marpich_iam_pods
+      surfaces:
+        - /api/v1/identity-twins
+    - component: twin_sync_workers
+    - component: twin_snapshot_cron
+    - component: twin_intelligence_batch_jobs
+  data_plane:
+    - component: postgresql_identity_twin_schema
+    - component: redis_twin_facet_cache
+    - component: kafka_or_pulsar_twin_topics
+  ai_plane:
+    - component: ai_platform_inference
+      note: Not deployed by twin Helm
+  security_plane:
+    - component: vault_or_cloud_kms
+    - component: cert_manager
+    - component: service_mesh_mtls
+
+cluster_topology:
+  namespaces:
+    - marpich
+    - marpich-observability
+    - marpich-ingress
+    - marpich-security
+  workloads:
+    Deployment:
+      - marpich-iam
+      - twin-sync-workers
+    StatefulSet: optional-edge-twin-cache
+    DaemonSet: node-agent-runtime-security
+    CronJob:
+      - twin-snapshot
+      - twin-retention
+      - twin-drift-scan
+      - twin-kind-catalog-reconcile
+    Job: twin-migration-031
+
+traffic_flow:
+  - step: 1
+    from: client
+    to: public_dns_glb
+  - step: 2
+    from: glb
+    to: dmz_ingress
+  - step: 3
+    from: ingress
+    to: service_mesh_sidecar
+  - step: 4
+    from: sidecar
+    to: marpich_iam
+  - step: 5
+    from: twin_sync_workers
+    to: event_mesh_topics
+  - step: 6
+    from: marpich_iam
+    to: ai_platform
+    when: prediction_or_copilot
+
+edge_profiles:
+  - id: bank_branch
+    twin_kinds_cached: [user, device, session, account]
+    offline_sync: true
+  - id: university_campus
+    twin_kinds_cached: [user, student, course]
+  - id: hospital_site
+    twin_kinds_cached: [user, patient, device]
+    data_class: health_sensitive
+  - id: retail_store
+    twin_kinds_cached: [user, device, application]
+  - id: iot_gateway
+    twin_kinds_cached: [device]
+    edge_ai: via_ai_platform_edge_profile
+
+cloud_abstraction:
+  providers: [aws, azure, gcp, oracle, openstack, vmware, bare_metal]
+  law: twin_domain_has_zero_cloud_sdks

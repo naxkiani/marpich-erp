@@ -1,0 +1,23 @@
+context: directory
+display_name: Directory Platform
+type: platform
+description: "Enterprise Directory — SAML federation, LDAP sync, and SCIM provisioning"
+api: /api/v1/directory
+aggregates:
+  - DirectoryProfile
+  - SamlProvider
+  - LdapConnector
+  - ScimProvider
+  - DirectorySyncJob
+publishes:
+  - directory.saml.provider.registered
+  - directory.ldap.connector.registered
+  - directory.sync.completed
+  - directory.scim.user.provisioned
+  - integration.directory.synced
+subscribes:
+  - platform.tenant.provisioned
+delegates:
+  - identity
+  - policy
+schema: directory

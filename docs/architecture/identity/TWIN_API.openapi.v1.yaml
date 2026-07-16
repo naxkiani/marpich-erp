@@ -1,0 +1,138 @@
+# Twin Sync / API contracts — OpenAPI 3.1 shape (architecture source)
+# Implements Prompt V03-C02-P199-B Section 4 (REST). Live router evolves toward this contract.
+openapi: 3.1.0
+info:
+  title: Marpich Identity Digital Twin API
+  version: 1.1.0
+  description: Twin registry, synchronization, facets, simulation, prediction
+servers:
+  - url: /api/v1/identity-twins
+paths:
+  /:
+    post:
+      operationId: createTwin
+      summary: Create twin
+      security: [{ bearerAuth: [] }]
+      x-permission: twin.write
+    get:
+      operationId: listTwins
+      summary: List twins (paginated)
+      parameters:
+        - name: kind
+          in: query
+          schema: { type: string }
+        - name: limit
+          in: query
+          schema: { type: integer, maximum: 100, default: 50 }
+        - name: cursor
+          in: query
+          schema: { type: string }
+      x-permission: twin.read
+  /{twin_ref}:
+    get:
+      operationId: getTwin
+      x-permission: twin.read
+    put:
+      operationId: updateTwin
+      x-permission: twin.write
+    delete:
+      operationId: deleteTwin
+      x-permission: twin.admin
+  /{twin_ref}/sync:
+    post:
+      operationId: syncTwin
+      summary: Manual or mode-selected synchronization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SyncTwinRequest"
+      x-permission: twin.write
+  /{twin_ref}/snapshot:
+    post:
+      operationId: snapshotTwin
+      x-permission: twin.write
+  /{twin_ref}/predict:
+    post:
+      operationId: predictTwin
+      x-permission: twin.ai.infer
+  /{twin_ref}/simulate:
+    post:
+      operationId: simulateTwin
+      x-permission: twin.write
+  /{twin_ref}/relationships:
+    post:
+      operationId: createTwinRelationship
+      x-permission: twin.write
+  /{twin_ref}/history:
+    get:
+      operationId: getTwinHistory
+      x-permission: twin.read
+  /{twin_ref}/health:
+    get:
+      operationId: getTwinHealth
+      x-permission: twin.read
+  /{twin_ref}/risk:
+    get:
+      operationId: getTwinRisk
+      x-permission: twin.read
+  /{twin_ref}/trust:
+    get:
+      operationId: getTwinTrust
+      x-permission: twin.read
+  /{twin_ref}/events:
+    get:
+      operationId: getTwinEvents
+      x-permission: twin.read
+  /sync-runs:
+    get:
+      operationId: listSyncRuns
+      x-permission: twin.read
+    post:
+      operationId: createSyncRun
+      x-permission: twin.admin
+  /sync-runs/{sync_run_ref}:
+    get:
+      operationId: getSyncRun
+      x-permission: twin.read
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    SyncTwinRequest:
+      type: object
+      properties:
+        mode:
+          type: string
+          enum: [realtime, near_realtime, batch, scheduled, manual, incremental, full]
+        facets:
+          type: array
+          items: { type: string }
+        full:
+          type: boolean
+          default: false
+        projection:
+          type: object
+          additionalProperties: true
+    ProblemDetails:
+      type: object
+      description: RFC 9457
+      required: [type, title, status]
+      properties:
+        type: { type: string, format: uri }
+        title: { type: string }
+        status: { type: integer }
+        detail: { type: string }
+        instance: { type: string }
+        correlation_id: { type: string }
+        tenant_id: { type: string }
+        code: { type: string }
+  responses:
+    Problem:
+      description: Error
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/ProblemDetails"

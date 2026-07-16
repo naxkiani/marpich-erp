@@ -4,10 +4,13 @@ from httpx import ASGITransport, AsyncClient
 
 import contexts.identity.container as identity_container
 from contexts.identity.infrastructure.persistence.memory_store import InMemoryStore
-from contexts.pos.container import reset_pos_service
+from contexts.inventory.container import get_inventory_service, reset_inventory_service
+from contexts.inventory.infrastructure.persistence.memory_store import InventoryMemoryStore
+from contexts.pos.container import get_pos_service, reset_pos_service
 from contexts.pos.infrastructure.persistence.memory_store import PosMemoryStore
-from core.presentation.api.main import app
-from shared.infrastructure.messaging.event_bus import InProcessEventBus
+from core.presentation.api.app_factory import create_app
+from core.presentation.api.startup_registry import configure_application
+from shared.infrastructure.messaging.event_fabric import EventFabric
 
 
 @pytest.fixture(autouse=True)
@@ -15,14 +18,20 @@ def reset_all():
     identity_container._container = None
     InMemoryStore.reset()
     PosMemoryStore.reset()
-    InProcessEventBus.reset()
+    InventoryMemoryStore.reset()
+    EventFabric.reset_dev_state()
     reset_pos_service()
+    reset_inventory_service()
+    get_pos_service()
+    get_inventory_service()
     yield
 
 
 @pytest.fixture
 async def client():
-    transport = ASGITransport(app=app)
+    application = create_app(profile="industry", startup_mode="lazy")
+    configure_application(application, profile="industry", startup_mode="lazy")
+    transport = ASGITransport(app=application)
     async with AsyncClient(transport=transport, base_url="http://test") as ac:
         yield ac
 
@@ -46,6 +55,13 @@ async def _auth_headers(client: AsyncClient, tenant: str) -> dict[str, str]:
 async def test_pos_sale_and_shift_close(client):
     tenant = "retail-pos"
     headers = await _auth_headers(client, tenant)
+
+    stock = await client.put(
+        "/api/v1/inventory/stock",
+        json={"sku": "SKU-1", "quantity": "20"},
+        headers=headers,
+    )
+    assert stock.status_code == 200, stock.text
 
     terminal = await client.post(
         "/api/v1/pos/terminals",
@@ -74,7 +90,7 @@ async def test_pos_sale_and_shift_close(client):
         },
         headers=headers,
     )
-    assert sale.status_code == 201
+    assert sale.status_code == 201, sale.text
     assert "receipt" in sale.json()["data"]
 
     closed = await client.post(f"/api/v1/pos/shifts/{shift_id}/close", headers=headers)

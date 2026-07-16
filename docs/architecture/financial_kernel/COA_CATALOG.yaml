@@ -1,9 +1,14 @@
-# Enterprise Chart of Accounts — API Catalog
+# Enterprise Chart of Accounts — API Catalog v2
 # See docs/architecture/ENTERPRISE_CHART_OF_ACCOUNTS.md
 
-version: 1
+version: 2
 
 api_prefix: /api/v1/financial-kernel/coa
+
+law:
+  hierarchical_unlimited_depth: true
+  no_hardcoded_account_numbers: true
+  tenant_configurable_codes: true
 
 categories:
   - asset
@@ -13,6 +18,23 @@ categories:
   - expense
   - off_balance
   - statistical
+
+account_fields:
+  - code
+  - name
+  - parent_account_id
+  - account_category
+  - currency
+  - is_posting
+  - is_control_account
+  - reconciliation_required
+  - tax_code
+  - budget_code
+  - status
+  - effective_date
+  - template_source
+  - template_key
+  - country_code
 
 account_groups:
   - balance_sheet
@@ -26,7 +48,15 @@ account_groups:
   - memorandum
   - kpi_metrics
 
+enterprise_template:
+  template_key: coa.enterprise
+  depth_example: Assets > Current Assets > Cash > Bank | Petty Cash
+
 endpoints:
+  - method: GET
+    path: /categories
+    permission: financial_kernel.coa.read
+    description: List root account categories
   - method: GET
     path: /tree
     permission: financial_kernel.coa.read

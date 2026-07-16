@@ -75,6 +75,55 @@ export function AIAssistantPanel() {
   const { t } = useLocale();
   const [open, setOpen] = useState(false);
   const [prompt, setPrompt] = useState("");
+  const [reply, setReply] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function onSend() {
+    const text = prompt.trim();
+    if (!text || loading) return;
+    setLoading(true);
+    setError(null);
+    setReply(null);
+    try {
+      const tenantId =
+        (typeof window !== "undefined" &&
+          (localStorage.getItem("marpich.tenantId") ||
+            localStorage.getItem("tenantId") ||
+            "demo")) ||
+        "demo";
+      const token =
+        typeof window !== "undefined"
+          ? localStorage.getItem("marpich.accessToken") ||
+            localStorage.getItem("access_token") ||
+            ""
+          : "";
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+        "X-Tenant-ID": tenantId,
+      };
+      if (token) headers.Authorization = `Bearer ${token}`;
+      const res = await fetch(`${API_URL}/api/v1/ai/assist`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          module_id: "platform",
+          surface: "assistant",
+          prompt: text,
+        }),
+      });
+      if (!res.ok) {
+        const body = await res.text();
+        throw new Error(body || `AI assist failed (${res.status})`);
+      }
+      const json = (await res.json()) as { data?: { reply?: string } };
+      setReply(json.data?.reply ?? "No reply returned.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "AI assist failed");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <>
@@ -95,10 +144,22 @@ export function AIAssistantPanel() {
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Ask Marpich AI…"
             rows={4}
+            disabled={loading}
           />
-          <button type="button" className="mp-btn mp-btn-primary" disabled={!prompt.trim()}>
-            Send
+          <button
+            type="button"
+            className="mp-btn mp-btn-primary"
+            disabled={!prompt.trim() || loading}
+            onClick={() => void onSend()}
+          >
+            {loading ? "Sending…" : "Send"}
           </button>
+          {error ? (
+            <p role="alert" className="mp-error">
+              {error}
+            </p>
+          ) : null}
+          {reply ? <pre className="mp-ai-reply">{reply}</pre> : null}
         </aside>
       ) : null}
     </>

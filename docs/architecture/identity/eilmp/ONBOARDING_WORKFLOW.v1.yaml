@@ -1,0 +1,26 @@
+# Onboarding workflow steps — P201-A
+version: "1.0"
+prompt_id: P201-A
+
+steps:
+  - registration_requested
+  - validation
+  - duplicate_detection
+  - risk_evaluation
+  - policy_evaluation
+  - approval
+  - identity_creation
+  - profile_initialization
+  - provisioning_request
+  - welcome_workflow
+  - activation_request
+
+approval_modes:
+  - automatic
+  - manual
+  - multi_level
+  - department
+  - hr
+  - security
+  - risk_based
+  - ai_assisted

@@ -1,0 +1,24 @@
+# Supported registration identity types — P201-A
+version: "1.0"
+prompt_id: P201-A
+
+identity_types:
+  - employee
+  - customer
+  - citizen
+  - student
+  - teacher
+  - vendor
+  - supplier
+  - partner
+  - contractor
+  - guest
+  - organization
+  - department
+  - api_client
+  - machine
+  - device
+  - service_account
+  - kubernetes_workload
+  - ai_agent
+  - digital_twin

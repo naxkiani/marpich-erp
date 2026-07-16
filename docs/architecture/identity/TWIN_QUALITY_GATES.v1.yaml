@@ -1,0 +1,52 @@
+# Twin quality gates — Prompt 199-D1 · ADR-209
+apiVersion: marpich.io/v1
+kind: QualityGateCatalog
+metadata:
+  id: twin-quality-gates
+  version: "1.0.0"
+  adr: 209
+
+gates:
+  - id: security
+    blockers:
+      - critical_cve
+      - unsigned_image
+      - secrets_in_git
+  - id: architecture
+    blockers:
+      - dependency_graph_new_violation_in_twin
+      - missing_adr_for_public_contract
+  - id: performance
+    blockers:
+      - p95_regression_gt_20_percent
+  - id: deployment
+    blockers:
+      - smoke_failed
+      - sync_lag_slo_burn_on_canary
+  - id: compliance
+    blockers:
+      - missing_sbom
+      - missing_audit_event_on_mutation_path
+  - id: ai
+    blockers:
+      - model_without_approval_ref
+  - id: operational
+    blockers:
+      - missing_servicemonitor
+      - missing_runbook_link
+  - id: release
+    blockers:
+      - invalid_semver
+      - missing_changelog_entry
+
+pipeline_binding:
+  workflow: .github/workflows/digital-twin-enterprise.yml
+  stage_order:
+    - test
+    - security
+    - architecture
+    - build_sign
+    - deploy_staging
+    - continuous_verification
+    - release_gate
+    - deploy_production

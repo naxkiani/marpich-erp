@@ -1,0 +1,75 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - /etc/prometheus/alerts/adaptive-auth.yml
+  - /etc/prometheus/alerts/identity-federation.yml
+  - /etc/prometheus/alerts/digital-twin.yml
+  - /etc/prometheus/alerts/platform.yml
+
+# Alertmanager is optional for local dev — enable when alertmanager service is running.
+# alerting:
+#   alertmanagers:
+#     - static_configs:
+#         - targets: ["alertmanager:9093"]
+
+scrape_configs:
+  - job_name: marpich-platform-observability
+    metrics_path: /api/v1/enterprise-observability/metrics
+    static_configs:
+      - targets: ["backend:8000"]
+        labels:
+          service: marpich-platform
+          component: observability
+
+  - job_name: marpich-iam
+    metrics_path: /api/v1/adaptive-auth/metrics
+    static_configs:
+      - targets: ["backend:8000"]
+        labels:
+          service: marpich-iam
+          component: adaptive-auth
+
+  - job_name: marpich-iam-federation
+    metrics_path: /api/v1/federation/metrics
+    static_configs:
+      - targets: ["backend:8000"]
+        labels:
+          service: marpich-iam
+          component: identity-federation
+
+  - job_name: marpich-iam-federation-fabric
+    metrics_path: /api/v1/federation/fabric/metrics
+    static_configs:
+      - targets: ["backend:8000"]
+        labels:
+          service: marpich-iam
+          component: federation-fabric
+
+  - job_name: marpich-iam-federation-intelligence
+    metrics_path: /api/v1/federation/intelligence/metrics
+    static_configs:
+      - targets: ["backend:8000"]
+        labels:
+          service: marpich-iam
+          component: federation-intelligence
+
+  - job_name: marpich-iam-twin
+    metrics_path: /api/v1/identity-twins/metrics
+    static_configs:
+      - targets: ["backend:8000"]
+        labels:
+          service: marpich-iam
+          component: digital-twin
+
+  - job_name: marpich-backend-health
+    metrics_path: /api/v1/health
+    static_configs:
+      - targets: ["backend:8000"]
+        labels:
+          service: marpich-backend
+
+  - job_name: otel-collector
+    static_configs:
+      - targets: ["otel-collector:8888"]

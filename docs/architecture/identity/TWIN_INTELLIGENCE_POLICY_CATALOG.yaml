@@ -1,0 +1,38 @@
+# Twin Intelligence — Policy Engine keys (Prompt 199-C)
+version: 1
+prompt: V03-C02-P199-C
+adr: 208
+evaluator: policy_engine
+keys:
+  - key: twin.intelligence.enabled
+    description: Master gate for Twin Intelligence pack
+    default: false
+  - key: twin.prediction.enabled
+    description: Allow twin prediction requests
+  - key: twin.prediction.behavior.enabled
+  - key: twin.prediction.risk.enabled
+  - key: twin.prediction.fraud.enabled
+  - key: twin.simulation.enabled
+  - key: twin.simulation.monte_carlo.max_trials
+    type: integer
+  - key: twin.graph.enabled
+  - key: twin.graph.max_hops
+    type: integer
+    default: 5
+  - key: twin.graph.retention_days
+    type: integer
+  - key: twin.reasoning.enabled
+  - key: twin.recommendation.enabled
+  - key: twin.decision.autonomous.max_impact
+    description: advisory | guarded | critical ceiling without workflow
+    default: advisory
+  - key: twin.anomaly.alert.enabled
+  - key: twin.copilot.enabled
+  - key: twin.model.scope
+    description: tenant | shared | regional | global
+  - key: twin.federated_learning.enabled
+    default: false
+  - key: twin.model.retrain.on_drift
+    default: true
+  - key: twin.cross_tenant.analytics.enabled
+    default: false

@@ -1,0 +1,55 @@
+# Twin Observability Profile — Prompt 199-D2.2 · ADR-210
+apiVersion: marpich.io/v1
+kind: ObservabilityProfile
+metadata:
+  id: twin-observability
+  version: "1.0.0"
+  adr: 210
+  context_id: identity_digital_twin
+
+hub:
+  reuses: enterprise_observability
+  never_owns: [prometheus_cluster, grafana_cluster, elasticsearch_cluster]
+
+signals:
+  metrics:
+    prefix: marpich_twin_
+    scrape_path: /api/v1/identity-twins/metrics
+    prometheus_alerts: infrastructure/observability/prometheus/alerts/digital-twin.yml
+  logs:
+    envelope: docs/architecture/observability/LOG_ENVELOPE.v1.json
+    required_fields: [tenant_id, request_id, correlation_id, twin_ref]
+  traces:
+    protocol: otel
+    exporters: [tempo, jaeger, zipkin]
+
+dashboards:
+  grafana:
+    - digital-twin-overview
+    - digital-twin-sync
+    - digital-twin-intelligence
+  analytics_exec:
+    - twin_coverage
+    - twin_availability
+    - twin_business_kpi
+
+aiops:
+  anomaly_events: [identity_twin.anomaly.detected, identity_twin.drift.detected]
+  health_analyze: POST /api/v1/ai/health/analyze
+  forbidden: twin_local_llm
+
+integrations:
+  - prometheus
+  - grafana
+  - opentelemetry
+  - elastic
+  - loki
+  - tempo
+  - victoriametrics
+  - pagerduty
+  - opsgenie
+  - servicenow
+  - jira
+  - azure_monitor
+  - cloudwatch
+  - google_cloud_operations

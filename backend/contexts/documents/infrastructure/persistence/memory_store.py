@@ -58,6 +58,13 @@ class InMemoryDocumentRepository(IDocumentRepository):
         doc = DocumentsMemoryStore.documents.get(str(document_id))
         return doc if doc and doc.tenant_id == tenant_id else None
 
+    async def find_by_qr_token(self, qr_token: str) -> Document | None:
+        for doc in DocumentsMemoryStore.documents.values():
+            token = doc.qr_token or doc.metadata.get("qr_token")
+            if token == qr_token:
+                return doc
+        return None
+
     async def list_by_folder(self, tenant_id: str, folder_id: UniqueId) -> list[Document]:
         return [
             d
