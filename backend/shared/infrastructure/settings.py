@@ -1,9 +1,10 @@
 """Application settings."""
+from pydantic import AliasChoices, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore", populate_by_name=True)
 
     jwt_secret: str = "change-me-in-production-use-256-bit-key"
     jwt_access_ttl: int = 900
@@ -22,7 +23,14 @@ class Settings(BaseSettings):
 
     # Kafka fan-out (optional — external consumers)
     kafka_enabled: bool = False
-    kafka_bootstrap_servers: str = ""
+    kafka_bootstrap_servers: str = Field(
+        default="",
+        validation_alias=AliasChoices(
+            "kafka_bootstrap_servers",
+            "KAFKA_BOOTSTRAP_SERVERS",
+            "KAFKA_BROKERS",
+        ),
+    )
     kafka_topic_prefix: str = "marpich"
 
     # RabbitMQ fan-out (optional — queue-oriented delivery)
@@ -64,6 +72,9 @@ class Settings(BaseSettings):
     # PostgreSQL RLS (Phase P5) — defense-in-depth tenant isolation
     marpich_rls_enabled: bool = False
     marpich_principal_partition_modulus: int = 8
+    # Redis (shared platform cache — AuthZ decision cache, rate limits, etc.)
+    redis_url: str = ""
+    authz_decision_cache_backend: str = "memory"  # memory | redis
     # orchestration worker: polls retry/delayed/scheduled queues
     marpich_orchestration_worker_enabled: bool = True
     marpich_orchestration_worker_poll_interval_ms: int = 1000

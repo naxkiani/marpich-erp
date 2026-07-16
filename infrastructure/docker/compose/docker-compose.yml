@@ -14,7 +14,7 @@ services:
       - "5432:5432"
     volumes:
       - marpich_pg:/var/lib/postgresql/data
-      - ../migrations:/docker-entrypoint-initdb.d:ro
+      - ../init-db.sql:/docker-entrypoint-initdb.d/01_init.sql:ro
 
   redis:
     image: redis:7-alpine
@@ -42,7 +42,8 @@ services:
     environment:
       DATABASE_URL: postgresql://marpich:marpich@postgres:5432/marpich_platform
       REDIS_URL: redis://redis:6379
-      KAFKA_BROKERS: kafka:9092
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      KAFKA_ENABLED: "true"
     depends_on:
       - postgres
       - redis

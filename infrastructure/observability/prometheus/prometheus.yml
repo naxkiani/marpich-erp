@@ -6,13 +6,23 @@ rule_files:
   - /etc/prometheus/alerts/adaptive-auth.yml
   - /etc/prometheus/alerts/identity-federation.yml
   - /etc/prometheus/alerts/digital-twin.yml
+  - /etc/prometheus/alerts/platform.yml
 
-alerting:
-  alertmanagers:
-    - static_configs:
-        - targets: ["alertmanager:9093"]
+# Alertmanager is optional for local dev — enable when alertmanager service is running.
+# alerting:
+#   alertmanagers:
+#     - static_configs:
+#         - targets: ["alertmanager:9093"]
 
 scrape_configs:
+  - job_name: marpich-platform-observability
+    metrics_path: /api/v1/enterprise-observability/metrics
+    static_configs:
+      - targets: ["backend:8000"]
+        labels:
+          service: marpich-platform
+          component: observability
+
   - job_name: marpich-iam
     metrics_path: /api/v1/adaptive-auth/metrics
     static_configs:

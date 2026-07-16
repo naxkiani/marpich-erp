@@ -18,8 +18,11 @@
     "typecheck": "turbo run typecheck",
     "format": "prettier --write \"**/*.{ts,tsx,json,md}\"",
     "db:migrate": "turbo run db:migrate",
-    "docker:up": "docker compose -f infrastructure/docker/docker-compose.yml up -d",
-    "docker:down": "docker compose -f infrastructure/docker/docker-compose.yml down"
+    "db:migrate:local": "./scripts/run-migrations.sh",
+    "dev:infra": "./scripts/dev-up.sh",
+    "docker:up": "docker compose -f infrastructure/docker/compose/docker-compose.dev.yml up -d",
+    "docker:up:obs": "COMPOSE_PROFILES=observability ./scripts/dev-up.sh",
+    "docker:down": "docker compose -f infrastructure/docker/compose/docker-compose.dev.yml down"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
