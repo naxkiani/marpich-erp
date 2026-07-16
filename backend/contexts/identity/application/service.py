@@ -612,6 +612,36 @@ class IdentityApplicationService:
             }
         )
 
+    async def seed_pharmacy_personas(self, tenant_id: str) -> Result[dict]:
+        """Ensure pharmacy_staff system role for dispensing tenants."""
+        created: list[str] = []
+        staff = await self._roles.find_by_code(tenant_id, "pharmacy_staff")
+        if not staff:
+            staff = Role.create_pharmacy_staff(tenant_id)
+            await self._roles.save(staff)
+            created.append("pharmacy_staff")
+        return Result.ok(
+            {
+                "pharmacy_staff_role_id": str(staff.id),
+                "created": created,
+            }
+        )
+
+    async def seed_laboratory_personas(self, tenant_id: str) -> Result[dict]:
+        """Ensure laboratory_staff system role for LIMS tenants."""
+        created: list[str] = []
+        staff = await self._roles.find_by_code(tenant_id, "laboratory_staff")
+        if not staff:
+            staff = Role.create_laboratory_staff(tenant_id)
+            await self._roles.save(staff)
+            created.append("laboratory_staff")
+        return Result.ok(
+            {
+                "laboratory_staff_role_id": str(staff.id),
+                "created": created,
+            }
+        )
+
     async def assign_user_roles(
         self,
         *,

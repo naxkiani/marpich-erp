@@ -735,7 +735,7 @@ HOSPITAL = BoundedContext(
         "hospital.encounter.started",
         "hospital.encounter.completed",
     ),
-    subscribes=("identity.user.created", "laboratory.result.finalized"),
+    subscribes=("identity.user.created", "laboratory.result.available"),
 )
 
 CLINIC = BoundedContext(
@@ -750,7 +750,7 @@ CLINIC = BoundedContext(
         "clinic.encounter.completed",
         "clinic.referral.sent",
     ),
-    subscribes=("identity.user.created", "laboratory.result.finalized"),
+    subscribes=("identity.user.created", "laboratory.result.available"),
 )
 
 LABORATORY = BoundedContext(
@@ -758,12 +758,12 @@ LABORATORY = BoundedContext(
     display_name="Laboratory",
     context_type=BoundedContextType.INDUSTRY,
     schema_name="laboratory",
-    description="LIMS, samples, results, QC",
+    description="LIMS — CAP-HLT-007 order, sample, result (never merge with pharmacy/clinic/hospital)",
     publishes=(
         "laboratory.sample.received",
-        "laboratory.result.finalized",
+        "laboratory.result.available",
     ),
-    subscribes=("hospital.encounter.completed",),
+    subscribes=("hospital.encounter.completed", "hospital.encounter.started"),
 )
 
 PHARMACY = BoundedContext(
@@ -771,10 +771,10 @@ PHARMACY = BoundedContext(
     display_name="Pharmacy",
     context_type=BoundedContextType.INDUSTRY,
     schema_name="pharmacy",
-    description="Dispensing, prescriptions, drug inventory",
+    description="Dispensing — CAP-HLT-008 prescribe→dispense (never merge with lab/clinic/hospital)",
     publishes=(
-        "pharmacy.prescription.dispensed",
-        "pharmacy.stock.depleted",
+        "pharmacy.prescription.received",
+        "pharmacy.dispense.completed",
     ),
     subscribes=("hospital.encounter.completed", "inventory.stock.adjusted"),
 )

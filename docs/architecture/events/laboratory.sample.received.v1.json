@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "laboratory.sample.received.v1",
+  "type": "object",
+  "required": ["sample_id", "order_id", "accession_number", "patient_ref"],
+  "properties": {
+    "sample_id": { "type": "string", "format": "uuid" },
+    "order_id": { "type": "string", "format": "uuid" },
+    "accession_number": { "type": "string" },
+    "patient_ref": { "type": "string" }
+  },
+  "additionalProperties": false
+}

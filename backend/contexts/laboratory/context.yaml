@@ -1,17 +1,42 @@
 context: laboratory
+architecture_version: "1.0"
 display_name: Laboratory
 type: industry
-description: "LIMS \u2014 samples, tests, results, QC"
+description: "LIMS — CAP-HLT-007 order→sample→result (never merge with hospital/clinic/pharmacy)"
+capability_ids:
+  - CAP-HLT-007
 aggregates:
-- Sample
-- TestOrder
-- TestResult
-- QualityControl
+  - TestOrder
+  - Sample
 publishes:
-- laboratory.sample.received
-- laboratory.result.available
-- laboratory.qc.failed
+  - laboratory.sample.received
+  - laboratory.result.available
 subscribes:
-- hospital.encounter.started
-- hospital.clinical.order.placed
+  - hospital.encounter.completed
+  - hospital.encounter.started
 schema: laboratory
+permissions:
+  - laboratory.orders.read
+  - laboratory.orders.write
+  - laboratory.samples.read
+  - laboratory.samples.write
+  - laboratory.results.write
+ai:
+  surfaces:
+    - insights
+    - recommendations
+    - summaries
+    - search
+    - assistant
+    - automation
+    - document_intelligence
+    - voice_commands
+    - chat
+    - report_explanation
+    - anomaly_detection
+    - forecasting
+    - optimization
+    - predictions
+  prompt_templates:
+    - laboratory.result.summary
+    - laboratory.order.priority

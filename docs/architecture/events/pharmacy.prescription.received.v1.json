@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "pharmacy.prescription.received.v1",
+  "type": "object",
+  "required": ["prescription_id", "rx_number", "patient_ref", "drug_code"],
+  "properties": {
+    "prescription_id": { "type": "string", "format": "uuid" },
+    "rx_number": { "type": "string" },
+    "patient_ref": { "type": "string" },
+    "drug_code": { "type": "string" }
+  },
+  "additionalProperties": false
+}

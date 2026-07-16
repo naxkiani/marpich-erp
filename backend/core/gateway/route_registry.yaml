@@ -212,6 +212,12 @@ business_routes:
   - prefix: /api/v1/clinic
     context_id: clinic
     module: clinic
+  - prefix: /api/v1/pharmacy
+    context_id: pharmacy
+    module: pharmacy
+  - prefix: /api/v1/laboratory
+    context_id: laboratory
+    module: laboratory
   - prefix: /api/v1/university
     context_id: university
     module: university

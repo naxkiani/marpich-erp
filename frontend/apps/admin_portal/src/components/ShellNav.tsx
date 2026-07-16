@@ -12,6 +12,8 @@ const LINKS = [
   { href: "/education/university", label: "University" },
   { href: "/healthcare/clinic", label: "Clinic" },
   { href: "/healthcare/hospital", label: "Hospital" },
+  { href: "/healthcare/pharmacy", label: "Pharmacy" },
+  { href: "/healthcare/laboratory", label: "Laboratory" },
   { href: "/enterprise/document-studio", label: "Document Studio" },
   { href: "/enterprise/messenger", label: "Messenger" },
   { href: "/enterprise/federation", label: "Federation" },

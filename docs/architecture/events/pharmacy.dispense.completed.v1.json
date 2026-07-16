@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "pharmacy.dispense.completed.v1",
+  "type": "object",
+  "required": ["dispense_id", "prescription_id", "patient_ref", "drug_code", "quantity_dispensed"],
+  "properties": {
+    "dispense_id": { "type": "string", "format": "uuid" },
+    "prescription_id": { "type": "string", "format": "uuid" },
+    "patient_ref": { "type": "string" },
+    "drug_code": { "type": "string" },
+    "quantity_dispensed": { "type": "number" }
+  },
+  "additionalProperties": false
+}

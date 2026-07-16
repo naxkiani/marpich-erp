@@ -19,7 +19,7 @@ publishes:
   - clinic.referral.sent
 subscribes:
   - identity.user.created
-  - laboratory.result.finalized
+  - laboratory.result.available
 schema: clinic
 permissions:
   - clinic.patients.read

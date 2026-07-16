@@ -135,6 +135,49 @@ class Role(AggregateRoot):
             ],
         )
 
+    @classmethod
+    def create_pharmacy_staff(cls, tenant_id: str) -> Role:
+        """Pharmacy staff — CAP-HLT-008 dispensing (not hospital/clinic/lab)."""
+        return cls(
+            id=UniqueId.generate(),
+            tenant_id=tenant_id,
+            code="pharmacy_staff",
+            name="Pharmacy Staff",
+            description="Pharmacy staff — prescriptions and dispenses",
+            is_system=True,
+            permission_ids=[
+                "pharmacy.prescriptions.read",
+                "pharmacy.prescriptions.write",
+                "pharmacy.dispenses.read",
+                "pharmacy.dispenses.write",
+                "documents.read",
+                "documents.write",
+                "audit.entries.read",
+            ],
+        )
+
+    @classmethod
+    def create_laboratory_staff(cls, tenant_id: str) -> Role:
+        """Laboratory staff — CAP-HLT-007 LIMS (not hospital/clinic/pharmacy)."""
+        return cls(
+            id=UniqueId.generate(),
+            tenant_id=tenant_id,
+            code="laboratory_staff",
+            name="Laboratory Staff",
+            description="Laboratory staff — orders, samples, results",
+            is_system=True,
+            permission_ids=[
+                "laboratory.orders.read",
+                "laboratory.orders.write",
+                "laboratory.samples.read",
+                "laboratory.samples.write",
+                "laboratory.results.write",
+                "documents.read",
+                "documents.write",
+                "audit.entries.read",
+            ],
+        )
+
     def to_dict(self) -> dict:
         return {
             "id": str(self.id),
