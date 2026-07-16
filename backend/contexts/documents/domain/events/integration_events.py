@@ -70,6 +70,9 @@ class DocumentSignedIntegration(IntegrationEvent):
     document_id: UniqueId
     signature_request_id: UniqueId
     signers: list[str]
+    algorithm: str | None = None
+    key_id: str | None = None
+    content_checksum: str | None = None
 
     @property
     def event_name(self) -> str:
@@ -81,13 +84,16 @@ class DocumentSignedIntegration(IntegrationEvent):
 
     @property
     def event_version(self) -> int:
-        return 1
+        return 2
 
     def to_payload(self) -> dict:
         return {
             "document_id": str(self.document_id),
             "signature_request_id": str(self.signature_request_id),
             "signers": self.signers,
+            "algorithm": self.algorithm,
+            "key_id": self.key_id,
+            "content_checksum": self.content_checksum,
         }
 
 

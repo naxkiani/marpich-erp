@@ -1,13 +1,16 @@
-"""Clinic application service."""
+"""Clinic application service — CAP-HLT-002/003 outpatient lifecycle.
+
+Audit via integration events → Audit Platform (no local audit tables / console prints).
+"""
 from __future__ import annotations
 
-import json
-from datetime import UTC, datetime
+from datetime import datetime
 
 from contexts.clinic.domain.aggregates.appointment import Appointment
 from contexts.clinic.domain.aggregates.outpatient_encounter import OutpatientEncounter
 from contexts.clinic.domain.aggregates.patient import ClinicPatient
 from contexts.clinic.domain.aggregates.referral import Referral
+from contexts.clinic.domain.events.integration_events import PatientRegisteredIntegration
 from contexts.clinic.domain.ports.repositories import (
     IAppointmentRepository,
     IClinicPatientRepository,
@@ -15,14 +18,9 @@ from contexts.clinic.domain.ports.repositories import (
     IReferralRepository,
 )
 from shared.application.result import Result
+from shared.domain.value_objects.tenant_id import TenantId
 from shared.domain.value_objects.unique_id import UniqueId
 from shared.infrastructure.messaging.event_bus import publish_integration_event
-
-
-class ConsoleClinicAudit:
-    async def log(self, **kwargs: object) -> None:
-        entry = {"type": "audit", "context": "clinic", **kwargs, "occurred_at": datetime.now(UTC).isoformat()}
-        print(json.dumps(entry, default=str))
 
 
 class ClinicApplicationService:
@@ -32,13 +30,11 @@ class ClinicApplicationService:
         appointments: IAppointmentRepository,
         encounters: IOutpatientEncounterRepository,
         referrals: IReferralRepository,
-        audit: ConsoleClinicAudit | None = None,
     ) -> None:
         self._patients = patients
         self._appointments = appointments
         self._encounters = encounters
         self._referrals = referrals
-        self._audit = audit or ConsoleClinicAudit()
 
     async def register_patient(
         self,
@@ -49,6 +45,7 @@ class ClinicApplicationService:
         last_name: str,
         date_of_birth: str,
         correlation_id: str,
+        document_id: str | None = None,
     ) -> Result[dict]:
         if await self._patients.find_by_number(tenant_id, patient_number):
             return Result.fail("clinic.errors.patient_number_exists")
@@ -59,20 +56,35 @@ class ClinicApplicationService:
             first_name=first_name,
             last_name=last_name,
             date_of_birth=date_of_birth,
+            document_id=document_id,
         )
         await self._patients.save(patient)
-        await self._audit.log(
-            tenant_id=tenant_id,
-            correlation_id=correlation_id,
-            action="clinic.patient.registered",
-            resource_type="patient",
-            resource_id=str(patient.id),
+        await publish_integration_event(
+            PatientRegisteredIntegration(
+                tenant_id=TenantId.create(tenant_id),
+                correlation_id=correlation_id,
+                patient_id=patient.id,
+                patient_number=patient.patient_number,
+                full_name=patient.full_name,
+            )
         )
         return Result.ok(patient.to_dict())
 
-    async def list_patients(self, tenant_id: str) -> Result[list[dict]]:
+    async def list_patients(
+        self, tenant_id: str, *, limit: int = 50, offset: int = 0
+    ) -> Result[dict]:
+        limit = max(1, min(limit, 100))
+        offset = max(0, offset)
         patients = await self._patients.list_patients(tenant_id)
-        return Result.ok([p.to_dict() for p in patients])
+        page = patients[offset : offset + limit]
+        return Result.ok(
+            {
+                "items": [p.to_dict() for p in page],
+                "total": len(patients),
+                "limit": limit,
+                "offset": offset,
+            }
+        )
 
     async def schedule_appointment(
         self,
@@ -96,44 +108,74 @@ class ClinicApplicationService:
         )
         await self._appointments.save(appointment)
         await publish_integration_event(event)
-        await self._audit.log(
-            tenant_id=tenant_id,
-            correlation_id=correlation_id,
-            action="clinic.appointment.scheduled",
-            resource_type="appointment",
-            resource_id=str(appointment.id),
-        )
         return Result.ok(appointment.to_dict())
 
-    async def list_appointments(self, tenant_id: str) -> Result[list[dict]]:
+    async def list_appointments(
+        self, tenant_id: str, *, limit: int = 50, offset: int = 0
+    ) -> Result[dict]:
+        limit = max(1, min(limit, 100))
+        offset = max(0, offset)
         appointments = await self._appointments.list_scheduled(tenant_id)
-        return Result.ok([a.to_dict() for a in appointments])
+        page = appointments[offset : offset + limit]
+        return Result.ok(
+            {
+                "items": [a.to_dict() for a in page],
+                "total": len(appointments),
+                "limit": limit,
+                "offset": offset,
+            }
+        )
 
     async def start_encounter(
         self,
         *,
         tenant_id: str,
-        appointment_id: str,
         correlation_id: str,
+        appointment_id: str | None = None,
+        patient_id: str | None = None,
     ) -> Result[dict]:
-        appointment = await self._appointments.find_by_id(tenant_id, UniqueId.from_string(appointment_id))
-        if not appointment:
-            return Result.fail("clinic.errors.appointment_not_found")
+        appt_uid: UniqueId | None = None
+        patient_uid: UniqueId | None = None
+
+        if appointment_id:
+            appointment = await self._appointments.find_by_id(
+                tenant_id, UniqueId.from_string(appointment_id)
+            )
+            if not appointment:
+                return Result.fail("clinic.errors.appointment_not_found")
+            appt_uid = appointment.id
+            patient_uid = appointment.patient_id
+        elif patient_id:
+            patient = await self._patients.find_by_id(tenant_id, UniqueId.from_string(patient_id))
+            if not patient:
+                return Result.fail("clinic.errors.patient_not_found")
+            patient_uid = patient.id
+        else:
+            return Result.fail("clinic.errors.appointment_or_patient_required")
 
         encounter = OutpatientEncounter.start(
             tenant_id=tenant_id,
-            patient_id=appointment.patient_id,
-            appointment_id=appointment.id,
+            patient_id=patient_uid,
+            appointment_id=appt_uid,
         )
         await self._encounters.save(encounter)
-        await self._audit.log(
-            tenant_id=tenant_id,
-            correlation_id=correlation_id,
-            action="clinic.encounter.started",
-            resource_type="encounter",
-            resource_id=str(encounter.id),
-        )
         return Result.ok(encounter.to_dict())
+
+    async def list_encounters(
+        self, tenant_id: str, *, limit: int = 50, offset: int = 0
+    ) -> Result[dict]:
+        limit = max(1, min(limit, 100))
+        offset = max(0, offset)
+        encounters = await self._encounters.list_encounters(tenant_id)
+        page = encounters[offset : offset + limit]
+        return Result.ok(
+            {
+                "items": [e.to_dict() for e in page],
+                "total": len(encounters),
+                "limit": limit,
+                "offset": offset,
+            }
+        )
 
     async def complete_encounter(
         self,
@@ -143,24 +185,21 @@ class ClinicApplicationService:
         diagnosis_codes: list[str] | None,
         correlation_id: str,
     ) -> Result[dict]:
-        encounter = await self._encounters.find_by_id(tenant_id, UniqueId.from_string(encounter_id))
+        encounter = await self._encounters.find_by_id(
+            tenant_id, UniqueId.from_string(encounter_id)
+        )
         if not encounter:
             return Result.fail("clinic.errors.encounter_not_found")
 
         try:
-            event = encounter.complete(correlation_id=correlation_id, diagnosis_codes=diagnosis_codes)
+            event = encounter.complete(
+                correlation_id=correlation_id, diagnosis_codes=diagnosis_codes
+            )
         except ValueError as exc:
             return Result.fail(str(exc))
 
         await self._encounters.save(encounter)
         await publish_integration_event(event)
-        await self._audit.log(
-            tenant_id=tenant_id,
-            correlation_id=correlation_id,
-            action="clinic.encounter.completed",
-            resource_type="encounter",
-            resource_id=str(encounter.id),
-        )
         return Result.ok(encounter.to_dict())
 
     async def create_referral(
@@ -173,7 +212,9 @@ class ClinicApplicationService:
         correlation_id: str,
         send: bool = False,
     ) -> Result[dict]:
-        encounter = await self._encounters.find_by_id(tenant_id, UniqueId.from_string(encounter_id))
+        encounter = await self._encounters.find_by_id(
+            tenant_id, UniqueId.from_string(encounter_id)
+        )
         if not encounter:
             return Result.fail("clinic.errors.encounter_not_found")
 
@@ -192,11 +233,4 @@ class ClinicApplicationService:
             await publish_integration_event(event)
 
         await self._referrals.save(referral)
-        await self._audit.log(
-            tenant_id=tenant_id,
-            correlation_id=correlation_id,
-            action="clinic.referral.sent" if send else "clinic.referral.created",
-            resource_type="referral",
-            resource_id=str(referral.id),
-        )
         return Result.ok(referral.to_dict())

@@ -1,4 +1,8 @@
-"""Clinic patient aggregate — ambulatory care."""
+"""Clinic patient aggregate — ambulatory care (CAP-HLT-002).
+
+Stores document_id references only — clinical files live in Document Exchange.
+Never share tables with hospital.patient.
+"""
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -15,6 +19,8 @@ class ClinicPatient(AggregateRoot):
     first_name: str
     last_name: str
     date_of_birth: str
+    document_id: str | None = None
+    identity_user_id: str | None = None
     created_at: datetime = field(default_factory=lambda: datetime.now(UTC))
 
     @classmethod
@@ -26,6 +32,8 @@ class ClinicPatient(AggregateRoot):
         first_name: str,
         last_name: str,
         date_of_birth: str,
+        document_id: str | None = None,
+        identity_user_id: str | None = None,
     ) -> ClinicPatient:
         return cls(
             id=UniqueId.generate(),
@@ -34,11 +42,16 @@ class ClinicPatient(AggregateRoot):
             first_name=first_name.strip(),
             last_name=last_name.strip(),
             date_of_birth=date_of_birth,
+            document_id=document_id,
+            identity_user_id=identity_user_id,
         )
 
     @property
     def full_name(self) -> str:
         return f"{self.first_name} {self.last_name}"
+
+    def attach_chart_document(self, document_id: str) -> None:
+        self.document_id = document_id
 
     def to_dict(self) -> dict:
         return {
@@ -49,5 +62,7 @@ class ClinicPatient(AggregateRoot):
             "last_name": self.last_name,
             "full_name": self.full_name,
             "date_of_birth": self.date_of_birth,
+            "document_id": self.document_id,
+            "identity_user_id": self.identity_user_id,
             "created_at": self.created_at.isoformat(),
         }

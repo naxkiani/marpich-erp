@@ -1,19 +1,48 @@
 context: hospital
+architecture_version: "1.0"
 display_name: Hospital
 type: industry
-description: EMR, admissions, encounters, clinical workflows
+description: "Acute care — CAP-HLT-001 patient lifecycle (register, admit, encounter). Never merge with clinic."
+capability_ids:
+  - CAP-HLT-001
+  - CAP-HLT-005
 aggregates:
-- Patient
-- Admission
-- Encounter
-- ClinicalOrder
-- Bed
+  - Patient
+  - Admission
+  - Encounter
 publishes:
-- hospital.admission.registered
-- hospital.encounter.started
-- hospital.encounter.completed
+  - hospital.patient.registered
+  - hospital.admission.registered
+  - hospital.encounter.started
+  - hospital.encounter.completed
 subscribes:
-- identity.user.created
-- laboratory.result.available
-- pharmacy.dispense.completed
+  - identity.user.created
+  - laboratory.result.available
+  - pharmacy.dispense.completed
 schema: hospital
+permissions:
+  - hospital.patients.read
+  - hospital.patients.write
+  - hospital.admissions.read
+  - hospital.admissions.write
+  - hospital.encounters.read
+  - hospital.encounters.write
+ai:
+  surfaces:
+    - insights
+    - recommendations
+    - summaries
+    - search
+    - assistant
+    - automation
+    - document_intelligence
+    - voice_commands
+    - chat
+    - report_explanation
+    - anomaly_detection
+    - forecasting
+    - optimization
+    - predictions
+  prompt_templates:
+    - hospital.encounter.summary
+    - hospital.admission.risk_flags

@@ -207,6 +207,10 @@ class PostgresSignatureRepository(ISignatureRepository):
                         requester_id=request.requester_id,
                         signers=request.signers,
                         status=request.status.value,
+                        algorithm=request.algorithm,
+                        signature_hash=request.signature_hash,
+                        content_checksum=request.content_checksum,
+                        key_id=request.key_id,
                         created_at=request.created_at,
                         completed_at=request.completed_at,
                     )
@@ -214,6 +218,10 @@ class PostgresSignatureRepository(ISignatureRepository):
             else:
                 row.status = request.status.value
                 row.completed_at = request.completed_at
+                row.algorithm = request.algorithm
+                row.signature_hash = request.signature_hash
+                row.content_checksum = request.content_checksum
+                row.key_id = request.key_id
 
     async def find_by_document(
         self, tenant_id: str, document_id: UniqueId
@@ -283,6 +291,10 @@ def _signature_from_row(row: SignatureRequestRow) -> SignatureRequest:
         requester_id=row.requester_id,
         signers=row.signers,
         status=SignatureStatus(row.status),
+        algorithm=row.algorithm,
+        signature_hash=row.signature_hash,
+        content_checksum=row.content_checksum,
+        key_id=row.key_id,
         created_at=row.created_at,
         completed_at=row.completed_at,
     )

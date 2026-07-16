@@ -57,3 +57,31 @@ class ConversationOpenedIntegration(IntegrationEvent):
             "title": self.title,
             "e2ee_enabled": self.e2ee_enabled,
         }
+
+
+@dataclass(frozen=True, kw_only=True)
+class LiveKitTokenIssuedIntegration(IntegrationEvent):
+    conversation_id: UniqueId
+    room_name: str
+    identity: str
+    simulated: bool
+
+    @property
+    def event_name(self) -> str:
+        return "messenger.livekit.token_issued"
+
+    @property
+    def source_context(self) -> str:
+        return "messenger"
+
+    @property
+    def event_version(self) -> int:
+        return 1
+
+    def to_payload(self) -> dict:
+        return {
+            "conversation_id": str(self.conversation_id),
+            "room_name": self.room_name,
+            "identity": self.identity,
+            "simulated": self.simulated,
+        }

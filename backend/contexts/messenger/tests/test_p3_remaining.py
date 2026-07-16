@@ -105,17 +105,28 @@ async def test_messenger_conversation_message_and_livekit_token(client):
     assert data["e2ee_enabled"] is True
     assert data["livekit_room_name"]
     assert data["livekit_token"].startswith("lk_")
+    assert data.get("livekit_simulated") is True
     conversation_id = data["id"]
 
-    # sender must be a member — add current user was auto-appended
-    sent = await client.post(
+    # E2EE: client supplies ciphertext — server must not accept plaintext
+    rejected = await client.post(
         f"/api/v1/messenger/conversations/{conversation_id}/messages",
         json={"body": "hello encrypted"},
         headers=headers,
     )
+    assert rejected.status_code == 400
+
+    sent = await client.post(
+        f"/api/v1/messenger/conversations/{conversation_id}/messages",
+        json={
+            "ciphertext": "v1:client-ciphertext",
+            "ciphertext_type": "application/x-marpich-e2ee",
+        },
+        headers=headers,
+    )
     assert sent.status_code == 201, sent.text
     msg = sent.json()["data"]
-    assert msg["ciphertext"]
+    assert msg["ciphertext"] == "v1:client-ciphertext"
     assert msg["body"] == ""
 
 

@@ -8,7 +8,13 @@ from contexts.university.infrastructure.persistence.memory_store import (
     InMemoryGradeRepository,
     InMemoryStudentRepository,
 )
+from contexts.university.infrastructure.persistence.postgres_store import (
+    PostgresCourseRepository,
+    PostgresGradeRepository,
+    PostgresStudentRepository,
+)
 from shared.infrastructure.messaging.event_bus import InProcessEventBus
+from shared.infrastructure.settings import use_postgres
 
 _service: UniversityApplicationService | None = None
 _registered = False
@@ -22,11 +28,18 @@ _LMS_EVENTS = (
 def get_university_service() -> UniversityApplicationService:
     global _service, _registered
     if _service is None:
-        _service = UniversityApplicationService(
-            students=InMemoryStudentRepository(),
-            courses=InMemoryCourseRepository(),
-            grades=InMemoryGradeRepository(),
-        )
+        if use_postgres():
+            _service = UniversityApplicationService(
+                students=PostgresStudentRepository(),
+                courses=PostgresCourseRepository(),
+                grades=PostgresGradeRepository(),
+            )
+        else:
+            _service = UniversityApplicationService(
+                students=InMemoryStudentRepository(),
+                courses=InMemoryCourseRepository(),
+                grades=InMemoryGradeRepository(),
+            )
     if not _registered:
         for name in _LMS_EVENTS:
             InProcessEventBus.subscribe(name, handle_lms_batch_synced)

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "laboratory.result.available.v1",
+  "type": "object",
+  "required": ["order_id", "patient_ref", "test_code", "result_value"],
+  "properties": {
+    "order_id": { "type": "string", "format": "uuid" },
+    "patient_ref": { "type": "string" },
+    "test_code": { "type": "string" },
+    "result_value": { "type": "string" },
+    "result_unit": { "type": ["string", "null"] }
+  },
+  "additionalProperties": false
+}

@@ -77,6 +77,107 @@ class Role(AggregateRoot):
             ],
         )
 
+    @classmethod
+    def create_clinic_staff(cls, tenant_id: str) -> Role:
+        """Clinic staff — outpatient ERP surfaces (not hospital acute)."""
+        return cls(
+            id=UniqueId.generate(),
+            tenant_id=tenant_id,
+            code="clinic_staff",
+            name="Clinic Staff",
+            description="Outpatient clinic staff — patients, appointments, encounters",
+            is_system=True,
+            permission_ids=[
+                "clinic.patients.read",
+                "clinic.patients.write",
+                "clinic.appointments.read",
+                "clinic.appointments.write",
+                "clinic.encounters.read",
+                "clinic.encounters.write",
+                "clinic.referrals.read",
+                "clinic.referrals.write",
+                "documents.read",
+                "documents.write",
+                "documents.file.read",
+                "documents.file.write",
+                "workflow.definitions.read",
+                "workflow.tasks.complete",
+                "workflow.instances.read",
+                "audit.entries.read",
+            ],
+        )
+
+    @classmethod
+    def create_hospital_staff(cls, tenant_id: str) -> Role:
+        """Hospital staff — acute CAP-HLT-001 surfaces (not clinic ambulatory)."""
+        return cls(
+            id=UniqueId.generate(),
+            tenant_id=tenant_id,
+            code="hospital_staff",
+            name="Hospital Staff",
+            description="Acute hospital staff — patients, admissions, encounters",
+            is_system=True,
+            permission_ids=[
+                "hospital.patients.read",
+                "hospital.patients.write",
+                "hospital.admissions.read",
+                "hospital.admissions.write",
+                "hospital.encounters.read",
+                "hospital.encounters.write",
+                "documents.read",
+                "documents.write",
+                "documents.file.read",
+                "documents.file.write",
+                "workflow.definitions.read",
+                "workflow.tasks.complete",
+                "workflow.instances.read",
+                "audit.entries.read",
+            ],
+        )
+
+    @classmethod
+    def create_pharmacy_staff(cls, tenant_id: str) -> Role:
+        """Pharmacy staff — CAP-HLT-008 dispensing (not hospital/clinic/lab)."""
+        return cls(
+            id=UniqueId.generate(),
+            tenant_id=tenant_id,
+            code="pharmacy_staff",
+            name="Pharmacy Staff",
+            description="Pharmacy staff — prescriptions and dispenses",
+            is_system=True,
+            permission_ids=[
+                "pharmacy.prescriptions.read",
+                "pharmacy.prescriptions.write",
+                "pharmacy.dispenses.read",
+                "pharmacy.dispenses.write",
+                "documents.read",
+                "documents.write",
+                "audit.entries.read",
+            ],
+        )
+
+    @classmethod
+    def create_laboratory_staff(cls, tenant_id: str) -> Role:
+        """Laboratory staff — CAP-HLT-007 LIMS (not hospital/clinic/pharmacy)."""
+        return cls(
+            id=UniqueId.generate(),
+            tenant_id=tenant_id,
+            code="laboratory_staff",
+            name="Laboratory Staff",
+            description="Laboratory staff — orders, samples, results",
+            is_system=True,
+            permission_ids=[
+                "laboratory.orders.read",
+                "laboratory.orders.write",
+                "laboratory.samples.read",
+                "laboratory.samples.write",
+                "laboratory.results.write",
+                "documents.read",
+                "documents.write",
+                "audit.entries.read",
+            ],
+        )
+
     def to_dict(self) -> dict:
         return {
             "id": str(self.id),

@@ -1,1 +1,1 @@
-{"api_key": {"type": "string"}, "ttl_seconds": {"type": "integer"}}
+{"api_key": {"type": "string"}, "api_secret": {"type": "string"}, "url": {"type": "string"}, "ws_url": {"type": "string"}, "ttl_seconds": {"type": "integer"}, "environment": {"type": "string"}}

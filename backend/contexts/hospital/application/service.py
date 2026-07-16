@@ -1,26 +1,26 @@
-"""Hospital application service."""
-from __future__ import annotations
+"""Hospital application service — CAP-HLT-001 acute patient lifecycle.
 
-import json
-from datetime import UTC, datetime
+Audit via integration events → Audit Platform (no console / local audit tables).
+Admission required before encounter (no clinic-style walk-in).
+"""
+from __future__ import annotations
 
 from contexts.hospital.domain.aggregates.admission import Admission
 from contexts.hospital.domain.aggregates.encounter import Encounter
 from contexts.hospital.domain.aggregates.patient import Patient
+from contexts.hospital.domain.events.integration_events import (
+    EncounterStartedIntegration,
+    PatientRegisteredIntegration,
+)
 from contexts.hospital.domain.ports.repositories import (
     IAdmissionRepository,
     IEncounterRepository,
     IPatientRepository,
 )
 from shared.application.result import Result
+from shared.domain.value_objects.tenant_id import TenantId
 from shared.domain.value_objects.unique_id import UniqueId
 from shared.infrastructure.messaging.event_bus import publish_integration_event
-
-
-class ConsoleHospitalAudit:
-    async def log(self, **kwargs: object) -> None:
-        entry = {"type": "audit", "context": "hospital", **kwargs, "occurred_at": datetime.now(UTC).isoformat()}
-        print(json.dumps(entry, default=str))
 
 
 class HospitalApplicationService:
@@ -29,12 +29,10 @@ class HospitalApplicationService:
         patients: IPatientRepository,
         admissions: IAdmissionRepository,
         encounters: IEncounterRepository,
-        audit: ConsoleHospitalAudit | None = None,
     ) -> None:
         self._patients = patients
         self._admissions = admissions
         self._encounters = encounters
-        self._audit = audit or ConsoleHospitalAudit()
 
     async def register_patient(
         self,
@@ -58,14 +56,32 @@ class HospitalApplicationService:
             date_of_birth=date_of_birth,
         )
         await self._patients.save(patient)
-        await self._audit.log(
-            tenant_id=tenant_id,
-            correlation_id=correlation_id,
-            action="hospital.patient.registered",
-            resource_type="patient",
-            resource_id=str(patient.id),
+        await publish_integration_event(
+            PatientRegisteredIntegration(
+                tenant_id=TenantId.create(tenant_id),
+                correlation_id=correlation_id,
+                patient_id=patient.id,
+                mrn=patient.mrn,
+                full_name=patient.full_name,
+            )
         )
         return Result.ok(patient.to_dict())
+
+    async def list_patients(
+        self, tenant_id: str, *, limit: int = 50, offset: int = 0
+    ) -> Result[dict]:
+        limit = max(1, min(limit, 100))
+        offset = max(0, offset)
+        patients = await self._patients.list_patients(tenant_id)
+        page = patients[offset : offset + limit]
+        return Result.ok(
+            {
+                "items": [p.to_dict() for p in page],
+                "total": len(patients),
+                "limit": limit,
+                "offset": offset,
+            }
+        )
 
     async def admit_patient(
         self,
@@ -87,14 +103,23 @@ class HospitalApplicationService:
         )
         await self._admissions.save(admission)
         await publish_integration_event(event)
-        await self._audit.log(
-            tenant_id=tenant_id,
-            correlation_id=correlation_id,
-            action="hospital.admission.registered",
-            resource_type="admission",
-            resource_id=str(admission.id),
-        )
         return Result.ok(admission.to_dict())
+
+    async def list_admissions(
+        self, tenant_id: str, *, limit: int = 50, offset: int = 0
+    ) -> Result[dict]:
+        limit = max(1, min(limit, 100))
+        offset = max(0, offset)
+        admissions = await self._admissions.list_admissions(tenant_id)
+        page = admissions[offset : offset + limit]
+        return Result.ok(
+            {
+                "items": [a.to_dict() for a in page],
+                "total": len(admissions),
+                "limit": limit,
+                "offset": offset,
+            }
+        )
 
     async def start_encounter(
         self,
@@ -103,7 +128,9 @@ class HospitalApplicationService:
         admission_id: str,
         correlation_id: str,
     ) -> Result[dict]:
-        admission = await self._admissions.find_by_id(tenant_id, UniqueId.from_string(admission_id))
+        admission = await self._admissions.find_by_id(
+            tenant_id, UniqueId.from_string(admission_id)
+        )
         if not admission:
             return Result.fail("hospital.errors.admission_not_found")
 
@@ -113,14 +140,32 @@ class HospitalApplicationService:
             admission_id=admission.id,
         )
         await self._encounters.save(encounter)
-        await self._audit.log(
-            tenant_id=tenant_id,
-            correlation_id=correlation_id,
-            action="hospital.encounter.started",
-            resource_type="encounter",
-            resource_id=str(encounter.id),
+        await publish_integration_event(
+            EncounterStartedIntegration(
+                tenant_id=TenantId.create(tenant_id),
+                correlation_id=correlation_id,
+                encounter_id=encounter.id,
+                patient_id=encounter.patient_id,
+                admission_id=encounter.admission_id,
+            )
         )
         return Result.ok(encounter.to_dict())
+
+    async def list_encounters(
+        self, tenant_id: str, *, limit: int = 50, offset: int = 0
+    ) -> Result[dict]:
+        limit = max(1, min(limit, 100))
+        offset = max(0, offset)
+        encounters = await self._encounters.list_encounters(tenant_id)
+        page = encounters[offset : offset + limit]
+        return Result.ok(
+            {
+                "items": [e.to_dict() for e in page],
+                "total": len(encounters),
+                "limit": limit,
+                "offset": offset,
+            }
+        )
 
     async def complete_encounter(
         self,
@@ -131,7 +176,9 @@ class HospitalApplicationService:
         diagnosis_codes: list[str] | None,
         correlation_id: str,
     ) -> Result[dict]:
-        encounter = await self._encounters.find_by_id(tenant_id, UniqueId.from_string(encounter_id))
+        encounter = await self._encounters.find_by_id(
+            tenant_id, UniqueId.from_string(encounter_id)
+        )
         if not encounter:
             return Result.fail("hospital.errors.encounter_not_found")
 
@@ -148,22 +195,12 @@ class HospitalApplicationService:
 
         await self._encounters.save(encounter)
         await publish_integration_event(event)
-        await self._audit.log(
-            tenant_id=tenant_id,
-            correlation_id=correlation_id,
-            action="hospital.encounter.completed",
-            resource_type="encounter",
-            resource_id=str(encounter.id),
-            payload={"procedure_codes": encounter.procedure_codes},
-        )
         return Result.ok(encounter.to_dict())
 
     async def get_encounter(self, tenant_id: str, encounter_id: str) -> Result[dict]:
-        encounter = await self._encounters.find_by_id(tenant_id, UniqueId.from_string(encounter_id))
+        encounter = await self._encounters.find_by_id(
+            tenant_id, UniqueId.from_string(encounter_id)
+        )
         if not encounter:
             return Result.fail("hospital.errors.encounter_not_found")
         return Result.ok(encounter.to_dict())
-
-    async def list_patients(self, tenant_id: str) -> Result[list[dict]]:
-        patients = await self._patients.list_patients(tenant_id)
-        return Result.ok([p.to_dict() for p in patients])

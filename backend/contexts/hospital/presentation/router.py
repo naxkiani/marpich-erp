@@ -1,9 +1,9 @@
-"""Hospital FastAPI router."""
+"""Hospital FastAPI router — CAP-HLT-001."""
 from __future__ import annotations
 
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 
 from contexts.hospital.container import get_hospital_service
 from contexts.hospital.presentation.schemas import (
@@ -45,8 +45,10 @@ async def register_patient(
 async def list_patients(
     tenant_id: Annotated[str, Depends(get_tenant_id)],
     _user: Annotated[dict, Depends(require_permissions("hospital.patients.read"))],
+    limit: Annotated[int, Query(ge=1, le=100)] = 50,
+    offset: Annotated[int, Query(ge=0)] = 0,
 ):
-    result = await get_hospital_service().list_patients(tenant_id)
+    result = await get_hospital_service().list_patients(tenant_id, limit=limit, offset=offset)
     return {"data": result.unwrap()}
 
 
@@ -68,6 +70,17 @@ async def admit_patient(
     return {"data": result.unwrap(), "meta": {"correlation_id": correlation_id}}
 
 
+@router.get("/admissions")
+async def list_admissions(
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    _user: Annotated[dict, Depends(require_permissions("hospital.admissions.read"))],
+    limit: Annotated[int, Query(ge=1, le=100)] = 50,
+    offset: Annotated[int, Query(ge=0)] = 0,
+):
+    result = await get_hospital_service().list_admissions(tenant_id, limit=limit, offset=offset)
+    return {"data": result.unwrap()}
+
+
 @router.post("/encounters", status_code=status.HTTP_201_CREATED)
 async def start_encounter(
     body: StartEncounterRequest,
@@ -83,6 +96,17 @@ async def start_encounter(
     if not result.succeeded:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, result.error)
     return {"data": result.unwrap(), "meta": {"correlation_id": correlation_id}}
+
+
+@router.get("/encounters")
+async def list_encounters(
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    _user: Annotated[dict, Depends(require_permissions("hospital.encounters.read"))],
+    limit: Annotated[int, Query(ge=1, le=100)] = 50,
+    offset: Annotated[int, Query(ge=0)] = 0,
+):
+    result = await get_hospital_service().list_encounters(tenant_id, limit=limit, offset=offset)
+    return {"data": result.unwrap()}
 
 
 @router.post("/encounters/{encounter_id}/complete")

@@ -117,7 +117,9 @@ class PostgresOutpatientEncounterRepository(IOutpatientEncounterRepository):
                     id=UUID(str(encounter.id)),
                     tenant_id=encounter.tenant_id,
                     patient_id=UUID(str(encounter.patient_id)),
-                    appointment_id=UUID(str(encounter.appointment_id)),
+                    appointment_id=UUID(str(encounter.appointment_id))
+                    if encounter.appointment_id
+                    else None,
                     status=encounter.status.value,
                     diagnosis_codes=list(encounter.diagnosis_codes),
                     started_at=encounter.started_at,
@@ -128,11 +130,25 @@ class PostgresOutpatientEncounterRepository(IOutpatientEncounterRepository):
                 row.status = encounter.status.value
                 row.diagnosis_codes = list(encounter.diagnosis_codes)
                 row.completed_at = encounter.completed_at
+                row.appointment_id = (
+                    UUID(str(encounter.appointment_id)) if encounter.appointment_id else None
+                )
 
     async def find_by_id(self, tenant_id: str, encounter_id: UniqueId) -> OutpatientEncounter | None:
         async with session_scope() as session:
             row = await session.get(ClinicEncounterRow, UUID(str(encounter_id)))
             return _encounter_from_row(row) if row and row.tenant_id == tenant_id else None
+
+    async def list_encounters(self, tenant_id: str) -> list[OutpatientEncounter]:
+        async with session_scope() as session:
+            rows = (
+                await session.scalars(
+                    select(ClinicEncounterRow)
+                    .where(ClinicEncounterRow.tenant_id == tenant_id)
+                    .order_by(ClinicEncounterRow.started_at.desc())
+                )
+            ).all()
+        return [_encounter_from_row(r) for r in rows]
 
 
 class PostgresReferralRepository(IReferralRepository):
@@ -190,7 +206,9 @@ def _encounter_from_row(row: ClinicEncounterRow) -> OutpatientEncounter:
         id=UniqueId.from_string(str(row.id)),
         tenant_id=row.tenant_id,
         patient_id=UniqueId.from_string(str(row.patient_id)),
-        appointment_id=UniqueId.from_string(str(row.appointment_id)),
+        appointment_id=UniqueId.from_string(str(row.appointment_id))
+        if row.appointment_id
+        else None,
         status=OutpatientEncounterStatus(row.status),
         diagnosis_codes=list(row.diagnosis_codes or []),
         started_at=row.started_at,

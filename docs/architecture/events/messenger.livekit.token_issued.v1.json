@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "messenger.livekit.token_issued.v1",
+  "type": "object",
+  "required": ["conversation_id", "room_name", "identity", "simulated"],
+  "properties": {
+    "conversation_id": { "type": "string", "format": "uuid" },
+    "room_name": { "type": "string" },
+    "identity": { "type": "string" },
+    "simulated": { "type": "boolean" }
+  },
+  "additionalProperties": false
+}

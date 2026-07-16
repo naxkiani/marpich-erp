@@ -4,7 +4,9 @@ from __future__ import annotations
 from contexts.inventory.application.service import InventoryApplicationService
 from contexts.inventory.infrastructure.acl.pos_events import handle_pos_sale_completed
 from contexts.inventory.infrastructure.persistence.memory_store import InMemoryStockLevelRepository
+from contexts.inventory.infrastructure.persistence.postgres_store import PostgresStockLevelRepository
 from shared.infrastructure.messaging.event_bus import InProcessEventBus
+from shared.infrastructure.settings import use_postgres
 
 _service: InventoryApplicationService | None = None
 _registered = False
@@ -13,7 +15,10 @@ _registered = False
 def get_inventory_service() -> InventoryApplicationService:
     global _service, _registered
     if _service is None:
-        _service = InventoryApplicationService(stock=InMemoryStockLevelRepository())
+        if use_postgres():
+            _service = InventoryApplicationService(stock=PostgresStockLevelRepository())
+        else:
+            _service = InventoryApplicationService(stock=InMemoryStockLevelRepository())
     if not _registered:
         InProcessEventBus.subscribe("pos.sale.completed", handle_pos_sale_completed)
         _registered = True

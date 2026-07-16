@@ -401,6 +401,10 @@ class SignatureRequestRow(Base):
     requester_id: Mapped[str] = mapped_column(String(64), nullable=False)
     signers: Mapped[list] = mapped_column(JSONB, nullable=False, default=list)
     status: Mapped[str] = mapped_column(String(16), nullable=False)
+    algorithm: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    signature_hash: Mapped[str | None] = mapped_column(Text, nullable=True)
+    content_checksum: Mapped[str | None] = mapped_column(String(128), nullable=True)
+    key_id: Mapped[str | None] = mapped_column(String(128), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
@@ -753,7 +757,7 @@ class ClinicEncounterRow(Base):
     id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
     tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
     patient_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
-    appointment_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
+    appointment_id: Mapped[UUID | None] = mapped_column(PG_UUID(as_uuid=True), nullable=True)
     status: Mapped[str] = mapped_column(String(32), nullable=False)
     diagnosis_codes: Mapped[list] = mapped_column(JSONB, nullable=False, default=list)
     started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
@@ -953,4 +957,101 @@ class PolicyVersionRow(Base):
     require_passing_tests: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     cache_allowed: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
     version_metadata: Mapped[dict] = mapped_column("metadata", JSONB, nullable=False, default=dict)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+# --- University (CAP-EDU-001) ---
+
+
+class UniversityStudentRow(Base):
+    __tablename__ = "students"
+    __table_args__ = {"schema": "university"}
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    student_number: Mapped[str] = mapped_column(String(32), nullable=False)
+    first_name: Mapped[str] = mapped_column(String(64), nullable=False)
+    last_name: Mapped[str] = mapped_column(String(64), nullable=False)
+    email: Mapped[str] = mapped_column(String(256), nullable=False)
+    program_code: Mapped[str] = mapped_column(String(32), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="enrolled")
+    identity_user_id: Mapped[str | None] = mapped_column(String(64))
+    document_id: Mapped[str | None] = mapped_column(String(64))
+    lms_external_id: Mapped[str | None] = mapped_column(String(128))
+    lms_provider: Mapped[str | None] = mapped_column(String(64))
+    delivery_model: Mapped[str] = mapped_column(String(32), nullable=False, default="degree")
+    cohort_ref: Mapped[str | None] = mapped_column(String(64))
+    enrolled_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class UniversityCourseRow(Base):
+    __tablename__ = "courses"
+    __table_args__ = {"schema": "university"}
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    course_code: Mapped[str] = mapped_column(String(32), nullable=False)
+    title: Mapped[str] = mapped_column(String(256), nullable=False)
+    credits: Mapped[int] = mapped_column(Integer, nullable=False)
+    term: Mapped[str] = mapped_column(String(32), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="active")
+    lms_external_id: Mapped[str | None] = mapped_column(String(128))
+    lms_provider: Mapped[str | None] = mapped_column(String(64))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class UniversityGradeRow(Base):
+    __tablename__ = "grades"
+    __table_args__ = {"schema": "university"}
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    student_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
+    course_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
+    letter_grade: Mapped[str] = mapped_column(String(8), nullable=False)
+    posted_by: Mapped[str | None] = mapped_column(String(64))
+    posted_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+# --- Inventory ---
+
+
+class InventoryStockLevelRow(Base):
+    __tablename__ = "stock_levels"
+    __table_args__ = {"schema": "inventory"}
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    sku: Mapped[str] = mapped_column(String(64), nullable=False)
+    quantity_on_hand: Mapped[float] = mapped_column(Numeric(18, 4), nullable=False, default=0)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+# --- Messenger (P5.3 E2EE + LiveKit room refs) ---
+
+
+class MessengerConversationRow(Base):
+    __tablename__ = "conversations"
+    __table_args__ = {"schema": "messenger"}
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    title: Mapped[str] = mapped_column(String(128), nullable=False)
+    member_ids: Mapped[list] = mapped_column(JSONB, nullable=False, default=list)
+    e2ee_enabled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    livekit_room_name: Mapped[str | None] = mapped_column(String(256))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class MessengerMessageRow(Base):
+    __tablename__ = "messages"
+    __table_args__ = {"schema": "messenger"}
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    conversation_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
+    sender_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    body: Mapped[str] = mapped_column(Text, nullable=False, default="")
+    ciphertext: Mapped[str | None] = mapped_column(Text)
+    ciphertext_type: Mapped[str | None] = mapped_column(String(64))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())

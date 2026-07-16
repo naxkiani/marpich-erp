@@ -46,6 +46,9 @@ class IOutpatientEncounterRepository(ABC):
     @abstractmethod
     async def find_by_id(self, tenant_id: str, encounter_id: UniqueId) -> OutpatientEncounter | None: ...
 
+    @abstractmethod
+    async def list_encounters(self, tenant_id: str) -> list[OutpatientEncounter]: ...
+
 
 class IReferralRepository(ABC):
     @abstractmethod

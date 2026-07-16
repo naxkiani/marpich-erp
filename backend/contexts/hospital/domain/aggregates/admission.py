@@ -45,6 +45,7 @@ class Admission(AggregateRoot):
             correlation_id=correlation_id,
             admission_id=admission.id,
             patient_id=patient_id,
+            ward=admission.ward,
         )
         return admission, event
 

@@ -1,16 +1,41 @@
 context: pharmacy
+architecture_version: "1.0"
 display_name: Pharmacy
 type: industry
-description: Prescriptions, dispensing, drug inventory
+description: "Dispensing — CAP-HLT-008 prescribe→dispense (never merge with hospital/clinic/lab)"
+capability_ids:
+  - CAP-HLT-008
 aggregates:
-- Prescription
-- DispenseRecord
-- DrugInteraction
-- PharmacyStock
+  - Prescription
+  - DispenseRecord
 publishes:
-- pharmacy.prescription.received
-- pharmacy.dispense.completed
+  - pharmacy.prescription.received
+  - pharmacy.dispense.completed
 subscribes:
-- hospital.encounter.started
-- inventory.stock.adjusted
+  - hospital.encounter.completed
+  - inventory.stock.adjusted
 schema: pharmacy
+permissions:
+  - pharmacy.prescriptions.read
+  - pharmacy.prescriptions.write
+  - pharmacy.dispenses.read
+  - pharmacy.dispenses.write
+ai:
+  surfaces:
+    - insights
+    - recommendations
+    - summaries
+    - search
+    - assistant
+    - automation
+    - document_intelligence
+    - voice_commands
+    - chat
+    - report_explanation
+    - anomaly_detection
+    - forecasting
+    - optimization
+    - predictions
+  prompt_templates:
+    - pharmacy.dispense.summary
+    - pharmacy.interaction.flags

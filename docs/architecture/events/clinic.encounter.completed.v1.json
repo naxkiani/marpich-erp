@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "clinic.encounter.completed",
+  "type": "object",
+  "required": ["encounter_id", "patient_id"],
+  "properties": {
+    "encounter_id": { "type": "string", "format": "uuid" },
+    "patient_id": { "type": "string", "format": "uuid" },
+    "appointment_id": { "type": ["string", "null"], "format": "uuid" },
+    "diagnosis_codes": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

@@ -2,14 +2,16 @@
 import pytest
 from httpx import ASGITransport, AsyncClient
 
+import contexts.identity.container as identity_container
 from contexts.accounting.container import get_accounting_service, reset_accounting_service
 from contexts.accounting.infrastructure.persistence.memory_store import AccountingMemoryStore
 from contexts.hospital.container import reset_hospital_service
 from contexts.hospital.infrastructure.persistence.memory_store import HospitalMemoryStore
 from contexts.identity.infrastructure.persistence.memory_store import InMemoryStore
-from core.presentation.api.main import app
+from core.presentation.api.app_factory import create_app
+from core.presentation.api.startup_registry import configure_application
 from shared.infrastructure.messaging.event_bus import InProcessEventBus
-import contexts.identity.container as identity_container
+from shared.infrastructure.messaging.event_fabric import EventFabric
 
 
 @pytest.fixture(autouse=True)
@@ -19,6 +21,7 @@ def reset_all():
     HospitalMemoryStore.reset()
     AccountingMemoryStore.reset()
     InProcessEventBus.reset()
+    EventFabric.reset_dev_state()
     reset_hospital_service()
     reset_accounting_service()
     get_accounting_service()  # re-register ACL subscribers after bus reset
@@ -28,28 +31,37 @@ def reset_all():
     HospitalMemoryStore.reset()
     AccountingMemoryStore.reset()
     InProcessEventBus.reset()
+    EventFabric.reset_dev_state()
     reset_hospital_service()
     reset_accounting_service()
 
 
 @pytest.fixture
 async def client():
-    transport = ASGITransport(app=app)
+    application = create_app(profile="industry", startup_mode="lazy")
+    configure_application(application, profile="industry", startup_mode="lazy")
+    transport = ASGITransport(app=application)
     async with AsyncClient(transport=transport, base_url="http://test") as ac:
         yield ac
 
 
 async def _auth_headers(client: AsyncClient, tenant: str) -> dict[str, str]:
-    await client.post(
+    reg = await client.post(
         "/api/v1/auth/register",
-        json={"email": "admin@hospital.com", "password": "SecurePass123!", "display_name": "Admin"},
+        json={
+            "email": "admin@hospital.com",
+            "password": "SecurePass123!",
+            "display_name": "Admin",
+        },
         headers={"X-Tenant-ID": tenant},
     )
+    assert reg.status_code in (200, 201), reg.text
     login = await client.post(
         "/api/v1/auth/login",
         json={"email": "admin@hospital.com", "password": "SecurePass123!"},
         headers={"X-Tenant-ID": tenant},
     )
+    assert login.status_code == 200, login.text
     token = login.json()["data"]["access_token"]
     return {"X-Tenant-ID": tenant, "Authorization": f"Bearer {token}"}
 
@@ -146,4 +158,7 @@ async def test_accounting_idempotent_on_duplicate_event(client):
     )
 
     billings = await client.get("/api/v1/accounting/billings", headers=headers)
-    assert len(billings.json()["data"]) == 1
+    assert billings.status_code == 200, billings.text
+    payload = billings.json()["data"]
+    items = payload["items"] if isinstance(payload, dict) and "items" in payload else payload
+    assert len(items) == 1
