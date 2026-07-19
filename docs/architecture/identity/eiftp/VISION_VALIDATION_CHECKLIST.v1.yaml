@@ -1,0 +1,46 @@
+# EIFTP Vision — Validation Checklist (P200-B1.1-B)
+apiVersion: marpich.io/v1
+kind: EiftpVisionValidationChecklist
+metadata:
+  id: eiftp-vision-validation
+  version: "1.0.0"
+  adr: [213]
+  prompt: P200-B1.1-B
+
+principles:
+  - identity_first
+  - trust_first
+  - policy_first
+  - zero_trust
+  - cloud_native
+  - api_first
+  - ai_native
+  - metadata_driven
+  - configuration_driven
+  - policy_driven
+  - knowledge_graph_native
+  - digital_twin_native
+  - plugin_first
+  - compliance_first
+  - security_by_design
+  - privacy_by_design
+  - audit_by_design
+  - resilience_by_design
+
+required_artifacts:
+  - docs/adr/213-enterprise-identity-federation-trust-vision.md
+  - docs/architecture/ENTERPRISE_IDENTITY_FEDERATION_TRUST_VISION.md
+  - docs/architecture/identity/eiftp/VISION_FUTURE_STATE_ARCHITECTURE.v1.yaml
+  - docs/architecture/identity/eiftp/VISION_TRUST_FABRIC.v1.yaml
+  - docs/architecture/identity/eiftp/VISION_IDENTITY_STRATEGY.v1.yaml
+  - docs/architecture/identity/eiftp/VISION_SECURITY.v1.yaml
+  - docs/architecture/identity/eiftp/VISION_AI_IDENTITY.v1.yaml
+  - docs/architecture/identity/eiftp/VISION_CAPABILITY_MATRIX.v1.yaml
+  - docs/architecture/identity/eiftp/VISION_VALIDATION_CHECKLIST.v1.yaml
+  - docs/architecture/identity/eiftp/VISION_ARCHITECTURE_COMPLIANCE.v1.yaml
+
+gates:
+  - mission_adr_212_exists
+  - no_sibling_eiftp_bc
+  - vision_does_not_replace_authz
+  - foundation_ready_for_p200_b11c

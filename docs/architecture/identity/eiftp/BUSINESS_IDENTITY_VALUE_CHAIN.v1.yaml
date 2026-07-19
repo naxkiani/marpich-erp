@@ -1,0 +1,33 @@
+# Identity Value Chain — EIFTP
+# P200-B1.1-C · ADR-214
+version: "1.0"
+prompt_id: P200-B1.1-C
+
+stages:
+  - id: VC1
+    name: Identify & Classify
+    activities: [taxonomy, subject_registration, device_binding]
+    drivers: [P2, P7]
+  - id: VC2
+    name: Prove & Authenticate
+    activities: [sso, mfa, passwordless, adaptive, continuous_authn]
+    drivers: [P6, P9]
+  - id: VC3
+    name: Federate & Trust
+    activities: [org_federation, cross_tenant_trust, external_idp, pki]
+    drivers: [P3, P4, P5]
+  - id: VC4
+    name: Authorize & Enforce
+    activities: [authz_pdp_consume_trust_facts, pep_enforcement]
+    drivers: [P3, P6]
+    note: Authorization SoR = authorization BC — EIFTP does not decide Permit/Deny
+  - id: VC5
+    name: Lifecycle & Govern
+    activities: [provision, deprovision, joiner_mover_leaver, privilege_hygiene]
+    drivers: [P10, P8]
+  - id: VC6
+    name: Observe & Improve
+    activities: [identity_analytics, observability, audit, compliance_evidence]
+    drivers: [P3, P8, P10]
+
+value_flow: inbound_subjects → verified_sessions → federated_trust → authorized_actions → governed_lifecycle → auditable_insight

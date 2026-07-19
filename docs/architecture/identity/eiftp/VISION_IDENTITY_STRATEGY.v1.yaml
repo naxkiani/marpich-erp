@@ -1,0 +1,26 @@
+# EIFTP Vision — Identity Strategy (P200-B1.1-B)
+apiVersion: marpich.io/v1
+kind: EiftpVisionIdentityStrategy
+metadata:
+  id: eiftp-vision-identity-strategy
+  version: "1.0.0"
+  adr: [213]
+  prompt: P200-B1.1-B
+
+strategies:
+  - id: identity_as_asset
+    statement: Treat identity as continuously verified enterprise asset, not login UX
+  - id: single_plane
+    statement: One Identity plane for all MEOS modules via EITAP / EIFTP
+  - id: federation_first_external
+    statement: External IdPs only through identity_federation (+ Integration Platform)
+  - id: trust_then_authorize
+    statement: Trust signals feed AuthZ/Policy facts — never skip PDP
+  - id: tenant_isolation
+    statement: Cross-tenant trust is explicit tuples; schemas remain isolated
+  - id: ai_first_class
+    statement: AI agents are principals with lifecycle, scope, and audit
+  - id: passwordless_preferred
+    statement: Prefer passkeys/passwordless; adaptive/risk step-up when needed
+  - id: graph_and_twin_ready
+    statement: Trust graph + digital twin correlation without embedding SoRs in modules

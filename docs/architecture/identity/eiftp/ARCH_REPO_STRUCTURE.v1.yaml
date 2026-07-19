@@ -1,0 +1,48 @@
+# Repository / Folder / Cursor / Coding Standards
+# P200-B2 · ADR-216
+version: "1.0"
+prompt_id: P200-B2
+
+coding_standards:
+  - ddd_hexagonal_clean
+  - no_business_logic_in_routers
+  - ports_in_domain_adapters_in_infrastructure
+  - tenant_id_everywhere
+  - async_apis
+  - pagination_on_lists
+  - structured_logging
+  - events_via_outbox
+
+repository_structure:
+  docs_architecture: docs/architecture/identity/eiftp/
+  adr: docs/adr/216-*.md
+  law: docs/architecture/ENTERPRISE_IDENTITY_FEDERATION_TRUST_ARCHITECTURE.md
+  backend_sor: backend/contexts/identity_federation/
+  shared_port: backend/shared/application/ports/identity_federation.py
+  helm: infrastructure/kubernetes/helm/marpich-iam/
+  migrations: infrastructure/docker/migrations/028_*.sql
+
+folder_structure:
+  target: |
+    backend/contexts/identity_federation/
+      application/
+        commands/ queries/ dto/ validators/ use_cases/
+        service.py fabric_*_service.py ai_service.py
+      domain/
+        aggregates/ entities/ value_objects/ services/ ports/ events/ specifications/
+      infrastructure/
+        persistence/ messaging/ caching/ storage/ external_apis/
+        protocols/ adapters/ certificates/ observability/ plugins/
+      presentation/
+        rest/ (routers migrate here) websocket/ reports/ dashboard/
+        *_router.py (current)
+      tests/ unit/ integration/ performance/
+      docs/ api/ architecture/
+      container.py context.yaml
+  status: incremental_hardening_in_progress
+
+cursor:
+  rules: .cursor/rules/marpich-*.mdc
+  canvases: ~/.cursor/projects/.../canvases/eiftp-*.canvas.tsx
+  catalogs: docs/architecture/identity/eiftp/
+  validation_modules: domain/services/eiftp_*.py

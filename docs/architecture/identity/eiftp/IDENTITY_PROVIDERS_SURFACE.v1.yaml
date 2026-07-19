@@ -1,0 +1,74 @@
+# IdP Management API / CQRS / Events / DoD — P200-B7 · ADR-221
+version: "1.0"
+prompt_id: P200-B7
+
+apis:
+  rest:
+    - GET /api/v1/federation/providers/surface
+    - POST /api/v1/federation/providers/register
+    - POST /api/v1/federation/providers/{ref}/configure
+    - POST /api/v1/federation/providers/{ref}/verify
+    - POST /api/v1/federation/providers/{ref}/activate
+    - POST /api/v1/federation/providers/{ref}/suspend
+    - POST /api/v1/federation/providers/{ref}/connections
+    - POST /api/v1/federation/providers/{ref}/trust/evaluate
+    - POST /api/v1/federation/providers/{ref}/certificates/rotate
+    - POST /api/v1/federation/providers/plugins/install
+    - POST /api/v1/federation/providers/mappings
+    - POST /api/v1/federation/providers/{ref}/synchronize
+    - GET /api/v1/federation/providers/{ref}
+    - GET /api/v1/federation/providers/{ref}/health
+    - GET /api/v1/federation/providers/{ref}/trust
+    - GET /api/v1/federation/providers/plugins
+    - GET /api/v1/federation/providers/{ref}/connections
+    - GET /api/v1/federation/providers/mappings
+    - GET /api/v1/federation/providers/sync/status
+  graphql: deferred_B10
+  grpc: deferred_B10
+
+commands:
+  - RegisterIdentityProvider # B5 reuse + B7 provider_type
+  - ConfigureProvider
+  - VerifyProvider
+  - ActivateIdentityProvider
+  - SuspendIdentityProvider
+  - CreateFederationConnection
+  - InstallProtocolPlugin
+  - CreateMappingRule
+  - SynchronizeIdentity
+  - ValidateProviderTrust
+  - RotateProviderCertificate
+
+queries:
+  - GetProvider
+  - GetProviderHealth
+  - GetFederationConnections
+  - GetProviderTrustScore
+  - GetMappingRules
+  - GetSynchronizationStatus
+  - GetProtocolPlugins
+  - GetProviderSurface
+
+events_logical:
+  - IdentityProviderRegistered
+  - IdentityProviderVerified
+  - IdentityProviderActivated
+  - IdentityProviderSuspended
+  - FederationConnectionCreated
+  - FederationConnectionActivated
+  - FederationConnectionRevoked
+  - ProtocolPluginRegistered
+  - IdentityMappingCreated
+  - IdentitySynchronized
+  - ProviderTrustUpdated
+  - CertificateRotated
+
+dod:
+  - connect_any_enterprise_idp_via_plugin
+  - multi_protocol_standards
+  - provider_lifecycle_governance
+  - secure_identity_sync
+  - federation_policy_hooks
+  - protocol_extensible
+  - enterprise_trust_via_fabric
+  - no_architectural_redesign

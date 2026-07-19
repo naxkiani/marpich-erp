@@ -1,0 +1,103 @@
+# Federation Engine — API / Events / CQRS / Security / Deploy / DoD
+# P200-B5 · ADR-219
+version: "1.0"
+prompt_id: P200-B5
+
+apis:
+  rest:
+    - GET /api/v1/federation/engine/surface
+    - POST /api/v1/federation/engine/providers/register
+    - POST /api/v1/federation/engine/providers/{ref}/connect
+    - POST /api/v1/federation/engine/providers/{ref}/health
+    - POST /api/v1/federation/engine/tokens/exchange
+    - POST /api/v1/federation/engine/identities/map
+    - POST /api/v1/federation/engine/sync/resolve-conflict
+    - GET /api/v1/federation/engine/providers/{ref}
+    - GET /api/v1/federation/engine/trust/{ref}/status
+  graphql: deferred_B10
+  grpc: deferred_B10
+  events: federation.*
+  webhooks: via_integration_platform
+
+commands:
+  - RegisterIdentityProvider
+  - ConnectFederationProvider
+  - DisconnectFederationProvider
+  - ProbeProviderHealth
+  - MapIdentity
+  - ExchangeFederatedToken
+  - SynchronizeIdentity
+  - ResolveSyncConflict
+  - EstablishTrust # B4
+  - TerminateSession # B4
+
+queries:
+  - GetProvider
+  - GetFederationStatus
+  - GetTrustStatus
+  - GetIdentityMapping
+  - GetSynchronizationStatus
+  - GetTokenStatus
+  - GetEngineSurface
+
+events_logical:
+  - FederationCreated
+  - FederationActivated
+  - FederationSuspended
+  - FederationRevoked
+  - IdentityProviderRegistered
+  - IdentityProviderVerified
+  - IdentityMapped
+  - IdentitySynchronized
+  - TrustEstablished
+  - TrustRevoked
+  - TokenIssued
+  - TokenRevoked
+  - PolicyUpdated
+
+security:
+  - zero_trust_validation
+  - mtls_via_mesh
+  - certificate_validation
+  - secrets_vault_paths
+  - key_rotation
+  - policy_enforcement
+  - risk_based_federation
+  - audit_logging
+  - no_token_logging
+
+persistence:
+  postgresql_schema: federation
+  tables_note: reuse migration 028 + ai_federated_agents + connection JSON/columns
+  event_store: outbox
+  audit: Audit Platform
+  cache: "fed:{tenant_id}:..."
+
+deployment:
+  reuses: ARCH_DEPLOYMENT.v1.yaml
+  helm: infrastructure/kubernetes/helm/marpich-iam/
+
+testing_strategy:
+  - unit_engine_facade
+  - unit_cqrs_handlers
+  - unit_health_probe
+  - integration_gateway_existing
+  - architecture_validator_eiftp_engine
+
+definition_of_done:
+  - engine_facade_shipped
+  - federation_connection_first_class
+  - cqrs_core_handlers_green
+  - health_probe_port
+  - monitoring_metrics_extended
+  - catalogs_and_law_published
+  - unlimited_idp_via_plugins
+  - no_contexts_eiftp
+  - no_vendor_sdk_in_domain
+
+implementation_roadmap:
+  - B5_complete_this_prompt
+  - B6_trust_fabric_depth
+  - B7_idp_catalog_ux
+  - B10_graphql_grpc_event_apis
+  - postgres_repository_adapters

@@ -1,0 +1,36 @@
+# EIFTP QA / DoD API Surface — P200-B12 · ADR-226
+version: "1.0"
+prompt_id: P200-B12
+
+apis:
+  rest:
+    - GET /api/v1/federation/qa/surface
+    - GET /api/v1/federation/qa/gates
+    - GET /api/v1/federation/qa/dod
+    - GET /api/v1/federation/qa/traceability
+    - GET /api/v1/federation/qa/testing
+    - GET /api/v1/federation/qa/governance
+    - GET /api/v1/federation/qa/compliance
+    - GET /api/v1/federation/qa/readiness
+    - GET /api/v1/federation/qa/metrics
+    - POST /api/v1/federation/qa/assessments
+    - POST /api/v1/federation/qa/gates/evaluate
+    - POST /api/v1/federation/qa/release/certify
+  graphql: deferred_platform_gateway
+  grpc: deferred_platform_gateway
+
+commands:
+  - RecordQualityAssessment
+  - EvaluateQualityGate
+  - CertifyRelease
+
+queries:
+  - GetQaSurface
+  - GetQualityGates
+  - GetDodChecklist
+  - GetTraceability
+  - GetTestingCatalog
+  - GetGovernanceModel
+  - GetComplianceValidation
+  - GetProductionReadiness
+  - GetQaMetrics

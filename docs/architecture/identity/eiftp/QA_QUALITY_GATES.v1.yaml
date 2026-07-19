@@ -1,0 +1,84 @@
+# EIFTP Quality Gates — P200-B12 · ADR-226
+version: "1.0"
+prompt_id: P200-B12
+
+gates:
+  - id: gate.compile
+    inputs: [source]
+    outputs: [build_artifact]
+    acceptance: build_succeeds
+    blocking: true
+    rollback: n/a
+  - id: gate.static_analysis
+    inputs: [build_artifact]
+    outputs: [lint_report]
+    acceptance: no_blocking_findings
+    blocking: true
+  - id: gate.architecture_validation
+    inputs: [lint_report]
+    outputs: [arch_scorecard]
+    acceptance: enterprise_grade_or_explicit_waiver
+    blocking: true
+  - id: gate.unit_tests
+    inputs: [arch_scorecard]
+    outputs: [unit_evidence]
+    acceptance: eiftp_unit_suite_green
+    blocking: true
+  - id: gate.security_scan
+    inputs: [unit_evidence]
+    outputs: [security_report]
+    acceptance: no_critical_vulns
+    blocking: true
+  - id: gate.dependency_scan
+    inputs: [security_report]
+    outputs: [sca_report]
+    acceptance: policy_compliant_licenses
+    blocking: true
+  - id: gate.container_scan
+    inputs: [sca_report]
+    outputs: [image_sbom]
+    acceptance: signed_image_no_critical
+    blocking: true
+  - id: gate.integration_tests
+    inputs: [image_sbom]
+    outputs: [integration_evidence]
+    acceptance: contract_and_api_green
+    blocking: true
+  - id: gate.performance_tests
+    inputs: [integration_evidence]
+    outputs: [perf_report]
+    acceptance: slo_budgets_not_regressed
+    blocking: true
+  - id: gate.contract_tests
+    inputs: [perf_report]
+    outputs: [contract_evidence]
+    acceptance: openapi_graphql_grpc_compatible
+    blocking: true
+  - id: gate.compliance_validation
+    inputs: [contract_evidence]
+    outputs: [compliance_attestation]
+    acceptance: control_evidence_complete
+    blocking: true
+  - id: gate.release_approval
+    inputs: [compliance_attestation]
+    outputs: [release_certificate]
+    acceptance: governance_boards_approved
+    blocking: true
+  - id: gate.production_deployment
+    inputs: [release_certificate]
+    outputs: [gitops_sync]
+    acceptance: gitops_healthy_rollback_path
+    blocking: true
+    rollback: previous_gitops_revision
+
+reject_if:
+  - not_fully_tested
+  - undocumented
+  - security_vulnerabilities_unresolved
+  - enterprise_architecture_violated
+  - observability_missing
+  - ddd_boundaries_broken
+  - cqrs_ignored
+  - governance_approval_missing
+  - not_auditable
+  - not_production_ready

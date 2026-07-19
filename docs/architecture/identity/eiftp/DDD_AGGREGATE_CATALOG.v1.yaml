@@ -1,0 +1,59 @@
+# Aggregate Catalog — Federation SoR + companion ownership
+# P200-B3 · ADR-217
+version: "1.0"
+prompt_id: P200-B3
+
+law: |
+  One aggregate instance per consistency boundary per command.
+  Cross-aggregate collaboration only via domain/integration events.
+  tenant_id is mandatory on every root.
+
+federation_aggregates:
+  - name: FederationProfile
+    root: FederationProfile
+    consistency: tenant_federation_config
+    repository: IFederationProfileRepository
+  - name: IdentityProvider
+    root: IdentityProvider
+    entities: []
+    value_objects: [ProtocolType, ProviderRef]
+    repository: IIdentityProviderRepository
+  - name: FederationPartner
+    root: FederationPartner
+    repository: IFederationPartnerRepository
+  - name: TrustRelationship
+    root: TrustRelationship
+    value_objects: [TrustScore, TrustStatus]
+    repository: ITrustRelationshipRepository
+    invariants: [cannot_activate_without_verification]
+  - name: ClaimsMapping
+    root: ClaimsMapping
+    repository: IClaimsMappingRepository
+  - name: IdentityLink
+    root: IdentityLink
+    value_objects: [ExternalSubject]
+    repository: IIdentityLinkRepository
+    invariants: [unique_external_subject_per_provider_tenant]
+  - name: ProvisioningPolicy
+    root: ProvisioningPolicy
+    repository: IProvisioningPolicyRepository
+  - name: SynchronizationJob
+    root: SynchronizationJob
+    repository: ISynchronizationJobRepository
+  - name: FederationSession
+    root: FederationSession
+    repository: IFederationSessionRepository
+    invariants: [terminate_revokes_tokens]
+  - name: TenantFederation
+    root: TenantFederation
+    repository: ITenantFederationRepository
+    invariants: [peer_tenant_ref_only]
+
+companion_aggregates_not_in_federation:
+  - { name: User, bc: identity }
+  - { name: AuthorizationDecision, bc: authorization }
+  - { name: RelationTuple, bc: authorization }
+  - { name: PolicyDefinition, bc: policy }
+  - { name: AuditEntry, bc: audit }
+
+anemic_model_rejected: true

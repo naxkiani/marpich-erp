@@ -1,0 +1,75 @@
+# EIFTP Definition of Done Checklist — P200-B12 · ADR-226
+version: "1.0"
+prompt_id: P200-B12
+
+module_dod:
+  - id: dod.business_requirements
+    description: Business requirements implemented
+  - id: dod.architecture_approved
+    description: Architecture approved (ADR + law)
+  - id: dod.ddd_validated
+    description: DDD validated
+  - id: dod.cqrs_validated
+    description: CQRS validated
+  - id: dod.security_approved
+    description: Security approved
+  - id: dod.zero_trust_validated
+    description: Zero Trust validated
+  - id: dod.apis_documented
+    description: APIs documented (REST/GraphQL/gRPC)
+  - id: dod.events_documented
+    description: Events documented
+  - id: dod.database_validated
+    description: Database / persistence validated
+  - id: dod.tests_passed
+    description: Tests passed
+  - id: dod.code_reviewed
+    description: Code reviewed (CI + review boards)
+  - id: dod.documentation_completed
+    description: Documentation completed
+  - id: dod.observability_implemented
+    description: Observability implemented
+  - id: dod.performance_validated
+    description: Performance validated (SLO catalogs)
+  - id: dod.disaster_recovery_tested
+    description: Disaster recovery tested
+  - id: dod.compliance_approved
+    description: Compliance evidence ready
+  - id: dod.ai_governance_approved
+    description: AI governance hooks approved
+  - id: dod.production_deployment_approved
+    description: Production deployment approved (GitOps)
+
+series_dod:
+  - id: series.b2_architecture
+    phase: P200-B2
+  - id: series.b3_ddd
+    phase: P200-B3
+  - id: series.b4_domain_model
+    phase: P200-B4
+  - id: series.b5_engine
+    phase: P200-B5
+  - id: series.b6_trust_fabric
+    phase: P200-B6
+  - id: series.b7_providers
+    phase: P200-B7
+  - id: series.b8_cross_tenant
+    phase: P200-B8
+  - id: series.b9_security_zt
+    phase: P200-B9
+  - id: series.b10_ohs
+    phase: P200-B10
+  - id: series.b11_ops
+    phase: P200-B11
+  - id: series.b12_quality
+    phase: P200-B12
+
+foundation_backlog:
+  - id: backlog.b1_d2_security_goals
+    phase: P200-B1.1-D2
+  - id: backlog.b1_scope
+    phase: P200-B1.Scope
+  - id: backlog.b1_stakeholders
+    phase: P200-B1.Stakeholders
+  - id: backlog.b1_principles
+    phase: P200-B1.Principles

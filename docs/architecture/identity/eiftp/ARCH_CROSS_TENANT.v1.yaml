@@ -1,0 +1,27 @@
+# Cross-Tenant Architecture
+# P200-B2 · ADR-216
+version: "1.0"
+prompt_id: P200-B2
+
+laws:
+  - hard_logical_isolation_per_tenant_id
+  - no_cross_schema_sql
+  - trust_links_are_explicit_aggregates
+  - default_deny_cross_tenant
+
+mechanisms:
+  - TenantFederation aggregate
+  - TrustRelationship with peer_tenant_id_ref_only
+  - configurable_trust_boundaries
+  - delegated_admin_scoped_by_policy
+
+collaboration_modes:
+  - org_to_org
+  - tenant_to_tenant
+  - marketplace_vendor
+  - government_enterprise
+
+data:
+  store_peer_ids_only: true
+  shared_users: false
+  identity_link_across_tenants: requires_approved_trust

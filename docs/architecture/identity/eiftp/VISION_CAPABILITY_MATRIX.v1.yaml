@@ -1,0 +1,47 @@
+# EIFTP Vision — Enterprise Capability Matrix (P200-B1.1-B)
+apiVersion: marpich.io/v1
+kind: EiftpVisionCapabilityMatrix
+metadata:
+  id: eiftp-vision-capability-matrix
+  version: "1.0.0"
+  adr: [213]
+  prompt: P200-B1.1-B
+
+capabilities:
+  - { id: enterprise_sso, owner: [identity_federation, authentication], horizon: near }
+  - { id: federated_identity, owner: [identity_federation], horizon: near }
+  - { id: cross_tenant_collaboration, owner: [identity_federation, authorization, organization], horizon: mid }
+  - { id: cross_organization_trust, owner: [identity_federation], horizon: mid }
+  - { id: ai_identity_governance, owner: [identity_federation, authorization, identity_governance, ai], horizon: mid }
+  - { id: machine_identity_management, owner: [directory, identity_federation], horizon: near }
+  - { id: service_identity_management, owner: [directory, authorization], horizon: near }
+  - { id: device_identity_management, owner: [security, adaptive_authentication], horizon: mid }
+  - { id: external_identity_federation, owner: [identity_federation, integration], horizon: near }
+  - { id: identity_lifecycle_automation, owner: [identity_lifecycle, identity_governance], horizon: near }
+  - { id: continuous_trust_evaluation, owner: [identity_federation, identity_risk], horizon: near }
+  - { id: passwordless_authentication, owner: [authentication, mfa], horizon: near }
+  - { id: adaptive_authentication, owner: [adaptive_authentication], horizon: near }
+  - { id: risk_based_authentication, owner: [adaptive_authentication, identity_risk], horizon: near }
+  - { id: delegated_administration, owner: [organization, identity_governance], horizon: near }
+  - { id: trust_analytics, owner: [analytics, identity_federation], horizon: mid }
+
+future_state_consumers:
+  - erp
+  - crm
+  - hrm
+  - finance
+  - banking
+  - marketplace
+  - supply_chain
+  - manufacturing
+  - healthcare
+  - education
+  - government
+  - workflow
+  - knowledge_graph
+  - ai_platform
+  - analytics
+  - plugin_marketplace
+  - developer_platform
+  - mobile_platform
+  - external_apis

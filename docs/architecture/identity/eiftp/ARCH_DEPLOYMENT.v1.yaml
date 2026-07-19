@@ -1,0 +1,37 @@
+# Deployment / HA / DR / Multi-region / Kubernetes — EIFTP
+# P200-B2 · ADR-216 · extends FEDERATION_DEPLOYMENT_TOPOLOGY.v1.yaml
+version: "1.0"
+prompt_id: P200-B2
+extends: docs/architecture/identity/FEDERATION_DEPLOYMENT_TOPOLOGY.v1.yaml
+
+kubernetes:
+  namespace: marpich-iam
+  helm_chart: infrastructure/kubernetes/helm/marpich-iam/
+  workloads:
+    - deployment: marpich-iam-api
+      replicas_min: 3
+      hpa: { cpu: 70, memory: 75, max: 30 }
+    - deployment: marpich-iam-outbox-dispatcher
+      replicas_min: 2
+    - deployment: marpich-idp-connector-sidecars
+      note: via Integration Platform — not in federation domain pods long-term
+
+ha:
+  pattern: active_active_multi_az
+  session: redis_cluster_or_external_store
+  jwks: redis_plus_object_versioned
+  database: postgres_primary_sync_standby
+
+dr:
+  rpo_minutes_target: 5
+  rto_minutes_target: 30
+  backups: pitr_plus_cross_region_snapshots
+  runbook: docs/deployment/IDENTITY_FEDERATION_DR_GUIDE.md
+
+multi_region:
+  modes: [active_passive, active_active_with_geo_dns]
+  data: tenant_affinity_preferred
+  tokens: region_agnostic_validation_via_jwks
+  events: kafka_mirror_or_multi_cluster_outbox
+
+diagram_ref: ENTERPRISE_IDENTITY_FEDERATION_TRUST_ARCHITECTURE.md#deployment

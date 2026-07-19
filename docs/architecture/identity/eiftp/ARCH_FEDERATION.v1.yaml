@@ -1,0 +1,23 @@
+# Identity Federation Architecture
+# P200-B2 · ADR-216
+version: "1.0"
+prompt_id: P200-B2
+
+pattern: federation_broker_plus_protocol_gateway
+comparable_products: [entra_id, keycloak_enterprise, okta_workforce, google_cloud_identity]
+
+planes:
+  admin: CRUD profiles providers partners trusts mappings policies sync_jobs
+  protocol: authorize token introspect revoke saml_acs scim userinfo discovery jwks
+  fabric: trust_graph zt_eval session token cert mesh
+  intelligence: analytics ai_14_surfaces
+
+protocols_supported:
+  - OAuth2
+  - OIDC
+  - SAML2
+  - SCIM2
+  - LDAP_connector_via_integration
+
+standards_law: protocol_agnostic_ports_in_domain_adapters_in_infrastructure
+plugin_first: protocol_plugin_sdk under infrastructure/plugins

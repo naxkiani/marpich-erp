@@ -1,0 +1,92 @@
+# EIFTP Ops — Deploy / DevSecOps / K8s / Observability Architecture
+# P200-B11 · ADR-225
+version: "1.0"
+prompt_id: P200-B11
+adr: "225"
+sor_context: identity_federation
+forbidden_sibling_bc: eiftp
+extends:
+  - ARCH_DEPLOYMENT.v1.yaml
+  - ARCH_DEVSECOPS.v1.yaml
+  - ARCH_OBSERVABILITY.v1.yaml
+  - FEDERATION_DEPLOYMENT_TOPOLOGY.v1.yaml
+
+logical_domains:
+  - platform_engineering_profile
+  - kubernetes_runtime
+  - devsecops_pipeline
+  - observability_surface
+  - sre_error_budget
+  - disaster_recovery
+
+kubernetes:
+  helm_chart: infrastructure/kubernetes/helm/marpich-iam/
+  namespace: marpich-iam
+  gitops:
+    argocd: infrastructure/argocd/marpich-iam-application.yaml
+    flux: infrastructure/fluxcd/marpich-iam-helmrelease.yaml
+  autoscaling: [HPA, VPA, cluster_autoscaler]
+  security:
+    - pod_security_restricted
+    - network_policies
+    - mesh_mtls
+    - admission_policy_as_code
+
+devsecops:
+  github_workflow: .github/workflows/identity-federation-enterprise.yml
+  azure_pipeline: infrastructure/azure-pipelines/identity-federation.yml
+  stages:
+    - source
+    - build
+    - static_analysis
+    - unit_tests
+    - dependency_scan
+    - secret_scan
+    - container_build
+    - container_scan
+    - integration_tests
+    - artifact_signing
+    - gitops_promote
+    - verify
+    - rollback
+  forbidden:
+    - manual_production_kubectl_apply_as_sole_path
+    - secrets_in_git
+
+observability:
+  otel: backend/shared/infrastructure/observability/telemetry.py
+  metrics_catalog: docs/architecture/observability/METRICS_CATALOG.yaml#identity_federation_metrics
+  scrape_paths:
+    - /api/v1/federation/metrics
+    - /api/v1/federation/ops/metrics
+  dashboards:
+    - infrastructure/observability/grafana/dashboards/identity-federation*.json
+  alerts: infrastructure/observability/prometheus/alerts/identity-federation.yml
+
+sre:
+  availability_slo: 0.9999
+  login_p95_ms: 200
+  token_p95_ms: 100
+  error_budget_period_days: 28
+
+dr:
+  rpo_minutes: 5
+  rto_minutes: 30
+  runbook: docs/deployment/IDENTITY_FEDERATION_DR_GUIDE.md
+  modes: [active_passive, active_active_geo]
+
+ai_ops:
+  hooks:
+    - incident_signal_correlation
+    - capacity_forecast_hooks
+    - log_anomaly_hints
+    - self_healing_recommendations
+  note: inference via AI Platform — not embedded LLM in ops facade
+
+quality_gates:
+  - gitops_required
+  - no_secrets_in_source
+  - distributed_tracing_required
+  - kubernetes_native
+  - multi_region_dr_plan
+  - automatic_rollback_path

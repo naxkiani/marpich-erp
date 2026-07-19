@@ -1,0 +1,58 @@
+# EIFTP Open Host Service — Architecture
+# P200-B10 · ADR-224
+version: "1.0"
+prompt_id: P200-B10
+adr: "224"
+sor_context: identity_federation
+forbidden_sibling_bc: eiftp
+
+logical_domains:
+  - api_management_ohs
+  - cqrs_infrastructure
+  - event_platform_surface
+  - saga_orchestration
+  - integration_patterns
+
+reuses:
+  api_gateway: PlatformGatewayMiddleware_and_enterprise_api_gateway
+  event_bus: EventFabric_outbox
+  integration_platform: external_connectors_only
+  workflow: approval_sagas_emit_workflow_events
+  service_mesh: mTLS_grpc
+
+apis:
+  rest_prefixes:
+    - /api/v1/federation/engine
+    - /api/v1/federation/trust-fabric
+    - /api/v1/federation/providers
+    - /api/v1/federation/cross-tenant
+    - /api/v1/federation/security
+    - /api/v1/federation/ohs
+  graphql: backend/shared/contracts/graphql/federation.graphql
+  grpc: backend/shared/contracts/grpc/federation/v1/federation.proto
+
+cqrs:
+  command_bus: FederationCommandBus
+  query_bus: FederationQueryBus
+  middleware: [tenant, idempotency, correlation, audit_metrics]
+
+events:
+  catalog: OHS_EVENT_CATALOG.v1.yaml
+  kafka_topics: docs/architecture/identity/FEDERATION_KAFKA_TOPICS.yaml
+  envelope: docs/architecture/events/_envelope.v1.json
+  versioning: required
+  patterns: [outbox, inbox, cloud_events_compatible]
+
+sagas:
+  - federation_trust_establishment
+  - identity_provider_activation
+  compensation: required
+  timeout: required
+
+quality_gates:
+  - no_direct_service_coupling
+  - no_sync_only_design
+  - event_versioning
+  - idempotency
+  - tenant_isolation
+  - zero_trust_headers

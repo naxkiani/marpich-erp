@@ -1,0 +1,64 @@
+# Domain / Bounded Context / Aggregate / Microservice Boundaries
+# P200-B2 · ADR-216
+version: "1.0"
+prompt_id: P200-B2
+
+domain_boundaries:
+  owns:
+    - federation_profiles
+    - identity_providers_registration
+    - partners_trusts
+    - claims_mappings
+    - identity_links
+    - provisioning_policies_for_federation
+    - sync_jobs
+    - federation_sessions
+    - tenant_federation
+    - trust_graph_facts
+  does_not_own:
+    - jwt_issuance_local_authn: identity_authentication
+    - permit_deny: authorization
+    - business_policy_outcomes: policy
+    - vendor_connectors: integration
+    - audit_store: audit
+    - secrets_vault: platform_secrets
+
+bounded_contexts:
+  primary: identity_federation
+  companions:
+    - identity
+    - authentication
+    - adaptive_authentication
+    - identity_lifecycle
+    - directory
+    - identity_risk
+    - identity_digital_twin
+    - authorization
+    - policy
+    - integration
+    - audit
+    - ai
+    - ai_governance
+    - ai_security
+
+aggregates:
+  - FederationProfile
+  - IdentityProvider
+  - FederationPartner
+  - TrustRelationship
+  - ClaimsMapping
+  - IdentityLink
+  - ProvisioningPolicy
+  - SynchronizationJob
+  - FederationSession
+  - TenantFederation
+
+microservices:
+  current_deploy: co_deployed_iam_monolith_plane
+  extractable_later:
+    - federation_protocol_gateway
+    - federation_admin_api
+    - federation_fabric
+    - federation_intelligence
+  communication: rest_plus_events_only
+  never: shared_mutable_state_or_cross_schema_sql

@@ -1,0 +1,34 @@
+# Federation Engine Architecture
+# P200-B5 · ADR-219
+version: "1.0"
+prompt_id: P200-B5
+
+facade: domain/services/identity_federation_engine.py
+composed_engines:
+  - protocol_engine
+  - broker_engine
+  - broker_intelligence_engine
+  - claims_transformation_engine
+  - token_federation_engine
+  - trust_management_engine
+  - session_federation_engine
+  - provisioning_engine
+  - zero_trust_federation_engine
+  - federation_engine
+  - risk_based_federation_engine
+
+subsystems:
+  idp_management: { aggregate: IdentityProvider, entity: FederationConnection }
+  protocol_layer: { ports: [IOAuth2, IOidc, IScim], plugins: protocol_plugin_sdk }
+  mapping: { engine: claims_transformation_engine, aggregate: ClaimsMapping }
+  trust: { engine: trust_management_engine, command: EstablishTrust }
+  tokens: { engine: token_federation_engine, command: ExchangeFederatedToken }
+  sync: { aggregate: SynchronizationJob, command: ResolveSyncConflict }
+  monitoring: { metrics: federation_protocol_metrics, health: IProviderHealthProbe }
+  audit: { path: integration_events_to_audit_platform }
+
+protocols: [oauth2, oidc, saml, scim, ldap, certificate_based, future_via_plugins]
+sso: [workforce, customer, partner, application, cross_tenant]
+multi_tenant: [tenant_providers, tenant_policies, tenant_trusts, tenant_keyed_secrets_paths]
+ai_native: [AiFederatedAgent, AI_token_types, trust_scores]
+deferred_to_b10: [graphql, grpc]

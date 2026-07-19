@@ -1,0 +1,54 @@
+# Business Outcome Matrix — EIFTP
+# P200-B1.1-C · ADR-214
+version: "1.0"
+prompt_id: P200-B1.1-C
+
+outcomes:
+  - id: O1
+    name: Centralized identity governance
+    drivers: [P2, P9, P10]
+    kpi_hints: [single_sor_ratio, orphan_account_count]
+  - id: O2
+    name: Reduced security incidents
+    drivers: [P3, P6, P9]
+    kpi_hints: [authn_incident_rate, privilege_abuse_rate]
+  - id: O3
+    name: Faster onboarding
+    drivers: [P10, P1]
+    kpi_hints: [time_to_first_login_p50]
+  - id: O4
+    name: Faster offboarding
+    drivers: [P10, P6]
+    kpi_hints: [time_to_revoke_p50]
+  - id: O5
+    name: Simplified compliance audits
+    drivers: [P8]
+    kpi_hints: [evidence_pack_generation_time]
+  - id: O6
+    name: Improved customer trust
+    drivers: [P3, P4]
+    kpi_hints: [partner_trust_nps, trust_slo]
+  - id: O7
+    name: Lower operational costs
+    drivers: [P1, P10]
+    kpi_hints: [identity_admin_fte_per_10k_users]
+  - id: O8
+    name: Enterprise-wide identity visibility
+    drivers: [P2]
+    kpi_hints: [subject_coverage_pct]
+  - id: O9
+    name: Secure AI adoption
+    drivers: [P7]
+    kpi_hints: [ai_agents_with_identity_pct]
+  - id: O10
+    name: Global federation readiness
+    drivers: [P4, P5]
+    kpi_hints: [active_federation_links, federation_success_rate]
+  - id: O11
+    name: Reduced administrative overhead
+    drivers: [P10]
+    kpi_hints: [manual_ticket_volume]
+  - id: O12
+    name: Improved enterprise resilience
+    drivers: [P3, P6]
+    kpi_hints: [authn_availability, mttr_identity]

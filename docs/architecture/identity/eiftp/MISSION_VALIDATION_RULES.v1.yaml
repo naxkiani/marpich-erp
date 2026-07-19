@@ -1,0 +1,61 @@
+# EIFTP — Mission Validation Rules (P200-B1.1-A)
+apiVersion: marpich.io/v1
+kind: EiftpMissionValidationRules
+metadata:
+  id: eiftp-mission-validation
+  version: "1.0.0"
+  adr: [212]
+  prompt: P200-B1.1-A
+
+rules:
+  - id: MV-001
+    rule: identity_federation_context_exists
+    path: backend/contexts/identity_federation/
+    severity: critical
+
+  - id: MV-002
+    rule: no_sibling_eiftp_bounded_context
+    forbid_path: backend/contexts/eiftp/
+    severity: critical
+
+  - id: MV-003
+    rule: mission_law_document_exists
+    path: docs/architecture/ENTERPRISE_IDENTITY_FEDERATION_TRUST_PLATFORM.md
+    severity: critical
+
+  - id: MV-004
+    rule: taxonomy_catalog_has_four_classes
+    path: docs/architecture/identity/eiftp/IDENTITY_TAXONOMY.v1.yaml
+    require_classes: [human, machine, ai, external]
+    severity: high
+
+  - id: MV-005
+    rule: trust_domains_catalog_complete
+    path: docs/architecture/identity/eiftp/TRUST_DOMAINS.v1.yaml
+    min_domains: 11
+    severity: high
+
+  - id: MV-006
+    rule: zero_trust_mission_model_exists
+    path: docs/architecture/identity/eiftp/ZERO_TRUST_MISSION_MODEL.v1.yaml
+    severity: high
+
+  - id: MV-007
+    rule: authz_not_replaced_by_federation
+    note: Access decisions remain ADR-204 Authorization
+    severity: critical
+
+  - id: MV-008
+    rule: modules_must_not_embed_idp_sdks
+    note: External IdPs via Federation + Integration Platform only
+    severity: critical
+
+  - id: MV-009
+    rule: adr_212_accepted
+    path: docs/adr/212-enterprise-identity-federation-trust-mission.md
+    severity: critical
+
+  - id: MV-010
+    rule: architecture_compliance_catalog_exists
+    path: docs/architecture/identity/eiftp/MISSION_ARCHITECTURE_COMPLIANCE.v1.yaml
+    severity: high

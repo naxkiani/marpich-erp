@@ -1,0 +1,45 @@
+# EIFTP Ops API / CQRS / DoD — P200-B11 · ADR-225
+version: "1.0"
+prompt_id: P200-B11
+
+apis:
+  rest:
+    - GET /api/v1/federation/ops/surface
+    - GET /api/v1/federation/ops/deployment
+    - GET /api/v1/federation/ops/pipeline
+    - GET /api/v1/federation/ops/observability
+    - GET /api/v1/federation/ops/slo
+    - GET /api/v1/federation/ops/dr
+    - GET /api/v1/federation/ops/health
+    - GET /api/v1/federation/ops/metrics
+    - POST /api/v1/federation/ops/incidents/signal
+    - POST /api/v1/federation/ops/dr/drill
+    - POST /api/v1/federation/ops/ai/recommend
+  graphql: deferred_platform_gateway
+  grpc: deferred_platform_gateway
+
+commands:
+  - SignalIncident
+  - RecordDrDrill
+  - RequestAiOpsRecommendation
+
+queries:
+  - GetOpsSurface
+  - GetDeploymentProfile
+  - GetPipelineProfile
+  - GetObservabilityProfile
+  - GetSloStatus
+  - GetDrProfile
+  - GetOpsHealth
+  - GetOpsMetrics
+
+dod:
+  - gitops_deployable
+  - secure_cicd_pipeline
+  - kubernetes_native_helm
+  - otel_and_metrics
+  - sre_slos
+  - disaster_recovery_plan
+  - multi_region_ready
+  - no_secrets_in_git
+  - ai_ops_hooks

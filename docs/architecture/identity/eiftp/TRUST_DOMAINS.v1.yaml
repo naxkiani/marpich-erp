@@ -1,0 +1,74 @@
+# EIFTP — Trust Domains (P200-B1.1-A)
+apiVersion: marpich.io/v1
+kind: EiftpTrustDomains
+metadata:
+  id: eiftp-trust-domains
+  version: "1.0.0"
+  adr: [212, 202c]
+  prompt: P200-B1.1-A
+
+law: |
+  Each trust domain keeps independent governance while participating in one Trust Fabric.
+  Cross-domain access requires explicit trust relationship + AuthZ/Policy — never implicit peer DB.
+
+domains:
+  - id: internal
+    label: Internal Trust Domain
+    isolation: tenant_organization
+    typical_idps: [marpich_idp, corporate_oidc]
+
+  - id: external
+    label: External Trust Domain
+    isolation: consumer_boundary
+    typical_idps: [google, apple, social]
+
+  - id: partner
+    label: Partner Trust Domain
+    isolation: contractual_b2b
+    typical_idps: [partner_saml, partner_oidc]
+
+  - id: government
+    label: Government Trust Domain
+    isolation: regulatory
+    typical_idps: [government_eid]
+
+  - id: banking
+    label: Banking Trust Domain
+    isolation: financial_regulation
+    typical_idps: [bank_idp]
+
+  - id: healthcare
+    label: Healthcare Trust Domain
+    isolation: phi_boundary
+    typical_idps: [health_idp]
+
+  - id: academic
+    label: Academic Trust Domain
+    isolation: education
+    typical_idps: [university_idp]
+
+  - id: cross_tenant
+    label: Cross-Tenant Trust Domain
+    isolation: hard_tenant_wall_plus_selective_federation
+    typical_idps: [marpich_idp]
+    notes: Tenant A never reads Tenant B schemas; trust tuples are first-class
+
+  - id: ai
+    label: AI Trust Domain
+    isolation: agent_and_tool_principals
+    typical_idps: [service_principal, agent_registry]
+
+  - id: service
+    label: Service Trust Domain
+    isolation: workload_identity
+    typical_idps: [mTLS, spiffe_oidc]
+
+  - id: device
+    label: Device Trust Domain
+    isolation: endpoint_posture
+    typical_idps: [device_attestation, mdm]
+
+fabric:
+  owner: identity_federation
+  engines: [trust_management_engine, trust_graph_engine, zero_trust_federation_engine]
+  authz_consumes: trust_score_assurance_level_as_facts_only

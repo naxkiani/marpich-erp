@@ -1,0 +1,28 @@
+# EIFTP Vision — Architecture Compliance Report (P200-B1.1-B)
+apiVersion: marpich.io/v1
+kind: EiftpVisionArchitectureCompliance
+metadata:
+  id: eiftp-vision-architecture-compliance
+  version: "1.0.0"
+  adr: [213]
+  prompt: P200-B1.1-B
+
+constraints_checked:
+  ddd: { pass: true, note: Future-state maps to existing BCs; P200-B1.1-C for strategic design }
+  cqrs: { pass: true, note: No UI-first design; commands/queries remain in owners }
+  hexagonal: { pass: true, note: Ports stay in identity_federation }
+  clean_architecture: { pass: true, note: Docs only in Vision; no layer inversion }
+  microservices: { pass: true, note: Context boundaries preserved }
+  event_driven: { pass: true, note: Trust changes via integration events }
+  zero_trust: { pass: true, note: Aligns ZERO_TRUST_MISSION_MODEL + VISION_SECURITY }
+  cloud_native: { pass: true, note: Reuses P198 deploy/ops }
+  api_first: { pass: true, note: /api/v1/federation surface remains }
+  plugin_first: { pass: true, note: Protocol plugins remain extension path }
+  metadata_driven: { pass: true, note: Catalogs under eiftp/ }
+  knowledge_graph_native: { pass: true, note: Trust fabric edges; Directory Graph companion }
+  digital_twin_native: { pass: true, note: Twin edges; twin SoR stays ADR-203 }
+  ai_native: { pass: true, note: VISION_AI_IDENTITY; AI Platform ACL }
+
+violations: []
+verdict: ENTERPRISE_GRADE
+foundation_for: P200-B1.1-C

@@ -1,0 +1,88 @@
+# Federation Security / Zero Trust / Compliance Posture — Architecture
+# P200-B9 · ADR-223
+version: "1.0"
+prompt_id: P200-B9
+adr: "223"
+sor_context: identity_federation
+forbidden_sibling_bc: eiftp
+
+logical_domains:
+  - security_control
+  - zero_trust
+  - enterprise_risk
+  - compliance_posture
+  - security_operations_signals
+  - ai_security_governance
+
+aggregates:
+  - SecurityControl
+  - ZeroTrustEvaluation # value outcome + history
+  - RiskAssessment
+  - ThreatEvent
+  - CompliancePostureSnapshot
+
+zt_gate_actions:
+  - allow
+  - allow_with_conditions
+  - challenge
+  - require_mfa
+  - require_step_up
+  - deny
+  - quarantine
+  - escalate
+
+evaluation_dimensions:
+  - identity
+  - device
+  - location
+  - network
+  - risk
+  - trust_score
+  - session
+  - behavior
+  - policy
+  - resource_sensitivity
+  - time
+  - tenant_context
+  - ai_context
+
+compliance_frameworks_mapped:
+  - ISO_27001
+  - SOC_2
+  - NIST_CSF
+  - CIS
+  - GDPR
+  - PCI_DSS
+  - HIPAA_READY
+note: Full Compliance Program SoR remains Compliance Framework; B9 produces posture + evidence refs
+
+platform_reuse:
+  authorization: ADR-204_facts_only
+  policy_engine: IPolicyEvaluator
+  audit: Audit_Platform_events
+  compliance: Compliance_Framework_events
+  secrets: vault_path_refs
+  threat_intel: Integration_Platform
+
+ai_security:
+  - ai_identity_verification
+  - ai_trust_evaluation
+  - ai_action_authorization_gate
+  - ai_prompt_governance_hook
+  - ai_audit_event
+
+devsecops:
+  deferred_deep_wiring: P200-B11
+  catalog_refs:
+    - secure_cicd
+    - secret_scanning
+    - dependency_scanning
+    - container_scanning
+    - policy_as_code
+
+quality_gates:
+  - no_implicit_trust
+  - no_hardcoded_tenant_policies
+  - continuous_verification_required
+  - tenant_isolation
+  - ai_governance_required

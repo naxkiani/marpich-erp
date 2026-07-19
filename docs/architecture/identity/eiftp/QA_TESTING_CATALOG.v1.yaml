@@ -1,0 +1,39 @@
+# EIFTP Testing Catalog — P200-B12 · ADR-226
+version: "1.0"
+prompt_id: P200-B12
+
+unit_suites:
+  - backend/contexts/identity_federation/tests/test_eiftp_mission.py
+  - backend/contexts/identity_federation/tests/test_eiftp_vision.py
+  - backend/contexts/identity_federation/tests/test_eiftp_business_drivers.py
+  - backend/contexts/identity_federation/tests/test_eiftp_strategic_goals.py
+  - backend/contexts/identity_federation/tests/test_eiftp_architecture.py
+  - backend/contexts/identity_federation/tests/test_eiftp_ddd_strategic.py
+  - backend/contexts/identity_federation/tests/test_eiftp_domain_model.py
+  - backend/contexts/identity_federation/tests/test_eiftp_federation_engine.py
+  - backend/contexts/identity_federation/tests/test_eiftp_trust_fabric.py
+  - backend/contexts/identity_federation/tests/test_eiftp_identity_providers.py
+  - backend/contexts/identity_federation/tests/test_eiftp_cross_tenant.py
+  - backend/contexts/identity_federation/tests/test_eiftp_security_zero_trust.py
+  - backend/contexts/identity_federation/tests/test_eiftp_ohs_apis_events_cqrs.py
+  - backend/contexts/identity_federation/tests/test_eiftp_ops_deployment.py
+  - backend/contexts/identity_federation/tests/test_eiftp_quality_governance.py
+
+contract_surfaces:
+  graphql: backend/shared/contracts/graphql/federation.graphql
+  grpc: backend/shared/contracts/grpc/federation/v1/federation.proto
+  api_catalog: backend/shared/contracts/api_contract_catalog.yaml
+
+ci:
+  github: .github/workflows/identity-federation-enterprise.yml
+  azure: infrastructure/azure-pipelines/identity-federation.yml
+
+chaos_and_dr:
+  dr_guide: docs/deployment/IDENTITY_FEDERATION_DR_GUIDE.md
+  ops_drill_api: POST /api/v1/federation/ops/dr/drill
+
+automation:
+  runner: pytest
+  parallel: true
+  continuous: true
+  mocks: protocol plugin sandbox + in-memory stores

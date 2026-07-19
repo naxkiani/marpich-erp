@@ -1,0 +1,40 @@
+# Enterprise Governance Alignment — EIFTP Strategic Goals
+# P200-B1.1-D1 · ADR-215
+version: "1.0"
+prompt_id: P200-B1.1-D1
+
+governance_areas:
+  identity_governance:
+    primary_goals: [SG01, SG07]
+    owners: [identity, identity_federation]
+  trust_governance:
+    primary_goals: [SG02, SG08]
+    owners: [identity_federation]
+  federation_governance:
+    primary_goals: [SG03, SG07]
+    owners: [identity_federation]
+  policy_governance:
+    primary_goals: [SG04, SG07]
+    owners: [policy, authorization]
+  audit_governance:
+    primary_goals: [SG07]
+    owners: [audit]
+  compliance_governance:
+    primary_goals: [SG07]
+    owners: [compliance]
+
+raci_summary:
+  identity_federation:
+    responsible: [SG02, SG03, SG05, SG06, SG08, SG10]
+    accountable: [trust_fabric, federation_sor]
+  identity:
+    responsible: [SG01, SG04_authn_signals, SG05, SG09]
+  authorization:
+    responsible: [SG04_permit_deny]
+    accountable: [pdp_adr_204]
+  audit:
+    responsible: [immutable_audit_trail]
+  ai_governance:
+    responsible: [SG07_ai_subject, SG10_ai_native]
+
+eags_10_compliance: PASS

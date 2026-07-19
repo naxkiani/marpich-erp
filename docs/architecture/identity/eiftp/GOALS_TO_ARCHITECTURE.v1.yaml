@@ -1,0 +1,42 @@
+# Goal-to-Architecture Mapping — EIFTP Strategic Goals → MEOS platforms
+# P200-B1.1-D1 · ADR-215
+version: "1.0"
+prompt_id: P200-B1.1-D1
+
+mappings:
+  - goal: SG01
+    contexts: [identity, identity_federation]
+    docs: [ENTERPRISE_IDENTITY_FEDERATION_TRUST_PLATFORM.md, CORE_PLATFORM.md]
+  - goal: SG02
+    contexts: [identity_federation]
+    docs: [ENTERPRISE_IDENTITY_FEDERATION_TRUST_VISION.md, ENTERPRISE_EVENT_BUS.md]
+  - goal: SG03
+    contexts: [identity_federation, identity, integration]
+    docs: [INTEGRATION_PLATFORM.md]
+    rule: external_idp_only_via_integration_platform
+  - goal: SG04
+    contexts: [identity, authorization, api_gateway]
+    docs: [SECURITY_STANDARD.md, ENTERPRISE_AUTHORIZATION_PLATFORM.md]
+  - goal: SG05
+    contexts: [identity_federation, identity, plugin_platform]
+    docs: [ENTERPRISE_PLUGIN_PLATFORM.md, MODULE_STRUCTURE_STANDARD.md]
+  - goal: SG06
+    contexts: [identity_federation, identity, organization]
+    docs: [LONG_HORIZON_ARCHITECTURE.md, PLATFORM_CHARTER.md]
+  - goal: SG07
+    contexts: [identity_federation, audit, compliance, policy, ai_governance]
+    docs: [ENTERPRISE_AUDIT_PLATFORM.md, ENTERPRISE_POLICY_ENGINE.md]
+  - goal: SG08
+    contexts: [identity_federation, organization, workflow]
+    docs: [SERVICE_BOUNDARIES.md]
+  - goal: SG09
+    contexts: [identity_federation, identity]
+    docs: [PERFORMANCE_STANDARD.md, ENTERPRISE_OBSERVABILITY_PLATFORM.md]
+  - goal: SG10
+    contexts: [identity_federation, ai, ai_security, ai_governance]
+    docs: [AI_PLATFORM_STANDARD.md, LONG_HORIZON_ARCHITECTURE.md]
+
+anti_patterns:
+  - contexts_eiftp_sibling_bc
+  - business_module_local_idp
+  - authz_pdp_inside_federation

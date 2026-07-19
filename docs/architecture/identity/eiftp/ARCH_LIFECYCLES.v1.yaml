@@ -1,0 +1,23 @@
+# Token / Session / Certificate Lifecycles
+# P200-B2 · ADR-216
+version: "1.0"
+prompt_id: P200-B2
+
+token:
+  types: [access, refresh, id_token, service_assertion]
+  states: [issued, active, rotated, revoked, expired]
+  engines: [token_federation_engine]
+  cache: redis_tenant_scoped
+  validation: jwks_plus_introspect
+
+session:
+  states: [created, elevated, stepped_up, suspended, terminated]
+  engines: [session_federation_engine]
+  continuous_authn: true
+  binding: [device, risk, trust_score]
+
+certificate_chain:
+  layers: [platform_root, intermediate_iam, workload_leaf, client_mtls]
+  manager: infrastructure/certificates/certificate_manager.py
+  rotation: automated_with_overlap
+  never: embed_private_keys_in_git

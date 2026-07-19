@@ -1,0 +1,30 @@
+# Data Plane — Postgres / Redis / Kafka / Scaling
+# P200-B2 · ADR-216
+version: "1.0"
+prompt_id: P200-B2
+
+postgresql:
+  schema: federation
+  migration: infrastructure/docker/migrations/028_enterprise_identity_federation_platform.sql
+  rules:
+    - tenant_id_on_every_table
+    - indexes_include_tenant_id
+    - no_cross_schema_joins
+  runtime_today: memory_store
+  target: postgres_repository_adapters
+
+redis:
+  key_pattern: "fed:{tenant_id}:{kind}:{id}"
+  uses: [session, token_introspection_cache, jwks, trust_fact_short_ttl]
+  ttl_policy: short_lived_with_invalidation_on_revoke
+
+kafka:
+  topics_catalog: docs/architecture/identity/FEDERATION_KAFKA_TOPICS.yaml
+  producer: outbox_same_transaction
+  consumer: acl_handlers_idempotent
+
+scaling:
+  stateless_api_pods: horizontal
+  sticky_sessions: avoided_prefer_shared_session_store
+  shard_hint: tenant_id_hash_for_partitioning
+  unlimited_tenants: soft_limit_none_architectural

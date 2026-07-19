@@ -1,0 +1,67 @@
+# EIFTP Quality / Governance / Testing Architecture — P200-B12 · ADR-226
+version: "1.0"
+prompt_id: P200-B12
+adr: "226"
+sor_context: identity_federation
+forbidden_sibling_bc: eiftp
+role: federation_quality_surface
+not:
+  - qa_platform_bc
+  - compliance_platform
+  - audit_platform
+  - authorization_pdp
+
+domains:
+  quality_management:
+    aggregates: [QualityProgram, QualityAssessment, QualityGate, QualityMetric, QualityRule]
+  enterprise_testing:
+    layers:
+      - unit
+      - component
+      - domain
+      - application
+      - integration
+      - contract
+      - api
+      - graphql
+      - grpc
+      - event
+      - security
+      - performance
+      - chaos
+      - multi_tenant
+      - ai
+      - knowledge_graph
+      - digital_twin
+      - disaster_recovery
+  documentation:
+    types:
+      - architecture
+      - adr
+      - openapi
+      - graphql
+      - grpc
+      - runbooks
+      - playbooks
+      - security_manual
+      - dr_manual
+      - release_notes
+  governance_boards:
+    - architecture_review_board
+    - security_review_board
+    - api_governance_board
+    - ai_governance_board
+    - release_governance_board
+  release_management:
+    strategies: [canary, blue_green, rolling, feature_flags, progressive_delivery]
+    versioning: semver
+    rollback_required: true
+
+platform_reuse:
+  testing_runner: pytest + CI workflows
+  architecture_gates:
+    - scripts/validate-architecture.py
+    - scripts/check-dependency-graph.py
+  audit: contexts/audit
+  compliance: contexts/compliance
+  ai_governance: ai_governance / AI Platform

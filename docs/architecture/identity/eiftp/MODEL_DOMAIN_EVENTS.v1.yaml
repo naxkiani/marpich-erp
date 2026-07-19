@@ -1,0 +1,35 @@
+# Domain Event Catalog — tactical (raise on aggregates → map to integration)
+# P200-B4 · ADR-218
+version: "1.0"
+prompt_id: P200-B4
+
+events:
+  # Companion-owned (documented for contracts — not raised by federation)
+  - { name: IdentityCreated, owner: identity }
+  - { name: IdentityVerified, owner: identity }
+  - { name: IdentityUpdated, owner: identity }
+  - { name: IdentitySuspended, owner: identity }
+  - { name: IdentityDeleted, owner: identity }
+  - { name: TenantCreated, owner: core_platform }
+  - { name: TenantTrustEstablished, owner: identity_federation, wire: federation.trust.changed }
+  - { name: CredentialCreated, owner: authentication }
+  - { name: CredentialRotated, owner: authentication }
+  - { name: CredentialExpired, owner: authentication }
+  - { name: PolicyCreated, owner: policy }
+  - { name: PolicyUpdated, owner: policy }
+  - { name: PolicyActivated, owner: policy }
+
+  # Federation-owned
+  - { name: FederationConnected, owner: identity_federation, aggregate: IdentityProvider }
+  - { name: FederationDisconnected, owner: identity_federation, aggregate: IdentityProvider }
+  - { name: TrustGranted, owner: identity_federation, aggregate: TrustRelationship }
+  - { name: TrustRevoked, owner: identity_federation, aggregate: TrustRelationship }
+  - { name: SessionCreated, owner: identity_federation, aggregate: FederationSession }
+  - { name: SessionValidated, owner: identity_federation, aggregate: FederationSession }
+  - { name: SessionTerminated, owner: identity_federation, aggregate: FederationSession }
+  - { name: AIIdentityRegistered, owner: identity_federation, aggregate: AiFederatedAgent }
+  - { name: AIIdentityRevoked, owner: identity_federation, aggregate: AiFederatedAgent }
+  - { name: IdentityLinked, owner: identity_federation, aggregate: IdentityLink }
+  - { name: IdentityUnlinked, owner: identity_federation, aggregate: IdentityLink }
+
+code: backend/contexts/identity_federation/domain/events/federation_domain_events.py

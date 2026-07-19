@@ -1,0 +1,85 @@
+# Domain / Integration Event Matrix — ownership & publishing rules
+# P200-B3 · ADR-217
+version: "1.0"
+prompt_id: P200-B3
+
+law: |
+  Only the owning BC may publish an event name.
+  Consumers use ACL → local commands. Never mutate envelopes.
+
+events:
+  - name: IdentityCreated
+    owner_bc: identity
+    kind: integration
+    federation_role: consume_optional
+  - name: IdentityUpdated
+    owner_bc: identity
+    kind: integration
+    federation_role: consume_optional
+  - name: IdentityDeleted
+    owner_bc: identity
+    kind: integration
+    federation_role: consume_unlink
+  - name: UserInvited
+    owner_bc: identity
+    kind: integration
+  - name: UserActivated
+    owner_bc: identity
+    kind: integration
+  - name: UserDisabled
+    owner_bc: identity
+    kind: integration
+    federation_role: consume_terminate_sessions
+  - name: FederationEstablished
+    owner_bc: identity_federation
+    wire_name: federation.provider.registered
+    kind: integration
+  - name: FederationRemoved
+    owner_bc: identity_federation
+    wire_name: federation.provider.removed
+    kind: integration
+  - name: TrustGranted
+    owner_bc: identity_federation
+    wire_name: federation.trust.changed
+    kind: integration
+    payload_status: active
+  - name: TrustRevoked
+    owner_bc: identity_federation
+    wire_name: federation.trust.changed
+    kind: integration
+    payload_status: revoked
+  - name: MFAEnabled
+    owner_bc: mfa
+    kind: integration
+    federation_role: consume_as_fact
+  - name: SessionCreated
+    owner_bc: identity_federation
+    wire_name: federation.session.created
+    kind: integration
+    note: Authentication may emit local session events under its own names
+  - name: SessionExpired
+    owner_bc: identity_federation
+    wire_name: federation.session.expired
+    kind: integration
+  - name: TokenIssued
+    owner_bc: identity_federation
+    wire_name: federation.token.issued
+    kind: integration
+  - name: TokenRevoked
+    owner_bc: identity_federation
+    wire_name: federation.token.revoked
+    kind: integration
+  - name: PolicyChanged
+    owner_bc: policy
+    kind: integration
+    federation_role: consume_reconfigure
+  - name: AIIdentityRegistered
+    owner_bc: identity_federation
+    wire_name: federation.ai.agent.registered
+    kind: integration
+
+publishing_rules:
+  - outbox_same_transaction_as_persist
+  - full_envelope_required
+  - idempotent_consumers
+  - no_direct_handler_calls_across_modules

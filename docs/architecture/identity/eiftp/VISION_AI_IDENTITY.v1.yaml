@@ -1,0 +1,35 @@
+# EIFTP Vision — AI Identity (P200-B1.1-B)
+apiVersion: marpich.io/v1
+kind: EiftpVisionAiIdentity
+metadata:
+  id: eiftp-vision-ai-identity
+  version: "1.0.0"
+  adr: [213]
+  prompt: P200-B1.1-B
+
+law: AI agents never bypass enterprise security policies
+
+required_attributes:
+  - identity
+  - trust_score
+  - capabilities
+  - security_policies
+  - execution_scope
+  - knowledge_scope
+  - risk_level
+  - audit_trail
+  - lifecycle
+  - governance_rules
+
+owners:
+  principal_registration: [directory, identity_federation]
+  access_decisions: [authorization]
+  scope_and_tools: [ai_platform, plugin_platform]
+  break_glass: [identity_governance]
+  runtime_trust: [identity_federation.zero_trust, identity_risk]
+
+hard_stops:
+  - module_embedded_llm_sdk_as_identity
+  - wildcard_execute_all_workflows
+  - ai_without_tenant_id
+  - ai_without_audit_events

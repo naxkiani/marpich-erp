@@ -1,0 +1,214 @@
+# Strategic Domain Catalog — EIFTP / Identity Plane
+# P200-B3 · ADR-217 · For each domain: mission, responsibilities, rules, model elements
+version: "1.0"
+prompt_id: P200-B3
+adr: "217"
+
+domains:
+  - id: DOM_FEDERATION
+    name: Federation Domain
+    type: core
+    owning_bc: identity_federation
+    mission: Broker and govern federation with internal/external IdPs using open standards.
+    responsibilities: [provider_registration, protocol_negotiation, claims_mapping, identity_linking, jit_hooks]
+    business_rules: [federation_requires_active_trust, claims_mapping_deterministic, no_vendor_sdk_in_domain]
+    aggregates: [FederationProfile, IdentityProvider, ClaimsMapping, IdentityLink, ProvisioningPolicy, SynchronizationJob]
+    entities: [FederatedClaimSet, SyncCursor]
+    value_objects: [ProtocolType, ProviderRef, ExternalSubject]
+    domain_events: [FederationEstablished, FederationRemoved, IdentityLinked]
+    domain_services: [FederationEngine, BrokerEngine, ProtocolEngine, ClaimsEngine]
+    repositories: [IIdentityProviderRepository, IClaimsMappingRepository, IIdentityLinkRepository]
+    factories: [IdentityProviderFactory]
+    policies: [federation_enabled, allowed_protocols]
+    specifications: [ActiveProviderSpec, LinkableSubjectSpec]
+    invariants: [tenant_id_required, one_link_per_external_subject_per_provider]
+    integration_contracts: [IFederationTrustFacts, federation.* events]
+    ownership_rules: [sole_federation_sor]
+
+  - id: DOM_TRUST
+    name: Trust Domain
+    type: core
+    owning_bc: identity_federation
+    mission: Establish, score, and revoke trust relationships forming the Trust Fabric.
+    responsibilities: [trust_lifecycle, trust_graph, zt_signals_as_facts, partner_trust]
+    business_rules: [default_deny_cross_tenant, trust_explicit, never_emit_permit_deny]
+    aggregates: [TrustRelationship, FederationPartner, TenantFederation]
+    entities: [TrustEdge]
+    value_objects: [TrustScore, TrustLevel, TrustStatus]
+    domain_events: [TrustGranted, TrustRevoked]
+    domain_services: [TrustManagementEngine, TrustGraphEngine, ZeroTrustFederationEngine]
+    repositories: [ITrustRelationshipRepository, IFederationPartnerRepository, ITenantFederationRepository]
+    factories: [TrustRelationshipFactory]
+    policies: [trust_boundary, partner_risk]
+    specifications: [ActiveTrustSpec]
+    invariants: [peer_ids_only_no_peer_aggregates]
+    integration_contracts: [FederationTrustFacts DTO]
+    ownership_rules: [trust_facts_to_authz_only]
+
+  - id: DOM_IDENTITY
+    name: Identity Domain
+    type: generic_platform
+    owning_bc: identity
+    mission: Authoritative registry of principals and their lifecycle attributes.
+    responsibilities: [user_registry, principal_ids, activation]
+    business_rules: [unique_principal_per_tenant]
+    aggregates: [User, Principal]
+    entities: []
+    value_objects: [UserId, Email]
+    domain_events: [IdentityCreated, IdentityUpdated, IdentityDeleted, UserInvited, UserActivated, UserDisabled]
+    domain_services: []
+    repositories: [IUserRepository]
+    factories: []
+    policies: []
+    specifications: []
+    invariants: [tenant_isolation]
+    integration_contracts: [identity.* events]
+    ownership_rules: [federation_stores_identity_id_refs_only]
+
+  - id: DOM_AUTHENTICATION
+    name: Authentication Domain
+    type: generic_platform
+    owning_bc: authentication
+    mission: Prove local credentials and issue primary authentication outcomes.
+    responsibilities: [password_passkey_local_authn, primary_session_boot]
+    business_rules: [credentials_never_logged]
+    aggregates: [CredentialChallenge]
+    value_objects: [AuthMethod]
+    domain_events: [SessionCreated]
+    ownership_rules: [does_not_own_federation_broker]
+    owning_note: Local AuthN; federation broker is DOM_FEDERATION
+
+  - id: DOM_AUTHORIZATION
+    name: Authorization Domain
+    type: generic_platform
+    owning_bc: authorization
+    mission: Decide Permit/Deny via PDP cascade.
+    responsibilities: [rbac_rebac_abac_pbac_obligations]
+    business_rules: [deny_by_default]
+    aggregates: [AuthorizationDecision, RelationTuple]
+    domain_events: [authorization.decision.made]
+    ownership_rules: [never_inside_federation]
+    policies: [pbac_via_policy_engine]
+
+  - id: DOM_SESSION
+    name: Session Domain
+    type: supporting
+    owning_bc: identity_federation
+    mission: Manage federation-brokered sessions with continuous verification hooks.
+    responsibilities: [create_elevate_terminate_fed_session]
+    aggregates: [FederationSession]
+    domain_events: [SessionCreated, SessionExpired]
+    invariants: [session_bound_to_tenant_and_trust]
+    note: Local app sessions may also exist under authentication — namespaced by context
+
+  - id: DOM_TOKEN
+    name: Token Domain
+    type: supporting
+    owning_bc: identity_federation
+    mission: Issue/validate/revoke federated tokens and assertions.
+    responsibilities: [access_refresh_id_token_lifecycle]
+    domain_events: [TokenIssued, TokenRevoked]
+    domain_services: [TokenFederationEngine]
+    value_objects: [TokenType, Jti]
+    invariants: [audience_bound, short_lived_access]
+
+  - id: DOM_CREDENTIAL
+    name: Credential Domain
+    type: generic_platform
+    owning_bc: authentication
+    mission: Store and verify secret authenticators (never in federation tables).
+    ownership_rules: [federation_never_persists_passwords]
+
+  - id: DOM_MFA
+    name: MFA Domain
+    type: generic_platform
+    owning_bc: mfa
+    mission: Multi-factor challenges and enrollment.
+    domain_events: [MFAEnabled]
+    ownership_rules: [federation_may_require_mfa_stepup_via_adaptive]
+
+  - id: DOM_POLICY
+    name: Policy Domain
+    type: generic_platform
+    owning_bc: policy
+    mission: Configurable business rule evaluation (not access Permit/Deny SoR).
+    domain_events: [PolicyChanged]
+    ownership_rules: [IPolicyEvaluator port]
+
+  - id: DOM_AUDIT
+    name: Audit Domain
+    type: generic_platform
+    owning_bc: audit
+    mission: Immutable enterprise audit trail.
+    ownership_rules: [federation_emits_events_never_local_audit_sor]
+
+  - id: DOM_COMPLIANCE
+    name: Compliance Domain
+    type: generic_platform
+    owning_bc: compliance
+    mission: Continuous compliance evidence and violations.
+    ownership_rules: [consumes_audit_and_federation_events]
+
+  - id: DOM_AI_IDENTITY
+    name: AI Identity Domain
+    type: supporting
+    owning_bc: identity_federation
+    companions: [ai_governance, ai_security, ai]
+    mission: Treat AI agents as first-class federated subjects.
+    domain_events: [AIIdentityRegistered]
+    invariants: [never_bypass_authz_or_policy]
+    value_objects: [AgentId, ToolScope]
+
+  - id: DOM_MACHINE_IDENTITY
+    name: Machine Identity Domain
+    type: supporting
+    owning_bc: identity_federation
+    mission: Workload/service principals and rotation.
+    value_objects: [WorkloadId, SpiffeCompatibleUri]
+    credentials_via: [DOM_CERTIFICATE, secrets_platform]
+
+  - id: DOM_DEVICE_IDENTITY
+    name: Device Identity Domain
+    type: supporting
+    owning_bc: identity_federation
+    mission: Device posture as trust facts for continuous verification.
+    value_objects: [DeviceId, PostureLevel]
+
+  - id: DOM_ORGANIZATION
+    name: Organization Domain
+    type: generic_platform
+    owning_bc: organization
+    mission: Org units, hierarchy, delegated admin scopes.
+    ownership_rules: [federation_references_org_ids_only]
+
+  - id: DOM_TENANT
+    name: Tenant Domain
+    type: generic_platform
+    owning_bc: core_platform
+    mission: Tenant lifecycle and hard isolation key.
+    domain_events: [platform.tenant.provisioned]
+    invariants: [every_federation_aggregate_has_tenant_id]
+
+  - id: DOM_EXTERNAL_IDENTITY
+    name: External Identity Domain
+    type: supporting
+    owning_bc: identity_federation
+    execution: integration
+    mission: Model external IdP subjects and classes; execute connectors via Integration Platform.
+    aggregates: [IdentityProvider]
+    ownership_rules: [no_vendor_sdk_in_domain]
+
+  - id: DOM_CERTIFICATE
+    name: Certificate Domain
+    type: supporting
+    owning_bc: identity_federation
+    mission: Certificate issuance/rotation for federation and workload trust chains.
+    domain_services: [CertificateManager_infra_adapter]
+    invariants: [private_keys_never_in_git_or_module_tables]
+
+  - id: DOM_SECRETS
+    name: Secrets Domain
+    type: generic_platform
+    owning_bc: platform_secrets
+    mission: Vault/KMS secret storage and rotation.
+    ownership_rules: ["path marpich/${env}/iam/federation/*"]

@@ -1,0 +1,48 @@
+# Runtime Flows — AuthN / Federation / Trust / Resolution
+# P200-B2 · ADR-216
+version: "1.0"
+prompt_id: P200-B2
+
+authentication:
+  steps:
+    - gateway_receive
+    - tenant_resolve
+    - choose_local_or_federated
+    - adaptive_auth_challenge_if_needed
+    - issue_or_broker_token
+    - emit_audit_and_events
+  owners: [api_gateway, authentication, identity_federation, adaptive_authentication]
+
+federation:
+  steps:
+    - sp_or_client_redirect_to_broker
+    - select_idp
+    - protocol_auth_at_idp
+    - assertion_or_code_callback
+    - claims_map
+    - identity_resolve_or_link
+    - trust_evaluate
+    - session_create
+    - token_issue
+    - authz_facts_available
+  owners: [identity_federation]
+
+trust_evaluation:
+  steps:
+    - load_TrustRelationship
+    - score_trust_graph
+    - zero_trust_signals
+    - risk_score
+    - policy_obligations
+    - publish_trust_facts
+  never_returns: permit_or_deny
+  consumers: [authorization_pdp, pep_modules]
+
+identity_resolution:
+  steps:
+    - normalize_claims
+    - match_IdentityLink
+    - create_or_update_link
+    - optional_jit_provision_via_lifecycle
+    - notify_digital_twin
+  owners: [identity_federation, identity_lifecycle]

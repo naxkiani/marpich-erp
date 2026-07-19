@@ -1,0 +1,19 @@
+# Edge — API Gateway & Service Mesh
+# P200-B2 · ADR-216
+version: "1.0"
+prompt_id: P200-B2
+extends: docs/architecture/identity/FEDERATION_API_GATEWAY.v1.yaml
+
+api_gateway:
+  single_entry: true
+  routes:
+    - /api/v1/federation/**
+    - /api/v1/identity/**  # protocol aliases hosted by gateway_router
+  headers_required: [X-Tenant-ID, X-Request-ID, X-Correlation-ID]
+  pep: gateway_plus_route_require_permissions
+
+service_mesh:
+  optional_enterprise: istio_or_linkerd
+  provides: [mtls, traffic_split, retry, outlier_detection]
+  identity: workload_identity_fed_into_trust_facts
+  law: mesh_does_not_replace_authz_pdp

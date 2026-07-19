@@ -1,0 +1,15 @@
+# Query Catalog — CQRS read model
+# P200-B4 · ADR-218
+version: "1.0"
+prompt_id: P200-B4
+
+queries:
+  - { name: GetTrustRelationship, owner: identity_federation }
+  - { name: GetFederationStatus, owner: identity_federation }
+  - { name: GetAIIdentityProfile, owner: identity_federation }
+  - { name: GetSecurityPosture, owner: identity_federation, note: composed_facts }
+  - { name: GetTrustFacts, handler: application/queries/get_trust_facts.py }
+  - { name: GetIdentity, owner: identity }
+  - { name: SearchIdentity, owner: identity }
+  - { name: GetIdentityHistory, owner: identity_or_audit }
+  - { name: GetEffectivePolicies, owner: policy }

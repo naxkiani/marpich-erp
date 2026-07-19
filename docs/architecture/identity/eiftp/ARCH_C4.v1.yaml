@@ -1,0 +1,91 @@
+# C4 Model — EIFTP
+# P200-B2 · ADR-216
+version: "1.0"
+prompt_id: P200-B2
+
+system_context:
+  system: MEOS_Identity_Federation_Trust
+  users:
+    - human_workforce
+    - partners
+    - customers_b2b
+    - ai_agents
+    - machines_workloads
+    - devices
+  external_systems:
+    - corporate_idp_entra_okta_keycloak
+    - social_idp
+    - government_eid
+    - scim_directories
+    - partner_saml_sp
+  peers_inside_meos:
+    - authorization_pdp
+    - policy_engine
+    - integration_platform
+    - audit_platform
+    - ai_platform
+    - identity_digital_twin
+
+containers:
+  - id: api_gateway
+    tech: Kong_or_Envoy
+    responsibility: authn_edge_tenant_rate_limit_routing
+  - id: federation_api
+    tech: FastAPI_identity_federation
+    responsibility: admin_federation_trust_CRUD_and_queries
+    path: /api/v1/federation
+  - id: federation_gateway
+    tech: FastAPI
+    responsibility: oidc_oauth_saml_scim_protocol_endpoints
+  - id: fabric_api
+    tech: FastAPI
+    responsibility: trust_mesh_zt_session_token_cert
+    path: /api/v1/federation/fabric
+  - id: intelligence_api
+    tech: FastAPI
+    responsibility: analytics_ai_surfaces
+    path: /api/v1/federation/intelligence
+  - id: postgres
+    tech: PostgreSQL
+    schema: federation
+  - id: redis
+    tech: Redis
+    responsibility: session_token_jwks_cache_tenant_scoped
+  - id: kafka
+    tech: Kafka_or_outbox_bus
+    responsibility: federation_integration_events
+  - id: integration_workers
+    tech: Integration_Platform
+    responsibility: external_idp_connectors
+
+components:
+  domain:
+    - federation_engine
+    - broker_engine
+    - claims_engine
+    - trust_graph_engine
+    - zero_trust_federation_engine
+    - session_federation_engine
+    - token_federation_engine
+    - protocol_engine
+    - provisioning_engine
+  application:
+    - IdentityFederationService
+    - FabricSecurityService
+    - FabricIntelligenceService
+    - IdentityFederationAIService
+    - commands_and_queries_cqrs
+  infrastructure:
+    - memory_and_postgres_repositories
+    - protocol_adapters_oauth_oidc_saml_scim_ldap
+    - certificate_manager
+    - adaptive_auth_acl
+    - identity_risk_acl
+    - redis_cache_adapter
+    - outbox_messaging_adapter
+  presentation:
+    - federation_router
+    - gateway_router
+    - fabric_router
+    - intelligence_router
+    - architecture_surface_router

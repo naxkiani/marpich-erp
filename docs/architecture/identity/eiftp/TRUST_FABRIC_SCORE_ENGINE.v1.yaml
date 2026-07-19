@@ -1,0 +1,35 @@
+# Trust Score Engine Design
+# P200-B6 · ADR-220
+version: "1.0"
+prompt_id: P200-B6
+
+inputs:
+  - identity_assurance
+  - authentication_strength
+  - behavior_analysis
+  - risk_signals
+  - compliance_status
+  - device_security
+  - network_context
+  - historical_trust
+  - threat_intelligence
+  - ai_analysis
+
+default_weights:
+  identity_assurance: 0.14
+  authentication_strength: 0.12
+  behavior_analysis: 0.10
+  risk_signals: 0.14
+  compliance_status: 0.10
+  device_security: 0.10
+  network_context: 0.08
+  historical_trust: 0.10
+  threat_intelligence: 0.06
+  ai_analysis: 0.06
+
+algorithm: weighted_sum_clamped_0_100_with_weakest_link_penalty
+explainability:
+  required_fields: [score, enterprise_level, factors, dimension_breakdown, weakest_link, policy_refs]
+  forbidden: black_box_score_without_factors
+
+code: domain/services/trust_score_engine.py

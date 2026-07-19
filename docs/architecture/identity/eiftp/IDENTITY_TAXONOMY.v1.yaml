@@ -1,0 +1,75 @@
+# EIFTP — Enterprise Identity Taxonomy (P200-B1.1-A)
+apiVersion: marpich.io/v1
+kind: EiftpIdentityTaxonomy
+metadata:
+  id: eiftp-identity-taxonomy
+  version: "1.0.0"
+  adr: [212, 202]
+  prompt: P200-B1.1-A
+
+law: |
+  Every MEOS principal maps to exactly one primary identity_class.
+  Subtypes are registry labels — lifecycle stays Identity / Directory / Federation.
+
+classes:
+  - id: human
+    label: Human Identities
+    subtypes:
+      - employee
+      - customer
+      - administrator
+      - contractor
+      - consultant
+      - student
+      - citizen
+      - guest
+      - auditor
+      - executive
+    owners: [identity, identity_lifecycle, directory]
+
+  - id: machine
+    label: Machine Identities
+    subtypes:
+      - microservice
+      - container
+      - kubernetes_pod
+      - api
+      - database
+      - message_broker
+      - event_consumer
+      - event_publisher
+      - scheduled_job
+      - integration_service
+    owners: [directory, identity_federation, service_mesh]
+
+  - id: ai
+    label: AI Identities
+    subtypes:
+      - ai_agent
+      - ai_assistant
+      - ai_worker
+      - autonomous_system
+      - llm_service
+      - ai_orchestrator
+      - ai_plugin
+      - ai_tool
+    owners: [identity_federation, ai, authorization_soa]
+
+  - id: external
+    label: External Identities
+    subtypes:
+      - azure_ad
+      - microsoft_entra
+      - google_workspace
+      - okta
+      - auth0
+      - keycloak
+      - aws_iam
+      - github
+      - gitlab
+      - apple_id
+      - government_idp
+      - university_idp
+      - banking_idp
+    owners: [identity_federation]
+    notes: Federated subjects linked via identity_links — never forked local IdP SoR in business modules

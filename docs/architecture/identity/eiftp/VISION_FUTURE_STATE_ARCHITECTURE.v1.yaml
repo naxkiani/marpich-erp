@@ -1,0 +1,38 @@
+# EIFTP Vision — Future-State Identity Architecture (P200-B1.1-B)
+apiVersion: marpich.io/v1
+kind: EiftpVisionFutureStateArchitecture
+metadata:
+  id: eiftp-vision-future-state
+  version: "1.0.0"
+  adr: [213, 212]
+  prompt: P200-B1.1-B
+
+layers:
+  - id: trust_fabric
+    label: Global Enterprise Trust Fabric
+    role: vision_control_plane
+  - id: identity_classes
+    ref: IDENTITY_TAXONOMY.v1.yaml
+  - id: trust_domains
+    ref: TRUST_DOMAINS.v1.yaml
+  - id: continuous_signals
+    signals: [risk_score, device_trust, network_posture, behavior, assurance_level]
+  - id: runtime_sor
+    context: identity_federation
+    components: [broker, protocols, trust_graph, mesh, zt_engine, provisioning, claims]
+  - id: companion_pdp_plane
+    contexts: [authentication, adaptive_authentication, authorization, policy, identity_governance, identity_lifecycle, directory, identity_digital_twin]
+  - id: consuming_modules
+    note: All MEOS business modules — never local IdP
+
+scale_targets:
+  users: ">= 1_000_000"
+  organizations: ">= 10_000"
+  tenants: unlimited_with_isolation
+  idps: unlimited
+  trust_relationships: unlimited
+
+forbidden:
+  - contexts/eiftp
+  - module_local_identity_stacks
+  - authz_replaced_by_federation_login

@@ -1,0 +1,54 @@
+# Ubiquitous Language Dictionary — EIFTP
+# P200-B3 · ADR-217
+version: "1.0"
+prompt_id: P200-B3
+
+terms:
+  - term: Federated Subject
+    definition: Any principal participating through federation protocols (human, machine, AI agent, device, partner).
+    context: identity_federation
+  - term: Identity Link
+    definition: Durable binding between a MEOS subject id and an external IdP subject identifier.
+    context: identity_federation
+  - term: Trust Relationship
+    definition: Explicit, governed trust edge with lifecycle (pending→active→suspended→revoked).
+    context: identity_federation
+  - term: Trust Facts
+    definition: Scored signals (trust/risk/ZT level/session) published for AuthZ consumption — never Permit/Deny.
+    context: identity_federation
+  - term: Federation Profile
+    definition: Tenant-level configuration for federation mode and broker behavior.
+    context: identity_federation
+  - term: Claims Mapping
+    definition: Deterministic transformation of external claims into MEOS claim set.
+    context: identity_federation
+  - term: Federation Session
+    definition: Broker-established session after successful federated authentication.
+    context: identity_federation
+  - term: Tenant Federation
+    definition: Cross-tenant collaboration configuration preserving isolation.
+    context: identity_federation
+  - term: External Identity Provider
+    definition: Registered IdP (enterprise/social/gov/partner) modeled in-domain; executed via Integration.
+    context: identity_federation
+  - term: Authorization Decision
+    definition: Result of PDP evaluation (allow/deny/obligations).
+    context: authorization
+    note: Not part of Federation UL for decisions
+  - term: Principal
+    definition: Registered identity in Identity BC.
+    context: identity
+  - term: Zero Trust Evaluation
+    definition: Continuous verification producing adaptive signals/facts.
+    contexts: [adaptive_authentication, identity_federation]
+  - term: Published Language
+    definition: Versioned events and DTOs used across context boundaries.
+    context: platform
+  - term: Anti-Corruption Layer
+    definition: Translation boundary preventing peer/vendor models from leaking into the domain.
+    context: platform
+
+rejected_synonyms:
+  - using_user_for_ai_agent_without_subject_kind
+  - calling_trust_score_an_authorization_decision
+  - calling_integration_connector_an_aggregate_in_federation_domain

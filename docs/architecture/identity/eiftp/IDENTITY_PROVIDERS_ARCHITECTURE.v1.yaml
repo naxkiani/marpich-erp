@@ -1,0 +1,84 @@
+# Identity Provider Management & Protocol Layer — Architecture
+# P200-B7 · ADR-221
+version: "1.0"
+prompt_id: P200-B7
+adr: "221"
+sor_context: identity_federation
+forbidden_sibling_bc: eiftp
+
+logical_domains:
+  - identity_provider_management
+  - federation_connection
+  - protocol_abstraction
+  - identity_mapping
+  - provider_trust
+  - federation_policy
+  - identity_synchronization
+
+provider_types:
+  - internal
+  - external_enterprise
+  - government
+  - banking
+  - university
+  - social
+  - partner
+  - directory
+  - machine
+  - ai_agent
+  - custom
+
+protocols_supported:
+  oauth2: [authorization_code, client_credentials, pkce, token_exchange, scopes]
+  oidc: [discovery, jwks, claims, id_token, userinfo]
+  saml: [sp, idp, metadata, assertions, certificates]
+  scim: [users, groups, attribute_mapping]
+  ldap: [directory_sync, lookup, group_mapping]
+  future: plugin_install
+
+aggregates:
+  - IdentityProvider
+  - FederationConnection # entity on IdP
+  - ClaimsMapping
+  - SynchronizationJob
+  - TrustRelationship # fabric
+
+value_objects:
+  - ProviderType
+  - ProviderStatus
+  - ProviderTrustLevel
+  - ProtocolType
+
+plugin_framework:
+  interface: IProtocolPlugin
+  registry: ProtocolPluginDescriptor
+  capabilities:
+    - dynamic_install
+    - versioning
+    - enable_disable
+    - config_isolation
+    - sandbox_via_plugin_platform
+  execution: integration_platform_connectors
+
+integrations:
+  trust_fabric: ADR-220
+  policy_engine: IPolicyEvaluator
+  secrets: vault_path_refs_only
+  certificates: CertificateManager
+  audit: integration_events
+  authorization: facts_only_separate_ways
+
+knowledge_graph:
+  entities: [IdentityProvider, Tenant, Organization, Protocol, FederationConnection, Application]
+  relationships: [connected_to, trusts, implements, uses]
+
+digital_twins:
+  - identity_provider_twin
+  - federation_connection_twin
+  - protocol_plugin_twin
+  - trust_relationship_twin
+
+deployment:
+  reuses: ARCH_DEPLOYMENT.v1.yaml
+  ha: multi_replica
+  mesh: mTLS

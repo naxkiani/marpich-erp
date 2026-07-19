@@ -1,0 +1,31 @@
+# Foundation for P200-B1.1-D2 — Security, Identity & Zero Trust Strategic Goals
+# P200-B1.1-D1 · ADR-215
+version: "1.0"
+prompt_id: P200-B1.1-D1
+next_prompt: P200-B1.1-D2
+next_title: Security, Identity & Zero Trust Strategic Goals
+
+rules:
+  - D2 goals MUST refine SG01–SG10 — never contradict D1
+  - D2 MUST deepen SG04 Zero Trust without moving AuthZ PDP ownership
+  - D2 MUST preserve single identity authority (SG01)
+  - D2 MUST keep external IdP via Integration Platform (SG03)
+  - D2 MUST address AI identity under SG07/SG10
+  - D2 MUST not introduce contexts/eiftp sibling BC
+
+seed_themes_for_d2:
+  - zt_never_trust_always_verify # SG04
+  - continuous_authn_to_authz_facts # SG04
+  - least_privilege_and_session_risk # SG04
+  - credential_and_secret_hygiene # SG01 SG07
+  - federation_threat_model # SG03 SG02
+  - tenant_isolation_invariants # SG06 SG08
+  - ai_agent_identity_controls # SG10 SG07
+  - audit_immutability # SG07
+
+parent_goals: [SG01, SG02, SG03, SG04, SG05, SG06, SG07, SG08, SG09, SG10]
+source_artifacts:
+  - GOALS_ENTERPRISE_STRATEGIC_CATALOGUE.v1.yaml
+  - GOALS_TRACEABILITY_MATRIX.v1.yaml
+  - GOALS_TO_POLICY.v1.yaml
+  - GOALS_TO_ARCHITECTURE.v1.yaml

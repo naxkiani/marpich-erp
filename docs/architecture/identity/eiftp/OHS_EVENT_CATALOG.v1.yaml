@@ -1,0 +1,76 @@
+# EIFTP consolidated event catalog — P200-B10 · ADR-224
+version: "1.0"
+prompt_id: P200-B10
+source_context: identity_federation
+
+events:
+  - name: federation.provider.registered
+    version: 1
+    phase: B5
+  - name: federation.identity.federated
+    version: 1
+    phase: B5
+  - name: federation.identity.linked
+    version: 1
+    phase: B5
+  - name: federation.token.exchanged
+    version: 1
+    phase: B5
+  - name: federation.trust.established
+    version: 1
+    phase: B5/B6
+  - name: federation.trust.revoked
+    version: 1
+    phase: B6
+  - name: federation.trust.evaluated
+    version: 1
+    phase: B6
+  - name: federation.provider.activated
+    version: 1
+    phase: B7
+  - name: federation.provider.suspended
+    version: 1
+    phase: B7
+  - name: federation.protocol.plugin.installed
+    version: 1
+    phase: B7
+  - name: federation.cross_tenant.trust.requested
+    version: 1
+    phase: B8
+  - name: federation.cross_tenant.trust.activated
+    version: 1
+    phase: B8
+  - name: federation.cross_tenant.trust.revoked
+    version: 1
+    phase: B8
+  - name: federation.delegation.created
+    version: 1
+    phase: B8
+  - name: federation.security.zero_trust.decision
+    version: 1
+    phase: B9
+  - name: federation.security.threat.detected
+    version: 1
+    phase: B9
+  - name: federation.security.ai.blocked
+    version: 1
+    phase: B9
+  - name: federation.security.compliance.assessed
+    version: 1
+    phase: B9
+  - name: federation.saga.completed
+    version: 1
+    phase: B10
+  - name: federation.saga.compensated
+    version: 1
+    phase: B10
+
+subscriptions_inbound:
+  - platform.tenant.provisioned
+  - workflow.task.completed # approval signals via ACL
+
+laws:
+  - every_event_has_tenant_id
+  - envelope_v1_required
+  - outbox_same_transaction
+  - consumers_idempotent

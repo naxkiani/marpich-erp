@@ -1,0 +1,56 @@
+# Trust Fabric Architecture
+# P200-B6 · ADR-220
+version: "1.0"
+prompt_id: P200-B6
+
+facade: domain/services/trust_fabric_engine.py
+score_engine: domain/services/trust_score_engine.py
+composed:
+  - trust_management_engine
+  - trust_graph_engine
+  - zero_trust_federation_engine
+  - risk_based_federation_engine
+  - identity_analytics_engine # intelligence hooks
+
+logical_domains:
+  trust_management:
+    aggregate: TrustRelationship
+    entities: [TrustAgreement, TrustOwner]
+  trust_evaluation:
+    engines: [trust_score_engine, trust_fabric_engine.evaluate_continuous]
+  trust_policy:
+    local: federation_trust_rules
+    platform: IPolicyEvaluator
+  trust_evidence:
+    store: infrastructure/persistence/trust_evidence_store.py
+  trust_intelligence:
+    path: AI Platform ACL + analytics engine
+    never: embedded_llm
+
+entity_kinds:
+  - human
+  - organization
+  - tenant
+  - application
+  - api
+  - service
+  - machine
+  - device
+  - ai_agent
+  - digital_twin
+  - partner
+
+integration:
+  authentication: consumes_assurance_signals
+  authorization: receives_trust_facts_only
+  policy: IPolicyEvaluator
+  api_gateway: pep_context
+  service_mesh: mtls_workload_facts
+  identity_federation: engine_facade
+  identity_risk: ACL
+  ai_governance: ai_agent_trust
+  audit: integration_events
+
+cross_tenant:
+  requires: [TenantFederation.enabled, explicit_TrustRelationship, approval_workflow_event]
+  isolation: no_shared_schema

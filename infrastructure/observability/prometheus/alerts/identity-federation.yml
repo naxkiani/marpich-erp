@@ -1,0 +1,85 @@
+groups:
+  - name: identity_federation_alerts
+    rules:
+      - alert: FederationHighLoginFailureRate
+        expr: |
+          (
+            marpich_federation_login_failure_total
+            / clamp_min(marpich_federation_login_total, 1)
+          ) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+          service: marpich-iam
+          component: identity-federation
+        annotations:
+          summary: Federation login failure rate exceeds 5%
+          runbook: docs/operations/runbooks/identity-federation-incident-response.md
+
+      - alert: FederationTokenLatencyHigh
+        expr: |
+          (
+            marpich_federation_token_ms_total
+            / clamp_min(marpich_federation_token_count, 1)
+          ) > 100
+        for: 3m
+        labels:
+          severity: warning
+          service: marpich-iam
+          component: identity-federation
+        annotations:
+          summary: Federation token issuance exceeds 100ms p-average target
+
+      - alert: FederationLoginLatencyHigh
+        expr: |
+          (
+            marpich_federation_login_ms_total
+            / clamp_min(marpich_federation_login_count, 1)
+          ) > 200
+        for: 3m
+        labels:
+          severity: warning
+          service: marpich-iam
+          component: identity-federation
+        annotations:
+          summary: Federation login latency exceeds 200ms target
+
+      - alert: FederationTrustScoreCollapse
+        expr: marpich_federation_trust_score_avg < 40
+        for: 10m
+        labels:
+          severity: critical
+          service: marpich-iam
+          component: identity-federation
+        annotations:
+          summary: Average federation trust score collapsed below 40
+
+      - alert: FederationScimSyncLag
+        expr: marpich_federation_scim_sync_lag_seconds > 900
+        for: 5m
+        labels:
+          severity: warning
+          service: marpich-iam
+          component: identity-federation
+        annotations:
+          summary: SCIM sync lag exceeds 15 minutes
+
+      - alert: FederationServiceDown
+        expr: up{job="marpich-iam-federation"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: marpich-iam
+          component: identity-federation
+        annotations:
+          summary: Federation metrics scrape endpoint unreachable
+
+      - alert: FederationAiRiskSpike
+        expr: increase(marpich_federation_ai_high_risk_total[5m]) > 50
+        for: 5m
+        labels:
+          severity: warning
+          service: marpich-iam
+          component: identity-federation
+        annotations:
+          summary: Spike in AI-flagged high-risk federation events

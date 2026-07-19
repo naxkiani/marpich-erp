@@ -1,0 +1,40 @@
+# DDD Governance Model — EIFTP
+# P200-B3 · ADR-217
+version: "1.0"
+prompt_id: P200-B3
+
+governance:
+  official_model: true
+  adr: "217"
+  change_control: adr_required_for_boundary_or_ownership_changes
+  owners:
+    strategic_design: chief_ddd_architect
+    federation_bc: identity_platform_team
+    authorization_bc: security_platform_team
+
+quality_gates_reject_if:
+  - mixes_bounded_contexts
+  - violates_aggregate_consistency
+  - couples_unrelated_domains
+  - breaks_tenant_isolation
+  - ignores_zero_trust
+  - bypasses_domain_events
+  - introduces_anemic_domain_models
+  - creates_circular_dependencies
+  - creates_contexts_eiftp
+
+definition_of_done:
+  - domain_catalog_complete_20_domains
+  - context_map_and_mapping_strategies_published
+  - ubiquitous_language_dictionary_published
+  - aggregate_and_event_matrices_published
+  - responsibility_integration_governance_published
+  - code_ul_registry_and_event_ownership_synced
+  - acl_package_present
+  - validator_tests_green
+  - roadmap_B3_done
+
+handoff_to_b4:
+  - tactical_entities_value_objects_inside_aggregates
+  - enriched_invariants_and_factories
+  - specification_implementations

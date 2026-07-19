@@ -1,0 +1,47 @@
+# Goal-to-Policy Mapping — EIFTP Strategic Goals → Policy / control types
+# P200-B1.1-D1 · ADR-215
+version: "1.0"
+prompt_id: P200-B1.1-D1
+
+law: >
+  Business rules remain in Policy Engine (IPolicyEvaluator). Authorization
+  decisions remain in AuthZ PDP. EIFTP governs trust/federation/lifecycle policies
+  as configuration + events — never hardcoded IdP logic in domain.
+
+mappings:
+  - goal: SG01
+    policy_domains: [identity_lifecycle, credential_strength, subject_classification]
+    engine: policy
+  - goal: SG02
+    policy_domains: [trust_boundary, federation_link_approval, partner_risk]
+    engine: policy
+  - goal: SG03
+    policy_domains: [allowed_idp_classes, protocol_allowlist, claim_mapping_rules]
+    engine: policy
+    note: protocol_allowlist is metadata — not vendor SDK in domain
+  - goal: SG04
+    policy_domains: [continuous_authn, session_risk, least_privilege]
+    engines: [policy, authorization]
+  - goal: SG05
+    policy_domains: [api_client_trust, plugin_permission_grants]
+    engines: [policy, plugin_runtime]
+  - goal: SG06
+    policy_domains: [tenant_isolation, trust_boundary_per_tenant]
+    engine: policy
+  - goal: SG07
+    policy_domains: [iga_separation, federation_governance, audit_retention]
+    engines: [policy, audit, compliance]
+  - goal: SG08
+    policy_domains: [cross_org_data_sharing, delegated_admin_scope]
+    engines: [policy, authorization]
+  - goal: SG09
+    policy_domains: [availability_slo, failover_mode]
+    engine: configuration
+  - goal: SG10
+    policy_domains: [ai_agent_identity, cryptography_agility, passwordless_enrollment]
+    engines: [policy, ai_governance]
+
+bypass_forbidden:
+  - policy_evaluation
+  - zero_trust_continuous_checks
+  - audit_emission

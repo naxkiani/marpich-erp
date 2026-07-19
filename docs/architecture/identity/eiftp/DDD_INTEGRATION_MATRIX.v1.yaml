@@ -1,0 +1,41 @@
+# Integration Matrix — cross-context communication
+# P200-B3 · ADR-217
+version: "1.0"
+prompt_id: P200-B3
+
+channels_allowed: [rest_api, integration_events, message_broker, application_contracts, scheduled_sync]
+
+integrations:
+  - from: identity_federation
+    to: authorization
+    channel: application_contracts
+    contract: IFederationTrustFacts
+  - from: identity_federation
+    to: audit
+    channel: integration_events
+    contract: federation.*
+  - from: identity_federation
+    to: identity_digital_twin
+    channel: integration_events
+    contract: federation.identity.linked
+  - from: identity_federation
+    to: integration
+    channel: rest_api
+    pattern: ACL
+  - from: identity
+    to: identity_federation
+    channel: integration_events
+    contract: identity.user.*
+  - from: business_modules
+    to: authorization
+    channel: application_contracts
+    contract: IAuthorizationEvaluator
+  - from: identity_federation
+    to: policy
+    channel: application_contracts
+    contract: IPolicyEvaluator
+
+forbidden:
+  - orm_join_across_schemas
+  - import_contexts_peer_domain
+  - in_process_call_to_peer_application_service_without_port

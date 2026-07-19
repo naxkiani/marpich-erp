@@ -1,0 +1,52 @@
+# Strategic Goal Traceability Matrix — Drivers ↔ Goals ↔ Outcomes
+# P200-B1.1-D1 · ADR-215
+version: "1.0"
+prompt_id: P200-B1.1-D1
+
+law: Every SG cites ≥1 primary driver P1–P10 (P200-B1.1-C)
+
+traceability:
+  - goal: SG01
+    drivers: [P2, P9, P10]
+    business_outcomes: [O1, O8]
+    foundation_theme: G_unify_identity_model
+  - goal: SG02
+    drivers: [P3, P4, P5]
+    business_outcomes: [O6, O10, O12]
+    foundation_theme: G_trust_fabric_slo
+  - goal: SG03
+    drivers: [P4, P5, P1]
+    business_outcomes: [O10]
+    foundation_theme: G_federation_scale
+  - goal: SG04
+    drivers: [P6, P3, P9]
+    business_outcomes: [O2, O12]
+    foundation_theme: G_zero_trust_continuous
+  - goal: SG05
+    drivers: [P1, P2, P10]
+    business_outcomes: [O1, O7]
+    foundation_theme: G_operational_cost_reduction
+  - goal: SG06
+    drivers: [P5, P1]
+    business_outcomes: [O10]
+    foundation_theme: G_federation_scale
+  - goal: SG07
+    drivers: [P8, P10, P7]
+    business_outcomes: [O5, O9, O11]
+    foundation_theme: [G_compliance_evidence, G_ai_subject_governance, G_lifecycle_automation]
+  - goal: SG08
+    drivers: [P4, P5, P3]
+    business_outcomes: [O6, O10]
+    foundation_theme: G_federation_scale
+  - goal: SG09
+    drivers: [P3, P1]
+    business_outcomes: [O12]
+    foundation_theme: G_trust_fabric_slo
+  - goal: SG10
+    drivers: [P7, P1, P9]
+    business_outcomes: [O9]
+    foundation_theme: G_ai_subject_governance
+
+coverage:
+  all_primary_drivers_cited: [P1, P2, P3, P4, P5, P6, P7, P8, P9, P10]
+  all_goals: [SG01, SG02, SG03, SG04, SG05, SG06, SG07, SG08, SG09, SG10]

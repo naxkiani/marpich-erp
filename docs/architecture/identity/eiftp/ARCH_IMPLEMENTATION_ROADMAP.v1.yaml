@@ -1,0 +1,38 @@
+# Implementation Roadmap — post P200-B2
+# P200-B2 · ADR-216
+version: "1.0"
+prompt_id: P200-B2
+
+phases:
+  - id: B2
+    title: Enterprise Architecture baseline
+    status: complete_this_prompt
+  - id: B3
+    title: DDD Strategic Design
+    depends_on: B2
+  - id: B4
+    title: Domain Model enrichment
+    depends_on: B3
+  - id: B5
+    title: Federation Engine hardening
+    note: reuse existing engines; close memory→postgres gap
+  - id: B6
+    title: Trust Fabric
+  - id: B7
+    title: Identity Providers via Integration Platform
+  - id: B8
+    title: Cross-Tenant Trust
+  - id: B9
+    title: Security & Zero Trust depth
+  - id: B10
+    title: APIs Events CQRS Integration completion
+  - id: B11
+    title: Deploy Observability DevSecOps
+  - id: B12
+    title: Cursor Deliverables & program DoD
+
+near_term_code:
+  - consume_IFederationTrustFacts_from_authz_optional
+  - postgres_repository_adapter
+  - migrate_routers_under_presentation_rest
+  - expand_event_subscriptions_identity_user_created

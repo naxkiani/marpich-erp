@@ -1,0 +1,63 @@
+# Persistence / Repository / Domain Service interfaces
+# P200-B4 · ADR-218
+version: "1.0"
+prompt_id: P200-B4
+
+postgresql:
+  schema: federation
+  migration: infrastructure/docker/migrations/028_enterprise_identity_federation_platform.sql
+  tables_target:
+    - federation_profiles
+    - identity_providers
+    - federation_partners
+    - trust_relationships
+    - claims_mappings
+    - identity_links
+    - provisioning_policies
+    - synchronization_jobs
+    - federation_sessions
+    - tenant_federations
+    - ai_federated_agents
+    - federation_outbox
+  rules: [tenant_id_column, indexes_include_tenant_id, no_cross_schema_fk]
+
+event_store:
+  pattern: outbox_table_same_db
+  envelope: docs/architecture/events/_envelope.v1.json
+
+audit_store:
+  pattern: emit_integration_events_to_audit_platform
+  local: federation_audit_store_trail_only_not_sor
+
+graph_database:
+  pattern: projection_from_events
+  never: write_path_for_aggregates
+
+cache:
+  redis_key: "fed:{tenant_id}:{kind}:{id}"
+  kinds: [session, token, trust_facts, jwks]
+
+repositories_code: backend/contexts/identity_federation/domain/ports/federation_repositories.py
+domain_services:
+  - FederationEngine
+  - BrokerEngine
+  - ClaimsEngine
+  - TrustManagementEngine
+  - TrustGraphEngine
+  - ZeroTrustFederationEngine
+  - SessionFederationEngine
+  - TokenFederationEngine
+  - ProtocolEngine
+  - ProvisioningEngine
+
+microservices_recommendations:
+  current: co_deployed_iam
+  extractable: [federation_admin, protocol_gateway, fabric, intelligence]
+  communication: rest_plus_events
+
+implementation_roadmap:
+  - enrich_aggregate_behaviors # this prompt
+  - postgres_adapters # B5/B10
+  - wire_command_handlers_for_all_commands
+  - twin_projection_consumers
+  - graph_projection_job
