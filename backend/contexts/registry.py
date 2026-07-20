@@ -339,6 +339,32 @@ CONSENT = BoundedContext(
     subscribes=("platform.tenant.provisioned",),
 )
 
+SECRETS = BoundedContext(
+    id="secrets",
+    display_name="Enterprise Secrets, Key Management, PKI & Cryptographic Trust Platform",
+    context_type=BoundedContextType.PLATFORM,
+    schema_name="secrets",
+    description=(
+        "Cryptographic Trust Fabric — secrets, KMS, PKI, HSM, workload identity, "
+        "PQC readiness — SoR for P209; peers store secret_ref/key_ref/certificate_ref only"
+    ),
+    publishes=(
+        "secrets.secret.created",
+        "secrets.secret.rotated",
+        "secrets.secret.revoked",
+        "secrets.key.created",
+        "secrets.key.rotated",
+        "secrets.key.destroyed",
+        "secrets.certificate.issued",
+        "secrets.certificate.renewed",
+        "secrets.certificate.revoked",
+        "secrets.hsm.operation_completed",
+        "secrets.workload_identity.issued",
+        "secrets.trust.audited",
+    ),
+    subscribes=("platform.tenant.provisioned",),
+)
+
 AUTHORIZATION = BoundedContext(
     id="authorization",
     display_name="Enterprise Authorization Platform",
@@ -927,6 +953,7 @@ ALL_CONTEXTS: tuple[BoundedContext, ...] = (
     IDENTITY_DIGITAL_TWIN,
     IDENTITY_INTELLIGENCE,
     CONSENT,
+    SECRETS,
     AUTHORIZATION,
     PERMISSION_REGISTRY,
     COMPLIANCE,
