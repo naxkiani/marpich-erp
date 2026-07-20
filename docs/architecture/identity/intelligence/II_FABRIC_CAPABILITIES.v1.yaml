@@ -1,0 +1,40 @@
+prompt: P207-L
+adr: 327
+sor: identity_intelligence
+product: CQRS, Events, APIs & Microservices Platform
+api_prefix: /api/v1/identity-intelligence/fabric
+capabilities:
+  logical_microservices:
+    - identity-intelligence-service
+    - identity-risk-service
+    - behavior-analytics-service
+    - identity-twin-service
+    - ai-agent-service
+    - knowledge-graph-service
+    - autonomous-operation-service
+    - governance-optimization-service
+  api_types:
+    - rest
+    - graphql
+    - event
+    - ai
+  communication_modes:
+    synchronous:
+      - rest
+      - grpc
+    asynchronous:
+      - events
+      - message_queues
+    internal:
+      - service_mesh
+  cloud_native:
+    - kubernetes
+    - autoscaling
+    - high_availability
+    - disaster_recovery
+  requirements:
+    shared_database_forbidden: true
+    secure_api_required: true
+    complete_audit_history_required: true
+    ai_integration_connected_required: true
+    independently_scalable_logical_services: true

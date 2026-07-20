@@ -1,0 +1,22 @@
+# P207-F — Validation gates
+version: "1.0"
+prompt_id: P207-F
+adr: "321"
+sor: identity_intelligence
+api_prefix: /api/v1/identity-intelligence/twins
+
+reject_if:
+  - twin_only_data_copy
+  - realtime_sync_absent
+  - simulation_capability_missing
+  - impact_analysis_unavailable
+  - ai_integration_weak
+  - security_controls_undefined
+  - duplicates_twin_sor
+  - invents_sibling_twin_bc
+  - embeds_llm_sdk
+  - skips_hitl_high_impact
+  - simulation_not_isolated
+
+production_readiness_verdict: ENTERPRISE_GRADE
+foundation_validator: contexts.identity_intelligence.domain.services.ii_twin_foundation

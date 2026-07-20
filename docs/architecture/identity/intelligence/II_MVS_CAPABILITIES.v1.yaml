@@ -1,0 +1,39 @@
+# P207-B — Mission / Vision / Scope capabilities
+version: "1.0"
+prompt_id: P207-B
+adr: "317"
+sor: identity_intelligence
+api_prefix: /api/v1/identity-intelligence/mission
+builds_on: P207-A
+
+enterprise_purpose:
+  - intelligent_identity_operations
+  - predictive_identity_security
+  - autonomous_identity_governance
+  - continuous_trust_management
+  - ai_assisted_enterprise_decision_making
+
+intelligence_layer_connects:
+  - identity_data
+  - identity_behavior
+  - identity_risk
+  - identity_relationships
+  - identity_policies
+  - identity_operations
+
+strategic_objective_categories:
+  - identity_intelligence
+  - security_intelligence
+  - operational_intelligence
+  - governance_intelligence
+
+in_scope_required: true
+out_of_scope_required: true
+does_not_replace_peers_required: true
+intelligence_layer_required: true
+mission_vision_required: true
+human_control_required: true
+chatbot_only_forbidden: true
+embeds_llm_forbidden: true
+hitl_required: true
+governance_required: true

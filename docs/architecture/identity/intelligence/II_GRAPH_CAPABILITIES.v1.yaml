@@ -1,0 +1,34 @@
+# P207-K — Knowledge Graph Intelligence capabilities
+version: "1.0"
+prompt_id: P207-K
+adr: "326"
+sor: identity_intelligence
+graph_storage_peer: directory
+api_prefix: /api/v1/identity-intelligence/graph
+
+layers:
+  - graph_data_platform
+  - semantic_layer
+  - reasoning_engine
+  - graph_intelligence_engine
+
+reasoning_types:
+  - rule_based_reasoning
+  - semantic_reasoning
+  - ai_reasoning
+  - graph_neural_reasoning
+
+not_data_only: true
+relationships_defined_required: true
+ai_explainable_required: true
+security_context_required: true
+ontology_governance_required: true
+ii_integration_strong_required: true
+via_directory_graph: true
+via_ai_platform: true
+via_search_platform: true
+via_p207e_agents: true
+via_p207f_twins: true
+via_p207g_risk: true
+governance_required: true
+embeds_llm_forbidden: true

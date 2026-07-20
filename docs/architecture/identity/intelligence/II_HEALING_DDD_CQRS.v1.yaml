@@ -1,0 +1,55 @@
+# P207-I — Self-healing DDD / CQRS
+version: "1.0"
+prompt_id: P207-I
+adr: "324"
+sor: identity_intelligence
+
+logical_bounded_contexts:
+  - identity_health
+  - failure_detection
+  - root_cause_analysis
+  - remediation
+  - recovery_validation
+  - continuous_learning
+  - identity_reliability
+
+aggregates:
+  - IdentityHealthProfile
+  - IdentityFailureIncident
+  - RootCauseAnalysisCase
+  - RemediationRun
+  - RecoveryValidation
+  - HealingLearningRecord
+  - HealingSecurityPolicy
+
+commands:
+  - CheckIdentityHealth
+  - AnalyzeFailure
+  - SimulateRecovery
+  - ExecuteRemediation
+  - ValidateRecovery
+  - UpdateLearningModel
+  - DetectFailure
+
+queries:
+  - GetIdentityHealth
+  - GetIncidentHistory
+  - GetRecoveryStatus
+  - GetRootCause
+  - GetRemediationRun
+  - GetLearningOutcome
+
+events:
+  - IdentityIssueDetected
+  - RootCauseIdentified
+  - RecoveryStarted
+  - RecoveryCompleted
+  - HealthRestored
+  - LearningUpdated
+  - RemediationApproved
+
+cqrs_ready: true
+event_driven: true
+outbox_required: true
+boundaries_clear: true
+deployable_unit: identity_intelligence

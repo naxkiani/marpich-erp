@@ -1,0 +1,55 @@
+# P207-J — Access governance DDD / CQRS
+version: "1.0"
+prompt_id: P207-J
+adr: "325"
+sor: identity_intelligence
+
+logical_bounded_contexts:
+  - ai_governance
+  - access_intelligence
+  - entitlement_intelligence
+  - optimization_engine
+  - certification_intelligence
+  - policy_intelligence
+  - governance_decision
+
+aggregates:
+  - AccessGovernanceCase
+  - EntitlementIntelligenceRecord
+  - AccessOptimizationRecommendation
+  - CertificationInsight
+  - RoleOptimizationProposal
+  - PolicyIntelligenceFinding
+  - GovernanceComplianceEvidence
+
+commands:
+  - AnalyzeAccess
+  - OptimizeEntitlement
+  - RecommendRemoval
+  - ValidateGovernance
+  - ExecuteOptimization
+  - GenerateCertificationInsight
+  - EvaluatePolicy
+
+queries:
+  - GetAccessRisk
+  - GetOptimizationRecommendation
+  - GetGovernanceStatus
+  - GetCertificationInsight
+  - GetEntitlementAnalysis
+  - GetComplianceEvidence
+
+events:
+  - AccessAnalyzed
+  - RiskDetected
+  - OptimizationRecommended
+  - ApprovalRequested
+  - AccessOptimized
+  - GovernanceUpdated
+  - ComplianceEvidenceGenerated
+
+cqrs_ready: true
+event_driven: true
+outbox_required: true
+boundaries_clear: true
+deployable_unit: identity_intelligence

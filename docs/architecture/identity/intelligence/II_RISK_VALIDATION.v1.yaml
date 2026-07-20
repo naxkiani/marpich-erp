@@ -1,0 +1,21 @@
+# P207-G — Validation gates
+version: "1.0"
+prompt_id: P207-G
+adr: "322"
+sor: identity_intelligence
+api_prefix: /api/v1/identity-intelligence/risk
+
+reject_if:
+  - risk_static_only
+  - prediction_capability_absent
+  - risk_explanation_unavailable
+  - ai_decisions_not_auditable
+  - trust_calculation_undefined
+  - automated_response_lacks_governance
+  - invents_sibling_risk_bc
+  - embeds_llm_sdk
+  - skips_hitl_high_critical
+  - bypasses_authorization_pdp
+
+production_readiness_verdict: ENTERPRISE_GRADE
+foundation_validator: contexts.identity_intelligence.domain.services.ii_risk_foundation

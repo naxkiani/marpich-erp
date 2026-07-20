@@ -1,0 +1,27 @@
+# P207-B — Mission scope security & governance
+version: "1.0"
+prompt_id: P207-B
+adr: "317"
+sor: identity_intelligence
+
+out_of_scope_peers:
+  - directory_p205
+  - identity_governance_p202
+  - authentication_p204
+  - privileged_access_p203
+  - master_identity_p206
+  - identity_credentials
+  - authorization_pdp
+  - identity_digital_twin_sor
+  - ai_platform_inference
+
+zero_trust_aligned: true
+ai_native_aligned: true
+digital_transformation_aligned: true
+autonomous_operations_aligned: true
+explainable_ai_required: true
+hitl_required: true
+human_control_required: true
+chatbot_only_forbidden: true
+does_not_replace_peers: true
+governance_required: true

@@ -1,0 +1,21 @@
+prompt: P207-M
+adr: 328
+security:
+  ai_security_gateway: true
+  zero_trust_ai_identity: true
+  least_privilege: true
+  jit_access: true
+  threat_protection:
+    - prompt_injection
+    - data_leakage
+    - model_manipulation
+    - model_theft
+    - adversarial_input
+    - unauthorized_agent_actions
+  reject_if:
+    - ai_operates_without_governance
+    - autonomous_actions_uncontrolled
+    - decisions_unexplainable
+    - models_unmonitored
+    - ai_identities_undefined
+    - audit_trails_incomplete

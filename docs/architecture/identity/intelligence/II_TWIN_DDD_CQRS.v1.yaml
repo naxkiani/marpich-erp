@@ -1,0 +1,56 @@
+# P207-F — Twin platform DDD / CQRS
+version: "1.0"
+prompt_id: P207-F
+adr: "321"
+sor: identity_intelligence
+
+logical_bounded_contexts:
+  - twin_engine
+  - twin_synchronization
+  - simulation_engine
+  - impact_analysis
+  - prediction_intelligence
+  - twin_analytics
+  - twin_agent_integration
+
+aggregates:
+  - IdentityTwinOrchestrationContract
+  - TwinSyncSession
+  - TwinSimulationRun
+  - TwinImpactAnalysis
+  - TwinPredictionCase
+  - TwinDecisionRecommendation
+  - TwinSecurityPolicy
+
+commands:
+  - CreateIdentityTwin
+  - UpdateTwinState
+  - RunSimulation
+  - AnalyzeImpact
+  - PredictFutureState
+  - OptimizeIdentity
+  - StartTwinSync
+
+queries:
+  - GetIdentityTwin
+  - GetTwinHistory
+  - GetSimulationResult
+  - GetImpactAnalysis
+  - GetTwinSyncStatus
+  - GetPrediction
+
+events:
+  - TwinCreated
+  - TwinUpdated
+  - SimulationCompleted
+  - ImpactDetected
+  - PredictionGenerated
+  - OptimizationRecommended
+  - TwinSynced
+
+cqrs_ready: true
+event_driven: true
+outbox_required: true
+boundaries_clear: true
+deployable_unit: identity_intelligence
+twin_storage_peer: identity_digital_twin

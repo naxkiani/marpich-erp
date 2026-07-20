@@ -1,0 +1,49 @@
+# P207-F — Identity Digital Twin Platform capabilities
+version: "1.0"
+prompt_id: P207-F
+adr: "321"
+sor: identity_intelligence
+twin_storage_peer: identity_digital_twin
+api_prefix: /api/v1/identity-intelligence/twins
+
+purposes:
+  - identity_state_representation
+  - identity_behavior_modeling
+  - identity_relationship_modeling
+  - identity_access_modeling
+  - identity_risk_modeling
+  - identity_simulation
+
+layers:
+  - identity_twin_engine
+  - simulation_engine
+  - knowledge_integration_layer
+  - ai_intelligence_layer
+
+simulation_types:
+  - access_simulation
+  - privilege_simulation
+  - organization_simulation
+  - security_simulation
+  - lifecycle_simulation
+
+impact_dimensions:
+  - business_impact
+  - security_impact
+  - compliance_impact
+  - operational_impact
+
+not_data_copy_only: true
+realtime_sync_required: true
+simulation_required: true
+impact_analysis_required: true
+ai_integration_strong_required: true
+security_controls_defined_required: true
+does_not_own_twin_sor: true
+via_identity_digital_twin: true
+via_directory_graph: true
+via_ai_platform: true
+via_p207e_agents: true
+hitl_required: true
+simulation_isolation_required: true
+governance_required: true

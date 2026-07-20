@@ -1,0 +1,22 @@
+# P207-J — Validation gates
+version: "1.0"
+prompt_id: P207-J
+adr: "325"
+sor: identity_intelligence
+api_prefix: /api/v1/identity-intelligence/access-gov
+
+reject_if:
+  - governance_periodic_only
+  - ai_recommendations_unexplained
+  - optimization_ignores_business_context
+  - human_governance_absent
+  - compliance_evidence_unavailable
+  - risk_intelligence_disconnected
+  - invents_sibling_governance_bc
+  - duplicates_p202_iga_sor
+  - embeds_llm_sdk
+  - skips_hitl_high_impact
+  - bypasses_authorization_pdp
+
+production_readiness_verdict: ENTERPRISE_GRADE
+foundation_validator: contexts.identity_intelligence.domain.services.ii_access_gov_foundation

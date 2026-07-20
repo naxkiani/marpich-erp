@@ -1,0 +1,68 @@
+# P207-C — DDD / CQRS catalog
+version: "1.0"
+prompt_id: P207-C
+adr: "318"
+sor: identity_intelligence
+
+logical_bounded_contexts:
+  - identity_understanding
+  - predictive_risk
+  - behavioral_analytics
+  - ai_agent_platform
+  - digital_twin_orchestration
+  - knowledge_graph_intelligence
+  - autonomous_operations
+  - self_healing_fabric
+  - recommendation
+  - ai_security_governance
+  - ml_model_registry_refs
+  - compliance_intelligence_hooks
+
+aggregates:
+  - IdentityIntelligenceProfile
+  - IdentityInsight
+  - IdentityRiskPrediction
+  - BehaviorAnalyticsProfile
+  - IdentityAiAgentContract
+  - DigitalTwinOrchestration
+  - KnowledgeGraphIntegration
+  - AutonomousOperationRun
+  - SelfHealingRemediation
+  - RecommendationCase
+  - IntelligenceModelRegistryRef
+  - IntelligenceTenantPolicy
+
+commands:
+  - AnalyzeIdentity
+  - PredictIdentityRisk
+  - GenerateRecommendation
+  - ExecuteRemediation
+  - UpdateDigitalTwin
+  - TrainModel
+  - RegisterAgent
+  - BindGraphProjection
+
+queries:
+  - GetIdentityIntelligence
+  - GetRiskPrediction
+  - GetBehaviorProfile
+  - GetDigitalTwin
+  - GetRecommendations
+  - GetAgentContract
+
+events:
+  - RiskPredicted
+  - AnomalyDetected
+  - InsightGenerated
+  - ActionRecommended
+  - RemediationExecuted
+  - ModelUpdated
+  - AgentRegistered
+  - TwinOrchestrationBound
+  - GraphIntegrationConnected
+
+cqrs_ready: true
+event_driven: true
+outbox_required: true
+boundaries_clear: true
+deployable_unit: identity_intelligence

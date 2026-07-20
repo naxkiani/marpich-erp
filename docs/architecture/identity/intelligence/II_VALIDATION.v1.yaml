@@ -1,0 +1,23 @@
+# P207-A — Validation scorecard gates
+version: "1.0"
+prompt_id: P207-A
+adr: "316"
+sor: identity_intelligence
+api_prefix: /api/v1/identity-intelligence
+
+reject_if:
+  - ai_only_chatbot
+  - automation_without_governance
+  - decisions_not_explainable
+  - digital_twin_absent
+  - identity_graph_integration_missing
+  - risk_prediction_not_measurable
+  - human_control_removed
+  - invents_sibling_intelligence_bc
+  - embeds_llm_sdk
+  - duplicates_authz_pdp
+  - duplicates_twin_sor
+  - duplicates_directory_graph_sor
+
+production_readiness_verdict: ENTERPRISE_GRADE
+foundation_validator: contexts.identity_intelligence.domain.services.ii_platform_foundation

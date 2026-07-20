@@ -1,0 +1,54 @@
+# P207-K — Graph intelligence DDD / CQRS
+version: "1.0"
+prompt_id: P207-K
+adr: "326"
+sor: identity_intelligence
+
+logical_bounded_contexts:
+  - graph_data_platform
+  - semantic_ontology
+  - reasoning_engine
+  - graph_intelligence
+  - attack_path_analysis
+  - semantic_search
+  - relationship_intelligence
+
+aggregates:
+  - KnowledgeGraphEntity
+  - GraphRelationship
+  - GraphReasoningSession
+  - AttackPathAnalysis
+  - SemanticQueryCase
+  - OntologyGovernancePolicy
+  - GraphSecurityContext
+
+commands:
+  - CreateEntity
+  - CreateRelationship
+  - UpdateKnowledge
+  - AnalyzeGraph
+  - RunReasoning
+  - DiscoverAttackPath
+
+queries:
+  - GetIdentityGraph
+  - FindRelationships
+  - AnalyzeImpact
+  - ExplainDecision
+  - GetAttackPath
+  - SemanticSearch
+
+events:
+  - EntityCreated
+  - RelationshipDiscovered
+  - RiskPathDetected
+  - KnowledgeUpdated
+  - ReasoningCompleted
+  - AttackPathIdentified
+
+cqrs_ready: true
+event_driven: true
+outbox_required: true
+boundaries_clear: true
+deployable_unit: identity_intelligence
+graph_storage_peer: directory

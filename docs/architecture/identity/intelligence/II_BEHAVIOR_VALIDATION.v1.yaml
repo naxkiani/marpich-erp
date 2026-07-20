@@ -1,0 +1,21 @@
+# P207-H — Validation gates
+version: "1.0"
+prompt_id: P207-H
+adr: "323"
+sor: identity_intelligence
+api_prefix: /api/v1/identity-intelligence/behavior
+
+reject_if:
+  - behavioral_analysis_rule_only
+  - learning_capability_absent
+  - anomaly_explanations_unavailable
+  - privacy_controls_missing
+  - ai_models_cannot_be_governed
+  - risk_intelligence_integration_absent
+  - invents_sibling_ueba_bc
+  - embeds_llm_sdk
+  - skips_hitl_high_impact
+  - bypasses_authorization_pdp
+
+production_readiness_verdict: ENTERPRISE_GRADE
+foundation_validator: contexts.identity_intelligence.domain.services.ii_behavior_foundation

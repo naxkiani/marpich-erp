@@ -1,0 +1,67 @@
+prompt: P207-L
+adr: 327
+sor: identity_intelligence
+ddd:
+  deployable_unit: identity_intelligence
+  logical_bounded_contexts:
+    - service_boundary_map
+    - command_model
+    - query_model
+    - event_fabric
+    - event_sourcing
+    - api_runtime
+    - service_mesh_security
+    - kubernetes_operations
+    - production_readiness
+cqrs:
+  commands:
+    - AnalyzeIdentity
+    - CreateIntelligenceProfile
+    - UpdateIdentityContext
+    - GenerateInsight
+    - CalculateRisk
+    - PredictRisk
+    - UpdateTrustScore
+    - AnalyzeBehavior
+    - DetectAnomaly
+    - CreateBehaviorProfile
+    - CreateTwin
+    - UpdateTwinState
+    - RunSimulation
+    - GenerateAction
+    - ExecuteRemediation
+    - ValidateRecovery
+  queries:
+    - GetIdentityIntelligence
+    - GetIdentityContext
+    - GetIdentityHistory
+    - GetRiskProfile
+    - GetRiskFactors
+    - GetPredictionResult
+    - GetBehaviorProfile
+    - GetAnomalies
+    - GetDigitalTwin
+    - GetSimulationResult
+    - GetOptimizationRecommendation
+    - GetAccessRisk
+  events:
+    - IdentityAnalyzed
+    - IdentityProfileCreated
+    - IdentityContextChanged
+    - RiskCalculated
+    - RiskIncreased
+    - RiskPredicted
+    - BehaviorAnalyzed
+    - AnomalyDetected
+    - TwinCreated
+    - TwinUpdated
+    - SimulationCompleted
+    - AgentActivated
+    - RecommendationGenerated
+    - DecisionCompleted
+    - ActionStarted
+    - ActionCompleted
+    - RecoveryCompleted
+  event_store_required: true
+  read_projections_required: true
+  replay_required: true

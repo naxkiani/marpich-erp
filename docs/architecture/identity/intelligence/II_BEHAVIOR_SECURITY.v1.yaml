@@ -1,0 +1,35 @@
+# P207-H — Behavior security, privacy & governance
+version: "1.0"
+prompt_id: P207-H
+adr: "323"
+sor: identity_intelligence
+
+privacy_by_design:
+  - data_minimization
+  - purpose_limitation
+  - access_control
+
+security:
+  - encryption
+  - audit_logging
+  - secure_analytics
+
+ai_governance:
+  - explainable_detection
+  - bias_monitoring
+  - human_review
+
+rule_only_forbidden: true
+learning_absent_forbidden: true
+anomaly_unexplained_forbidden: true
+privacy_missing_forbidden: true
+ai_ungoverned_forbidden: true
+risk_integration_absent_forbidden: true
+hitl_required: true
+via_ai_platform: true
+via_ai_governance: true
+via_authorization: true
+via_audit: true
+via_p207g_risk: true
+governance_required: true
+embeds_llm_forbidden: true

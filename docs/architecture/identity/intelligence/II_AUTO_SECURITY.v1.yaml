@@ -1,0 +1,39 @@
+# P207-D — Autonomous ops security & AI governance
+version: "1.0"
+prompt_id: P207-D
+adr: "319"
+sor: identity_intelligence
+
+zero_trust:
+  - identity_verification
+  - action_authorization
+  - context_validation
+
+execution_security:
+  - privileged_action_control
+  - approval_gates
+  - execution_logging
+
+ai_governance:
+  controls:
+    - explain_decision
+    - record_reasoning
+    - store_evidence
+    - human_override
+  restrictions:
+    - no_uncontrolled_actions
+    - no_policy_bypass
+    - no_hidden_decisions
+
+automation_governance_required: true
+explainable_required: true
+human_oversight_required: true
+auditable_required: true
+recovery_required: true
+security_bypass_forbidden: true
+hitl_required: true
+via_authorization: true
+via_policy: true
+via_workflow: true
+via_audit: true
+governance_required: true

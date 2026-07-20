@@ -1,0 +1,12 @@
+prompt: P207-M
+adr: 328
+validation:
+  outputs: 20
+  verdict_target: ENTERPRISE_GRADE
+  quality_gates:
+    - ai_operates_without_governance
+    - autonomous_actions_uncontrolled
+    - decisions_unexplainable
+    - models_unmonitored
+    - ai_identities_undefined
+    - audit_trails_incomplete

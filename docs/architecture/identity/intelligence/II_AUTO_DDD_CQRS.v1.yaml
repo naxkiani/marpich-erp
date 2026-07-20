@@ -1,0 +1,53 @@
+# P207-D — Autonomous ops DDD / CQRS
+version: "1.0"
+prompt_id: P207-D
+adr: "319"
+sor: identity_intelligence
+
+logical_bounded_contexts:
+  - autonomous_operations_engine
+  - decision_engine
+  - workflow_orchestration
+  - self_healing
+  - agent_orchestration
+  - learning_feedback
+  - execution_security
+
+aggregates:
+  - AutonomousOperationRun
+  - AutonomousDecisionCase
+  - AutonomousWorkflowInstance
+  - SelfHealingRemediation
+  - AgentOrchestrationRequest
+  - ActionApprovalGate
+  - LearningFeedbackRecord
+
+commands:
+  - AnalyzeIdentityEvent
+  - EvaluateRisk
+  - GenerateAction
+  - ApproveAction
+  - ExecuteAction
+  - ValidateResult
+
+queries:
+  - GetAutonomousRun
+  - GetDecisionCase
+  - GetWorkflowStatus
+  - GetRemediation
+  - GetApprovalGate
+  - GetLearningMetrics
+
+events:
+  - IdentityOperationStarted
+  - DecisionGenerated
+  - ApprovalRequested
+  - ActionExecuted
+  - RemediationCompleted
+  - LearningUpdated
+
+cqrs_ready: true
+event_driven: true
+outbox_required: true
+boundaries_clear: true
+deployable_unit: identity_intelligence

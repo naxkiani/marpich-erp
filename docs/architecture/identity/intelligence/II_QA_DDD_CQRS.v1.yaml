@@ -1,0 +1,19 @@
+prompt: P207-O
+adr: 330
+commands:
+  - CreateIdentityTest
+  - ExecuteValidation
+  - RunSecurityAssessment
+  - ApproveRelease
+  - CertifyDefinitionOfDone
+queries:
+  - GetTestReport
+  - GetSecurityStatus
+  - GetComplianceEvidence
+  - GetDefinitionOfDone
+events:
+  - TestCompleted
+  - SecurityValidated
+  - GovernanceApproved
+  - ReleaseAuthorized
+  - DefinitionOfDoneCertified

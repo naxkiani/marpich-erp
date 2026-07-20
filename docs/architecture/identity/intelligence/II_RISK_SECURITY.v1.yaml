@@ -1,0 +1,30 @@
+# P207-G — Risk security & governance
+version: "1.0"
+prompt_id: P207-G
+adr: "322"
+sor: identity_intelligence
+
+security:
+  - risk_data_protection
+  - model_security
+  - decision_audit
+
+governance:
+  - explainable_risk_scores
+  - human_oversight
+  - policy_alignment
+
+static_only_forbidden: true
+prediction_absent_forbidden: true
+explanation_unavailable_forbidden: true
+ai_unauditable_forbidden: true
+trust_undefined_forbidden: true
+ungoverned_automation_forbidden: true
+hitl_required: true
+via_ai_platform: true
+via_authorization: true
+via_audit: true
+via_workflow: true
+via_policy: true
+governance_required: true
+embeds_llm_forbidden: true

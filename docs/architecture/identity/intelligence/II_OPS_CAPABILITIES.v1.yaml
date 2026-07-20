@@ -1,0 +1,16 @@
+prompt: P207-N
+adr: 329
+sor: identity_intelligence
+product: Enterprise Deployment, DevSecOps, Kubernetes, Scalability & Observability Platform
+api_prefix: /api/v1/identity-intelligence/ops
+capabilities:
+  cloud_native: true
+  kubernetes_defined: true
+  devsecops_integrated: true
+  gitops: true
+  service_mesh: true
+  autoscaling: true
+  high_availability: true
+  disaster_recovery_tested: true
+  observability_complete: true
+  availability_target: "99.99%"

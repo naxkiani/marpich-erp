@@ -1,0 +1,15 @@
+prompt: P207-O
+adr: 330
+sor: identity_intelligence
+product: Enterprise Testing, Governance, Security Validation & Definition of Done Platform
+api_prefix: /api/v1/identity-intelligence/qa
+certification_complete: true
+p207_series_complete: true
+capabilities:
+  automated_testing_required: true
+  security_validation_required: true
+  ai_validation_required: true
+  governance_defined_required: true
+  compliance_evidence_required: true
+  definition_of_done_required: true
+  continuous_assurance_required: true

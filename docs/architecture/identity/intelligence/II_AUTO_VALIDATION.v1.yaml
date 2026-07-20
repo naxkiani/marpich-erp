@@ -1,0 +1,23 @@
+# P207-D — Validation gates
+version: "1.0"
+prompt_id: P207-D
+adr: "319"
+sor: identity_intelligence
+api_prefix: /api/v1/identity-intelligence/autonomous
+
+reject_if:
+  - automation_without_governance
+  - decisions_not_explainable
+  - human_oversight_absent
+  - actions_not_auditable
+  - recovery_mechanisms_missing
+  - security_controls_bypassed
+  - invents_sibling_autonomous_bc
+  - embeds_llm_sdk
+  - local_approval_engine
+  - chatbot_only_ai
+  - irreversible_without_compensation
+  - skips_policy_validation
+
+production_readiness_verdict: ENTERPRISE_GRADE
+foundation_validator: contexts.identity_intelligence.domain.services.ii_autonomous_foundation

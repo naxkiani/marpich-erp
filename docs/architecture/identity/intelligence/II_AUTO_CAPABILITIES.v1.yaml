@@ -1,0 +1,43 @@
+# P207-D — Autonomous Identity Operations capabilities
+version: "1.0"
+prompt_id: P207-D
+adr: "319"
+sor: identity_intelligence
+api_prefix: /api/v1/identity-intelligence/autonomous
+
+lifecycle:
+  - identity_event
+  - data_collection
+  - context_understanding
+  - ai_analysis
+  - risk_evaluation
+  - decision_generation
+  - policy_validation
+  - human_approval
+  - automated_execution
+  - verification
+  - learning_feedback
+
+principles:
+  - policy_controlled_automation
+  - human_in_the_loop
+  - explainable_decisions
+  - continuous_verification
+  - least_privilege_execution
+  - safe_automation
+  - reversible_actions
+  - full_auditability
+
+automation_governance_required: true
+explainable_decisions_required: true
+human_oversight_required: true
+auditable_actions_required: true
+recovery_mechanisms_required: true
+security_bypass_forbidden: true
+hitl_required: true
+via_workflow_engine: true
+via_policy_engine: true
+via_ai_platform: true
+chatbot_only_forbidden: true
+embeds_llm_forbidden: true
+governance_required: true

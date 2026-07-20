@@ -1,0 +1,34 @@
+# P207-F — Twin security & governance
+version: "1.0"
+prompt_id: P207-F
+adr: "321"
+sor: identity_intelligence
+
+zero_trust_controls:
+  - twin_access_control
+  - data_protection
+  - identity_verification
+
+security_requirements:
+  - encryption
+  - audit_logging
+  - model_protection
+  - simulation_isolation
+
+data_copy_only_forbidden: true
+sync_absent_forbidden: true
+simulation_missing_forbidden: true
+impact_unavailable_forbidden: true
+weak_ai_forbidden: true
+security_undefined_forbidden: true
+duplicates_twin_sor_forbidden: true
+simulation_isolation_required: true
+actions_audited_required: true
+security_controls_defined_required: true
+hitl_required: true
+via_ai_platform: true
+via_authorization: true
+via_audit: true
+via_workflow: true
+via_identity_digital_twin: true
+governance_required: true

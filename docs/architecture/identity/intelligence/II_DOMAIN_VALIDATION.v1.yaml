@@ -1,0 +1,23 @@
+# P207-C — Validation gates
+version: "1.0"
+prompt_id: P207-C
+adr: "318"
+sor: identity_intelligence
+api_prefix: /api/v1/identity-intelligence/domain
+
+reject_if:
+  - ddd_boundaries_unclear
+  - anemic_domain_model
+  - cqrs_absent
+  - event_driven_missing
+  - replaces_peer_sors
+  - domain_purpose_absent
+  - context_map_undefined
+  - ai_only_chatbot
+  - human_control_removed
+  - invents_sibling_intelligence_bc
+  - embeds_llm_sdk
+  - automation_without_governance
+
+production_readiness_verdict: ENTERPRISE_GRADE
+foundation_validator: contexts.identity_intelligence.domain.services.ii_domain_foundation

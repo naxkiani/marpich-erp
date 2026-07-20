@@ -1,0 +1,23 @@
+prompt: P207-M
+adr: 328
+commands:
+  - RegisterAIModel
+  - ApproveAIAgent
+  - EvaluateAIRisk
+  - ValidateDecision
+  - MonitorAIBehavior
+  - RegisterAutonomousAction
+queries:
+  - GetAIModelInventory
+  - GetAgentGovernanceStatus
+  - GetDecisionExplanation
+  - GetAIRiskProfile
+  - GetAuditTrail
+  - GetComplianceMapping
+events:
+  - AIModelRegistered
+  - AgentApproved
+  - RiskDetected
+  - DecisionExplained
+  - PolicyViolationDetected
+  - AIActionAudited

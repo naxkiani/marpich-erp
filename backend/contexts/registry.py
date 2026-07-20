@@ -290,6 +290,34 @@ IDENTITY_DIGITAL_TWIN = BoundedContext(
     subscribes=("identity.user.created", "identity.role.assigned", "federation.identity.linked", "lifecycle.state.changed", "identity_risk.score.updated"),
 )
 
+IDENTITY_INTELLIGENCE = BoundedContext(
+    id="identity_intelligence",
+    display_name="Enterprise Identity Intelligence & Autonomous Identity Operations",
+    context_type=BoundedContextType.PLATFORM,
+    schema_name="identity_intelligence",
+    description=(
+        "Cross-fabric identity intelligence — predictive risk, AI agents, twin orchestration, "
+        "self-healing fabric, autonomous governance/access under HITL (P207 SoR)"
+    ),
+    publishes=(
+        "identity_intelligence.strategy.published",
+        "identity_intelligence.risk.predicted",
+        "identity_intelligence.anomaly.detected",
+        "identity_intelligence.insight.generated",
+        "identity_intelligence.action.recommended",
+        "identity_intelligence.remediation.executed",
+        "identity_intelligence.model.updated",
+    ),
+    subscribes=(
+        "platform.tenant.provisioned",
+        "directory.relationship.linked",
+        "identity_twin.synchronized",
+        "identity_lifecycle.state.changed",
+        "identity_governance.certification.completed",
+        "authentication.session.evaluated",
+    ),
+)
+
 CONSENT = BoundedContext(
     id="consent",
     display_name="Enterprise Consent & Privacy Platform",
@@ -897,6 +925,7 @@ ALL_CONTEXTS: tuple[BoundedContext, ...] = (
     IDENTITY_FEDERATION,
     IDENTITY_LIFECYCLE,
     IDENTITY_DIGITAL_TWIN,
+    IDENTITY_INTELLIGENCE,
     CONSENT,
     AUTHORIZATION,
     PERMISSION_REGISTRY,
