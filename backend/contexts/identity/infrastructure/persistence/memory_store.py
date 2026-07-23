@@ -21,6 +21,7 @@ PERMISSION_CODES = [
     "identity.roles.read",
     "identity.roles.write",
     "identity.mfa.manage",
+    "identity.password.change",
     "identity.sessions.read",
     "identity.sessions.revoke",
     "identity.audit.read",

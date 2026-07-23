@@ -344,6 +344,49 @@ class IdentityApplicationService:
         )
         return Result.ok({"mfa_enabled": True, "backup_codes": backup_codes})
 
+    async def change_password(
+        self,
+        *,
+        tenant_id: str,
+        user_id: str,
+        current_password: str,
+        new_password: str,
+        revoke_other_sessions: bool = True,
+        correlation_id: str,
+        ip_address: str | None = None,
+    ) -> Result[dict]:
+        user = await self._users.find_by_id(tenant_id, UniqueId.from_string(user_id))
+        if not user:
+            return Result.fail("identity.errors.user_not_found")
+        if not await self._hasher.verify(current_password, user.password_hash):
+            return Result.fail("identity.errors.invalid_credentials")
+        if current_password == new_password:
+            return Result.fail("identity.errors.password_unchanged")
+        password_hash = await self._hasher.hash(new_password)
+        user.update_password(password_hash=password_hash, must_change=False)
+        await self._users.save(user)
+        if revoke_other_sessions:
+            await self._sessions.revoke_all_for_user(tenant_id, user_id)
+        await self._audit.log(
+            tenant_id=tenant_id,
+            correlation_id=correlation_id,
+            action="identity.password.updated",
+            resource_type="user",
+            resource_id=user_id,
+            actor_id=user_id,
+            ip_address=ip_address,
+        )
+        return Result.ok(
+            {
+                "password_changed": True,
+                "password_must_change": user.password_must_change,
+                "password_changed_at": (
+                    user.password_changed_at.isoformat() if user.password_changed_at else None
+                ),
+                "other_sessions_revoked": bool(revoke_other_sessions),
+            }
+        )
+
     async def _issue_tokens(
         self,
         *,

@@ -18,7 +18,7 @@ const LINKS = [
   { href: "/enterprise/messenger", label: "Messenger" },
   { href: "/enterprise/federation", label: "Federation" },
   { href: "/enterprise/connector-framework", label: "Connectors" },
-  { href: "/enterprise/ai-security", label: "AI Security" },
+  { href: "/enterprise/plugins", label: "Plugins" },
   { href: "/enterprise/observability", label: "Observability" },
   { href: "/enterprise/scheduler", label: "Scheduler" },
   { href: "/enterprise/integration-studio", label: "Integration Studio" },
@@ -36,6 +36,11 @@ export function ShellNav() {
     router.push("/login");
   }
 
+  function linkLabel(href: string, label: string): string {
+    if (href === "/account/security") return t("nav.mySecurity");
+    return label;
+  }
+
   return (
     <nav aria-label="Main">
       {LINKS.map((link) => (
@@ -44,25 +49,25 @@ export function ShellNav() {
           href={link.href}
           aria-current={pathname === link.href ? "page" : undefined}
         >
-          {link.label}
+          {linkLabel(link.href, link.label)}
         </Link>
       ))}
       <span className="mp-nav-muted">{t("app.name")}</span>
       <div className="mp-shell-auth">
         {isLoading ? (
-          <span className="mp-nav-muted">Checking session…</span>
+          <span className="mp-nav-muted">{t("accountSecurity.loading")}</span>
         ) : isAuthenticated && session ? (
           <>
             <span className="mp-nav-muted">
-              {user?.email ?? "Signed in"} · {session.tenantId}
+              {user?.email ?? t("accountSecurity.signedIn")} · {session.tenantId}
             </span>
-            <Link href="/account/change-password">Change password</Link>
+            <Link href="/account/change-password">{t("nav.changePassword")}</Link>
             <button type="button" className="mp-btn" onClick={() => void onLogout()}>
-              Sign out
+              {t("accountSecurity.logout")}
             </button>
           </>
         ) : (
-          <Link href="/login">Sign in</Link>
+          <Link href="/login">{t("accountSecurity.step.signIn")}</Link>
         )}
       </div>
     </nav>

@@ -5,12 +5,8 @@ from httpx import ASGITransport, AsyncClient
 import contexts.identity.container as identity_container
 from contexts.identity.infrastructure.persistence.memory_store import InMemoryStore
 from contexts.plugins.container import get_plugin_runtime, get_plugin_service, reset_plugin_service
-from contexts.plugins.infrastructure.persistence.memory_store import (
-    InMemoryPluginInstallationRepository,
-    InMemoryPluginRepository,
-)
-from core.presentation.api.main import app
-from shared.infrastructure.messaging.event_bus import InProcessEventBus
+from core.presentation.api.app_factory import create_app
+from core.presentation.api.startup_registry import configure_application
 
 
 @pytest.fixture(autouse=True)
@@ -24,7 +20,9 @@ def reset_all():
 
 @pytest.fixture
 async def client():
-    transport = ASGITransport(app=app)
+    application = create_app(profile="full", startup_mode="lazy")
+    configure_application(application, profile="full", startup_mode="lazy")
+    transport = ASGITransport(app=application)
     async with AsyncClient(transport=transport, base_url="http://test") as ac:
         yield ac
 
@@ -40,6 +38,7 @@ async def _auth_headers(client: AsyncClient, tenant: str) -> dict[str, str]:
         json={"email": "admin@plugins.dev", "password": "SecurePass123!"},
         headers={"X-Tenant-ID": tenant},
     )
+    assert login.status_code == 200, login.text
     token = login.json()["data"]["access_token"]
     return {"X-Tenant-ID": tenant, "Authorization": f"Bearer {token}"}
 

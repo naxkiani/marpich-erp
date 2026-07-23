@@ -5,8 +5,24 @@ export type { LoginGateProps } from "./LoginGate";
 export { PasskeyLoginButton } from "./PasskeyLoginButton";
 export type { PasskeyLoginButtonProps } from "./PasskeyLoginButton";
 
-export { loginWithPasskey, isWebAuthnSupported, beginPasskeyLogin, completePasskeyLogin } from "./webauthn";
-export type { AuthenticationCredentialJSON, PublicKeyCredentialRequestOptionsJSON } from "./webauthn";
+export {
+  loginWithPasskey,
+  registerPasskey,
+  listPasskeys,
+  revokePasskey,
+  beginPasskeyRegistration,
+  completePasskeyRegistration,
+  isWebAuthnSupported,
+  beginPasskeyLogin,
+  completePasskeyLogin,
+} from "./webauthn";
+export type {
+  AuthenticationCredentialJSON,
+  PasskeyCredential,
+  PublicKeyCredentialCreationOptionsJSON,
+  PublicKeyCredentialRequestOptionsJSON,
+  RegistrationCredentialJSON,
+} from "./webauthn";
 
 export { apiDelete, apiGet, apiPost, apiPut } from "./api-client";
 export {
@@ -28,6 +44,7 @@ export { clearSessionCookie, setSessionCookie } from "./cookie";
 export {
   authHeaders,
   clearSession,
+  isAuthFailure,
   isSessionExpired,
   loadSession,
   saveSession,
