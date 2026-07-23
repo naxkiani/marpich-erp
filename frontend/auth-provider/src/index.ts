@@ -1,7 +1,7 @@
 export { AuthProvider, useAuthContext } from "./AuthProvider";
 export { useAuth, useAuthorization, useLoginForm, usePermission } from "./hooks";
 export { LoginGate } from "./LoginGate";
-export type { LoginGateProps } from "./LoginGate";
+export type { LoginGateLabels, LoginGateProps } from "./LoginGate";
 export { PasskeyLoginButton } from "./PasskeyLoginButton";
 export type { PasskeyLoginButtonProps } from "./PasskeyLoginButton";
 
@@ -24,7 +24,7 @@ export type {
   RegistrationCredentialJSON,
 } from "./webauthn";
 
-export { apiDelete, apiGet, apiPost, apiPut } from "./api-client";
+export { apiDelete, apiGet, apiPatch, apiPost, apiPut } from "./api-client";
 export {
   fetchCurrentUser,
   getStoredSession,

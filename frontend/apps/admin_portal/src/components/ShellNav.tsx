@@ -16,6 +16,8 @@ const LINKS = [
   { href: "/healthcare/laboratory", label: "Laboratory" },
   { href: "/enterprise/document-studio", label: "Document Studio" },
   { href: "/enterprise/messenger", label: "Messenger" },
+  { href: "/enterprise/notifications", label: "Notifications" },
+  { href: "/enterprise/audit", label: "Audit" },
   { href: "/enterprise/federation", label: "Federation" },
   { href: "/enterprise/connector-framework", label: "Connectors" },
   { href: "/enterprise/plugins", label: "Plugins" },

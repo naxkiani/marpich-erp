@@ -14,7 +14,8 @@ from contexts.organization.container import get_organization_service, reset_orga
 from contexts.organization.infrastructure.persistence.memory_store import OrganizationMemoryStore
 from contexts.settings.container import get_settings_service, reset_settings_service
 from contexts.settings.infrastructure.persistence.memory_store import SettingsMemoryStore
-from core.presentation.api.main import app
+from core.presentation.api.app_factory import create_app
+from core.presentation.api.startup_registry import configure_application
 from shared.infrastructure.messaging.event_bus import InProcessEventBus
 
 
@@ -42,7 +43,9 @@ def reset_all():
 
 @pytest.fixture
 async def client():
-    transport = ASGITransport(app=app)
+    application = create_app(profile="full", startup_mode="lazy")
+    configure_application(application, profile="full", startup_mode="lazy")
+    transport = ASGITransport(app=application)
     async with AsyncClient(transport=transport, base_url="http://test") as ac:
         yield ac
 
@@ -73,7 +76,11 @@ async def test_tenant_provision_creates_audit_entries(client):
 
     headers = await _auth_headers(client, slug)
 
-    entries = await client.get("/api/v1/audit/entries", headers=headers)
+    entries = await client.get(
+        "/api/v1/audit/entries",
+        params={"event_name": "platform.tenant.provisioned", "limit": 50},
+        headers=headers,
+    )
     assert entries.status_code == 200
     data = entries.json()["data"]
     assert data["total"] >= 1

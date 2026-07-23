@@ -1,34 +1,12 @@
 "use client";
 
-import { LoginGate, useAuth } from "@marpich/auth-provider";
-import { PageLayout } from "@marpich/core";
-import { useRouter, useSearchParams } from "next/navigation";
+import { AccountLoginPage } from "@/components/AccountLoginPage";
+import { Suspense } from "react";
 
-export default function LoginPage() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const { isAuthenticated } = useAuth();
-  const returnTo = searchParams.get("returnTo") ?? "/";
-
-  if (isAuthenticated) {
-    router.replace(returnTo.startsWith("/") ? returnTo : "/");
-  }
-
+export default function LoginRoutePage() {
   return (
-    <PageLayout
-      title="Sign in"
-      breadcrumb={[
-        { label: "Marpich", href: "/" },
-        { label: "Sign in" },
-      ]}
-    >
-      <p className="mp-auth-page-desc">
-        Centralized identity for all Marpich admin dashboards. One session is shared across enterprise, tax, and FX modules.
-      </p>
-      <LoginGate
-        title="Sign in to Marpich"
-        onConnected={() => router.replace(returnTo.startsWith("/") ? returnTo : "/")}
-      />
-    </PageLayout>
+    <Suspense fallback={null}>
+      <AccountLoginPage />
+    </Suspense>
   );
 }

@@ -4,7 +4,16 @@
 - Identity (`identity`) — MFA, sessions, password change  
 - Authentication (`authentication`) — WebAuthn / passkeys, federation  
 
-**UI surfaces:** `/account/security` (P28), `/account/mfa` (P29), `/account/passkeys` (P30), `/account/change-password` (P31)
+**UI surfaces:** `/login` (P34), `/account/security` (P28), `/account/mfa` (P29), `/account/passkeys` (P30), `/account/change-password` (P31)
+
+## Sign-in desk (P34)
+
+`AccountLoginPage` + shared `LoginGate` — central Identity login for admin portal.
+
+- Draft: `marpich.account.login.draft` (tenant + email only — never password)
+- Workflow: Identity → credentials → authenticate → enter (`StepProgress`)
+- Live auth via auth-provider → Identity token issuance; passkey button delegates to Authentication WebAuthn
+- i18n: `login.*` (en / fa / ar)
 
 ## Admin UI depth (P28)
 

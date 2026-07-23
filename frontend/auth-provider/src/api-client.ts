@@ -48,3 +48,14 @@ export async function apiPut<T>(path: string, session: AuthSession, body: unknow
   const json = await res.json();
   return json.data as T;
 }
+
+export async function apiPatch<T>(path: string, session: AuthSession, body: unknown = {}): Promise<T> {
+  const res = await fetch(`${API_URL}${path}`, {
+    method: "PATCH",
+    headers: authHeaders(session),
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(await parseError(res));
+  const json = await res.json();
+  return json.data as T;
+}
