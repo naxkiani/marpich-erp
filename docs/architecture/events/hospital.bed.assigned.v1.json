@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hospital.bed.assigned.v1",
+  "title": "hospital.bed.assigned.v1",
+  "type": "object",
+  "required": ["admission_id", "patient_id", "bed_id", "ward"],
+  "properties": {
+    "admission_id": { "type": "string", "format": "uuid" },
+    "patient_id": { "type": "string", "format": "uuid" },
+    "bed_id": { "type": "string", "format": "uuid" },
+    "ward": { "type": "string", "minLength": 1 }
+  },
+  "additionalProperties": false
+}

@@ -157,3 +157,32 @@ async def test_hospital_pack_register_admit_encounter(client):
     encounters = await client.get("/api/v1/hospital/encounters", headers=headers)
     assert encounters.status_code == 200
     assert encounters.json()["data"]["total"] >= 1
+
+
+@pytest.mark.asyncio
+async def test_dashboard_and_demo_seed(client):
+    slug = "hospital-dash-seed"
+    provision = await client.post(
+        "/api/v1/platform/tenants",
+        json={"name": "Dash Hospital", "slug": slug, "industry_pack": "hospital"},
+    )
+    assert provision.status_code == 201, provision.text
+
+    headers = await _register_login(client, slug, "hospital@dash.dev")
+
+    dash = await client.get("/api/v1/hospital/dashboard", headers=headers)
+    assert dash.status_code == 200, dash.text
+    summary = dash.json()["data"]["summary"]
+    assert summary["patient_count"] >= 4
+    assert summary["bed_count"] >= 4
+    assert summary["active_admissions"] >= 1
+    assert summary["encounter_count"] >= 1
+    assert summary["available_beds"] >= 1
+
+    beds = await client.get("/api/v1/hospital/beds", headers=headers)
+    assert beds.status_code == 200
+    assert beds.json()["data"]["total"] >= 4
+
+    again = await client.post("/api/v1/hospital/seed", headers=headers)
+    assert again.status_code == 201
+    assert again.json()["data"]["seeded"] is False

@@ -12,6 +12,22 @@ class RegisterPatientRequest(BaseModel):
 class AdmitPatientRequest(BaseModel):
     patient_id: str
     ward: str = Field(min_length=1, max_length=64)
+    bed_id: str | None = None
+
+
+class CreateBedRequest(BaseModel):
+    ward: str = Field(min_length=1, max_length=64)
+    room: str = Field(min_length=1, max_length=32)
+    bed_code: str = Field(min_length=1, max_length=32)
+
+
+class AssignBedRequest(BaseModel):
+    bed_id: str
+
+
+class TransferAdmissionRequest(BaseModel):
+    to_ward: str = Field(min_length=1, max_length=64)
+    to_bed_id: str | None = None
 
 
 class StartEncounterRequest(BaseModel):
@@ -21,3 +37,8 @@ class StartEncounterRequest(BaseModel):
 class CompleteEncounterRequest(BaseModel):
     procedure_codes: list[str] = Field(default_factory=list)
     diagnosis_codes: list[str] = Field(default_factory=list)
+
+
+class AiInferRequest(BaseModel):
+    surface: str = Field(min_length=1, max_length=64)
+    payload: dict = Field(default_factory=dict)

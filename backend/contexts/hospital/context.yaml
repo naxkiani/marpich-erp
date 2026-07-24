@@ -2,17 +2,23 @@ context: hospital
 architecture_version: "1.0"
 display_name: Hospital
 type: industry
-description: "Acute care — CAP-HLT-001 patient lifecycle (register, admit, encounter). Never merge with clinic."
+description: "Acute care — CAP-HLT-001/004/005 patient, beds, encounter. Never merge with clinic."
 capability_ids:
   - CAP-HLT-001
+  - CAP-HLT-004
   - CAP-HLT-005
 aggregates:
   - Patient
   - Admission
+  - Bed
   - Encounter
+  - CareEventProjection
 publishes:
   - hospital.patient.registered
   - hospital.admission.registered
+  - hospital.bed.assigned
+  - hospital.admission.transferred
+  - hospital.admission.discharged
   - hospital.encounter.started
   - hospital.encounter.completed
 subscribes:
@@ -25,8 +31,12 @@ permissions:
   - hospital.patients.write
   - hospital.admissions.read
   - hospital.admissions.write
+  - hospital.beds.read
+  - hospital.beds.write
   - hospital.encounters.read
   - hospital.encounters.write
+  - hospital.ai.read
+  - hospital.ai.infer
 ai:
   surfaces:
     - insights

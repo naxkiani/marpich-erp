@@ -60,6 +60,94 @@ class AdmissionRegisteredIntegration(IntegrationEvent):
 
 
 @dataclass(frozen=True, kw_only=True)
+class BedAssignedIntegration(IntegrationEvent):
+    admission_id: UniqueId
+    patient_id: UniqueId
+    bed_id: UniqueId
+    ward: str
+
+    @property
+    def event_name(self) -> str:
+        return "hospital.bed.assigned"
+
+    @property
+    def source_context(self) -> str:
+        return "hospital"
+
+    @property
+    def event_version(self) -> int:
+        return 1
+
+    def to_payload(self) -> dict:
+        return {
+            "admission_id": str(self.admission_id),
+            "patient_id": str(self.patient_id),
+            "bed_id": str(self.bed_id),
+            "ward": self.ward,
+        }
+
+
+@dataclass(frozen=True, kw_only=True)
+class AdmissionTransferredIntegration(IntegrationEvent):
+    admission_id: UniqueId
+    patient_id: UniqueId
+    from_ward: str
+    to_ward: str
+    from_bed_id: UniqueId | None
+    to_bed_id: UniqueId | None
+
+    @property
+    def event_name(self) -> str:
+        return "hospital.admission.transferred"
+
+    @property
+    def source_context(self) -> str:
+        return "hospital"
+
+    @property
+    def event_version(self) -> int:
+        return 1
+
+    def to_payload(self) -> dict:
+        return {
+            "admission_id": str(self.admission_id),
+            "patient_id": str(self.patient_id),
+            "from_ward": self.from_ward,
+            "to_ward": self.to_ward,
+            "from_bed_id": str(self.from_bed_id) if self.from_bed_id else None,
+            "to_bed_id": str(self.to_bed_id) if self.to_bed_id else None,
+        }
+
+
+@dataclass(frozen=True, kw_only=True)
+class AdmissionDischargedIntegration(IntegrationEvent):
+    admission_id: UniqueId
+    patient_id: UniqueId
+    ward: str
+    bed_id: UniqueId | None
+
+    @property
+    def event_name(self) -> str:
+        return "hospital.admission.discharged"
+
+    @property
+    def source_context(self) -> str:
+        return "hospital"
+
+    @property
+    def event_version(self) -> int:
+        return 1
+
+    def to_payload(self) -> dict:
+        return {
+            "admission_id": str(self.admission_id),
+            "patient_id": str(self.patient_id),
+            "ward": self.ward,
+            "bed_id": str(self.bed_id) if self.bed_id else None,
+        }
+
+
+@dataclass(frozen=True, kw_only=True)
 class EncounterStartedIntegration(IntegrationEvent):
     encounter_id: UniqueId
     patient_id: UniqueId
