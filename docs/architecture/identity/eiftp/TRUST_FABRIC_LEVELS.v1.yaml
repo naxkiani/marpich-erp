@@ -1,0 +1,47 @@
+# Enterprise Trust Levels 0–5
+# P200-B6 · ADR-220
+version: "1.0"
+prompt_id: P200-B6
+
+levels:
+  - level: 0
+    name: unknown_trust
+    min_score: 0
+    max_score: 19
+    privileges: [no_federated_access]
+  - level: 1
+    name: limited_trust
+    min_score: 20
+    max_score: 39
+    privileges: [read_low_sensitivity, step_up_required]
+  - level: 2
+    name: verified_trust
+    min_score: 40
+    max_score: 59
+    privileges: [standard_workforce_sso]
+  - level: 3
+    name: enterprise_trust
+    min_score: 60
+    max_score: 74
+    privileges: [cross_app_sso, partner_limited]
+  - level: 4
+    name: strategic_trust
+    min_score: 75
+    max_score: 89
+    privileges: [cross_tenant_collaboration, privileged_apis_with_obligations]
+  - level: 5
+    name: continuous_adaptive_trust
+    min_score: 90
+    max_score: 100
+    privileges: [adaptive_sessions, ai_agent_orchestrations]
+    requires_continuous_reeval: true
+
+transitions:
+  - { from: 0, to: 1, requires: [identity_verified, evidence_authn] }
+  - { from: 1, to: 2, requires: [mfa_or_federation_assurance, min_score_40] }
+  - { from: 2, to: 3, requires: [org_verified, compliance_ok] }
+  - { from: 3, to: 4, requires: [trust_agreement_active, approval_recorded] }
+  - { from: 4, to: 5, requires: [continuous_signals, low_risk, no_anomalies] }
+  - { from: any, to: 0, on: [revoke, critical_risk, policy_violation] }
+
+law: never_permanent_trust — level_5 still continuously reevaluated

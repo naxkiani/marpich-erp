@@ -1,0 +1,31 @@
+# Goal-to-Capability Mapping — EIFTP Strategic Goals
+# P200-B1.1-D1 · ADR-215
+version: "1.0"
+prompt_id: P200-B1.1-D1
+
+# Capability IDs from BUSINESS_CAPABILITY_MAP.v1.yaml
+
+mappings:
+  - goal: SG01
+    capabilities: [CAP_AUTHN, CAP_MACHINE, CAP_SERVICE, CAP_DEVICE, CAP_AI_IDENTITY]
+  - goal: SG02
+    capabilities: [CAP_TRUST_FABRIC, CAP_API_TRUST, CAP_PKI, CAP_XTENANT]
+  - goal: SG03
+    capabilities: [CAP_FEDERATION, CAP_SSO, CAP_AUTHN]
+  - goal: SG04
+    capabilities: [CAP_ADAPTIVE, CAP_MFA, CAP_AUTHZ, CAP_AUTHN]
+    note: CAP_AUTHZ owned by authorization BC
+  - goal: SG05
+    capabilities: [CAP_FEDERATION, CAP_TRUST_FABRIC, CAP_AUTHN]
+    platform_surfaces: [apis, sdks, events, plugins, service_discovery]
+  - goal: SG06
+    capabilities: [CAP_XTENANT, CAP_FEDERATION, CAP_DELEGATION]
+  - goal: SG07
+    capabilities: [CAP_AUDIT, CAP_ANALYTICS, CAP_DELEGATION, CAP_AI_IDENTITY]
+  - goal: SG08
+    capabilities: [CAP_XTENANT, CAP_FEDERATION, CAP_DELEGATION]
+  - goal: SG09
+    capabilities: [CAP_TRUST_FABRIC, CAP_AUTHN]
+    non_functional: [ha, dr, geo_redundancy]
+  - goal: SG10
+    capabilities: [CAP_AI_IDENTITY, CAP_PASSWORDLESS, CAP_PKI, CAP_FEDERATION]

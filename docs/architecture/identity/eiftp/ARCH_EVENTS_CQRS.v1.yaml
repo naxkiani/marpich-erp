@@ -1,0 +1,27 @@
+# Events & CQRS Architecture
+# P200-B2 · ADR-216
+version: "1.0"
+prompt_id: P200-B2
+
+events:
+  bus: EventFabric_outbox
+  envelope: docs/architecture/events/_envelope.v1.json
+  catalog: FEDERATION_KAFKA_TOPICS.yaml
+  publishes_examples:
+    - federation.provider.registered
+    - federation.identity.linked
+    - federation.trust.changed
+    - federation.session.created
+    - federation.token.issued
+  subscribe_minimum: [platform.tenant.provisioned]
+  target_subscribe: [identity.user.created]
+
+cqrs:
+  write_model: aggregates_via_application_commands
+  read_model: queries_and_projections_for_admin_and_trust_facts
+  package_layout:
+    commands: backend/contexts/identity_federation/application/commands/
+    queries: backend/contexts/identity_federation/application/queries/
+    dto: backend/contexts/identity_federation/application/dto/
+  migration: incremental_from_monolithic_service_py
+  law: presentation_never_imports_infrastructure_or_domain_engines_directly_long_term

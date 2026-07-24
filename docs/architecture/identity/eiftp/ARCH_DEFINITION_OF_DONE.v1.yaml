@@ -1,0 +1,23 @@
+# Definition of Done — P200-B2 Enterprise Architecture
+# P200-B2 · ADR-216
+version: "1.0"
+prompt_id: P200-B2
+
+architecture_dod:
+  - all_50_deliverables_indexed
+  - law_doc_with_mermaid_published
+  - adr_216_accepted
+  - shared_IFederationTrustFacts_port_shipped
+  - cqrs_package_scaffolds_present
+  - redis_and_messaging_adapter_packages_present
+  - architecture_surface_api_available
+  - eiftp_architecture_validator_tests_green
+  - roadmap_marks_B2_done
+  - no_contexts_eiftp_created
+
+quality_gates_reject_if:
+  - multiple_identity_authorities
+  - tenant_isolation_broken
+  - authz_pdp_duplicated
+  - vendor_sdk_in_domain
+  - cross_context_domain_imports

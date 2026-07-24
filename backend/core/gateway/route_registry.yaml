@@ -143,6 +143,9 @@ platform_routes:
   - prefix: /api/v1/identity-twins
     context_id: identity_digital_twin
     module: identity_digital_twin
+  - prefix: /api/v1/identity-intelligence
+    context_id: identity_intelligence
+    module: identity_intelligence
   - prefix: /api/v1/consent
     context_id: consent
     module: consent

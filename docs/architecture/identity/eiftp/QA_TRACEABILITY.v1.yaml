@@ -1,0 +1,52 @@
+# EIFTP Traceability Matrix — P200-B12 · ADR-226
+version: "1.0"
+prompt_id: P200-B12
+
+chain:
+  - Business Requirement
+  - Capability
+  - Domain
+  - Bounded Context
+  - Aggregate
+  - Command
+  - Query
+  - Event
+  - API
+  - Microservice
+  - Deployment
+  - Monitoring
+  - Test
+  - Documentation
+  - Release
+
+mappings:
+  - requirement: Federated login & trust facts
+    capability: CAP-IDF-FEDERATION
+    domain: Identity Federation
+    bounded_context: identity_federation
+    aggregates: [FederationPlatform, TrustRelationship, IdentityProvider]
+    apis:
+      - /api/v1/federation/engine/*
+      - /api/v1/federation/trust-fabric/*
+      - /api/v1/federation/providers/*
+    events: [federation.provider.registered, federation.trust.evaluated]
+    deployment: marpich-iam Helm + GitOps
+    monitoring: METRICS_CATALOG#identity_federation_metrics
+    tests: test_eiftp_*
+  - requirement: Zero Trust gates (facts only)
+    capability: CAP-IDF-ZT-GATES
+    bounded_context: identity_federation
+    apis: [/api/v1/federation/security/*]
+    note: Permit/Deny remains Authorization PDP
+  - requirement: Cross-tenant trust
+    capability: CAP-IDF-CROSS-TENANT
+    apis: [/api/v1/federation/cross-tenant/*]
+  - requirement: OHS / CQRS / events
+    capability: CAP-IDF-OHS
+    apis: [/api/v1/federation/ohs/*]
+  - requirement: Ops / SRE / DR
+    capability: CAP-IDF-OPS
+    apis: [/api/v1/federation/ops/*]
+  - requirement: Quality / DoD closeout
+    capability: CAP-IDF-QA
+    apis: [/api/v1/federation/qa/*]

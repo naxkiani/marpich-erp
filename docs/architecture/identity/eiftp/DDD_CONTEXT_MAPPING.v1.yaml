@@ -1,0 +1,87 @@
+# Context Mapping Strategies — why each relationship exists
+# P200-B3 · ADR-217
+version: "1.0"
+prompt_id: P200-B3
+
+relationships:
+  - id: REL_FED_OHS
+    type: open_host_service
+    upstream: identity_federation
+    downstream: [authorization, business_modules, identity_digital_twin]
+    why: Stable federation/trust APIs and IFederationTrustFacts for many consumers
+
+  - id: REL_FED_PL
+    type: published_language
+    parties: [identity_federation, all_consumers]
+    artifacts: [federation.* integration events, FederationTrustFacts DTO, OpenAPI]
+    why: Versioned interoperability without sharing domain models
+
+  - id: REL_FED_INT_ACL
+    type: anti_corruption_layer
+    upstream: integration
+    downstream: identity_federation
+    why: Protect federation domain from vendor IdP connector shapes
+
+  - id: REL_FED_ADA_ACL
+    type: anti_corruption_layer
+    upstream: adaptive_authentication
+    downstream: identity_federation
+    why: Translate risk/ZT challenge models into local trust facts
+
+  - id: REL_FED_RISK_ACL
+    type: anti_corruption_layer
+    upstream: identity_risk
+    downstream: identity_federation
+    why: Isolate risk-engine schemas from trust aggregates
+
+  - id: REL_FED_ID_CS
+    type: customer_supplier
+    customer: identity_federation
+    supplier: identity
+    why: Federation needs stable principal ids; Identity owns registry
+
+  - id: REL_AUTH_FED_CS
+    type: customer_supplier
+    customer: authentication
+    supplier: identity_federation
+    why: AuthN may initiate federated login; Federation owns broker outcome
+
+  - id: REL_MOD_AUTHZ_CS
+    type: customer_supplier
+    customer: business_modules
+    supplier: authorization
+    why: Modules depend on PDP decisions
+
+  - id: REL_AUTHZ_POL_CS
+    type: customer_supplier
+    customer: authorization
+    supplier: policy
+    why: PBAC outcomes via IPolicyEvaluator — AuthZ does not own business policies
+
+  - id: REL_FED_ADA_CF
+    type: conformist
+    upstream: adaptive_authentication
+    downstream: identity_federation
+    why: Accept challenge result vocabulary as input facts when stepping up
+
+  - id: REL_FED_AUTHZ_SW
+    type: separate_ways
+    parties: [identity_federation, authorization]
+    why: Trust scoring ≠ access decision; merging would corrupt both models
+
+  - id: REL_SK
+    type: shared_kernel
+    parties: [all_contexts]
+    artifacts: [shared.domain value objects, IntegrationEvent envelope, Result]
+    why: Technical reuse only — no federation aggregates in shared kernel
+
+  - id: REL_FED_AUD_OHS
+    type: published_language
+    upstream: identity_federation
+    downstream: audit
+    why: Audit consumes integration events; no shared mutable audit tables
+
+forbidden:
+  - partnership_sharing_databases
+  - shared_kernel_including_TrustRelationship
+  - conformist_to_vendor_sdk_in_domain

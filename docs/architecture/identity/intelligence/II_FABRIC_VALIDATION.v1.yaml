@@ -1,0 +1,33 @@
+prompt: P207-L
+adr: 327
+validation:
+  outputs:
+    - microservice_architecture
+    - service_boundary_map
+    - cqrs_design
+    - command_catalog
+    - query_catalog
+    - event_catalog
+    - event_schema_design
+    - event_bus_architecture
+    - api_gateway_design
+    - rest_api_specifications
+    - graphql_architecture
+    - grpc_communication_model
+    - service_mesh_architecture
+    - kubernetes_deployment_design
+    - security_architecture
+    - data_ownership_model
+    - observability_architecture
+    - testing_strategy
+    - disaster_recovery_model
+    - production_readiness_assessment
+  quality_gates:
+    reject_if:
+      - services_share_databases
+      - events_undefined
+      - apis_lack_security
+      - cqrs_boundaries_unclear
+      - audit_history_incomplete
+      - ai_integration_disconnected
+  verdict_target: ENTERPRISE_GRADE

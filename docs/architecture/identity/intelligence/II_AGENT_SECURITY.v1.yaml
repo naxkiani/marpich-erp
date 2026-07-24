@@ -1,0 +1,30 @@
+# P207-E — Agent security & governance
+version: "1.0"
+prompt_id: P207-E
+adr: "320"
+sor: identity_intelligence
+
+zero_trust_ai:
+  - agent_authentication
+  - agent_authorization
+  - tool_access_control
+  - data_protection
+
+ai_security:
+  - prompt_protection
+  - model_security
+  - output_validation
+  - decision_logging
+
+permissionless_forbidden: true
+explainable_required: true
+knowledge_controlled_required: true
+human_governance_required: true
+actions_audited_required: true
+security_boundaries_defined_required: true
+hitl_required: true
+via_ai_platform: true
+via_authorization: true
+via_audit: true
+via_workflow: true
+governance_required: true

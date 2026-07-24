@@ -1,0 +1,55 @@
+# P207-G — Risk engine DDD / CQRS
+version: "1.0"
+prompt_id: P207-G
+adr: "322"
+sor: identity_intelligence
+
+logical_bounded_contexts:
+  - risk_intelligence
+  - risk_data_fusion
+  - prediction_engine
+  - continuous_trust
+  - behavior_risk_analysis
+  - risk_decision
+  - risk_mitigation
+
+aggregates:
+  - IdentityRiskProfile
+  - RiskSignalFusionBatch
+  - RiskPredictionCase
+  - ContinuousTrustScore
+  - BehaviorRiskFinding
+  - RiskMitigationRecommendation
+  - RiskGovernancePolicy
+
+commands:
+  - CalculateIdentityRisk
+  - PredictFutureRisk
+  - AnalyzeBehavior
+  - EvaluateTrust
+  - RecommendMitigation
+  - FuseRiskSignals
+  - PrioritizeRisk
+
+queries:
+  - GetRiskProfile
+  - GetRiskHistory
+  - GetTrustScore
+  - GetRiskExplanation
+  - GetPrediction
+  - GetMitigation
+
+events:
+  - RiskCalculated
+  - RiskIncreased
+  - RiskPredicted
+  - TrustUpdated
+  - ThreatDetected
+  - MitigationRecommended
+  - SignalsFused
+
+cqrs_ready: true
+event_driven: true
+outbox_required: true
+boundaries_clear: true
+deployable_unit: identity_intelligence

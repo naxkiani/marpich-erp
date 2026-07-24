@@ -1,0 +1,58 @@
+# P207-A — DDD / CQRS for Identity Intelligence
+version: "1.0"
+prompt_id: P207-A
+adr: "316"
+sor: identity_intelligence
+
+logical_bounded_contexts:
+  - identity_intelligence
+  - autonomous_operations
+  - ai_agent_platform
+  - digital_twin_orchestration
+  - knowledge_graph_intelligence
+  - predictive_risk
+  - behavioral_analytics
+  - self_healing_fabric
+  - autonomous_access_intelligence
+  - autonomous_governance_intelligence
+  - ml_platform
+  - ai_security_governance
+
+aggregates:
+  - IdentityIntelligenceProfile
+  - AutonomousOperationRun
+  - IdentityAiAgentContract
+  - DigitalTwinOrchestration
+  - IdentityRiskPrediction
+  - BehaviorAnalyticsProfile
+  - SelfHealingRemediation
+  - IntelligenceModelRegistryRef
+
+commands:
+  - AnalyzeIdentity
+  - PredictIdentityRisk
+  - GenerateRecommendation
+  - ExecuteRemediation
+  - UpdateDigitalTwin
+  - TrainModel
+
+queries:
+  - GetIdentityIntelligence
+  - GetRiskPrediction
+  - GetBehaviorProfile
+  - GetDigitalTwin
+  - GetRecommendations
+
+events:
+  - RiskPredicted
+  - AnomalyDetected
+  - InsightGenerated
+  - ActionRecommended
+  - RemediationExecuted
+  - ModelUpdated
+
+cqrs_ready: true
+event_driven: true
+outbox_required: true
+boundaries_clear: true
+deployable_unit: identity_intelligence

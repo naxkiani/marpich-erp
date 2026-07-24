@@ -1,0 +1,40 @@
+# EIFTP Vision — Trust Fabric Edges (P200-B1.1-B)
+apiVersion: marpich.io/v1
+kind: EiftpVisionTrustFabric
+metadata:
+  id: eiftp-vision-trust-fabric
+  version: "1.0.0"
+  adr: [213]
+  prompt: P200-B1.1-B
+
+edge_qualities: [verified, governed, auditable, policy_controlled, continuously_evaluated]
+
+edges:
+  - { from: user, to: organization }
+  - { from: organization, to: organization }
+  - { from: tenant, to: tenant, constraint: selective_federation_never_shared_schema }
+  - { from: application, to: api }
+  - { from: service, to: service }
+  - { from: ai_agent, to: workflow }
+  - { from: ai_agent, to: knowledge_graph }
+  - { from: digital_twin, to: physical_asset }
+  - { from: partner, to: enterprise }
+  - { from: government, to: enterprise }
+  - { from: customer, to: marketplace }
+  - { from: supplier, to: procurement }
+
+global_participants:
+  - enterprises
+  - governments
+  - universities
+  - banks
+  - hospitals
+  - ngos
+  - suppliers
+  - customers
+  - saas_providers
+  - cloud_providers
+  - ai_platforms
+  - autonomous_systems
+  - smart_cities
+  - national_digital_identity_systems

@@ -1,0 +1,16 @@
+prompt: P207-M
+adr: 328
+sor: identity_intelligence
+product: AI Security, Responsible AI & Governance Platform
+api_prefix: /api/v1/identity-intelligence/ai-gov
+capabilities:
+  ai_governance_required: true
+  explainable_decisions_required: true
+  autonomous_control_required: true
+  model_monitoring_required: true
+  ai_identity_required: true
+  audit_trail_complete_required: true
+  via_ai_platform: true
+  via_audit_platform: true
+  via_workflow_engine: true
+  does_not_duplicate_platform_ai_governance_sor: true

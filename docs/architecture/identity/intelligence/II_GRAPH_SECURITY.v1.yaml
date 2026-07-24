@@ -1,0 +1,32 @@
+# P207-K — Graph security & governance
+version: "1.0"
+prompt_id: P207-K
+adr: "326"
+sor: identity_intelligence
+
+graph_security:
+  - access_control
+  - data_classification
+  - encryption
+
+reasoning_security:
+  - explainability
+  - auditability
+  - decision_tracking
+
+zero_trust:
+  - verify_every_query
+  - control_every_relationship
+
+data_only_forbidden: true
+relationships_undefined_forbidden: true
+ai_unexplainable_forbidden: true
+security_context_missing_forbidden: true
+ontology_governance_absent_forbidden: true
+weak_ii_integration_forbidden: true
+duplicates_directory_graph_sor_forbidden: true
+via_ai_platform: true
+via_authorization: true
+via_audit: true
+governance_required: true
+embeds_llm_forbidden: true

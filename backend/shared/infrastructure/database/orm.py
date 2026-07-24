@@ -4,7 +4,7 @@ from __future__ import annotations
 from datetime import date, datetime
 from uuid import UUID
 
-from sqlalchemy import Boolean, Date, DateTime, Integer, Numeric, String, Text, func
+from sqlalchemy import Boolean, Date, DateTime, Index, Integer, Numeric, String, Text, func
 from sqlalchemy.dialects.postgresql import JSONB, UUID as PG_UUID
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
@@ -140,7 +140,23 @@ class AdmissionRow(Base):
     patient_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
     ward: Mapped[str] = mapped_column(String(64), nullable=False)
     status: Mapped[str] = mapped_column(String(32), nullable=False, default="active")
+    bed_id: Mapped[UUID | None] = mapped_column(PG_UUID(as_uuid=True))
     admitted_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    discharged_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class BedRow(Base):
+    __tablename__ = "beds"
+    __table_args__ = {"schema": "hospital"}
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    ward: Mapped[str] = mapped_column(String(64), nullable=False)
+    room: Mapped[str] = mapped_column(String(32), nullable=False)
+    bed_code: Mapped[str] = mapped_column(String(32), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="available")
+    current_admission_id: Mapped[UUID | None] = mapped_column(PG_UUID(as_uuid=True))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
 class EncounterRow(Base):
@@ -156,6 +172,37 @@ class EncounterRow(Base):
     diagnosis_codes: Mapped[list] = mapped_column(JSONB, nullable=False, default=list)
     started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class CareEventProjectionRow(Base):
+    """Local care timeline — peer IDs + summary only (never lab/pharmacy aggregates)."""
+
+    __tablename__ = "care_event_projections"
+    __table_args__ = (
+        Index(
+            "ix_hospital_care_events_tenant_source",
+            "tenant_id",
+            "source_event_id",
+            unique=True,
+        ),
+        Index("ix_hospital_care_events_tenant_patient", "tenant_id", "patient_id"),
+        Index("ix_hospital_care_events_tenant_encounter", "tenant_id", "encounter_id"),
+        Index("ix_hospital_care_events_tenant_occurred", "tenant_id", "occurred_at"),
+        {"schema": "hospital"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    source_event_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    source_context: Mapped[str] = mapped_column(String(64), nullable=False)
+    event_kind: Mapped[str] = mapped_column(String(32), nullable=False)
+    peer_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    patient_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
+    admission_id: Mapped[UUID | None] = mapped_column(PG_UUID(as_uuid=True))
+    encounter_id: Mapped[UUID | None] = mapped_column(PG_UUID(as_uuid=True))
+    summary: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+    correlation_id: Mapped[str] = mapped_column(String(64), nullable=False, default="")
+    occurred_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
 class BillingEncounterRow(Base):
@@ -469,7 +516,7 @@ class ConnectorRow(Base):
 
     id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
     tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
-    connector_type: Mapped[str] = mapped_column(String(16), nullable=False)
+    connector_type: Mapped[str] = mapped_column(String(32), nullable=False)
     name: Mapped[str] = mapped_column(String(128), nullable=False)
     config: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
@@ -779,6 +826,36 @@ class ClinicReferralRow(Base):
     sent_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
 
+class ClinicCareEventProjectionRow(Base):
+    """Local ambulatory care timeline — peer IDs + summary only."""
+
+    __tablename__ = "care_event_projections"
+    __table_args__ = (
+        Index(
+            "ix_clinic_care_events_tenant_source",
+            "tenant_id",
+            "source_event_id",
+            unique=True,
+        ),
+        Index("ix_clinic_care_events_tenant_patient", "tenant_id", "patient_id"),
+        Index("ix_clinic_care_events_tenant_encounter", "tenant_id", "encounter_id"),
+        Index("ix_clinic_care_events_tenant_occurred", "tenant_id", "occurred_at"),
+        {"schema": "clinic"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    source_event_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    source_context: Mapped[str] = mapped_column(String(64), nullable=False)
+    event_kind: Mapped[str] = mapped_column(String(32), nullable=False)
+    peer_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    patient_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
+    encounter_id: Mapped[UUID | None] = mapped_column(PG_UUID(as_uuid=True))
+    summary: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+    correlation_id: Mapped[str] = mapped_column(String(64), nullable=False, default="")
+    occurred_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
 # ── Municipality bounded context ─────────────────────────────────────────
 
 
@@ -1040,6 +1117,7 @@ class MessengerConversationRow(Base):
     member_ids: Mapped[list] = mapped_column(JSONB, nullable=False, default=list)
     e2ee_enabled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     livekit_room_name: Mapped[str | None] = mapped_column(String(256))
+    meta: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
@@ -1054,4 +1132,247 @@ class MessengerMessageRow(Base):
     body: Mapped[str] = mapped_column(Text, nullable=False, default="")
     ciphertext: Mapped[str | None] = mapped_column(Text)
     ciphertext_type: Mapped[str | None] = mapped_column(String(64))
+    kind: Mapped[str] = mapped_column(String(32), nullable=False, default="text")
+    metadata_json: Mapped[dict] = mapped_column("metadata", JSONB, nullable=False, default=dict)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+# --- Identity Governance (IGA / P202) ---
+
+
+class IgaRefCounterRow(Base):
+    __tablename__ = "ref_counters"
+    __table_args__ = {"schema": "identity_governance"}
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    prefix: Mapped[str] = mapped_column(String(64), primary_key=True)
+    value: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+
+
+class IgaProfileRow(Base):
+    __tablename__ = "profiles"
+    __table_args__ = {"schema": "identity_governance"}
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    profile_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    access_review_frequency_days: Mapped[int] = mapped_column(Integer, nullable=False, default=90)
+    certification_required: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    sod_enforcement: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    temporary_access_max_hours: Mapped[int] = mapped_column(Integer, nullable=False, default=72)
+    emergency_access_max_hours: Mapped[int] = mapped_column(Integer, nullable=False, default=4)
+    metadata_json: Mapped[dict] = mapped_column("metadata", JSONB, nullable=False, default=dict)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class IgaAccessRequestRow(Base):
+    __tablename__ = "access_requests"
+    __table_args__ = {"schema": "identity_governance"}
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    request_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    requester_id: Mapped[str] = mapped_column(String(128), nullable=False)
+    target_user_id: Mapped[str] = mapped_column(String(128), nullable=False)
+    requested_roles: Mapped[list] = mapped_column(JSONB, nullable=False, default=list)
+    justification: Mapped[str] = mapped_column(Text, nullable=False, default="")
+    status: Mapped[str] = mapped_column(String(32), nullable=False)
+    approver_id: Mapped[str] = mapped_column(String(128), nullable=False, default="")
+    sod_checked: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    sod_valid: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    metadata_json: Mapped[dict] = mapped_column("metadata", JSONB, nullable=False, default=dict)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class IgaAccessReviewRow(Base):
+    __tablename__ = "access_reviews"
+    __table_args__ = {"schema": "identity_governance"}
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    review_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    title: Mapped[str] = mapped_column(String(256), nullable=False)
+    reviewer_id: Mapped[str] = mapped_column(String(128), nullable=False)
+    scope_user_ids: Mapped[list] = mapped_column(JSONB, nullable=False, default=list)
+    status: Mapped[str] = mapped_column(String(32), nullable=False)
+    findings: Mapped[list] = mapped_column(JSONB, nullable=False, default=list)
+    completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    metadata_json: Mapped[dict] = mapped_column("metadata", JSONB, nullable=False, default=dict)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class IgaPrivilegeCertificationRow(Base):
+    __tablename__ = "privilege_certifications"
+    __table_args__ = {"schema": "identity_governance"}
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    certification_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    user_id: Mapped[str] = mapped_column(String(128), nullable=False)
+    role_ids: Mapped[list] = mapped_column(JSONB, nullable=False, default=list)
+    certifier_id: Mapped[str] = mapped_column(String(128), nullable=False, default="")
+    status: Mapped[str] = mapped_column(String(32), nullable=False)
+    notes: Mapped[str] = mapped_column(Text, nullable=False, default="")
+    certified_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    metadata_json: Mapped[dict] = mapped_column("metadata", JSONB, nullable=False, default=dict)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class IgaTemporaryAccessGrantRow(Base):
+    __tablename__ = "temporary_access_grants"
+    __table_args__ = {"schema": "identity_governance"}
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    grant_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    user_id: Mapped[str] = mapped_column(String(128), nullable=False)
+    roles: Mapped[list] = mapped_column(JSONB, nullable=False, default=list)
+    granted_by: Mapped[str] = mapped_column(String(128), nullable=False)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False)
+    justification: Mapped[str] = mapped_column(Text, nullable=False, default="")
+    metadata_json: Mapped[dict] = mapped_column("metadata", JSONB, nullable=False, default=dict)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class IgaEmergencyAccessGrantRow(Base):
+    __tablename__ = "emergency_access_grants"
+    __table_args__ = {"schema": "identity_governance"}
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    grant_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    user_id: Mapped[str] = mapped_column(String(128), nullable=False)
+    roles: Mapped[list] = mapped_column(JSONB, nullable=False, default=list)
+    granted_by: Mapped[str] = mapped_column(String(128), nullable=False)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False)
+    incident_ref: Mapped[str] = mapped_column(String(128), nullable=False, default="")
+    justification: Mapped[str] = mapped_column(Text, nullable=False, default="")
+    metadata_json: Mapped[dict] = mapped_column("metadata", JSONB, nullable=False, default=dict)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class IgaAuditEntryRow(Base):
+    __tablename__ = "audit_entries"
+    __table_args__ = {"schema": "identity_governance"}
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    entry_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    action: Mapped[str] = mapped_column(String(128), nullable=False)
+    actor_id: Mapped[str] = mapped_column(String(128), nullable=False)
+    resource_type: Mapped[str] = mapped_column(String(64), nullable=False)
+    resource_ref: Mapped[str] = mapped_column(String(128), nullable=False)
+    details: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+# --- Secrets (metadata refs only — never plaintext/ciphertext) ---
+
+
+class SecretMaterialRow(Base):
+    __tablename__ = "secret_materials"
+    __table_args__ = (
+        Index("ix_secrets_materials_tenant_ref", "tenant_id", "secret_ref", unique=True),
+        {"schema": "secrets"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    secret_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    connector_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    external_ref: Mapped[str] = mapped_column(String(256), nullable=False)
+    key_ref: Mapped[str] = mapped_column(String(128), nullable=False, default="")
+    version: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="active")
+    rotation_policy_ref: Mapped[str] = mapped_column(String(128), nullable=False, default="")
+    provider_catalog_type: Mapped[str] = mapped_column(String(32), nullable=False, default="vault_provider")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+# --- Laboratory (CAP-HLT-007) ---
+
+
+class LaboratoryTestOrderRow(Base):
+    __tablename__ = "test_orders"
+    __table_args__ = (
+        Index("ix_laboratory_test_orders_tenant_number", "tenant_id", "order_number", unique=True),
+        Index("ix_laboratory_test_orders_tenant_created", "tenant_id", "created_at"),
+        Index("ix_laboratory_test_orders_tenant_patient", "tenant_id", "patient_ref"),
+        {"schema": "laboratory"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    order_number: Mapped[str] = mapped_column(String(64), nullable=False)
+    patient_ref: Mapped[str] = mapped_column(String(128), nullable=False)
+    test_code: Mapped[str] = mapped_column(String(64), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="ordered")
+    result_value: Mapped[str | None] = mapped_column(String(256))
+    result_unit: Mapped[str | None] = mapped_column(String(64))
+    source_encounter_ref: Mapped[str | None] = mapped_column(String(128))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    finalized_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class LaboratorySampleRow(Base):
+    __tablename__ = "samples"
+    __table_args__ = (
+        Index("ix_laboratory_samples_tenant_accession", "tenant_id", "accession_number", unique=True),
+        Index("ix_laboratory_samples_tenant_order", "tenant_id", "order_id"),
+        Index("ix_laboratory_samples_tenant_received", "tenant_id", "received_at"),
+        {"schema": "laboratory"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    order_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
+    accession_number: Mapped[str] = mapped_column(String(64), nullable=False)
+    specimen_type: Mapped[str] = mapped_column(String(64), nullable=False)
+    patient_ref: Mapped[str] = mapped_column(String(128), nullable=False)
+    received_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+# --- Pharmacy (CAP-HLT-008) ---
+
+
+class PharmacyPrescriptionRow(Base):
+    __tablename__ = "prescriptions"
+    __table_args__ = (
+        Index("ix_pharmacy_prescriptions_tenant_rx", "tenant_id", "rx_number", unique=True),
+        Index("ix_pharmacy_prescriptions_tenant_created", "tenant_id", "created_at"),
+        Index("ix_pharmacy_prescriptions_tenant_patient", "tenant_id", "patient_ref"),
+        {"schema": "pharmacy"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    rx_number: Mapped[str] = mapped_column(String(64), nullable=False)
+    patient_ref: Mapped[str] = mapped_column(String(128), nullable=False)
+    drug_code: Mapped[str] = mapped_column(String(64), nullable=False)
+    drug_name: Mapped[str] = mapped_column(String(256), nullable=False)
+    quantity: Mapped[float] = mapped_column(Numeric(18, 4), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="received")
+    source_encounter_ref: Mapped[str | None] = mapped_column(String(128))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class PharmacyDispenseRecordRow(Base):
+    __tablename__ = "dispense_records"
+    __table_args__ = (
+        Index("ix_pharmacy_dispenses_tenant_rx", "tenant_id", "prescription_id"),
+        Index("ix_pharmacy_dispenses_tenant_dispensed", "tenant_id", "dispensed_at"),
+        {"schema": "pharmacy"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    prescription_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
+    patient_ref: Mapped[str] = mapped_column(String(128), nullable=False)
+    drug_code: Mapped[str] = mapped_column(String(64), nullable=False)
+    quantity_dispensed: Mapped[float] = mapped_column(Numeric(18, 4), nullable=False)
+    dispensed_by: Mapped[str | None] = mapped_column(String(128))
+    dispensed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())

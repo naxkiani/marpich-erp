@@ -1,0 +1,55 @@
+# P207-E — Agent platform DDD / CQRS
+version: "1.0"
+prompt_id: P207-E
+adr: "320"
+sor: identity_intelligence
+
+logical_bounded_contexts:
+  - agent_runtime
+  - agent_orchestrator
+  - agent_memory
+  - knowledge_rag
+  - agent_tools
+  - agent_security
+  - agent_governance
+
+aggregates:
+  - IdentityAiAgentContract
+  - AgentTask
+  - AgentOrchestrationSession
+  - AgentMemoryScope
+  - AgentToolGrant
+  - AgentRecommendation
+  - AgentGovernancePolicy
+
+commands:
+  - CreateAgentTask
+  - AnalyzeIdentity
+  - GenerateRecommendation
+  - RequestApproval
+  - ExecuteAgentAction
+  - RegisterAgent
+  - GrantToolAccess
+
+queries:
+  - GetAgentCatalog
+  - GetAgentTask
+  - GetRecommendation
+  - GetOrchestrationSession
+  - GetToolGrants
+  - GetAgentMemoryScope
+
+events:
+  - AgentActivated
+  - AnalysisCompleted
+  - RecommendationCreated
+  - ApprovalRequested
+  - ActionExecuted
+  - LearningUpdated
+  - ToolAccessGranted
+
+cqrs_ready: true
+event_driven: true
+outbox_required: true
+boundaries_clear: true
+deployable_unit: identity_intelligence

@@ -1,0 +1,51 @@
+# P207-B — Mission / Vision / Scope DDD
+version: "1.0"
+prompt_id: P207-B
+adr: "317"
+sor: identity_intelligence
+
+logical_bounded_contexts:
+  - mission_governance
+  - vision_architecture
+  - enterprise_scope
+  - strategic_objectives
+  - meos_placement
+  - stakeholder_governance
+
+aggregates:
+  - MissionCharter
+  - VisionBlueprint
+  - EnterpriseScopeBoundary
+  - StrategicObjectiveSet
+  - MeosArchitecturePlacement
+  - StakeholderGovernanceMap
+
+commands:
+  - PublishMissionCharter
+  - ApproveVisionBlueprint
+  - DefineScopeBoundary
+  - RegisterStrategicObjective
+  - MapMeosPlacement
+  - AssignStakeholderOwnership
+
+queries:
+  - GetMissionStatement
+  - GetVisionStatement
+  - GetEnterpriseScope
+  - GetStrategicObjectives
+  - GetMeosPlacement
+  - GetOutOfScope
+
+events:
+  - MissionCharterPublished
+  - VisionBlueprintApproved
+  - ScopeBoundaryDefined
+  - StrategicObjectiveRegistered
+  - MeosPlacementMapped
+  - PeerSorReplacementRejected
+
+cqrs_ready: true
+event_driven: true
+outbox_required: true
+boundaries_clear: true
+deployable_unit: identity_intelligence

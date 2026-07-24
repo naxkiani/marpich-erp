@@ -1,0 +1,65 @@
+# Tactical Aggregate Map — EIFTP Domain Model
+# P200-B4 · ADR-218
+version: "1.0"
+prompt_id: P200-B4
+
+federation_owned:
+  - name: FederationProfile
+    root: FederationProfile
+    entities: [TenantIdentitySettingsProjection]
+    behaviors: [enable_federation, disable_cross_tenant]
+  - name: IdentityProvider
+    root: IdentityProvider
+    entities: [FederationConnection, FederationAgreement]
+    value_objects: [ProviderId, ProtocolType, FederationStatus]
+    behaviors: [register, enable, disable]
+  - name: ClaimsMapping
+    root: ClaimsMapping
+    aliases: [FederationMapping]
+    behaviors: [enable, disable]
+  - name: IdentityLink
+    root: IdentityLink
+    purpose: Federated identity handle — NOT Identity SoR
+    entities: [IdentityAttributeSnapshot]
+    behaviors: [activate, suspend, unlink]
+  - name: FederationPartner
+    root: FederationPartner
+    behaviors: [enable, disable, set_trust_level]
+  - name: TrustRelationship
+    root: TrustRelationship
+    entities: [TrustEvaluation, TrustEvidence, TrustHistoryEntry]
+    value_objects: [TrustId, TrustScore, TrustLevel, TrustStatus]
+    behaviors: [grant, revoke, suspend, reactivate, rescore]
+  - name: FederationSession
+    root: FederationSession
+    entities: [SessionDevice, SessionContext, SessionRisk]
+    value_objects: [SessionId, SessionState]
+    behaviors: [terminate, elevate, mark_expired]
+  - name: TenantFederation
+    root: TenantFederation
+    behaviors: [enable, disable, attach_partner_tenant]
+  - name: ProvisioningPolicy
+    root: ProvisioningPolicy
+    note: Federation provisioning policy — not Policy Engine aggregate
+    behaviors: [enable, disable]
+  - name: SynchronizationJob
+    root: SynchronizationJob
+    behaviors: [start, complete, fail]
+  - name: AiFederatedAgent
+    root: AiFederatedAgent
+    entities: [AIProfile, AICapability, AIExecutionScope, AIRiskProfile]
+    value_objects: [AIIdentityId, CapabilitySet, RiskLevel]
+    behaviors: [register, revoke, update_capabilities]
+
+companion_owned_not_persisted_here:
+  - { name: Identity, bc: identity, federation_touchpoint: IdentityLink.user_id }
+  - { name: Tenant, bc: core_platform, federation_touchpoint: tenant_id + TenantFederation }
+  - { name: Organization, bc: organization, federation_touchpoint: org_id refs }
+  - { name: Credential, bc: authentication, federation_touchpoint: none }
+  - { name: PolicyDefinition, bc: policy, federation_touchpoint: IPolicyEvaluator }
+
+invariants_global:
+  - tenant_id_on_every_root
+  - one_aggregate_write_per_transaction
+  - no_peer_aggregate_embedding
+  - private_keys_never_on_aggregates

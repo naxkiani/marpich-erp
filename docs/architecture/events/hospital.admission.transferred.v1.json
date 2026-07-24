@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hospital.admission.transferred.v1",
+  "title": "hospital.admission.transferred.v1",
+  "type": "object",
+  "required": ["admission_id", "patient_id", "from_ward", "to_ward"],
+  "properties": {
+    "admission_id": { "type": "string", "format": "uuid" },
+    "patient_id": { "type": "string", "format": "uuid" },
+    "from_ward": { "type": "string", "minLength": 1 },
+    "to_ward": { "type": "string", "minLength": 1 },
+    "from_bed_id": { "type": ["string", "null"], "format": "uuid" },
+    "to_bed_id": { "type": ["string", "null"], "format": "uuid" }
+  },
+  "additionalProperties": false
+}

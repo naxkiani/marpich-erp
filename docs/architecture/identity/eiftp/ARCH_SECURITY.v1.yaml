@@ -1,0 +1,32 @@
+# Security / Zero Trust / Secrets / S2S / Compliance
+# P200-B2 · ADR-216
+version: "1.0"
+prompt_id: P200-B2
+
+secrets:
+  store: vault_or_cloud_kms
+  path_pattern: "marpich/${env}/iam/federation/*"
+  never: secrets_in_source_or_module_tables
+  rotation: automated
+
+s2s:
+  mechanisms: [mtls_mesh, short_lived_service_jwt, spiffe_compatible_uri]
+  audience_bound: true
+  federation_issues_workload_assertions: true
+
+zero_trust:
+  principles: [never_trust, always_verify, least_privilege, continuous_evaluation, context_aware, adaptive]
+  enforcement_points: [gateway, federation_fabric, authz_pdp, mesh_mtls]
+  continuous: session_and_request_reeval
+
+compliance:
+  frameworks: [GDPR, ISO_27001, SOC2, HIPAA_ready, PCI_DSS_ready, NIST]
+  evidence: audit_events_plus_immutable_trail
+  owners: [audit, compliance, identity_federation]
+
+security_baseline:
+  - tls_everywhere
+  - input_validation
+  - tenant_scoping
+  - permission_gated_admin_apis
+  - no_token_logging

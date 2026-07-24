@@ -17,6 +17,7 @@ from contexts.identity.presentation.dependencies import (
 )
 from contexts.identity.presentation.schemas import (
     AssignRolesRequest,
+    ChangePasswordRequest,
     LoginRequest,
     LogoutRequest,
     MfaVerifyRequest,
@@ -165,6 +166,29 @@ async def mfa_verify(
         user_id=user["sub"],
         code=body.code,
         correlation_id=correlation_id,
+    )
+    if not result.succeeded:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, result.error)
+    return {"data": result.unwrap()}
+
+
+@router.post("/users/me/password", tags=["Users", "Security"])
+async def change_password(
+    body: ChangePasswordRequest,
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    user: Annotated[dict, Depends(require_permissions("identity.password.change"))],
+    request: Request,
+    correlation_id: Annotated[str, Depends(get_correlation_id)],
+):
+    svc = get_identity_service()
+    result = await svc.change_password(
+        tenant_id=tenant_id,
+        user_id=user["sub"],
+        current_password=body.current_password,
+        new_password=body.new_password,
+        revoke_other_sessions=body.revoke_other_sessions,
+        correlation_id=correlation_id,
+        ip_address=get_client_ip(request),
     )
     if not result.succeeded:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, result.error)

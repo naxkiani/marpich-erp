@@ -29,6 +29,12 @@ class MfaVerifyRequest(BaseModel):
     code: str = Field(min_length=6, max_length=8)
 
 
+class ChangePasswordRequest(BaseModel):
+    current_password: str = Field(min_length=1, max_length=128)
+    new_password: str = Field(min_length=8, max_length=128)
+    revoke_other_sessions: bool = True
+
+
 class AssignRolesRequest(BaseModel):
     role_codes: list[str] = Field(min_length=1, max_length=16)
 

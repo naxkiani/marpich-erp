@@ -1,0 +1,23 @@
+# DevSecOps Pipeline
+# P200-B2 · ADR-216
+version: "1.0"
+prompt_id: P200-B2
+
+pipeline_stages:
+  - lint_and_typecheck
+  - unit_tests_federation
+  - architecture_dependency_graph
+  - eiftp_catalog_validators
+  - sast_secret_scan
+  - container_image_scan
+  - integration_tests
+  - sign_artifacts
+  - gitops_deploy_staging
+  - canary_production
+  - chaos_game_day_reference: docs/operations/IDENTITY_FEDERATION_CHAOS_GAME_DAY.md
+
+gates:
+  - no_cross_context_domain_imports
+  - no_secrets_in_diff
+  - tests_green
+  - adr_for_boundary_changes

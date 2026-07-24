@@ -1,0 +1,33 @@
+# Foundation for Strategic Goals — handoff to P200-B1.1-D
+# P200-B1.1-C · ADR-214
+version: "1.0"
+prompt_id: P200-B1.1-C
+next_prompt: P200-B1.1-D1
+next_title: Enterprise Strategic Goals
+superseded_note: Master Blueprint splits Strategic Goals into D1 (enterprise) and D2 (security/identity/ZT)
+
+rules:
+  - Every Strategic Goal MUST cite ≥1 primary driver (P1–P10)
+  - Goals MUST NOT introduce a second identity authority
+  - Goals MUST preserve tenant isolation and Zero Trust
+  - Goals MUST keep AuthZ PDP in authorization BC
+  - Goals MUST keep federation SoR in identity_federation
+  - Goals MUST enable AI identity governance (P7)
+  - Goals MUST remain protocol- and vendor-agnostic
+  - Outcome KPIs from BUSINESS_OUTCOME_MATRIX are seed inputs for goal metrics
+
+suggested_goal_themes:
+  - G_unify_identity_model # P2
+  - G_zero_trust_continuous # P6
+  - G_federation_scale # P4 P5
+  - G_lifecycle_automation # P10
+  - G_ai_subject_governance # P7
+  - G_compliance_evidence # P8
+  - G_trust_fabric_slo # P3
+  - G_operational_cost_reduction # P1 P10
+
+source_artifacts:
+  - BUSINESS_DRIVER_CATALOGUE.v1.yaml
+  - BUSINESS_OUTCOME_MATRIX.v1.yaml
+  - BUSINESS_CAPABILITY_TRACEABILITY.v1.yaml
+  - BUSINESS_STRATEGIC_DRIVER_MATRIX.v1.yaml

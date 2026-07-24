@@ -1,0 +1,32 @@
+# P207-A — Security & AI governance for Identity Intelligence
+version: "1.0"
+prompt_id: P207-A
+adr: "316"
+sor: identity_intelligence
+
+ai_security:
+  - model_protection
+  - data_protection
+  - prompt_security
+  - ai_access_control
+
+ai_governance:
+  - human_approval
+  - decision_explainability
+  - audit_trail
+  - model_compliance
+
+zero_trust: true
+continuous_verification: true
+policy_driven: true
+explainable_ai_required: true
+hitl_required: true
+human_control_required: true
+chatbot_only_forbidden: true
+embeds_llm_forbidden: true
+local_pdp_forbidden: true
+via_ai_platform: true
+via_authorization: true
+via_audit: true
+via_policy: true
+governance_required: true

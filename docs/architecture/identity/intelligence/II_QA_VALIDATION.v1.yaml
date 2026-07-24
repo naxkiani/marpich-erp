@@ -1,0 +1,21 @@
+prompt: P207-O
+adr: 330
+validation:
+  outputs: 20
+  verdict_target: ENTERPRISE_GRADE
+  p207_completion_gate: true
+  definition_of_done:
+    - secure
+    - scalable
+    - reliable
+    - governed
+    - explainable
+    - auditable
+    - production_ready
+  quality_gates:
+    - testing_manual_only
+    - security_validation_incomplete
+    - governance_undefined
+    - compliance_evidence_missing
+    - ai_validation_absent
+    - definition_of_done_incomplete

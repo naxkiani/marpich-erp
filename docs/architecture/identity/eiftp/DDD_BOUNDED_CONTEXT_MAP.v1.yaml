@@ -1,0 +1,98 @@
+# Bounded Context Map — EIFTP strategic design
+# P200-B3 · ADR-217
+version: "1.0"
+prompt_id: P200-B3
+
+contexts:
+  - name: identity_federation
+    purpose: Federation broker, trust fabric, fed sessions/tokens, external IdP domain model
+    domain_type: core
+    upstream: [identity, policy, integration, adaptive_authentication, identity_risk]
+    downstream: [authorization, identity_digital_twin, audit, compliance, ai_governance]
+    apis: [/api/v1/federation, /api/v1/federation/fabric, /api/v1/federation/intelligence]
+    events_publish: [federation.*]
+    contracts: [IFederationTrustFacts, protocol_ports]
+    ownership: identity_platform_team
+    isolation_rules: [tenant_id_hard, schema_federation]
+    security_rules: [zt_facts, no_permit_deny, plugin_signed_protocols]
+
+  - name: identity
+    purpose: Principal registry
+    domain_type: generic
+    upstream: []
+    downstream: [identity_federation, authentication, authorization]
+    apis: [/api/v1/identity]
+    events_publish: [identity.*]
+    ownership: identity_platform_team
+    isolation_rules: [tenant_id_hard]
+
+  - name: authentication
+    purpose: Local authentication & credential proof
+    domain_type: generic
+    upstream: [identity]
+    downstream: [identity_federation, mfa]
+    apis: [/api/v1/auth]
+    ownership: identity_platform_team
+
+  - name: authorization
+    purpose: PDP Permit/Deny
+    domain_type: generic
+    upstream: [identity_federation, policy, permission_registry]
+    downstream: [all_business_modules_peps]
+    apis: [/api/v1/authorization]
+    contracts: [IAuthorizationEvaluator]
+    ownership: security_platform_team
+    security_rules: [deny_default]
+
+  - name: policy
+    purpose: Business policy evaluation
+    domain_type: generic
+    contracts: [IPolicyEvaluator]
+    ownership: platform_team
+
+  - name: integration
+    purpose: External system connectors including IdPs
+    domain_type: supporting_platform
+    ownership: platform_team
+    isolation_rules: [connector_secrets_in_vault]
+
+  - name: mfa
+    purpose: MFA enrollment and challenge
+    domain_type: generic
+    ownership: identity_platform_team
+
+  - name: audit
+    purpose: Immutable audit
+    domain_type: generic
+    ownership: security_platform_team
+
+  - name: compliance
+    purpose: Compliance continuous monitoring
+    domain_type: generic
+    ownership: risk_compliance_team
+
+  - name: organization
+    purpose: Org structure
+    domain_type: generic
+    ownership: platform_team
+
+  - name: identity_digital_twin
+    purpose: Identity projections and simulation
+    domain_type: supporting
+    upstream: [identity_federation, identity]
+    ownership: identity_platform_team
+
+  - name: adaptive_authentication
+    purpose: Risk/ZT challenges
+    domain_type: supporting
+    ownership: identity_platform_team
+
+  - name: ai_governance
+    purpose: AI subject governance policies
+    domain_type: supporting
+    ownership: ai_platform_team
+
+  - name: ai_security
+    purpose: AI security controls
+    domain_type: supporting
+    ownership: ai_platform_team

@@ -1,0 +1,21 @@
+prompt: P207-O
+adr: 330
+security_validation:
+  zero_trust:
+    - authentication
+    - authorization
+    - encryption
+    - identity_verification
+    - least_privilege
+  application:
+    - sast
+    - dast
+    - dependency_scanning
+    - api_security_testing
+  infrastructure:
+    - kubernetes_security
+    - container_security
+    - network_security
+reject_if:
+  - security_validation_incomplete
+  - zero_trust_validation_skipped

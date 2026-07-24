@@ -1,0 +1,75 @@
+# Cross-Tenant Trust API / CQRS / Events / DoD — P200-B8 · ADR-222
+version: "1.0"
+prompt_id: P200-B8
+
+apis:
+  rest:
+    - GET /api/v1/federation/cross-tenant/surface
+    - POST /api/v1/federation/cross-tenant/trust/request
+    - POST /api/v1/federation/cross-tenant/trust/{ref}/approve
+    - POST /api/v1/federation/cross-tenant/trust/{ref}/activate
+    - POST /api/v1/federation/cross-tenant/trust/{ref}/suspend
+    - POST /api/v1/federation/cross-tenant/trust/{ref}/revoke
+    - POST /api/v1/federation/cross-tenant/delegations
+    - POST /api/v1/federation/cross-tenant/delegations/{ref}/approve
+    - POST /api/v1/federation/cross-tenant/delegations/{ref}/revoke
+    - POST /api/v1/federation/cross-tenant/partners
+    - POST /api/v1/federation/cross-tenant/partners/{ref}/assign-access
+    - POST /api/v1/federation/cross-tenant/external/invite
+    - POST /api/v1/federation/cross-tenant/external/{ref}/activate
+    - POST /api/v1/federation/cross-tenant/external/{ref}/remove
+    - GET /api/v1/federation/cross-tenant/trust/{ref}
+    - GET /api/v1/federation/cross-tenant/trust/{ref}/history
+    - GET /api/v1/federation/cross-tenant/delegations
+    - GET /api/v1/federation/cross-tenant/partners
+    - GET /api/v1/federation/cross-tenant/external
+  graphql: deferred_B10
+  grpc: deferred_B10
+
+commands:
+  - RequestTenantTrust
+  - ApproveTenantTrust
+  - ActivateTenantTrust
+  - SuspendTenantTrust
+  - RevokeTenantTrust
+  - CreateDelegation
+  - ApproveDelegation
+  - RevokeDelegation
+  - RegisterPartner
+  - AssignPartnerAccess
+  - InviteExternalIdentity
+  - ActivateExternalIdentity
+  - RemoveExternalIdentity
+
+queries:
+  - GetTenantTrust
+  - GetTrustHistory
+  - GetDelegations
+  - GetDelegationAudit
+  - GetPartnerAccess
+  - GetExternalIdentities
+  - GetCrossTenantSurface
+
+events_logical:
+  - TenantTrustRequested
+  - TenantTrustApproved
+  - TenantTrustEstablished
+  - TenantTrustSuspended
+  - TenantTrustRevoked
+  - DelegationCreated
+  - DelegationApproved
+  - DelegationExpired
+  - DelegationRevoked
+  - PartnerRegistered
+  - ExternalIdentityInvited
+  - ExternalIdentityActivated
+  - ExternalIdentityRemoved
+
+dod:
+  - b2b_collaboration
+  - b2c_guest_identities
+  - partner_ecosystems
+  - delegated_administration
+  - cross_tenant_workflows
+  - ai_agent_delegation
+  - full_governance

@@ -1,0 +1,52 @@
+# Architecture Alignment Report — Business Drivers ↔ MEOS platforms
+# P200-B1.1-C · ADR-214
+version: "1.0"
+prompt_id: P200-B1.1-C
+
+alignment:
+  - driver: P1
+    platforms: [identity, identity_federation, integration]
+    status: aligned
+  - driver: P2
+    platforms: [identity, identity_federation]
+    status: aligned
+    gate: one_authoritative_model
+  - driver: P3
+    platforms: [identity_federation, audit, authorization]
+    status: aligned
+    note: Trust facts from EIFTP; Permit/Deny from AuthZ
+  - driver: P4
+    platforms: [identity_federation, organization, workflow]
+    status: aligned
+  - driver: P5
+    platforms: [identity_federation]
+    status: aligned
+    gate: tenant_isolation
+  - driver: P6
+    platforms: [identity, authorization, api_gateway]
+    status: aligned
+  - driver: P7
+    platforms: [identity_federation, ai, ai_governance, ai_security]
+    status: aligned
+  - driver: P8
+    platforms: [audit, compliance, identity_federation]
+    status: aligned
+  - driver: P9
+    platforms: [identity, identity_federation]
+    status: aligned
+  - driver: P10
+    platforms: [identity, identity_federation, workflow]
+    status: aligned
+
+anti_patterns_rejected:
+  - second_identity_bc_named_eiftp
+  - business_module_local_idp
+  - hardcoded_oidc_vendor_in_domain
+  - authz_decisions_inside_federation_domain
+  - cross_tenant_db_join_for_identity
+
+reuse:
+  mission: ADR-212
+  vision: ADR-213
+  federation_sor: ADR-202x
+  authz_pdp: ADR-204

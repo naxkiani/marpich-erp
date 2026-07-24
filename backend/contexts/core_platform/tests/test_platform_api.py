@@ -6,7 +6,8 @@ import contexts.identity.container as identity_container
 from contexts.core_platform.container import reset_platform_service
 from contexts.core_platform.infrastructure.persistence.memory_store import PlatformMemoryStore
 from contexts.identity.infrastructure.persistence.memory_store import InMemoryStore
-from core.presentation.api.main import app
+from core.presentation.api.app_factory import create_app
+from core.presentation.api.startup_registry import configure_application
 
 
 @pytest.fixture(autouse=True)
@@ -24,7 +25,9 @@ def reset_stores():
 
 @pytest.fixture
 async def client():
-    transport = ASGITransport(app=app)
+    application = create_app(profile="full", startup_mode="lazy")
+    configure_application(application, profile="full", startup_mode="lazy")
+    transport = ASGITransport(app=application)
     async with AsyncClient(transport=transport, base_url="http://test") as ac:
         yield ac
 

@@ -1,0 +1,35 @@
+# Compliance Alignment Matrix — Drivers ↔ frameworks
+# P200-B1.1-C · ADR-214
+version: "1.0"
+prompt_id: P200-B1.1-C
+
+frameworks:
+  - id: GDPR
+    primary_drivers: [P8, P2, P10]
+    controls_supported: [lawful_processing_of_identity_data, right_to_erasure_via_lifecycle, access_logging]
+  - id: ISO_27001
+    primary_drivers: [P8, P3, P9]
+    controls_supported: [access_control, cryptography_via_pki, supplier_trust]
+  - id: SOC2
+    primary_drivers: [P8, P3, P6]
+    controls_supported: [cc_logical_access, change_management_audit, availability]
+  - id: HIPAA_ready
+    primary_drivers: [P8, P6]
+    controls_supported: [unique_user_id, emergency_access_via_breakglass_authz, audit_controls]
+  - id: PCI_DSS_ready
+    primary_drivers: [P8, P6, P9]
+    controls_supported: [strong_auth, session_management, least_privilege_via_authz]
+  - id: NIST
+    primary_drivers: [P6, P3, P7]
+    controls_supported: [zero_trust_architecture, identity_proofing, ai_risk_mgmt]
+  - id: REGIONAL
+    primary_drivers: [P8, P5]
+    controls_supported: [data_residency_aware_federation, local_idp_integration]
+
+driver_p8_span:
+  note: P8 Regulatory Compliance is the spanning driver; other drivers contribute evidence paths
+  evidence_owners:
+    - audit
+    - compliance
+    - identity_federation
+    - authorization

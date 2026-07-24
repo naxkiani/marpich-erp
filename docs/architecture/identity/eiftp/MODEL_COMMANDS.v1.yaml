@@ -1,0 +1,28 @@
+# Command Catalog — CQRS write model
+# P200-B4 · ADR-218
+version: "1.0"
+prompt_id: P200-B4
+
+commands:
+  # Federation-executed
+  - { name: ConfigureFederation, handler: application/commands, aggregate: FederationProfile }
+  - { name: EstablishTrust, handler: application/commands, aggregate: TrustRelationship }
+  - { name: RevokeTrust, handler: application/commands, aggregate: TrustRelationship }
+  - { name: RegisterAIIdentity, handler: application/commands, aggregate: AiFederatedAgent }
+  - { name: TerminateSession, handler: application/commands, aggregate: FederationSession }
+  - { name: EvaluateTrust, handler: application/commands/evaluate_trust.py, note: facts_only }
+  - { name: ConnectFederationProvider, aggregate: IdentityProvider }
+  - { name: DisconnectFederationProvider, aggregate: IdentityProvider }
+  - { name: LinkExternalIdentity, aggregate: IdentityLink }
+  - { name: UnlinkExternalIdentity, aggregate: IdentityLink }
+
+  # Companion BC commands (ports / events — not implemented in federation)
+  - { name: CreateIdentity, owner: identity }
+  - { name: UpdateIdentity, owner: identity }
+  - { name: VerifyIdentity, owner: identity }
+  - { name: SuspendIdentity, owner: identity }
+  - { name: ActivateIdentity, owner: identity }
+  - { name: CreateTenant, owner: core_platform }
+  - { name: CreatePolicy, owner: policy }
+  - { name: UpdatePolicy, owner: policy }
+  - { name: RotateCredential, owner: authentication }

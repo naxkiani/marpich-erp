@@ -1,0 +1,87 @@
+context: identity_intelligence
+display_name: Enterprise Identity Intelligence & Autonomous Identity Operations
+type: platform
+description: >-
+  Cross-fabric identity intelligence brain — predictive risk, behavioral analytics,
+  AI agents, digital twin orchestration, self-healing fabric, autonomous governance/access
+  intelligence under HITL (P207). Not chatbot-only. Not AuthZ PDP. Not twin/graph SoR.
+api: /api/v1/identity-intelligence
+schema: identity_intelligence
+aggregates:
+  - IdentityIntelligenceProfile
+  - AutonomousOperationRun
+  - IdentityAiAgentContract
+  - DigitalTwinOrchestration
+  - IdentityRiskPrediction
+  - BehaviorAnalyticsProfile
+  - SelfHealingRemediation
+  - IntelligenceModelRegistryRef
+publishes:
+  - identity_intelligence.strategy.published
+  - identity_intelligence.risk.predicted
+  - identity_intelligence.anomaly.detected
+  - identity_intelligence.insight.generated
+  - identity_intelligence.action.recommended
+  - identity_intelligence.remediation.executed
+  - identity_intelligence.model.updated
+subscribes:
+  - platform.tenant.provisioned
+  - directory.relationship.linked
+  - identity_twin.synchronized
+  - identity_lifecycle.state.changed
+  - identity_governance.certification.completed
+  - authentication.session.evaluated
+delegates:
+  - identity
+  - authorization
+  - authentication
+  - directory
+  - identity_lifecycle
+  - identity_governance
+  - privileged_access
+  - identity_digital_twin
+  - ai
+  - policy
+  - audit
+  - observability
+  - workflow
+permissions:
+  - identity_intelligence.read
+  - identity_intelligence.write
+  - identity_intelligence.admin
+  - identity_intelligence.ai.read
+  - identity_intelligence.ai.infer
+ai:
+  enabled: true
+  surfaces:
+    insights: true
+    predictions: true
+    recommendations: true
+    summaries: true
+    search: true
+    assistant: true
+    automation: true
+    document_intelligence: true
+    voice_commands: true
+    chat: true
+    report_explanation: true
+    anomaly_detection: true
+    forecasting: true
+    optimization: true
+  prompt_templates:
+    - id: identity_intelligence.risk_explain
+      purpose: Explain identity risk predictions via platform AI
+    - id: identity_intelligence.agent_analyst
+      purpose: Identity analyst agent investigation via platform AI
+  event_publications:
+    - ai.insight.generated
+    - ai.prediction.completed
+    - ai.anomaly.detected
+policies:
+  domain: platform
+  keys:
+    - identity_intelligence.enabled
+    - identity_intelligence.autonomous.enabled
+    - identity_intelligence.hitl.high_impact_required
+    - identity_intelligence.risk.threshold
+    - identity_intelligence.self_healing.enabled

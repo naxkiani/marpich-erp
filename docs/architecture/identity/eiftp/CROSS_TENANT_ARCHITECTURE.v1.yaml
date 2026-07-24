@@ -1,0 +1,72 @@
+# Cross-Tenant Trust & Delegation — Architecture
+# P200-B8 · ADR-222
+version: "1.0"
+prompt_id: P200-B8
+adr: "222"
+sor_context: identity_federation
+forbidden_sibling_bc: eiftp
+
+logical_domains:
+  - cross_tenant_trust
+  - enterprise_delegation
+  - partner_access
+  - external_identity
+
+aggregates:
+  - TenantFederation # enhanced lifecycle
+  - DelegationAgreement
+  - PartnerAccess
+  - ExternalIdentity
+
+trust_workflow:
+  - request
+  - security_assessment
+  - policy_evaluation
+  - approval
+  - agreement
+  - activation
+  - continuous_monitoring
+  - renewal
+  - revocation
+
+delegation_types:
+  - user
+  - organization
+  - service
+  - ai_agent
+
+isolation:
+  - data
+  - policy
+  - credential
+  - configuration
+  - audit
+  - encryption
+
+integrations:
+  trust_fabric: ADR-220
+  policy_engine: IPolicyEvaluator
+  workflow: approval_events
+  audit: integration_events
+  authorization: facts_only_separate_ways
+
+knowledge_graph:
+  relationships:
+    - tenant_trusts_tenant
+    - organization_delegates_to
+    - user_acts_on_behalf_of
+    - ai_agent_authorized_by
+    - partner_connected_to
+
+digital_twins:
+  - tenant_trust_twin
+  - delegation_twin
+  - partner_relationship_twin
+  - external_identity_twin
+
+quality_gates:
+  - no_implicit_cross_tenant_trust
+  - mandatory_expiration_on_delegation
+  - tenant_isolation
+  - no_unlimited_privileges
+  - continuous_trust_evaluation

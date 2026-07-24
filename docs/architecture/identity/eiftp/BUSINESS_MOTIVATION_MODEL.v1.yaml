@@ -1,0 +1,65 @@
+# Business Motivation Model (BMM-aligned) — EIFTP
+# P200-B1.1-C · ADR-214
+version: "1.0"
+prompt_id: P200-B1.1-C
+
+ends:
+  vision_ref: ADR-213
+  mission_ref: ADR-212
+  desired_results:
+    - centralized_identity_governance
+    - continuous_zero_trust
+    - secure_ai_adoption
+    - global_federation_readiness
+    - simplified_compliance
+
+means:
+  strategies:
+    - unify_identity_plane
+    - federate_never_fork
+    - trust_as_fabric
+    - automate_lifecycle
+    - govern_ai_subjects
+  tactics:
+    - protocol_agnostic_federation_ports
+    - continuous_authn_signals_to_authz
+    - outbox_integration_events
+    - external_idp_via_integration_platform
+    - policy_driven_not_hardcoded
+
+influencers:
+  external:
+    - gdpr
+    - iso_27001
+    - soc2
+    - hipaa_ready
+    - pci_dss_ready
+    - nist
+    - regional_frameworks
+    - partner_ecosystems
+    - ai_regulation_pressure
+  internal:
+    - platform_charter_one_core
+    - multi_tenant_isolation
+    - developer_productivity
+    - operational_cost_pressure
+
+assessments:
+  strengths:
+    - existing_identity_federation_sor
+    - authz_pdp_adr_204
+    - event_bus_and_audit
+  weaknesses_addressed_by_drivers:
+    - identity_fragmentation
+    - manual_lifecycle
+    - ai_identity_gap
+  opportunities:
+    - partner_marketplace_trust
+    - passwordless_enterprise
+  threats:
+    - vendor_lock_in
+    - multiple_identity_authorities_creep
+
+course_of_action_to_goals:
+  foundation_for: P200-B1.1-D_Strategic_Goals
+  rule: Every Strategic Goal must cite at least one primary driver P1-P10

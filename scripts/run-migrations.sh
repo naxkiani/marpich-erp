@@ -71,7 +71,13 @@ for migration in \
   028_enterprise_identity_federation_platform.sql \
   029_enterprise_identity_digital_twin.sql \
   030_enterprise_authorization_platform.sql \
-  031_enterprise_identity_digital_twin_p199a.sql
+  031_enterprise_identity_digital_twin_p199a.sql \
+  032_documents_rsa_signature_evidence.sql \
+  033_clinic_walkin_encounters.sql \
+  034_university_inventory_postgres.sql \
+  035_messenger_postgres.sql \
+  036_hospital_beds_cap_hlt_004.sql \
+  037_identity_governance.sql
 do
   apply_migration "$migration"
 done

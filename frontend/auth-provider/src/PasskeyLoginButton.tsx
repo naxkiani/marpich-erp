@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { loginWithPasskey, isWebAuthnSupported } from "./webauthn";
 
 export type PasskeyLoginButtonProps = {
@@ -18,8 +18,15 @@ export function PasskeyLoginButton({
 }: PasskeyLoginButtonProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Defer WebAuthn detection until after mount so SSR and hydration match
+  // (server has no PublicKeyCredential; client does).
+  const [supported, setSupported] = useState(false);
 
-  if (!isWebAuthnSupported()) return null;
+  useEffect(() => {
+    setSupported(isWebAuthnSupported());
+  }, []);
+
+  if (!supported) return null;
 
   async function onPasskeyLogin() {
     setLoading(true);
@@ -36,7 +43,12 @@ export function PasskeyLoginButton({
 
   return (
     <div className="mp-passkey-login">
-      <button type="button" className={className} onClick={() => void onPasskeyLogin()} disabled={loading || !email}>
+      <button
+        type="button"
+        className={className}
+        onClick={() => void onPasskeyLogin()}
+        disabled={loading || !email}
+      >
         {loading ? "Authenticating…" : "Sign in with passkey"}
       </button>
       {error ? (

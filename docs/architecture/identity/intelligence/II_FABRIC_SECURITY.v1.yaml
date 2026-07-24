@@ -1,0 +1,29 @@
+prompt: P207-L
+adr: 327
+security:
+  authentication:
+    - oauth_2_1
+    - oidc
+    - mtls
+  authorization:
+    - rbac
+    - abac
+    - policy_based_access
+  protections:
+    - api_gateway
+    - rate_limiting
+    - threat_detection
+    - service_identity
+    - certificate_rotation
+    - secret_management
+  zero_trust:
+    - verify_every_api
+    - verify_every_service
+    - tenant_scoped_calls
+    - auditable_decisions
+  reject_if:
+    - services_share_databases
+    - apis_lack_security
+    - audit_history_incomplete
+    - ai_integration_disconnected
+    - embeds_llm_sdk

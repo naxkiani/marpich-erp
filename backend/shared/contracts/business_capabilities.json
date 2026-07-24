@@ -56,6 +56,8 @@
     {"id": "CAP-HLT-001", "name": "Patient Lifecycle (acute)", "tier": "industry", "namespace": "healthcare", "boundedContext": "hospital", "lifecycle": "register-admit-discharge"},
     {"id": "CAP-HLT-002", "name": "Outpatient Care Lifecycle", "tier": "industry", "namespace": "healthcare", "boundedContext": "clinic", "lifecycle": "register-visit-followup"},
     {"id": "CAP-HLT-003", "name": "Appointment Management", "tier": "industry", "namespace": "healthcare", "boundedContext": "clinic", "lifecycle": "schedule-complete"},
+    {"id": "CAP-HLT-004", "name": "Admission and Bed Management", "tier": "industry", "namespace": "healthcare", "boundedContext": "hospital", "lifecycle": "admit-transfer-discharge"},
+    {"id": "CAP-HLT-005", "name": "Clinical Encounter Management", "tier": "industry", "namespace": "healthcare", "boundedContext": "hospital", "lifecycle": "start-document-complete"},
     {"id": "CAP-HLT-007", "name": "Laboratory LIMS", "tier": "industry", "namespace": "healthcare", "boundedContext": "laboratory", "lifecycle": "order-sample-result"},
     {"id": "CAP-HLT-008", "name": "Pharmacy and Dispensing", "tier": "industry", "namespace": "healthcare", "boundedContext": "pharmacy", "lifecycle": "prescribe-dispense"},
     {"id": "CAP-CNS-001", "name": "Construction Lifecycle", "tier": "industry", "namespace": "construction", "boundedContext": "construction", "lifecycle": "tender-build-handover"},
@@ -68,6 +70,11 @@
     {"id": "CAP-GOV-002", "name": "Government Permit Management", "tier": "industry", "namespace": "government", "boundedContext": "government", "lifecycle": "apply-issue"},
     {"id": "CAP-GOV-003", "name": "Municipal Permit Management", "tier": "industry", "namespace": "government", "boundedContext": "municipality", "lifecycle": "apply-inspect-issue"},
     {"id": "CAP-GOV-004", "name": "Municipal Utility Management", "tier": "industry", "namespace": "government", "boundedContext": "municipality", "lifecycle": "account-bill-collect"},
-    {"id": "CAP-NGO-001", "name": "Grant Lifecycle", "tier": "industry", "namespace": "ngo", "boundedContext": "ngo", "lifecycle": "apply-award-report"}
+    {"id": "CAP-NGO-001", "name": "Grant Lifecycle", "tier": "industry", "namespace": "ngo", "boundedContext": "ngo", "lifecycle": "apply-award-report"},
+    {"id": "CAP-PAM-001", "name": "Privileged Account Management", "tier": "platform", "namespace": "privileged-access", "boundedContext": "privileged_access", "lifecycle": "provision-rotate-retire"},
+    {"id": "CAP-PAM-002", "name": "Credential Checkout Checkin", "tier": "platform", "namespace": "privileged-access", "boundedContext": "privileged_access", "lifecycle": "checkout-use-checkin"},
+    {"id": "CAP-PAM-004", "name": "Privileged Session Broker", "tier": "platform", "namespace": "privileged-access", "boundedContext": "privileged_access", "lifecycle": "start-verify-end"},
+    {"id": "CAP-PAM-005", "name": "Just In Time Elevation", "tier": "platform", "namespace": "privileged-access", "boundedContext": "privileged_access", "lifecycle": "request-approve-expire"},
+    {"id": "CAP-PAM-006", "name": "Break Glass Access", "tier": "platform", "namespace": "privileged-access", "boundedContext": "privileged_access", "lifecycle": "request-grant-revoke"}
   ]
 }

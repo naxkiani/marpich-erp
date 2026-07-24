@@ -1,0 +1,20 @@
+# Observability & OpenTelemetry
+# P200-B2 · ADR-216
+version: "1.0"
+prompt_id: P200-B2
+
+observability:
+  logs: structured_logging_request_tenant_correlation
+  metrics: federation_protocol_trust_ai_metrics
+  traces: otel_spans_on_protocol_and_trust_eval
+  health: /health_via_gateway
+  dashboards: docs/architecture/identity grafana federation boards
+
+otel:
+  bootstrap: shared/infrastructure/observability/telemetry.py
+  required_attrs: [tenant_id, correlation_id, federation_session_id, trust_score]
+  exporters: otlp
+
+never:
+  - silent_exception_swallow
+  - print_logging_in_production

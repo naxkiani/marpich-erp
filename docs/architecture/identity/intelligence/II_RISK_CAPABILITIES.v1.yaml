@@ -1,0 +1,39 @@
+# P207-G — Predictive Identity Risk capabilities
+version: "1.0"
+prompt_id: P207-G
+adr: "322"
+sor: identity_intelligence
+api_prefix: /api/v1/identity-intelligence/risk
+
+risk_domains:
+  - identity_risk
+  - access_risk
+  - privilege_risk
+  - behavior_risk
+  - compliance_risk
+  - relationship_risk
+  - operational_risk
+
+layers:
+  - risk_intelligence_engine
+  - risk_data_fusion_engine
+  - prediction_engine
+  - decision_engine
+  - continuous_trust_engine
+
+not_static_only: true
+prediction_required: true
+explanation_required: true
+ai_decisions_auditable_required: true
+trust_calculation_defined_required: true
+automated_response_governed_required: true
+via_ai_platform: true
+via_directory_graph: true
+via_p207f_twins: true
+via_p207e_agents: true
+via_p207d_autonomous: true
+via_authorization: true
+via_workflow: true
+hitl_required: true
+governance_required: true
+embeds_llm_forbidden: true

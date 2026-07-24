@@ -1,0 +1,23 @@
+# P207-E — Validation gates
+version: "1.0"
+prompt_id: P207-E
+adr: "320"
+sor: identity_intelligence
+api_prefix: /api/v1/identity-intelligence/agents
+
+reject_if:
+  - agents_without_permissions
+  - decisions_not_explainable
+  - knowledge_sources_uncontrolled
+  - human_governance_missing
+  - ai_actions_not_audited
+  - security_boundaries_undefined
+  - invents_sibling_agent_bc
+  - embeds_llm_sdk
+  - chatbot_only_ai
+  - tool_access_unscoped
+  - skips_hitl_high_impact
+  - uncontrolled_rag_sources
+
+production_readiness_verdict: ENTERPRISE_GRADE
+foundation_validator: contexts.identity_intelligence.domain.services.ii_agent_foundation

@@ -1,0 +1,44 @@
+# P207-A — Identity Intelligence capabilities
+version: "1.0"
+prompt_id: P207-A
+adr: "316"
+sor: identity_intelligence
+api_prefix: /api/v1/identity-intelligence
+
+identity_intelligence_core:
+  - identity_understanding
+  - identity_context_analysis
+  - identity_relationship_intelligence
+  - identity_behavior_analysis
+  - identity_risk_intelligence
+  - identity_prediction
+
+autonomous_loop:
+  - identity_monitoring
+  - identity_analysis
+  - risk_prediction
+  - decision_generation
+  - policy_evaluation
+  - human_approval_if_required
+  - automated_action
+  - learning_feedback
+
+ai_agents:
+  - identity_analyst_agent
+  - governance_agent
+  - security_agent
+  - operations_agent
+  - compliance_agent
+
+digital_twin_required: true
+identity_graph_integration_required: true
+risk_prediction_measurable_required: true
+explainable_decisions_required: true
+human_control_required: true
+automation_governance_required: true
+chatbot_only_forbidden: true
+embeds_llm_forbidden: true
+via_ai_platform: true
+via_policy_engine: true
+hitl_required: true
+governance_required: true

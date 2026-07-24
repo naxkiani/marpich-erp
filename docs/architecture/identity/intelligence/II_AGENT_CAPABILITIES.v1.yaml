@@ -1,0 +1,29 @@
+# P207-E — Identity AI Agent Platform capabilities
+version: "1.0"
+prompt_id: P207-E
+adr: "320"
+sor: identity_intelligence
+api_prefix: /api/v1/identity-intelligence/agents
+
+core_agents:
+  - identity_analyst_agent
+  - identity_governance_agent
+  - identity_security_agent
+  - identity_operations_agent
+  - identity_compliance_agent
+  - identity_architecture_agent
+
+agent_permissions_required: true
+explainable_decisions_required: true
+knowledge_sources_controlled_required: true
+human_governance_required: true
+ai_actions_audited_required: true
+security_boundaries_defined_required: true
+hitl_required: true
+via_ai_platform: true
+via_workflow_engine: true
+via_authorization: true
+chatbot_only_forbidden: true
+embeds_llm_forbidden: true
+permissionless_agents_forbidden: true
+governance_required: true

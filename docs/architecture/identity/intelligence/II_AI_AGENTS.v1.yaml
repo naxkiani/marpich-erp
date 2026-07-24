@@ -1,0 +1,86 @@
+# P207-A — AI agents, twin, risk, self-healing
+version: "1.0"
+prompt_id: P207-A
+adr: "316"
+sor: identity_intelligence
+
+agents:
+  identity_analyst:
+    - investigate_identities
+    - explain_risks
+    - provide_insights
+  governance:
+    - support_certification
+    - recommend_governance_actions
+  security:
+    - detect_threats
+    - analyze_attack_paths
+  operations:
+    - automate_identity_tasks
+    - optimize_operations
+  compliance:
+    - monitor_compliance
+    - generate_evidence
+
+digital_twin:
+  represents:
+    - identity_profile
+    - identity_relationships
+    - identity_behavior
+    - identity_access
+    - identity_risk
+    - identity_history
+    - identity_context
+  capabilities:
+    - simulation
+    - prediction
+    - impact_analysis
+    - what_if_analysis
+  via_peer: identity_digital_twin
+  required: true
+
+knowledge_graph:
+  integrates:
+    - p205h_identity_graph
+    - p205i_ai_directory_intelligence
+  capabilities:
+    - entity_understanding
+    - relationship_reasoning
+    - semantic_analysis
+    - identity_discovery
+    - hidden_relationship_detection
+  via_peer: directory
+  required: true
+
+predictive_risk:
+  predicts:
+    - identity_risk
+    - access_risk
+    - privilege_risk
+    - behavior_risk
+    - compliance_risk
+  measurable: true
+  explainable: true
+
+self_healing:
+  loop:
+    - automatic_detection
+    - root_cause_analysis
+    - recommended_resolution
+    - automated_remediation
+    - validation
+  hitl_for_high_impact: true
+
+ml_models:
+  - identity_classification
+  - risk_prediction
+  - behavior_detection
+  - recommendation
+  - graph_intelligence
+  - anomaly_detection
+  requirements:
+    - explainability
+    - model_governance
+    - version_control
+    - continuous_learning
+  via_ai_platform: true

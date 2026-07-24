@@ -1,0 +1,41 @@
+# EIFTP SRE catalog — P200-B11 · ADR-225
+version: "1.0"
+prompt_id: P200-B11
+
+slis:
+  - id: sli.availability
+    description: Successful federation API responses / total
+  - id: sli.login_latency_p95
+    description: Federated login p95 latency
+  - id: sli.token_latency_p95
+    description: Token exchange p95 latency
+  - id: sli.outbox_lag
+    description: Outbox pending age
+  - id: sli.zt_decision_latency_p95
+    description: Zero Trust evaluate p95
+
+slos:
+  - id: slo.availability
+    target: 0.9999
+    window_days: 28
+  - id: slo.login_p95_ms
+    target: 200
+  - id: slo.token_p95_ms
+    target: 100
+  - id: slo.outbox_lag_seconds
+    target: 60
+
+error_budget:
+  policy: freeze_risky_deploys_when_budget_exhausted
+  notify: Notification Platform via events
+
+incident_classes:
+  - federation_outage
+  - trust_fabric_degradation
+  - idp_connector_failure
+  - security_gate_spike
+  - outbox_backlog
+
+runbooks:
+  - docs/deployment/IDENTITY_FEDERATION_DEPLOYMENT_GUIDE.md
+  - docs/deployment/IDENTITY_FEDERATION_DR_GUIDE.md

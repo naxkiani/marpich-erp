@@ -1,0 +1,1 @@
+"""Federation protocol plugins package."""

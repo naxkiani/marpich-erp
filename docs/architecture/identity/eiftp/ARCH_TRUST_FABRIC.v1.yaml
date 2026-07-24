@@ -1,0 +1,37 @@
+# Trust Fabric Architecture
+# P200-B2 · ADR-216
+version: "1.0"
+prompt_id: P200-B2
+extends_vision: VISION_TRUST_FABRIC.v1.yaml
+
+nodes:
+  - human
+  - organization
+  - tenant
+  - service
+  - api
+  - ai_agent
+  - machine
+  - device
+  - partner
+  - external_idp
+
+edges:
+  - federates_with
+  - trusts
+  - delegates_to
+  - provisions
+  - issues_token_for
+  - verifies
+  - risks
+
+evaluation:
+  inputs: [trust_score, risk_score, device_posture, session_freshness, policy_obligations]
+  outputs: [trust_facts_for_authz]
+  never: permit_deny_in_federation
+
+runtime_engines:
+  - trust_graph_engine
+  - trust_management_engine
+  - zero_trust_federation_engine
+  - identity_fabric_mesh_engine

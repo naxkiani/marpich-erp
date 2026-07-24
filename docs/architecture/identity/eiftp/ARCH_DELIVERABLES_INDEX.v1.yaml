@@ -1,0 +1,65 @@
+# P200-B2 Architecture Deliverables Index — 50 Views
+# Maps every required EA deliverable to canonical artifacts (no sibling BC)
+version: "1.0"
+prompt_id: P200-B2
+adr: "216"
+sor: identity_federation
+
+deliverables:
+  1:  { title: Solution Architecture, artifact: ARCH_SOLUTION.v1.yaml }
+  2:  { title: Context Diagram, artifact: ARCH_C4.v1.yaml#system_context }
+  3:  { title: Container Diagram, artifact: ARCH_C4.v1.yaml#containers }
+  4:  { title: Component Diagram, artifact: ARCH_C4.v1.yaml#components }
+  5:  { title: Deployment Diagram, artifact: ARCH_DEPLOYMENT.v1.yaml }
+  6:  { title: Identity Federation Architecture, artifact: ARCH_FEDERATION.v1.yaml }
+  7:  { title: Trust Fabric Architecture, artifact: ARCH_TRUST_FABRIC.v1.yaml }
+  8:  { title: Cross-Tenant Architecture, artifact: ARCH_CROSS_TENANT.v1.yaml }
+  9:  { title: External IdP Integration, artifact: ARCH_EXTERNAL_IDP.v1.yaml }
+  10: { title: Authentication Flow, artifact: ARCH_FLOWS.v1.yaml#authentication }
+  11: { title: Federation Flow, artifact: ARCH_FLOWS.v1.yaml#federation }
+  12: { title: Trust Evaluation Flow, artifact: ARCH_FLOWS.v1.yaml#trust_evaluation }
+  13: { title: Identity Resolution Flow, artifact: ARCH_FLOWS.v1.yaml#identity_resolution }
+  14: { title: Token Lifecycle, artifact: ARCH_LIFECYCLES.v1.yaml#token }
+  15: { title: Session Lifecycle, artifact: ARCH_LIFECYCLES.v1.yaml#session }
+  16: { title: Certificate Trust Chain, artifact: ARCH_LIFECYCLES.v1.yaml#certificate_chain }
+  17: { title: Secrets Architecture, artifact: ARCH_SECURITY.v1.yaml#secrets }
+  18: { title: Service-to-Service Authentication, artifact: ARCH_SECURITY.v1.yaml#s2s }
+  19: { title: AI Identity Architecture, artifact: ARCH_SUBJECTS.v1.yaml#ai }
+  20: { title: Machine Identity Architecture, artifact: ARCH_SUBJECTS.v1.yaml#machine }
+  21: { title: Device Identity Architecture, artifact: ARCH_SUBJECTS.v1.yaml#device }
+  22: { title: Knowledge Graph Integration, artifact: ARCH_PLATFORM_INTEGRATIONS.v1.yaml#knowledge_graph }
+  23: { title: Digital Twin Integration, artifact: ARCH_PLATFORM_INTEGRATIONS.v1.yaml#digital_twin }
+  24: { title: Event Architecture, artifact: ARCH_EVENTS_CQRS.v1.yaml#events }
+  25: { title: CQRS Architecture, artifact: ARCH_EVENTS_CQRS.v1.yaml#cqrs }
+  26: { title: Domain Boundaries, artifact: ARCH_BOUNDED_CONTEXTS.v1.yaml#domain_boundaries }
+  27: { title: Bounded Contexts, artifact: ARCH_BOUNDED_CONTEXTS.v1.yaml }
+  28: { title: Aggregate Map, artifact: ARCH_BOUNDED_CONTEXTS.v1.yaml#aggregates }
+  29: { title: Microservice Boundaries, artifact: ARCH_BOUNDED_CONTEXTS.v1.yaml#microservices }
+  30: { title: API Gateway Integration, artifact: ARCH_EDGE.v1.yaml#api_gateway }
+  31: { title: Service Mesh Integration, artifact: ARCH_EDGE.v1.yaml#service_mesh }
+  32: { title: Kubernetes Deployment, artifact: ARCH_DEPLOYMENT.v1.yaml#kubernetes }
+  33: { title: High Availability Architecture, artifact: ARCH_DEPLOYMENT.v1.yaml#ha }
+  34: { title: Disaster Recovery, artifact: ARCH_DEPLOYMENT.v1.yaml#dr }
+  35: { title: Multi Region Architecture, artifact: ARCH_DEPLOYMENT.v1.yaml#multi_region }
+  36: { title: Horizontal Scaling Strategy, artifact: ARCH_DATA_PLANE.v1.yaml#scaling }
+  37: { title: Redis Strategy, artifact: ARCH_DATA_PLANE.v1.yaml#redis }
+  38: { title: Kafka Strategy, artifact: ARCH_DATA_PLANE.v1.yaml#kafka }
+  39: { title: PostgreSQL Strategy, artifact: ARCH_DATA_PLANE.v1.yaml#postgresql }
+  40: { title: Observability Architecture, artifact: ARCH_OBSERVABILITY.v1.yaml }
+  41: { title: OpenTelemetry Integration, artifact: ARCH_OBSERVABILITY.v1.yaml#otel }
+  42: { title: Security Architecture, artifact: ARCH_SECURITY.v1.yaml }
+  43: { title: Zero Trust Enforcement, artifact: ARCH_SECURITY.v1.yaml#zero_trust }
+  44: { title: Compliance Architecture, artifact: ARCH_SECURITY.v1.yaml#compliance }
+  45: { title: DevSecOps Pipeline, artifact: ARCH_DEVSECOPS.v1.yaml }
+  46: { title: Enterprise Coding Standards, artifact: ARCH_REPO_STRUCTURE.v1.yaml#coding_standards }
+  47: { title: Repository Structure, artifact: ARCH_REPO_STRUCTURE.v1.yaml }
+  48: { title: Folder Structure, artifact: ARCH_REPO_STRUCTURE.v1.yaml#folder_structure }
+  49: { title: Cursor Project Structure, artifact: ARCH_REPO_STRUCTURE.v1.yaml#cursor }
+  50: { title: Definition of Done, artifact: ARCH_DEFINITION_OF_DONE.v1.yaml }
+
+law_doc: ENTERPRISE_IDENTITY_FEDERATION_TRUST_ARCHITECTURE.md
+implementation_roadmap: ARCH_IMPLEMENTATION_ROADMAP.v1.yaml
+reuse:
+  deployment_topology: docs/architecture/identity/FEDERATION_DEPLOYMENT_TOPOLOGY.v1.yaml
+  kafka_topics: docs/architecture/identity/FEDERATION_KAFKA_TOPICS.yaml
+  gateway: docs/architecture/identity/FEDERATION_API_GATEWAY.v1.yaml

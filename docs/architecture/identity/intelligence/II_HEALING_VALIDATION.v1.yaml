@@ -1,0 +1,21 @@
+# P207-I — Validation gates
+version: "1.0"
+prompt_id: P207-I
+adr: "324"
+sor: identity_intelligence
+api_prefix: /api/v1/identity-intelligence/healing
+
+reject_if:
+  - recovery_fully_manual
+  - remediation_no_governance
+  - root_cause_analysis_missing
+  - actions_not_auditable
+  - digital_twin_simulation_absent
+  - security_validation_undefined
+  - invents_sibling_healing_bc
+  - embeds_llm_sdk
+  - skips_hitl_level_2_plus
+  - bypasses_authorization_pdp
+
+production_readiness_verdict: ENTERPRISE_GRADE
+foundation_validator: contexts.identity_intelligence.domain.services.ii_healing_foundation

@@ -12,7 +12,8 @@ from contexts.hospital.infrastructure.persistence.memory_store import HospitalMe
 from contexts.accounting.infrastructure.persistence.memory_store import AccountingMemoryStore
 from contexts.finance.infrastructure.persistence.memory_store import FinanceMemoryStore
 from contexts.identity.infrastructure.persistence.memory_store import InMemoryStore
-from core.presentation.api.main import app
+from core.presentation.api.app_factory import create_app
+from core.presentation.api.startup_registry import configure_application
 from shared.infrastructure.messaging.event_bus import InProcessEventBus
 
 
@@ -37,7 +38,9 @@ def reset_all():
 
 @pytest.fixture
 async def client():
-    transport = ASGITransport(app=app)
+    application = create_app(profile="industry", startup_mode="lazy")
+    configure_application(application, profile="industry", startup_mode="lazy")
+    transport = ASGITransport(app=application)
     async with AsyncClient(transport=transport, base_url="http://test") as ac:
         yield ac
 

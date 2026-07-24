@@ -1,0 +1,33 @@
+# EIFTP Vision — Long-Term Security (P200-B1.1-B)
+apiVersion: marpich.io/v1
+kind: EiftpVisionSecurity
+metadata:
+  id: eiftp-vision-security
+  version: "1.0.0"
+  adr: [213]
+  prompt: P200-B1.1-B
+
+goal: eliminate_implicit_trust
+
+request_pipeline:
+  - identity_verification
+  - policy_evaluation
+  - context_analysis
+  - risk_assessment
+  - authorization
+  - audit
+  - continuous_validation
+
+owners:
+  identity_verification: [authentication, identity_federation]
+  policy_evaluation: [policy]
+  context_analysis: [adaptive_authentication, gateway]
+  risk_assessment: [identity_risk, adaptive_authentication]
+  authorization: [authorization]
+  audit: [audit]
+  continuous_validation: [identity_federation.zero_trust, adaptive_authentication]
+
+never:
+  - permanent_unconditional_trust
+  - federated_equals_authorized
+  - skip_audit_on_machine_or_ai_principals

@@ -1,0 +1,44 @@
+# P207-C — Domain architecture capabilities
+version: "1.0"
+prompt_id: P207-C
+adr: "318"
+sor: identity_intelligence
+api_prefix: /api/v1/identity-intelligence/domain
+builds_on:
+  - P207-A
+  - P207-B
+
+domain_purpose:
+  - identity_understanding
+  - identity_reasoning
+  - identity_prediction
+  - identity_optimization
+  - autonomous_identity_operations
+  - continuous_identity_intelligence
+
+transforms_into: actionable_enterprise_identity_intelligence
+
+core_domains:
+  - identity_understanding
+  - predictive_risk
+  - behavioral_analytics
+  - autonomous_operations
+  - ai_agent_orchestration
+
+supporting_domains:
+  - digital_twin_orchestration
+  - knowledge_graph_intelligence
+  - self_healing
+  - recommendation
+  - model_registry_refs
+
+ddd_boundaries_clear_required: true
+cqrs_required: true
+event_driven_required: true
+outbox_required: true
+anemic_aggregates_forbidden: true
+does_not_replace_peers_required: true
+chatbot_only_forbidden: true
+embeds_llm_forbidden: true
+hitl_required: true
+governance_required: true

@@ -1,0 +1,40 @@
+# Solution Architecture — EIFTP / Marpich Identity Plane
+# P200-B2 · ADR-216
+version: "1.0"
+prompt_id: P200-B2
+
+positioning: |
+  MEOS Identity Federation & Trust Platform is the enterprise trust backbone —
+  comparable in responsibility to Entra ID / Keycloak Enterprise / Okta Workforce /
+  Google Cloud Identity, implemented as Marpich-native platform services.
+
+solution_layers:
+  - id: edge
+    components: [api_gateway, ingress, waf, rate_limit]
+  - id: identity_plane
+    components: [identity, authentication, adaptive_authentication, identity_federation, identity_lifecycle, directory, identity_risk, identity_digital_twin]
+  - id: control_plane
+    components: [authorization, policy, workflow, feature_flags, secrets_paths]
+  - id: trust_data_plane
+    components: [postgresql_federation_schema, redis_session_token_cache, kafka_outbox]
+  - id: integration_plane
+    components: [integration_connectors, external_idp_adapters]
+  - id: intelligence_plane
+    components: [federation_intelligence, ai_platform_acl, ai_governance, ai_security]
+  - id: observability_plane
+    components: [otel, prometheus, grafana, audit_consumer]
+
+quality_attributes:
+  - availability_99_95_plus
+  - tenant_isolation_hard
+  - zero_trust_continuous
+  - horizontal_scale_unlimited_tenants
+  - standards_oidc_saml_scim_oauth2
+  - vendor_agnostic_ports
+  - immutable_audit
+
+anti_goals:
+  - second_identity_authority_bc
+  - authz_pdp_inside_federation
+  - vendor_sdk_in_domain
+  - cross_tenant_sql

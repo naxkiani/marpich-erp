@@ -1,0 +1,35 @@
+# P207-J — Access governance security & compliance
+version: "1.0"
+prompt_id: P207-J
+adr: "325"
+sor: identity_intelligence
+
+security:
+  - least_privilege
+  - zero_trust
+  - access_validation
+
+compliance:
+  - evidence_generation
+  - audit_trail
+  - policy_mapping
+
+ai_governance:
+  - explainable_recommendations
+  - human_approval
+  - decision_logging
+
+periodic_only_forbidden: true
+unexplained_ai_forbidden: true
+business_context_ignored_forbidden: true
+human_governance_absent_forbidden: true
+compliance_evidence_unavailable_forbidden: true
+risk_disconnected_forbidden: true
+hitl_required: true
+via_ai_platform: true
+via_workflow: true
+via_audit: true
+via_p207g_risk: true
+via_p202_iga: true
+governance_required: true
+embeds_llm_forbidden: true

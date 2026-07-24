@@ -1,0 +1,96 @@
+# Enterprise Business Capability Map — EIFTP driven
+# P200-B1.1-C · ADR-214
+version: "1.0"
+prompt_id: P200-B1.1-C
+
+law: Capabilities are enterprise platform capabilities — never reimplemented inside industry modules.
+
+strategic_capabilities:
+  - id: CAP_AUTHN
+    name: Enterprise Authentication
+    owner_context: identity
+    drivers: [P1, P2, P6, P9]
+  - id: CAP_AUTHZ
+    name: Enterprise Authorization
+    owner_context: authorization
+    drivers: [P3, P6, P9]
+    note: AuthZ PDP ADR-204 — EIFTP supplies trust facts only
+  - id: CAP_FEDERATION
+    name: Identity Federation
+    owner_context: identity_federation
+    drivers: [P4, P5, P8, P10]
+  - id: CAP_SSO
+    name: Single Sign-On
+    owner_context: identity
+    drivers: [P1, P9, P10]
+  - id: CAP_MFA
+    name: Multi-Factor Authentication
+    owner_context: identity
+    drivers: [P6, P8, P9]
+  - id: CAP_ADAPTIVE
+    name: Adaptive Authentication
+    owner_context: identity
+    drivers: [P6, P9]
+  - id: CAP_PASSWORDLESS
+    name: Passwordless Authentication
+    owner_context: identity
+    drivers: [P1, P9]
+  - id: CAP_PKI
+    name: Enterprise PKI Integration
+    owner_context: identity_federation
+    drivers: [P3, P7, P9]
+  - id: CAP_API_TRUST
+    name: API Trust
+    owner_context: identity_federation
+    drivers: [P3, P9]
+  - id: CAP_MACHINE
+    name: Machine Identity
+    owner_context: identity_federation
+    drivers: [P2, P7]
+  - id: CAP_SERVICE
+    name: Service Identity
+    owner_context: identity_federation
+    drivers: [P2, P9]
+  - id: CAP_AI_IDENTITY
+    name: AI Identity
+    owner_context: identity_federation
+    drivers: [P7]
+    companions: [ai_governance, ai_security]
+  - id: CAP_DEVICE
+    name: Device Identity
+    owner_context: identity_federation
+    drivers: [P2, P6]
+  - id: CAP_DELEGATION
+    name: Delegated Administration
+    owner_context: identity
+    drivers: [P4, P10]
+  - id: CAP_XTENANT
+    name: Cross-Tenant Collaboration
+    owner_context: identity_federation
+    drivers: [P4, P5]
+  - id: CAP_AUDIT
+    name: Enterprise Audit
+    owner_context: audit
+    drivers: [P3, P8]
+  - id: CAP_ANALYTICS
+    name: Identity Analytics
+    owner_context: analytics
+    drivers: [P3, P10]
+  - id: CAP_TRUST_FABRIC
+    name: Enterprise Trust Fabric
+    owner_context: identity_federation
+    drivers: [P3, P5, P6]
+
+downstream_impact_modules:
+  - authentication_platform
+  - authorization_platform
+  - identity_federation
+  - trust_fabric
+  - api_security
+  - secrets_management
+  - certificate_management
+  - session_management
+  - identity_lifecycle
+  - privilege_management
+  - ai_security
+  - external_identity_integration

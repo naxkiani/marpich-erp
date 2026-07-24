@@ -1,0 +1,31 @@
+# P207-I — Self-healing security & governance
+version: "1.0"
+prompt_id: P207-I
+adr: "324"
+sor: identity_intelligence
+
+zero_trust_recovery:
+  - verify_before_repair
+  - least_privilege_automation
+  - approval_controls
+
+security_controls:
+  - audit_trail
+  - encryption
+  - action_validation
+  - emergency_controls
+
+fully_manual_forbidden: true
+ungoverned_remediation_forbidden: true
+rca_missing_forbidden: true
+unaudited_actions_forbidden: true
+twin_simulation_absent_forbidden: true
+security_validation_undefined_forbidden: true
+hitl_for_level_2_plus: true
+via_ai_platform: true
+via_workflow: true
+via_audit: true
+via_p207f_twins: true
+via_authorization: true
+governance_required: true
+embeds_llm_forbidden: true

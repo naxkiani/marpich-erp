@@ -1,0 +1,20 @@
+# Subject Architectures — AI / Machine / Device
+# P200-B2 · ADR-216
+version: "1.0"
+prompt_id: P200-B2
+
+ai:
+  law: AI agents are first-class federated subjects — never bypass AuthZ/Policy
+  attributes: [agent_id, owner_principal, purpose, trust_score, model_version, tool_scopes]
+  companions: [ai_governance, ai_security, ai_platform]
+  events: [federation.ai.agent.registered, ai.insight.generated]
+
+machine:
+  law: Workload identities via SPIFFE-like URI or platform service principals
+  credentials: [mtls_cert, short_lived_jwt, cloud_workload_identity]
+  rotation: mandatory
+
+device:
+  law: Device posture enters trust evaluation as facts — not AuthZ rules
+  signals: [managed, compliance, attestation, geo]
+  binding: session_and_risk

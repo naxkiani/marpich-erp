@@ -1,0 +1,40 @@
+# P207-C — Domain security & context map
+version: "1.0"
+prompt_id: P207-C
+adr: "318"
+sor: identity_intelligence
+
+context_map:
+  partnership:
+    - identity_lifecycle
+    - identity_governance
+    - privileged_access
+    - authentication
+    - directory
+    - identity_digital_twin
+  customer_supplier:
+    - ai
+    - policy
+    - audit
+    - observability
+  conformist:
+    - authorization
+  anti_corruption:
+    - integration
+
+never_owns:
+  - credentials
+  - jwt_sessions
+  - authz_pdp
+  - directory_graph_sor
+  - twin_storage_sor
+  - organization_hierarchy
+
+zero_trust: true
+explainable_ai_required: true
+hitl_required: true
+human_control_required: true
+chatbot_only_forbidden: true
+embeds_llm_forbidden: true
+anemic_forbidden: true
+governance_required: true

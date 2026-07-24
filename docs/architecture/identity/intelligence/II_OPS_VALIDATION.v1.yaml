@@ -1,0 +1,12 @@
+prompt: P207-N
+adr: 329
+validation:
+  outputs: 20
+  verdict_target: ENTERPRISE_GRADE
+  quality_gates:
+    - deployment_manual
+    - kubernetes_architecture_undefined
+    - security_separated_from_devops
+    - observability_incomplete
+    - scaling_strategy_missing
+    - disaster_recovery_not_tested

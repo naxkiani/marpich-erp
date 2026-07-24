@@ -1,0 +1,74 @@
+# Federation Security API / CQRS / Events / DoD — P200-B9 · ADR-223
+version: "1.0"
+prompt_id: P200-B9
+
+apis:
+  rest:
+    - GET /api/v1/federation/security/surface
+    - POST /api/v1/federation/security/controls
+    - POST /api/v1/federation/security/policies
+    - POST /api/v1/federation/security/zero-trust/evaluate
+    - POST /api/v1/federation/security/risk/evaluate
+    - POST /api/v1/federation/security/verification/continuous
+    - POST /api/v1/federation/security/threats/detect
+    - POST /api/v1/federation/security/threats/{ref}/mitigate
+    - POST /api/v1/federation/security/compliance/assess
+    - POST /api/v1/federation/security/ai/govern
+    - POST /api/v1/federation/security/exceptions
+    - POST /api/v1/federation/security/exceptions/{ref}/revoke
+    - GET /api/v1/federation/security/posture
+    - GET /api/v1/federation/security/risk/{ref}
+    - GET /api/v1/federation/security/threats
+    - GET /api/v1/federation/security/compliance
+    - GET /api/v1/federation/security/events
+    - GET /api/v1/federation/security/zero-trust/last
+  graphql: deferred_B10
+  grpc: deferred_B10
+
+commands:
+  - RegisterSecurityControl
+  - CreateSecurityPolicy
+  - EvaluateZeroTrust
+  - EvaluateRisk
+  - RunContinuousVerification
+  - DetectThreat
+  - MitigateThreat
+  - RunComplianceAssessment
+  - GovernAiAction
+  - ApproveException
+  - RevokeException
+
+queries:
+  - GetSecurityPosture
+  - GetRiskAssessment
+  - GetThreatStatus
+  - GetComplianceStatus
+  - GetSecurityEvents
+  - GetZeroTrustDecision
+  - GetSecuritySurface
+
+events_logical:
+  - SecurityPolicyCreated
+  - SecurityPolicyActivated
+  - SecurityViolationDetected
+  - RiskCalculated
+  - RiskLevelChanged
+  - ThreatDetected
+  - ThreatMitigated
+  - ComplianceAssessmentStarted
+  - ComplianceViolationDetected
+  - CompliancePassed
+  - ZeroTrustDecisionCreated
+  - ContinuousVerificationTriggered
+  - AIActionBlocked
+
+dod:
+  - enterprise_zero_trust_enforcement
+  - continuous_verification
+  - centralized_security_governance
+  - compliance_posture_automation
+  - enterprise_risk_evaluation
+  - realtime_threat_detection
+  - ai_security_governance
+  - immutable_auditing_via_platform
+  - production_ready_devsecops_catalog

@@ -1,0 +1,64 @@
+# EIFTP — Mission Architecture Compliance (P200-B1.1-A)
+apiVersion: marpich.io/v1
+kind: EiftpMissionArchitectureCompliance
+metadata:
+  id: eiftp-mission-architecture-compliance
+  version: "1.0.0"
+  adr: [212]
+  prompt: P200-B1.1-A
+
+constraints:
+  - id: ddd
+    required: true
+    evidence: identity_federation bounded context + ports
+  - id: cqrs
+    required: true
+    evidence: commands via application services; queries via list/get APIs
+  - id: event_driven
+    required: true
+    evidence: federation integration events + outbox pattern
+  - id: hexagonal
+    required: true
+    evidence: domain ports; protocol adapters in infrastructure
+  - id: clean_architecture
+    required: true
+    evidence: presentation → application → domain
+  - id: api_first
+    required: true
+    evidence: /api/v1/federation (+ gateway/fabric/intelligence)
+  - id: plugin_first
+    required: true
+    evidence: federation_plugin_registry + protocol_plugin_sdk
+  - id: metadata_driven
+    required: true
+    evidence: context.yaml ai/surfaces + catalogs
+  - id: configuration_driven
+    required: true
+    evidence: tenant federation policies / settings
+  - id: policy_driven
+    required: true
+    evidence: Policy Engine + Adaptive Auth policies
+  - id: zero_trust
+    required: true
+    evidence: zero_trust_federation_engine + ZT mission model
+  - id: cloud_native
+    required: true
+    evidence: Helm/K8s/ops catalogs from P198-D
+  - id: ai_native
+    required: true
+    evidence: ai_service + intelligence routers (ACL to AI Platform)
+  - id: knowledge_graph_native
+    required: true
+    evidence: trust_graph_engine; Directory Graph companion
+  - id: digital_twin_native
+    required: true
+    evidence: identity_digital_twin companion (ADR-203); no twin SoR inside federation
+  - id: multi_tenant_native
+    required: true
+    evidence: tenant_id on federation schema + cross_tenant trust domain
+
+hard_stops:
+  - second_federation_bc
+  - business_module_local_oidc_sdk
+  - authz_business_rules_inside_federation
+  - shared_db_with_peer_modules

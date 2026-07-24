@@ -1,0 +1,37 @@
+# P207-H — Behavioral Identity Analytics capabilities
+version: "1.0"
+prompt_id: P207-H
+adr: "323"
+sor: identity_intelligence
+api_prefix: /api/v1/identity-intelligence/behavior
+
+flow:
+  - identity_behavior
+  - context
+  - pattern
+  - deviation
+  - risk
+  - action
+
+layers:
+  - behavior_collection
+  - behavior_processing
+  - behavior_intelligence
+  - behavior_decision
+
+not_rule_only: true
+learning_required: true
+anomaly_explanation_required: true
+privacy_controls_required: true
+ai_models_governed_required: true
+risk_intelligence_integration_required: true
+via_p207g_risk: true
+via_ai_platform: true
+via_directory_graph: true
+via_p207f_twins: true
+via_p207e_agents: true
+via_authorization: true
+privacy_by_design: true
+hitl_required: true
+governance_required: true
+embeds_llm_forbidden: true

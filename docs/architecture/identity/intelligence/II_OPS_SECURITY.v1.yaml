@@ -1,0 +1,22 @@
+prompt: P207-N
+adr: 329
+security:
+  devsecops_integrated: true
+  container_security:
+    - immutable_containers
+    - image_signing
+    - vulnerability_scanning
+    - runtime_protection
+  zero_trust:
+    - kubernetes_rbac
+    - network_policies
+    - secrets_management
+    - encryption
+  supply_chain:
+    - dependency_scanning
+    - image_verification
+    - artifact_security
+  reject_if:
+    - deployment_manual
+    - security_separated_from_devops
+    - kubernetes_architecture_undefined

@@ -1,0 +1,43 @@
+# EIFTP OHS API / CQRS / DoD — P200-B10 · ADR-224
+version: "1.0"
+prompt_id: P200-B10
+
+apis:
+  rest:
+    - GET /api/v1/federation/ohs/surface
+    - GET /api/v1/federation/ohs/apis
+    - GET /api/v1/federation/ohs/events
+    - GET /api/v1/federation/ohs/cqrs
+    - POST /api/v1/federation/ohs/commands/dispatch
+    - POST /api/v1/federation/ohs/queries/dispatch
+    - POST /api/v1/federation/ohs/events/publish
+    - POST /api/v1/federation/ohs/sagas/start
+    - GET /api/v1/federation/ohs/sagas/{ref}
+    - GET /api/v1/federation/ohs/outbox
+    - GET /api/v1/federation/ohs/inbox
+  graphql: /graphql/v1/federation
+  grpc: marpich.federation.v1.FederationService
+
+commands_bus_registry:
+  - RequestTenantTrust
+  - EvaluateZeroTrust
+  - RegisterManagedProvider
+  - EvaluateTrustContinuous
+  - DetectThreat
+
+queries_bus_registry:
+  - GetSecurityPosture
+  - GetTenantTrust
+  - GetManagedProvider
+  - GetTrustStatus
+  - GetOhsCatalog
+
+dod:
+  - secure_async_service_communication
+  - versioned_events
+  - cqrs_buses
+  - outbox_inbox_idempotency
+  - graphql_grpc_ohs
+  - saga_orchestration
+  - tenant_isolation
+  - no_direct_coupling

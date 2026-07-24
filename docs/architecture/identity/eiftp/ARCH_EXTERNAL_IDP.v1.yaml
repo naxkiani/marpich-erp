@@ -1,0 +1,30 @@
+# External Identity Provider Integration
+# P200-B2 · ADR-216
+version: "1.0"
+prompt_id: P200-B2
+
+law: |
+  Production external IdP connectivity (Entra, Okta, on-prem AD, gov eID) executes
+  through Integration Platform connectors. identity_federation owns federation
+  domain policy, trust, claims mapping, and protocol gateway contracts.
+
+classes:
+  - enterprise_idp
+  - social_idp
+  - government_eid
+  - partner_idp
+  - directory_scim
+
+flow:
+  - register_IdentityProvider_aggregate
+  - configure_claims_mapping
+  - publish_federation_provider_registered
+  - integration_connector_sync_or_oidc_redirect
+  - protocol_gateway_callback
+  - IdentityLink_upsert
+  - emit_federation_identity_linked
+
+forbidden:
+  - entra_sdk_in_domain
+  - okta_sdk_in_application
+  - vendor_secrets_in_module_tables

@@ -1,0 +1,42 @@
+# Value Object Catalog — EIFTP
+# P200-B4 · ADR-218
+version: "1.0"
+prompt_id: P200-B4
+
+value_objects:
+  - name: ProviderId
+    fields: [value: str]
+  - name: ProtocolType
+    enum: [oauth2, oidc, saml, scim, ldap, custom]
+  - name: FederationStatus
+    enum: [draft, connected, disconnected, error]
+  - name: TrustId
+    fields: [value: str]
+  - name: TrustScore
+    fields: [value: int]
+    invariants: [0_to_100]
+  - name: TrustLevel
+    enum: [low, medium, high, verified]
+  - name: TrustStatus
+    enum: [pending, active, suspended, revoked, expired]
+  - name: SessionId
+    fields: [value: str]
+  - name: SessionState
+    enum: [active, elevated, suspended, terminated, expired]
+  - name: ExternalSubject
+    fields: [value: str]
+  - name: AssuranceLevel
+    enum: [aal1, aal2, aal3]
+  - name: RiskScore
+    fields: [value: float]
+    invariants: [0_to_100]
+  - name: FederatedSubjectKind
+    enum: [human, machine, service, ai_agent, device, partner, api]
+  - name: AIIdentityId
+    fields: [value: str]
+  - name: CapabilitySet
+    fields: [capabilities: list[str]]
+  - name: RiskLevel
+    enum: [low, medium, high, critical]
+
+code_package: backend/contexts/identity_federation/domain/value_objects/

@@ -1,0 +1,36 @@
+# Architecture validation + DoD — P200-B4
+# P200-B4 · ADR-218
+version: "1.0"
+prompt_id: P200-B4
+
+hard_gates:
+  non_anemic_aggregates: PASS
+  companion_ownership_respected: PASS
+  tenant_isolation: PASS
+  zero_trust_facts_only: PASS
+  ai_identity_aggregate: PASS
+  event_driven: PASS
+  no_contexts_eiftp: PASS
+  no_credential_sor_in_federation: PASS
+
+dimensions:
+  Architecture: 5
+  DDD: 5
+  Security: 5
+  Scalability: 5
+  AI_Integration: 5
+  Documentation: 5
+  Audit: 4
+  Testing: 4
+
+verdict: ENTERPRISE_GRADE
+
+definition_of_done:
+  - tactical_catalogs_published
+  - aggregate_behaviors_in_code
+  - value_objects_specs_factories_policies
+  - domain_events_raised_from_aggregates
+  - ai_federated_agent_aggregate
+  - command_query_catalogs
+  - persistence_model_documented
+  - validator_tests_green

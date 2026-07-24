@@ -1,0 +1,41 @@
+# Capability Traceability Matrix — Driver → Capability → Owner → Outcome
+# P200-B1.1-C · ADR-214
+version: "1.0"
+prompt_id: P200-B1.1-C
+
+traceability:
+  - driver: P1
+    capabilities: [CAP_AUTHN, CAP_SSO, CAP_PASSWORDLESS]
+    outcomes: [O3, O7]
+  - driver: P2
+    capabilities: [CAP_AUTHN, CAP_MACHINE, CAP_SERVICE, CAP_DEVICE, CAP_AI_IDENTITY]
+    outcomes: [O1, O8]
+  - driver: P3
+    capabilities: [CAP_TRUST_FABRIC, CAP_API_TRUST, CAP_AUDIT, CAP_ANALYTICS, CAP_PKI]
+    outcomes: [O2, O6, O12]
+  - driver: P4
+    capabilities: [CAP_XTENANT, CAP_FEDERATION, CAP_DELEGATION]
+    outcomes: [O6, O10]
+  - driver: P5
+    capabilities: [CAP_FEDERATION, CAP_XTENANT, CAP_TRUST_FABRIC]
+    outcomes: [O10]
+  - driver: P6
+    capabilities: [CAP_AUTHN, CAP_ADAPTIVE, CAP_MFA, CAP_AUTHZ, CAP_DEVICE]
+    outcomes: [O2, O4, O12]
+  - driver: P7
+    capabilities: [CAP_AI_IDENTITY, CAP_MACHINE, CAP_PKI]
+    outcomes: [O9]
+  - driver: P8
+    capabilities: [CAP_AUDIT, CAP_FEDERATION, CAP_MFA]
+    outcomes: [O5]
+  - driver: P9
+    capabilities: [CAP_AUTHN, CAP_SSO, CAP_API_TRUST, CAP_SERVICE]
+    outcomes: [O1, O2]
+  - driver: P10
+    capabilities: [CAP_DELEGATION, CAP_ANALYTICS, CAP_FEDERATION]
+    outcomes: [O3, O4, O7, O11]
+
+ownership_law:
+  - eiftp_does_not_own_authz_pdp: CAP_AUTHZ → authorization
+  - eiftp_does_not_own_business_rules: industry_modules_call_identity_apis_only
+  - single_federation_sor: CAP_FEDERATION → identity_federation

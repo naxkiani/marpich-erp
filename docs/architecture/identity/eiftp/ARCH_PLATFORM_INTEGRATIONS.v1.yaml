@@ -1,0 +1,17 @@
+# Platform Integrations — Knowledge Graph & Digital Twin
+# P200-B2 · ADR-216
+version: "1.0"
+prompt_id: P200-B2
+
+knowledge_graph:
+  role: Trust fabric graph projection for analytics and AI copilot context
+  write_path: integration_events_only
+  read_path: intelligence_apis_and_search
+  never: peer_db_queries
+
+digital_twin:
+  context: identity_digital_twin
+  subscribes: [federation.identity.linked]
+  carries: federation_link_refs
+  simulates: [federation_disable, trust_revocation]
+  law: Twin is projection — federation remains SoR for links/trust

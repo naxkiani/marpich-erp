@@ -1,0 +1,23 @@
+# P207-B — Validation gates
+version: "1.0"
+prompt_id: P207-B
+adr: "317"
+sor: identity_intelligence
+api_prefix: /api/v1/identity-intelligence/mission
+
+reject_if:
+  - mission_vision_absent
+  - enterprise_scope_undefined
+  - out_of_scope_unclear
+  - replaces_peer_sors
+  - strategic_objectives_undefined
+  - intelligence_layer_absent
+  - ai_only_chatbot
+  - human_control_removed
+  - invents_sibling_intelligence_bc
+  - embeds_llm_sdk
+  - automation_without_governance
+  - decisions_not_explainable
+
+production_readiness_verdict: ENTERPRISE_GRADE
+foundation_validator: contexts.identity_intelligence.domain.services.ii_mission_foundation

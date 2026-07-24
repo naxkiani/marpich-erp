@@ -1,0 +1,36 @@
+# Responsibility Matrix — Domain × Concern
+# P200-B3 · ADR-217
+version: "1.0"
+prompt_id: P200-B3
+
+# R = Responsible, A = Accountable, C = Consulted, I = Informed
+
+matrix:
+  federated_login:
+    DOM_FEDERATION: RA
+    DOM_AUTHENTICATION: C
+    DOM_TRUST: C
+    DOM_IDENTITY: I
+  trust_evaluation:
+    DOM_TRUST: RA
+    DOM_AUTHORIZATION: I
+  permit_deny:
+    DOM_AUTHORIZATION: RA
+    DOM_TRUST: C
+    DOM_POLICY: C
+  principal_registry:
+    DOM_IDENTITY: RA
+    DOM_FEDERATION: I
+  external_idp_connector_execution:
+    integration: RA
+    DOM_EXTERNAL_IDENTITY: C
+  audit_trail:
+    DOM_AUDIT: RA
+    DOM_FEDERATION: C
+  secrets:
+    DOM_SECRETS: RA
+    DOM_CERTIFICATE: C
+  ai_agent_identity:
+    DOM_AI_IDENTITY: RA
+    ai_governance: A
+    DOM_AUTHORIZATION: C

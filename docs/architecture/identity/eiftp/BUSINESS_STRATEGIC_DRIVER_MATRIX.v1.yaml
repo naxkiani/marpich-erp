@@ -1,0 +1,62 @@
+# Strategic Driver Matrix — EIFTP
+# P200-B1.1-C · ADR-214
+version: "1.0"
+prompt_id: P200-B1.1-C
+
+# Rows = primary drivers; Columns = value themes (Y = primary contribution)
+
+value_themes:
+  - operational_excellence
+  - security_excellence
+  - compliance_excellence
+  - digital_transformation
+  - cloud_readiness
+  - ai_readiness
+  - developer_productivity
+  - partner_enablement
+  - customer_experience
+  - scalable_enterprise_growth
+
+matrix:
+  P1:
+    digital_transformation: primary
+    cloud_readiness: primary
+    operational_excellence: secondary
+    scalable_enterprise_growth: secondary
+  P2:
+    operational_excellence: primary
+    security_excellence: primary
+    developer_productivity: secondary
+    scalable_enterprise_growth: primary
+  P3:
+    security_excellence: primary
+    customer_experience: primary
+    partner_enablement: secondary
+  P4:
+    partner_enablement: primary
+    customer_experience: secondary
+    scalable_enterprise_growth: secondary
+  P5:
+    partner_enablement: primary
+    security_excellence: primary
+    cloud_readiness: secondary
+  P6:
+    security_excellence: primary
+    compliance_excellence: secondary
+    cloud_readiness: secondary
+  P7:
+    ai_readiness: primary
+    security_excellence: primary
+    compliance_excellence: secondary
+  P8:
+    compliance_excellence: primary
+    customer_experience: secondary
+    security_excellence: secondary
+  P9:
+    security_excellence: primary
+    digital_transformation: secondary
+    developer_productivity: secondary
+  P10:
+    operational_excellence: primary
+    developer_productivity: primary
+    scalable_enterprise_growth: secondary

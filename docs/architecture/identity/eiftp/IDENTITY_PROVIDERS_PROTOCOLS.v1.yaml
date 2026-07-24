@@ -1,0 +1,37 @@
+# Protocol abstraction catalog — P200-B7 · ADR-221
+version: "1.0"
+prompt_id: P200-B7
+
+builtin_plugins:
+  - plugin_id: plugin.oauth2
+    protocol: oauth2
+    capabilities: [pkce, dcr, authorization_code, client_credentials, token_exchange]
+  - plugin_id: plugin.oidc
+    protocol: oidc
+    capabilities: [discovery, jwks, userinfo, id_token]
+  - plugin_id: plugin.saml
+    protocol: saml
+    capabilities: [idp, sp, slo, metadata]
+  - plugin_id: plugin.scim
+    protocol: scim
+    capabilities: [users, groups, bulk]
+  - plugin_id: plugin.ldap
+    protocol: ldap
+    capabilities: [sync, bind]
+  - plugin_id: plugin.ad
+    protocol: ad
+    capabilities: [sync, group_mapping]
+  - plugin_id: plugin.jwt
+    protocol: jwt
+    capabilities: [jws, jwe, jwks]
+
+extension_law: |
+  New federation protocols ship as ProtocolPluginDescriptor + Integration Platform
+  connector. Domain never imports vendor SDKs.
+
+security:
+  - certificate_validation
+  - mutual_tls_via_mesh
+  - secret_rotation
+  - no_secrets_in_config_payload_logs
+  - zero_trust_provider_validation

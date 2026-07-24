@@ -1,0 +1,48 @@
+# EIFTP Governance Framework — P200-B12 · ADR-226
+version: "1.0"
+prompt_id: P200-B12
+
+boards:
+  - id: arb
+    name: Architecture Review Board
+    approves: [architecture_adr, ddd_boundaries]
+  - id: srb
+    name: Security Review Board
+    approves: [security_controls, zero_trust_gates]
+  - id: apigb
+    name: API Governance Board
+    approves: [rest_graphql_grpc_contracts]
+  - id: aigb
+    name: AI Governance Board
+    approves: [ai_ops_hooks, prompt_surfaces]
+  - id: rgb
+    name: Release Governance Board
+    approves: [release_certificate, production_gitops]
+
+workflows:
+  - id: pr_review
+    steps: [code_review, architecture_check, security_check, docs_check]
+  - id: release_train
+    steps: [quality_gates, board_approvals, gitops_promote, verify, rollback_ready]
+  - id: emergency_hotfix
+    steps: [security_exception, abbreviated_gates, post_hoc_review]
+
+compliance_frameworks:
+  - ISO_27001
+  - SOC_2
+  - NIST
+  - OWASP_ASVS
+  - OWASP_API_Security
+  - CIS_Benchmarks
+  - GDPR_Ready
+  - PCI_DSS_Ready
+  - Enterprise_Internal_Policies
+
+ai_quality:
+  - model_validation_hooks
+  - prompt_validation
+  - bias_detection_hooks
+  - hallucination_detection_hooks
+  - explainability_validation
+  - human_approval_when_required
+  note: inference and deep AI QA via AI Platform / ai_governance — not embedded

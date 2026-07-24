@@ -1,0 +1,25 @@
+# Knowledge Graph + Digital Twin model
+# P200-B4 · ADR-218
+version: "1.0"
+prompt_id: P200-B4
+
+knowledge_graph:
+  write_path: integration_events_only
+  edges:
+    - { from: Identity, rel: belongs_to, to: Organization }
+    - { from: Identity, rel: has_role, to: Capability }
+    - { from: Tenant, rel: trusts, to: Tenant }
+    - { from: AIAgent, rel: authorized_for, to: Workflow }
+    - { from: Service, rel: communicates_with, to: Service }
+    - { from: DigitalTwin, rel: represents, to: IdentityState }
+    - { from: Identity, rel: federated_via, to: IdentityProvider }
+    - { from: Identity, rel: linked_as, to: ExternalSubject }
+
+digital_twins:
+  - { name: IdentityTwin, context: identity_digital_twin, state: [current, historical, risk, posture, relationships] }
+  - { name: TenantTwin, context: identity_digital_twin }
+  - { name: TrustTwin, context: identity_digital_twin, source_events: [federation.trust.changed] }
+  - { name: FederationTwin, context: identity_digital_twin, source_events: [federation.provider.*, federation.identity.linked] }
+  - { name: AIIdentityTwin, context: identity_digital_twin, source_events: [federation.ai.agent.*] }
+
+law: Twin is projection — federation aggregates remain write SoR

@@ -1,0 +1,88 @@
+# Trust Fabric — Events, CQRS, API, KG, Twin, DoD
+# P200-B6 · ADR-220
+version: "1.0"
+prompt_id: P200-B6
+
+events:
+  - TrustRelationshipCreated
+  - TrustApproved
+  - TrustEstablished
+  - TrustEvaluated
+  - TrustScoreChanged
+  - TrustLevelChanged
+  - TrustSuspended
+  - TrustRevoked
+  - EvidenceAdded
+  - RiskDetected
+  - PolicyViolationDetected
+
+commands:
+  - CreateTrustRelationship
+  - ApproveTrust
+  - EvaluateTrustContinuous
+  - UpdateTrustPolicy
+  - AddTrustEvidence
+  - RevokeTrust
+  - RegisterTrustEntity
+
+queries:
+  - GetTrustStatus
+  - GetTrustScore
+  - GetTrustHistory
+  - GetTrustGraph
+  - GetRiskProfile
+  - GetTrustEvidence
+
+apis:
+  rest_prefix: /api/v1/federation/trust-fabric
+  graphql: deferred_B10
+  grpc: deferred_B10
+  events: federation.trust.*
+  webhooks: via_integration_platform
+
+knowledge_graph:
+  entities: [Identity, Organization, Tenant, Application, Service, AIAgent, Device, Policy, Evidence]
+  relationships: [trusts, verified_by, authorized_by, connected_to, depends_on, communicates_with]
+
+digital_twins:
+  - TrustRelationshipTwin
+  - TenantTrustTwin
+  - OrganizationTrustTwin
+  - AITrustTwin
+  - ServiceTrustTwin
+  twin_context: identity_digital_twin
+  law: projection_only
+
+persistence:
+  relational: [trust_relationships, trust_evidence, trust_history]
+  graph: trust_graph_engine_projection
+  event_store: outbox
+  cache: "fed:{tenant_id}:trust:{id}"
+
+observability:
+  - trust_decision_logging
+  - metrics_trust_score_level
+  - otel_spans
+  - audit_via_events
+
+testing_strategy:
+  - unit_score_engine_explainability
+  - unit_level_transitions
+  - unit_cqrs_trust_fabric
+  - architecture_validator
+
+definition_of_done:
+  - continuous_evaluation_shipped
+  - levels_0_to_5
+  - evidence_store
+  - explainable_scores
+  - cqrs_and_rest_surface
+  - no_permit_deny_in_fabric
+  - no_contexts_eiftp
+  - ai_agent_entity_kind_supported
+
+implementation_roadmap:
+  - B6_this_prompt
+  - B8_cross_tenant_approval_depth
+  - B9_security_zt_enforcement_depth
+  - B10_graphql_grpc

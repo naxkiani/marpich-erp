@@ -1,0 +1,55 @@
+# P207-H — Behavior analytics DDD / CQRS
+version: "1.0"
+prompt_id: P207-H
+adr: "323"
+sor: identity_intelligence
+
+logical_bounded_contexts:
+  - behavior_collection
+  - behavior_baseline
+  - anomaly_detection
+  - ueba_engine
+  - behavior_risk
+  - continuous_trust_signal
+  - investigation
+
+aggregates:
+  - IdentityBehaviorProfile
+  - BehaviorBaseline
+  - AnomalyDetectionCase
+  - UebaEntityProfile
+  - BehaviorRiskSignal
+  - BehaviorTrustSignal
+  - BehaviorPrivacyPolicy
+
+commands:
+  - CreateBehaviorProfile
+  - AnalyzeBehavior
+  - DetectAnomaly
+  - CalculateBehaviorRisk
+  - UpdateTrustScore
+  - LearnBaseline
+  - StartInvestigation
+
+queries:
+  - GetBehaviorProfile
+  - GetAnomalyHistory
+  - GetRiskAnalysis
+  - GetBaseline
+  - GetTrustSignal
+  - GetInvestigation
+
+events:
+  - BehaviorProfileCreated
+  - BehaviorAnalyzed
+  - AnomalyDetected
+  - RiskUpdated
+  - TrustChanged
+  - InvestigationStarted
+  - BaselineLearned
+
+cqrs_ready: true
+event_driven: true
+outbox_required: true
+boundaries_clear: true
+deployable_unit: identity_intelligence

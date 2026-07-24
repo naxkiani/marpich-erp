@@ -1,0 +1,21 @@
+# P207-K — Validation gates
+version: "1.0"
+prompt_id: P207-K
+adr: "326"
+sor: identity_intelligence
+api_prefix: /api/v1/identity-intelligence/graph
+
+reject_if:
+  - graph_only_data_without_reasoning
+  - relationships_undefined
+  - ai_cannot_explain_conclusions
+  - security_context_missing
+  - ontology_governance_absent
+  - identity_intelligence_integration_weak
+  - duplicates_directory_graph_sor
+  - invents_sibling_graph_bc
+  - embeds_llm_sdk
+  - bypasses_authorization_pdp
+
+production_readiness_verdict: ENTERPRISE_GRADE
+foundation_validator: contexts.identity_intelligence.domain.services.ii_graph_foundation

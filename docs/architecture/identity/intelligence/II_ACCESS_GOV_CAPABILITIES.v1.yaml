@@ -1,0 +1,37 @@
+# P207-J — AI Governance & Access Optimization capabilities
+version: "1.0"
+prompt_id: P207-J
+adr: "325"
+sor: identity_intelligence
+api_prefix: /api/v1/identity-intelligence/access-gov
+
+flow:
+  - identity_governance_intelligence
+  - access_intelligence
+  - entitlement_intelligence
+  - risk_intelligence
+  - optimization_intelligence
+  - autonomous_governance_actions
+
+layers:
+  - ai_governance_engine
+  - access_intelligence_engine
+  - optimization_engine
+  - decision_governance_engine
+
+not_periodic_only: true
+explainable_recommendations_required: true
+business_context_required: true
+human_governance_required: true
+compliance_evidence_required: true
+risk_intelligence_connected_required: true
+via_p207g_risk: true
+via_p207f_twins: true
+via_p207e_agents: true
+via_p202_iga: true
+via_workflow: true
+via_policy_engine: true
+continuous_certification: true
+hitl_required: true
+governance_required: true
+embeds_llm_forbidden: true
