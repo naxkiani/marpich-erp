@@ -12,6 +12,7 @@ from contexts.hospital.presentation.schemas import (
     AssignBedRequest,
     CompleteEncounterRequest,
     CreateBedRequest,
+    DocumentEncounterRequest,
     RegisterPatientRequest,
     StartEncounterRequest,
     TransferAdmissionRequest,
@@ -194,9 +195,37 @@ async def list_encounters(
     _user: Annotated[dict, Depends(require_permissions("hospital.encounters.read"))],
     limit: Annotated[int, Query(ge=1, le=100)] = 50,
     offset: Annotated[int, Query(ge=0)] = 0,
+    admission_id: Annotated[str | None, Query()] = None,
+    status: Annotated[str | None, Query()] = None,
 ):
-    result = await get_hospital_service().list_encounters(tenant_id, limit=limit, offset=offset)
+    result = await get_hospital_service().list_encounters(
+        tenant_id,
+        limit=limit,
+        offset=offset,
+        admission_id=admission_id,
+        status=status,
+    )
     return {"data": result.unwrap()}
+
+
+@router.post("/encounters/{encounter_id}/document")
+async def document_encounter(
+    encounter_id: str,
+    body: DocumentEncounterRequest,
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    correlation_id: Annotated[str, Depends(get_correlation_id)],
+    _user: Annotated[dict, Depends(require_permissions("hospital.encounters.write"))],
+):
+    result = await get_hospital_service().document_encounter(
+        tenant_id=tenant_id,
+        encounter_id=encounter_id,
+        procedure_codes=body.procedure_codes,
+        diagnosis_codes=body.diagnosis_codes,
+        correlation_id=correlation_id,
+    )
+    if not result.succeeded:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, result.error)
+    return {"data": result.unwrap(), "meta": {"correlation_id": correlation_id}}
 
 
 @router.post("/encounters/{encounter_id}/complete")

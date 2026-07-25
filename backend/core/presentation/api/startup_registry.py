@@ -2,12 +2,15 @@
 from __future__ import annotations
 
 import importlib
+import logging
 from typing import TYPE_CHECKING
 
 from core.presentation.api.app_profiles import filter_specs_by_profile
 
 if TYPE_CHECKING:
     from fastapi import FastAPI
+
+logger = logging.getLogger("marpich.startup")
 
 API_PREFIX = "/api/v1"
 
@@ -409,18 +412,28 @@ def register_routers(app: "FastAPI", *, profile: str = "full") -> int:
     if _registered_profiles.get(app_id) == profile:
         return len(router_specs_for_profile(profile))
     specs = router_specs_for_profile(profile)
+    mounted = 0
     for module_path, attr in specs:
-        app.include_router(resolve_router(module_path, attr), prefix=API_PREFIX)
+        try:
+            app.include_router(resolve_router(module_path, attr), prefix=API_PREFIX)
+            mounted += 1
+        except (ModuleNotFoundError, ImportError, AttributeError) as exc:
+            logger.warning("Skipping router %s.%s — %s", module_path, attr, exc)
     _registered_profiles[app_id] = profile
-    return len(specs)
+    return mounted
 
 
 def warmup_services(app: "FastAPI", specs: list[tuple[str, str]]) -> int:
     app_id = id(app)
+    warmed = 0
     for module_path, getter in specs:
-        resolve_service(module_path, getter)
+        try:
+            resolve_service(module_path, getter)
+            warmed += 1
+        except (ModuleNotFoundError, ImportError, AttributeError) as exc:
+            logger.warning("Skipping service %s.%s — %s", module_path, getter, exc)
     _services_warmed_for[app_id] = "done"
-    return len(specs)
+    return warmed
 
 
 def configure_application(
