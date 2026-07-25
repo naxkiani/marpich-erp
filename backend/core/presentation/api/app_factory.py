@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
+from typing import Any, Protocol
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -9,13 +10,42 @@ from fastapi.middleware.cors import CORSMiddleware
 from core.presentation.api.startup_registry import configure_application
 from core.presentation.middleware.platform_gateway import PlatformGatewayMiddleware
 from core.presentation.middleware.tenant_rls import TenantRlsMiddleware
-from contexts.enterprise_message_orchestration.infrastructure.workers.orchestration_worker import (
-    get_orchestration_worker,
-)
 from shared.infrastructure.messaging.dispatcher import get_outbox_dispatcher
-from shared.infrastructure.messaging.transport_registry import get_transport_registry
 from shared.infrastructure.observability.telemetry import setup_observability, shutdown_observability
 from shared.infrastructure.settings import settings
+
+
+class _LifecycleWorker(Protocol):
+    async def start(self) -> None: ...
+    async def stop(self) -> None: ...
+
+
+class _NoopLifecycle:
+    async def start(self) -> None:
+        return None
+
+    async def stop(self) -> None:
+        return None
+
+
+def _optional_orchestration_worker() -> _LifecycleWorker | None:
+    """Message orchestration context may be absent when sources are not restored."""
+    try:
+        from contexts.enterprise_message_orchestration.infrastructure.workers.orchestration_worker import (
+            get_orchestration_worker,
+        )
+    except ModuleNotFoundError:
+        return None
+    return get_orchestration_worker()
+
+
+def _transport_registry() -> _LifecycleWorker:
+    """Prefer shared transport registry; fall back to no-op when module is missing."""
+    try:
+        from shared.infrastructure.messaging.transport_registry import get_transport_registry
+    except ModuleNotFoundError:
+        return _NoopLifecycle()
+    return get_transport_registry()
 
 
 def create_app(
@@ -35,15 +65,18 @@ def create_app(
             startup_mode=app_startup_mode,
         )
         dispatcher = get_outbox_dispatcher()
-        await get_transport_registry().start()
+        transport = _transport_registry()
+        await transport.start()
         await dispatcher.start()
-        orchestration_worker = get_orchestration_worker()
-        await orchestration_worker.start()
+        orchestration_worker = _optional_orchestration_worker()
+        if orchestration_worker is not None:
+            await orchestration_worker.start()
         setup_observability(app)
         yield
-        await orchestration_worker.stop()
+        if orchestration_worker is not None:
+            await orchestration_worker.stop()
         await dispatcher.stop()
-        await get_transport_registry().stop()
+        await transport.stop()
         shutdown_observability()
 
     application = FastAPI(
