@@ -3337,7 +3337,6 @@ const MESSAGES: Record<Locale, Record<string, string>> = {
     "hospital.assignBed": "تعيين سرير",
     "hospital.transfer": "نقل",
     "hospital.discharge": "خروج",
-<<<<<<< HEAD
     "hospital.encounter": "بدء ← توثيق ← إكمال",
     "hospital.startEncounter": "بدء الزيارة",
     "hospital.documentEncounter": "توثيق الرموز",
@@ -3345,9 +3344,6 @@ const MESSAGES: Record<Locale, Record<string, string>> = {
     "hospital.procedureCodes": "رموز الإجراءات",
     "hospital.diagnosisCodes": "رموز التشخيص",
     "hospital.encounterLifecycleHelp": "CAP-HLT-005: ابدأ، وثّق الرموز أثناء الزيارة، ثم أكمل (الفوترة عند الإكمال).",
-=======
-    "hospital.encounter": "إكمال الزيارة",
->>>>>>> origin/main
     "hospital.confirmDischarge": "خروج هذا القبول؟ سيتم تحرير السرير.",
     "hospital.billing": "الفوترة",
     "hospital.billingPosted": "تم ترحيل فاتورة الزيارة",
