@@ -20,6 +20,7 @@ publishes:
   - hospital.admission.transferred
   - hospital.admission.discharged
   - hospital.encounter.started
+  - hospital.encounter.documented
   - hospital.encounter.completed
 subscribes:
   - identity.user.created

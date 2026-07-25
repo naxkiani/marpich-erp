@@ -39,6 +39,11 @@ class CompleteEncounterRequest(BaseModel):
     diagnosis_codes: list[str] = Field(default_factory=list)
 
 
+class DocumentEncounterRequest(BaseModel):
+    procedure_codes: list[str] = Field(default_factory=list)
+    diagnosis_codes: list[str] = Field(default_factory=list)
+
+
 class AiInferRequest(BaseModel):
     surface: str = Field(min_length=1, max_length=64)
     payload: dict = Field(default_factory=dict)

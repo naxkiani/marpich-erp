@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hospital.encounter.started.v1",
+  "title": "hospital.encounter.started.v1",
+  "type": "object",
+  "required": ["encounter_id", "patient_id", "admission_id"],
+  "properties": {
+    "encounter_id": { "type": "string", "format": "uuid" },
+    "patient_id": { "type": "string", "format": "uuid" },
+    "admission_id": { "type": "string", "format": "uuid" }
+  },
+  "additionalProperties": false
+}

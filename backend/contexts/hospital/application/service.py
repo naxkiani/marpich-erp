@@ -502,11 +502,22 @@ class HospitalApplicationService:
         return Result.ok(encounter.to_dict())
 
     async def list_encounters(
-        self, tenant_id: str, *, limit: int = 50, offset: int = 0
+        self,
+        tenant_id: str,
+        *,
+        limit: int = 50,
+        offset: int = 0,
+        admission_id: str | None = None,
+        status: str | None = None,
     ) -> Result[dict]:
         limit = max(1, min(limit, 100))
         offset = max(0, offset)
         encounters = await self._encounters.list_encounters(tenant_id)
+        if admission_id:
+            encounters = [e for e in encounters if str(e.admission_id) == admission_id]
+        if status:
+            status_n = status.strip().lower()
+            encounters = [e for e in encounters if e.status.value == status_n]
         page = encounters[offset : offset + limit]
         return Result.ok(
             {
@@ -516,6 +527,32 @@ class HospitalApplicationService:
                 "offset": offset,
             }
         )
+
+    async def document_encounter(
+        self,
+        *,
+        tenant_id: str,
+        encounter_id: str,
+        procedure_codes: list[str] | None,
+        diagnosis_codes: list[str] | None,
+        correlation_id: str,
+    ) -> Result[dict]:
+        encounter = await self._encounters.find_by_id(
+            tenant_id, UniqueId.from_string(encounter_id)
+        )
+        if not encounter:
+            return Result.fail("hospital.errors.encounter_not_found")
+        try:
+            event = encounter.document(
+                procedure_codes=procedure_codes,
+                diagnosis_codes=diagnosis_codes,
+                correlation_id=correlation_id,
+            )
+        except ValueError as exc:
+            return Result.fail(str(exc))
+        await self._encounters.save(encounter)
+        await publish_integration_event(event)
+        return Result.ok(encounter.to_dict())
 
     async def complete_encounter(
         self,
@@ -532,13 +569,13 @@ class HospitalApplicationService:
         if not encounter:
             return Result.fail("hospital.errors.encounter_not_found")
 
-        if procedure_codes:
-            for code in procedure_codes:
-                encounter.add_procedure(code)
-        if diagnosis_codes:
-            encounter.diagnosis_codes.extend(diagnosis_codes)
-
         try:
+            if procedure_codes:
+                for code in procedure_codes:
+                    encounter.add_procedure(code)
+            if diagnosis_codes:
+                for code in diagnosis_codes:
+                    encounter.add_diagnosis(code)
             event = encounter.complete(correlation_id=correlation_id)
         except ValueError as exc:
             return Result.fail(str(exc))

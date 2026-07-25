@@ -25,13 +25,14 @@ No clinic-style walk-in encounters. Discharge releases occupied beds.
 
 **Publishes:** `hospital.patient.registered` · `hospital.admission.registered` · `hospital.bed.assigned` ·
 `hospital.admission.transferred` · `hospital.admission.discharged` ·
-`hospital.encounter.started` · `hospital.encounter.completed`
+`hospital.encounter.started` · `hospital.encounter.documented` · `hospital.encounter.completed`
 
 **Subscribes:** `laboratory.result.available` · `pharmacy.dispense.completed` (ACL → `CareEventProjection`)
 
 ## Demo UI (P11)
 
-Admin portal encounters tab: **Seed care events** calls Lab/Pharmacy HTTP APIs with peer
+Admin portal encounters tab: **Start → Document codes → Complete** (billing on complete).
+**Seed care events** calls Lab/Pharmacy HTTP APIs with peer
 `patient_ref` (+ selected encounter when set). Fresh `uniqueKey` per click; timeline refreshes via ACL.
 Hospital never imports laboratory/pharmacy domains.
 
