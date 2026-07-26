@@ -8,6 +8,34 @@ from shared.domain.value_objects.unique_id import UniqueId
 
 
 @dataclass(frozen=True, kw_only=True)
+class OrderPlacedIntegration(IntegrationEvent):
+    order_id: UniqueId
+    order_number: str
+    patient_ref: str
+    test_code: str
+
+    @property
+    def event_name(self) -> str:
+        return "laboratory.order.placed"
+
+    @property
+    def source_context(self) -> str:
+        return "laboratory"
+
+    @property
+    def event_version(self) -> int:
+        return 1
+
+    def to_payload(self) -> dict:
+        return {
+            "order_id": str(self.order_id),
+            "order_number": self.order_number,
+            "patient_ref": self.patient_ref,
+            "test_code": self.test_code,
+        }
+
+
+@dataclass(frozen=True, kw_only=True)
 class SampleReceivedIntegration(IntegrationEvent):
     sample_id: UniqueId
     order_id: UniqueId

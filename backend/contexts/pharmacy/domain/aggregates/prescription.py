@@ -1,5 +1,6 @@
 """Pharmacy prescription aggregate — CAP-HLT-008.
 
+Lifecycle: received → dispensed → counselled.
 Stores peer patient_ref only (hospital/clinic UniqueId string) — never shared patient tables.
 """
 from __future__ import annotations
@@ -21,6 +22,8 @@ class Prescription(AggregateRoot):
     quantity: float
     status: str = "received"
     source_encounter_ref: str | None = None
+    counseling_notes: str | None = None
+    counselled_at: datetime | None = None
     created_at: datetime = field(default_factory=lambda: datetime.now(UTC))
 
     @classmethod
@@ -54,9 +57,17 @@ class Prescription(AggregateRoot):
         )
 
     def mark_dispensed(self) -> None:
-        if self.status == "dispensed":
-            raise ValueError("pharmacy.errors.already_dispensed")
+        if self.status != "received":
+            raise ValueError("pharmacy.errors.dispense_requires_received")
         self.status = "dispensed"
+
+    def record_counseling(self, *, notes: str | None = None) -> None:
+        if self.status != "dispensed":
+            raise ValueError("pharmacy.errors.counsel_requires_dispensed")
+        text = (notes or "").strip()
+        self.counseling_notes = text or None
+        self.counselled_at = datetime.now(UTC)
+        self.status = "counselled"
 
     def to_dict(self) -> dict:
         return {
@@ -69,5 +80,7 @@ class Prescription(AggregateRoot):
             "quantity": self.quantity,
             "status": self.status,
             "source_encounter_ref": self.source_encounter_ref,
+            "counseling_notes": self.counseling_notes,
+            "counselled_at": self.counselled_at.isoformat() if self.counselled_at else None,
             "created_at": self.created_at.isoformat(),
         }

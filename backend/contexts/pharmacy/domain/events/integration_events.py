@@ -63,3 +63,31 @@ class DispenseCompletedIntegration(IntegrationEvent):
             "drug_code": self.drug_code,
             "quantity_dispensed": self.quantity_dispensed,
         }
+
+
+@dataclass(frozen=True, kw_only=True)
+class CounselingCompletedIntegration(IntegrationEvent):
+    prescription_id: UniqueId
+    patient_ref: str
+    drug_code: str
+    counseling_notes: str | None = None
+
+    @property
+    def event_name(self) -> str:
+        return "pharmacy.counseling.completed"
+
+    @property
+    def source_context(self) -> str:
+        return "pharmacy"
+
+    @property
+    def event_version(self) -> int:
+        return 1
+
+    def to_payload(self) -> dict:
+        return {
+            "prescription_id": str(self.prescription_id),
+            "patient_ref": self.patient_ref,
+            "drug_code": self.drug_code,
+            "counseling_notes": self.counseling_notes,
+        }

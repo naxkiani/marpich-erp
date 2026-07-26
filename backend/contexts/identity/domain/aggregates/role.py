@@ -174,6 +174,7 @@ class Role(AggregateRoot):
                 "pharmacy.prescriptions.write",
                 "pharmacy.dispenses.read",
                 "pharmacy.dispenses.write",
+                "pharmacy.counseling.write",
                 "documents.read",
                 "documents.write",
                 "audit.entries.read",

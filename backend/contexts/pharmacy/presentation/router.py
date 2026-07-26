@@ -11,7 +11,11 @@ from contexts.identity.presentation.dependencies import (
     require_permissions,
 )
 from contexts.pharmacy.container import get_pharmacy_service
-from contexts.pharmacy.presentation.schemas import DispenseRequest, ReceivePrescriptionRequest
+from contexts.pharmacy.presentation.schemas import (
+    CounselRequest,
+    DispenseRequest,
+    ReceivePrescriptionRequest,
+)
 
 router = APIRouter(prefix="/pharmacy", tags=["Pharmacy"])
 
@@ -82,3 +86,27 @@ async def list_dispenses(
 ):
     result = await get_pharmacy_service().list_dispenses(tenant_id, limit=limit, offset=offset)
     return {"data": result.unwrap()}
+
+
+@router.post("/prescriptions/{prescription_id}/counsel", status_code=status.HTTP_200_OK)
+async def record_counseling(
+    prescription_id: str,
+    body: CounselRequest,
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    correlation_id: Annotated[str, Depends(get_correlation_id)],
+    _user: Annotated[dict, Depends(require_permissions("pharmacy.counseling.write"))],
+):
+    result = await get_pharmacy_service().record_counseling(
+        tenant_id=tenant_id,
+        prescription_id=prescription_id,
+        correlation_id=correlation_id,
+        notes=body.notes,
+    )
+    if not result.succeeded:
+        code = (
+            status.HTTP_404_NOT_FOUND
+            if "not_found" in (result.error or "")
+            else status.HTTP_400_BAD_REQUEST
+        )
+        raise HTTPException(code, result.error)
+    return {"data": result.unwrap(), "meta": {"correlation_id": correlation_id}}

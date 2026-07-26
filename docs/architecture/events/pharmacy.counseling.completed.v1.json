@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "pharmacy.counseling.completed.v1",
+  "type": "object",
+  "required": ["prescription_id", "patient_ref", "drug_code"],
+  "properties": {
+    "prescription_id": { "type": "string", "format": "uuid" },
+    "patient_ref": { "type": "string" },
+    "drug_code": { "type": "string" },
+    "counseling_notes": { "type": ["string", "null"] }
+  },
+  "additionalProperties": false
+}

@@ -4,6 +4,7 @@ from __future__ import annotations
 from contexts.pharmacy.domain.aggregates.dispense_record import DispenseRecord
 from contexts.pharmacy.domain.aggregates.prescription import Prescription
 from contexts.pharmacy.domain.events.integration_events import (
+    CounselingCompletedIntegration,
     DispenseCompletedIntegration,
     PrescriptionReceivedIntegration,
 )
@@ -125,3 +126,33 @@ class PharmacyApplicationService:
         return Result.ok(
             {"items": [r.to_dict() for r in page], "total": len(rows), "limit": limit, "offset": offset}
         )
+
+    async def record_counseling(
+        self,
+        *,
+        tenant_id: str,
+        prescription_id: str,
+        correlation_id: str,
+        notes: str | None = None,
+    ) -> Result[dict]:
+        prescription = await self._prescriptions.find_by_id(
+            tenant_id, UniqueId.from_string(prescription_id)
+        )
+        if not prescription:
+            return Result.fail("pharmacy.errors.prescription_not_found")
+        try:
+            prescription.record_counseling(notes=notes)
+        except ValueError as exc:
+            return Result.fail(str(exc))
+        await self._prescriptions.save(prescription)
+        await publish_integration_event(
+            CounselingCompletedIntegration(
+                tenant_id=TenantId.create(tenant_id),
+                correlation_id=correlation_id,
+                prescription_id=prescription.id,
+                patient_ref=prescription.patient_ref,
+                drug_code=prescription.drug_code,
+                counseling_notes=prescription.counseling_notes,
+            )
+        )
+        return Result.ok(prescription.to_dict())

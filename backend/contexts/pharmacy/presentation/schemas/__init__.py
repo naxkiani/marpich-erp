@@ -14,3 +14,7 @@ class ReceivePrescriptionRequest(BaseModel):
 class DispenseRequest(BaseModel):
     prescription_id: str
     quantity_dispensed: float | None = Field(default=None, gt=0)
+
+
+class CounselRequest(BaseModel):
+    notes: str | None = Field(default=None, max_length=2000)

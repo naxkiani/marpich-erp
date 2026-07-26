@@ -84,6 +84,13 @@ async def test_pharmacy_receive_and_dispense(client):
     assert listed.status_code == 200
     assert listed.json()["data"]["total"] == 1
 
+    early_counsel = await client.post(
+        f"/api/v1/pharmacy/prescriptions/{prescription_id}/counsel",
+        json={"notes": "too early"},
+        headers=headers,
+    )
+    assert early_counsel.status_code == 400
+
     dispense = await client.post(
         "/api/v1/pharmacy/dispenses",
         json={"prescription_id": prescription_id},
@@ -98,3 +105,31 @@ async def test_pharmacy_receive_and_dispense(client):
         headers=headers,
     )
     assert again.status_code == 400
+
+    listed_after = await client.get("/api/v1/pharmacy/prescriptions", headers=headers)
+    assert listed_after.json()["data"]["items"][0]["status"] == "dispensed"
+
+    counsel = await client.post(
+        f"/api/v1/pharmacy/prescriptions/{prescription_id}/counsel",
+        json={"notes": "Take with food"},
+        headers=headers,
+    )
+    assert counsel.status_code == 200, counsel.text
+    assert counsel.json()["data"]["status"] == "counselled"
+    assert counsel.json()["data"]["counseling_notes"] == "Take with food"
+
+    again_counsel = await client.post(
+        f"/api/v1/pharmacy/prescriptions/{prescription_id}/counsel",
+        json={},
+        headers=headers,
+    )
+    assert again_counsel.status_code == 400
+
+
+@pytest.mark.unit
+def test_pharmacy_staff_can_counsel():
+    from contexts.identity.domain.aggregates.role import Role
+
+    role = Role.create_pharmacy_staff("pharmacy-demo")
+    assert "pharmacy.counseling.write" in role.permission_ids
+    assert "pharmacy.dispenses.write" in role.permission_ids

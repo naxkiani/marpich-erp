@@ -4,6 +4,7 @@ from __future__ import annotations
 from contexts.laboratory.domain.aggregates.sample import Sample
 from contexts.laboratory.domain.aggregates.test_order import TestOrder
 from contexts.laboratory.domain.events.integration_events import (
+    OrderPlacedIntegration,
     ResultAvailableIntegration,
     SampleReceivedIntegration,
 )
@@ -46,6 +47,16 @@ class LaboratoryApplicationService:
         except ValueError as exc:
             return Result.fail(str(exc))
         await self._orders.save(order)
+        await publish_integration_event(
+            OrderPlacedIntegration(
+                tenant_id=TenantId.create(tenant_id),
+                correlation_id=correlation_id,
+                order_id=order.id,
+                order_number=order.order_number,
+                patient_ref=order.patient_ref,
+                test_code=order.test_code,
+            )
+        )
         return Result.ok(order.to_dict())
 
     async def list_orders(

@@ -1357,6 +1357,8 @@ class PharmacyPrescriptionRow(Base):
     quantity: Mapped[float] = mapped_column(Numeric(18, 4), nullable=False)
     status: Mapped[str] = mapped_column(String(32), nullable=False, default="received")
     source_encounter_ref: Mapped[str | None] = mapped_column(String(128))
+    counseling_notes: Mapped[str | None] = mapped_column(Text, nullable=True)
+    counselled_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 

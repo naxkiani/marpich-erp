@@ -1,4 +1,4 @@
-# Laboratory P0 Architecture Brief — CAP-HLT-007
+# Laboratory Architecture Brief — CAP-HLT-007
 
 **Domain type:** Industry Core (healthcare) — LIMS  
 **Must not merge with:** hospital, clinic, pharmacy
@@ -19,4 +19,19 @@ Peer `patient_ref` only — never shared EMR patient tables.
 
 ## Events
 
-`laboratory.sample.received` · `laboratory.result.available`
+| Event | When |
+|-------|------|
+| `laboratory.order.placed` | Order created |
+| `laboratory.sample.received` | Sample accessioned |
+| `laboratory.result.available` | Result finalized (hospital/clinic ACL → care timeline) |
+
+## API
+
+- `POST /api/v1/laboratory/orders`
+- `POST /api/v1/laboratory/samples`
+- `POST /api/v1/laboratory/orders/{id}/results`
+- Paginated `GET` lists (limit ≤ 100)
+
+## UI
+
+Admin `/healthcare/laboratory` — StepProgress order→sample→result desk.

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "laboratory.order.placed.v1",
+  "type": "object",
+  "required": ["order_id", "order_number", "patient_ref", "test_code"],
+  "properties": {
+    "order_id": { "type": "string", "format": "uuid" },
+    "order_number": { "type": "string" },
+    "patient_ref": { "type": "string" },
+    "test_code": { "type": "string" }
+  },
+  "additionalProperties": false
+}

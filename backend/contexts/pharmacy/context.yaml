@@ -2,7 +2,7 @@ context: pharmacy
 architecture_version: "1.0"
 display_name: Pharmacy
 type: industry
-description: "Dispensing — CAP-HLT-008 prescribe→dispense (never merge with hospital/clinic/lab)"
+description: "Dispensing — CAP-HLT-008 receive→dispense→counsel (never merge with hospital/clinic/lab)"
 capability_ids:
   - CAP-HLT-008
 aggregates:
@@ -11,6 +11,7 @@ aggregates:
 publishes:
   - pharmacy.prescription.received
   - pharmacy.dispense.completed
+  - pharmacy.counseling.completed
 subscribes:
   - hospital.encounter.completed
   - inventory.stock.adjusted
@@ -20,6 +21,7 @@ permissions:
   - pharmacy.prescriptions.write
   - pharmacy.dispenses.read
   - pharmacy.dispenses.write
+  - pharmacy.counseling.write
 ai:
   surfaces:
     - insights
@@ -39,3 +41,4 @@ ai:
   prompt_templates:
     - pharmacy.dispense.summary
     - pharmacy.interaction.flags
+    - pharmacy.counseling.notes

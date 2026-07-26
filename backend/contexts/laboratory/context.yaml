@@ -9,6 +9,7 @@ aggregates:
   - TestOrder
   - Sample
 publishes:
+  - laboratory.order.placed
   - laboratory.sample.received
   - laboratory.result.available
 subscribes:
