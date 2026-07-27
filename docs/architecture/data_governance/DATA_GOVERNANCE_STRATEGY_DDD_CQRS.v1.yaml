@@ -1,0 +1,38 @@
+# P212-A — Data Governance strategy DDD / CQRS
+version: "1.0"
+prompt_id: P212-A
+adr: "392"
+sor: data_governance
+domain: Enterprise Data Governance
+supporting_domains:
+  - data_ownership_management
+  - data_stewardship_management
+  - data_quality_intelligence
+  - metadata_governance
+  - data_product_management
+  - data_marketplace
+  - data_policy_management
+  - enterprise_intelligence
+commands:
+  - AssignDataOwner
+  - CreateDataSteward
+  - RegisterDataProduct
+  - ApproveDataPolicy
+  - PublishDataQualityRule
+  - UpdateMetadata
+  - CalculateAiReadinessScore
+queries:
+  - GetGovernanceIntelligence
+  - GetDataQualityAnalytics
+  - GetDataProductCatalog
+  - GetDataDomainIntelligence
+  - GetExecutiveDataDashboard
+events:
+  - DataOwnerAssigned
+  - DataStewardCreated
+  - DataProductRegistered
+  - DataPolicyApproved
+  - DataQualityRulePublished
+  - MetadataUpdated
+  - GovernanceViolationDetected
+  - AIReadinessScoreCalculated

@@ -1,0 +1,36 @@
+# P212-H — VALIDATION
+version: "1.0"
+prompt_id: P212-H
+adr: "401"
+sor: data_governance
+capability: CAP-PLT-DG-001
+api_prefix: /api/v1/data-governance/policies
+builds_on:
+  - P212-A
+  - P212-B
+  - P212-D
+  - P212-E
+  - P212-F
+  - P212-G
+  - ADR-392
+  - ADR-393
+  - ADR-397
+  - ADR-398
+  - ADR-399
+  - ADR-400
+reject_if:
+  - data_policy_architecture_is_incomplete
+  - policy_lifecycle_management_is_missing
+  - policy_rule_engine_is_missing
+  - governance_automation_is_missing
+  - policy_intelligence_is_missing
+  - ai_governance_integration_is_missing
+  - knowledge_graph_integration_is_missing
+  - digital_twin_integration_is_missing
+  - cqrs_architecture_is_missing
+  - event_sourcing_architecture_is_missing
+  - microservices_architecture_is_missing
+  - zero_trust_alignment_is_missing
+  - enterprise_scalability_is_missing
+  - sibling_data_policy_bc
+verdict_required: ENTERPRISE_GRADE

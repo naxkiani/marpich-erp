@@ -1,0 +1,45 @@
+# P212-N — VALIDATION
+version: "1.0"
+prompt_id: P212-N
+adr: "406"
+sor: data_governance
+capability: CAP-PLT-DG-001
+api_prefix: /api/v1/data-governance/deploy
+builds_on:
+  - P212-A
+  - P212-B
+  - P212-D
+  - P212-E
+  - P212-F
+  - P212-G
+  - P212-H
+  - P212-J
+  - P212-K
+  - P212-L
+  - P212-M
+  - ADR-392
+  - ADR-397
+  - ADR-398
+  - ADR-399
+  - ADR-400
+  - ADR-401
+  - ADR-402
+  - ADR-404
+  - ADR-405
+reject_if:
+  - cloud_native_deployment_architecture_is_missing
+  - kubernetes_platform_architecture_is_missing
+  - devsecops_platform_is_missing
+  - gitops_architecture_is_missing
+  - infrastructure_as_code_is_missing
+  - service_mesh_architecture_is_missing
+  - scalability_architecture_is_missing
+  - high_availability_architecture_is_missing
+  - observability_platform_is_missing
+  - aiops_operations_is_missing
+  - security_integration_is_missing
+  - multi_region_architecture_is_missing
+  - cqrs_operational_integration_is_missing
+  - enterprise_reliability_is_missing
+  - sibling_data_governance_deploy_bc
+verdict_required: ENTERPRISE_GRADE

@@ -1,0 +1,20 @@
+# P212-D — Validation
+version: "1.0"
+prompt_id: P212-D
+adr: "397"
+sor: data_governance
+reject_if:
+  - data_ownership_architecture_is_incomplete
+  - data_stewardship_architecture_is_incomplete
+  - accountability_framework_is_missing
+  - ddd_domain_model_is_missing
+  - cqrs_design_is_missing
+  - event_sourcing_design_is_missing
+  - data_mesh_alignment_is_missing
+  - knowledge_graph_integration_is_missing
+  - digital_twin_integration_is_missing
+  - ai_ownership_intelligence_is_missing
+  - zero_trust_security_alignment_is_missing
+  - enterprise_scalability_is_missing
+  - sibling_ownership_stewardship_bc
+verdict_required: ENTERPRISE_GRADE

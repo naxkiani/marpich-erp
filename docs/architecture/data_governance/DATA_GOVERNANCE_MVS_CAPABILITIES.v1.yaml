@@ -1,0 +1,28 @@
+# P212-B — Mission / vision / scope capabilities
+version: "1.0"
+prompt_id: P212-B
+adr: "393"
+sor: data_governance
+capability: CAP-PLT-DG-001
+api_prefix: /api/v1/data-governance/mission
+builds_on:
+  - P212-A
+  - ADR-392
+
+mission_defined_required: true
+vision_defined_required: true
+enterprise_scope_defined_required: true
+strategic_objectives_present_required: true
+operating_model_present_required: true
+maturity_model_present_required: true
+ai_governance_direction_present_required: true
+meos_integration_alignment_present_required: true
+domain_boundaries_clear_required: true
+enterprise_governance_standard_compliant_required: true
+sibling_data_governance_bc_forbidden: true
+via_p207: true
+via_p208: true
+via_p209: true
+via_p210: true
+via_p211: true
+via_enterprise_ai: true

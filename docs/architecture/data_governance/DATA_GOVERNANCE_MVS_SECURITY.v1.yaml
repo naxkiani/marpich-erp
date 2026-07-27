@@ -1,0 +1,27 @@
+# P212-B — Mission / vision / scope security requirements
+version: "1.0"
+prompt_id: P212-B
+adr: "393"
+requirements:
+  - clear_domain_boundaries
+  - peer_sor_respect
+  - privacy_by_design_inheritance
+  - zero_trust_alignment
+  - auditable_charter_changes
+standards:
+  - enterprise_architecture_governance_standard_11
+  - privacy_by_design
+  - data_mesh_principles
+permissions:
+  read: data_governance.read
+  write: data_governance.write
+  admin: data_governance.admin
+audit:
+  via_integration_events: true
+  local_audit_tables_forbidden: true
+out_of_scope_peers:
+  encryption: data_security
+  identity: identity_intelligence
+  authorization: authorization
+  cryptography: secrets
+  cyber_defense: cyber_security

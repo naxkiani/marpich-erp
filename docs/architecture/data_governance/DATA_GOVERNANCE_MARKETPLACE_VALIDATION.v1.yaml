@@ -1,0 +1,35 @@
+# P212-G — VALIDATION
+version: "1.0"
+prompt_id: P212-G
+adr: "400"
+sor: data_governance
+capability: CAP-PLT-DG-001
+api_prefix: /api/v1/data-governance/marketplace
+builds_on:
+  - P212-A
+  - P212-B
+  - P212-D
+  - P212-E
+  - P212-F
+  - ADR-392
+  - ADR-393
+  - ADR-397
+  - ADR-398
+  - ADR-399
+reject_if:
+  - enterprise_data_marketplace_architecture_is_incomplete
+  - data_catalog_architecture_is_missing
+  - data_discovery_architecture_is_missing
+  - data_product_consumption_model_is_missing
+  - data_access_governance_is_missing
+  - ai_recommendation_intelligence_is_missing
+  - data_mesh_alignment_is_missing
+  - knowledge_graph_integration_is_missing
+  - digital_twin_integration_is_missing
+  - cqrs_architecture_is_missing
+  - event_sourcing_architecture_is_missing
+  - microservices_architecture_is_missing
+  - zero_trust_security_alignment_is_missing
+  - enterprise_scalability_is_missing
+  - sibling_data_marketplace_bc
+verdict_required: ENTERPRISE_GRADE

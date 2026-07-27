@@ -1,0 +1,48 @@
+# P212-L — CAPABILITIES
+version: "1.0"
+prompt_id: P212-L
+adr: "404"
+sor: data_governance
+capability: CAP-PLT-DG-001
+api_prefix: /api/v1/data-governance/twin
+builds_on:
+  - P212-A
+  - P212-B
+  - P212-D
+  - P212-E
+  - P212-F
+  - P212-G
+  - P212-H
+  - P212-J
+  - P212-K
+  - ADR-392
+  - ADR-393
+  - ADR-397
+  - ADR-398
+  - ADR-399
+  - ADR-400
+  - ADR-401
+  - ADR-402
+digital_twin_architecture_complete_required: true
+governance_state_model_present_required: true
+simulation_engine_present_required: true
+what_if_analysis_present_required: true
+risk_prediction_intelligence_present_required: true
+optimization_engine_present_required: true
+ai_governance_integration_present_required: true
+knowledge_graph_integration_present_required: true
+data_mesh_integration_present_required: true
+policy_simulation_present_required: true
+cqrs_architecture_present_required: true
+event_sourcing_architecture_present_required: true
+microservices_architecture_present_required: true
+zero_trust_security_present_required: true
+enterprise_scalability_present_required: true
+sibling_governance_twin_bc_forbidden: true
+via_enterprise_ai: true
+via_p208: true
+via_p212_e: true
+via_p212_f: true
+via_p212_h: true
+via_p212_j: true
+via_p212_k: true

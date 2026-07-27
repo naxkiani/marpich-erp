@@ -75,6 +75,7 @@
     {"id": "CAP-PAM-002", "name": "Credential Checkout Checkin", "tier": "platform", "namespace": "privileged-access", "boundedContext": "privileged_access", "lifecycle": "checkout-use-checkin"},
     {"id": "CAP-PAM-004", "name": "Privileged Session Broker", "tier": "platform", "namespace": "privileged-access", "boundedContext": "privileged_access", "lifecycle": "start-verify-end"},
     {"id": "CAP-PAM-005", "name": "Just In Time Elevation", "tier": "platform", "namespace": "privileged-access", "boundedContext": "privileged_access", "lifecycle": "request-approve-expire"},
-    {"id": "CAP-PAM-006", "name": "Break Glass Access", "tier": "platform", "namespace": "privileged-access", "boundedContext": "privileged_access", "lifecycle": "request-grant-revoke"}
+    {"id": "CAP-PAM-006", "name": "Break Glass Access", "tier": "platform", "namespace": "privileged-access", "boundedContext": "privileged_access", "lifecycle": "request-grant-revoke"},
+    {"id": "CAP-PLT-DG-001", "name": "Enterprise Data Governance Data Mesh and Enterprise Intelligence", "tier": "platform", "namespace": "data-governance", "boundedContext": "data_governance", "lifecycle": "own-govern-assure"}
   ]
 }

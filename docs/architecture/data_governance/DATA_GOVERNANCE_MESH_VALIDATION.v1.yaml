@@ -1,0 +1,33 @@
+# P212-F — VALIDATION
+version: "1.0"
+prompt_id: P212-F
+adr: "399"
+sor: data_governance
+capability: CAP-PLT-DG-001
+api_prefix: /api/v1/data-governance/mesh
+builds_on:
+  - P212-A
+  - P212-B
+  - P212-D
+  - P212-E
+  - ADR-392
+  - ADR-393
+  - ADR-397
+  - ADR-398
+reject_if:
+  - data_mesh_architecture_is_incomplete
+  - data_product_platform_is_incomplete
+  - ddd_domain_model_is_missing
+  - data_domain_model_is_missing
+  - data_product_lifecycle_is_missing
+  - data_contract_architecture_is_missing
+  - data_quality_integration_is_missing
+  - knowledge_graph_integration_is_missing
+  - digital_twin_integration_is_missing
+  - ai_native_intelligence_is_missing
+  - cqrs_architecture_is_missing
+  - event_sourcing_architecture_is_missing
+  - microservices_architecture_is_missing
+  - enterprise_scalability_is_missing
+  - sibling_data_mesh_bc
+verdict_required: ENTERPRISE_GRADE

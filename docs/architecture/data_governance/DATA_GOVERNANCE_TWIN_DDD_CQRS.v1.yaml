@@ -1,0 +1,45 @@
+# P212-L — DDD_CQRS
+version: "1.0"
+prompt_id: P212-L
+adr: "404"
+sor: data_governance
+capability: CAP-PLT-DG-001
+api_prefix: /api/v1/data-governance/twin
+builds_on:
+  - P212-A
+  - P212-B
+  - P212-D
+  - P212-E
+  - P212-F
+  - P212-G
+  - P212-H
+  - P212-J
+  - P212-K
+  - ADR-392
+  - ADR-393
+  - ADR-397
+  - ADR-398
+  - ADR-399
+  - ADR-400
+  - ADR-401
+  - ADR-402
+core_domain: enterprise_data_governance_digital_twin_management
+aggregate: GovernanceDigitalTwin
+commands:
+  - CreateGovernanceTwinCommand
+  - CaptureGovernanceStateCommand
+  - CreateSimulationScenarioCommand
+  - ExecuteSimulationCommand
+  - ApproveOptimizationCommand
+queries:
+  - GetTwinStateQuery
+  - GetSimulationResultQuery
+  - GetRiskPredictionQuery
+  - GetGovernanceHealthQuery
+events:
+  - DigitalTwinCreatedEvent
+  - StateCapturedEvent
+  - SimulationStartedEvent
+  - SimulationCompletedEvent
+  - RiskPredictedEvent
+  - OptimizationGeneratedEvent

@@ -1,0 +1,110 @@
+# P212 — Enterprise Data Governance, Data Mesh & Enterprise Intelligence Roadmap
+version: "1.0"
+series: P212
+module: Enterprise Data Governance, Data Mesh & Enterprise Intelligence Platform
+volume: "06 — Enterprise Data Intelligence & Protection Fabric"
+sor: data_governance
+capability: CAP-PLT-DG-001
+builds_on:
+  - ADR-159
+  - ADR-345
+  - ADR-376
+  - ADR-387
+  - ADR-388
+  - ADR-389
+  - ADR-390
+  - ADR-391
+  - CORE_PLATFORM.md
+  - ENTERPRISE_EVENT_BUS.md
+  - AI_PLATFORM_STANDARD.md
+forbidden_sibling_bc:
+  - data_mesh
+  - data_product_platform
+  - data_marketplace
+  - enterprise_intelligence
+  - data_quality_platform
+  - metadata_governance_platform
+
+phases:
+  - id: P212-A
+    title: Foundation Architecture — Data Governance, Data Mesh & Enterprise Intelligence
+    status: done
+    adr: "392"
+    api: /api/v1/data-governance/strategy*
+  - id: P212-B
+    title: Mission, Vision & Enterprise Data Governance Scope
+    status: done
+    adr: "393"
+    api: /api/v1/data-governance/mission*
+  - id: P212-C
+    title: Data Governance Domain Architecture
+    status: planned
+    api: /api/v1/data-governance/domain*
+  - id: P212-D
+    title: Data Ownership & Stewardship
+    status: done
+    adr: "397"
+    api: /api/v1/data-governance/ownership*
+  - id: P212-E
+    title: Data Quality Intelligence
+    status: done
+    adr: "398"
+    api: /api/v1/data-governance/quality*
+  - id: P212-F
+    title: Data Products & Data Mesh
+    status: done
+    adr: "399"
+    api: /api/v1/data-governance/mesh*
+  - id: P212-G
+    title: Metadata Governance & Data Marketplace
+    status: done
+    adr: "400"
+    api: /api/v1/data-governance/marketplace*
+  - id: P212-H
+    title: Data Policy Management
+    status: done
+    adr: "401"
+    api: /api/v1/data-governance/policies*
+  - id: P212-I
+    title: Enterprise Data Intelligence
+    status: planned
+    api: /api/v1/data-governance/intelligence*
+  - id: P212-J
+    title: Data Intelligence Knowledge Graph
+    status: done
+    adr: "402"
+    api: /api/v1/data-governance/graph*
+  - id: P212-K
+    title: AI Data Governance & AI Readiness
+    status: planned
+    api: /api/v1/data-governance/ai-readiness*
+  - id: P212-L
+    title: Data Governance Digital Twin & Simulation
+    status: done
+    adr: "404"
+    api: /api/v1/data-governance/twin*
+  - id: P212-M
+    title: CQRS, Events, APIs & Microservices Platform
+    status: done
+    adr: "405"
+    api: /api/v1/data-governance/ops*
+  - id: P212-N
+    title: Deployment, DevSecOps & Observability
+    status: done
+    adr: "406"
+    api: /api/v1/data-governance/deploy*
+  - id: P212-O
+    title: Testing, Governance Validation & Definition of Done
+    status: done
+    adr: "407"
+    api: /api/v1/data-governance/qa*
+
+series_status: complete
+distinct_from:
+  - data_security (P211 data security & privacy intelligence)
+  - consent (consent ledger / DSAR / DPIA)
+  - secrets (cryptographic trust — P209)
+  - cyber_security (threat defense — P210)
+  - authorization (PDP — P208)
+  - compliance (compliance orchestration)
+  - data_protection (legacy module — not P212 SoR)

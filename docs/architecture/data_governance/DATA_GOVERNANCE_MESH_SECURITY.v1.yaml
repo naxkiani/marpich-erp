@@ -1,0 +1,19 @@
+# P212-F — SECURITY
+version: "1.0"
+prompt_id: P212-F
+adr: "399"
+sor: data_governance
+capability: CAP-PLT-DG-001
+api_prefix: /api/v1/data-governance/mesh
+builds_on:
+  - P212-A
+  - P212-B
+  - P212-D
+  - P212-E
+  - ADR-392
+  - ADR-393
+  - ADR-397
+  - ADR-398
+permission: data_governance.read
+zero_trust: true
+federated_computational_governance: true

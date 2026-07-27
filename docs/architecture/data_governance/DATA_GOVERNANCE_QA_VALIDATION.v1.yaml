@@ -1,0 +1,47 @@
+# P212-O — VALIDATION
+version: "1.0"
+prompt_id: P212-O
+adr: "407"
+sor: data_governance
+capability: CAP-PLT-DG-001
+api_prefix: /api/v1/data-governance/qa
+builds_on:
+  - P212-A
+  - P212-B
+  - P212-D
+  - P212-E
+  - P212-F
+  - P212-G
+  - P212-H
+  - P212-J
+  - P212-K
+  - P212-L
+  - P212-M
+  - P212-N
+  - ADR-392
+  - ADR-397
+  - ADR-398
+  - ADR-399
+  - ADR-400
+  - ADR-401
+  - ADR-402
+  - ADR-404
+  - ADR-405
+  - ADR-406
+reject_if:
+  - complete_enterprise_testing_architecture_is_missing
+  - governance_validation_platform_is_missing
+  - compliance_automation_is_missing
+  - security_assurance_is_missing
+  - definition_of_done_engine_is_missing
+  - ai_quality_intelligence_is_missing
+  - knowledge_graph_integration_is_missing
+  - digital_twin_integration_is_missing
+  - cqrs_architecture_is_missing
+  - event_sourcing_architecture_is_missing
+  - microservices_architecture_is_missing
+  - api_first_architecture_is_missing
+  - continuous_governance_is_missing
+  - sibling_data_governance_qa_bc
+verdict_required: ENTERPRISE_GRADE
+series_complete_when: foundation_passed

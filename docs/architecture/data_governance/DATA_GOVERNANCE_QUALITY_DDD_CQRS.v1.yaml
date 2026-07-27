@@ -1,0 +1,34 @@
+# P212-E — DDD_CQRS
+version: "1.0"
+prompt_id: P212-E
+adr: "398"
+sor: data_governance
+capability: CAP-PLT-DG-001
+api_prefix: /api/v1/data-governance/quality
+builds_on:
+  - P212-A
+  - P212-B
+  - P212-D
+  - ADR-392
+  - ADR-393
+  - ADR-397
+core_domain: enterprise_data_quality_intelligence
+aggregate: DataQualityAssessment
+commands:
+  - CreateQualityRuleCommand
+  - ExecuteQualityCheckCommand
+  - ApproveQualityScoreCommand
+  - ResolveQualityIssueCommand
+  - PublishQualityReportCommand
+queries:
+  - GetDatasetQualityQuery
+  - GetQualityTrendQuery
+  - GetQualityRiskQuery
+  - GetQualityDashboardQuery
+events:
+  - QualityRuleCreatedEvent
+  - QualityCheckExecutedEvent
+  - QualityViolationDetectedEvent
+  - QualityScoreCalculatedEvent
+  - QualityIssueResolvedEvent
+  - QualityImprovementRecordedEvent

@@ -1,0 +1,41 @@
+# P212-H — DDD_CQRS
+version: "1.0"
+prompt_id: P212-H
+adr: "401"
+sor: data_governance
+capability: CAP-PLT-DG-001
+api_prefix: /api/v1/data-governance/policies
+builds_on:
+  - P212-A
+  - P212-B
+  - P212-D
+  - P212-E
+  - P212-F
+  - P212-G
+  - ADR-392
+  - ADR-393
+  - ADR-397
+  - ADR-398
+  - ADR-399
+  - ADR-400
+core_domain: enterprise_data_policy_management
+aggregate: DataPolicy
+commands:
+  - CreateDataPolicyCommand
+  - ApprovePolicyCommand
+  - ActivatePolicyCommand
+  - EvaluatePolicyCommand
+  - CreatePolicyExceptionCommand
+queries:
+  - GetPolicyQuery
+  - GetPolicyHistoryQuery
+  - GetComplianceStatusQuery
+  - GetPolicyRiskQuery
+events:
+  - DataPolicyCreatedEvent
+  - PolicyApprovedEvent
+  - PolicyActivatedEvent
+  - PolicyEvaluatedEvent
+  - PolicyViolationDetectedEvent
+  - PolicyExceptionGrantedEvent
+  - PolicyRetiredEvent

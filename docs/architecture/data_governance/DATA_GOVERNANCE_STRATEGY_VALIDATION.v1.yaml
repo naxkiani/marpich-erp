@@ -1,0 +1,38 @@
+# P212-A — Validation gates
+version: "1.0"
+prompt_id: P212-A
+adr: "392"
+reject_if:
+  - enterprise_data_governance_architecture_is_incomplete
+  - ddd_domain_model_is_missing
+  - cqrs_architecture_is_missing
+  - event_driven_architecture_is_missing
+  - microservices_architecture_is_missing
+  - data_mesh_native_architecture_is_missing
+  - knowledge_graph_integration_is_missing
+  - digital_twin_integration_is_missing
+  - ai_native_governance_is_missing
+  - zero_trust_alignment_is_missing
+  - privacy_by_design_is_missing
+  - cloud_native_deployment_is_missing
+  - enterprise_scalability_is_missing
+  - sibling_data_governance_bc
+forbidden_siblings:
+  - backend/contexts/data_mesh
+  - backend/contexts/data_product_platform
+  - backend/contexts/data_marketplace
+  - backend/contexts/enterprise_intelligence
+  - backend/contexts/data_quality_platform
+  - backend/contexts/metadata_governance_platform
+required_artifacts:
+  - docs/adr/392-enterprise-data-governance-strategy.md
+  - docs/architecture/ENTERPRISE_DATA_GOVERNANCE_STRATEGY.md
+  - docs/architecture/data_governance/DATA_GOVERNANCE_STRATEGY_CAPABILITIES.v1.yaml
+  - docs/architecture/data_governance/DATA_GOVERNANCE_STRATEGY_DDD_CQRS.v1.yaml
+  - docs/architecture/data_governance/DATA_GOVERNANCE_STRATEGY_SECURITY.v1.yaml
+  - docs/architecture/data_governance/DATA_GOVERNANCE_STRATEGY_VALIDATION.v1.yaml
+  - docs/architecture/data_governance/P212_MASTER_SERIES_ROADMAP.v1.yaml
+  - backend/contexts/data_governance/domain/services/dg_platform_strategy.py
+  - backend/contexts/data_governance/domain/aggregates/dg_strategy_aggregates.py
+  - backend/contexts/data_governance/infrastructure/acl/dg_strategy_acl.py
+  - backend/contexts/data_governance/application/dg_strategy_foundation.py

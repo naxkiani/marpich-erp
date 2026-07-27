@@ -1,0 +1,19 @@
+# P212-E — SECURITY
+version: "1.0"
+prompt_id: P212-E
+adr: "398"
+sor: data_governance
+capability: CAP-PLT-DG-001
+api_prefix: /api/v1/data-governance/quality
+builds_on:
+  - P212-A
+  - P212-B
+  - P212-D
+  - ADR-392
+  - ADR-393
+  - ADR-397
+permission: data_governance.read
+zero_trust: true
+quality_audit_trail: true
+policy_enforcement_via_policy_engine: true
+privacy_protection_via_p211: true

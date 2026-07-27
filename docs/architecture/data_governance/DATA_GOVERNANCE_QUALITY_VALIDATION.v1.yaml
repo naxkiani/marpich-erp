@@ -1,0 +1,29 @@
+# P212-E — VALIDATION
+version: "1.0"
+prompt_id: P212-E
+adr: "398"
+sor: data_governance
+capability: CAP-PLT-DG-001
+api_prefix: /api/v1/data-governance/quality
+builds_on:
+  - P212-A
+  - P212-B
+  - P212-D
+  - ADR-392
+  - ADR-393
+  - ADR-397
+reject_if:
+  - data_quality_intelligence_architecture_is_incomplete
+  - ddd_domain_model_is_missing
+  - quality_rule_architecture_is_missing
+  - quality_measurement_architecture_is_missing
+  - ai_quality_intelligence_is_missing
+  - data_mesh_alignment_is_missing
+  - knowledge_graph_integration_is_missing
+  - digital_twin_integration_is_missing
+  - cqrs_architecture_is_missing
+  - event_sourcing_architecture_is_missing
+  - microservices_architecture_is_missing
+  - enterprise_scalability_is_missing
+  - sibling_data_quality_bc
+verdict_required: ENTERPRISE_GRADE
