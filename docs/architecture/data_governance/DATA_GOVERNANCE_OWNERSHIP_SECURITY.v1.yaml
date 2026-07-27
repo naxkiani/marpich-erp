@@ -1,0 +1,12 @@
+# P212-D — Security
+version: "1.0"
+prompt_id: P212-D
+adr: "397"
+sor: data_governance
+permission: data_governance.read
+zero_trust: true
+owner_authentication_via_p207: true
+privileged_governance_actions_via_p208: true
+approval_security_via_workflow: true
+audit_trail_via_events: true
+policy_enforcement_via_policy_engine: true

@@ -1,0 +1,39 @@
+# P212-G — DDD_CQRS
+version: "1.0"
+prompt_id: P212-G
+adr: "400"
+sor: data_governance
+capability: CAP-PLT-DG-001
+api_prefix: /api/v1/data-governance/marketplace
+builds_on:
+  - P212-A
+  - P212-B
+  - P212-D
+  - P212-E
+  - P212-F
+  - ADR-392
+  - ADR-393
+  - ADR-397
+  - ADR-398
+  - ADR-399
+core_domain: enterprise_data_marketplace_management
+aggregate: DataMarketplaceItem
+commands:
+  - RegisterMarketplaceProductCommand
+  - PublishDataProductCommand
+  - RequestDataAccessCommand
+  - ApproveSubscriptionCommand
+  - RateDataProductCommand
+queries:
+  - SearchDataProductsQuery
+  - GetProductDetailsQuery
+  - GetMarketplaceAnalyticsQuery
+  - GetConsumerHistoryQuery
+events:
+  - DataProductPublishedEvent
+  - CatalogEntryCreatedEvent
+  - DataProductDiscoveredEvent
+  - AccessRequestedEvent
+  - AccessApprovedEvent
+  - SubscriptionCreatedEvent
+  - DataUsageRecordedEvent

@@ -1,0 +1,34 @@
+# P212-B — Validation gates
+version: "1.0"
+prompt_id: P212-B
+adr: "393"
+reject_if:
+  - mission_is_undefined
+  - vision_is_undefined
+  - enterprise_scope_is_undefined
+  - strategic_objectives_are_missing
+  - operating_model_is_missing
+  - maturity_model_is_missing
+  - ai_governance_direction_is_missing
+  - meos_integration_alignment_is_missing
+  - domain_boundaries_are_unclear
+  - enterprise_governance_standard_is_noncompliant
+  - sibling_data_governance_bc
+forbidden_siblings:
+  - backend/contexts/data_mesh
+  - backend/contexts/data_product_platform
+  - backend/contexts/data_marketplace
+  - backend/contexts/enterprise_intelligence
+  - backend/contexts/data_quality_platform
+  - backend/contexts/metadata_governance_platform
+required_artifacts:
+  - docs/adr/393-enterprise-data-governance-mission-vision-scope.md
+  - docs/architecture/ENTERPRISE_DATA_GOVERNANCE_MISSION_VISION_SCOPE.md
+  - docs/architecture/data_governance/DATA_GOVERNANCE_MVS_CAPABILITIES.v1.yaml
+  - docs/architecture/data_governance/DATA_GOVERNANCE_MVS_DDD_CQRS.v1.yaml
+  - docs/architecture/data_governance/DATA_GOVERNANCE_MVS_SECURITY.v1.yaml
+  - docs/architecture/data_governance/DATA_GOVERNANCE_MVS_VALIDATION.v1.yaml
+  - backend/contexts/data_governance/domain/services/dg_platform_mission_scope.py
+  - backend/contexts/data_governance/domain/aggregates/dg_mission_aggregates.py
+  - backend/contexts/data_governance/infrastructure/acl/dg_mission_acl.py
+  - backend/contexts/data_governance/application/dg_mission_foundation.py

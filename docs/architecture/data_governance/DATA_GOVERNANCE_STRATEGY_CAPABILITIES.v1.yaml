@@ -1,0 +1,40 @@
+# P212-A — Data Governance strategy capabilities
+version: "1.0"
+prompt_id: P212-A
+adr: "392"
+sor: data_governance
+capability: CAP-PLT-DG-001
+api_prefix: /api/v1/data-governance/strategy
+builds_on:
+  - ADR-159
+  - ADR-345
+  - ADR-376
+  - ADR-387
+  - ADR-388
+  - ADR-389
+  - ADR-390
+  - ADR-391
+
+governance_architecture_complete_required: true
+ddd_domain_model_present_required: true
+cqrs_architecture_present_required: true
+event_driven_architecture_present_required: true
+microservices_architecture_present_required: true
+data_mesh_native_required: true
+knowledge_graph_integration_present_required: true
+digital_twin_integration_present_required: true
+ai_native_governance_present_required: true
+zero_trust_alignment_present_required: true
+privacy_by_design_present_required: true
+cloud_native_deployment_present_required: true
+enterprise_scalability_present_required: true
+sibling_data_governance_bc_forbidden: true
+via_data_security_p211: true
+via_authorization_p208: true
+via_secrets_p209: true
+via_cyber_security_p210: true
+via_identity_p207: true
+via_enterprise_ai: true
+via_policy_engine: true
+via_audit_platform: true
+via_workflow: true

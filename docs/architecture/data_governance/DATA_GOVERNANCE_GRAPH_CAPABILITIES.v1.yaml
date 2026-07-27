@@ -1,0 +1,48 @@
+# P212-J — CAPABILITIES
+version: "1.0"
+prompt_id: P212-J
+adr: "402"
+sor: data_governance
+capability: CAP-PLT-DG-001
+api_prefix: /api/v1/data-governance/graph
+builds_on:
+  - P212-A
+  - P212-B
+  - P212-D
+  - P212-E
+  - P212-F
+  - P212-G
+  - P212-H
+  - ADR-392
+  - ADR-393
+  - ADR-397
+  - ADR-398
+  - ADR-399
+  - ADR-400
+  - ADR-401
+knowledge_graph_architecture_complete_required: true
+ddd_domain_model_present_required: true
+ontology_architecture_present_required: true
+semantic_data_fabric_present_required: true
+graph_intelligence_engine_present_required: true
+ai_reasoning_layer_present_required: true
+data_mesh_integration_present_required: true
+metadata_integration_present_required: true
+data_marketplace_integration_present_required: true
+policy_integration_present_required: true
+digital_twin_integration_present_required: true
+cqrs_architecture_present_required: true
+event_sourcing_architecture_present_required: true
+microservices_architecture_present_required: true
+zero_trust_security_present_required: true
+enterprise_scalability_present_required: true
+sibling_knowledge_graph_bc_forbidden: true
+via_enterprise_search: true
+via_enterprise_ai: true
+via_p208: true
+via_policy_engine: true
+via_p212_d: true
+via_p212_e: true
+via_p212_f: true
+via_p212_g: true
+via_p212_h: true

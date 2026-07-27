@@ -1,0 +1,41 @@
+# P212-J — VALIDATION
+version: "1.0"
+prompt_id: P212-J
+adr: "402"
+sor: data_governance
+capability: CAP-PLT-DG-001
+api_prefix: /api/v1/data-governance/graph
+builds_on:
+  - P212-A
+  - P212-B
+  - P212-D
+  - P212-E
+  - P212-F
+  - P212-G
+  - P212-H
+  - ADR-392
+  - ADR-393
+  - ADR-397
+  - ADR-398
+  - ADR-399
+  - ADR-400
+  - ADR-401
+reject_if:
+  - enterprise_knowledge_graph_architecture_is_incomplete
+  - ddd_domain_model_is_missing
+  - ontology_architecture_is_missing
+  - semantic_data_fabric_is_missing
+  - graph_intelligence_engine_is_missing
+  - ai_reasoning_layer_is_missing
+  - data_mesh_integration_is_missing
+  - metadata_integration_is_missing
+  - data_marketplace_integration_is_missing
+  - policy_integration_is_missing
+  - digital_twin_integration_is_missing
+  - cqrs_architecture_is_missing
+  - event_sourcing_architecture_is_missing
+  - microservices_architecture_is_missing
+  - zero_trust_security_is_missing
+  - enterprise_scalability_is_missing
+  - sibling_knowledge_graph_bc
+verdict_required: ENTERPRISE_GRADE

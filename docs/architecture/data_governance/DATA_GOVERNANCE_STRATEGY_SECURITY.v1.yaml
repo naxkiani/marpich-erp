@@ -1,0 +1,28 @@
+# P212-A — Data Governance strategy security requirements
+version: "1.0"
+prompt_id: P212-A
+adr: "392"
+requirements:
+  - zero_trust_data_governance
+  - fine_grained_authorization
+  - data_policy_enforcement
+  - audit_architecture
+  - encryption_integration
+  - privacy_controls
+  - privacy_by_design
+standards:
+  - privacy_by_design
+  - nist_privacy_framework
+  - data_mesh_principles
+  - zero_trust
+permissions:
+  read: data_governance.read
+  write: data_governance.write
+  admin: data_governance.admin
+audit:
+  via_integration_events: true
+  local_audit_tables_forbidden: true
+ai:
+  via_enterprise_ai: true
+  module_local_llm_sdk_forbidden: true
+inherits_privacy_from: data_security

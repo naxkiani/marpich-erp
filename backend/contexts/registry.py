@@ -365,6 +365,27 @@ SECRETS = BoundedContext(
     subscribes=("platform.tenant.provisioned",),
 )
 
+
+DATA_GOVERNANCE = BoundedContext(
+    id="data_governance",
+    display_name="Enterprise Data Governance, Data Mesh & Enterprise Intelligence Platform",
+    context_type=BoundedContextType.PLATFORM,
+    schema_name="data_governance",
+    description=(
+        "Data Governance Fabric — ownership, stewardship, quality, metadata, "
+        "data products, data mesh, marketplace, enterprise intelligence, AI data "
+        "readiness — SoR for P212; security/privacy remains data_security"
+    ),
+    publishes=(
+        "data_governance.strategy.published",
+        "data_governance.owner.assigned",
+        "data_governance.steward.created",
+        "data_governance.product.registered",
+        "data_governance.policy.approved",
+    ),
+    subscribes=("platform.tenant.provisioned",),
+)
+
 AUTHORIZATION = BoundedContext(
     id="authorization",
     display_name="Enterprise Authorization Platform",
@@ -954,6 +975,7 @@ ALL_CONTEXTS: tuple[BoundedContext, ...] = (
     IDENTITY_INTELLIGENCE,
     CONSENT,
     SECRETS,
+    DATA_GOVERNANCE,
     AUTHORIZATION,
     PERMISSION_REGISTRY,
     COMPLIANCE,

@@ -1,0 +1,38 @@
+# P212-B — Mission / vision / scope DDD / CQRS
+version: "1.0"
+prompt_id: P212-B
+adr: "393"
+sor: data_governance
+domain: Enterprise Data Governance Strategic Scope
+bounded_contexts:
+  - mission_charter
+  - vision_charter
+  - scope_boundary
+  - operating_model
+  - maturity_framework
+  - ai_governance_direction
+  - meos_alignment
+commands:
+  - PublishMissionCharter
+  - PublishVisionCharter
+  - DeclareEnterpriseScope
+  - RegisterStrategicObjectives
+  - EstablishOperatingModel
+  - PublishMaturityModel
+  - AlignMeosIntegrations
+queries:
+  - GetMission
+  - GetVision
+  - GetStrategicObjectives
+  - GetEnterpriseScope
+  - GetOperatingModel
+  - GetMaturityModel
+  - GetMissionReadiness
+events:
+  - MissionPublished
+  - VisionPublished
+  - ScopeDeclared
+  - ObjectivesRegistered
+  - OperatingModelEstablished
+  - MaturityModelPublished
+  - MeosAlignmentConfirmed

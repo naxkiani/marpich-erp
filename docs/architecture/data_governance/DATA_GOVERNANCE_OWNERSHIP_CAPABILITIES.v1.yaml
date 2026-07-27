@@ -1,0 +1,31 @@
+# P212-D — Ownership / stewardship capabilities
+version: "1.0"
+prompt_id: P212-D
+adr: "397"
+sor: data_governance
+capability: CAP-PLT-DG-001
+api_prefix: /api/v1/data-governance/ownership
+builds_on:
+  - P212-A
+  - P212-B
+  - ADR-392
+  - ADR-393
+ownership_architecture_complete_required: true
+stewardship_architecture_complete_required: true
+accountability_framework_present_required: true
+ddd_domain_model_present_required: true
+cqrs_design_present_required: true
+event_sourcing_design_present_required: true
+data_mesh_alignment_present_required: true
+knowledge_graph_integration_present_required: true
+digital_twin_integration_present_required: true
+ai_ownership_intelligence_present_required: true
+zero_trust_alignment_present_required: true
+enterprise_scalability_present_required: true
+sibling_ownership_stewardship_bc_forbidden: true
+via_p207: true
+via_p208: true
+via_p209: true
+via_p210: true
+via_p211: true
+via_enterprise_ai: true

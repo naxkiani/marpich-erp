@@ -1,0 +1,33 @@
+# P212-D — DDD / CQRS
+version: "1.0"
+prompt_id: P212-D
+adr: "397"
+sor: data_governance
+core_domain: enterprise_data_ownership_management
+aggregates:
+  - DataOwnershipAssignment
+  - DataStewardAssignment
+commands:
+  - AssignDataOwnerCommand
+  - ChangeDataOwnerCommand
+  - RemoveDataOwnerCommand
+  - RegisterStewardCommand
+  - UpdateResponsibilityCommand
+  - ApproveAccountabilityCommand
+queries:
+  - GetDataOwnerQuery
+  - GetOwnershipCoverageQuery
+  - GetUnownedAssetsQuery
+  - OwnershipDashboardQuery
+  - StewardPerformanceQuery
+  - AccountabilityRiskQuery
+events:
+  - DataOwnerAssignedEvent
+  - DataOwnerChangedEvent
+  - OwnershipExpiredEvent
+  - OwnershipViolationDetectedEvent
+  - DataStewardAssignedEvent
+  - StewardActivityCompletedEvent
+  - DataIssueResolvedEvent
+  - AccountabilityChangedEvent
+  - OwnershipRiskDetectedEvent

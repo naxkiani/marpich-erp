@@ -1,0 +1,43 @@
+# P212-G — CAPABILITIES
+version: "1.0"
+prompt_id: P212-G
+adr: "400"
+sor: data_governance
+capability: CAP-PLT-DG-001
+api_prefix: /api/v1/data-governance/marketplace
+builds_on:
+  - P212-A
+  - P212-B
+  - P212-D
+  - P212-E
+  - P212-F
+  - ADR-392
+  - ADR-393
+  - ADR-397
+  - ADR-398
+  - ADR-399
+marketplace_architecture_complete_required: true
+data_catalog_architecture_present_required: true
+data_discovery_architecture_present_required: true
+data_product_consumption_model_present_required: true
+data_access_governance_present_required: true
+ai_recommendation_intelligence_present_required: true
+data_mesh_alignment_present_required: true
+knowledge_graph_integration_present_required: true
+digital_twin_integration_present_required: true
+cqrs_architecture_present_required: true
+event_sourcing_architecture_present_required: true
+microservices_architecture_present_required: true
+zero_trust_alignment_present_required: true
+enterprise_scalability_present_required: true
+sibling_data_marketplace_bc_forbidden: true
+via_p207: true
+via_p208: true
+via_p209: true
+via_p210: true
+via_p211: true
+via_p212_d: true
+via_p212_e: true
+via_p212_f: true
+via_enterprise_ai: true
+via_enterprise_search: true

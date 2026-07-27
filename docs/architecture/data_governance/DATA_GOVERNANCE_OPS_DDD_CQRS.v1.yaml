@@ -1,0 +1,44 @@
+# P212-M — DDD_CQRS
+version: "1.0"
+prompt_id: P212-M
+adr: "405"
+sor: data_governance
+capability: CAP-PLT-DG-001
+api_prefix: /api/v1/data-governance/ops
+builds_on:
+  - P212-A
+  - P212-B
+  - P212-D
+  - P212-E
+  - P212-F
+  - P212-G
+  - P212-H
+  - P212-J
+  - P212-K
+  - P212-L
+  - ADR-392
+  - ADR-397
+  - ADR-398
+  - ADR-399
+  - ADR-400
+  - ADR-401
+  - ADR-402
+  - ADR-404
+core_domain: enterprise_data_governance_command_and_intelligence_platform
+aggregate: GovernanceCommandAggregate
+commands:
+  - AssignOwnerCommand
+  - EvaluateQualityCommand
+  - CreatePolicyCommand
+  - PublishDataProductCommand
+  - ApproveAIDatasetCommand
+queries:
+  - GetTwinStateQuery
+  - GetPolicyComplianceQuery
+  - SearchMetadataQuery
+  - GetAIReadinessQuery
+events:
+  - CommandExecutedEvent
+  - ProjectionUpdatedEvent
+  - GovernanceStateChangedEvent
+  - IntegrationEventPublishedEvent

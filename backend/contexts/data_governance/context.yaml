@@ -1,0 +1,62 @@
+context: data_governance
+architecture_version: "1.0"
+display_name: Enterprise Data Governance, Data Mesh & Enterprise Intelligence Platform
+type: platform
+description: >-
+  Data Governance Fabric — ownership, stewardship, quality, metadata,
+  data products, data mesh, marketplace, policies, enterprise intelligence,
+  AI data readiness (P212). Not data security SoR (data_security). Not consent ledger.
+api: /api/v1/data-governance
+series: P212
+foundation_prompt: P212-A
+adr: "392"
+capability: CAP-PLT-DG-001
+schema: data_governance
+aggregates:
+  - DataGovernanceStrategyProfile
+  - DataOwnerAssignment
+  - DataStewardProfile
+  - DataProductRegistration
+  - DataQualityRule
+  - DataPolicyBinding
+  - AiReadinessAssessment
+publishes:
+  - data_governance.strategy.published
+  - data_governance.owner.assigned
+  - data_governance.steward.created
+  - data_governance.product.registered
+  - data_governance.policy.approved
+subscribes:
+  - platform.tenant.provisioned
+delegates:
+  - data_security
+  - secrets
+  - authorization
+  - cyber_security
+  - compliance
+  - audit
+  - workflow
+  - ai
+  - policy
+forbidden_sibling_bc:
+  - data_mesh
+  - data_product_platform
+  - data_marketplace
+  - enterprise_intelligence
+  - data_quality_platform
+  - metadata_governance_platform
+ai:
+  insights: true
+  predictions: true
+  recommendations: true
+  summaries: true
+  search: true
+  assistant: true
+  automation: true
+  document_intelligence: true
+  voice_commands: true
+  chat_interface: true
+  report_explanation: true
+  anomaly_detection: true
+  forecasting: true
+  optimization_suggestions: true
