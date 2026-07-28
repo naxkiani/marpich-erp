@@ -1,0 +1,260 @@
+"""Analytics P213-L BI decision knowledge graph foundation validator."""
+from __future__ import annotations
+
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[4]
+
+REQUIRED_ARTIFACTS = [
+    "docs/adr/416-enterprise-business-intelligence-graph.md",
+    "docs/architecture/ENTERPRISE_BUSINESS_INTELLIGENCE_GRAPH.md",
+    "docs/architecture/business_intelligence/BI_GRAPH_CAPABILITIES.v1.yaml",
+    "docs/architecture/business_intelligence/BI_GRAPH_DDD_CQRS.v1.yaml",
+    "docs/architecture/business_intelligence/BI_GRAPH_SECURITY.v1.yaml",
+    "docs/architecture/business_intelligence/BI_GRAPH_VALIDATION.v1.yaml",
+    "backend/contexts/analytics/domain/services/bi_platform_graph.py",
+    "backend/contexts/analytics/domain/aggregates/bi_graph_aggregates.py",
+    "backend/contexts/analytics/infrastructure/acl/bi_graph_acl.py",
+    "backend/contexts/analytics/application/bi_graph_foundation.py",
+]
+
+FORBIDDEN_SIBLINGS = (
+    "backend/contexts/business_intelligence",
+    "backend/contexts/decision_intelligence",
+    "backend/contexts/reporting_platform",
+    "backend/contexts/metric_governance_platform",
+    "backend/contexts/visualization_platform",
+    "backend/contexts/bi_core",
+)
+
+
+def validate_bi_graph_foundation(*, repo_root: Path | None = None) -> dict:
+    root = repo_root or REPO_ROOT
+    missing = [rel for rel in REQUIRED_ARTIFACTS if not (root / rel).exists()]
+    sibling = any((root / path).exists() for path in FORBIDDEN_SIBLINGS)
+
+    from contexts.analytics.domain.aggregates.bi_graph_aggregates import (
+        BiAiReasoningRoot,
+        BiDecisionLineageRoot,
+        BiDecisionMemoryRoot,
+        BiDecisionOntologyRoot,
+        BiGraphAnalyticsRoot,
+        BiGraphProfileRoot,
+    )
+    from contexts.analytics.domain.services import bi_platform_graph as catmod
+
+    cat = catmod.catalog()
+    catalog_ok = (
+        cat.get("prompt_id") == "P213-L"
+        and cat.get("adr") == 416
+        and cat.get("sor") == "analytics"
+        and cat.get("capability") == "CAP-PLT-BI-001"
+        and cat.get("principle") == catmod.PRINCIPLE
+        and cat.get("fabric") == catmod.FABRIC
+        and "governed, connected" in cat["principle"]
+        and cat["enterprise_decision_knowledge_graph_present_required"] is True
+        and cat["enterprise_decision_ontology_present_required"] is True
+        and cat["enterprise_decision_memory_present_required"] is True
+        and cat["graph_analytics_present_required"] is True
+        and cat["ai_reasoning_present_required"] is True
+        and cat["decision_lineage_present_required"] is True
+        and cat["knowledge_graph_federation_present_required"] is True
+        and cat["digital_twin_integration_present_required"] is True
+        and cat["cqrs_architecture_present_required"] is True
+        and cat["event_sourcing_architecture_present_required"] is True
+        and cat["microservice_architecture_present_required"] is True
+        and cat["api_first_architecture_present_required"] is True
+        and cat["zero_trust_security_present_required"] is True
+        and cat["cloud_native_deployment_present_required"] is True
+        and cat["architecture_present_required"] is True
+        and cat["sibling_business_intelligence_bc_forbidden"] is True
+        and cat["domain_model"]["supporting_count"] >= 8
+        and cat["bounded_contexts"]["context_count"] >= 6
+        and cat["graph_model"]["entity_type_count"] >= 21
+        and cat["graph_analytics"]["capability_count"] >= 9
+        and cat["ai_native"]["agent_count"] >= 6
+        and cat["ai_native"]["via_enterprise_ai"] is True
+        and cat["knowledge_graph_federation"]["via_p212_j"] is True
+        and cat["digital_twin"]["via_p212_l"] is True
+        and cat["semantic_integration"]["via_p213_g"] is True
+        and cat["predictive_integration"]["via_p213_j"] is True
+        and cat["prescriptive_integration"]["via_p213_k"] is True
+        and cat["cqrs"]["command_count"] >= 5
+        and cat["cqrs"]["query_count"] >= 5
+        and cat["events"]["core_event_count"] >= 6
+        and cat["microservices"]["service_count"] >= 8
+        and cat["deployment"]["cloud_native"] is True
+        and cat["cursor_outputs"]["count"] >= 20
+        and "decision_knowledge_graph_architecture_is_incomplete"
+        in cat["quality_gates"]["reject_if"]
+        and "knowledge_graph_federation_is_missing"
+        in cat["quality_gates"]["reject_if"]
+        and "P213-K" in cat["builds_on"]
+        and "P212-J" in cat["builds_on"]
+        and cat["production_readiness"]["verdict"] == "ENTERPRISE_GRADE"
+    )
+
+    def _bad(fn, **kwargs):
+        try:
+            fn(**kwargs)
+            return True
+        except ValueError:
+            return False
+
+    checks = []
+    checks.append(
+        not _bad(
+            BiGraphProfileRoot.publish,
+            tenant_id="t1",
+            profile_ref="r1",
+            complete=False,
+        )
+        and BiGraphProfileRoot.publish(
+            tenant_id="t1", profile_ref="r2"
+        ).is_incomplete()
+        is False
+    )
+    checks.append(
+        not _bad(
+            BiDecisionOntologyRoot.enable,
+            tenant_id="t1",
+            ontology_ref="o1",
+            present=False,
+        )
+        and BiDecisionOntologyRoot.enable(
+            tenant_id="t1", ontology_ref="o2"
+        ).is_missing()
+        is False
+    )
+    checks.append(
+        not _bad(
+            BiDecisionMemoryRoot.enable,
+            tenant_id="t1",
+            memory_ref="m1",
+            present=False,
+        )
+        and BiDecisionMemoryRoot.enable(
+            tenant_id="t1", memory_ref="m2"
+        ).is_missing()
+        is False
+    )
+    checks.append(
+        not _bad(
+            BiDecisionLineageRoot.enable,
+            tenant_id="t1",
+            lineage_ref="l1",
+            present=False,
+        )
+        and BiDecisionLineageRoot.enable(
+            tenant_id="t1", lineage_ref="l2"
+        ).is_missing()
+        is False
+    )
+    checks.append(
+        not _bad(
+            BiGraphAnalyticsRoot.enable,
+            tenant_id="t1",
+            analytics_ref="a1",
+            present=False,
+        )
+        and BiGraphAnalyticsRoot.enable(
+            tenant_id="t1", analytics_ref="a2"
+        ).is_missing()
+        is False
+    )
+    checks.append(
+        not _bad(
+            BiAiReasoningRoot.enable,
+            tenant_id="t1",
+            reasoning_ref="ai1",
+            present=False,
+        )
+        and BiAiReasoningRoot.enable(
+            tenant_id="t1", reasoning_ref="ai2"
+        ).is_missing()
+        is False
+    )
+    aggregates_ok = all(checks)
+
+    acl_path = (
+        root / "backend/contexts/analytics/infrastructure/acl/bi_graph_acl.py"
+    )
+    acl_text = acl_path.read_text(encoding="utf-8") if acl_path.exists() else ""
+    acl_ok = (
+        acl_path.exists()
+        and "via_p207" in acl_text
+        and "via_p208" in acl_text
+        and "via_p211" in acl_text
+        and "via_p212" in acl_text
+        and "via_p212_j" in acl_text
+        and "via_p212_l" in acl_text
+        and "via_p213_g" in acl_text
+        and "via_p213_j" in acl_text
+        and "via_p213_k" in acl_text
+        and "via_enterprise_ai" in acl_text
+        and "module_local_llm_sdk_forbidden" in acl_text
+        and "node_level_security" in acl_text
+    )
+
+    router = (
+        root / "backend/contexts/analytics/presentation/router.py"
+    ).read_text(encoding="utf-8")
+    router_ok = (
+        '@router.get("/graph")' in router
+        and "/graph/readiness" in router
+        and "/graph/vision" in router
+        and "/graph/ontology" in router
+        and "/graph/lineage" in router
+        and "/graph/analytics" in router
+        and "/graph/ai" in router
+        and "/graph/federation" in router
+    )
+
+    law = (
+        root / "docs/architecture/ENTERPRISE_BUSINESS_INTELLIGENCE_GRAPH.md"
+    ).read_text(encoding="utf-8")
+    doc_ok = (
+        "Never Enterprise decision knowledge graph is missing" in law
+        and "Never Enterprise decision ontology is missing" in law
+        and "Never Enterprise decision memory is missing" in law
+        and "Never Graph analytics is missing" in law
+        and "Never AI reasoning is missing" in law
+        and "Never Decision lineage is missing" in law
+        and "Never Knowledge graph federation is missing" in law
+        and "Never Digital twin integration is missing" in law
+        and "Never CQRS architecture is missing" in law
+        and "Never Event sourcing architecture is missing" in law
+        and "Never Microservice architecture is missing" in law
+        and "Never API first architecture is missing" in law
+        and "Never Zero trust security is missing" in law
+        and "Never Cloud native deployment is missing" in law
+        and "Never Decision knowledge graph architecture is incomplete" in law
+        and "Never Sibling business intelligence BC" in law
+        and "MEOS Enterprise Decision Knowledge Fabric" in law
+        and "governed, connected" in law
+    )
+
+    passed = (
+        not missing
+        and not sibling
+        and catalog_ok
+        and aggregates_ok
+        and acl_ok
+        and router_ok
+        and doc_ok
+    )
+    return {
+        "prompt": "P213-L",
+        "adr": 416,
+        "passed": passed,
+        "missing_artifacts": missing,
+        "forbidden_sibling_present": sibling,
+        "catalog": catalog_ok,
+        "aggregates": aggregates_ok,
+        "acl": acl_ok,
+        "router": router_ok,
+        "documentation": doc_ok,
+        "sor": "analytics",
+        "capability": "CAP-PLT-BI-001",
+        "verdict": "ENTERPRISE_GRADE" if passed else "BELOW_THRESHOLD",
+    }

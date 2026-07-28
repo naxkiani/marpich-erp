@@ -1,0 +1,63 @@
+# P213-H — DDD / CQRS
+version: "1.0"
+prompt_id: P213-H
+adr: "412"
+sor: analytics
+capability: CAP-PLT-BI-001
+principle: Every business user SHALL be capable of creating trusted analytics without compromising governance, security, or enterprise consistency.
+fabric: meos_enterprise_analytics_experience_fabric
+core_domain: enterprise_self_service_analytics_management
+aggregate: SelfServiceAnalyticsWorkspaceAggregate
+supporting_domains:
+  - workspace_management
+  - analytics_authoring
+  - dashboard_builder
+  - dataset_discovery
+  - collaboration
+  - insight_sharing
+  - ai_analytics_assistance
+  - analytics_governance
+logical_bounded_contexts:
+  - BC-01 analytics_workspace
+  - BC-02 analytics_exploration
+  - BC-03 dashboard_builder
+  - BC-04 ad_hoc_analytics
+  - BC-05 collaboration
+  - BC-06 ai_analytics_assistant
+commands:
+  - CreateWorkspaceCommand
+  - CreateDashboardCommand
+  - SaveAnalyticsCommand
+  - ShareInsightCommand
+  - PublishDashboardCommand
+  - BookmarkDatasetCommand
+queries:
+  - SearchDatasetQuery
+  - ExploreDatasetQuery
+  - GetDashboardQuery
+  - SearchInsightQuery
+  - GetWorkspaceQuery
+events:
+  - WorkspaceCreatedEvent
+  - AnalyticsExecutedEvent
+  - DashboardPublishedEvent
+  - InsightSharedEvent
+  - DatasetBookmarkedEvent
+  - VisualizationCreatedEvent
+microservices:
+  - workspace-service
+  - analytics-builder-service
+  - dashboard-builder-service
+  - collaboration-service
+  - search-service
+  - natural-language-analytics-service
+  - ai-analytics-assistant-service
+  - insight-sharing-service
+semantic_layer:
+  via_p213_g: true
+knowledge_graph:
+  via_p212_j: true
+digital_twin:
+  via_p212_l: true
+reporting:
+  via_p213_d: true

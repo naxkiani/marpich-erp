@@ -1,0 +1,23 @@
+# P213-B — VALIDATION
+version: "1.0"
+prompt_id: P213-B
+adr: "395"
+sor: analytics
+capability: CAP-PLT-BI-001
+api_prefix: /api/v1/analytics/mission
+reject_if:
+  - mission_is_undefined
+  - vision_is_undefined
+  - decision_intelligence_scope_is_undefined
+  - capability_map_is_missing
+  - operating_model_is_missing
+  - governance_model_is_missing
+  - ai_strategy_is_undefined
+  - knowledge_graph_alignment_is_missing
+  - digital_twin_alignment_is_missing
+  - meos_integration_alignment_is_missing
+  - enterprise_scope_is_undefined
+  - strategic_objectives_are_missing
+  - domain_boundaries_are_unclear
+  - sibling_business_intelligence_bc
+verdict_required: ENTERPRISE_GRADE

@@ -1,0 +1,32 @@
+# P214-A — SECURITY
+version: "1.0"
+prompt_id: P214-A
+adr: "421"
+sor: ai
+capability: CAP-PLT-AI-001
+zero_trust: true
+privacy_by_design: true
+via_p207: true
+via_p208: true
+via_p209: true
+via_p210: true
+via_p211: true
+via_p212: true
+controls:
+  - ai_identity
+  - model_authorization
+  - prompt_security
+  - data_protection
+  - model_encryption
+  - ai_audit_trail
+  - responsible_ai_controls
+  - ai_risk_management
+forbidden:
+  - module_local_llm_sdk
+  - unsigned_model_artifacts
+  - inference_without_tenant_id
+  - inference_without_audit
+permissions:
+  - ai.assist.read
+  - ai.assist.infer
+  - ai.platform.read

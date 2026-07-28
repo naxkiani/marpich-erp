@@ -1,0 +1,36 @@
+# P213-A — CAPABILITIES
+version: "1.0"
+prompt_id: P213-A
+adr: "394"
+sor: analytics
+capability: CAP-PLT-BI-001
+api_prefix: /api/v1/analytics/strategy
+principle: Enterprise intelligence transforms trusted data into strategic organizational decisions.
+builds_on:
+  - P212
+  - P212-J
+  - P212-L
+  - ADR-392
+  - ADR-393
+  - ADR-376
+bi_architecture_complete_required: true
+analytics_architecture_present_required: true
+decision_intelligence_foundation_present_required: true
+ddd_domain_model_present_required: true
+cqrs_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_design_present_required: true
+ai_native_bi_present_required: true
+knowledge_graph_integration_present_required: true
+digital_twin_integration_present_required: true
+governance_alignment_present_required: true
+data_mesh_alignment_present_required: true
+sibling_business_intelligence_bc_forbidden: true
+via_p207: true
+via_p208: true
+via_p211: true
+via_p212: true
+via_p212_j: true
+via_p212_l: true
+via_enterprise_ai: true
+via_api_gateway: true

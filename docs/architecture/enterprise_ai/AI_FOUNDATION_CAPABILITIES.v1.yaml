@@ -1,0 +1,60 @@
+# P214-A — CAPABILITIES
+version: "1.0"
+prompt_id: P214-A
+adr: "421"
+sor: ai
+capability: CAP-PLT-AI-001
+api_prefix: /api/v1/ai/foundation
+principle: >-
+  Enterprise AI Platform SHALL provide the intelligence foundation enabling
+  every MEOS domain to consume, create, govern and operationalize artificial
+  intelligence.
+fabric: meos_enterprise_ai_intelligence_fabric
+builds_on:
+  - P212
+  - P212-J
+  - P212-L
+  - P213
+  - P213-L
+  - P213-M
+  - P213-O
+  - ADR-394
+  - ADR-419
+  - P207
+  - P208
+  - P209
+  - P210
+  - P211
+  - AI_PLATFORM_STANDARD
+enterprise_ai_platform_foundation_present_required: true
+machine_learning_platform_present_required: true
+generative_ai_platform_present_required: true
+llm_platform_present_required: true
+ai_model_lifecycle_present_required: true
+mlops_foundation_present_required: true
+vector_intelligence_present_required: true
+ai_governance_foundation_present_required: true
+ai_agent_foundation_present_required: true
+knowledge_graph_integration_present_required: true
+digital_twin_integration_present_required: true
+cqrs_architecture_present_required: true
+event_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_architecture_present_required: true
+zero_trust_security_present_required: true
+cloud_native_deployment_present_required: true
+sibling_ai_bc_forbidden: true
+module_local_llm_sdk_forbidden: true
+via_p207: true
+via_p208: true
+via_p209: true
+via_p210: true
+via_p211: true
+via_p212: true
+via_p212_j: true
+via_p212_l: true
+via_p213_l: true
+via_p213_m: true
+via_p213_o: true
+via_enterprise_ai: true
+via_api_gateway: true

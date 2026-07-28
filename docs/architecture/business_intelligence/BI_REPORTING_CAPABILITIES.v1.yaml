@@ -1,0 +1,56 @@
+# P213-D — CAPABILITIES
+version: "1.0"
+prompt_id: P213-D
+adr: "408"
+sor: analytics
+capability: CAP-PLT-BI-001
+api_prefix: /api/v1/analytics/reporting
+principle: Enterprise reporting SHALL not only describe what happened, it SHALL explain why it happened and what should happen next.
+fabric: meos_enterprise_intelligence_experience_fabric
+builds_on:
+  - P213-A
+  - P213-B
+  - P213-C
+  - ADR-394
+  - ADR-395
+  - ADR-396
+  - P212
+  - P212-E
+  - P212-F
+  - P212-G
+  - P212-I
+  - P212-J
+  - P212-K
+  - P212-L
+  - P212-M
+  - P212-N
+  - P212-O
+enterprise_reporting_platform_present_required: true
+dashboard_architecture_present_required: true
+visualization_platform_present_required: true
+self_service_bi_capability_present_required: true
+ai_reporting_intelligence_present_required: true
+real_time_analytics_experience_present_required: true
+cqrs_architecture_present_required: true
+event_driven_design_present_required: true
+microservice_architecture_present_required: true
+api_first_architecture_present_required: true
+security_governance_present_required: true
+enterprise_scalability_present_required: true
+architecture_present_required: true
+knowledge_graph_visualization_present_required: true
+digital_twin_visualization_present_required: true
+sibling_business_intelligence_bc_forbidden: true
+core_domain: enterprise_intelligence_experience_management
+bounded_context_count: 5
+dashboard_category_count: 4
+ai_agent_count: 5
+microservice_count: 6
+via_p207: true
+via_p208: true
+via_p211: true
+via_p212: true
+via_p212_j: true
+via_p212_l: true
+via_enterprise_ai: true
+via_api_gateway: true

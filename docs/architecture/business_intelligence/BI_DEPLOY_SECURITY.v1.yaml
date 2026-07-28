@@ -1,0 +1,27 @@
+# P213-O — SECURITY
+version: "1.0"
+prompt_id: P213-O
+adr: "419"
+sor: analytics
+capability: CAP-PLT-BI-001
+permission: analytics.deploy.read
+zero_trust: true
+tenant_isolation: true
+delegates:
+  identity: P207
+  authorization: P208
+  cryptographic_trust: P209
+  cyber_security: P210
+  data_security: P211
+  data_governance: P212
+  cqrs_ops: P213-N
+  enterprise_ai: ai
+  observability: platform_observability
+  api_gateway: gateway
+mtls: true
+pod_security_standards: true
+network_policies: true
+image_signing_required: true
+sbom_required: true
+audit_logging: true
+sibling_bc_forbidden: true

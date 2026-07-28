@@ -1,0 +1,35 @@
+# P214-C — VALIDATION
+version: "1.0"
+prompt_id: P214-C
+adr: "423"
+sor: ai
+capability: CAP-PLT-AI-001
+verdict_required: ENTERPRISE_GRADE
+reject_if:
+  - complete_ai_domain_model_is_missing
+  - strategic_ddd_design_is_missing
+  - core_domain_is_undefined
+  - supporting_domains_are_missing
+  - bounded_contexts_are_missing
+  - aggregates_are_undefined
+  - entities_are_undefined
+  - value_objects_are_undefined
+  - domain_events_are_missing
+  - microservice_mapping_is_missing
+  - integration_boundaries_are_unclear
+  - governance_model_is_missing
+  - sibling_ai_bc
+definition_of_done:
+  - enterprise_ai_domain_architecture
+  - ddd_model
+  - ai_core_domain
+  - ai_supporting_domains
+  - bounded_contexts
+  - aggregates
+  - domain_events
+  - ai_microservice_boundaries
+  - integration_architecture
+  - governance_architecture
+tests:
+  - contexts/ai/tests/test_ai_platform_domain.py
+  - contexts/ai/tests/unit/test_ai_platform_domain.py

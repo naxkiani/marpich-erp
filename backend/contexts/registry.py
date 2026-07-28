@@ -104,29 +104,52 @@ NOTIFICATIONS = BoundedContext(
 
 ANALYTICS = BoundedContext(
     id="analytics",
-    display_name="Analytics",
+    display_name=(
+        "Enterprise Business Intelligence, Analytics & "
+        "Decision Intelligence Platform"
+    ),
     context_type=BoundedContextType.SUPPORTING,
     schema_name="analytics",
-    description="OLAP, dashboards, KPIs, data warehouse projections",
-    publishes=("analytics.report.generated", "analytics.alert.triggered"),
+    description=(
+        "Enterprise BI Fabric (P213 / CAP-PLT-BI-001) — BI assets, metrics "
+        "governance, reporting, analytics intelligence, decision intelligence; "
+        "also OLAP projections and operational dashboards/alerts"
+    ),
+    publishes=(
+        "analytics.report.generated",
+        "analytics.alert.triggered",
+        "analytics.bi_asset.published",
+        "analytics.metric.defined",
+        "analytics.insight.generated",
+        "analytics.decision.completed",
+    ),
     subscribes=("*", "platform.tenant.provisioned"),
 )
 
 AI = BoundedContext(
     id="ai",
-    display_name="AI",
+    display_name="Enterprise AI / ML / Generative AI Platform",
     context_type=BoundedContextType.SUPPORTING,
     schema_name="ai",
-    description="LLM orchestration, embeddings, domain AI agents",
+    description=(
+        "MEOS Enterprise AI Intelligence Fabric (P214 / CAP-PLT-AI-001) — "
+        "AI-PaaS, MLOps, generative AI, LLM management, vector intelligence, "
+        "agents, and AI governance; modules never embed LLM SDKs"
+    ),
     publishes=(
         "ai.insight.generated",
         "ai.fraud.alert.raised",
         "ai.document.parsed",
+        "ai.model.registered",
+        "ai.model.deployed",
+        "ai.inference.executed",
+        "ai.governance.validated",
     ),
     subscribes=(
         "documents.document.uploaded",
         "banking.transaction.posted",
         "hospital.encounter.completed",
+        "platform.tenant.provisioned",
     ),
 )
 
@@ -365,6 +388,44 @@ SECRETS = BoundedContext(
     subscribes=("platform.tenant.provisioned",),
 )
 
+CYBER_SECURITY = BoundedContext(
+    id="cyber_security",
+    display_name="Enterprise Cyber Security & Threat Defense Platform",
+    context_type=BoundedContextType.PLATFORM,
+    schema_name="cyber_security",
+    description=(
+        "Cyber Security Fabric — SOC, SIEM, SOAR, XDR/EDR/NDR, threat intel, "
+        "ASM/CTEM, AI-native SecOps — SoR for P210; IR remains security_incident"
+    ),
+    publishes=(
+        "cyber_security.strategy.published",
+        "cyber_security.capability.registered",
+        "cyber_security.control.registered",
+        "security.attack.detected",
+    ),
+    subscribes=("platform.tenant.provisioned",),
+)
+
+
+DATA_SECURITY = BoundedContext(
+    id="data_security",
+    display_name="Enterprise Data Security & Privacy Intelligence Platform",
+    context_type=BoundedContextType.PLATFORM,
+    schema_name="data_security",
+    description=(
+        "Data Security Intelligence Fabric — discovery, classification, DSPM, "
+        "privacy intelligence, access governance, AI data security — SoR for P211; "
+        "consent ledger remains consent; crypto remains secrets; cyber remains cyber_security"
+    ),
+    publishes=(
+        "data_security.strategy.published",
+        "data_security.asset.registered",
+        "data_security.data.classified",
+        "data_security.risk.detected",
+        "data_security.policy.applied",
+    ),
+    subscribes=("platform.tenant.provisioned",),
+)
 
 DATA_GOVERNANCE = BoundedContext(
     id="data_governance",
@@ -382,6 +443,29 @@ DATA_GOVERNANCE = BoundedContext(
         "data_governance.steward.created",
         "data_governance.product.registered",
         "data_governance.policy.approved",
+    ),
+    subscribes=("platform.tenant.provisioned",),
+)
+
+QUANTUM = BoundedContext(
+    id="quantum",
+    display_name=(
+        "Enterprise Quantum Computing, Quantum AI & "
+        "Post-Classical Intelligence Platform"
+    ),
+    context_type=BoundedContextType.PLATFORM,
+    schema_name="quantum",
+    description=(
+        "Quantum Intelligence Fabric — infrastructure, algorithms, Quantum AI/ML, "
+        "optimization/simulation, security bindings, data intelligence, networking, "
+        "governance/ethics/compliance — SoR for P215; PQC remains secrets (P209)"
+    ),
+    publishes=(
+        "quantum.governance.policy.created",
+        "quantum.governance.risk.detected",
+        "quantum.governance.compliance.validated",
+        "quantum.governance.audit.completed",
+        "quantum.governance.trust.established",
     ),
     subscribes=("platform.tenant.provisioned",),
 )
@@ -975,7 +1059,10 @@ ALL_CONTEXTS: tuple[BoundedContext, ...] = (
     IDENTITY_INTELLIGENCE,
     CONSENT,
     SECRETS,
+    CYBER_SECURITY,
+    DATA_SECURITY,
     DATA_GOVERNANCE,
+    QUANTUM,
     AUTHORIZATION,
     PERMISSION_REGISTRY,
     COMPLIANCE,

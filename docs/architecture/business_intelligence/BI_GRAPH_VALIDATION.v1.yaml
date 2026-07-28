@@ -1,0 +1,42 @@
+# P213-L — VALIDATION
+version: "1.0"
+prompt_id: P213-L
+adr: "416"
+sor: analytics
+capability: CAP-PLT-BI-001
+principle: Every enterprise decision SHALL become a governed, connected, explainable, versioned knowledge asset.
+fabric: meos_enterprise_decision_knowledge_fabric
+reject_if:
+  - enterprise_decision_knowledge_graph_is_missing
+  - enterprise_decision_ontology_is_missing
+  - enterprise_decision_memory_is_missing
+  - graph_analytics_is_missing
+  - ai_reasoning_is_missing
+  - decision_lineage_is_missing
+  - knowledge_graph_federation_is_missing
+  - digital_twin_integration_is_missing
+  - cqrs_architecture_is_missing
+  - event_sourcing_architecture_is_missing
+  - microservice_architecture_is_missing
+  - api_first_architecture_is_missing
+  - zero_trust_security_is_missing
+  - cloud_native_deployment_is_missing
+  - decision_knowledge_graph_architecture_is_incomplete
+  - sibling_business_intelligence_bc
+verdict_required: ENTERPRISE_GRADE
+definition_of_done:
+  - enterprise_decision_graph
+  - decision_ontology
+  - decision_lineage
+  - decision_memory
+  - graph_analytics
+  - ai_graph_reasoning
+  - knowledge_graph_federation
+  - digital_twin_integration
+  - cqrs_architecture
+  - event_architecture
+  - microservice_architecture
+  - api_platform
+  - security_architecture
+  - deployment_architecture
+  - testing_architecture

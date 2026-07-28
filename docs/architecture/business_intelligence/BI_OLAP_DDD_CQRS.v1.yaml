@@ -1,0 +1,65 @@
+# P213-G — DDD / CQRS
+version: "1.0"
+prompt_id: P213-G
+adr: "411"
+sor: analytics
+capability: CAP-PLT-BI-001
+principle: Every enterprise decision SHALL be based upon a governed semantic definition instead of isolated calculations.
+fabric: meos_enterprise_semantic_intelligence_fabric
+core_domain: enterprise_semantic_intelligence_management
+aggregate: SemanticModelAggregate
+supporting_domains:
+  - metric_governance
+  - kpi_governance
+  - olap_management
+  - dimension_management
+  - measure_management
+  - calculation_management
+  - business_vocabulary_management
+  - semantic_metadata_management
+logical_bounded_contexts:
+  - BC-01 business_metrics
+  - BC-02 semantic_layer
+  - BC-03 olap_cube
+  - BC-04 calculation_engine
+  - BC-05 business_taxonomy
+commands:
+  - CreateMetricCommand
+  - ApproveMetricCommand
+  - PublishSemanticModelCommand
+  - CreateCubeCommand
+  - RefreshCubeCommand
+  - RegisterBusinessGlossaryCommand
+queries:
+  - GetMetricQuery
+  - GetKPIQuery
+  - GetSemanticModelQuery
+  - GetCubeQuery
+  - SearchBusinessConceptQuery
+events:
+  - MetricCreatedEvent
+  - MetricApprovedEvent
+  - SemanticModelPublishedEvent
+  - CubeRefreshedEvent
+  - BusinessGlossaryUpdatedEvent
+  - FormulaChangedEvent
+  - HierarchyChangedEvent
+microservices:
+  - semantic-layer-service
+  - metric-catalog-service
+  - business-glossary-service
+  - olap-cube-service
+  - calculation-engine-service
+  - hierarchy-management-service
+  - dimension-service
+  - semantic-ai-service
+knowledge_graph:
+  via_p212_j: true
+digital_twin:
+  via_p212_l: true
+warehouse:
+  via_p213_e: true
+lakehouse:
+  via_p213_f: true
+reporting:
+  via_p213_d: true

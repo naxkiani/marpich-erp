@@ -1,0 +1,21 @@
+# P214-C — DDD / CQRS
+version: "1.0"
+prompt_id: P214-C
+adr: "423"
+sor: ai
+capability: CAP-PLT-AI-001
+core_domain: enterprise_artificial_intelligence_intelligence_platform
+aggregate: EnterpriseAIPlatformAggregate
+supporting_domain_count: 11
+strategic_domain_count: 3
+bounded_contexts:
+  - BC-01 ai_platform_management
+  - BC-02 machine_learning
+  - BC-03 generative_ai
+  - BC-04 ai_agent
+  - BC-05 ai_knowledge
+  - BC-06 ai_runtime
+  - BC-07 ai_governance
+  - BC-08 ai_security
+microservice_count: 9
+event_count: 9

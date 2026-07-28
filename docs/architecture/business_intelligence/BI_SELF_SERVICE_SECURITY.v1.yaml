@@ -1,0 +1,34 @@
+# P213-H — SECURITY
+version: "1.0"
+prompt_id: P213-H
+adr: "412"
+sor: analytics
+capability: CAP-PLT-BI-001
+permission: analytics.self_service.read
+zero_trust: true
+tenant_isolation: true
+delegates:
+  identity: P207
+  authorization: P208
+  data_security: P211
+  data_governance: P212
+  metadata: P212-I
+  knowledge_graph: P212-J
+  digital_twin: P212-L
+  reporting: P213-D
+  semantic: P213-G
+  enterprise_ai: ai
+  enterprise_search: search
+  api_gateway: gateway
+workspace_isolation: true
+dataset_authorization: true
+role_based_access_control: true
+attribute_based_access_control: true
+row_level_security: true
+column_level_security: true
+dynamic_data_masking: true
+policy_based_data_access: true
+audit_logging: true
+privacy_enforcement: true
+certified_metrics_only: true
+sibling_bc_forbidden: true

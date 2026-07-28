@@ -1,0 +1,28 @@
+# P213-E — SECURITY
+version: "1.0"
+prompt_id: P213-E
+adr: "409"
+sor: analytics
+capability: CAP-PLT-BI-001
+permission: analytics.warehouse.read
+zero_trust: true
+tenant_isolation: true
+delegates:
+  identity: P207
+  authorization: P208
+  cryptographic_trust: P209
+  data_security: P211
+  data_governance: P212
+  data_quality: P212-E
+  knowledge_graph: P212-J
+  ai_readiness: P212-K
+  digital_twin: P212-L
+  reporting: P213-D
+  enterprise_ai: ai
+  api_gateway: gateway
+analytical_data_access_control: true
+data_masking: true
+encryption: true
+audit_logging: true
+privacy_controls: true
+sibling_bc_forbidden: true

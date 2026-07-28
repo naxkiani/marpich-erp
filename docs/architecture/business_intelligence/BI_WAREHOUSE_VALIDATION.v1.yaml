@@ -1,0 +1,40 @@
+# P213-E — VALIDATION
+version: "1.0"
+prompt_id: P213-E
+adr: "409"
+sor: analytics
+capability: CAP-PLT-BI-001
+principle: Enterprise Data Warehouse SHALL become the historical intelligence memory of MEOS.
+fabric: meos_enterprise_analytical_intelligence_data_fabric
+reject_if:
+  - enterprise_data_warehouse_architecture_is_missing
+  - analytical_data_platform_is_missing
+  - dimensional_modeling_is_missing
+  - data_integration_architecture_is_missing
+  - semantic_layer_is_missing
+  - data_governance_alignment_is_missing
+  - ai_readiness_alignment_is_missing
+  - knowledge_graph_integration_is_missing
+  - cqrs_architecture_is_missing
+  - event_driven_architecture_is_missing
+  - microservice_architecture_is_missing
+  - api_first_architecture_is_missing
+  - cloud_native_deployment_is_missing
+  - warehouse_architecture_is_incomplete
+  - historical_data_management_is_missing
+  - digital_twin_analytical_integration_is_missing
+  - sibling_business_intelligence_bc
+verdict_required: ENTERPRISE_GRADE
+definition_of_done:
+  - enterprise_data_warehouse
+  - analytical_data_model
+  - data_integration_architecture
+  - historical_data_management
+  - semantic_layer
+  - data_governance_integration
+  - ai_data_foundation
+  - cqrs_architecture
+  - event_architecture
+  - microservice_architecture
+  - api_architecture
+  - deployment_architecture

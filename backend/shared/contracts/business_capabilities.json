@@ -76,6 +76,9 @@
     {"id": "CAP-PAM-004", "name": "Privileged Session Broker", "tier": "platform", "namespace": "privileged-access", "boundedContext": "privileged_access", "lifecycle": "start-verify-end"},
     {"id": "CAP-PAM-005", "name": "Just In Time Elevation", "tier": "platform", "namespace": "privileged-access", "boundedContext": "privileged_access", "lifecycle": "request-approve-expire"},
     {"id": "CAP-PAM-006", "name": "Break Glass Access", "tier": "platform", "namespace": "privileged-access", "boundedContext": "privileged_access", "lifecycle": "request-grant-revoke"},
+    {"id": "CAP-PLT-QC-001", "name": "Enterprise Quantum Computing and Post-Classical Intelligence", "tier": "platform", "namespace": "quantum", "boundedContext": "quantum", "lifecycle": "govern-compute-assure"},
+    {"id": "CAP-PLT-BI-001", "name": "Enterprise Business Intelligence Analytics and Decision Intelligence", "tier": "platform", "namespace": "analytics", "boundedContext": "analytics", "lifecycle": "ingest-analyze-decide"},
+    {"id": "CAP-PLT-AI-001", "name": "Enterprise Artificial Intelligence Machine Learning and Generative AI", "tier": "platform", "namespace": "ai", "boundedContext": "ai", "lifecycle": "train-govern-infer-learn"},
     {"id": "CAP-PLT-DG-001", "name": "Enterprise Data Governance Data Mesh and Enterprise Intelligence", "tier": "platform", "namespace": "data-governance", "boundedContext": "data_governance", "lifecycle": "own-govern-assure"}
   ]
 }

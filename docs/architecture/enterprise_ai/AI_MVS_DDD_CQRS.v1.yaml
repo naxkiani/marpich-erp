@@ -1,0 +1,31 @@
+# P214-B — DDD / CQRS
+version: "1.0"
+prompt_id: P214-B
+adr: "422"
+sor: ai
+capability: CAP-PLT-AI-001
+strategic_objectives: 10
+capability_domains: 6
+maturity_levels: 6
+roadmap_phases: 5
+commands:
+  - PublishAiMissionCommand
+  - PublishAiVisionCommand
+  - RegisterStrategicObjectiveCommand
+  - ApproveAiCapabilityDomainCommand
+  - AdvanceMaturityAssessmentCommand
+  - ApproveTransformationPhaseCommand
+queries:
+  - GetAiMissionQuery
+  - GetAiVisionQuery
+  - GetStrategicObjectivesQuery
+  - GetCapabilityMapQuery
+  - GetMaturityStatusQuery
+  - GetTransformationRoadmapQuery
+events:
+  - AiMissionPublishedEvent
+  - AiVisionPublishedEvent
+  - AiStrategicObjectiveRegisteredEvent
+  - AiMaturityLevelAssessedEvent
+  - AiTransformationPhaseApprovedEvent
+  - AiGovernanceStrategyValidatedEvent

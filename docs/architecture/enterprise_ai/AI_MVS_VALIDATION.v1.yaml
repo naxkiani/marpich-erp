@@ -1,0 +1,37 @@
+# P214-B — VALIDATION
+version: "1.0"
+prompt_id: P214-B
+adr: "422"
+sor: ai
+capability: CAP-PLT-AI-001
+verdict_required: ENTERPRISE_GRADE
+reject_if:
+  - mission_is_undefined
+  - vision_is_undefined
+  - ai_strategic_scope_is_undefined
+  - ai_capability_map_is_missing
+  - ai_operating_model_is_missing
+  - ai_maturity_model_is_missing
+  - ai_governance_strategy_is_undefined
+  - ai_transformation_roadmap_is_missing
+  - ai_value_framework_is_missing
+  - responsible_ai_strategy_is_undefined
+  - ai_security_strategy_is_missing
+  - sibling_ai_bc
+definition_of_done:
+  - enterprise_ai_mission
+  - enterprise_ai_vision
+  - ai_strategic_objectives
+  - ai_capability_map
+  - ai_operating_model
+  - ai_center_of_excellence
+  - ai_maturity_model
+  - ai_value_framework
+  - ai_governance_model
+  - ai_transformation_roadmap
+  - ai_risk_strategy
+  - ai_security_strategy
+  - ai_success_metrics
+tests:
+  - contexts/ai/tests/test_ai_platform_mission_scope.py
+  - contexts/ai/tests/unit/test_ai_platform_mission_scope.py

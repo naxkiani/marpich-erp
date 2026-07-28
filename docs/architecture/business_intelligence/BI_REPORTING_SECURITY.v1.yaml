@@ -1,0 +1,25 @@
+# P213-D — SECURITY
+version: "1.0"
+prompt_id: P213-D
+adr: "408"
+sor: analytics
+capability: CAP-PLT-BI-001
+permission: analytics.dashboards.read
+zero_trust: true
+tenant_isolation: true
+delegates:
+  identity: P207
+  authorization: P208
+  data_security: P211
+  data_governance: P212
+  knowledge_graph: P212-J
+  digital_twin: P212-L
+  enterprise_ai: ai
+  api_gateway: gateway
+dashboard_permissions: true
+report_classification: true
+data_masking: true
+access_auditing: true
+privacy_controls: true
+certified_metrics_only: true
+sibling_bc_forbidden: true

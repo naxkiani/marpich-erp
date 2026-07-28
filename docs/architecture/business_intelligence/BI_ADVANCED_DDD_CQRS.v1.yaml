@@ -1,0 +1,67 @@
+# P213-I — DDD / CQRS
+version: "1.0"
+prompt_id: P213-I
+adr: "413"
+sor: analytics
+capability: CAP-PLT-BI-001
+principle: Advanced Analytics SHALL transform enterprise data into scientific business intelligence that supports strategic decision making.
+fabric: meos_enterprise_advanced_analytics_fabric
+core_domain: enterprise_advanced_analytics_management
+aggregate: AdvancedAnalyticsAggregate
+supporting_domains:
+  - statistical_analytics
+  - analytical_modeling
+  - experiment_management
+  - pattern_discovery
+  - correlation_analysis
+  - root_cause_analysis
+  - behaviour_analytics
+  - insight_management
+  - data_science_workspace
+logical_bounded_contexts:
+  - BC-01 statistical_analytics
+  - BC-02 analytical_modeling
+  - BC-03 experimentation
+  - BC-04 pattern_discovery
+  - BC-05 root_cause_analytics
+  - BC-06 insight_management
+commands:
+  - CreateAnalysisCommand
+  - RunExperimentCommand
+  - GenerateInsightCommand
+  - ApproveInsightCommand
+  - PublishAnalysisCommand
+queries:
+  - GetAnalysisQuery
+  - GetExperimentQuery
+  - SearchInsightsQuery
+  - GetPatternQuery
+  - GetRootCauseQuery
+events:
+  - AnalysisStartedEvent
+  - AnalysisCompletedEvent
+  - PatternDetectedEvent
+  - ExperimentCompletedEvent
+  - InsightGeneratedEvent
+  - RootCauseDetectedEvent
+microservices:
+  - advanced-analytics-service
+  - statistical-engine-service
+  - experiment-service
+  - pattern-discovery-service
+  - root-cause-service
+  - insight-service
+  - analytics-ai-service
+  - notebook-service
+semantic_layer:
+  via_p213_g: true
+self_service:
+  via_p213_h: true
+knowledge_graph:
+  via_p212_j: true
+digital_twin:
+  via_p212_l: true
+warehouse:
+  via_p213_e: true
+lakehouse:
+  via_p213_f: true

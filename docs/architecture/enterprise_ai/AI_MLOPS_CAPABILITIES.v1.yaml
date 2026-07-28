@@ -1,0 +1,55 @@
+# P214-D — CAPABILITIES
+version: "1.0"
+prompt_id: P214-D
+adr: "424"
+sor: ai
+capability: CAP-PLT-AI-001
+api_prefix: /api/v1/ai/mlops
+fabric: meos_enterprise_machine_learning_intelligence_fabric
+principle: >-
+  Enterprise MLOps SHALL transform machine learning from isolated experiments
+  into governed, scalable, secure and continuously improving enterprise capabilities.
+builds_on:
+  - P214-A
+  - P214-B
+  - P214-C
+  - ADR-423
+  - P212
+  - P213-J
+  - P213-O
+  - P207
+  - P208
+  - P209
+  - P210
+  - P211
+enterprise_mlops_platform_present_required: true
+ml_lifecycle_management_present_required: true
+experiment_platform_present_required: true
+feature_store_present_required: true
+training_platform_present_required: true
+model_registry_present_required: true
+validation_platform_present_required: true
+deployment_platform_present_required: true
+monitoring_platform_present_required: true
+continuous_training_present_required: true
+ml_governance_present_required: true
+cqrs_architecture_present_required: true
+event_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_architecture_present_required: true
+zero_trust_security_present_required: true
+cloud_native_deployment_present_required: true
+sibling_ai_bc_forbidden: true
+module_local_llm_sdk_forbidden: true
+via_p212: true
+via_p213_j: true
+via_p213_o: true
+via_p214_a: true
+via_p214_c: true
+via_p207: true
+via_p208: true
+via_p209: true
+via_p210: true
+via_p211: true
+via_enterprise_ai: true
+via_api_gateway: true

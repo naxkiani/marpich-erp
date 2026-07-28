@@ -1,0 +1,16 @@
+# P213-P — SECURITY
+version: "1.0"
+prompt_id: P213-P
+adr: "420"
+sor: analytics
+capability: CAP-PLT-BI-001
+api_prefix: /api/v1/analytics/qa
+builds_on:
+  - P213-A
+  - P213-O
+  - ADR-394
+  - ADR-419
+permission: analytics.dashboards.read
+zero_trust: true
+via_p208: true
+via_api_gateway: true

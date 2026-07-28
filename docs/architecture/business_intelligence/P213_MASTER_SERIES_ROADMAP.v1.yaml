@@ -1,0 +1,110 @@
+# P213 — Enterprise BI, Analytics & Decision Intelligence Roadmap
+version: "1.0"
+series: P213
+module: Enterprise Business Intelligence, Analytics & Decision Intelligence Platform
+volume: "06 — Enterprise Data Intelligence & Protection Fabric"
+sor: analytics
+capability: CAP-PLT-BI-001
+builds_on:
+  - ADR-392
+  - ADR-393
+  - ADR-376
+  - CORE_PLATFORM.md
+  - ENTERPRISE_EVENT_BUS.md
+  - AI_PLATFORM_STANDARD.md
+  - P212
+forbidden_sibling_bc:
+  - business_intelligence
+  - decision_intelligence
+  - reporting_platform
+  - metric_governance_platform
+  - visualization_platform
+  - bi_core
+phases:
+  - id: P213-A
+    title: Foundation Architecture — Enterprise BI, Analytics & Decision Intelligence
+    status: done
+    adr: "394"
+    api: /api/v1/analytics/strategy*
+  - id: P213-B
+    title: Mission, Vision & Enterprise Decision Intelligence Scope
+    status: done
+    adr: "395"
+    api: /api/v1/analytics/mission*
+  - id: P213-C
+    title: Enterprise BI Domain Architecture (DDD)
+    status: done
+    adr: "396"
+    api: /api/v1/analytics/domain*
+  - id: P213-D
+    title: Enterprise Reporting, Dashboard & Visualization Platform
+    status: done
+    adr: "408"
+    api: /api/v1/analytics/reporting*
+  - id: P213-E
+    title: Enterprise Data Warehouse & Analytical Data Platform
+    status: done
+    adr: "409"
+    api: /api/v1/analytics/warehouse*
+  - id: P213-F
+    title: Enterprise Lakehouse Architecture Platform
+    status: done
+    adr: "410"
+    api: /api/v1/analytics/lakehouse*
+  - id: P213-G
+    title: Enterprise OLAP, Semantic Layer & Business Metrics Platform
+    status: done
+    adr: "411"
+    api: /api/v1/analytics/olap*
+  - id: P213-H
+    title: Enterprise Self-Service BI Platform
+    status: done
+    adr: "412"
+    api: /api/v1/analytics/self-service*
+  - id: P213-I
+    title: Enterprise Advanced Analytics Platform
+    status: done
+    adr: "413"
+    api: /api/v1/analytics/advanced*
+  - id: P213-J
+    title: Enterprise Predictive Analytics & Forecasting Platform
+    status: done
+    adr: "414"
+    api: /api/v1/analytics/predictive*
+  - id: P213-K
+    title: Enterprise Prescriptive Analytics & Optimization Intelligence Platform
+    status: done
+    adr: "415"
+    api: /api/v1/analytics/prescriptive*
+  - id: P213-L
+    title: Enterprise Decision Intelligence Knowledge Graph Platform
+    status: done
+    adr: "416"
+    api: /api/v1/analytics/graph*
+  - id: P213-M
+    title: AI Native Analytics & Autonomous Decision Intelligence Platform
+    status: done
+    adr: "417"
+    api: /api/v1/analytics/ai*
+  - id: P213-N
+    title: CQRS, Events, APIs & Microservices Platform
+    status: done
+    adr: "418"
+    api: /api/v1/analytics/ops*
+  - id: P213-O
+    title: Deployment, DevSecOps, Kubernetes, Scalability & Observability
+    status: done
+    adr: "419"
+    api: /api/v1/analytics/deploy*
+  - id: P213-P
+    title: Testing, Governance Validation & Definition of Done
+    status: done
+    adr: "420"
+    api: /api/v1/analytics/qa*
+
+series_status: complete
+distinct_from:
+  - data_governance (P212)
+  - data_security (P211)
+  - reporting (report engine core)
+  - ai (Enterprise AI inference)

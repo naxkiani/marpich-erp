@@ -1,0 +1,67 @@
+# P213-N — DDD_CQRS
+version: "1.0"
+prompt_id: P213-N
+adr: "418"
+sor: analytics
+capability: CAP-PLT-BI-001
+api_prefix: /api/v1/analytics/ops
+core_domain: enterprise_analytics_integration_platform
+aggregate: IntegrationPlatformAggregate
+supporting_domains:
+  - command_processing
+  - query_processing
+  - event_streaming
+  - api_management
+  - service_discovery
+  - integration_gateway
+  - event_store
+  - contract_registry
+bounded_contexts:
+  - BC-01_command_platform
+  - BC-02_query_platform
+  - BC-03_event_platform
+  - BC-04_api_platform
+  - BC-05_integration
+  - BC-06_messaging
+commands:
+  - CreateAnalyticsModelCommand
+  - PublishDashboardCommand
+  - GenerateForecastCommand
+  - ApproveRecommendationCommand
+  - ExecuteDecisionCommand
+  - RegisterInsightCommand
+queries:
+  - GetDashboardQuery
+  - SearchInsightsQuery
+  - GetForecastQuery
+  - GetRecommendationQuery
+  - GetDecisionHistoryQuery
+  - GetAnalyticsStatusQuery
+events:
+  - CommandAcceptedEvent
+  - CommandRejectedEvent
+  - EventPublishedEvent
+  - ReadModelUpdatedEvent
+  - ApiRegisteredEvent
+  - ConsumerSubscribedEvent
+  - BiCommandExecuted
+  - BiProjectionUpdated
+  - BiIntegrationPublished
+  - BiStateChanged
+cqrs_platform:
+  command_bus: true
+  query_bus: true
+  validation_pipeline: true
+  idempotency: true
+  retry_policies: true
+  transaction_boundaries: true
+event_sourcing:
+  immutable_event_store: true
+  aggregate_replay: true
+  event_snapshots: true
+  via_enterprise_event_fabric: true
+patterns:
+  - outbox
+  - inbox
+  - saga
+  - publish_subscribe

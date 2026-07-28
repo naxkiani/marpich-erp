@@ -1,0 +1,58 @@
+# P213-O — CAPABILITIES
+version: "1.0"
+prompt_id: P213-O
+adr: "419"
+sor: analytics
+capability: CAP-PLT-BI-001
+api_prefix: /api/v1/analytics/deploy
+principle: Every analytics capability SHALL be continuously deployed through secure GitOps, remain cloud-native and observable, and satisfy enterprise Definition of Done before production promotion.
+fabric: meos_enterprise_bi_operations_fabric
+builds_on:
+  - P213-A
+  - P213-B
+  - P213-C
+  - P213-D
+  - P213-E
+  - P213-F
+  - P213-G
+  - P213-H
+  - P213-I
+  - P213-J
+  - P213-K
+  - P213-L
+  - P213-M
+  - P213-N
+  - ADR-394
+  - ADR-418
+  - P207
+  - P208
+  - P209
+  - P210
+  - P211
+  - P212
+enterprise_production_deployment_present_required: true
+kubernetes_runtime_present_required: true
+gitops_platform_present_required: true
+devsecops_pipeline_present_required: true
+observability_platform_present_required: true
+sre_processes_present_required: true
+scalability_architecture_present_required: true
+disaster_recovery_present_required: true
+definition_of_done_present_required: true
+cloud_native_deployment_present_required: true
+zero_trust_security_present_required: true
+continuous_governance_present_required: true
+architecture_present_required: true
+sibling_business_intelligence_bc_forbidden: true
+core_domain: enterprise_analytics_operational_excellence
+bounded_context_count: 6
+environment_count: 11
+definition_of_done_criterion_count: 23
+aiops_agent_count: 9
+microservice_count: 8
+via_p209: true
+via_p210: true
+via_p213_n: true
+via_enterprise_ai: true
+via_enterprise_observability: true
+via_api_gateway: true

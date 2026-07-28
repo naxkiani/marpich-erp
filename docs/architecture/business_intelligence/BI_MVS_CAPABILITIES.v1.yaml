@@ -1,0 +1,32 @@
+# P213-B — CAPABILITIES
+version: "1.0"
+prompt_id: P213-B
+adr: "395"
+sor: analytics
+capability: CAP-PLT-BI-001
+api_prefix: /api/v1/analytics/mission
+mission: MEOS Enterprise Intelligence mission is to transform trusted enterprise data into actionable knowledge, predictive insights, and intelligent decisions.
+builds_on:
+  - P213-A
+  - ADR-394
+  - P212
+  - P212-J
+  - P212-L
+mission_defined_required: true
+vision_defined_required: true
+decision_intelligence_scope_defined_required: true
+capability_map_present_required: true
+operating_model_present_required: true
+governance_model_present_required: true
+ai_strategy_defined_required: true
+knowledge_graph_alignment_present_required: true
+digital_twin_alignment_present_required: true
+meos_integration_alignment_present_required: true
+sibling_business_intelligence_bc_forbidden: true
+via_p207: true
+via_p208: true
+via_p211: true
+via_p212: true
+via_p212_j: true
+via_p212_l: true
+via_enterprise_ai: true

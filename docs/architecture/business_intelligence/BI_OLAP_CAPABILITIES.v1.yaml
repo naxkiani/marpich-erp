@@ -1,0 +1,71 @@
+# P213-G — CAPABILITIES
+version: "1.0"
+prompt_id: P213-G
+adr: "411"
+sor: analytics
+capability: CAP-PLT-BI-001
+api_prefix: /api/v1/analytics/olap
+principle: Every enterprise decision SHALL be based upon a governed semantic definition instead of isolated calculations.
+fabric: meos_enterprise_semantic_intelligence_fabric
+builds_on:
+  - P213-A
+  - P213-B
+  - P213-C
+  - P213-D
+  - P213-E
+  - P213-F
+  - ADR-394
+  - ADR-395
+  - ADR-396
+  - ADR-408
+  - ADR-409
+  - ADR-410
+  - P212
+  - P212-E
+  - P212-F
+  - P212-G
+  - P212-I
+  - P212-J
+  - P212-K
+  - P212-L
+  - P212-M
+  - P212-N
+  - P212-O
+enterprise_semantic_layer_present_required: true
+enterprise_metric_platform_present_required: true
+kpi_governance_present_required: true
+olap_platform_present_required: true
+business_glossary_present_required: true
+business_vocabulary_present_required: true
+semantic_query_layer_present_required: true
+knowledge_graph_integration_present_required: true
+ai_native_semantic_platform_present_required: true
+digital_twin_integration_present_required: true
+cqrs_architecture_present_required: true
+event_sourcing_architecture_present_required: true
+microservice_architecture_present_required: true
+api_first_architecture_present_required: true
+zero_trust_security_present_required: true
+cloud_native_deployment_present_required: true
+architecture_present_required: true
+dimension_platform_present_required: true
+calculation_engine_present_required: true
+sibling_business_intelligence_bc_forbidden: true
+core_domain: enterprise_semantic_intelligence_management
+bounded_context_count: 5
+metric_class_count: 13
+kpi_lifecycle_step_count: 8
+ai_agent_count: 6
+microservice_count: 8
+via_p207: true
+via_p208: true
+via_p211: true
+via_p212: true
+via_p212_j: true
+via_p212_l: true
+via_p213_d: true
+via_p213_e: true
+via_p213_f: true
+via_enterprise_ai: true
+via_enterprise_search: true
+via_api_gateway: true

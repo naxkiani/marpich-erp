@@ -1,0 +1,49 @@
+# P213-H — VALIDATION
+version: "1.0"
+prompt_id: P213-H
+adr: "412"
+sor: analytics
+capability: CAP-PLT-BI-001
+principle: Every business user SHALL be capable of creating trusted analytics without compromising governance, security, or enterprise consistency.
+fabric: meos_enterprise_analytics_experience_fabric
+reject_if:
+  - enterprise_self_service_bi_platform_is_missing
+  - citizen_analytics_platform_is_missing
+  - no_code_analytics_platform_is_missing
+  - low_code_analytics_platform_is_missing
+  - natural_language_analytics_is_missing
+  - ai_analytics_assistant_is_missing
+  - collaborative_analytics_is_missing
+  - semantic_layer_integration_is_missing
+  - knowledge_graph_integration_is_missing
+  - digital_twin_integration_is_missing
+  - cqrs_architecture_is_missing
+  - event_sourcing_architecture_is_missing
+  - microservice_architecture_is_missing
+  - api_first_architecture_is_missing
+  - zero_trust_security_is_missing
+  - enterprise_governance_is_missing
+  - cloud_native_deployment_is_missing
+  - self_service_bi_architecture_is_incomplete
+  - analytics_workspace_is_missing
+  - ad_hoc_analytics_is_missing
+  - sibling_business_intelligence_bc
+verdict_required: ENTERPRISE_GRADE
+definition_of_done:
+  - enterprise_self_service_bi
+  - analytics_workspace
+  - no_code_analytics
+  - ad_hoc_analytics
+  - collaborative_analytics
+  - ai_analytics_assistant
+  - natural_language_analytics
+  - semantic_integration
+  - knowledge_graph_integration
+  - digital_twin_integration
+  - cqrs_architecture
+  - event_architecture
+  - microservice_architecture
+  - api_platform
+  - security_architecture
+  - deployment_architecture
+  - testing_architecture

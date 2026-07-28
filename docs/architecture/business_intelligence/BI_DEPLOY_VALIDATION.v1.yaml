@@ -1,0 +1,48 @@
+# P213-O — VALIDATION
+version: "1.0"
+prompt_id: P213-O
+adr: "419"
+sor: analytics
+capability: CAP-PLT-BI-001
+principle: Every analytics capability SHALL be continuously deployed through secure GitOps, remain cloud-native and observable, and satisfy enterprise Definition of Done before production promotion.
+fabric: meos_enterprise_bi_operations_fabric
+reject_if:
+  - enterprise_production_deployment_is_missing
+  - kubernetes_runtime_is_missing
+  - gitops_platform_is_missing
+  - devsecops_pipeline_is_missing
+  - observability_platform_is_missing
+  - sre_processes_are_missing
+  - scalability_architecture_is_missing
+  - disaster_recovery_is_missing
+  - definition_of_done_is_incomplete
+  - cloud_native_deployment_is_missing
+  - zero_trust_security_is_missing
+  - continuous_governance_is_missing
+  - bi_deploy_architecture_is_incomplete
+  - sibling_business_intelligence_bc
+verdict_required: ENTERPRISE_GRADE
+definition_of_done:
+  - all_bi_services_production_deployed
+  - all_analytics_services_cloud_native
+  - cqrs_architecture_operational
+  - event_streaming_operational
+  - knowledge_graph_operational
+  - ai_decision_intelligence_operational
+  - predictive_analytics_operational
+  - prescriptive_analytics_operational
+  - enterprise_reporting_operational
+  - self_service_bi_operational
+  - semantic_layer_operational
+  - api_platform_operational
+  - kubernetes_deployment_operational
+  - gitops_pipeline_operational
+  - devsecops_pipeline_operational
+  - observability_platform_operational
+  - sre_processes_operational
+  - disaster_recovery_validated
+  - scalability_objectives_validated
+  - security_controls_verified
+  - compliance_controls_verified
+  - operational_documentation_complete
+  - platform_governance_complete

@@ -1,0 +1,68 @@
+# P213-K — DDD / CQRS
+version: "1.0"
+prompt_id: P213-K
+adr: "415"
+sor: analytics
+capability: CAP-PLT-BI-001
+principle: Enterprise Prescriptive Analytics SHALL recommend the optimal enterprise action based upon business objectives, enterprise policies, constraints, predictions, and strategic priorities.
+fabric: meos_enterprise_decision_optimization_fabric
+core_domain: enterprise_decision_optimization_management
+aggregate: DecisionOptimizationAggregate
+supporting_domains:
+  - optimization_management
+  - recommendation_management
+  - constraint_management
+  - decision_policy_management
+  - scenario_optimization
+  - resource_optimization
+  - objective_function_management
+  - decision_simulation
+  - optimization_governance
+logical_bounded_contexts:
+  - BC-01 decision_optimization
+  - BC-02 recommendation
+  - BC-03 constraint_management
+  - BC-04 optimization_engine
+  - BC-05 decision_policy
+  - BC-06 resource_optimization
+commands:
+  - CreateOptimizationRequestCommand
+  - DefineObjectiveCommand
+  - RegisterConstraintCommand
+  - GenerateRecommendationCommand
+  - ApproveDecisionPlanCommand
+  - ExecuteOptimizationCommand
+queries:
+  - GetOptimizationQuery
+  - GetRecommendationQuery
+  - GetDecisionPlanQuery
+  - GetConstraintQuery
+  - GetOptimizationScoreQuery
+  - SearchOptimizationHistoryQuery
+events:
+  - OptimizationRequestedEvent
+  - ConstraintValidatedEvent
+  - RecommendationGeneratedEvent
+  - DecisionApprovedEvent
+  - OptimizationCompletedEvent
+  - OptimizationRejectedEvent
+  - ContinuousLearningUpdatedEvent
+microservices:
+  - optimization-engine-service
+  - recommendation-service
+  - constraint-management-service
+  - decision-policy-service
+  - scenario-optimization-service
+  - resource-optimization-service
+  - decision-explainability-service
+  - optimization-ai-service
+semantic_layer:
+  via_p213_g: true
+advanced_analytics:
+  via_p213_i: true
+predictive_analytics:
+  via_p213_j: true
+knowledge_graph:
+  via_p212_j: true
+digital_twin:
+  via_p212_l: true

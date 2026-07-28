@@ -1,0 +1,35 @@
+# P213-M — SECURITY
+version: "1.0"
+prompt_id: P213-M
+adr: "417"
+sor: analytics
+capability: CAP-PLT-BI-001
+permission: analytics.ai.read
+zero_trust: true
+tenant_isolation: true
+delegates:
+  identity: P207
+  authorization: P208
+  cryptographic_trust: P209
+  cyber_security: P210
+  data_security: P211
+  data_governance: P212
+  knowledge_graph: P212-J
+  digital_twin: P212-L
+  semantic: P213-G
+  predictive: P213-J
+  prescriptive: P213-K
+  decision_graph: P213-L
+  enterprise_ai: ai
+  api_gateway: gateway
+agent_identity: true
+agent_authorization: true
+secure_prompt_execution: true
+secure_tool_invocation: true
+encrypted_agent_memory: true
+fine_grained_permissions: true
+policy_enforcement: true
+ai_audit_logging: true
+human_approval_policies: true
+module_local_llm_sdk_forbidden: true
+sibling_bc_forbidden: true

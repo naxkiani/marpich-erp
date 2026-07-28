@@ -1,9 +1,12 @@
 context: ai
-display_name: AI
+display_name: Enterprise AI / ML / Generative AI Platform
 type: platform
-description: ML models, predictions, document intelligence, mentor assist
+description: >-
+  MEOS Enterprise AI Intelligence Fabric (P214 / CAP-PLT-AI-001) —
+  AI-PaaS, ML, generative AI, LLM, vectors, agents, governance
 aggregates:
   - AssistSession
+  - EnterpriseAI
   - ModelDeployment
   - Prediction
   - TrainingJob
@@ -12,11 +15,35 @@ publishes:
   - ai.prediction.completed
   - ai.fraud.detected
   - ai.insight.generated
+  - ai.model.registered
+  - ai.model.deployed
+  - ai.inference.executed
+  - ai.governance.validated
 subscribes:
   - analytics.metric.updated
   - documents.document.uploaded
   - banking.transaction.posted
+  - platform.tenant.provisioned
 schema: ai
 permissions:
   - ai.assist.infer
   - ai.assist.read
+  - ai.platform.read
+ai:
+  enabled: true
+  surfaces:
+    insights: true
+    predictions: true
+    recommendations: true
+    summaries: true
+    search: true
+    assistant: true
+    automation: true
+    document_intelligence: true
+    voice_commands: true
+    chat: true
+    report_explanation: true
+    anomaly_detection: true
+    forecasting: true
+    optimization: true
+capability: CAP-PLT-AI-001

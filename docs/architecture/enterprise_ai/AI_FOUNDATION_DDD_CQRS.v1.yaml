@@ -1,0 +1,57 @@
+# P214-A — DDD / CQRS
+version: "1.0"
+prompt_id: P214-A
+adr: "421"
+sor: ai
+capability: CAP-PLT-AI-001
+core_domain: enterprise_artificial_intelligence_management
+aggregate: EnterpriseAIAggregate
+supporting_domains:
+  - ai_platform_management
+  - machine_learning_operations
+  - generative_ai_management
+  - model_lifecycle_management
+  - ai_runtime_management
+  - ai_governance
+  - ai_experiment_management
+  - ai_knowledge_management
+bounded_contexts:
+  - BC-01 ai_platform_core
+  - BC-02 machine_learning
+  - BC-03 generative_ai
+  - BC-04 ai_runtime
+  - BC-05 ai_governance
+  - BC-06 ai_knowledge
+commands:
+  - RegisterAIModelCommand
+  - TrainModelCommand
+  - DeployAIModelCommand
+  - ExecuteInferenceCommand
+  - CreatePromptCommand
+  - ValidateAIModelCommand
+queries:
+  - GetAIModelQuery
+  - SearchModelsQuery
+  - GetInferenceHistoryQuery
+  - GetTrainingStatusQuery
+  - GetAIGovernanceStatusQuery
+events:
+  - AIModelRegisteredEvent
+  - AITrainingStartedEvent
+  - AITrainingCompletedEvent
+  - AIModelDeployedEvent
+  - AIInferenceExecutedEvent
+  - AIModelUpdatedEvent
+  - AIGovernanceValidatedEvent
+  - AIModelRetiredEvent
+microservices:
+  - ai-platform-service
+  - model-registry-service
+  - training-service
+  - inference-service
+  - prompt-management-service
+  - vector-intelligence-service
+  - feature-store-service
+  - ai-governance-service
+  - ai-monitoring-service
+  - ai-marketplace-service

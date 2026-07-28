@@ -1,0 +1,65 @@
+# P213-L — CAPABILITIES
+version: "1.0"
+prompt_id: P213-L
+adr: "416"
+sor: analytics
+capability: CAP-PLT-BI-001
+api_prefix: /api/v1/analytics/graph
+principle: Every enterprise decision SHALL become a governed, connected, explainable, versioned knowledge asset.
+fabric: meos_enterprise_decision_knowledge_fabric
+builds_on:
+  - P213-A
+  - P213-B
+  - P213-C
+  - P213-D
+  - P213-E
+  - P213-F
+  - P213-G
+  - P213-H
+  - P213-I
+  - P213-J
+  - P213-K
+  - ADR-394
+  - ADR-395
+  - ADR-396
+  - ADR-402
+  - ADR-408
+  - ADR-409
+  - ADR-410
+  - ADR-411
+  - ADR-412
+  - ADR-413
+  - ADR-414
+  - ADR-415
+  - P212
+  - P212-J
+  - P212-L
+enterprise_decision_knowledge_graph_present_required: true
+enterprise_decision_ontology_present_required: true
+enterprise_decision_memory_present_required: true
+graph_analytics_present_required: true
+ai_reasoning_present_required: true
+decision_lineage_present_required: true
+knowledge_graph_federation_present_required: true
+digital_twin_integration_present_required: true
+cqrs_architecture_present_required: true
+event_sourcing_architecture_present_required: true
+microservice_architecture_present_required: true
+api_first_architecture_present_required: true
+zero_trust_security_present_required: true
+cloud_native_deployment_present_required: true
+architecture_present_required: true
+sibling_business_intelligence_bc_forbidden: true
+core_domain: enterprise_decision_knowledge_management
+bounded_context_count: 6
+graph_entity_type_count: 21
+ai_agent_count: 6
+microservice_count: 8
+via_p212: true
+via_p212_j: true
+via_p212_l: true
+via_p213_g: true
+via_p213_j: true
+via_p213_k: true
+via_enterprise_ai: true
+via_api_gateway: true

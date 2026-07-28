@@ -1,0 +1,64 @@
+# P213-L — DDD / CQRS
+version: "1.0"
+prompt_id: P213-L
+adr: "416"
+sor: analytics
+capability: CAP-PLT-BI-001
+principle: Every enterprise decision SHALL become a governed, connected, explainable, versioned knowledge asset.
+fabric: meos_enterprise_decision_knowledge_fabric
+core_domain: enterprise_decision_knowledge_management
+aggregate: DecisionKnowledgeGraphAggregate
+supporting_domains:
+  - decision_graph_management
+  - decision_context_management
+  - decision_lineage_management
+  - decision_ontology_management
+  - graph_analytics
+  - decision_relationship_management
+  - decision_reasoning
+  - graph_governance
+logical_bounded_contexts:
+  - BC-01 decision_graph
+  - BC-02 decision_context
+  - BC-03 decision_lineage
+  - BC-04 decision_ontology
+  - BC-05 graph_analytics
+  - BC-06 decision_reasoning
+commands:
+  - CreateDecisionNodeCommand
+  - LinkDecisionCommand
+  - PublishOntologyCommand
+  - CreateReasoningSessionCommand
+  - RegisterDecisionOutcomeCommand
+queries:
+  - GetDecisionGraphQuery
+  - GetDecisionContextQuery
+  - SearchDecisionQuery
+  - FindDecisionDependenciesQuery
+  - GetDecisionLineageQuery
+events:
+  - DecisionNodeCreatedEvent
+  - DecisionLinkedEvent
+  - DecisionReasoningCompletedEvent
+  - DecisionOutcomeRegisteredEvent
+  - GraphUpdatedEvent
+  - OntologyPublishedEvent
+microservices:
+  - decision-graph-service
+  - ontology-service
+  - graph-query-service
+  - graph-analytics-service
+  - reasoning-service
+  - decision-memory-service
+  - graph-ai-service
+  - decision-lineage-service
+semantic_layer:
+  via_p213_g: true
+predictive_analytics:
+  via_p213_j: true
+prescriptive_analytics:
+  via_p213_k: true
+knowledge_graph_federation:
+  via_p212_j: true
+digital_twin:
+  via_p212_l: true

@@ -1,0 +1,78 @@
+# P213-M — CAPABILITIES
+version: "1.0"
+prompt_id: P213-M
+adr: "417"
+sor: analytics
+capability: CAP-PLT-BI-001
+api_prefix: /api/v1/analytics/ai
+principle: Every enterprise decision SHALL be supported by AI reasoning, enterprise knowledge, governance policies and continuous learning.
+fabric: meos_autonomous_decision_intelligence_fabric
+builds_on:
+  - P213-A
+  - P213-B
+  - P213-C
+  - P213-D
+  - P213-E
+  - P213-F
+  - P213-G
+  - P213-H
+  - P213-I
+  - P213-J
+  - P213-K
+  - P213-L
+  - ADR-394
+  - ADR-395
+  - ADR-396
+  - ADR-408
+  - ADR-409
+  - ADR-410
+  - ADR-411
+  - ADR-412
+  - ADR-413
+  - ADR-414
+  - ADR-415
+  - ADR-416
+  - P207
+  - P208
+  - P209
+  - P210
+  - P211
+  - P212
+  - P212-J
+  - P212-L
+ai_native_analytics_platform_present_required: true
+autonomous_decision_intelligence_present_required: true
+enterprise_ai_agent_platform_present_required: true
+multi_agent_collaboration_present_required: true
+executive_ai_copilot_present_required: true
+ai_governance_platform_present_required: true
+knowledge_graph_integration_present_required: true
+digital_twin_integration_present_required: true
+cqrs_architecture_present_required: true
+event_sourcing_architecture_present_required: true
+microservice_architecture_present_required: true
+api_first_architecture_present_required: true
+zero_trust_security_present_required: true
+cloud_native_deployment_present_required: true
+architecture_present_required: true
+sibling_business_intelligence_bc_forbidden: true
+via_enterprise_ai_only: true
+core_domain: enterprise_autonomous_decision_intelligence
+bounded_context_count: 6
+agent_count: 16
+autonomy_level_count: 5
+microservice_count: 10
+via_p207: true
+via_p208: true
+via_p209: true
+via_p210: true
+via_p211: true
+via_p212: true
+via_p212_j: true
+via_p212_l: true
+via_p213_g: true
+via_p213_j: true
+via_p213_k: true
+via_p213_l: true
+via_enterprise_ai: true
+via_api_gateway: true

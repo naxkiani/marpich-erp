@@ -1,0 +1,67 @@
+# P213-O — DDD / CQRS
+version: "1.0"
+prompt_id: P213-O
+adr: "419"
+sor: analytics
+capability: CAP-PLT-BI-001
+principle: Every analytics capability SHALL be continuously deployed through secure GitOps, remain cloud-native and observable, and satisfy enterprise Definition of Done before production promotion.
+fabric: meos_enterprise_bi_operations_fabric
+core_domain: enterprise_analytics_operational_excellence
+aggregate: BiOperationsPlatformAggregate
+supporting_domains:
+  - kubernetes_runtime
+  - gitops_delivery
+  - cicd_pipelines
+  - devsecops
+  - observability
+  - site_reliability
+  - scalability
+  - platform_engineering
+  - aiops
+logical_bounded_contexts:
+  - BC-01 deployment_platform
+  - BC-02 kubernetes_platform
+  - BC-03 gitops_cicd
+  - BC-04 devsecops
+  - BC-05 observability_sre
+  - BC-06 scalability_dr
+commands:
+  - CreateDeploymentReleaseCommand
+  - PromoteEnvironmentCommand
+  - ReconcileGitOpsCommand
+  - ExecuteRollbackCommand
+  - RegisterSloCommand
+  - DeclareIncidentCommand
+queries:
+  - GetDeploymentStatusQuery
+  - GetEnvironmentTopologyQuery
+  - GetSloComplianceQuery
+  - GetObservabilityHealthQuery
+  - GetSecurityGateStatusQuery
+  - GetDefinitionOfDoneQuery
+events:
+  - BiDeploymentCompletedEvent
+  - BiScalingExecutedEvent
+  - BiIncidentDetectedEvent
+  - BiRecoveryCompletedEvent
+  - BiSecurityGatePassedEvent
+  - BiGitOpsReconciledEvent
+microservices:
+  - bi-deployment-service
+  - bi-gitops-service
+  - bi-devsecops-service
+  - bi-observability-service
+  - bi-sre-service
+  - bi-scalability-service
+  - bi-dr-service
+  - bi-aiops-service
+cqrs_ops:
+  via_p213_n: true
+cryptographic_trust:
+  via_p209: true
+cyber_security:
+  via_p210: true
+observability:
+  via_enterprise_observability: true
+aiops:
+  via_enterprise_ai: true

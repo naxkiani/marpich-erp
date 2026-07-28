@@ -1,15 +1,63 @@
 context: analytics
-display_name: Analytics
+architecture_version: "1.0"
+display_name: Enterprise Business Intelligence, Analytics & Decision Intelligence Platform
 type: platform
-description: Data warehouse projections, dashboards, KPIs
-aggregates:
-- Dashboard
-- Report
-- Metric
-- DataProjection
-publishes:
-- analytics.report.generated
-- analytics.alert.triggered
-subscribes:
-- '*'
+description: >-
+  Enterprise BI Fabric (P213) — BI assets, metrics governance, reporting,
+  analytics intelligence, decision intelligence; operational OLAP/dashboards/alerts.
+api: /api/v1/analytics
+series: P213
+foundation_prompt: P213-A
+adr: "394"
+capability: CAP-PLT-BI-001
 schema: analytics
+aggregates:
+  - Dashboard
+  - Report
+  - Metric
+  - DataProjection
+  - EnterpriseBIAssetAggregate
+  - EnterpriseMetric
+  - AnalyticsModel
+  - DecisionModel
+publishes:
+  - analytics.report.generated
+  - analytics.alert.triggered
+  - analytics.bi_asset.published
+  - analytics.metric.defined
+  - analytics.insight.generated
+  - analytics.decision.completed
+subscribes:
+  - '*'
+  - platform.tenant.provisioned
+delegates:
+  - data_governance
+  - data_security
+  - authorization
+  - identity
+  - ai
+  - policy
+  - audit
+  - workflow
+forbidden_sibling_bc:
+  - business_intelligence
+  - decision_intelligence
+  - reporting_platform
+  - metric_governance_platform
+  - visualization_platform
+  - bi_core
+ai:
+  insights: true
+  predictions: true
+  recommendations: true
+  summaries: true
+  search: true
+  assistant: true
+  automation: true
+  document_intelligence: true
+  voice_commands: true
+  chat_interface: true
+  report_explanation: true
+  anomaly_detection: true
+  forecasting: true
+  optimization_suggestions: true
