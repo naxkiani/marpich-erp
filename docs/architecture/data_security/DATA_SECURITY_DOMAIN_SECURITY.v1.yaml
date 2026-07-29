@@ -1,0 +1,16 @@
+# P211-C — Security & compliance
+version: "1.0"
+prompt_id: P211-C
+adr: "378"
+zero_trust_data: true
+privacy_by_design: true
+privacy_integrated_with_security: true
+loose_coupling: true
+clear_ownership: true
+immutable_events: true
+compliance:
+  - iso_27001
+  - iso_27701
+  - gdpr
+  - soc_2
+  - nist

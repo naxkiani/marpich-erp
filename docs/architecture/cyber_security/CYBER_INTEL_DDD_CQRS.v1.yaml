@@ -1,0 +1,52 @@
+# P210-H — DDD / CQRS
+version: "1.0"
+prompt_id: P210-H
+adr: "368"
+sor: cyber_security
+bounded_context: cyber_security.threat_intelligence
+logical_subdomains:
+  - threat_feeds
+  - enrichment_fusion
+  - threat_actors_campaigns
+  - threat_hunting
+  - detection_engineering
+  - intel_sharing
+  - threat_ai
+
+aggregates:
+  - CsIntelValidatedRoot
+  - CsIntelProactiveHuntRoot
+  - CsIntelKnowledgeGraphRoot
+  - CsIntelExplainableAiRoot
+  - CsIntelConnectedDetectionRoot
+  - CsIntelStandardsSharingRoot
+  - CsIntelAttributionRoot
+  - CsIntelCampaignDetectedRoot
+
+commands:
+  - CollectThreatFeed
+  - NormalizeThreat
+  - EnrichIndicator
+  - RegisterThreatActor
+  - CreateCampaign
+  - LaunchThreatHunt
+  - GenerateDetectionRule
+  - PublishThreatIntel
+
+queries:
+  - GetThreatActor
+  - GetCampaign
+  - GetThreatGraph
+  - GetThreatFeedStatus
+  - GetThreatHuntResults
+  - GetDetectionCoverage
+
+events:
+  - ThreatFeedCollected
+  - ThreatEnriched
+  - ThreatActorDiscovered
+  - CampaignDetected
+  - ThreatHuntStarted
+  - ThreatHuntCompleted
+  - DetectionRuleGenerated
+  - ThreatPublished

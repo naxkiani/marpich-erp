@@ -1,0 +1,36 @@
+# P214-W — DDD / CQRS
+version: "1.0"
+prompt_id: P214-W
+adr: "443"
+core_domain: enterprise_collective_intelligence_management
+aggregate: EnterpriseCollectiveIntelligenceAggregate
+bounded_contexts:
+  - BC-01: AI Civilization Management
+  - BC-02: Collective Knowledge Network
+  - BC-03: Human-AI Collaboration
+  - BC-04: Distributed Intelligence
+  - BC-05: Collective Decision Intelligence
+  - BC-06: Learning Civilization
+  - BC-07: Future Intelligence Ecosystem
+commands:
+  - CreateIntelligenceNetworkCommand
+  - ShareKnowledgeCommand
+  - CreateLearningCycleCommand
+  - GenerateCollectiveDecisionCommand
+  - RegisterIntelligenceNodeCommand
+  - TriggerEvolutionCommand
+queries:
+  - GetIntelligenceNetworkQuery
+  - GetKnowledgeCommunityQuery
+  - GetCollectiveLearningQuery
+  - GetDecisionConsensusQuery
+  - GetEvolutionStateQuery
+events:
+  - NetworkCreatedEvent
+  - KnowledgeSharedEvent
+  - LearningCompletedEvent
+  - DecisionGeneratedEvent
+  - ContributionAddedEvent
+  - EvolutionReachedEvent
+  - CommunityTrustUpdatedEvent
+same_sor_ai: true

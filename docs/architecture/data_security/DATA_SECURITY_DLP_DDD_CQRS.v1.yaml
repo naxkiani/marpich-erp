@@ -1,0 +1,39 @@
+# P211-G — DLP DDD / CQRS
+version: "1.0"
+prompt_id: P211-G
+adr: "382"
+sor: data_security
+domain: Enterprise Data Loss Prevention Domain
+entities:
+  - DLPPolicy
+  - DataTransferEvent
+  - DLPViolation
+  - ResponseAction
+  - DLPIncident
+  - Investigation
+  - Evidence
+  - ResponseHistory
+commands:
+  - CreateDLPPolicy
+  - UpdateDLPPolicy
+  - MonitorDataTransfer
+  - EvaluateRisk
+  - DetectViolation
+  - BlockTransfer
+  - ApproveTransfer
+  - CreateIncident
+queries:
+  - GetDLPStatus
+  - GetViolations
+  - GetRiskScore
+  - GetTransferHistory
+  - GetPolicyCoverage
+  - GetIncidentReport
+events:
+  - DataTransferDetected
+  - SensitiveDataDetected
+  - DLPViolationCreated
+  - TransferBlocked
+  - IncidentCreated
+  - PolicyUpdated
+  - RiskScoreChanged

@@ -1,0 +1,7 @@
+prompt_id: P215-M
+adr: '458'
+zero_trust: true
+via_p215_h: true
+via_p215_k: true
+via_platform_api_gateway: true
+module_local_gateway_forbidden: true

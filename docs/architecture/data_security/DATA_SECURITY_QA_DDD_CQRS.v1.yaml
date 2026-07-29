@@ -1,0 +1,37 @@
+# P211-P — QA DDD / CQRS
+version: "1.0"
+prompt_id: P211-P
+adr: "391"
+sor: data_security
+domain: Enterprise Data Security Quality Assurance Domain
+bounded_contexts:
+  - functional_testing
+  - security_testing
+  - privacy_testing
+  - performance_testing
+  - compliance_validation
+  - ai_validation
+  - governance_assurance
+commands:
+  - CreateTestPlan
+  - ExecuteTest
+  - ValidateControl
+  - CollectEvidence
+  - CreateFinding
+  - ApproveRelease
+  - CloseRisk
+queries:
+  - GetTestStatus
+  - GetComplianceScore
+  - GetSecurityPosture
+  - GetAuditEvidence
+  - GetRiskDashboard
+  - GetQaReadiness
+events:
+  - TestStarted
+  - TestCompleted
+  - ControlValidated
+  - FindingCreated
+  - RiskAccepted
+  - ComplianceApproved
+  - ReleaseApproved

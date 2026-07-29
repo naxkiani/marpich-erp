@@ -1,0 +1,27 @@
+# P211-K — Validation gates
+version: "1.0"
+prompt_id: P211-K
+adr: "386"
+reject_if:
+  - data_origin_is_unknown
+  - data_movement_is_invisible
+  - metadata_is_incomplete
+  - relationships_cannot_be_queried
+  - impact_analysis_is_unavailable
+  - ai_cannot_reason_over_data_context
+  - sibling_intelligence_bc
+forbidden_siblings:
+  - backend/contexts/data_lineage_platform
+  - backend/contexts/metadata_platform
+  - backend/contexts/data_intelligence_graph
+required_artifacts:
+  - docs/adr/386-enterprise-data-security-intelligence.md
+  - docs/architecture/ENTERPRISE_DATA_SECURITY_INTELLIGENCE.md
+  - docs/architecture/data_security/DATA_SECURITY_INTELLIGENCE_CAPABILITIES.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_INTELLIGENCE_DDD_CQRS.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_INTELLIGENCE_SECURITY.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_INTELLIGENCE_VALIDATION.v1.yaml
+  - backend/contexts/data_security/domain/services/ds_platform_intelligence.py
+  - backend/contexts/data_security/domain/aggregates/ds_intelligence_aggregates.py
+  - backend/contexts/data_security/infrastructure/acl/ds_intelligence_acl.py
+  - backend/contexts/data_security/application/ds_intelligence_foundation.py

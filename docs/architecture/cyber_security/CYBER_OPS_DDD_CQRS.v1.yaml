@@ -1,0 +1,55 @@
+# P210-L — DDD / CQRS
+version: "1.0"
+prompt_id: P210-L
+adr: "372"
+sor: cyber_security
+bounded_context: cyber_security.ops_fabric
+logical_subdomains:
+  - cqrs_command
+  - cqrs_query
+  - event_sourcing
+  - event_streaming
+  - api_platform
+  - microservice_mesh
+  - data_architecture
+  - observability
+
+aggregates:
+  - CsOpsLooseCouplingRoot
+  - CsOpsImmutableEventsRoot
+  - CsOpsSecuredApisRoot
+  - CsOpsCqrsSeparationRoot
+  - CsOpsIndependentScaleRoot
+  - CsOpsObservabilityRoot
+  - CsOpsAiIntegrableRoot
+  - CsOpsEventGovernanceRoot
+
+commands:
+  - CreateSecurityIncident
+  - CollectSecurityTelemetry
+  - ExecutePlaybook
+  - BlockThreat
+  - UpdateKnowledgeGraph
+  - SynchronizeDigitalTwin
+  - DeployDetectionRule
+  - PublishIntegrationEvent
+
+queries:
+  - GetIncidentTimeline
+  - GetThreatAnalysis
+  - GetAttackGraph
+  - GetSOCDashboard
+  - GetExecutiveCyberRisk
+  - GetDigitalTwinState
+  - GetComplianceStatus
+  - GetServiceHealth
+
+events:
+  - SecurityEventReceived
+  - ThreatDetected
+  - IncidentCreated
+  - PlaybookExecuted
+  - ResponseCompleted
+  - DigitalTwinUpdated
+  - AIInsightGenerated
+  - EventGoverned

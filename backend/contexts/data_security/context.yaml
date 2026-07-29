@@ -1,0 +1,63 @@
+context: data_security
+architecture_version: "1.0"
+display_name: Enterprise Data Security & Privacy Intelligence Platform
+type: platform
+description: >-
+  Data Security Intelligence Fabric — discovery, classification, DSPM,
+  privacy intelligence, access governance, protection intents, AI data security
+  (P211). Not consent ledger SoR. Not crypto SoR (secrets). Not cyber threat SoR.
+api: /api/v1/data-security
+series: P211
+foundation_prompt: P211-A
+adr: "376"
+capability: CAP-PLT-DS-001
+schema: data_security
+aggregates:
+  - DataSecurityStrategyProfile
+  - DiscoverableAssetRegister
+  - ClassifiableDataRegister
+  - PrivacyRiskRegister
+  - DataAccessGovernancePolicy
+  - AiDataProtectionPolicy
+  - DataLineageModel
+  - ComplianceEvidenceBinding
+publishes:
+  - data_security.strategy.published
+  - data_security.asset.registered
+  - data_security.data.classified
+  - data_security.risk.detected
+  - data_security.policy.applied
+subscribes:
+  - platform.tenant.provisioned
+delegates:
+  - consent
+  - secrets
+  - authorization
+  - cyber_security
+  - compliance
+  - audit
+  - workflow
+  - ai
+  - policy
+forbidden_sibling_bc:
+  - dspm
+  - dspm_platform
+  - privacy_intelligence
+  - data_classification
+  - data_protection_platform
+  - data_lineage_platform
+ai:
+  insights: true
+  predictions: true
+  recommendations: true
+  summaries: true
+  search: true
+  assistant: true
+  automation: true
+  document_intelligence: true
+  voice_commands: true
+  chat_interface: true
+  report_explanation: true
+  anomaly_detection: true
+  forecasting: true
+  optimization_suggestions: true

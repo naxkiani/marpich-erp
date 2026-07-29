@@ -1,0 +1,34 @@
+# P211-H — Access governance DDD / CQRS
+version: "1.0"
+prompt_id: P211-H
+adr: "383"
+sor: data_security
+domain: Enterprise Data Access Governance Domain
+entities:
+  - DataAccessPolicy
+  - DataEntitlement
+  - DataAccessRequest
+  - AccessReview
+  - DataOwner
+commands:
+  - RequestDataAccess
+  - ApproveAccess
+  - GrantEntitlement
+  - RevokeAccess
+  - ReviewAccess
+  - EvaluateAccessRisk
+  - UpdateAccessPolicy
+queries:
+  - GetUserDataAccess
+  - GetDatasetPermissions
+  - GetAccessHistory
+  - GetRiskScore
+  - GetAccessReviewStatus
+events:
+  - AccessRequested
+  - AccessApproved
+  - AccessGranted
+  - AccessDenied
+  - AccessRevoked
+  - AccessReviewCompleted
+  - RiskDetected

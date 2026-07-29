@@ -1,0 +1,30 @@
+# P211-B — Validation gates
+version: "1.0"
+prompt_id: P211-B
+adr: "377"
+reject_if:
+  - data_security_scope_is_undefined
+  - ownership_model_is_missing
+  - privacy_responsibilities_are_unclear
+  - data_protection_principles_are_absent
+  - integration_boundaries_are_undefined
+  - governance_model_is_incomplete
+  - sibling_data_security_bc
+forbidden_siblings:
+  - backend/contexts/dspm
+  - backend/contexts/dspm_platform
+  - backend/contexts/privacy_intelligence
+  - backend/contexts/data_classification
+  - backend/contexts/data_protection_platform
+  - backend/contexts/data_lineage_platform
+required_artifacts:
+  - docs/adr/377-enterprise-data-security-mission-vision-scope.md
+  - docs/architecture/ENTERPRISE_DATA_SECURITY_MISSION_VISION_SCOPE.md
+  - docs/architecture/data_security/DATA_SECURITY_MVS_CAPABILITIES.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_MVS_DDD_CQRS.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_MVS_SECURITY.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_MVS_VALIDATION.v1.yaml
+  - backend/contexts/data_security/domain/services/ds_platform_mission_scope.py
+  - backend/contexts/data_security/domain/aggregates/ds_mission_aggregates.py
+  - backend/contexts/data_security/infrastructure/acl/ds_mission_acl.py
+  - backend/contexts/data_security/application/ds_mission_foundation.py

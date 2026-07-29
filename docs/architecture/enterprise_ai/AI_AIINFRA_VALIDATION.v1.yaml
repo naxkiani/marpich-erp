@@ -1,0 +1,27 @@
+# P214-N — VALIDATION
+version: "1.0"
+prompt_id: P214-N
+adr: "434"
+sor: ai
+verdict_target: ENTERPRISE_GRADE
+reject_if:
+  - enterprise_ai_cloud_platform_is_missing
+  - intelligent_compute_fabric_is_missing
+  - gpu_infrastructure_platform_is_missing
+  - ai_runtime_platform_is_missing
+  - kubernetes_ai_platform_is_missing
+  - infrastructure_automation_is_missing
+  - resource_intelligence_is_missing
+  - infrastructure_security_is_missing
+  - infrastructure_knowledge_graph_is_missing
+  - infrastructure_digital_twin_is_missing
+  - cqrs_architecture_is_missing
+  - event_architecture_is_missing
+  - microservices_architecture_is_missing
+  - api_first_architecture_is_missing
+  - zero_trust_security_is_missing
+  - cloud_native_deployment_is_missing
+  - sibling_ai_bc
+tests:
+  - backend/contexts/ai/tests/test_ai_platform_aiinfra.py
+  - backend/contexts/ai/tests/unit/test_ai_platform_aiinfra.py

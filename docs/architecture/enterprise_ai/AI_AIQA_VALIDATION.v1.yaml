@@ -1,0 +1,29 @@
+# P214-O — VALIDATION
+version: "1.0"
+prompt_id: P214-O
+adr: "435"
+sor: ai
+verdict_target: ENTERPRISE_GRADE
+reject_if:
+  - enterprise_ai_testing_platform_is_missing
+  - ai_evaluation_platform_is_missing
+  - ai_validation_platform_is_missing
+  - ai_quality_assurance_platform_is_missing
+  - ai_benchmarking_platform_is_missing
+  - ai_safety_testing_is_missing
+  - ai_reliability_testing_is_missing
+  - ai_regression_testing_is_missing
+  - ai_certification_platform_is_missing
+  - quality_intelligence_platform_is_missing
+  - knowledge_graph_integration_is_missing
+  - digital_twin_integration_is_missing
+  - cqrs_architecture_is_missing
+  - event_architecture_is_missing
+  - microservices_architecture_is_missing
+  - api_first_architecture_is_missing
+  - zero_trust_security_is_missing
+  - cloud_native_deployment_is_missing
+  - sibling_ai_bc
+tests:
+  - backend/contexts/ai/tests/test_ai_platform_aiqa.py
+  - backend/contexts/ai/tests/unit/test_ai_platform_aiqa.py

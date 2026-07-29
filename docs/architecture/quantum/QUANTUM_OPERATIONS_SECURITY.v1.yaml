@@ -1,0 +1,7 @@
+prompt_id: P215-N
+adr: '459'
+zero_trust_operations: true
+via_p215_h: true
+via_p215_k: true
+via_observability_platform: true
+module_local_metrics_store_forbidden: true

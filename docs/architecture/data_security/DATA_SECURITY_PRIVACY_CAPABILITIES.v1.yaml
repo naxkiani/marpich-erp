@@ -1,0 +1,40 @@
+# P211-I — Privacy intelligence capabilities
+version: "1.0"
+prompt_id: P211-I
+adr: "384"
+sor: data_security
+capability: CAP-PLT-DS-001
+api_prefix: /api/v1/data-security/privacy
+builds_on:
+  - P211-A
+  - P211-B
+  - P211-C
+  - P211-D
+  - P211-E
+  - P211-F
+  - P211-G
+  - P211-H
+  - ADR-383
+
+personal_data_discoverable_required: true
+consent_trackable_required: true
+privacy_risks_measurable_required: true
+processing_visible_required: true
+regulatory_obligations_mapped_required: true
+ai_privacy_risks_managed_required: true
+sibling_privacy_bc_forbidden: true
+consent_ledger_remains_consent: true
+via_consent_bc: true
+via_p211_d_discovery: true
+via_p211_e_classification: true
+via_p211_f_dspm: true
+via_p211_g_dlp: true
+via_p211_h_access: true
+via_p207: true
+via_p208: true
+via_p209: true
+via_p210: true
+via_enterprise_ai: true
+via_policy_engine: true
+via_workflow: true
+via_compliance: true

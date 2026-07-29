@@ -1,0 +1,72 @@
+context: quantum
+architecture_version: "1.0"
+display_name: Enterprise Quantum Computing, Quantum AI & Post-Classical Intelligence Platform
+type: platform
+description: >-
+  Quantum Intelligence Fabric — computing infrastructure, algorithms, Quantum AI/ML,
+  optimization/simulation, quantum security bindings, quantum data intelligence,
+  quantum networking, quantum governance/ethics/compliance (P215). Post-quantum
+  cryptography remains secrets (P209). Not a sibling of ai_governance.
+api: /api/v1/quantum
+series: P215
+foundation_prompt: P215-A
+adr: "447"
+capability: CAP-PLT-QC-001
+schema: quantum
+aggregates:
+  - EnterpriseQuantumIntelligenceAggregate
+  - EnterpriseQuantumGovernanceAggregate
+  - QuantumGovernancePolicy
+  - QuantumRiskAssessment
+  - QuantumComplianceControl
+  - QuantumAuditRecord
+  - QuantumTrustProfile
+publishes:
+  - quantum.foundation.platform.created
+  - quantum.foundation.algorithm.registered
+  - quantum.foundation.experiment.executed
+  - quantum.foundation.simulation.completed
+  - quantum.foundation.qai.model.created
+  - quantum.foundation.capability.expanded
+  - quantum.governance.policy.created
+  - quantum.governance.risk.detected
+  - quantum.governance.compliance.validated
+  - quantum.governance.audit.completed
+  - quantum.governance.trust.established
+subscribes:
+  - platform.tenant.provisioned
+delegates:
+  - secrets
+  - cyber_security
+  - data_governance
+  - data_security
+  - authorization
+  - policy
+  - compliance
+  - audit
+  - workflow
+  - ai
+  - ai_governance
+forbidden_sibling_bc:
+  - quantum_governance
+  - quantum_ethics_platform
+  - quantum_regulation_platform
+  - responsible_quantum_platform
+  - quantum_compliance_platform
+  - quantum_risk_platform
+  - quantum_audit_platform
+ai:
+  insights: true
+  predictions: true
+  recommendations: true
+  summaries: true
+  search: true
+  assistant: true
+  automation: true
+  document_intelligence: true
+  voice_commands: true
+  chat_interface: true
+  report_explanation: true
+  anomaly_detection: true
+  forecasting: true
+  optimization_suggestions: true

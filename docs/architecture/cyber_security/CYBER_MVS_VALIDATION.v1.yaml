@@ -1,0 +1,34 @@
+# P210-B — MVS validation gates
+version: "1.0"
+prompt_id: P210-B
+adr: "362"
+sor: cyber_security
+api_prefix: /api/v1/cyber-security/mission
+
+required_artifacts:
+  - docs/adr/362-enterprise-cyber-security-mission-vision-scope.md
+  - docs/architecture/ENTERPRISE_CYBER_SECURITY_MISSION_VISION_SCOPE.md
+  - docs/architecture/cyber_security/CYBER_MVS_CAPABILITIES.v1.yaml
+  - docs/architecture/cyber_security/CYBER_MVS_DDD_CQRS.v1.yaml
+  - docs/architecture/cyber_security/CYBER_MVS_SECURITY.v1.yaml
+  - docs/architecture/cyber_security/CYBER_MVS_VALIDATION.v1.yaml
+  - backend/contexts/cyber_security/domain/services/cs_platform_mission_scope.py
+  - backend/contexts/cyber_security/domain/aggregates/cs_mission_aggregates.py
+  - backend/contexts/cyber_security/infrastructure/acl/cs_mission_acl.py
+  - backend/contexts/cyber_security/application/cs_mission_foundation.py
+
+forbidden_siblings:
+  - backend/contexts/cyber_defense
+  - backend/contexts/soc_platform
+  - backend/contexts/siem_platform
+  - backend/contexts/soar_platform
+  - backend/contexts/xdr
+  - backend/contexts/edr
+  - backend/contexts/ndr
+  - backend/contexts/security_ops
+
+verdict_target: ENTERPRISE_GRADE
+min_scope_items: 20
+min_security_domains: 15
+min_event_count: 12
+min_cursor_outputs: 20

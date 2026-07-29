@@ -1,0 +1,32 @@
+# P210-H — Validation gates
+version: "1.0"
+prompt_id: P210-H
+adr: "368"
+reject_if:
+  - threat_intelligence_cannot_be_validated
+  - threat_hunting_reactive_only
+  - knowledge_graph_integration_absent
+  - ai_cannot_explain_recommendations
+  - detection_engineering_disconnected
+  - intelligence_sharing_lacks_standards
+  - threat_actor_attribution_unsupported
+  - sibling_threat_intel_bc
+forbidden_siblings:
+  - backend/contexts/threat_intel
+  - backend/contexts/threat_hunting
+  - backend/contexts/cti_platform
+  - backend/contexts/siem_platform
+  - backend/contexts/soar_platform
+  - backend/contexts/soc_platform
+  - backend/contexts/xdr
+required_artifacts:
+  - docs/adr/368-enterprise-cyber-security-threat-intelligence.md
+  - docs/architecture/ENTERPRISE_CYBER_SECURITY_THREAT_INTELLIGENCE.md
+  - docs/architecture/cyber_security/CYBER_INTEL_CAPABILITIES.v1.yaml
+  - docs/architecture/cyber_security/CYBER_INTEL_DDD_CQRS.v1.yaml
+  - docs/architecture/cyber_security/CYBER_INTEL_SECURITY.v1.yaml
+  - docs/architecture/cyber_security/CYBER_INTEL_VALIDATION.v1.yaml
+  - backend/contexts/cyber_security/domain/services/cs_platform_intel.py
+  - backend/contexts/cyber_security/domain/aggregates/cs_intel_aggregates.py
+  - backend/contexts/cyber_security/infrastructure/acl/cs_intel_acl.py
+  - backend/contexts/cyber_security/application/cs_intel_foundation.py

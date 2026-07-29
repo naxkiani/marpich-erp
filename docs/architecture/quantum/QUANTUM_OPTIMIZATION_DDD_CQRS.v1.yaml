@@ -1,0 +1,5 @@
+prompt_id: P215-G
+adr: '453'
+core_domain: enterprise_quantum_optimization_scientific_intelligence_management
+bounded_context_count: 5
+aggregate_count: 6

@@ -1,0 +1,21 @@
+# P210-C — Domain security controls
+version: "1.0"
+prompt_id: P210-C
+adr: "363"
+sor: cyber_security
+
+permissions:
+  - cyber_security.read
+  - cyber_security.write
+  - cyber_security.domain.read
+  - cyber_security.domain.write
+
+reject_if:
+  - bounded_contexts_overlap
+  - aggregates_violate_consistency_boundaries
+  - domain_ownership_unclear
+  - business_rules_leak_across_contexts
+  - events_not_domain_driven
+  - knowledge_graph_integration_missing
+  - anti_corruption_layers_absent
+  - sibling_cyber_bc

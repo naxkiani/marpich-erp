@@ -1,0 +1,14 @@
+prompt_id: P215-B
+adr: '448'
+api_prefix: /api/v1/quantum/mission
+quantum_mission_framework_present_required: true
+quantum_vision_framework_present_required: true
+strategic_intelligence_scope_present_required: true
+quantum_maturity_model_present_required: true
+quantum_roadmap_present_required: true
+business_value_architecture_present_required: true
+quantum_governance_strategy_present_required: true
+quantum_knowledge_strategy_present_required: true
+quantum_workforce_strategy_present_required: true
+builds_on_p215_a: true
+governed_by_p215_k: true

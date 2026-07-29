@@ -1,0 +1,53 @@
+# P210-K — DDD / CQRS
+version: "1.0"
+prompt_id: P210-K
+adr: "371"
+sor: cyber_security
+bounded_context: cyber_security.knowledge_graph
+logical_subdomains:
+  - graph_ingestion
+  - entity_resolution
+  - ontology
+  - knowledge_graph
+  - attack_graph
+  - reasoning
+  - digital_twin
+  - simulation
+
+aggregates:
+  - CsGraphSemanticRelationshipsRoot
+  - CsGraphAttackPathCalculableRoot
+  - CsGraphLivingTwinRoot
+  - CsGraphAiReasoningRoot
+  - CsGraphGovernanceRoot
+  - CsGraphAccurateResolutionRoot
+  - CsGraphSimulationRoot
+  - CsGraphInsightGeneratedRoot
+
+commands:
+  - CreateEntity
+  - UpdateEntity
+  - CreateRelationship
+  - AnalyzeAttackPath
+  - GenerateSimulation
+  - UpdateDigitalTwin
+  - ExecuteReasoning
+  - ValidateControl
+
+queries:
+  - GetSecurityGraph
+  - GetAttackPath
+  - GetEntityContext
+  - GetRiskPropagation
+  - GetDigitalTwinState
+  - GetSimulationResult
+
+events:
+  - EntityCreated
+  - RelationshipDiscovered
+  - ThreatMapped
+  - AttackPathGenerated
+  - RiskPropagated
+  - SimulationStarted
+  - SimulationCompleted
+  - InsightGenerated

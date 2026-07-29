@@ -1,0 +1,30 @@
+# P210-K — Validation gates
+version: "1.0"
+prompt_id: P210-K
+adr: "371"
+reject_if:
+  - security_entities_lack_semantic_relationships
+  - attack_paths_cannot_be_calculated
+  - digital_twins_are_static
+  - ai_reasoning_unavailable
+  - graph_governance_missing
+  - entity_resolution_inaccurate
+  - simulation_capability_absent
+  - sibling_graph_bc
+forbidden_siblings:
+  - backend/contexts/cyber_graph
+  - backend/contexts/security_digital_twin
+  - backend/contexts/attack_graph
+  - backend/contexts/ai_ops
+  - backend/contexts/asm
+required_artifacts:
+  - docs/adr/371-enterprise-cyber-security-knowledge-graph.md
+  - docs/architecture/ENTERPRISE_CYBER_SECURITY_KNOWLEDGE_GRAPH.md
+  - docs/architecture/cyber_security/CYBER_GRAPH_CAPABILITIES.v1.yaml
+  - docs/architecture/cyber_security/CYBER_GRAPH_DDD_CQRS.v1.yaml
+  - docs/architecture/cyber_security/CYBER_GRAPH_SECURITY.v1.yaml
+  - docs/architecture/cyber_security/CYBER_GRAPH_VALIDATION.v1.yaml
+  - backend/contexts/cyber_security/domain/services/cs_platform_graph.py
+  - backend/contexts/cyber_security/domain/aggregates/cs_graph_aggregates.py
+  - backend/contexts/cyber_security/infrastructure/acl/cs_graph_acl.py
+  - backend/contexts/cyber_security/application/cs_graph_foundation.py

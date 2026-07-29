@@ -1,0 +1,46 @@
+# P214-I — CAPABILITIES
+version: "1.0"
+prompt_id: P214-I
+adr: "429"
+sor: ai
+capability: CAP-PLT-AI-001
+api_prefix: /api/v1/ai/aisec
+fabric: meos_ai_security_fabric
+principle: >-
+  Enterprise AI Security SHALL protect the intelligence layer of MEOS by
+  securing models, data, agents, prompts, knowledge and autonomous actions
+  against internal and external threats.
+builds_on:
+  - P214-A
+  - P214-B
+  - P214-C
+  - P214-D
+  - P214-E
+  - P214-F
+  - P214-G
+  - P214-H
+  - ADR-428
+  - P207
+  - P208
+  - P209
+  - P210
+  - P211
+enterprise_ai_security_platform_present_required: true
+ai_model_security_present_required: true
+llm_security_present_required: true
+prompt_security_present_required: true
+agent_security_present_required: true
+adversarial_defense_present_required: true
+ai_threat_intelligence_present_required: true
+runtime_protection_present_required: true
+ai_security_operations_present_required: true
+security_knowledge_graph_present_required: true
+ai_security_digital_twin_present_required: true
+cqrs_architecture_present_required: true
+event_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_architecture_present_required: true
+zero_trust_security_present_required: true
+cloud_native_deployment_present_required: true
+sibling_ai_bc_forbidden: true
+module_local_ai_security_forbidden: true

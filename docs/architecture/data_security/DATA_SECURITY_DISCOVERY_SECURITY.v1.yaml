@@ -1,0 +1,11 @@
+# P211-D — Security & compliance
+version: "1.0"
+prompt_id: P211-D
+adr: "379"
+zero_trust_data: true
+privacy_by_design: true
+shadow_data_visible: true
+connector_via_integration: true
+secrets_via_p209: true
+ai_via_enterprise_ai: true
+immutable_audit: true

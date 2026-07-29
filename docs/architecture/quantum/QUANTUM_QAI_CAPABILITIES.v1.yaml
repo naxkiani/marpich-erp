@@ -1,0 +1,13 @@
+prompt_id: P215-F
+adr: '452'
+api_prefix: /api/v1/quantum/qai
+quantum_ai_platform_present_required: true
+quantum_machine_learning_platform_present_required: true
+quantum_model_lifecycle_present_required: true
+quantum_neural_intelligence_present_required: true
+quantum_feature_intelligence_present_required: true
+quantum_ai_agent_foundation_present_required: true
+builds_on_p215_a: true
+builds_on_p215_d: true
+builds_on_p215_e: true
+governed_by_p215_k: true

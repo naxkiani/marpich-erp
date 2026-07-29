@@ -1,0 +1,36 @@
+# P214-U — DDD / CQRS
+version: "1.0"
+prompt_id: P214-U
+adr: "441"
+core_domain: enterprise_autonomous_intelligence_governance_management
+aggregate: EnterpriseAutonomousAIGovernanceAggregate
+bounded_contexts:
+  - BC-01: Autonomous AI Governance
+  - BC-02: AI Alignment Intelligence
+  - BC-03: Self-Healing Intelligence
+  - BC-04: AI Safety Intelligence
+  - BC-05: Evolution Control
+  - BC-06: AGI Readiness
+  - BC-07: Human Compatibility
+commands:
+  - ActivateGovernanceCommand
+  - ValidateAlignmentCommand
+  - TriggerSelfHealingCommand
+  - ExecuteSafetyResponseCommand
+  - ApproveEvolutionCycleCommand
+  - AssessAGIReadinessCommand
+queries:
+  - GetGovernanceStateQuery
+  - GetAlignmentScoreQuery
+  - GetSafetyStatusQuery
+  - GetEvolutionStatusQuery
+  - GetReadinessAssessmentQuery
+events:
+  - GovernanceActivatedEvent
+  - AlignmentValidatedEvent
+  - HealingTriggeredEvent
+  - RiskPreventedEvent
+  - EvolutionApprovedEvent
+  - SafetyViolationDetectedEvent
+  - AGIReadinessAssessedEvent
+same_sor_ai: true

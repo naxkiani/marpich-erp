@@ -1,0 +1,46 @@
+# P214-K — CAPABILITIES
+version: "1.0"
+prompt_id: P214-K
+adr: "431"
+sor: ai
+capability: CAP-PLT-AI-001
+api_prefix: /api/v1/ai/aidata
+fabric: meos_enterprise_ai_data_intelligence_fabric
+principle: >-
+  Enterprise AI Data Platform SHALL transform enterprise data into governed,
+  intelligent and reusable AI assets for machine learning, generative AI and
+  autonomous intelligence.
+builds_on:
+  - P214-A
+  - P214-B
+  - P214-C
+  - P214-D
+  - P214-E
+  - P214-F
+  - P214-G
+  - P214-H
+  - P214-I
+  - P214-J
+  - ADR-430
+  - P211
+  - P212
+  - P212-K
+  - P213
+enterprise_ai_data_platform_present_required: true
+ai_dataset_management_present_required: true
+feature_engineering_platform_present_required: true
+feature_store_platform_present_required: true
+training_data_platform_present_required: true
+ai_data_pipeline_present_required: true
+synthetic_data_platform_present_required: true
+data_quality_intelligence_present_required: true
+ai_data_lineage_present_required: true
+ai_data_marketplace_present_required: true
+cqrs_architecture_present_required: true
+event_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_architecture_present_required: true
+zero_trust_security_present_required: true
+cloud_native_deployment_present_required: true
+sibling_ai_bc_forbidden: true
+module_local_feature_store_forbidden: true

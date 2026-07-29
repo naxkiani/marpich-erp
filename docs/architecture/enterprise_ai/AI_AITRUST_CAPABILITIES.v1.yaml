@@ -1,0 +1,45 @@
+# P214-P — CAPABILITIES
+version: "1.0"
+prompt_id: P214-P
+adr: "436"
+sor: ai
+capability: CAP-PLT-AI-001
+api_prefix: /api/v1/ai/aitrust
+fabric: meos_continuous_ai_trust_fabric
+principle: >-
+  Enterprise AI Governance Platform SHALL transform AI governance from
+  static compliance management into continuous intelligent trust management.
+builds_on:
+  - P214-A
+  - P214-H
+  - P214-O
+  - ADR-428
+  - ADR-435
+  - P207
+  - P208
+  - P209
+  - P210
+  - P211
+  - P212
+  - P213
+enterprise_ai_governance_platform_present_required: true
+ai_compliance_platform_present_required: true
+ai_audit_platform_present_required: true
+ai_trust_platform_present_required: true
+ai_risk_management_present_required: true
+ai_policy_management_present_required: true
+ai_transparency_present_required: true
+ai_explainability_governance_present_required: true
+regulatory_intelligence_present_required: true
+certification_platform_present_required: true
+governance_knowledge_graph_present_required: true
+governance_digital_twin_present_required: true
+cqrs_architecture_present_required: true
+event_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_architecture_present_required: true
+zero_trust_security_present_required: true
+cloud_native_deployment_present_required: true
+sibling_ai_bc_forbidden: true
+module_local_ai_governance_forbidden: true
+deepens_p214_h_continuous_trust: true

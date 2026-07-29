@@ -1,0 +1,5 @@
+prompt_id: P215-F
+adr: '452'
+core_domain: enterprise_quantum_intelligence_management
+bounded_context_count: 8
+aggregate_count: 9

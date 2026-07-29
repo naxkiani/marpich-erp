@@ -1,0 +1,24 @@
+# P214-M — SECURITY
+version: "1.0"
+prompt_id: P214-M
+adr: "433"
+sor: ai
+zero_trust: true
+integrates:
+  - P207
+  - P208
+  - P209
+  - P210
+  - P211
+  - P214-I
+implements:
+  - zero_trust_communication
+  - mtls
+  - api_security
+  - token_security
+  - policy_enforcement
+  - communication_audit
+forbidden:
+  - module_local_ai_gateway
+  - bypass_platform_api_gateway
+  - bypass_event_fabric_outbox

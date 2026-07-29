@@ -1,0 +1,12 @@
+prompt_id: P215-L
+adr: '457'
+core_domain: enterprise_quantum_reality_intelligence_management
+bounded_context_count: 6
+aggregate_count: 7
+commands:
+  - CreateQuantumTwinCommand
+  - UpdateRealityModelCommand
+  - ExecuteSimulationCommand
+  - GenerateScenarioCommand
+  - PredictFutureStateCommand
+  - OptimizeTwinCommand

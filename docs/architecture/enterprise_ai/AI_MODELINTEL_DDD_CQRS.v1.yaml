@@ -1,0 +1,39 @@
+# P214-L — DDD / CQRS
+version: "1.0"
+prompt_id: P214-L
+adr: "432"
+sor: ai
+core_domain: enterprise_ai_model_intelligence_management
+aggregate: EnterpriseAIModelIntelligenceAggregate
+bounded_contexts:
+  - BC-01_ai_model_registry
+  - BC-02_model_lifecycle_management
+  - BC-03_model_evaluation
+  - BC-04_model_monitoring
+  - BC-05_model_governance
+  - BC-06_model_risk_management
+  - BC-07_model_optimization
+commands:
+  - RegisterAIModelCommand
+  - CreateModelVersionCommand
+  - EvaluateModelCommand
+  - ApproveModelCommand
+  - DeployModelCommand
+  - MonitorModelCommand
+  - RetireModelCommand
+queries:
+  - GetModelQuery
+  - GetModelVersionQuery
+  - GetEvaluationQuery
+  - GetPerformanceQuery
+  - GetRiskProfileQuery
+  - GetLifecycleStatusQuery
+events:
+  - ModelRegisteredEvent
+  - TrainingCompletedEvent
+  - EvaluationCompletedEvent
+  - ApprovalGrantedEvent
+  - DeploymentCompletedEvent
+  - DriftDetectedEvent
+  - OptimizationCompletedEvent
+  - ModelRetiredEvent

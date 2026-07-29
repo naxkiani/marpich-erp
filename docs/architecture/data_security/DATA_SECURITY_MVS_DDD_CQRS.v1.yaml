@@ -1,0 +1,45 @@
+# P211-B — DDD / CQRS
+version: "1.0"
+prompt_id: P211-B
+adr: "377"
+sor: data_security
+bounded_context: data_security.mission_scope
+aggregates:
+  - DsMissionScopeDefinedRoot
+  - DsOwnershipModelRoot
+  - DsPrivacyResponsibilitiesRoot
+  - DsProtectionPrinciplesRoot
+  - DsIntegrationBoundariesRoot
+  - DsGovernanceModelRoot
+  - DsMissionCharterRoot
+  - DsVisionCharterRoot
+
+commands:
+  - PublishMission
+  - PublishVision
+  - DeclareEnterpriseScope
+  - RegisterOwnershipModel
+  - ClarifyPrivacyResponsibilities
+  - AdoptProtectionPrinciples
+  - DeclareIntegrationBoundaries
+  - CompleteGovernanceModel
+
+queries:
+  - GetMission
+  - GetVision
+  - GetEnterpriseScope
+  - GetOperatingModel
+  - GetPrinciples
+  - GetMaturityModel
+  - GetGovernance
+  - GetMissionReadiness
+
+events:
+  - MissionPublished
+  - VisionPublished
+  - ScopeDeclared
+  - OwnershipModelRegistered
+  - PrivacyResponsibilitiesClarified
+  - PrinciplesAdopted
+  - IntegrationBoundariesDeclared
+  - GovernanceModelCompleted

@@ -1,0 +1,18 @@
+# P210-I — Security & governance
+version: "1.0"
+prompt_id: P210-I
+adr: "369"
+zero_trust: true
+rbac: true
+abac: true
+continuous_asset_validation: true
+immutable_audit_logs: true
+data_integrity_verification: true
+policy_based_remediation: true
+compliance:
+  - nist_csf
+  - nist_sp_800_53
+  - iso_27001
+  - cis_controls
+  - pci_dss
+  - soc_2

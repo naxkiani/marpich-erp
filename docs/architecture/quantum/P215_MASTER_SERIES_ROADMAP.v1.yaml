@@ -1,0 +1,116 @@
+# P215 — Enterprise Quantum Computing, Quantum AI & Post-Classical Intelligence Roadmap
+version: "1.0"
+series: P215
+module: Enterprise Quantum Computing, Quantum AI & Post-Classical Intelligence Platform
+volume: "07 — Enterprise Quantum & Post-Classical Intelligence Fabric"
+sor: quantum
+capability: CAP-PLT-QC-001
+builds_on:
+  - ADR-345
+  - ADR-376
+  - ADR-392
+  - CORE_PLATFORM.md
+  - ENTERPRISE_POLICY_ENGINE.md
+  - ENTERPRISE_EVENT_BUS.md
+  - AI_PLATFORM_STANDARD.md
+forbidden_sibling_bc:
+  - quantum_governance
+  - quantum_ethics_platform
+  - quantum_regulation_platform
+  - responsible_quantum_platform
+  - quantum_compliance_platform
+  - quantum_risk_platform
+  - quantum_audit_platform
+notes:
+  - PQC cryptography SoR remains secrets (P209); quantum binds via ACL only
+  - P215-A–N delivered; P215-K remains trust gate (ADR 403); P215-N fabric meos_quantum_autonomous_operations_fabric (ADR 459) binds Observability Platform / P214-J AIOps; no module-local metrics stores; P215-O next for quantum testing / QA / certification
+
+phases:
+  - id: P215-A
+    title: Foundation Architecture — Quantum Computing, Quantum AI & Post-Classical Intelligence
+    status: done
+    adr: "447"
+    fabric: meos_quantum_intelligence_fabric
+    api: /api/v1/quantum/foundation*
+  - id: P215-B
+    title: Mission, Vision & Strategic Quantum Intelligence Scope
+    status: done
+    adr: "448"
+    fabric: meos_quantum_strategic_intelligence_framework
+    api: /api/v1/quantum/mission*
+  - id: P215-C
+    title: Quantum Domain Architecture (DDD)
+    status: done
+    adr: "449"
+    fabric: meos_quantum_domain_operating_model
+    api: /api/v1/quantum/domain*
+  - id: P215-D
+    title: Quantum Computing Infrastructure & Quantum Cloud
+    status: done
+    adr: "450"
+    fabric: meos_quantum_infrastructure_fabric
+    api: /api/v1/quantum/infrastructure*
+  - id: P215-E
+    title: Quantum Algorithm Intelligence & Quantum Software
+    status: done
+    adr: "451"
+    fabric: meos_quantum_software_intelligence_fabric
+    api: /api/v1/quantum/algorithms*
+  - id: P215-F
+    title: Quantum AI & Quantum Machine Learning
+    status: done
+    adr: "452"
+    fabric: meos_quantum_ai_intelligence_fabric
+    api: /api/v1/quantum/qai*
+  - id: P215-G
+    title: Quantum Optimization, Simulation & Scientific Intelligence
+    status: done
+    adr: "453"
+    fabric: meos_quantum_scientific_intelligence_fabric
+    api: /api/v1/quantum/optimization*
+  - id: P215-H
+    title: Quantum Security, PQC Bindings & Quantum Trust Architecture
+    status: done
+    adr: "454"
+    fabric: meos_quantum_trust_fabric
+    api: /api/v1/quantum/security*
+  - id: P215-I
+    title: Quantum Data Intelligence, Knowledge Graph & Data Governance Bindings
+    status: done
+    adr: "455"
+    fabric: meos_quantum_data_intelligence_fabric
+    api: /api/v1/quantum/data*
+  - id: P215-J
+    title: Quantum Internet, Networking & Communication
+    status: done
+    adr: "456"
+    fabric: meos_quantum_network_intelligence_fabric
+    api: /api/v1/quantum/network*
+  - id: P215-K
+    title: Quantum Governance, Regulation, Ethics & Responsible Quantum Computing
+    status: done
+    adr: "403"
+    fabric: meos_quantum_responsible_intelligence_fabric
+    api: /api/v1/quantum/governance*
+  - id: P215-L
+    title: Quantum Digital Twin, Simulation Intelligence & Reality Modeling
+    status: done
+    adr: "457"
+    fabric: meos_quantum_reality_intelligence_fabric
+    api: /api/v1/quantum/twin*
+  - id: P215-M
+    title: Quantum Integration, API Gateway, Service Mesh & Hybrid Intelligence Interoperability
+    status: done
+    adr: "458"
+    fabric: meos_quantum_integration_intelligence_fabric
+    api: /api/v1/quantum/integration*
+  - id: P215-N
+    title: Quantum Operations, Quantum AIOps, Autonomous Quantum Management & Self-Healing Infrastructure
+    status: done
+    adr: "459"
+    fabric: meos_quantum_autonomous_operations_fabric
+    api: /api/v1/quantum/operations*
+  - id: P215-O
+    title: Quantum Testing, Validation, Benchmarking, Quality Assurance & Certification
+    status: planned
+    api: /api/v1/quantum/testing*

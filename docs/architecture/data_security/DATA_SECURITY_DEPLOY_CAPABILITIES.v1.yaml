@@ -1,0 +1,40 @@
+# P211-O — Deploy / DevSecOps / observability capabilities
+version: "1.0"
+prompt_id: P211-O
+adr: "390"
+sor: data_security
+capability: CAP-PLT-DS-001
+api_prefix: /api/v1/data-security/deploy
+builds_on:
+  - P211-A
+  - P211-B
+  - P211-C
+  - P211-D
+  - P211-E
+  - P211-F
+  - P211-G
+  - P211-H
+  - P211-I
+  - P211-J
+  - P211-K
+  - P211-L
+  - P211-M
+  - P211-N
+  - ADR-389
+
+deployment_automated_required: true
+security_scanning_present_required: true
+infrastructure_scalable_required: true
+monitoring_complete_required: true
+disaster_recovery_defined_required: true
+runtime_security_present_required: true
+sibling_deploy_bc_forbidden: true
+via_observability_platform: true
+via_p209_secrets_signing: true
+via_p210_siem_soar_xdr: true
+via_api_gateway: true
+via_gitops: true
+via_enterprise_ai_aiops: true
+via_p207: true
+via_p208: true
+via_p211_a_through_n: true

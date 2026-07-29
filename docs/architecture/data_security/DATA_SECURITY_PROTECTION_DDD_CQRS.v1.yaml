@@ -1,0 +1,42 @@
+# P211-J — Protection DDD / CQRS
+version: "1.0"
+prompt_id: P211-J
+adr: "385"
+sor: data_security
+domain: Enterprise Data Protection Domain
+bounded_contexts:
+  - encryption_management
+  - tokenization
+  - data_masking
+  - anonymization
+  - protection_policy
+  - cryptographic_enforcement
+  - confidential_computing
+entities:
+  - DataProtectionPolicy
+  - ProtectedDataAsset
+  - EncryptionProfile
+  - TokenizationProfile
+  - ProtectionDecision
+commands:
+  - CreateProtectionPolicy
+  - EncryptDataAsset
+  - DecryptDataAsset
+  - TokenizeData
+  - DetokenizeData
+  - MaskData
+  - ApplyProtection
+  - RotateProtection
+queries:
+  - GetProtectionStatus
+  - GetEncryptionCoverage
+  - GetTokenStatus
+  - GetMaskingHistory
+  - GetProtectionReport
+events:
+  - DataProtectionApplied
+  - EncryptionCompleted
+  - TokenCreated
+  - MaskingApplied
+  - ProtectionPolicyChanged
+  - ProtectionViolationDetected

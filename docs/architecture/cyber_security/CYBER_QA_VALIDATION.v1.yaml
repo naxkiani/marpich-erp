@@ -1,0 +1,30 @@
+# P210-O — Validation gates
+version: "1.0"
+prompt_id: P210-O
+adr: "375"
+reject_if:
+  - security_testing_is_manual_only
+  - no_adversarial_validation_exists
+  - ai_systems_are_not_tested
+  - compliance_cannot_be_verified
+  - production_readiness_is_undefined
+  - security_controls_cannot_be_measured
+  - test_evidence_cannot_be_audited
+  - sibling_qa_bc
+forbidden_siblings:
+  - backend/contexts/qa_platform
+  - backend/contexts/security_testing
+  - backend/contexts/red_team
+  - backend/contexts/penetration_testing
+  - backend/contexts/cyber_ops
+required_artifacts:
+  - docs/adr/375-enterprise-cyber-security-qa-validation.md
+  - docs/architecture/ENTERPRISE_CYBER_SECURITY_QA.md
+  - docs/architecture/cyber_security/CYBER_QA_CAPABILITIES.v1.yaml
+  - docs/architecture/cyber_security/CYBER_QA_DDD_CQRS.v1.yaml
+  - docs/architecture/cyber_security/CYBER_QA_SECURITY.v1.yaml
+  - docs/architecture/cyber_security/CYBER_QA_VALIDATION.v1.yaml
+  - backend/contexts/cyber_security/domain/services/cs_platform_qa.py
+  - backend/contexts/cyber_security/domain/aggregates/cs_qa_aggregates.py
+  - backend/contexts/cyber_security/infrastructure/acl/cs_qa_acl.py
+  - backend/contexts/cyber_security/application/cs_qa_foundation.py

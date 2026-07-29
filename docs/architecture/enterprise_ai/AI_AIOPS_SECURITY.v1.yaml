@@ -1,0 +1,25 @@
+# P214-J — SECURITY
+version: "1.0"
+prompt_id: P214-J
+adr: "430"
+sor: ai
+zero_trust: true
+integrates:
+  - P207
+  - P208
+  - P209
+  - P210
+  - P211
+controls:
+  - ops_access_control
+  - remediation_authorization
+  - telemetry_protection
+  - policy_enforcement
+  - audit_security
+permissions:
+  - ai.assist.read
+  - ai.assist.infer
+forbidden:
+  - module_local_aiops
+  - sibling_ai_bc
+  - silent_remediation_without_policy

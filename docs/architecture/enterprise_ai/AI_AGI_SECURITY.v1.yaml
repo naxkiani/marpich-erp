@@ -1,0 +1,21 @@
+# P214-V — SECURITY
+version: "1.0"
+prompt_id: P214-V
+adr: "442"
+zero_trust: true
+controls:
+  - cognitive_core_authorization
+  - reasoning_execution_controls
+  - memory_access_boundaries
+  - governed_learning_boundaries
+  - human_compatibility_controls
+integrations:
+  - P210
+  - P212
+  - P213
+  - P214-T
+  - P214-U
+forbidden:
+  - module_local_shadow_agi_cores
+  - bypassing_guardian_controls
+  - uncontrolled_cognitive_learning

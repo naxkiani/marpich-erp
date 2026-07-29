@@ -1,0 +1,53 @@
+# P210-J — DDD / CQRS
+version: "1.0"
+prompt_id: P210-J
+adr: "370"
+sor: cyber_security
+bounded_context: cyber_security.ai_ops
+logical_subdomains:
+  - security_agents
+  - security_copilot
+  - reasoning_engine
+  - knowledge_memory
+  - autonomous_response
+  - detection_engineering_ai
+  - predictive_analytics
+  - ai_governance
+
+aggregates:
+  - CsAiOpsExplainableDecisionRoot
+  - CsAiOpsHumanOversightRoot
+  - CsAiOpsAgentCollaborationRoot
+  - CsAiOpsKnowledgeGraphConnectedRoot
+  - CsAiOpsAuditedAutonomyRoot
+  - CsAiOpsGovernanceCompleteRoot
+  - CsAiOpsModelLifecycleRoot
+  - CsAiOpsInvestigationCompletedRoot
+
+commands:
+  - CreateSecurityAgent
+  - LaunchInvestigation
+  - GenerateRecommendation
+  - ApproveAutonomousResponse
+  - ExecuteResponse
+  - GenerateExecutiveReport
+  - TrainAgent
+  - UpdateKnowledgeBase
+
+queries:
+  - GetThreatAnalysis
+  - GetAgentStatus
+  - GetInvestigation
+  - GetSecurityInsights
+  - GetExecutiveDashboard
+  - GetModelPerformance
+
+events:
+  - ThreatAnalysed
+  - InvestigationCompleted
+  - RecommendationGenerated
+  - AgentCollaborated
+  - ResponseExecuted
+  - KnowledgeUpdated
+  - ModelRetrained
+  - ExecutiveReportGenerated

@@ -1,0 +1,29 @@
+# P214-P — VALIDATION
+version: "1.0"
+prompt_id: P214-P
+adr: "436"
+sor: ai
+verdict_target: ENTERPRISE_GRADE
+reject_if:
+  - enterprise_ai_governance_platform_is_missing
+  - ai_compliance_platform_is_missing
+  - ai_audit_platform_is_missing
+  - ai_trust_platform_is_missing
+  - ai_risk_management_is_missing
+  - ai_policy_management_is_missing
+  - ai_transparency_is_missing
+  - ai_explainability_governance_is_missing
+  - regulatory_intelligence_is_missing
+  - certification_platform_is_missing
+  - governance_knowledge_graph_is_missing
+  - governance_digital_twin_is_missing
+  - cqrs_architecture_is_missing
+  - event_architecture_is_missing
+  - microservices_architecture_is_missing
+  - api_first_architecture_is_missing
+  - zero_trust_security_is_missing
+  - cloud_native_deployment_is_missing
+  - sibling_ai_bc
+tests:
+  - backend/contexts/ai/tests/test_ai_platform_aitrust.py
+  - backend/contexts/ai/tests/unit/test_ai_platform_aitrust.py

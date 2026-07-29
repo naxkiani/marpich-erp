@@ -1,0 +1,45 @@
+# P210-L — CQRS / Events / APIs / Microservices capabilities
+version: "1.0"
+prompt_id: P210-L
+adr: "372"
+sor: cyber_security
+api_prefix: /api/v1/cyber-security/ops
+builds_on:
+  - P210-A
+  - P210-B
+  - P210-C
+  - P210-D
+  - P210-E
+  - P210-F
+  - P210-G
+  - P210-H
+  - P210-I
+  - P210-J
+  - P210-K
+  - ADR-361
+  - ADR-362
+  - ADR-363
+  - ADR-364
+  - ADR-365
+  - ADR-366
+  - ADR-367
+  - ADR-368
+  - ADR-369
+  - ADR-370
+  - ADR-371
+
+services_loosely_coupled_required: true
+events_immutable_required: true
+apis_security_controls_required: true
+cqrs_separation_complete_required: true
+microservices_independently_scalable_required: true
+observability_required: true
+ai_integration_possible_required: true
+event_governance_required: true
+sibling_ops_bc_forbidden: true
+via_enterprise_event_bus: true
+via_api_gateway: true
+via_observability: true
+via_enterprise_ai_platform: true
+via_authorization: true
+via_audit_platform: true

@@ -1,0 +1,22 @@
+# P210-O — Security & compliance
+version: "1.0"
+prompt_id: P210-O
+adr: "375"
+zero_trust: true
+automated_security_testing: true
+adversarial_validation: true
+ai_security_testing: true
+purple_team: true
+chaos_security: true
+immutable_audit_evidence: true
+workflow_gated_destructive_tests: true
+compliance:
+  - iso_27001
+  - nist_csf
+  - nist_zero_trust
+  - nist_ai_rmf
+  - soc_2
+  - pci_dss
+  - gdpr
+  - cis_controls
+  - mitre_attack_coverage

@@ -1,0 +1,12 @@
+prompt_id: P215-N
+adr: '459'
+core_domain: enterprise_quantum_operations_intelligence_management
+bounded_context_count: 7
+aggregate_count: 8
+commands:
+  - RegisterQuantumResourceCommand
+  - AnalyzeOperationalStateCommand
+  - CreateIncidentCommand
+  - ExecuteRecoveryCommand
+  - OptimizeResourceCommand
+  - TriggerSelfHealingCommand

@@ -1,0 +1,31 @@
+# P210-I — Validation gates
+version: "1.0"
+prompt_id: P210-I
+adr: "369"
+reject_if:
+  - asset_discovery_incomplete
+  - external_attack_surface_not_continuously_monitored
+  - risk_prioritization_ignores_business_context
+  - attack_path_analysis_absent
+  - ai_recommendations_not_explainable
+  - remediation_cannot_be_validated
+  - ctem_lifecycle_not_continuous
+  - sibling_asm_bc
+forbidden_siblings:
+  - backend/contexts/asm
+  - backend/contexts/ctem
+  - backend/contexts/easm
+  - backend/contexts/caasm
+  - backend/contexts/threat_intel
+  - backend/contexts/siem_platform
+required_artifacts:
+  - docs/adr/369-enterprise-cyber-security-asm-ctem.md
+  - docs/architecture/ENTERPRISE_CYBER_SECURITY_ASM_CTEM.md
+  - docs/architecture/cyber_security/CYBER_ASM_CAPABILITIES.v1.yaml
+  - docs/architecture/cyber_security/CYBER_ASM_DDD_CQRS.v1.yaml
+  - docs/architecture/cyber_security/CYBER_ASM_SECURITY.v1.yaml
+  - docs/architecture/cyber_security/CYBER_ASM_VALIDATION.v1.yaml
+  - backend/contexts/cyber_security/domain/services/cs_platform_asm.py
+  - backend/contexts/cyber_security/domain/aggregates/cs_asm_aggregates.py
+  - backend/contexts/cyber_security/infrastructure/acl/cs_asm_acl.py
+  - backend/contexts/cyber_security/application/cs_asm_foundation.py

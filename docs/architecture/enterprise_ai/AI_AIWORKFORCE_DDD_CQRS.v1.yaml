@@ -1,0 +1,37 @@
+# P214-Q — DDD / CQRS
+version: "1.0"
+prompt_id: P214-Q
+adr: "437"
+core_domain: enterprise_autonomous_intelligence_management
+aggregate: EnterpriseAutonomousIntelligenceAggregate
+bounded_contexts:
+  - BC-01: AI Digital Workforce
+  - BC-02: Autonomous Agent Ecosystem
+  - BC-03: AI Organization
+  - BC-04: Cognitive Workflow
+  - BC-05: Self-Learning Intelligence
+  - BC-06: AI Decision Autonomy
+  - BC-07: Human AI Collaboration
+commands:
+  - CreateDigitalEmployeeCommand
+  - ActivateAgentCommand
+  - CreateAgentTeamCommand
+  - ExecuteAutonomousDecisionCommand
+  - StartLearningCycleCommand
+  - ImproveCapabilityCommand
+queries:
+  - GetAgentStatusQuery
+  - GetDigitalWorkforceQuery
+  - GetDecisionHistoryQuery
+  - GetLearningProgressQuery
+  - GetCapabilityScoreQuery
+events:
+  - AgentCreatedEvent
+  - EmployeeActivatedEvent
+  - TaskAssignedEvent
+  - DecisionExecutedEvent
+  - LearningCompletedEvent
+  - CapabilityImprovedEvent
+  - AutonomyChangedEvent
+  - HumanApprovalRequestedEvent
+same_sor_ai: true

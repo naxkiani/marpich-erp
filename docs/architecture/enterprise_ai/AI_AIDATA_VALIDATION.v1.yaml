@@ -1,0 +1,26 @@
+# P214-K — VALIDATION
+version: "1.0"
+prompt_id: P214-K
+adr: "431"
+sor: ai
+verdict_target: ENTERPRISE_GRADE
+reject_if:
+  - enterprise_ai_data_platform_is_missing
+  - ai_dataset_management_is_missing
+  - feature_engineering_platform_is_missing
+  - feature_store_platform_is_missing
+  - training_data_platform_is_missing
+  - synthetic_data_platform_is_missing
+  - data_quality_intelligence_is_missing
+  - ai_data_lineage_is_missing
+  - ai_data_marketplace_is_missing
+  - cqrs_architecture_is_missing
+  - event_architecture_is_missing
+  - microservices_architecture_is_missing
+  - api_first_architecture_is_missing
+  - zero_trust_security_is_missing
+  - cloud_native_deployment_is_missing
+  - sibling_ai_bc
+tests:
+  - backend/contexts/ai/tests/test_ai_platform_aidata.py
+  - backend/contexts/ai/tests/unit/test_ai_platform_aidata.py

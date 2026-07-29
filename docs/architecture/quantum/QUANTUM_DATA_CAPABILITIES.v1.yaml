@@ -1,0 +1,15 @@
+prompt_id: P215-I
+adr: '455'
+api_prefix: /api/v1/quantum/data
+quantum_data_intelligence_platform_present_required: true
+quantum_knowledge_graph_platform_present_required: true
+quantum_data_governance_platform_present_required: true
+quantum_data_mesh_architecture_present_required: true
+quantum_data_product_platform_present_required: true
+metadata_intelligence_present_required: true
+data_quality_intelligence_present_required: true
+data_lineage_intelligence_present_required: true
+via_p212: true
+builds_on_p215_a: true
+builds_on_p215_h: true
+governed_by_p215_k: true

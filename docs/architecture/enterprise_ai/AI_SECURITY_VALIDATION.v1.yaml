@@ -1,0 +1,36 @@
+# P214-I — VALIDATION
+version: "1.0"
+prompt_id: P214-I
+adr: "429"
+sor: ai
+capability: CAP-PLT-AI-001
+verdict_target: ENTERPRISE_GRADE
+foundation_validator: contexts.ai.application.ai_security_foundation.validate_ai_security_foundation
+quality_gates_reject_if:
+  - enterprise_ai_security_platform_is_missing
+  - ai_model_security_is_missing
+  - llm_security_is_missing
+  - prompt_security_is_missing
+  - agent_security_is_missing
+  - adversarial_defense_is_missing
+  - ai_threat_intelligence_is_missing
+  - runtime_protection_is_missing
+  - ai_security_operations_is_missing
+  - security_knowledge_graph_is_missing
+  - ai_security_digital_twin_is_missing
+  - cqrs_architecture_is_missing
+  - event_architecture_is_missing
+  - microservices_architecture_is_missing
+  - api_first_architecture_is_missing
+  - zero_trust_security_is_missing
+  - cloud_native_deployment_is_missing
+  - sibling_ai_bc
+testing:
+  - ai_security_testing
+  - adversarial_testing
+  - red_team_testing
+  - prompt_attack_testing
+  - model_security_testing
+  - agent_security_testing
+  - runtime_testing
+  - compliance_testing

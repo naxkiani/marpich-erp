@@ -1,0 +1,30 @@
+# P211-C — Validation gates
+version: "1.0"
+prompt_id: P211-C
+adr: "378"
+reject_if:
+  - domains_are_tightly_coupled
+  - data_ownership_is_unclear
+  - privacy_is_separated_from_security
+  - events_are_missing
+  - aggregates_are_undefined
+  - integration_boundaries_are_unclear
+  - sibling_data_security_bc
+forbidden_siblings:
+  - backend/contexts/dspm
+  - backend/contexts/dspm_platform
+  - backend/contexts/privacy_intelligence
+  - backend/contexts/data_classification
+  - backend/contexts/data_protection_platform
+  - backend/contexts/data_lineage_platform
+required_artifacts:
+  - docs/adr/378-enterprise-data-security-domain-architecture.md
+  - docs/architecture/ENTERPRISE_DATA_SECURITY_DOMAIN_ARCHITECTURE.md
+  - docs/architecture/data_security/DATA_SECURITY_DOMAIN_CAPABILITIES.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_DOMAIN_DDD_CQRS.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_DOMAIN_SECURITY.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_DOMAIN_VALIDATION.v1.yaml
+  - backend/contexts/data_security/domain/services/ds_platform_domain.py
+  - backend/contexts/data_security/domain/aggregates/ds_domain_aggregates.py
+  - backend/contexts/data_security/infrastructure/acl/ds_domain_acl.py
+  - backend/contexts/data_security/application/ds_domain_foundation.py

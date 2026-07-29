@@ -1,0 +1,5 @@
+prompt_id: P215-H
+adr: '454'
+core_domain: enterprise_quantum_security_trust_management
+bounded_context_count: 6
+aggregate_count: 7

@@ -1,0 +1,4 @@
+prompt_id: P215-B
+adr: '448'
+core_domain: enterprise_quantum_strategy_management
+aggregate: EnterpriseQuantumStrategyAggregate

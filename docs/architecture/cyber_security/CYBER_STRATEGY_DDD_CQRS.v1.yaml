@@ -1,0 +1,54 @@
+# P210-A — Cyber strategy DDD / CQRS
+version: "1.0"
+prompt_id: P210-A
+adr: "361"
+sor: cyber_security
+
+aggregates:
+  - CyberSecurityStrategyProfile
+  - ZeroTrustControlPlane
+  - SocOperatingModel
+  - DetectionCapabilityMap
+  - ThreatIntelligenceBinding
+  - ResponseAutomationPolicy
+  - TelemetryCoverageModel
+  - MeasurableControlRegister
+
+commands:
+  - PublishCyberStrategy
+  - RegisterCapabilityDomain
+  - BindThreatIntelligence
+  - EnableSocOperatingModel
+  - RequireZeroTrust
+  - RegisterMeasurableControl
+  - DeclareTelemetryCoverage
+
+queries:
+  - GetCyberStrategy
+  - ListCapabilityDomains
+  - GetSecurityLayers
+  - GetProtectionDomains
+  - GetQualityGates
+  - GetReadiness
+
+domain_events:
+  - CyberStrategyPublished
+  - CapabilityDomainRegistered
+  - ZeroTrustEnforced
+  - SocModelEnabled
+  - ThreatIntelligenceBound
+  - ResponseAutomationEnabled
+  - TelemetryCoverageDeclared
+  - ControlRegistered
+  - ManualOnlyResponseRejected
+  - IsolatedIntelRejected
+  - IncompleteTelemetryRejected
+  - SiblingCyberBcRejected
+
+integration_events:
+  - cyber_security.strategy.published
+  - cyber_security.capability.registered
+  - cyber_security.control.registered
+
+deployable_unit: cyber_security
+never_invent_sibling_bc: true

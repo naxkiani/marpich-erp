@@ -1,0 +1,35 @@
+# P214-G — VALIDATION
+version: "1.0"
+prompt_id: P214-G
+adr: "427"
+sor: ai
+capability: CAP-PLT-AI-001
+verdict_target: ENTERPRISE_GRADE
+foundation_validator: contexts.ai.application.ai_knowledge_foundation.validate_ai_knowledge_foundation
+quality_gates_reject_if:
+  - enterprise_ai_knowledge_platform_is_missing
+  - rag_platform_is_missing
+  - vector_intelligence_platform_is_missing
+  - knowledge_graph_integration_is_missing
+  - semantic_intelligence_is_missing
+  - ai_memory_platform_is_missing
+  - context_intelligence_is_missing
+  - cognitive_reasoning_is_missing
+  - knowledge_governance_is_missing
+  - cqrs_architecture_is_missing
+  - event_architecture_is_missing
+  - microservices_architecture_is_missing
+  - api_first_architecture_is_missing
+  - zero_trust_security_is_missing
+  - cloud_native_deployment_is_missing
+  - sibling_ai_bc
+testing:
+  - knowledge_quality_testing
+  - retrieval_accuracy_testing
+  - embedding_testing
+  - rag_evaluation_testing
+  - hallucination_testing
+  - security_testing
+  - performance_testing
+  - regression_testing
+  - human_evaluation_testing

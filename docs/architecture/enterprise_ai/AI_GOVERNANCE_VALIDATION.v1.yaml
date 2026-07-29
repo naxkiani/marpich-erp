@@ -1,0 +1,34 @@
+# P214-H — VALIDATION
+version: "1.0"
+prompt_id: P214-H
+adr: "428"
+sor: ai
+capability: CAP-PLT-AI-001
+verdict_target: ENTERPRISE_GRADE
+foundation_validator: contexts.ai.application.ai_governance_foundation.validate_ai_governance_foundation
+quality_gates_reject_if:
+  - enterprise_ai_governance_platform_is_missing
+  - responsible_ai_platform_is_missing
+  - ai_risk_management_platform_is_missing
+  - ai_policy_engine_is_missing
+  - ai_compliance_platform_is_missing
+  - ai_explainability_platform_is_missing
+  - ai_audit_platform_is_missing
+  - ai_trust_management_is_missing
+  - governance_digital_twin_is_missing
+  - cqrs_architecture_is_missing
+  - event_architecture_is_missing
+  - microservices_architecture_is_missing
+  - api_first_architecture_is_missing
+  - zero_trust_security_is_missing
+  - cloud_native_deployment_is_missing
+  - sibling_ai_bc
+testing:
+  - ai_governance_testing
+  - policy_testing
+  - risk_model_testing
+  - compliance_testing
+  - explainability_testing
+  - audit_testing
+  - security_testing
+  - simulation_testing

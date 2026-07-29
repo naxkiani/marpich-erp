@@ -1,0 +1,27 @@
+# P210-B — Mission / Vision / Scope capabilities
+version: "1.0"
+prompt_id: P210-B
+adr: "362"
+sor: cyber_security
+api_prefix: /api/v1/cyber-security/mission
+builds_on:
+  - P210-A
+  - ADR-361
+
+mission_measurable_required: true
+vision_enterprise_scale_required: true
+enterprise_scope_complete_required: true
+security_domains_fragmented_forbidden: true
+zero_trust_absent_forbidden: true
+ai_security_omitted_forbidden: true
+strategic_objectives_meos_aligned_required: true
+sibling_cyber_bc_forbidden: true
+ir_lifecycle_duplication_forbidden: true
+
+via_security_incident: true
+via_integration_platform: true
+via_authorization: true
+via_workflow: true
+via_audit_platform: true
+via_ai_platform: true
+via_secrets_crypto_trust: true

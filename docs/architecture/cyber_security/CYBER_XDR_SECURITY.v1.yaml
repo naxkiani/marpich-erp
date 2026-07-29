@@ -1,0 +1,22 @@
+# P210-G — Security & governance
+version: "1.0"
+prompt_id: P210-G
+adr: "366"
+zero_trust: true
+rbac: true
+abac: true
+mtls: true
+secure_boot_support: true
+code_signing_verification: true
+tamper_protection: true
+agent_integrity_validation: true
+immutable_audit_logs: true
+response_via_authz_workflow: true
+response_via_soar_playbook: true
+compliance:
+  - iso_27001
+  - nist_csf
+  - mitre_attack
+  - mitre_d3fend
+  - pci_dss
+  - soc_2

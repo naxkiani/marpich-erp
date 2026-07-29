@@ -1,0 +1,22 @@
+# P214-O — SECURITY
+version: "1.0"
+prompt_id: P214-O
+adr: "435"
+sor: ai
+zero_trust: true
+integrates:
+  - P207
+  - P208
+  - P209
+  - P210
+  - P214-H
+  - P214-I
+controls:
+  - test_access_control
+  - evaluation_authorization
+  - certification_approval
+  - evidence_protection
+  - audit_security
+forbidden:
+  - module_local_ai_qa
+  - production_without_certification_evidence

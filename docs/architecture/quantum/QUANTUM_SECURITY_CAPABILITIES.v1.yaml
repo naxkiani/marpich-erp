@@ -1,0 +1,16 @@
+prompt_id: P215-H
+adr: '454'
+api_prefix: /api/v1/quantum/security
+quantum_security_platform_present_required: true
+post_quantum_cryptography_platform_present_required: true
+quantum_trust_architecture_present_required: true
+quantum_identity_security_present_required: true
+quantum_key_management_present_required: true
+threat_intelligence_platform_present_required: true
+pqc_remains_secrets: true
+pqc_sor: secrets
+builds_on_p215_a: true
+builds_on_p215_d: true
+builds_on_p215_f: true
+builds_on_p215_g: true
+governed_by_p215_k: true

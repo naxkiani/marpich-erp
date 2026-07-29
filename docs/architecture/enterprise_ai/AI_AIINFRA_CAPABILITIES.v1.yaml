@@ -1,0 +1,49 @@
+# P214-N — CAPABILITIES
+version: "1.0"
+prompt_id: P214-N
+adr: "434"
+sor: ai
+capability: CAP-PLT-AI-001
+api_prefix: /api/v1/ai/aiinfra
+fabric: meos_intelligent_ai_infrastructure_fabric
+principle: >-
+  Enterprise AI Infrastructure Platform SHALL provide the scalable, secure
+  and intelligent compute foundation required for operating enterprise
+  artificial intelligence at global scale.
+builds_on:
+  - P214-A
+  - P214-B
+  - P214-C
+  - P214-D
+  - P214-E
+  - P214-F
+  - P214-G
+  - P214-H
+  - P214-I
+  - P214-J
+  - P214-K
+  - P214-L
+  - P214-M
+  - ADR-433
+  - P209
+  - P210
+  - P211
+  - P213-O
+enterprise_ai_cloud_platform_present_required: true
+intelligent_compute_fabric_present_required: true
+gpu_infrastructure_platform_present_required: true
+ai_runtime_platform_present_required: true
+kubernetes_ai_platform_present_required: true
+infrastructure_automation_present_required: true
+resource_intelligence_present_required: true
+infrastructure_security_present_required: true
+infrastructure_knowledge_graph_present_required: true
+infrastructure_digital_twin_present_required: true
+cqrs_architecture_present_required: true
+event_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_architecture_present_required: true
+zero_trust_security_present_required: true
+cloud_native_deployment_present_required: true
+sibling_ai_bc_forbidden: true
+module_local_gpu_scheduler_forbidden: true

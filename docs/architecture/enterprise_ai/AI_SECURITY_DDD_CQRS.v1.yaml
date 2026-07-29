@@ -1,0 +1,38 @@
+# P214-I — DDD / CQRS
+version: "1.0"
+prompt_id: P214-I
+adr: "429"
+sor: ai
+core_domain: enterprise_ai_security_management
+aggregate: EnterpriseAISecurityAggregate
+bounded_contexts:
+  - BC-01 AI Asset Security
+  - BC-02 AI Model Security
+  - BC-03 LLM Security
+  - BC-04 Prompt Security
+  - BC-05 AI Agent Security
+  - BC-06 Adversarial Defense
+  - BC-07 AI Runtime Security
+  - BC-08 AI Security Operations
+commands:
+  - RegisterAIAssetCommand
+  - ScanAIModelCommand
+  - ValidatePromptCommand
+  - BlockThreatCommand
+  - ProtectAgentCommand
+  - UpdateSecurityPolicyCommand
+queries:
+  - GetAISecurityStatusQuery
+  - GetThreatQuery
+  - GetModelSecurityQuery
+  - GetAgentSecurityQuery
+  - GetIncidentHistoryQuery
+events:
+  - AIAssetRegisteredEvent
+  - ThreatDetectedEvent
+  - PromptAttackDetectedEvent
+  - ModelIntegrityVerifiedEvent
+  - AgentBlockedEvent
+  - SecurityPolicyTriggeredEvent
+  - AIIncidentResolvedEvent
+  - AIThreatDetectedEvent

@@ -1,0 +1,15 @@
+prompt_id: P215-D
+adr: '450'
+api_prefix: /api/v1/quantum/infrastructure
+quantum_infrastructure_platform_present_required: true
+quantum_cloud_architecture_present_required: true
+hardware_abstraction_layer_present_required: true
+quantum_resource_fabric_present_required: true
+workload_orchestration_present_required: true
+hybrid_computing_architecture_present_required: true
+zero_trust_security_present_required: true
+digital_twin_integration_present_required: true
+knowledge_graph_integration_present_required: true
+builds_on_p215_a: true
+builds_on_p215_c: true
+governed_by_p215_k: true

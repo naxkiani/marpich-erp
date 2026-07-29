@@ -1,0 +1,34 @@
+# P210-G — Validation gates
+version: "1.0"
+prompt_id: P210-G
+adr: "366"
+reject_if:
+  - endpoint_telemetry_incomplete
+  - network_visibility_insufficient
+  - xdr_correlation_siloed
+  - ai_analytics_absent
+  - detection_rules_cannot_evolve
+  - automated_response_lacks_safeguards
+  - agent_integrity_cannot_be_verified
+  - sibling_xdr_bc
+  - sibling_edr_bc
+  - sibling_ndr_bc
+forbidden_siblings:
+  - backend/contexts/xdr
+  - backend/contexts/edr
+  - backend/contexts/ndr
+  - backend/contexts/soar_platform
+  - backend/contexts/soc_platform
+  - backend/contexts/siem_platform
+  - backend/contexts/security_ops
+required_artifacts:
+  - docs/adr/366-enterprise-cyber-security-xdr.md
+  - docs/architecture/ENTERPRISE_CYBER_SECURITY_XDR.md
+  - docs/architecture/cyber_security/CYBER_XDR_CAPABILITIES.v1.yaml
+  - docs/architecture/cyber_security/CYBER_XDR_DDD_CQRS.v1.yaml
+  - docs/architecture/cyber_security/CYBER_XDR_SECURITY.v1.yaml
+  - docs/architecture/cyber_security/CYBER_XDR_VALIDATION.v1.yaml
+  - backend/contexts/cyber_security/domain/services/cs_platform_xdr.py
+  - backend/contexts/cyber_security/domain/aggregates/cs_xdr_aggregates.py
+  - backend/contexts/cyber_security/infrastructure/acl/cs_xdr_acl.py
+  - backend/contexts/cyber_security/application/cs_xdr_foundation.py

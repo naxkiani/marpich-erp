@@ -1,0 +1,151 @@
+# P211 — Enterprise Data Security & Privacy Intelligence Roadmap
+version: "1.0"
+series: P211
+module: Enterprise Data Security & Privacy Intelligence Platform
+volume: "06 — Enterprise Data Intelligence & Protection Fabric"
+sor: data_security
+capability: CAP-PLT-DS-001
+builds_on:
+  - ADR-159
+  - ADR-345
+  - ADR-361
+  - ADR-373
+  - ADR-374
+  - ADR-375
+  - CORE_PLATFORM.md
+  - SECURITY_STANDARD.md
+  - ENTERPRISE_EVENT_BUS.md
+forbidden_sibling_bc:
+  - dspm
+  - dspm_platform
+  - privacy_intelligence
+  - data_classification
+  - data_protection_platform
+  - data_lineage_platform
+  - data_privacy_platform
+  - data_security_fabric
+  - data_digital_twin
+  - privacy_simulation
+  - data_twin_platform
+  - ai_data_security
+  - autonomous_data_protection
+  - data_security_ai
+  - data_security_ops
+  - ds_event_platform
+  - data_security_microservices
+  - data_security_deploy
+  - ds_kubernetes_platform
+  - data_security_observability
+  - data_security_qa
+  - ds_assurance_platform
+  - data_security_compliance_validation
+
+phases:
+  - id: P211-A
+    title: Foundation Architecture, Mission Vision, Enterprise Scope & Strategic Security Framework
+    status: done
+    adr: "376"
+    api: /api/v1/data-security/strategy*
+  - id: P211-B
+    title: Mission, Vision & Enterprise Scope Deepening
+    status: done
+    adr: "377"
+    api: /api/v1/data-security/mission*
+  - id: P211-C
+    title: Data Security Domain Architecture
+    status: done
+    adr: "378"
+    api: /api/v1/data-security/domain*
+  - id: P211-D
+    title: Data Discovery & Asset Inventory
+    status: done
+    adr: "379"
+    api: /api/v1/data-security/discovery*
+  - id: P211-E
+    title: Data Classification Platform
+    status: done
+    adr: "380"
+    api: /api/v1/data-security/classification*
+  - id: P211-F
+    title: Data Security Posture Management (DSPM)
+    status: done
+    adr: "381"
+    api: /api/v1/data-security/dspm*
+  - id: P211-G
+    title: Data Loss Prevention (DLP)
+    status: done
+    adr: "382"
+    api: /api/v1/data-security/dlp*
+  - id: P211-H
+    title: Data Access Governance
+    status: done
+    adr: "383"
+    api: /api/v1/data-security/access*
+  - id: P211-I
+    title: Privacy Intelligence Engine
+    status: done
+    adr: "384"
+    api: /api/v1/data-security/privacy*
+  - id: P211-J
+    title: Data Protection Controls (Encrypt/Tokenize/Mask)
+    status: done
+    adr: "385"
+    api: /api/v1/data-security/protection*
+  - id: P211-K
+    title: Data Lineage, Metadata & Intelligence Graph
+    status: done
+    adr: "386"
+    api: /api/v1/data-security/intelligence*
+  - id: P211-L
+    title: Data Security AI Intelligence & Autonomous Protection
+    status: done
+    adr: "387"
+    api: /api/v1/data-security/ai-data*
+  - id: P211-L-GRAPH
+    title: Data Knowledge Graph Deepening
+    status: planned
+    api: /api/v1/data-security/graph*
+    note: deferred_after_P211-L_ai_security_realignment; twin simulation delivered in P211-M
+  - id: P211-M
+    title: Data Digital Twin & Privacy Simulation
+    status: done
+    adr: "388"
+    api: /api/v1/data-security/twin*
+  - id: P211-M-OPS
+    title: CQRS, Events & Microservices Ops
+    status: superseded
+    api: /api/v1/data-security/ops*
+    note: delivered_as_P211-N
+  - id: P211-N
+    title: CQRS, Events, APIs & Microservices Platform
+    status: done
+    adr: "389"
+    api: /api/v1/data-security/ops*
+  - id: P211-N-DEPLOY
+    title: Deployment & DevSecOps Integration
+    status: superseded
+    api: /api/v1/data-security/deploy*
+    note: delivered_as_P211-O
+  - id: P211-O
+    title: Enterprise Deployment, DevSecOps, Kubernetes, Scalability & Observability
+    status: done
+    adr: "390"
+    api: /api/v1/data-security/deploy*
+  - id: P211-O-QA
+    title: Testing, Validation & Definition of Done
+    status: superseded
+    api: /api/v1/data-security/qa*
+    note: delivered_as_P211-P
+  - id: P211-P
+    title: Enterprise Testing, Governance, Compliance Validation & Definition of Done
+    status: done
+    adr: "391"
+    api: /api/v1/data-security/qa*
+
+series_status: complete
+distinct_from:
+  - consent (consent ledger / DSAR / DPIA)
+  - secrets (cryptographic trust — P209)
+  - cyber_security (threat defense — P210)
+  - authorization (PDP — P208)
+  - compliance (compliance orchestration)

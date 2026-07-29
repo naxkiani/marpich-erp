@@ -1,0 +1,57 @@
+# P210-A — Cyber Security strategy capabilities
+version: "1.0"
+prompt_id: P210-A
+adr: "361"
+sor: cyber_security
+api_prefix: /api/v1/cyber-security/strategy
+builds_on:
+  - ADR-021
+  - ADR-158
+  - ADR-179
+  - ADR-345
+
+zero_trust_required: true
+enterprise_soc_required: true
+ai_security_required: true
+threat_intelligence_isolated_forbidden: true
+incident_response_manual_only_forbidden: true
+security_telemetry_incomplete_forbidden: true
+security_controls_unmeasurable_forbidden: true
+non_cloud_native_forbidden: true
+sibling_cyber_bc_forbidden: true
+vendor_sdk_embed_forbidden: true
+ir_lifecycle_duplication_forbidden: true
+observability_as_cyber_sor_forbidden: true
+
+via_security_incident: true
+via_integration_platform: true
+via_authorization: true
+via_workflow: true
+via_audit_platform: true
+via_ai_platform: true
+via_policy_engine: true
+via_observability_signals: true
+via_secrets_crypto_trust: true
+
+capability_domains:
+  - enterprise_soc
+  - enterprise_siem
+  - enterprise_soar
+  - enterprise_xdr
+  - enterprise_edr
+  - enterprise_ndr
+  - enterprise_ueba
+  - threat_intelligence
+  - threat_hunting
+  - incident_response_handoff
+  - digital_forensics
+  - malware_analysis
+  - attack_surface_management
+  - continuous_threat_exposure
+  - cloud_security
+  - application_security
+  - api_security
+  - container_security
+  - kubernetes_security
+  - identity_threat_detection
+  - ai_security_operations

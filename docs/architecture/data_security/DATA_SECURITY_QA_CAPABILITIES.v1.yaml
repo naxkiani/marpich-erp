@@ -1,0 +1,42 @@
+# P211-P — QA / governance / compliance / DoD capabilities
+version: "1.0"
+prompt_id: P211-P
+adr: "391"
+sor: data_security
+capability: CAP-PLT-DS-001
+api_prefix: /api/v1/data-security/qa
+builds_on:
+  - P211-A
+  - P211-B
+  - P211-C
+  - P211-D
+  - P211-E
+  - P211-F
+  - P211-G
+  - P211-H
+  - P211-I
+  - P211-J
+  - P211-K
+  - P211-L
+  - P211-M
+  - P211-N
+  - P211-O
+  - ADR-390
+
+testing_automated_required: true
+compliance_evidence_available_required: true
+security_validation_present_required: true
+governance_ownership_clear_required: true
+risks_trackable_required: true
+production_readiness_defined_required: true
+sibling_qa_bc_forbidden: true
+via_audit_platform: true
+via_compliance_acl: true
+via_consent_acl_only: true
+via_p211_o_devsecops: true
+via_p207: true
+via_p208: true
+via_p209: true
+via_p210: true
+via_p211_a_through_o: true
+series_finalizes_p211: true

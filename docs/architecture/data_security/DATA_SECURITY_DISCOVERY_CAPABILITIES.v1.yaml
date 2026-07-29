@@ -1,0 +1,27 @@
+# P211-D — Discovery & inventory capabilities
+version: "1.0"
+prompt_id: P211-D
+adr: "379"
+sor: data_security
+capability: CAP-PLT-DS-001
+api_prefix: /api/v1/data-security/discovery
+builds_on:
+  - P211-A
+  - P211-B
+  - P211-C
+  - ADR-378
+
+data_assets_discoverable_required: true
+inventory_complete_required: true
+metadata_available_required: true
+ownership_determinable_required: true
+shadow_data_visible_required: true
+ai_discovery_required: true
+relationships_analyzable_required: true
+sibling_discovery_bc_forbidden: true
+via_integration_platform: true
+via_enterprise_ai: true
+via_p207: true
+via_p208: true
+via_p209: true
+via_p210: true

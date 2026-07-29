@@ -1,0 +1,37 @@
+# P214-N — DDD / CQRS
+version: "1.0"
+prompt_id: P214-N
+adr: "434"
+sor: ai
+core_domain: enterprise_ai_infrastructure_management
+aggregate: EnterpriseAIInfrastructureAggregate
+bounded_contexts:
+  - BC-01_ai_cloud_platform
+  - BC-02_ai_compute_fabric
+  - BC-03_ai_runtime_infrastructure
+  - BC-04_kubernetes_ai_platform
+  - BC-05_infrastructure_automation
+  - BC-06_ai_resource_intelligence
+  - BC-07_infrastructure_governance
+commands:
+  - CreateAIEnvironmentCommand
+  - ProvisionComputeCommand
+  - AllocateGPUCommand
+  - DeployAIWorkloadCommand
+  - ScaleInfrastructureCommand
+  - OptimizeResourcesCommand
+queries:
+  - GetInfrastructureStatusQuery
+  - GetComputeCapacityQuery
+  - GetGPUStatusQuery
+  - GetWorkloadStatusQuery
+  - GetOptimizationReportQuery
+events:
+  - InfrastructureCreatedEvent
+  - ComputeAllocatedEvent
+  - GPUProvisionedEvent
+  - WorkloadDeployedEvent
+  - ScalingTriggeredEvent
+  - OptimizationCompletedEvent
+  - InfrastructureFailureEvent
+  - ResourceScaledEvent

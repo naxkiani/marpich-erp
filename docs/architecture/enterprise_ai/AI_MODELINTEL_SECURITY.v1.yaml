@@ -1,0 +1,24 @@
+# P214-L — SECURITY
+version: "1.0"
+prompt_id: P214-L
+adr: "432"
+sor: ai
+zero_trust: true
+integrates:
+  - P207
+  - P208
+  - P209
+  - P210
+  - P211
+  - P214-H
+  - P214-I
+controls:
+  - model_access_control
+  - approval_authorization
+  - artifact_protection
+  - risk_policy_enforcement
+  - audit_security
+forbidden:
+  - module_local_model_registry
+  - unversioned_production_artifacts
+  - deploy_without_approval

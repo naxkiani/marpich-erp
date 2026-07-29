@@ -1,0 +1,21 @@
+# P214-U — SECURITY
+version: "1.0"
+prompt_id: P214-U
+adr: "441"
+zero_trust: true
+controls:
+  - alignment_threshold_enforcement
+  - autonomy_boundary_enforcement
+  - self_healing_authorization
+  - guardian_layer_access_control
+  - human_override_pathways
+integrations:
+  - P210
+  - P211
+  - P213
+  - P214-P
+  - P214-T
+forbidden:
+  - module_local_shadow_guardian_layers
+  - bypassing_runtime_trust_authority
+  - uncontrolled_recursive_improvement

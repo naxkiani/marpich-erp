@@ -1,0 +1,45 @@
+# P210-I — ASM/CTEM capabilities
+version: "1.0"
+prompt_id: P210-I
+adr: "369"
+sor: cyber_security
+api_prefix: /api/v1/cyber-security/asm
+builds_on:
+  - P210-A
+  - P210-B
+  - P210-C
+  - P210-D
+  - P210-E
+  - P210-F
+  - P210-G
+  - P210-H
+  - ADR-361
+  - ADR-362
+  - ADR-363
+  - ADR-364
+  - ADR-365
+  - ADR-366
+  - ADR-367
+  - ADR-368
+
+asset_discovery_complete_required: true
+external_attack_surface_continuous_required: true
+risk_prioritization_business_context_required: true
+attack_path_analysis_required: true
+ai_recommendations_explainable_required: true
+remediation_validated_required: true
+ctem_lifecycle_continuous_required: true
+sibling_asm_bc_forbidden: true
+vendor_sdk_embed_forbidden: true
+
+via_p210_d_soc: true
+via_p210_e_siem: true
+via_p210_f_soar: true
+via_p210_g_xdr: true
+via_p210_h_intel: true
+via_workflow: true
+via_integration_platform: true
+via_ai_platform: true
+via_knowledge_graph: true
+via_digital_twin: true
+via_cmdb_refs: true

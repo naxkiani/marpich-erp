@@ -1,0 +1,27 @@
+# P214-L — VALIDATION
+version: "1.0"
+prompt_id: P214-L
+adr: "432"
+sor: ai
+verdict_target: ENTERPRISE_GRADE
+reject_if:
+  - enterprise_ai_model_platform_is_missing
+  - model_registry_is_missing
+  - model_lifecycle_management_is_missing
+  - model_evaluation_intelligence_is_missing
+  - model_governance_is_missing
+  - model_monitoring_is_missing
+  - drift_detection_is_missing
+  - model_risk_management_is_missing
+  - model_knowledge_graph_is_missing
+  - model_digital_twin_is_missing
+  - cqrs_architecture_is_missing
+  - event_architecture_is_missing
+  - microservices_architecture_is_missing
+  - api_first_architecture_is_missing
+  - zero_trust_security_is_missing
+  - cloud_native_deployment_is_missing
+  - sibling_ai_bc
+tests:
+  - backend/contexts/ai/tests/test_ai_platform_modelintel.py
+  - backend/contexts/ai/tests/unit/test_ai_platform_modelintel.py

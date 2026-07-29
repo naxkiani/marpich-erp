@@ -1,0 +1,15 @@
+prompt_id: P215-E
+adr: '451'
+api_prefix: /api/v1/quantum/algorithms
+quantum_algorithm_platform_present_required: true
+quantum_software_platform_present_required: true
+quantum_programming_environment_present_required: true
+circuit_intelligence_engine_present_required: true
+optimization_platform_present_required: true
+software_lifecycle_management_present_required: true
+algorithm_repository_present_required: true
+quantum_marketplace_present_required: true
+builds_on_p215_a: true
+builds_on_p215_c: true
+builds_on_p215_d: true
+governed_by_p215_k: true

@@ -1,0 +1,35 @@
+# P210-B — MVS security controls
+version: "1.0"
+prompt_id: P210-B
+adr: "362"
+sor: cyber_security
+
+operating_principles:
+  - zero_trust_by_default
+  - assume_breach
+  - identity_first_security
+  - security_by_design
+  - privacy_by_design
+  - least_privilege
+  - continuous_verification
+  - risk_based_decisions
+  - policy_driven_operations
+  - automation_first
+  - ai_assisted_decision_making
+  - continuous_improvement
+
+permissions:
+  - cyber_security.read
+  - cyber_security.write
+  - cyber_security.mission.read
+  - cyber_security.mission.write
+
+reject_if:
+  - mission_not_measurable
+  - vision_not_enterprise_scale
+  - enterprise_scope_incomplete
+  - security_domains_fragmented
+  - zero_trust_absent
+  - ai_security_omitted
+  - strategic_objectives_not_aligned_with_meos
+  - sibling_cyber_bc

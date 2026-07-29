@@ -1,0 +1,38 @@
+# P214-F — DDD / CQRS
+version: "1.0"
+prompt_id: P214-F
+adr: "426"
+sor: ai
+core_domain: enterprise_autonomous_intelligence_management
+aggregate: EnterpriseAgentPlatformAggregate
+bounded_contexts:
+  - BC-01 Agent Platform Management
+  - BC-02 Agent Reasoning
+  - BC-03 Agent Memory
+  - BC-04 Agent Tool Integration
+  - BC-05 Agent Workflow
+  - BC-06 Multi-Agent Collaboration
+  - BC-07 Agent Governance
+  - BC-08 Agent Marketplace
+commands:
+  - CreateAgentCommand
+  - DeployAgentCommand
+  - AssignGoalCommand
+  - ExecuteTaskCommand
+  - ApproveAgentCommand
+  - UpdateAgentPolicyCommand
+queries:
+  - GetAgentQuery
+  - GetAgentExecutionQuery
+  - GetAgentPerformanceQuery
+  - GetAgentMemoryQuery
+  - GetAgentAuditQuery
+events:
+  - AgentCreatedEvent
+  - AgentDeployedEvent
+  - GoalReceivedEvent
+  - PlanCreatedEvent
+  - ActionExecutedEvent
+  - ToolCalledEvent
+  - AgentLearningEvent
+  - AgentRetiredEvent

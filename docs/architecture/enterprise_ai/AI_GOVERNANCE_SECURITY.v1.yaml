@@ -1,0 +1,27 @@
+# P214-H — SECURITY
+version: "1.0"
+prompt_id: P214-H
+adr: "428"
+sor: ai
+zero_trust: true
+integrates:
+  - P207
+  - P208
+  - P209
+  - P210
+  - P211
+controls:
+  - ai_zero_trust
+  - model_access_governance
+  - agent_governance
+  - prompt_governance
+  - data_protection
+  - policy_enforcement
+  - audit_security
+permissions:
+  - ai.assist.read
+  - ai.assist.infer
+forbidden:
+  - module_local_governance
+  - sibling_ai_bc
+  - hardcoded_ai_risk_bypass_policy_engine

@@ -1,0 +1,32 @@
+# P210-E — Validation gates
+version: "1.0"
+prompt_id: P210-E
+adr: "367"
+reject_if:
+  - event_normalization_incomplete
+  - correlation_cannot_span_multiple_domains
+  - detection_rules_not_extensible
+  - ai_intelligence_absent
+  - telemetry_lacks_integrity_validation
+  - storage_not_immutable
+  - platform_cannot_scale_horizontally
+  - sibling_siem_bc
+forbidden_siblings:
+  - backend/contexts/siem_platform
+  - backend/contexts/xdr
+  - backend/contexts/edr
+  - backend/contexts/ndr
+  - backend/contexts/soar_platform
+  - backend/contexts/soc_platform
+  - backend/contexts/security_ops
+required_artifacts:
+  - docs/adr/367-enterprise-cyber-security-siem.md
+  - docs/architecture/ENTERPRISE_CYBER_SECURITY_SIEM.md
+  - docs/architecture/cyber_security/CYBER_SIEM_CAPABILITIES.v1.yaml
+  - docs/architecture/cyber_security/CYBER_SIEM_DDD_CQRS.v1.yaml
+  - docs/architecture/cyber_security/CYBER_SIEM_SECURITY.v1.yaml
+  - docs/architecture/cyber_security/CYBER_SIEM_VALIDATION.v1.yaml
+  - backend/contexts/cyber_security/domain/services/cs_platform_siem.py
+  - backend/contexts/cyber_security/domain/aggregates/cs_siem_aggregates.py
+  - backend/contexts/cyber_security/infrastructure/acl/cs_siem_acl.py
+  - backend/contexts/cyber_security/application/cs_siem_foundation.py

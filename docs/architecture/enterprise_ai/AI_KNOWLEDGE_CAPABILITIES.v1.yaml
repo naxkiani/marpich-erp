@@ -1,0 +1,47 @@
+# P214-G — CAPABILITIES
+version: "1.0"
+prompt_id: P214-G
+adr: "427"
+sor: ai
+capability: CAP-PLT-AI-001
+api_prefix: /api/v1/ai/knowledge
+fabric: meos_enterprise_cognitive_knowledge_fabric
+principle: >-
+  Enterprise AI Knowledge Platform SHALL provide the trusted cognitive
+  foundation allowing AI systems to understand enterprise context, retrieve
+  relevant knowledge, reason accurately and generate reliable intelligence.
+builds_on:
+  - P214-A
+  - P214-B
+  - P214-C
+  - P214-D
+  - P214-E
+  - P214-F
+  - ADR-426
+  - P212
+  - P213-L
+  - P213-O
+  - P207
+  - P208
+  - P209
+  - P210
+  - P211
+enterprise_ai_knowledge_platform_present_required: true
+rag_platform_present_required: true
+vector_intelligence_platform_present_required: true
+knowledge_graph_integration_present_required: true
+semantic_intelligence_present_required: true
+ai_memory_platform_present_required: true
+context_intelligence_present_required: true
+cognitive_reasoning_present_required: true
+knowledge_governance_present_required: true
+cqrs_architecture_present_required: true
+event_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_architecture_present_required: true
+zero_trust_security_present_required: true
+cloud_native_deployment_present_required: true
+sibling_ai_bc_forbidden: true
+module_local_vector_sdk_forbidden: true
+rag_pipeline_steps: 11
+knowledge_lifecycle_stages: 8

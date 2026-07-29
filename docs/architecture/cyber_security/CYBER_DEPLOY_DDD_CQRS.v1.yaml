@@ -1,0 +1,57 @@
+# P210-N — DDD / CQRS
+version: "1.0"
+prompt_id: P210-N
+adr: "374"
+sor: cyber_security
+bounded_context: cyber_security.deploy
+logical_subdomains:
+  - deployment_pipeline
+  - kubernetes_platform
+  - container_security
+  - iac_gitops
+  - service_mesh
+  - scalability_ha
+  - observability
+  - platform_engineering
+
+aggregates:
+  - CsDeployAutomatedPipelineRoot
+  - CsDeployK8sSecurityRoot
+  - CsDeployReproducibleInfraRoot
+  - CsDeployObservabilityRoot
+  - CsDeployAutoScalingRoot
+  - CsDeployDisasterRecoveryRoot
+  - CsDeploySecurityControlsRoot
+  - CsDeployPipelineValidationRoot
+
+commands:
+  - ProvisionInfrastructure
+  - DeployWorkload
+  - ScanContainerImage
+  - ApplyNetworkPolicy
+  - PromoteEnvironment
+  - ScaleService
+  - DeclareDisasterRecovery
+  - ValidatePipeline
+  - RollbackDeployment
+  - AttachObservability
+
+queries:
+  - GetDeployArchitecture
+  - GetPipelineStatus
+  - GetK8sSecurityPosture
+  - GetObservabilityHealth
+  - GetScalingStatus
+  - GetDisasterRecoveryPlan
+  - GetDeployReadiness
+
+events:
+  - DeploymentPipelineStarted
+  - SecurityValidationPassed
+  - ContainerImageSigned
+  - KubernetesWorkloadDeployed
+  - ObservabilityAttached
+  - ScalingPolicyApplied
+  - DisasterRecoveryPlanDefined
+  - PipelineValidationFailed
+  - DeploymentRolledBack

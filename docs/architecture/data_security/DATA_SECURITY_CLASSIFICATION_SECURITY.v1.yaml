@@ -1,0 +1,15 @@
+# P211-E — Security & compliance
+version: "1.0"
+prompt_id: P211-E
+adr: "380"
+zero_trust_classification: true
+immutable_audit: true
+ai_explainability: true
+human_approval_via_workflow: true
+role_based_administration: true
+compliance:
+  - iso_27001
+  - iso_27701
+  - nist_privacy_framework
+  - gdpr
+  - soc_2

@@ -1,0 +1,37 @@
+# P214-J — DDD / CQRS
+version: "1.0"
+prompt_id: P214-J
+adr: "430"
+sor: ai
+core_domain: enterprise_ai_operations_intelligence_management
+aggregate: EnterpriseAIOpsOperationsAggregate
+bounded_contexts:
+  - BC-01 AI Observability
+  - BC-02 AI Monitoring
+  - BC-03 AI Incident Intelligence
+  - BC-04 AI Reliability Engineering
+  - BC-05 AI Optimization
+  - BC-06 Autonomous Remediation
+  - BC-07 AI Service Management
+commands:
+  - CreateAIServiceCommand
+  - MonitorAIServiceCommand
+  - DetectIncidentCommand
+  - ExecuteRemediationCommand
+  - OptimizeAIResourceCommand
+  - ScaleAIServiceCommand
+queries:
+  - GetAIHealthQuery
+  - GetPerformanceQuery
+  - GetIncidentQuery
+  - GetOperationalStatusQuery
+  - GetOptimizationReportQuery
+events:
+  - AIServiceCreatedEvent
+  - MetricCollectedEvent
+  - PerformanceDegradedEvent
+  - IncidentDetectedEvent
+  - RootCauseIdentifiedEvent
+  - RemediationExecutedEvent
+  - OptimizationCompletedEvent
+  - AIServiceRecoveredEvent

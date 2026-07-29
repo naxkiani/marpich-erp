@@ -1,0 +1,32 @@
+# P210-F — SOAR validation gates
+version: "1.0"
+prompt_id: P210-F
+adr: "365"
+sor: cyber_security
+api_prefix: /api/v1/cyber-security/soar
+
+required_artifacts:
+  - docs/adr/365-enterprise-cyber-security-soar.md
+  - docs/architecture/ENTERPRISE_CYBER_SECURITY_SOAR.md
+  - docs/architecture/cyber_security/CYBER_SOAR_CAPABILITIES.v1.yaml
+  - docs/architecture/cyber_security/CYBER_SOAR_DDD_CQRS.v1.yaml
+  - docs/architecture/cyber_security/CYBER_SOAR_SECURITY.v1.yaml
+  - docs/architecture/cyber_security/CYBER_SOAR_VALIDATION.v1.yaml
+  - backend/contexts/cyber_security/domain/services/cs_platform_soar.py
+  - backend/contexts/cyber_security/domain/aggregates/cs_soar_aggregates.py
+  - backend/contexts/cyber_security/infrastructure/acl/cs_soar_acl.py
+  - backend/contexts/cyber_security/application/cs_soar_foundation.py
+
+forbidden_siblings:
+  - backend/contexts/soar_platform
+  - backend/contexts/soc_platform
+  - backend/contexts/siem_platform
+  - backend/contexts/xdr
+  - backend/contexts/security_ops
+  - backend/contexts/cyber_defense
+
+verdict_target: ENTERPRISE_GRADE
+min_layers: 10
+min_playbook_categories: 10
+min_event_count: 12
+min_cursor_outputs: 20

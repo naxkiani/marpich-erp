@@ -1,0 +1,26 @@
+# P215-K — SECURITY
+version: "1.0"
+prompt_id: P215-K
+adr: "403"
+sor: quantum
+capability: CAP-PLT-QC-001
+api_prefix: /api/v1/quantum/governance
+builds_on:
+  - P215-A
+  - P215-B
+  - P215-H
+  - P215-I
+  - P215-J
+  - P209
+  - P210
+  - P212
+  - ADR-345
+  - ADR-403
+permission: quantum.read
+zero_trust: true
+via_p207: true
+via_p208: true
+via_p209: true
+via_p210: true
+via_p211: true
+via_policy_engine: true

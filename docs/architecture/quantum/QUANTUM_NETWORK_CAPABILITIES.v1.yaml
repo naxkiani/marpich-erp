@@ -1,0 +1,15 @@
+prompt_id: P215-J
+adr: '456'
+api_prefix: /api/v1/quantum/network
+quantum_internet_platform_present_required: true
+quantum_network_fabric_present_required: true
+quantum_communication_platform_present_required: true
+quantum_node_federation_present_required: true
+quantum_routing_intelligence_present_required: true
+quantum_network_control_plane_present_required: true
+quantum_security_integration_present_required: true
+builds_on_p215_a: true
+builds_on_p215_d: true
+builds_on_p215_h: true
+builds_on_p215_i: true
+governed_by_p215_k: true

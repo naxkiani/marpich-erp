@@ -1,0 +1,47 @@
+# P214-F — CAPABILITIES
+version: "1.0"
+prompt_id: P214-F
+adr: "426"
+sor: ai
+capability: CAP-PLT-AI-001
+api_prefix: /api/v1/ai/agents
+fabric: meos_autonomous_intelligence_fabric
+principle: >-
+  Enterprise AI Agents SHALL become intelligent digital workers capable of
+  understanding goals, reasoning over enterprise knowledge, executing
+  approved actions and continuously improving enterprise operations.
+builds_on:
+  - P214-A
+  - P214-B
+  - P214-C
+  - P214-D
+  - P214-E
+  - ADR-425
+  - P212
+  - P213-L
+  - P213-O
+  - P207
+  - P208
+  - P209
+  - P210
+  - P211
+enterprise_ai_agent_platform_present_required: true
+autonomous_intelligence_platform_present_required: true
+agent_identity_present_required: true
+agent_memory_present_required: true
+agent_reasoning_present_required: true
+agent_tool_ecosystem_present_required: true
+multi_agent_architecture_present_required: true
+workflow_automation_present_required: true
+agent_governance_present_required: true
+agent_security_present_required: true
+agent_digital_twin_present_required: true
+cqrs_architecture_present_required: true
+event_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_architecture_present_required: true
+cloud_native_deployment_present_required: true
+sibling_ai_bc_forbidden: true
+module_local_agent_runtime_forbidden: true
+lifecycle_stages: 10
+bounded_contexts: 8

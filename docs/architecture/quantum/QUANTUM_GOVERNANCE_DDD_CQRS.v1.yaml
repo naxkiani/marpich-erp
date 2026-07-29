@@ -1,0 +1,40 @@
+# P215-K — DDD_CQRS
+version: "1.0"
+prompt_id: P215-K
+adr: "403"
+sor: quantum
+capability: CAP-PLT-QC-001
+api_prefix: /api/v1/quantum/governance
+builds_on:
+  - P215-A
+  - P215-B
+  - P215-H
+  - P215-I
+  - P215-J
+  - P209
+  - P210
+  - P212
+  - ADR-345
+  - ADR-403
+core_domain: enterprise_quantum_governance_intelligence_management
+aggregate: EnterpriseQuantumGovernanceAggregate
+commands:
+  - CreateQuantumPolicyCommand
+  - UpdateQuantumRegulationCommand
+  - AssessQuantumRiskCommand
+  - ValidateComplianceCommand
+  - ExecuteQuantumAuditCommand
+  - ApproveQuantumUsageCommand
+queries:
+  - GetQuantumGovernanceScoreQuery
+  - GetComplianceStatusQuery
+  - GetRiskAssessmentQuery
+  - GetAuditHistoryQuery
+  - GetEthicalImpactQuery
+events:
+  - QuantumPolicyCreatedEvent
+  - RegulationChangedEvent
+  - RiskAssessmentCompletedEvent
+  - ComplianceValidatedEvent
+  - AuditExecutedEvent
+  - EthicalReviewCompletedEvent

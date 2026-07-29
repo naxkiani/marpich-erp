@@ -1,0 +1,60 @@
+# P210-D — SOC DDD / CQRS
+version: "1.0"
+prompt_id: P210-D
+adr: "364"
+sor: cyber_security
+
+aggregates:
+  - SocOperatingProfile
+  - SecurityAlert
+  - AlertQueue
+  - SocCase
+  - ThreatHunt
+  - ResponseOrchestration
+  - SocMetricsRegister
+  - SocKnowledgeLink
+
+commands:
+  - CreateAlert
+  - CorrelateAlerts
+  - EscalateIncidentHandoff
+  - AssignCase
+  - StartThreatHunt
+  - ExecutePlaybookIntent
+  - ContainThreatIntent
+  - CloseAlert
+  - GenerateSocReport
+
+queries:
+  - GetActiveAlerts
+  - GetIncidentHandoffStatus
+  - GetThreatTimeline
+  - GetRiskDashboard
+  - GetSocMetrics
+  - GetReadiness
+
+domain_events:
+  - AlertGenerated
+  - AlertCorrelated
+  - IncidentHandoffOpened
+  - IncidentHandoffEscalated
+  - ThreatDetected
+  - ThreatHuntStarted
+  - ThreatHuntCompleted
+  - PlaybookIntentExecuted
+  - CaseOpened
+  - CaseClosed
+  - ManualOnlyResponseRejected
+  - Non24x7Rejected
+  - UncorrelatedAlertsRejected
+  - MissingAiRejected
+  - IncompleteMetricsRejected
+
+integration_events:
+  - cyber_security.soc.alert.generated
+  - cyber_security.soc.alert.correlated
+  - cyber_security.soc.hunt.completed
+  - security.attack.detected
+
+deployable_unit: cyber_security
+never_invent_sibling_bc: true

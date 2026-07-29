@@ -1,0 +1,30 @@
+# P210-J — Validation gates
+version: "1.0"
+prompt_id: P210-J
+adr: "370"
+reject_if:
+  - ai_decisions_not_explainable
+  - human_oversight_absent
+  - agent_collaboration_unsupported
+  - knowledge_graph_disconnected
+  - autonomous_actions_unaudited
+  - ai_governance_incomplete
+  - model_lifecycle_management_missing
+  - sibling_ai_ops_bc
+forbidden_siblings:
+  - backend/contexts/ai_ops
+  - backend/contexts/autonomous_soc
+  - backend/contexts/security_copilot
+  - backend/contexts/soc_platform
+  - backend/contexts/asm
+required_artifacts:
+  - docs/adr/370-enterprise-cyber-security-ai-ops.md
+  - docs/architecture/ENTERPRISE_CYBER_SECURITY_AI_OPS.md
+  - docs/architecture/cyber_security/CYBER_AI_OPS_CAPABILITIES.v1.yaml
+  - docs/architecture/cyber_security/CYBER_AI_OPS_DDD_CQRS.v1.yaml
+  - docs/architecture/cyber_security/CYBER_AI_OPS_SECURITY.v1.yaml
+  - docs/architecture/cyber_security/CYBER_AI_OPS_VALIDATION.v1.yaml
+  - backend/contexts/cyber_security/domain/services/cs_platform_ai_ops.py
+  - backend/contexts/cyber_security/domain/aggregates/cs_ai_ops_aggregates.py
+  - backend/contexts/cyber_security/infrastructure/acl/cs_ai_ops_acl.py
+  - backend/contexts/cyber_security/application/cs_ai_ops_foundation.py

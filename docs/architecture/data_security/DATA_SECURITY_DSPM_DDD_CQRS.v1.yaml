@@ -1,0 +1,40 @@
+# P211-F — DSPM DDD / CQRS
+version: "1.0"
+prompt_id: P211-F
+adr: "381"
+sor: data_security
+domain: Enterprise Data Security Posture Domain
+bounded_contexts:
+  - data_asset_intelligence
+  - data_exposure_management
+  - security_posture_assessment
+  - risk_intelligence
+  - vulnerability
+  - remediation
+  - compliance_security
+entities:
+  - DataSecurityAsset
+  - SecurityPostureProfile
+  - DataExposureFinding
+  - RiskAssessment
+  - RemediationAction
+commands:
+  - DiscoverDataAsset
+  - AssessSecurityPosture
+  - CalculateRisk
+  - CreateFinding
+  - GenerateRemediation
+  - ApplySecurityControl
+queries:
+  - GetSecurityScore
+  - GetExposureReport
+  - GetRiskDashboard
+  - GetAssetPosture
+  - GetComplianceStatus
+events:
+  - DataAssetDiscovered
+  - SensitiveDataDetected
+  - ExposureFound
+  - RiskCalculated
+  - RemediationCreated
+  - ControlApplied

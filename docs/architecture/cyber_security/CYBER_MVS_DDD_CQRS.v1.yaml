@@ -1,0 +1,55 @@
+# P210-B — MVS DDD / CQRS
+version: "1.0"
+prompt_id: P210-B
+adr: "362"
+sor: cyber_security
+
+aggregates:
+  - CyberMissionCharter
+  - CyberVisionCharter
+  - EnterpriseScopeRegister
+  - SecurityDomainMap
+  - StrategicObjectiveRegister
+  - OperatingPrincipleSet
+  - StakeholderModel
+  - CyberKpiRegister
+
+commands:
+  - PublishMission
+  - PublishVision
+  - DeclareEnterpriseScope
+  - RegisterSecurityDomain
+  - AlignStrategicObjective
+  - RegisterKpi
+  - BindStakeholder
+
+queries:
+  - GetMission
+  - GetVision
+  - GetEnterpriseScope
+  - GetSecurityDomains
+  - GetCapabilityMap
+  - GetKpis
+  - GetReadiness
+
+domain_events:
+  - MissionPublished
+  - VisionPublished
+  - ScopeDeclared
+  - DomainRegistered
+  - ObjectiveAligned
+  - PrincipleAdopted
+  - StakeholderBound
+  - KpiRegistered
+  - UnmeasurableMissionRejected
+  - IncompleteScopeRejected
+  - FragmentedDomainsRejected
+  - ZeroTrustAbsenceRejected
+
+integration_events:
+  - cyber_security.mission.published
+  - cyber_security.vision.published
+  - cyber_security.scope.declared
+
+deployable_unit: cyber_security
+never_invent_sibling_bc: true

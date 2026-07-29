@@ -1,0 +1,7 @@
+prompt_id: P215-L
+adr: '457'
+zero_trust: true
+via_p215_h: true
+via_p215_k: true
+twin_authz: true
+simulation_integrity: true

@@ -1,0 +1,36 @@
+# P214-E — VALIDATION
+version: "1.0"
+prompt_id: P214-E
+adr: "425"
+sor: ai
+capability: CAP-PLT-AI-001
+verdict_target: ENTERPRISE_GRADE
+foundation_validator: contexts.ai.application.ai_genai_foundation.validate_ai_genai_foundation
+quality_gates_reject_if:
+  - enterprise_generative_ai_platform_is_missing
+  - llm_platform_is_missing
+  - foundation_model_management_is_missing
+  - prompt_intelligence_platform_is_missing
+  - rag_platform_is_missing
+  - vector_intelligence_is_missing
+  - ai_assistant_platform_is_missing
+  - multimodal_ai_foundation_is_missing
+  - llmops_architecture_is_missing
+  - ai_governance_is_missing
+  - cqrs_architecture_is_missing
+  - event_architecture_is_missing
+  - microservices_architecture_is_missing
+  - api_first_architecture_is_missing
+  - zero_trust_security_is_missing
+  - cloud_native_deployment_is_missing
+  - sibling_ai_bc
+testing:
+  - llm_evaluation_testing
+  - prompt_testing
+  - rag_accuracy_testing
+  - safety_testing
+  - performance_testing
+  - latency_testing
+  - security_testing
+  - regression_testing
+  - human_evaluation_testing

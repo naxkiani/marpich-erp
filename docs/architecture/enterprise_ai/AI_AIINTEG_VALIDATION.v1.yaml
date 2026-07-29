@@ -1,0 +1,28 @@
+# P214-M — VALIDATION
+version: "1.0"
+prompt_id: P214-M
+adr: "433"
+sor: ai
+verdict_target: ENTERPRISE_GRADE
+reject_if:
+  - enterprise_ai_api_gateway_is_missing
+  - intelligent_service_mesh_is_missing
+  - ai_communication_fabric_is_missing
+  - model_serving_gateway_is_missing
+  - agent_communication_platform_is_missing
+  - event_integration_platform_is_missing
+  - workflow_orchestration_is_missing
+  - integration_governance_is_missing
+  - security_architecture_is_missing
+  - knowledge_graph_integration_is_missing
+  - digital_twin_integration_is_missing
+  - cqrs_architecture_is_missing
+  - event_architecture_is_missing
+  - microservices_architecture_is_missing
+  - api_first_architecture_is_missing
+  - zero_trust_security_is_missing
+  - cloud_native_deployment_is_missing
+  - sibling_ai_bc
+tests:
+  - backend/contexts/ai/tests/test_ai_platform_aiinteg.py
+  - backend/contexts/ai/tests/unit/test_ai_platform_aiinteg.py

@@ -1,0 +1,28 @@
+# P214-I — SECURITY
+version: "1.0"
+prompt_id: P214-I
+adr: "429"
+sor: ai
+zero_trust: true
+integrates:
+  - P207
+  - P208
+  - P209
+  - P210
+  - P211
+controls:
+  - ai_zero_trust
+  - model_access_governance
+  - agent_governance
+  - prompt_governance
+  - data_protection
+  - policy_enforcement
+  - runtime_protection
+  - adversarial_defense
+permissions:
+  - ai.assist.read
+  - ai.assist.infer
+forbidden:
+  - module_local_ai_security
+  - sibling_ai_bc
+  - unsigned_models_in_production

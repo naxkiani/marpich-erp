@@ -1,0 +1,47 @@
+# P210-J — AI Security Operations capabilities
+version: "1.0"
+prompt_id: P210-J
+adr: "370"
+sor: cyber_security
+api_prefix: /api/v1/cyber-security/ai-ops
+builds_on:
+  - P210-A
+  - P210-B
+  - P210-C
+  - P210-D
+  - P210-E
+  - P210-F
+  - P210-G
+  - P210-H
+  - P210-I
+  - ADR-361
+  - ADR-362
+  - ADR-363
+  - ADR-364
+  - ADR-365
+  - ADR-366
+  - ADR-367
+  - ADR-368
+  - ADR-369
+
+ai_decisions_explainable_required: true
+human_oversight_required: true
+agent_collaboration_supported_required: true
+knowledge_graph_connected_required: true
+autonomous_actions_audited_required: true
+ai_governance_complete_required: true
+model_lifecycle_management_required: true
+sibling_ai_ops_bc_forbidden: true
+module_local_llm_sdk_forbidden: true
+via_enterprise_ai_platform: true
+via_workflow: true
+via_p210_d_soc: true
+via_p210_e_siem: true
+via_p210_f_soar: true
+via_p210_g_xdr: true
+via_p210_h_intel: true
+via_p210_i_asm: true
+via_knowledge_graph: true
+via_digital_twin: true
+via_audit_platform: true
+via_authorization: true

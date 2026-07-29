@@ -1,0 +1,30 @@
+# P211-D — Validation gates
+version: "1.0"
+prompt_id: P211-D
+adr: "379"
+reject_if:
+  - data_assets_cannot_be_discovered
+  - inventory_is_incomplete
+  - metadata_is_unavailable
+  - ownership_cannot_be_determined
+  - shadow_data_remains_invisible
+  - ai_discovery_capability_is_missing
+  - data_relationships_cannot_be_analyzed
+  - sibling_discovery_bc
+forbidden_siblings:
+  - backend/contexts/data_discovery
+  - backend/contexts/data_inventory
+  - backend/contexts/metadata_platform
+  - backend/contexts/shadow_data
+  - backend/contexts/dspm
+required_artifacts:
+  - docs/adr/379-enterprise-data-security-discovery-inventory.md
+  - docs/architecture/ENTERPRISE_DATA_SECURITY_DISCOVERY.md
+  - docs/architecture/data_security/DATA_SECURITY_DISCOVERY_CAPABILITIES.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_DISCOVERY_DDD_CQRS.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_DISCOVERY_SECURITY.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_DISCOVERY_VALIDATION.v1.yaml
+  - backend/contexts/data_security/domain/services/ds_platform_discovery.py
+  - backend/contexts/data_security/domain/aggregates/ds_discovery_aggregates.py
+  - backend/contexts/data_security/infrastructure/acl/ds_discovery_acl.py
+  - backend/contexts/data_security/application/ds_discovery_foundation.py

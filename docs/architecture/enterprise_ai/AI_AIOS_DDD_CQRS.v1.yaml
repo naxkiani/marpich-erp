@@ -1,0 +1,37 @@
+# P214-T — DDD / CQRS
+version: "1.0"
+prompt_id: P214-T
+adr: "440"
+core_domain: enterprise_ai_operating_system_management
+aggregate: EnterpriseAIOperatingSystemAggregate
+bounded_contexts:
+  - BC-01: AI Control Plane
+  - BC-02: AI Orchestration
+  - BC-03: AI Governance Operations
+  - BC-04: AI Lifecycle Management
+  - BC-05: AI Decision Control
+  - BC-06: AI Intelligence Monitoring
+  - BC-07: AI Evolution Management
+commands:
+  - CreateAIControlPlaneCommand
+  - RegisterCapabilityCommand
+  - ExecuteAIWorkflowCommand
+  - ApplyPolicyCommand
+  - ApproveDecisionCommand
+  - TriggerEvolutionCommand
+queries:
+  - GetAIStateQuery
+  - GetCapabilityStatusQuery
+  - GetGovernanceStatusQuery
+  - GetDecisionHistoryQuery
+  - GetEvolutionStatusQuery
+events:
+  - ControlPlaneCreatedEvent
+  - CapabilityRegisteredEvent
+  - WorkflowExecutedEvent
+  - PolicyAppliedEvent
+  - DecisionCompletedEvent
+  - OptimizationTriggeredEvent
+  - EvolutionStartedEvent
+  - AIStateChangedEvent
+same_sor_ai: true

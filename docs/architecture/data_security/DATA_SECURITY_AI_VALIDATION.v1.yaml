@@ -1,0 +1,27 @@
+# P211-L — Validation gates
+version: "1.0"
+prompt_id: P211-L
+adr: "387"
+reject_if:
+  - ai_decisions_are_not_explainable
+  - autonomous_actions_are_uncontrolled
+  - data_risks_cannot_be_predicted
+  - learning_loop_is_missing
+  - ai_security_governance_is_absent
+  - human_oversight_is_impossible
+  - sibling_ai_security_bc
+forbidden_siblings:
+  - backend/contexts/ai_data_security
+  - backend/contexts/autonomous_data_protection
+  - backend/contexts/data_security_ai
+required_artifacts:
+  - docs/adr/387-enterprise-data-security-ai.md
+  - docs/architecture/ENTERPRISE_DATA_SECURITY_AI.md
+  - docs/architecture/data_security/DATA_SECURITY_AI_CAPABILITIES.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_AI_DDD_CQRS.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_AI_SECURITY.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_AI_VALIDATION.v1.yaml
+  - backend/contexts/data_security/domain/services/ds_platform_ai.py
+  - backend/contexts/data_security/domain/aggregates/ds_ai_aggregates.py
+  - backend/contexts/data_security/infrastructure/acl/ds_ai_acl.py
+  - backend/contexts/data_security/application/ds_ai_foundation.py

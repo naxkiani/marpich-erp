@@ -1,0 +1,29 @@
+# P210-C — Domain DDD capabilities
+version: "1.0"
+prompt_id: P210-C
+adr: "363"
+sor: cyber_security
+api_prefix: /api/v1/cyber-security/domain
+builds_on:
+  - P210-A
+  - P210-B
+  - ADR-361
+  - ADR-362
+
+bounded_contexts_overlap_forbidden: true
+aggregates_consistency_boundary_required: true
+domain_ownership_clear_required: true
+business_rules_leak_across_contexts_forbidden: true
+events_domain_driven_required: true
+knowledge_graph_integration_required: true
+anti_corruption_layers_required: true
+sibling_logical_bc_deployable_forbidden: true
+ir_lifecycle_duplication_forbidden: true
+
+via_security_incident: true
+via_knowledge_graph: true
+via_digital_twin: true
+via_integration_platform: true
+via_authorization: true
+via_audit_platform: true
+via_ai_platform: true

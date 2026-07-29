@@ -1,0 +1,117 @@
+# P210 — Enterprise Cyber Security & Threat Defense Roadmap
+version: "1.0"
+series: P210
+module: Enterprise Cyber Security & Threat Defense Platform
+volume: "05 — Enterprise Cyber Security Fabric"
+sor: cyber_security
+builds_on:
+  - ADR-021
+  - ADR-158
+  - ADR-179
+  - ADR-345
+  - CORE_PLATFORM.md
+  - SECURITY_STANDARD.md
+  - ENTERPRISE_EVENT_BUS.md
+  - INTEGRATION_PLATFORM.md
+forbidden_sibling_bc:
+  - cyber_defense
+  - threat_defense
+  - soc_platform
+  - siem_platform
+  - soar_platform
+  - xdr
+  - edr
+  - ndr
+  - security_ops
+  - security_operations
+  - threat_hunting_platform
+  - attack_surface_platform
+  - mdr_platform
+  - cyber_fabric
+
+phases:
+  - id: P210-A
+    title: Enterprise Cyber Security & Threat Defense Overview & Strategy Foundation
+    status: done
+    adr: "361"
+    api: /api/v1/cyber-security/strategy*
+  - id: P210-B
+    title: Mission, Vision & Enterprise Scope
+    status: done
+    adr: "362"
+    api: /api/v1/cyber-security/mission*
+  - id: P210-C
+    title: Enterprise Cyber Security Domain Architecture
+    status: done
+    adr: "363"
+    api: /api/v1/cyber-security/domain*
+  - id: P210-D
+    title: Security Operations Center (SOC)
+    status: done
+    adr: "364"
+    api: /api/v1/cyber-security/soc*
+  - id: P210-E
+    title: Enterprise SIEM Platform
+    status: done
+    adr: "367"
+    api: /api/v1/cyber-security/siem*
+  - id: P210-F
+    title: Enterprise SOAR Platform
+    status: done
+    adr: "365"
+    api: /api/v1/cyber-security/soar*
+  - id: P210-G
+    title: XDR / EDR / NDR Platform
+    status: done
+    adr: "366"
+    api: /api/v1/cyber-security/xdr*
+  - id: P210-H
+    title: Threat Intelligence & Threat Hunting Platform
+    status: done
+    adr: "368"
+    api: /api/v1/cyber-security/intel*
+  - id: P210-I
+    title: Attack Surface Management & Continuous Threat Exposure Management
+    status: done
+    adr: "369"
+    api: /api/v1/cyber-security/asm*
+  - id: P210-J
+    title: AI Security Operations & Autonomous SOC
+    status: done
+    adr: "370"
+    api: /api/v1/cyber-security/ai-ops*
+  - id: P210-K
+    title: Cyber Knowledge Graph & Digital Twin
+    status: done
+    adr: "371"
+    api: /api/v1/cyber-security/graph*
+  - id: P210-L
+    title: CQRS, Events, APIs & Microservices
+    status: done
+    adr: "372"
+    api: /api/v1/cyber-security/ops*
+  - id: P210-M
+    title: AI Security Governance & Compliance
+    status: done
+    adr: "373"
+    api: /api/v1/cyber-security/gov*
+  - id: P210-N
+    title: Enterprise Deployment, DevSecOps, Kubernetes, Scalability & Observability
+    status: done
+    adr: "374"
+    api: /api/v1/cyber-security/deploy*
+  - id: P210-O
+    title: Enterprise Testing, Governance, Security Validation & Definition of Done
+    status: done
+    adr: "375"
+    api: /api/v1/cyber-security/qa*
+
+series_status: complete
+distinct_from:
+  - security_incident (IR SoR — consumes security.attack.detected)
+  - enterprise_observability (telemetry plumbing — not cyber SoR)
+  - secrets (cryptographic trust — P209)
+  - privileged_access (PAM)
+  - identity_intelligence (identity UEBA)
+  - authorization (PDP)
+  - integration (vendor connectors)

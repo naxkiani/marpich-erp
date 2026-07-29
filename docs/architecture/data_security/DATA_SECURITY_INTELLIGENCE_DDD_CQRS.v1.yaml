@@ -1,0 +1,45 @@
+# P211-K — Intelligence DDD / CQRS
+version: "1.0"
+prompt_id: P211-K
+adr: "386"
+sor: data_security
+domain: Enterprise Data Intelligence Graph Domain
+bounded_contexts:
+  - metadata_management
+  - data_lineage
+  - relationship_intelligence
+  - semantic_knowledge
+  - impact_analysis
+  - data_observability
+  - ai_data_reasoning
+entities:
+  - DataAsset
+  - MetadataEntity
+  - LineageNode
+  - LineageRelationship
+  - TransformationLogic
+commands:
+  - RegisterMetadata
+  - CreateLineage
+  - UpdateRelationship
+  - DiscoverDependency
+  - AnalyzeImpact
+  - UpdateKnowledgeGraph
+queries:
+  - GetDataLineage
+  - GetMetadata
+  - SearchDataGraph
+  - GetImpactAnalysis
+  - GetDataHistory
+  - GetDependencyMap
+events:
+  - MetadataCollected
+  - DataAssetRegistered
+  - LineageCreated
+  - RelationshipUpdated
+  - ImpactDetected
+  - KnowledgeGraphUpdated
+  - DataQualityIssueDetected
+  - SchemaChanged
+  - PipelineFailed
+  - LineageBroken

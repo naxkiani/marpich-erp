@@ -1,0 +1,30 @@
+# P210-M — Validation gates
+version: "1.0"
+prompt_id: P210-M
+adr: "373"
+reject_if:
+  - ai_models_cannot_be_inventoried
+  - ai_decisions_cannot_be_audited
+  - ai_risks_cannot_be_measured
+  - ai_agents_operate_without_governance
+  - policies_cannot_be_enforced
+  - compliance_evidence_cannot_be_generated
+  - human_oversight_unavailable
+  - sibling_gov_bc
+forbidden_siblings:
+  - backend/contexts/ai_governance
+  - backend/contexts/ai_compliance
+  - backend/contexts/responsible_ai
+  - backend/contexts/ai_ops
+  - backend/contexts/cyber_ops
+required_artifacts:
+  - docs/adr/373-enterprise-cyber-security-ai-governance.md
+  - docs/architecture/ENTERPRISE_CYBER_SECURITY_AI_GOVERNANCE.md
+  - docs/architecture/cyber_security/CYBER_GOV_CAPABILITIES.v1.yaml
+  - docs/architecture/cyber_security/CYBER_GOV_DDD_CQRS.v1.yaml
+  - docs/architecture/cyber_security/CYBER_GOV_SECURITY.v1.yaml
+  - docs/architecture/cyber_security/CYBER_GOV_VALIDATION.v1.yaml
+  - backend/contexts/cyber_security/domain/services/cs_platform_gov.py
+  - backend/contexts/cyber_security/domain/aggregates/cs_gov_aggregates.py
+  - backend/contexts/cyber_security/infrastructure/acl/cs_gov_acl.py
+  - backend/contexts/cyber_security/application/cs_gov_foundation.py

@@ -1,0 +1,23 @@
+# P210-L — Security & governance
+version: "1.0"
+prompt_id: P210-L
+adr: "372"
+zero_trust: true
+least_privilege: true
+service_identity: true
+mtls: true
+secrets_management: true
+secure_apis: true
+immutable_audit: true
+policy_enforcement: true
+api_gateway: true
+oauth21: true
+oidc: true
+rate_limiting: true
+compliance:
+  - iso_27001
+  - nist_csf
+  - soc_2
+  - pci_dss
+  - gdpr
+  - nist_zero_trust

@@ -1,0 +1,49 @@
+# P210-M — AI Security Governance capabilities
+version: "1.0"
+prompt_id: P210-M
+adr: "373"
+sor: cyber_security
+api_prefix: /api/v1/cyber-security/gov
+builds_on:
+  - P210-A
+  - P210-B
+  - P210-C
+  - P210-D
+  - P210-E
+  - P210-F
+  - P210-G
+  - P210-H
+  - P210-I
+  - P210-J
+  - P210-K
+  - P210-L
+  - ADR-361
+  - ADR-362
+  - ADR-363
+  - ADR-364
+  - ADR-365
+  - ADR-366
+  - ADR-367
+  - ADR-368
+  - ADR-369
+  - ADR-370
+  - ADR-371
+  - ADR-372
+
+ai_models_inventoried_required: true
+ai_decisions_auditable_required: true
+ai_risks_measurable_required: true
+ai_agents_governed_required: true
+policies_enforceable_required: true
+compliance_evidence_generatable_required: true
+human_oversight_required: true
+sibling_gov_bc_forbidden: true
+module_local_llm_sdk_forbidden: true
+via_enterprise_ai_platform: true
+via_policy_engine: true
+via_workflow: true
+via_compliance_framework: true
+via_authorization: true
+via_audit_platform: true
+via_p210_j_ai_ops: true
+via_p210_k_graph: true

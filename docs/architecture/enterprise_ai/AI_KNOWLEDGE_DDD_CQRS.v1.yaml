@@ -1,0 +1,37 @@
+# P214-G — DDD / CQRS
+version: "1.0"
+prompt_id: P214-G
+adr: "427"
+sor: ai
+core_domain: enterprise_cognitive_knowledge_management
+aggregate: EnterpriseKnowledgeIntelligenceAggregate
+bounded_contexts:
+  - BC-01 Knowledge Acquisition
+  - BC-02 Knowledge Processing
+  - BC-03 Knowledge Graph
+  - BC-04 Vector Intelligence
+  - BC-05 RAG Intelligence
+  - BC-06 Knowledge Memory
+  - BC-07 Knowledge Governance
+commands:
+  - CreateKnowledgeAssetCommand
+  - RegisterKnowledgeSourceCommand
+  - GenerateEmbeddingCommand
+  - BuildRAGPipelineCommand
+  - PublishKnowledgeCommand
+  - UpdateKnowledgeCommand
+queries:
+  - GetKnowledgeQuery
+  - SearchKnowledgeQuery
+  - RetrieveContextQuery
+  - GetKnowledgeGraphQuery
+  - GetRAGHistoryQuery
+events:
+  - KnowledgeCreatedEvent
+  - KnowledgeProcessedEvent
+  - EmbeddingGeneratedEvent
+  - KnowledgeIndexedEvent
+  - RetrievalExecutedEvent
+  - ContextGeneratedEvent
+  - RAGCompletedEvent
+  - KnowledgeQualityChangedEvent

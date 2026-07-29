@@ -1,0 +1,27 @@
+# P211-O — Validation gates
+version: "1.0"
+prompt_id: P211-O
+adr: "390"
+reject_if:
+  - deployment_is_manual
+  - security_scanning_is_missing
+  - infrastructure_cannot_scale
+  - monitoring_is_incomplete
+  - disaster_recovery_is_undefined
+  - runtime_security_is_absent
+  - sibling_deploy_bc
+forbidden_siblings:
+  - backend/contexts/data_security_deploy
+  - backend/contexts/ds_kubernetes_platform
+  - backend/contexts/data_security_observability
+required_artifacts:
+  - docs/adr/390-enterprise-data-security-deploy.md
+  - docs/architecture/ENTERPRISE_DATA_SECURITY_DEPLOY.md
+  - docs/architecture/data_security/DATA_SECURITY_DEPLOY_CAPABILITIES.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_DEPLOY_DDD_CQRS.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_DEPLOY_SECURITY.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_DEPLOY_VALIDATION.v1.yaml
+  - backend/contexts/data_security/domain/services/ds_platform_deploy.py
+  - backend/contexts/data_security/domain/aggregates/ds_deploy_aggregates.py
+  - backend/contexts/data_security/infrastructure/acl/ds_deploy_acl.py
+  - backend/contexts/data_security/application/ds_deploy_foundation.py

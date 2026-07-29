@@ -1,0 +1,42 @@
+# P211-L — AI security DDD / CQRS
+version: "1.0"
+prompt_id: P211-L
+adr: "387"
+sor: data_security
+domain: Autonomous Data Security Intelligence Domain
+bounded_contexts:
+  - data_security_ai_analytics
+  - data_risk_intelligence
+  - autonomous_protection
+  - security_recommendation
+  - ai_data_governance
+  - security_learning
+  - autonomous_response
+entities:
+  - DataSecurityIntelligence
+  - DataRiskPrediction
+  - SecurityRecommendation
+  - AutonomousAction
+  - LearningFeedback
+commands:
+  - AnalyzeDataRisk
+  - GenerateRecommendation
+  - ExecuteProtection
+  - UpdateSecurityModel
+  - TrainSecurityModel
+  - OptimizePolicy
+  - ApproveAutonomousAction
+queries:
+  - GetSecurityIntelligence
+  - GetRiskPrediction
+  - GetAIRecommendation
+  - GetProtectionHistory
+  - GetSecurityScore
+events:
+  - RiskPredicted
+  - ThreatDetected
+  - RecommendationGenerated
+  - ProtectionExecuted
+  - PolicyOptimized
+  - ModelUpdated
+  - LearningCompleted

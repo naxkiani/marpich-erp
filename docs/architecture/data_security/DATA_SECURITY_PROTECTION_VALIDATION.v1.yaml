@@ -1,0 +1,27 @@
+# P211-J — Validation gates
+version: "1.0"
+prompt_id: P211-J
+adr: "385"
+reject_if:
+  - sensitive_data_can_exist_unprotected
+  - encryption_policies_are_undefined
+  - token_lifecycle_is_missing
+  - key_integration_is_unavailable
+  - protection_decisions_are_not_auditable
+  - privacy_controls_are_incomplete
+  - sibling_protection_bc
+forbidden_siblings:
+  - backend/contexts/data_protection_platform
+  - backend/contexts/tokenization_platform
+  - backend/contexts/encryption_platform
+required_artifacts:
+  - docs/adr/385-enterprise-data-security-protection.md
+  - docs/architecture/ENTERPRISE_DATA_SECURITY_PROTECTION.md
+  - docs/architecture/data_security/DATA_SECURITY_PROTECTION_CAPABILITIES.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_PROTECTION_DDD_CQRS.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_PROTECTION_SECURITY.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_PROTECTION_VALIDATION.v1.yaml
+  - backend/contexts/data_security/domain/services/ds_platform_protection.py
+  - backend/contexts/data_security/domain/aggregates/ds_protection_aggregates.py
+  - backend/contexts/data_security/infrastructure/acl/ds_protection_acl.py
+  - backend/contexts/data_security/application/ds_protection_foundation.py

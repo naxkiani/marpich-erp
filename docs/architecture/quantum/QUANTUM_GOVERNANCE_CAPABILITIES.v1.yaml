@@ -1,0 +1,43 @@
+# P215-K — CAPABILITIES
+version: "1.0"
+prompt_id: P215-K
+adr: "403"
+sor: quantum
+capability: CAP-PLT-QC-001
+api_prefix: /api/v1/quantum/governance
+builds_on:
+  - P215-A
+  - P215-B
+  - P215-H
+  - P215-I
+  - P215-J
+  - P209
+  - P210
+  - P212
+  - ADR-345
+  - ADR-403
+quantum_governance_platform_complete_required: true
+quantum_regulatory_intelligence_present_required: true
+responsible_quantum_computing_present_required: true
+quantum_ethics_framework_present_required: true
+quantum_risk_management_present_required: true
+quantum_compliance_automation_present_required: true
+quantum_audit_intelligence_present_required: true
+accountability_framework_present_required: true
+knowledge_graph_integration_present_required: true
+digital_twin_integration_present_required: true
+cqrs_architecture_present_required: true
+event_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_architecture_present_required: true
+cloud_native_governance_present_required: true
+sibling_quantum_governance_bc_forbidden: true
+via_policy_engine: true
+via_p208: true
+via_p209: true
+via_p210: true
+via_p212: true
+via_audit: true
+via_workflow: true
+via_enterprise_ai: true
+via_ai_governance: true

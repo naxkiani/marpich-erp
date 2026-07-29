@@ -1,0 +1,23 @@
+# P211-B — Mission / Vision / Scope capabilities
+version: "1.0"
+prompt_id: P211-B
+adr: "377"
+sor: data_security
+capability: CAP-PLT-DS-001
+api_prefix: /api/v1/data-security/mission
+builds_on:
+  - P211-A
+  - ADR-376
+
+data_security_scope_defined_required: true
+ownership_model_required: true
+privacy_responsibilities_clear_required: true
+data_protection_principles_present_required: true
+integration_boundaries_defined_required: true
+governance_model_complete_required: true
+sibling_data_security_bc_forbidden: true
+via_consent: true
+via_p207: true
+via_p208: true
+via_p209: true
+via_p210: true

@@ -1,0 +1,48 @@
+# P214-J — CAPABILITIES
+version: "1.0"
+prompt_id: P214-J
+adr: "430"
+sor: ai
+capability: CAP-PLT-AI-001
+api_prefix: /api/v1/ai/aiops
+fabric: meos_autonomous_ai_operations_fabric
+principle: >-
+  Enterprise AIOps SHALL transform AI operations from reactive monitoring
+  into predictive, autonomous and self-optimizing intelligence.
+builds_on:
+  - P214-A
+  - P214-B
+  - P214-C
+  - P214-D
+  - P214-E
+  - P214-F
+  - P214-G
+  - P214-H
+  - P214-I
+  - ADR-429
+  - P207
+  - P208
+  - P209
+  - P210
+  - P211
+  - P213-O
+enterprise_aiops_platform_present_required: true
+ai_operations_center_present_required: true
+ai_observability_present_required: true
+ai_monitoring_present_required: true
+incident_intelligence_present_required: true
+root_cause_analysis_present_required: true
+autonomous_remediation_present_required: true
+ai_reliability_engineering_present_required: true
+performance_intelligence_present_required: true
+capacity_intelligence_present_required: true
+cost_optimization_present_required: true
+operational_digital_twin_present_required: true
+cqrs_architecture_present_required: true
+event_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_architecture_present_required: true
+zero_trust_security_present_required: true
+cloud_native_deployment_present_required: true
+sibling_ai_bc_forbidden: true
+module_local_aiops_forbidden: true

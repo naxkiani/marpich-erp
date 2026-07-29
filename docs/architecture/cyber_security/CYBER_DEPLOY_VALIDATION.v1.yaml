@@ -1,0 +1,31 @@
+# P210-N — Validation gates
+version: "1.0"
+prompt_id: P210-N
+adr: "374"
+reject_if:
+  - deployment_is_not_automated
+  - kubernetes_security_is_incomplete
+  - infrastructure_cannot_be_reproduced
+  - observability_is_missing
+  - scaling_is_manual
+  - disaster_recovery_is_undefined
+  - security_controls_are_not_integrated
+  - devsecops_pipeline_lacks_validation
+  - sibling_deploy_bc
+forbidden_siblings:
+  - backend/contexts/deploy_platform
+  - backend/contexts/devsecops
+  - backend/contexts/k8s_platform
+  - backend/contexts/cyber_observability
+  - backend/contexts/cyber_ops
+required_artifacts:
+  - docs/adr/374-enterprise-cyber-security-deploy-devsecops.md
+  - docs/architecture/ENTERPRISE_CYBER_SECURITY_DEPLOY.md
+  - docs/architecture/cyber_security/CYBER_DEPLOY_CAPABILITIES.v1.yaml
+  - docs/architecture/cyber_security/CYBER_DEPLOY_DDD_CQRS.v1.yaml
+  - docs/architecture/cyber_security/CYBER_DEPLOY_SECURITY.v1.yaml
+  - docs/architecture/cyber_security/CYBER_DEPLOY_VALIDATION.v1.yaml
+  - backend/contexts/cyber_security/domain/services/cs_platform_deploy.py
+  - backend/contexts/cyber_security/domain/aggregates/cs_deploy_aggregates.py
+  - backend/contexts/cyber_security/infrastructure/acl/cs_deploy_acl.py
+  - backend/contexts/cyber_security/application/cs_deploy_foundation.py

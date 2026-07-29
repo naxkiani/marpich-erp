@@ -1,0 +1,23 @@
+# P210-D — SOC security controls
+version: "1.0"
+prompt_id: P210-D
+adr: "364"
+sor: cyber_security
+
+permissions:
+  - cyber_security.read
+  - cyber_security.write
+  - cyber_security.soc.read
+  - cyber_security.soc.write
+  - cyber_security.ai.read
+  - cyber_security.ai.infer
+
+reject_if:
+  - soc_not_24x7
+  - alerts_cannot_be_correlated
+  - ai_assistance_absent
+  - incident_response_manual_only
+  - threat_hunting_missing
+  - metrics_incomplete
+  - knowledge_graph_integration_absent
+  - sibling_soc_bc

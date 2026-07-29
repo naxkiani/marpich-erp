@@ -1,0 +1,41 @@
+# P211-I — Privacy DDD / CQRS
+version: "1.0"
+prompt_id: P211-I
+adr: "384"
+sor: data_security
+domain: Enterprise Privacy Intelligence Domain
+bounded_contexts:
+  - personal_data_intelligence
+  - privacy_risk_management
+  - consent_management
+  - data_subject_rights
+  - privacy_impact_assessment
+  - regulatory_intelligence
+  - ai_privacy_governance
+entities:
+  - PersonalDataAsset
+  - ProcessingActivity
+  - ConsentRecord
+  - PrivacyRiskAssessment
+  - PrivacyObligation
+commands:
+  - RegisterPersonalData
+  - CreateProcessingActivity
+  - RecordConsent
+  - WithdrawConsent
+  - RunPrivacyAssessment
+  - CalculatePrivacyRisk
+  - GenerateComplianceEvidence
+queries:
+  - GetPersonalDataProfile
+  - GetConsentStatus
+  - GetPrivacyRisk
+  - GetProcessingHistory
+  - GetComplianceReport
+events:
+  - PersonalDataDetected
+  - ConsentGranted
+  - ConsentWithdrawn
+  - PrivacyRiskIdentified
+  - AssessmentCompleted
+  - ComplianceEvidenceGenerated

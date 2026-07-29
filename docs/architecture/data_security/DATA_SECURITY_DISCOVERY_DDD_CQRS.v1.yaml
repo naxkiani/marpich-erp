@@ -1,0 +1,56 @@
+# P211-D — DDD / CQRS
+version: "1.0"
+prompt_id: P211-D
+adr: "379"
+sor: data_security
+bounded_context: data_security.discovery
+logical_subdomains:
+  - connectors
+  - collection
+  - metadata
+  - profiling
+  - inventory
+  - shadow_data
+  - ai_discovery
+  - discovery_graph
+
+aggregates:
+  - DsDiscoverableAssetsRoot
+  - DsCompleteInventoryRoot
+  - DsAvailableMetadataRoot
+  - DsDeterminableOwnershipRoot
+  - DsVisibleShadowDataRoot
+  - DsAiDiscoveryRoot
+  - DsAnalyzableRelationshipsRoot
+  - DsDiscoveryJobRoot
+
+commands:
+  - RegisterDataSource
+  - CreateConnector
+  - StartDiscoveryJob
+  - ScanDataSource
+  - RegisterDataAsset
+  - UpdateMetadata
+  - ProfileDataset
+  - DetectShadowData
+
+queries:
+  - GetDataInventory
+  - GetDataAssetDetails
+  - GetDataSources
+  - GetMetadataHistory
+  - GetDiscoveryStatus
+  - GetShadowDataReport
+  - GetDiscoveryReadiness
+
+events:
+  - DataSourceRegistered
+  - ConnectorCreated
+  - DiscoveryStarted
+  - DiscoveryCompleted
+  - DataAssetDiscovered
+  - MetadataCollected
+  - DatasetProfiled
+  - SensitivePatternDetected
+  - ShadowDataDetected
+  - InventoryUpdated

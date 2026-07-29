@@ -1,0 +1,27 @@
+# P211-M — Validation gates
+version: "1.0"
+prompt_id: P211-M
+adr: "388"
+reject_if:
+  - digital_representation_is_incomplete
+  - privacy_scenarios_cannot_be_simulated
+  - risk_prediction_is_unavailable
+  - compliance_impact_cannot_be_measured
+  - ai_privacy_risks_are_invisible
+  - simulation_results_are_not_explainable
+  - sibling_twin_bc
+forbidden_siblings:
+  - backend/contexts/data_digital_twin
+  - backend/contexts/privacy_simulation
+  - backend/contexts/data_twin_platform
+required_artifacts:
+  - docs/adr/388-enterprise-data-security-twin.md
+  - docs/architecture/ENTERPRISE_DATA_SECURITY_TWIN.md
+  - docs/architecture/data_security/DATA_SECURITY_TWIN_CAPABILITIES.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_TWIN_DDD_CQRS.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_TWIN_SECURITY.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_TWIN_VALIDATION.v1.yaml
+  - backend/contexts/data_security/domain/services/ds_platform_twin.py
+  - backend/contexts/data_security/domain/aggregates/ds_twin_aggregates.py
+  - backend/contexts/data_security/infrastructure/acl/ds_twin_acl.py
+  - backend/contexts/data_security/application/ds_twin_foundation.py

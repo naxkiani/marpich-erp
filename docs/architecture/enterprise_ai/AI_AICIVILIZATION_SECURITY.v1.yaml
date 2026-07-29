@@ -1,0 +1,21 @@
+# P214-W — SECURITY
+version: "1.0"
+prompt_id: P214-W
+adr: "443"
+zero_trust: true
+controls:
+  - civilization_network_authorization
+  - knowledge_contribution_controls
+  - human_ai_collaboration_boundaries
+  - collective_decision_controls
+  - ecosystem_governance_access
+integrations:
+  - P212
+  - P213
+  - P214-T
+  - P214-U
+  - P214-V
+forbidden:
+  - module_local_shadow_civilization_layers
+  - bypassing_guardian_and_control_planes
+  - uncontrolled_collective_evolution

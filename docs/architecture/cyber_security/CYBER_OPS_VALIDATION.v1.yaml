@@ -1,0 +1,31 @@
+# P210-L — Validation gates
+version: "1.0"
+prompt_id: P210-L
+adr: "372"
+reject_if:
+  - services_tightly_coupled
+  - events_mutable
+  - apis_lack_security_controls
+  - cqrs_separation_incomplete
+  - microservices_cannot_scale_independently
+  - observability_missing
+  - ai_integration_impossible
+  - event_governance_absent
+  - sibling_ops_bc
+forbidden_siblings:
+  - backend/contexts/cyber_ops
+  - backend/contexts/security_mesh
+  - backend/contexts/cyber_event_bus
+  - backend/contexts/cyber_graph
+  - backend/contexts/ai_ops
+required_artifacts:
+  - docs/adr/372-enterprise-cyber-security-cqrs-ops.md
+  - docs/architecture/ENTERPRISE_CYBER_SECURITY_CQRS_OPS.md
+  - docs/architecture/cyber_security/CYBER_OPS_CAPABILITIES.v1.yaml
+  - docs/architecture/cyber_security/CYBER_OPS_DDD_CQRS.v1.yaml
+  - docs/architecture/cyber_security/CYBER_OPS_SECURITY.v1.yaml
+  - docs/architecture/cyber_security/CYBER_OPS_VALIDATION.v1.yaml
+  - backend/contexts/cyber_security/domain/services/cs_platform_ops.py
+  - backend/contexts/cyber_security/domain/aggregates/cs_ops_aggregates.py
+  - backend/contexts/cyber_security/infrastructure/acl/cs_ops_acl.py
+  - backend/contexts/cyber_security/application/cs_ops_foundation.py

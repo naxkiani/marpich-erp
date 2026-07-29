@@ -1,0 +1,100 @@
+# P210-G — XDR/EDR/NDR capabilities
+version: "1.0"
+prompt_id: P210-G
+adr: "366"
+sor: cyber_security
+api_prefix: /api/v1/cyber-security/xdr
+builds_on:
+  - P210-A
+  - P210-B
+  - P210-C
+  - P210-D
+  - P210-F
+  - ADR-361
+  - ADR-362
+  - ADR-363
+  - ADR-364
+  - ADR-365
+
+endpoint_telemetry_complete_required: true
+network_visibility_sufficient_required: true
+xdr_correlation_unified_required: true
+ai_analytics_required: true
+detection_rules_evolvable_required: true
+automated_response_safeguards_required: true
+agent_integrity_verifiable_required: true
+sibling_xdr_bc_forbidden: true
+sibling_edr_bc_forbidden: true
+sibling_ndr_bc_forbidden: true
+ir_lifecycle_duplication_forbidden: true
+local_approval_engine_forbidden: true
+vendor_sdk_embed_forbidden: true
+siloed_correlation_forbidden: true
+
+via_security_incident: true
+via_workflow: true
+via_integration_platform: true
+via_authorization: true
+via_audit_platform: true
+via_ai_platform: true
+via_knowledge_graph: true
+via_digital_twin: true
+via_p210_d_soc: true
+via_p210_f_soar: true
+via_observability: true
+via_secrets_p209: true
+
+layers:
+  - identity
+  - endpoint
+  - network
+  - cloud
+  - application
+  - api
+  - container
+  - kubernetes
+  - threat_correlation
+  - ai_detection
+  - autonomous_response
+
+edr_platforms:
+  - windows
+  - linux
+  - macos
+  - android
+  - ios
+  - virtual_machines
+  - vdi
+  - developer_workstations
+  - edge_devices
+
+ndr_surfaces:
+  - lan
+  - wan
+  - vpn
+  - cloud_networks
+  - hybrid_networks
+  - kubernetes_networks
+  - service_mesh
+  - dns
+  - dhcp
+  - smtp
+  - http
+  - https
+  - tls
+  - ssh
+  - database_traffic
+  - east_west_traffic
+  - north_south_traffic
+
+correlation_domains:
+  - identity
+  - endpoint
+  - application
+  - container
+  - cloud
+  - api
+  - network
+  - threat_intelligence
+  - ueba
+  - mitre_attack
