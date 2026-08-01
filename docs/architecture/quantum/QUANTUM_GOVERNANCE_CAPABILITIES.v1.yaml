@@ -5,15 +5,27 @@ adr: "403"
 sor: quantum
 capability: CAP-PLT-QC-001
 api_prefix: /api/v1/quantum/governance
+fabric: meos_quantum_responsible_intelligence_fabric
+principle: >-
+  MEOS Quantum Governance Platform SHALL ensure that all quantum technologies,
+  algorithms, infrastructures and intelligence systems operate within trusted,
+  ethical, compliant and accountable boundaries.
 builds_on:
   - P215-A
   - P215-B
+  - P215-C
+  - P215-D
+  - P215-E
+  - P215-F
+  - P215-G
   - P215-H
   - P215-I
   - P215-J
   - P209
   - P210
   - P212
+  - P214-H
+  - P214-Y
   - ADR-345
   - ADR-403
 quantum_governance_platform_complete_required: true
@@ -41,3 +53,27 @@ via_audit: true
 via_workflow: true
 via_enterprise_ai: true
 via_ai_governance: true
+via_p214_h: true
+via_p214_y: true
+policy_categories:
+  - quantum_computing_policies
+  - quantum_ai_policies
+  - quantum_data_policies
+  - quantum_security_policies
+  - quantum_research_policies
+  - quantum_usage_policies
+risk_types:
+  - technology
+  - security
+  - operational
+  - ethical
+  - regulatory
+  - strategic
+forbidden_siblings:
+  - quantum_governance
+  - quantum_ethics_platform
+  - quantum_regulation_platform
+  - responsible_quantum_platform
+  - quantum_compliance_platform
+  - quantum_risk_platform
+  - quantum_audit_platform

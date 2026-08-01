@@ -1,5 +1,21 @@
+# P215-F — Security catalog
 prompt_id: P215-F
-adr: '452'
+adr: "452"
 zero_trust: true
 privacy_by_design: true
 via_p215_k: true
+permissions:
+  - quantum.read
+  - quantum.write
+controls:
+  - model_authz
+  - training_data_isolation
+  - inference_audit
+  - bias_testing
+  - tenant_isolation
+forbidden:
+  - module_local_llm_sdk
+  - module_local_model_registry
+  - sibling_quantum_ai_bc
+  - cross_schema_sql_to_ai
+pqc_secrets_sor: secrets

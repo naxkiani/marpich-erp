@@ -1,0 +1,48 @@
+prompt_id: P215-V
+adr: "467"
+sor: quantum
+capability: CAP-PLT-QC-001
+api_prefix: /api/v1/quantum/qgi
+fabric: meos_quantum_cognitive_intelligence_fabric
+evolution_gate: P215-U
+os_gate: P215-T
+trust_gate: P215-K
+principle: >-
+  MEOS Quantum General Intelligence Platform SHALL provide the cognitive
+  foundation enabling understanding, reasoning, learning and intelligent
+  decision-making across the entire enterprise ecosystem.
+quantum_general_intelligence_platform_present_required: true
+cognitive_enterprise_brain_present_required: true
+advanced_reasoning_engine_present_required: true
+knowledge_understanding_layer_present_required: true
+cognitive_agent_network_present_required: true
+enterprise_memory_platform_present_required: true
+intelligence_evolution_framework_present_required: true
+knowledge_graph_integration_present_required: true
+digital_twin_integration_present_required: true
+never_replace_p215_u: true
+never_replace_p215_t: true
+never_replace_core_platform: true
+never_replace_p215_k: true
+module_local_llm_forbidden: true
+ungated_agi_class_actions_forbidden: true
+opaque_unexplainable_decisions_forbidden: true
+via_p215_u: true
+via_p215_t: true
+via_p214_z: true
+via_p213: true
+via_p214_g: true
+via_p215_k: true
+via_policy_engine: true
+via_workflow: true
+via_audit: true
+builds_on_p215_a: true
+builds_on_p215_u: true
+builds_on_p215_t: true
+governed_by_p215_k: true
+forbidden_siblings:
+  - quantum_qgi_platform
+  - quantum_cognitive_brain_platform
+  - quantum_reasoning_platform
+  - quantum_enterprise_memory_platform
+  - quantum_general_intelligence_platform

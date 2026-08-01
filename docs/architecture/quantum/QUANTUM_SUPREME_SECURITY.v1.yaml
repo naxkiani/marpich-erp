@@ -1,0 +1,28 @@
+# QUANTUM_SUPREME_SECURITY.v1.yaml — P215-Z
+apiVersion: marpich.io/v1
+kind: QuantumSupremeSecurityCatalog
+metadata:
+  phase: P215-Z
+  adr: "471"
+spec:
+  authn: JWT via Identity / API Gateway
+  authz:
+    permissions:
+      - quantum.supreme.read
+      - quantum.supreme.write
+      - quantum.supreme.admin
+      - quantum.supreme.ai.read
+      - quantum.supreme.ai.infer
+  tenant_isolation: mandatory
+  supreme_autonomy: policy_workflow_and_ultimate_trust_gated
+  continuous_trust_gate: P215-K
+  ultimate_trust_gate: P215-Y
+  os_control_plane: P215-T
+  pqc_binding: P215-H / secrets (P209)
+  audit: Audit Platform via integration events
+  ai_inference: AI Platform / P214-Z ACL only
+  never:
+    - ungated_supreme_autonomy
+    - opaque_master_decisions
+    - module_local_llm
+    - replace_core_or_p215_t_or_p215_y_or_p215_k

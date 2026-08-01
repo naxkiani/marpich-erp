@@ -1,0 +1,35 @@
+prompt_id: P215-W
+adr: "468"
+sor: quantum
+zero_trust_civilization_intelligence: true
+human_ai_quantum_collaboration: true
+via_p215_v: true
+via_p215_u: true
+via_p215_t: true
+via_p215_k: true
+via_p215_h: true
+via_p215_s: true
+via_p213: true
+via_p214_g: true
+via_policy_engine: true
+via_workflow: true
+via_audit: true
+never_replace_p215_v: true
+never_replace_p215_u: true
+never_replace_p215_t: true
+never_replace_core_platform: true
+never_replace_p215_k: true
+module_local_llm_forbidden: true
+ungoverned_cross_tenant_intelligence_federation_forbidden: true
+opaque_collective_decisions_forbidden: true
+module_local_pdp_forbidden: true
+permissions:
+  read: quantum.read
+  write: quantum.write
+controls:
+  - civilization_authz
+  - tenant_isolated_federation
+  - explainable_collective_decision
+  - responsible_collective_ai_gate
+  - knowledge_contribution_audit
+  - agent_society_governance

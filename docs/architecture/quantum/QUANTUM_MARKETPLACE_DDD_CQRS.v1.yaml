@@ -1,0 +1,53 @@
+prompt_id: P215-P
+adr: "461"
+sor: quantum
+core_domain: enterprise_quantum_economy_intelligence_management
+bounded_context_count: 7
+aggregate_count: 8
+bounded_contexts:
+  - id: BC-01
+    name: Quantum Capability Marketplace Context
+    owns: QuantumCapabilityAggregate
+  - id: BC-02
+    name: Quantum Service Exchange Context
+    owns: QuantumServiceExchangeAggregate
+  - id: BC-03
+    name: Quantum Application Marketplace Context
+    owns: QuantumApplicationAggregate
+  - id: BC-04
+    name: Quantum Algorithm Economy Context
+    owns: QuantumAlgorithmCommerceAggregate
+  - id: BC-05
+    name: Quantum Resource Sharing Context
+    owns: QuantumResourceMarketplaceAggregate
+  - id: BC-06
+    name: Quantum Innovation Ecosystem Context
+    owns: QuantumInnovationAggregate
+  - id: BC-07
+    name: Quantum Economic Intelligence Context
+    owns: QuantumEconomyIntelligenceAggregate
+commands:
+  - RegisterQuantumCapabilityCommand
+  - PublishQuantumServiceCommand
+  - CreateMarketplaceListingCommand
+  - SubscribeQuantumServiceCommand
+  - PublishAlgorithmCommand
+  - CreateInnovationProjectCommand
+queries:
+  - GetCapabilityCatalogQuery
+  - GetMarketplaceListingQuery
+  - GetServiceAvailabilityQuery
+  - GetInnovationNetworkQuery
+  - GetEconomicImpactQuery
+events:
+  - CapabilityRegisteredEvent
+  - ServicePublishedEvent
+  - MarketplaceTransactionCompletedEvent
+  - ApplicationSubscribedEvent
+  - AlgorithmReleasedEvent
+  - InnovationProjectCreatedEvent
+event_versioning: event_version_field
+outbox_required: true
+via_p215_o: true
+via_workflow: true
+via_financial_kernel: true

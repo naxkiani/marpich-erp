@@ -1,0 +1,29 @@
+prompt_id: P215-T
+adr: "465"
+sor: quantum
+zero_trust_quantum_os: true
+via_p215_k: true
+via_p215_h: true
+via_p215_s: true
+via_p215_r: true
+via_policy_engine: true
+via_p213: true
+via_p214_z: true
+via_workflow: true
+via_audit: true
+never_replace_core_platform: true
+never_replace_p215_k: true
+never_replace_p215_h: true
+module_local_pdp_forbidden: true
+module_local_llm_forbidden: true
+module_local_metrics_store_forbidden: true
+permissions:
+  read: quantum.read
+  write: quantum.write
+controls:
+  - os_authz
+  - control_plane_tenant_isolation
+  - policy_ref_only
+  - agent_governance_binding
+  - orchestration_acl
+  - evolution_workflow

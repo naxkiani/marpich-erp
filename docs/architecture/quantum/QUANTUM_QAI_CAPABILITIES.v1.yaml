@@ -1,13 +1,82 @@
+# P215-F — Quantum AI / QML capability catalog
 prompt_id: P215-F
-adr: '452'
+adr: "452"
+sor: quantum
+capability: CAP-PLT-QC-001
+fabric: meos_quantum_ai_intelligence_fabric
 api_prefix: /api/v1/quantum/qai
+principle: >
+  MEOS Quantum AI Platform SHALL combine quantum computational capabilities
+  with artificial intelligence systems to create advanced enterprise intelligence
+  beyond classical machine learning architectures.
+
 quantum_ai_platform_present_required: true
 quantum_machine_learning_platform_present_required: true
 quantum_model_lifecycle_present_required: true
 quantum_neural_intelligence_present_required: true
 quantum_feature_intelligence_present_required: true
 quantum_ai_agent_foundation_present_required: true
+knowledge_graph_integration_present_required: true
+digital_twin_integration_present_required: true
+cqrs_architecture_present_required: true
+event_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_architecture_present_required: true
+cloud_native_deployment_present_required: true
+
 builds_on_p215_a: true
 builds_on_p215_d: true
 builds_on_p215_e: true
 governed_by_p215_k: true
+
+qml_capabilities:
+  - quantum_data_processing
+  - quantum_feature_engineering
+  - quantum_model_training
+  - quantum_model_optimization
+  - quantum_pattern_recognition
+  - quantum_prediction
+
+learning_modes:
+  - supervised
+  - unsupervised
+  - reinforcement
+  - deep_learning
+  - optimization_learning
+
+model_lifecycle_stages:
+  - discovery
+  - design
+  - training
+  - validation
+  - optimization
+  - deployment
+  - monitoring
+  - evolution
+
+logical_bcs:
+  - BC-01_quantum_machine_learning
+  - BC-02_quantum_ai_model_management
+  - BC-03_quantum_neural_intelligence
+  - BC-04_quantum_feature_intelligence
+  - BC-05_quantum_training_intelligence
+  - BC-06_quantum_inference_intelligence
+  - BC-07_quantum_ai_agent
+  - BC-08_quantum_ai_governance
+
+forbidden_sibling_bc:
+  - quantum_ai_platform
+  - quantum_ml_platform
+  - quantum_neural_platform
+  - qml_platform
+
+integrations:
+  - P215-D
+  - P215-E
+  - P214-Z
+  - P214-F
+  - P214-V
+  - P214-L
+  - P213
+  - P212
+  - P215-K

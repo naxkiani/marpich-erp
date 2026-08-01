@@ -1,0 +1,56 @@
+prompt_id: P215-U
+adr: "466"
+sor: quantum
+core_domain: enterprise_quantum_autonomous_evolution_intelligence_management
+bounded_context_count: 6
+aggregate_count: 7
+os_gate: P215-T
+trust_gate: P215-K
+bounded_contexts:
+  - id: BC-01
+    name: Quantum Autonomous Intelligence Context
+    owns: QuantumAutonomousIntelligenceAggregate
+  - id: BC-02
+    name: Self-Healing Ecosystem Context
+    owns: QuantumHealingAggregate
+  - id: BC-03
+    name: Adaptive Optimization Context
+    owns: QuantumOptimizationAggregate
+  - id: BC-04
+    name: Quantum Evolution Intelligence Context
+    owns: QuantumEvolutionAggregate
+  - id: BC-05
+    name: Singularity Readiness Context
+    owns: QuantumSingularityReadinessAggregate
+  - id: BC-06
+    name: Autonomous Governance Evolution Context
+    owns: AutonomousGovernanceEvolutionAggregate
+commands:
+  - CreateAutonomousAgentCommand
+  - TriggerHealingProcessCommand
+  - OptimizeQuantumCapabilityCommand
+  - ExecuteEvolutionPlanCommand
+  - EvaluateSingularityReadinessCommand
+queries:
+  - GetAutonomyStateQuery
+  - GetHealingStatusQuery
+  - GetEvolutionScoreQuery
+  - GetFutureReadinessQuery
+  - GetIntelligenceLevelQuery
+events:
+  - AutonomousDecisionGeneratedEvent
+  - HealingProcessStartedEvent
+  - OptimizationExecutedEvent
+  - EvolutionCycleCompletedEvent
+  - CapabilityUpgradeDetectedEvent
+  - SingularityAssessmentCompletedEvent
+event_versioning: event_version_field
+outbox_required: true
+via_p215_t: true
+via_p215_k: true
+via_p214_z: true
+via_workflow: true
+via_audit: true
+never_replace_p215_t: true
+ungated_autonomous_actions_forbidden: true
+module_local_llm_forbidden: true

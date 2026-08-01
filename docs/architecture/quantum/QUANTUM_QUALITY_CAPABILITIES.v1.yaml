@@ -1,0 +1,42 @@
+prompt_id: P215-O
+adr: "460"
+sor: quantum
+capability: CAP-PLT-QC-001
+api_prefix: /api/v1/quantum/testing
+fabric: meos_quantum_quality_intelligence_fabric
+principle: >-
+  MEOS Quantum Quality Platform SHALL provide the trust, measurement and
+  validation foundation required for enterprise-scale quantum computing adoption.
+quantum_testing_platform_present_required: true
+quantum_validation_platform_present_required: true
+quantum_benchmarking_platform_present_required: true
+quantum_qa_platform_present_required: true
+quantum_certification_platform_present_required: true
+quality_intelligence_platform_present_required: true
+knowledge_graph_integration_present_required: true
+digital_twin_integration_present_required: true
+cqrs_architecture_present_required: true
+event_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_architecture_present_required: true
+cloud_native_deployment_present_required: true
+via_p214_o: true
+via_p215_k: true
+via_p215_n: true
+via_workflow: true
+via_audit: true
+builds_on_p215_a: true
+builds_on_p215_d: true
+builds_on_p215_e: true
+builds_on_p215_f: true
+builds_on_p215_g: true
+builds_on_p215_h: true
+builds_on_p215_l: true
+builds_on_p215_n: true
+governed_by_p215_k: true
+forbidden_siblings:
+  - quantum_testing_platform
+  - quantum_validation_platform
+  - quantum_benchmarking_platform
+  - quantum_certification_platform
+  - quantum_qa_platform

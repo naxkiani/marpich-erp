@@ -1,4 +1,20 @@
+# P215-G — Security catalog
 prompt_id: P215-G
-adr: '453'
+adr: "453"
 zero_trust: true
 via_p215_k: true
+permissions:
+  - quantum.read
+  - quantum.write
+controls:
+  - experiment_authz
+  - dataset_isolation
+  - reproducibility_audit
+  - tenant_isolation
+forbidden:
+  - module_local_llm_sdk
+  - module_local_decision_engine
+  - sibling_optimization_bc
+  - cross_schema_sql_to_decision_or_ai
+pqc_secrets_sor: secrets
+p215_h_deepens_trust: true

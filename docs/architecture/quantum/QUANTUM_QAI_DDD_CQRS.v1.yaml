@@ -1,5 +1,45 @@
+# P215-F — DDD / CQRS catalog
 prompt_id: P215-F
-adr: '452'
+adr: "452"
 core_domain: enterprise_quantum_intelligence_management
 bounded_context_count: 8
 aggregate_count: 9
+
+aggregates:
+  - EnterpriseQuantumAIIntelligenceAggregate
+  - QuantumMLAggregate
+  - QuantumAIModelAggregate
+  - QuantumNeuralAggregate
+  - QuantumFeatureAggregate
+  - QuantumTrainingAggregate
+  - QuantumInferenceAggregate
+  - QuantumAIAgentAggregate
+  - QuantumAIGovernanceAggregate
+
+commands:
+  - CreateQuantumAIModelCommand
+  - TrainQuantumModelCommand
+  - OptimizeQuantumModelCommand
+  - ExecuteQuantumInferenceCommand
+  - CreateQuantumAIAgentCommand
+  - ImproveQuantumIntelligenceCommand
+
+queries:
+  - GetQuantumAIModelQuery
+  - GetTrainingStatusQuery
+  - GetInferenceResultQuery
+  - GetModelCapabilityQuery
+  - GetQuantumIntelligenceStateQuery
+
+events:
+  - QuantumAIModelCreatedEvent
+  - QuantumTrainingStartedEvent
+  - QuantumTrainingCompletedEvent
+  - QuantumInferenceExecutedEvent
+  - QuantumModelOptimizedEvent
+  - QuantumIntelligenceExpandedEvent
+  - QuantumAIOptimizedEvent
+  - QuantumIntelligenceImprovedEvent
+
+event_envelope: docs/architecture/events/_envelope.v1.json
+outbox_required: true

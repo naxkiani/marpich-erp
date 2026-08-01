@@ -8,19 +8,44 @@ api_prefix: /api/v1/quantum/governance
 builds_on:
   - P215-A
   - P215-B
+  - P215-C
+  - P215-D
+  - P215-E
+  - P215-F
+  - P215-G
   - P215-H
   - P215-I
   - P215-J
   - P209
   - P210
   - P212
+  - P214-H
+  - P214-Y
   - ADR-345
   - ADR-403
 permission: quantum.read
+write_permission: quantum.write
 zero_trust: true
+human_oversight_required: true
 via_p207: true
 via_p208: true
 via_p209: true
 via_p210: true
 via_p211: true
+via_p212: true
 via_policy_engine: true
+via_audit: true
+via_workflow: true
+via_p214_h: true
+via_p214_y: true
+pqc_remains_secrets: true
+module_local_pdp_forbidden: true
+module_local_audit_ledger_forbidden: true
+controls:
+  - policy_enforcement
+  - ethical_gate
+  - risk_scoring
+  - compliance_validation
+  - audit_evidence_refs
+  - tenant_isolation
+  - trust_profiles

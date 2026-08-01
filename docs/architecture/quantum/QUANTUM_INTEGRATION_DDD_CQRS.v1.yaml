@@ -1,8 +1,28 @@
 prompt_id: P215-M
-adr: '458'
+adr: "458"
+sor: quantum
 core_domain: enterprise_quantum_integration_intelligence_management
 bounded_context_count: 6
 aggregate_count: 7
+bounded_contexts:
+  - id: BC-01
+    name: Quantum API Management Context
+    owns: QuantumAPIAggregate
+  - id: BC-02
+    name: Quantum Service Mesh Context
+    owns: QuantumServiceMeshAggregate
+  - id: BC-03
+    name: Hybrid Intelligence Integration Context
+    owns: HybridIntegrationAggregate
+  - id: BC-04
+    name: Quantum Connector Context
+    owns: QuantumConnectorAggregate
+  - id: BC-05
+    name: Event Integration Context
+    owns: QuantumEventIntegrationAggregate
+  - id: BC-06
+    name: Capability Federation Context
+    owns: QuantumCapabilityAggregate
 commands:
   - RegisterQuantumAPICommand
   - CreateServiceConnectionCommand
@@ -10,3 +30,20 @@ commands:
   - PublishQuantumEventCommand
   - RegisterCapabilityCommand
   - OptimizeServiceMeshCommand
+queries:
+  - GetAPIStatusQuery
+  - GetIntegrationHealthQuery
+  - GetServiceMeshTopologyQuery
+  - GetCapabilityCatalogQuery
+  - GetDependencyGraphQuery
+events:
+  - QuantumAPIRegisteredEvent
+  - ServiceConnectedEvent
+  - IntegrationExecutedEvent
+  - QuantumEventPublishedEvent
+  - CapabilityRegisteredEvent
+  - ServiceFailureDetectedEvent
+event_versioning: event_version_field
+event_retention: tenant_scoped_immutable_append
+outbox_required: true
+via_event_fabric: true

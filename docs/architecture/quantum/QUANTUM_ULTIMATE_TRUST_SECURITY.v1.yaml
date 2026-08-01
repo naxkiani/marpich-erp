@@ -1,0 +1,26 @@
+# QUANTUM_ULTIMATE_TRUST_SECURITY.v1.yaml — P215-Y
+apiVersion: marpich.io/v1
+kind: QuantumUltimateTrustSecurityCatalog
+metadata:
+  phase: P215-Y
+  adr: "470"
+spec:
+  authn: JWT via Identity / API Gateway
+  authz:
+    permissions:
+      - quantum.ultimate_trust.read
+      - quantum.ultimate_trust.write
+      - quantum.ultimate_trust.admin
+      - quantum.ultimate_trust.ai.read
+      - quantum.ultimate_trust.ai.infer
+  tenant_isolation: mandatory
+  alignment_and_ethics: policy_and_workflow_gated
+  continuous_trust_gate: P215-K
+  pqc_binding: P215-H / secrets (P209)
+  audit: Audit Platform via integration events
+  ai_inference: AI Platform / P214-Z ACL only
+  never:
+    - ungoverned_intelligence_misalignment
+    - opaque_ethics_decisions
+    - module_local_llm
+    - replace_p215_k_or_core

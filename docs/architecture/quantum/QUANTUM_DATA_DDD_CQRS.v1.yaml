@@ -1,5 +1,49 @@
+# P215-I — DDD / CQRS catalog
 prompt_id: P215-I
-adr: '455'
+adr: "455"
 core_domain: enterprise_quantum_data_intelligence_management
 bounded_context_count: 7
 aggregate_count: 8
+
+aggregates:
+  - EnterpriseQuantumDataIntelligenceAggregate
+  - QuantumDataGovernanceAggregate
+  - QuantumMetadataAggregate
+  - QuantumKnowledgeGraphAggregate
+  - QuantumDataProductAggregate
+  - QuantumDataQualityAggregate
+  - QuantumLineageAggregate
+  - QuantumDataMarketplaceAggregate
+
+commands:
+  - RegisterQuantumDataAssetCommand
+  - CreateQuantumDataProductCommand
+  - UpdateQuantumMetadataCommand
+  - ValidateQuantumDataQualityCommand
+  - ApplyQuantumDataPolicyCommand
+  - PublishQuantumDataProductCommand
+
+queries:
+  - GetQuantumDataAssetQuery
+  - GetKnowledgeGraphEntityQuery
+  - GetDataTrustScoreQuery
+  - GetLineageQuery
+  - GetQuantumReadinessQuery
+
+events:
+  - QuantumDataAssetRegisteredEvent
+  - QuantumDataRegisteredEvent
+  - QuantumDataProductCreatedEvent
+  - QuantumMetadataUpdatedEvent
+  - MetadataDiscoveredEvent
+  - KnowledgeEntityCreatedEvent
+  - QuantumLineageDiscoveredEvent
+  - QuantumDataQualityValidatedEvent
+  - DataQualityValidatedEvent
+  - QuantumDataPolicyAppliedEvent
+  - PolicyAppliedEvent
+  - DataProductPublishedEvent
+
+event_envelope: docs/architecture/events/_envelope.v1.json
+outbox_required: true
+via_p212: true

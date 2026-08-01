@@ -1,0 +1,38 @@
+prompt_id: P215-P
+adr: "461"
+sor: quantum
+capability: CAP-PLT-QC-001
+api_prefix: /api/v1/quantum/marketplace
+fabric: meos_quantum_economy_intelligence_fabric
+principle: >-
+  MEOS Quantum Marketplace Platform SHALL provide a trusted ecosystem where
+  quantum capabilities, services, applications and innovations can be
+  discovered, exchanged and evolved.
+quantum_marketplace_platform_present_required: true
+capability_exchange_platform_present_required: true
+quantum_service_economy_present_required: true
+algorithm_marketplace_present_required: true
+application_marketplace_present_required: true
+innovation_ecosystem_present_required: true
+economic_intelligence_present_required: true
+knowledge_graph_integration_present_required: true
+digital_twin_integration_present_required: true
+via_p215_m: true
+via_p215_o: true
+via_p215_k: true
+via_p213: true
+via_plugin_platform: true
+via_financial_kernel: true
+via_enterprise_search: true
+builds_on_p215_a: true
+builds_on_p215_e: true
+builds_on_p215_f: true
+builds_on_p215_m: true
+builds_on_p215_o: true
+governed_by_p215_k: true
+forbidden_siblings:
+  - quantum_marketplace_platform
+  - quantum_capability_exchange_platform
+  - quantum_algorithm_marketplace_platform
+  - quantum_economy_platform
+  - quantum_innovation_ecosystem_platform

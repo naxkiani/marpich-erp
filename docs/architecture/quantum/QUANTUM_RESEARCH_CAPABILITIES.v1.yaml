@@ -1,0 +1,37 @@
+prompt_id: P215-Q
+adr: "462"
+sor: quantum
+capability: CAP-PLT-QC-001
+api_prefix: /api/v1/quantum/research
+fabric: meos_quantum_discovery_intelligence_fabric
+principle: >-
+  MEOS Quantum Research Platform SHALL provide the scientific intelligence
+  foundation enabling discovery, experimentation, collaboration and evolution
+  of future quantum capabilities.
+quantum_research_platform_present_required: true
+quantum_innovation_lab_present_required: true
+scientific_collaboration_platform_present_required: true
+discovery_intelligence_present_required: true
+ai_assisted_research_present_required: true
+experiment_management_present_required: true
+future_technology_radar_present_required: true
+knowledge_graph_integration_present_required: true
+digital_twin_integration_present_required: true
+via_p215_g: true
+via_p214_g: true
+via_p215_i: true
+via_p215_k: true
+via_p215_o: true
+via_p215_p: true
+via_document_exchange: true
+builds_on_p215_a: true
+builds_on_p215_f: true
+builds_on_p215_g: true
+builds_on_p215_p: true
+governed_by_p215_k: true
+forbidden_siblings:
+  - quantum_research_platform
+  - quantum_innovation_lab_platform
+  - quantum_discovery_platform
+  - quantum_experiment_platform
+  - quantum_future_radar_platform

@@ -1,0 +1,59 @@
+prompt_id: P215-V
+adr: "467"
+sor: quantum
+core_domain: enterprise_quantum_cognitive_intelligence_management
+bounded_context_count: 6
+aggregate_count: 7
+evolution_gate: P215-U
+os_gate: P215-T
+trust_gate: P215-K
+bounded_contexts:
+  - id: BC-01
+    name: Quantum Cognitive Core Context
+    owns: QuantumCognitiveCoreAggregate
+  - id: BC-02
+    name: Advanced Reasoning Intelligence Context
+    owns: ReasoningIntelligenceAggregate
+  - id: BC-03
+    name: Enterprise Knowledge Understanding Context
+    owns: EnterpriseKnowledgeIntelligenceAggregate
+  - id: BC-04
+    name: Cognitive Agent Intelligence Context
+    owns: CognitiveAgentAggregate
+  - id: BC-05
+    name: Enterprise Memory Intelligence Context
+    owns: EnterpriseMemoryAggregate
+  - id: BC-06
+    name: Intelligence Evolution Context
+    owns: IntelligenceEvolutionAggregate
+commands:
+  - InitiateReasoningCommand
+  - CreateCognitiveDecisionCommand
+  - UpdateEnterpriseMemoryCommand
+  - ExecuteCognitiveWorkflowCommand
+  - TriggerIntelligenceEvolutionCommand
+queries:
+  - GetCognitiveStateQuery
+  - GetReasoningResultQuery
+  - GetEnterpriseKnowledgeQuery
+  - GetDecisionHistoryQuery
+  - GetIntelligenceCapabilityQuery
+events:
+  - ReasoningCompletedEvent
+  - KnowledgeIntegratedEvent
+  - DecisionCreatedEvent
+  - LearningCompletedEvent
+  - CognitiveCapabilityExpandedEvent
+  - IntelligenceEvolutionDetectedEvent
+event_versioning: event_version_field
+outbox_required: true
+via_p215_u: true
+via_p215_t: true
+via_p214_z: true
+via_p213: true
+via_workflow: true
+via_audit: true
+never_replace_p215_u: true
+module_local_llm_forbidden: true
+opaque_unexplainable_decisions_forbidden: true
+ungated_agi_class_actions_forbidden: true

@@ -1,8 +1,28 @@
 prompt_id: P215-L
-adr: '457'
+adr: "457"
+sor: quantum
 core_domain: enterprise_quantum_reality_intelligence_management
 bounded_context_count: 6
 aggregate_count: 7
+bounded_contexts:
+  - id: BC-01
+    name: Quantum Twin Management Context
+    owns: QuantumDigitalTwinAggregate
+  - id: BC-02
+    name: Reality Modeling Context
+    owns: RealityModelAggregate
+  - id: BC-03
+    name: Quantum Simulation Context
+    owns: SimulationAggregate
+  - id: BC-04
+    name: Scenario Intelligence Context
+    owns: ScenarioAggregate
+  - id: BC-05
+    name: Predictive Intelligence Context
+    owns: PredictionAggregate
+  - id: BC-06
+    name: Evolution Intelligence Context
+    owns: EvolutionAggregate
 commands:
   - CreateQuantumTwinCommand
   - UpdateRealityModelCommand
@@ -10,3 +30,19 @@ commands:
   - GenerateScenarioCommand
   - PredictFutureStateCommand
   - OptimizeTwinCommand
+queries:
+  - GetQuantumTwinQuery
+  - GetSimulationResultQuery
+  - GetPredictionResultQuery
+  - GetScenarioImpactQuery
+  - GetTwinHealthQuery
+events:
+  - QuantumTwinCreatedEvent
+  - TwinStateUpdatedEvent
+  - SimulationCompletedEvent
+  - PredictionGeneratedEvent
+  - ScenarioValidatedEvent
+  - EvolutionImprovedEvent
+event_versioning: event_version_field
+event_retention: tenant_scoped_immutable_append
+outbox_required: true

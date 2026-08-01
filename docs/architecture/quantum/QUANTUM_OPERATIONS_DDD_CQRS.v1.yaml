@@ -1,8 +1,31 @@
 prompt_id: P215-N
-adr: '459'
+adr: "459"
+sor: quantum
 core_domain: enterprise_quantum_operations_intelligence_management
 bounded_context_count: 7
 aggregate_count: 8
+bounded_contexts:
+  - id: BC-01
+    name: Quantum Monitoring Context
+    owns: QuantumMonitoringAggregate
+  - id: BC-02
+    name: Quantum Observability Intelligence Context
+    owns: QuantumObservabilityAggregate
+  - id: BC-03
+    name: Quantum Incident Management Context
+    owns: QuantumIncidentAggregate
+  - id: BC-04
+    name: Quantum AIOps Intelligence Context
+    owns: QuantumAIOpsAggregate
+  - id: BC-05
+    name: Quantum Automation Context
+    owns: QuantumAutomationAggregate
+  - id: BC-06
+    name: Quantum Self-Healing Context
+    owns: QuantumSelfHealingAggregate
+  - id: BC-07
+    name: Quantum Reliability Engineering Context
+    owns: QuantumReliabilityAggregate
 commands:
   - RegisterQuantumResourceCommand
   - AnalyzeOperationalStateCommand
@@ -10,3 +33,22 @@ commands:
   - ExecuteRecoveryCommand
   - OptimizeResourceCommand
   - TriggerSelfHealingCommand
+queries:
+  - GetQuantumHealthQuery
+  - GetOperationalStatusQuery
+  - GetIncidentHistoryQuery
+  - GetPerformanceScoreQuery
+  - GetAutomationStatusQuery
+events:
+  - QuantumResourceRegisteredEvent
+  - TelemetryReceivedEvent
+  - AnomalyDetectedEvent
+  - IncidentCreatedEvent
+  - RecoveryCompletedEvent
+  - SelfHealingExecutedEvent
+  - OptimizationCompletedEvent
+event_versioning: event_version_field
+event_retention: tenant_scoped_immutable_append
+outbox_required: true
+via_observability_platform: true
+via_p214_j: true

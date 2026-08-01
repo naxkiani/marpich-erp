@@ -1,3 +1,30 @@
+# P215-I — Architecture validation scorecard
 prompt_id: P215-I
-adr: '455'
+adr: "455"
+sor: quantum
+capability: CAP-PLT-QC-001
 verdict: ENTERPRISE_GRADE
+
+dimensions:
+  Architecture: 5
+  DDD: 5
+  Security: 5
+  Scalability: 4
+  Performance: 4
+  Testing: 4
+  AI_Integration: 5
+  Documentation: 5
+  Accessibility: 3
+  Localization: 3
+  Observability: 4
+  Workflow: 4
+  Audit: 5
+  Policy_Compliance: 5
+  Plugin_Compatibility: 4
+
+critical_min: 4
+average_min: 4.0
+notes:
+  - Enterprise data governance SoR remains P212
+  - Data mesh products owned in quantum with federated governance
+  - Quantum networking deferred to P215-J

@@ -1,7 +1,25 @@
 prompt_id: P215-L
-adr: '457'
+adr: "457"
+sor: quantum
 zero_trust: true
 via_p215_h: true
 via_p215_k: true
+via_policy_engine: true
+via_workflow_for_high_impact_evolution: true
 twin_authz: true
 simulation_integrity: true
+permissions:
+  read: quantum.read
+  write: quantum.write
+controls:
+  - twin_ownership
+  - twin_accuracy
+  - simulation_integrity
+  - model_versioning
+  - synchronization_policies
+  - trust_validation
+  - tenant_isolation
+forbidden:
+  - module_local_metrics_store
+  - ungoverned_autonomous_evolution
+  - sibling_twin_bc

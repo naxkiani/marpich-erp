@@ -1,6 +1,24 @@
+# P215-I — Security catalog
 prompt_id: P215-I
-adr: '455'
+adr: "455"
 zero_trust_data: true
 via_p215_h: true
 via_p215_k: true
 via_p212: true
+permissions:
+  - quantum.read
+  - quantum.write
+controls:
+  - data_authz
+  - policy_enforcement
+  - lineage_audit
+  - tenant_isolation
+forbidden:
+  - module_local_data_catalog
+  - sibling_quantum_data_bc
+  - cross_schema_sql_to_p212
+  - embedded_vector_store
+integrations:
+  data_governance: P212
+  knowledge_rag: P214-G
+  quantum_security: P215-H

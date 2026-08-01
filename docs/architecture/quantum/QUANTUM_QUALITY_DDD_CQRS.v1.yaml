@@ -1,0 +1,51 @@
+prompt_id: P215-O
+adr: "460"
+sor: quantum
+core_domain: enterprise_quantum_quality_intelligence_management
+bounded_context_count: 6
+aggregate_count: 7
+bounded_contexts:
+  - id: BC-01
+    name: Quantum Software Testing Context
+    owns: QuantumSoftwareTestAggregate
+  - id: BC-02
+    name: Quantum Algorithm Validation Context
+    owns: QuantumAlgorithmValidationAggregate
+  - id: BC-03
+    name: Quantum Hardware Testing Context
+    owns: QuantumHardwareTestAggregate
+  - id: BC-04
+    name: Quantum Benchmarking Context
+    owns: QuantumBenchmarkAggregate
+  - id: BC-05
+    name: Quantum Certification Context
+    owns: QuantumCertificationAggregate
+  - id: BC-06
+    name: Quantum Quality Intelligence Context
+    owns: QuantumQualityIntelligenceAggregate
+commands:
+  - CreateQuantumTestSuiteCommand
+  - ExecuteQuantumTestCommand
+  - ValidateQuantumResultCommand
+  - GenerateBenchmarkCommand
+  - IssueCertificationCommand
+  - ImproveQualityCommand
+queries:
+  - GetQuantumQualityScoreQuery
+  - GetValidationReportQuery
+  - GetBenchmarkResultQuery
+  - GetCertificationStatusQuery
+  - GetTestHistoryQuery
+events:
+  - QuantumTestCreatedEvent
+  - TestExecutionCompletedEvent
+  - ValidationCompletedEvent
+  - BenchmarkGeneratedEvent
+  - CertificationIssuedEvent
+  - QualityImprovementTriggeredEvent
+event_versioning: event_version_field
+event_retention: tenant_scoped_immutable_append
+outbox_required: true
+via_workflow: true
+via_audit: true
+via_p214_o: true

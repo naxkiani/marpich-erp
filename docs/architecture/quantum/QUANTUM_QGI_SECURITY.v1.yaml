@@ -1,0 +1,35 @@
+prompt_id: P215-V
+adr: "467"
+sor: quantum
+zero_trust_cognitive_intelligence: true
+explainable_intelligence_required: true
+human_ai_collaborative_intelligence: true
+via_p215_u: true
+via_p215_t: true
+via_p215_k: true
+via_p215_h: true
+via_p215_s: true
+via_p214_z: true
+via_p213: true
+via_p214_g: true
+via_policy_engine: true
+via_workflow: true
+via_audit: true
+never_replace_p215_u: true
+never_replace_p215_t: true
+never_replace_core_platform: true
+never_replace_p215_k: true
+module_local_llm_forbidden: true
+ungated_agi_class_actions_forbidden: true
+opaque_unexplainable_decisions_forbidden: true
+module_local_pdp_forbidden: true
+permissions:
+  read: quantum.read
+  write: quantum.write
+controls:
+  - qgi_authz
+  - explainable_decision_required
+  - responsible_cognition_gate
+  - human_ai_collaboration_binding
+  - memory_document_id_refs_only
+  - tenant_isolation
