@@ -1,0 +1,30 @@
+# ROBOTICS_DOMAIN_AGGREGATES.v1.yaml — P216-C
+apiVersion: marpich.io/v1
+kind: RoboticsDomainAggregateCatalog
+metadata:
+  phase: P216-C
+  adr: "475"
+spec:
+  rules:
+    - one_aggregate_one_consistency_boundary
+    - external_communication_via_domain_events
+    - cross_context_updates_asynchronous
+    - never_cross_context_aggregate_mutation
+  aggregates:
+    - RobotIdentityAggregate
+    - RobotLifecycleAggregate
+    - AutonomousMachineAggregate
+    - PhysicalAIModelAggregate
+    - RobotMissionAggregate
+    - RobotFleetAggregate
+    - RoboticsDigitalTwinAggregate
+    - HumanRobotCollaborationAggregate
+    - RoboticsSafetyAggregate
+  relationships:
+    - Robot owns RobotIdentity
+    - Robot executes Mission
+    - Robot belongsTo Fleet
+    - Robot uses PhysicalAIModel
+    - Robot synchronizedWith DigitalTwin
+    - HumanOperator collaboratesWith Robot
+    - SafetyPolicy governs RobotOperation

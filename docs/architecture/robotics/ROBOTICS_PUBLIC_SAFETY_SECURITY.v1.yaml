@@ -1,0 +1,32 @@
+# ROBOTICS_PUBLIC_SAFETY_SECURITY.v1.yaml — P216-L
+apiVersion: marpich.io/v1
+kind: RoboticsPublicSafetySecurityCatalog
+metadata:
+  phase: P216-L
+  adr: "484"
+spec:
+  framework: meos_public_safety_zero_trust_framework
+  domains:
+    - responder_identity
+    - robot_identity
+    - drone_identity
+    - agency_identity
+    - mission_authorisation
+    - critical_infrastructure_protection
+    - data_privacy
+    - operational_logging
+    - continuous_monitoring
+    - compliance
+    - auditability
+  hard_laws:
+    - gis_weather_via_integration_platform_only
+    - never_direct_gis_weather_bypass
+    - citizen_alerts_via_notification_platform_only
+    - never_bypass_notification_platform
+    - physical_ai_via_p214z_acl_only
+    - no_module_local_llm
+    - never_duplicate_hospital_clinic_core_logic
+    - never_replace_p216_k_construction
+    - human_centered_explainable_ai_required
+    - ungated_physical_autonomy_forbidden
+    - opaque_safety_forbidden

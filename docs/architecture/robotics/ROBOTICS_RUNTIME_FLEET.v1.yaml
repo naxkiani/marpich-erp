@@ -1,0 +1,35 @@
+# ROBOTICS_RUNTIME_FLEET.v1.yaml — P216-D
+apiVersion: marpich.io/v1
+kind: RoboticsRuntimeFleetCatalog
+metadata:
+  phase: P216-D
+  adr: "476"
+spec:
+  fleet_control_plane:
+    capabilities:
+      - robot_discovery
+      - robot_registration
+      - fleet_organization
+      - mission_distribution
+      - resource_allocation
+      - performance_monitoring
+      - failure_management
+      - autonomous_optimization
+    components:
+      - fleet_registry
+      - mission_scheduler
+      - robot_coordinator
+      - policy_manager
+      - optimization_engine
+      - telemetry_manager
+  edge_platform:
+    components: [edge_compute_nodes, ai_accelerators, local_storage, sensor_processing, real_time_controllers, security_agents]
+    capabilities: [low_latency_intelligence, offline_operation, local_decision_making, data_synchronization]
+  mission_lifecycle:
+    - created
+    - validated
+    - assigned
+    - executed
+    - monitored
+    - completed
+    - learned

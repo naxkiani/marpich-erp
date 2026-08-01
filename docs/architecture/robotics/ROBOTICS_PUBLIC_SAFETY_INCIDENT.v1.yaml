@@ -1,0 +1,28 @@
+# ROBOTICS_PUBLIC_SAFETY_INCIDENT.v1.yaml — P216-L
+apiVersion: marpich.io/v1
+kind: RoboticsPublicSafetyIncidentCatalog
+metadata:
+  phase: P216-L
+  adr: "484"
+  fabric: meos_civil_protection_intelligence_fabric
+  capability: CAP-PLT-RB-001
+spec:
+  mission: "Create an intelligent, AI-assisted, robotics-enabled public safety ecosystem that improves preparedness, response, recovery and resilience for communities."
+  vision: "Every emergency operation, robot, drone, responder, critical infrastructure asset and emergency workflow shall become part of the unified MEOS Civil Protection Ecosystem."
+  core_domain: enterprise_emergency_civil_protection_intelligence
+  aggregate: EmergencyManagementAggregate
+  public_safety_robotics_components:
+    - emergency_robot_registry
+    - robot_fleet_manager
+    - mission_planner
+    - responder_coordination_engine
+    - emergency_drone_coordinator
+    - field_operations_console
+  capabilities:
+    - search_support
+    - infrastructure_inspection
+    - hazard_assessment
+    - damage_mapping
+    - medical_supply_delivery
+    - environmental_monitoring
+    - remote_communications_support

@@ -1,0 +1,38 @@
+# ROBOTICS_RUNTIME_DDD_CQRS.v1.yaml — P216-D
+apiVersion: marpich.io/v1
+kind: RoboticsRuntimeDddCqrsCatalog
+metadata:
+  phase: P216-D
+  adr: "476"
+spec:
+  commands:
+    - RegisterRobotRuntimeCommand
+    - DeployRobotApplicationCommand
+    - StartMissionCommand
+    - UpdateRobotConfigurationCommand
+    - OptimizeFleetCommand
+    - RecoverRobotCommand
+  queries:
+    - GetRobotRuntimeStateQuery
+    - GetFleetHealthQuery
+    - GetMissionExecutionStateQuery
+    - GetMachinePerformanceQuery
+  events:
+    - robotics.runtime.started.v1
+    - robotics.runtime.application.deployed.v1
+    - robotics.runtime.mission.execution.started.v1
+    - robotics.runtime.failure.detected.v1
+    - robotics.runtime.fleet.optimization.completed.v1
+    - robotics.runtime.machine.recovered.v1
+    - robotics.runtime.security.violation.v1
+  microservices:
+    - robot_runtime_service
+    - robot_device_management_service
+    - fleet_control_service
+    - mission_execution_service
+    - telemetry_service
+    - edge_management_service
+    - robot_communication_service
+    - ai_runtime_service
+    - safety_runtime_service
+    - recovery_service

@@ -1,0 +1,30 @@
+# ROBOTICS_STRATEGY_CAPABILITIES.v1.yaml — P216-B
+apiVersion: marpich.io/v1
+kind: RoboticsStrategyCapabilityCatalog
+metadata:
+  phase: P216-B
+  adr: "474"
+  capability: CAP-PLT-RB-001
+spec:
+  domains:
+    - id: CD01
+      name: Robot Lifecycle Management
+      capabilities: [robot_registration, robot_identity, robot_configuration, robot_deployment, robot_monitoring, robot_retirement, robot_upgrade]
+    - id: CD02
+      name: Autonomous Machine Management
+      capabilities: [machine_intelligence, machine_decision_making, machine_learning, machine_adaptation, machine_optimization]
+    - id: CD03
+      name: Robot Fleet Intelligence
+      capabilities: [fleet_monitoring, fleet_coordination, fleet_scheduling, fleet_optimization, multi_robot_collaboration]
+    - id: CD04
+      name: Physical AI Intelligence
+      capabilities: [computer_vision, sensor_intelligence, spatial_understanding, motion_planning, environment_awareness, physical_reasoning]
+    - id: CD05
+      name: Robotics Operations Management
+      capabilities: [mission_management, task_scheduling, operational_monitoring, performance_analysis, failure_management]
+    - id: CD06
+      name: Human-Robot Collaboration
+      capabilities: [human_interaction, safety_collaboration, workforce_augmentation, collaborative_workflows]
+    - id: CD07
+      name: Robotics Knowledge Management
+      capabilities: [robot_knowledge_graph, operational_memory, machine_learning_repository, experience_management]

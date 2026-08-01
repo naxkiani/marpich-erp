@@ -1,0 +1,29 @@
+# ROBOTICS_DOMAIN_VALIDATION.v1.yaml — P216-C
+apiVersion: marpich.io/v1
+kind: RoboticsDomainValidationCatalog
+metadata:
+  phase: P216-C
+  adr: "475"
+spec:
+  quality_gates:
+    - Strategic domains defined
+    - Core domain identified
+    - Supporting domains defined
+    - Generic domains defined
+    - Bounded context map created
+    - Aggregates designed
+    - Entities and value objects defined
+    - Domain services and repositories defined
+    - Domain events and CQRS defined
+    - Microservice alignment completed
+    - MEOS integration defined
+  definition_of_done:
+    - True DDD Robotics Model exists
+    - Enterprise Scalability boundaries exist
+    - Autonomous System Modeling exists
+    - Physical AI Domain Separation exists
+    - Event Driven Architecture exists
+    - Microservice Boundaries exist
+    - Future Robotics Evolution Capability exists
+    - Foundation for P216-D exists
+  foundation_validator: validate_rb_domain_foundation

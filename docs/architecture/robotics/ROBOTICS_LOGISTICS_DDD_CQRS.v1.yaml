@@ -1,0 +1,44 @@
+# ROBOTICS_LOGISTICS_DDD_CQRS.v1.yaml — P216-G
+apiVersion: marpich.io/v1
+kind: RoboticsLogisticsDddCqrsCatalog
+metadata:
+  phase: P216-G
+  adr: "479"
+spec:
+  commands:
+    - ReceiveInventoryCommand
+    - AllocateInventoryCommand
+    - AssignPickingRobotCommand
+    - ExecutePickingMissionCommand
+    - CompletePackingCommand
+    - DispatchShipmentCommand
+    - OptimiseWarehouseCommand
+  queries:
+    - GetWarehouseStatusQuery
+    - GetInventoryAvailabilityQuery
+    - GetRobotFleetStatusQuery
+    - GetShipmentStatusQuery
+    - GetMaterialFlowQuery
+    - GetWarehouseDigitalTwinQuery
+  events:
+    - robotics.logistics.inventory.received.v1
+    - robotics.logistics.inventory.reserved.v1
+    - robotics.logistics.picking.mission.started.v1
+    - robotics.logistics.picking.mission.completed.v1
+    - robotics.logistics.packing.completed.v1
+    - robotics.logistics.shipment.dispatched.v1
+    - robotics.logistics.transport.arrived.v1
+    - robotics.logistics.warehouse.optimised.v1
+    - robotics.logistics.robot.fleet.balanced.v1
+  microservices:
+    - warehouse_management_service
+    - warehouse_robotics_service
+    - inventory_intelligence_service
+    - material_flow_service
+    - order_fulfilment_service
+    - dock_management_service
+    - transport_coordination_service
+    - warehouse_digital_twin_service
+    - logistics_analytics_service
+    - supply_chain_knowledge_graph_service
+    - cold_chain_monitoring_service

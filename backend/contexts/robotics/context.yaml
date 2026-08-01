@@ -1,0 +1,61 @@
+context: robotics
+architecture_version: "1.0"
+display_name: Enterprise Robotics, Autonomous Machines, Physical AI & Cyber-Physical Intelligence Platform
+type: platform
+description: >-
+  MEOS Cyber-Physical Intelligence Fabric — robotics operating system, autonomous
+  machines, physical AI, industrial intelligence, fleet management, HRI, edge
+  intelligence, and physical digital twins (P216). External IIoT via Integration Platform.
+api: /api/v1/robotics
+series: P216
+foundation_prompt: P216
+adr: "472"
+capability: CAP-PLT-RB-001
+schema: robotics
+aggregates:
+  - EnterpriseCyberPhysicalIntelligenceAggregate
+  - RobotSystemAggregate
+  - AutonomousMachineAggregate
+  - PhysicalAIModelAggregate
+  - IndustrialIntelligenceAggregate
+  - RobotFleetAggregate
+  - HumanRobotCollaborationAggregate
+publishes:
+  - robotics.foundation.robot.created
+  - robotics.foundation.mission.started
+  - robotics.foundation.machine.failure.detected
+  - robotics.foundation.autonomous.action.completed
+  - robotics.foundation.fleet.optimization.completed
+  - robotics.foundation.safety.violation.detected
+subscribes:
+  - platform.tenant.provisioned
+delegates:
+  - identity
+  - ai
+  - quantum
+  - integration
+  - policy
+  - workflow
+  - audit
+  - search
+  - analytics
+forbidden_sibling_bc:
+  - robotics_platform
+  - physical_ai_platform
+  - autonomous_machine_platform
+  - robot_fleet_platform
+ai:
+  insights: true
+  predictions: true
+  recommendations: true
+  summaries: true
+  search: true
+  assistant: true
+  automation: true
+  document_intelligence: true
+  voice_commands: true
+  chat_interface: true
+  report_explanation: true
+  anomaly_detection: true
+  forecasting: true
+  optimization_suggestions: true

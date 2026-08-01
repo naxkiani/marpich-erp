@@ -1,0 +1,24 @@
+# ROBOTICS_LOGISTICS_BOUNDED_CONTEXTS.v1.yaml — P216-G
+apiVersion: marpich.io/v1
+kind: RoboticsLogisticsBoundedContextCatalog
+metadata:
+  phase: P216-G
+  adr: "479"
+spec:
+  bounded_contexts:
+    - id: BC-01
+      name: Warehouse Management Context
+    - id: BC-02
+      name: Warehouse Robotics Context
+    - id: BC-03
+      name: Inventory Intelligence Context
+    - id: BC-04
+      name: Material Flow Context
+    - id: BC-05
+      name: Order Fulfilment Context
+    - id: BC-06
+      name: Transport Coordination Context
+    - id: BC-07
+      name: Supply Chain Visibility Context
+    - id: BC-08
+      name: Warehouse Digital Twin Context

@@ -1,0 +1,43 @@
+# ROBOTICS_PUBLIC_SAFETY_DDD_CQRS.v1.yaml — P216-L
+apiVersion: marpich.io/v1
+kind: RoboticsPublicSafetyDddCqrsCatalog
+metadata:
+  phase: P216-L
+  adr: "484"
+spec:
+  commands:
+    - ReportIncidentCommand
+    - DeclareEmergencyCommand
+    - AssignMissionCommand
+    - DispatchResponderCommand
+    - OpenShelterCommand
+    - StartRecoveryCommand
+    - CloseIncidentCommand
+  queries:
+    - GetIncidentStatusQuery
+    - GetMissionStatusQuery
+    - GetShelterCapacityQuery
+    - GetInfrastructureStatusQuery
+    - GetRecoveryProgressQuery
+    - GetDigitalTwinQuery
+  events:
+    - robotics.public_safety.incident.reported.v1
+    - robotics.public_safety.emergency.activated.v1
+    - robotics.public_safety.mission.assigned.v1
+    - robotics.public_safety.responder.arrived.v1
+    - robotics.public_safety.drone.survey.completed.v1
+    - robotics.public_safety.evacuation.completed.v1
+    - robotics.public_safety.recovery.initiated.v1
+    - robotics.public_safety.infrastructure.recovered.v1
+    - robotics.public_safety.after_action.review.completed.v1
+  microservices:
+    - incident_management_service
+    - emergency_operations_service
+    - public_safety_robotics_service
+    - search_and_rescue_service
+    - shelter_management_service
+    - recovery_management_service
+    - digital_twin_service
+    - knowledge_graph_service
+    - situation_intelligence_service
+    - emergency_analytics_service

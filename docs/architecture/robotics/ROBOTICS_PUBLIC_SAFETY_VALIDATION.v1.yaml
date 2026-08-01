@@ -1,0 +1,34 @@
+# ROBOTICS_PUBLIC_SAFETY_VALIDATION.v1.yaml — P216-L
+apiVersion: marpich.io/v1
+kind: RoboticsPublicSafetyValidationCatalog
+metadata:
+  phase: P216-L
+  adr: "484"
+spec:
+  quality_gates:
+    - Public Safety Robotics Platform
+    - Emergency Response Platform
+    - Disaster Recovery Platform
+    - Civil Protection Platform
+    - Disaster Digital Twin
+    - Knowledge Graph
+    - CQRS Architecture
+    - Event Architecture
+    - Microservice Architecture
+    - Zero Trust Security
+    - Multi-Region Resilience
+  definition_of_done:
+    - Public Safety Robotics Platform exists
+    - Emergency Response Platform exists
+    - Disaster Recovery Platform exists
+    - Civil Protection Platform exists
+    - Disaster Digital Twin exists
+    - Situation Intelligence Platform exists
+    - Knowledge Graph exists
+    - CQRS Architecture exists
+    - Event Architecture exists
+    - Microservice Architecture exists
+    - Deployment Architecture exists
+    - Testing Architecture exists
+    - Foundation for P216-M exists
+  foundation_validator: validate_rb_public_safety_foundation

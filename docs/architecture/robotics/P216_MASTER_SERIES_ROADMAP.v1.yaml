@@ -1,0 +1,92 @@
+# P216_MASTER_SERIES_ROADMAP.v1.yaml
+apiVersion: marpich.io/v1
+kind: SeriesRoadmap
+metadata:
+  series: P216
+  title: Enterprise Robotics, Autonomous Machines, Physical AI & MEOS Cyber-Physical Intelligence
+  capability: CAP-PLT-RB-001
+  sor: robotics
+notes:
+  - P216 through P216-I, P216-K, P216-L delivered; P216-J agriculture remains planned (ADR 482 reserved); public safety fabric meos_civil_protection_intelligence_fabric (ADR 484) under /robotics/public-safety*; never replace prior fabrics/Core/AI/P215-Z; GIS/Weather via Integration Platform; citizen alerts via Notification Platform; P216-M next space robotics
+phases:
+  - id: P216
+    title: Enterprise Robotics, Autonomous Machines, Physical AI, Industrial Intelligence & MEOS Cyber-Physical Intelligence Platform
+    status: done
+    adr: "472"
+    fabric: meos_cyber_physical_intelligence_fabric
+    api: /api/v1/robotics*
+  - id: P216-A
+    title: Enterprise Robotics Mission, Vision & Strategic Cyber-Physical Intelligence Scope
+    status: done
+    adr: "473"
+    fabric: meos_cyber_physical_strategic_intelligence_framework
+    api: /api/v1/robotics/mission*
+  - id: P216-B
+    title: Enterprise Robotics Strategic Architecture, Capability Model & Robotics Operating Framework
+    status: done
+    adr: "474"
+    fabric: meos_robotics_strategic_architecture_framework
+    api: /api/v1/robotics/strategy*
+  - id: P216-C
+    title: Enterprise Robotics Domain Architecture (DDD), Bounded Contexts, Aggregates & Domain Model
+    status: done
+    adr: "475"
+    fabric: meos_robotics_domain_architecture_framework
+    api: /api/v1/robotics/domain*
+  - id: P216-D
+    title: Enterprise Robotics Operating System, Robot Runtime Platform, Fleet Control Plane & Autonomous Machine Infrastructure
+    status: done
+    adr: "476"
+    fabric: meos_robotics_operating_fabric
+    api: /api/v1/robotics/runtime*
+  - id: P216-E
+    title: Enterprise Robotics Physical AI Engine, Robot Perception, Cognitive Robotics & Autonomous Decision Platform
+    status: done
+    adr: "477"
+    fabric: meos_physical_ai_intelligence_fabric
+    api: /api/v1/robotics/physical-ai*
+  - id: P216-F
+    title: Enterprise Robotics Industrial Automation, Smart Factory, Autonomous Manufacturing & Industrial Intelligence Platform
+    status: done
+    adr: "478"
+    fabric: meos_industrial_intelligence_fabric
+    api: /api/v1/robotics/industrial*
+  - id: P216-G
+    title: Enterprise Robotics Autonomous Logistics, Warehouse Automation, Supply Chain Robotics & Intelligent Material Flow Platform
+    status: done
+    adr: "479"
+    fabric: meos_autonomous_logistics_fabric
+    api: /api/v1/robotics/logistics*
+  - id: P216-H
+    title: Enterprise Robotics Autonomous Mobility, Connected Vehicles, Drone Intelligence & Smart Transportation Platform
+    status: done
+    adr: "480"
+    fabric: meos_autonomous_mobility_fabric
+    api: /api/v1/robotics/mobility*
+  - id: P216-I
+    title: Enterprise Robotics Healthcare Robotics, Medical AI, Surgical Robotics & Digital Healthcare Automation Platform
+    status: done
+    adr: "481"
+    fabric: meos_healthcare_robotics_fabric
+    api: /api/v1/robotics/healthcare*
+  - id: P216-J
+    title: Enterprise Robotics Agricultural Robotics, Precision Farming, Autonomous Agriculture & Smart AgriTech Intelligence Platform
+    status: planned
+    adr: "482"
+    api: /api/v1/robotics/agriculture*
+  - id: P216-K
+    title: Enterprise Robotics Construction Robotics, Smart Infrastructure, Autonomous Building Systems & Digital Construction Intelligence Platform
+    status: done
+    adr: "483"
+    fabric: meos_construction_intelligence_fabric
+    api: /api/v1/robotics/construction*
+  - id: P216-L
+    title: Enterprise Robotics Public Safety, Emergency Response, Disaster Recovery & Civil Protection Intelligence Platform
+    status: done
+    adr: "484"
+    fabric: meos_civil_protection_intelligence_fabric
+    api: /api/v1/robotics/public-safety*
+  - id: P216-M
+    title: Enterprise Robotics Space Robotics, Orbital Infrastructure, Autonomous Space Operations & Space Intelligence Platform
+    status: planned
+    api: /api/v1/robotics/space*

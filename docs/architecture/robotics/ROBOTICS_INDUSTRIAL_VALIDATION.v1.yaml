@@ -1,0 +1,39 @@
+# ROBOTICS_INDUSTRIAL_VALIDATION.v1.yaml — P216-F
+apiVersion: marpich.io/v1
+kind: RoboticsIndustrialValidationCatalog
+metadata:
+  phase: P216-F
+  adr: "478"
+spec:
+  quality_gates:
+    - Smart Factory Platform
+    - Industrial Automation Platform
+    - Autonomous Manufacturing Platform
+    - Manufacturing Execution Intelligence
+    - Factory Digital Twin
+    - Industrial Knowledge Graph
+    - Industrial Analytics Platform
+    - Predictive Maintenance Platform
+    - CQRS Architecture
+    - Event Architecture
+    - Microservice Architecture
+    - Industry 4.0 / 5.0 Alignment
+    - Industrial Cybersecurity
+    - Cloud-Edge Industrial Deployment
+  definition_of_done:
+    - Smart Factory Platform exists
+    - Industrial Automation Platform exists
+    - Autonomous Manufacturing Platform exists
+    - Manufacturing Execution Intelligence exists
+    - Factory Digital Twin exists
+    - Industrial Knowledge Graph exists
+    - Predictive Maintenance exists
+    - Industrial Analytics Platform exists
+    - Industrial Cybersecurity exists
+    - CQRS Architecture exists
+    - Event Architecture exists
+    - Microservice Architecture exists
+    - Deployment Architecture exists
+    - Testing Architecture exists
+    - Foundation for P216-G exists
+  foundation_validator: validate_rb_industrial_foundation

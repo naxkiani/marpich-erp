@@ -257,6 +257,7 @@ ROUTER_SPECS: list[tuple[str, str]] = [
     ("contexts.data_security.presentation.router", "data_security_router"),
     ("contexts.data_governance.presentation.router", "data_governance_router"),
     ("contexts.quantum.presentation.router", "quantum_router"),
+    ("contexts.robotics.presentation.router", "robotics_router"),
     ("contexts.enterprise_executive_dashboard.presentation.router", "enterprise_executive_dashboard_router"),
     ("contexts.enterprise_decision_support.presentation.router", "enterprise_decision_support_router"),
     ("contexts.financial_data_science.presentation.router", "financial_data_science_router"),

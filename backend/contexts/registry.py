@@ -470,6 +470,31 @@ QUANTUM = BoundedContext(
     subscribes=("platform.tenant.provisioned",),
 )
 
+
+ROBOTICS = BoundedContext(
+    id="robotics",
+    display_name=(
+        "Enterprise Robotics, Autonomous Machines, Physical AI & "
+        "Cyber-Physical Intelligence Platform"
+    ),
+    context_type=BoundedContextType.PLATFORM,
+    schema_name="robotics",
+    description=(
+        "MEOS Cyber-Physical Intelligence Fabric — robotics OS, autonomous machines, "
+        "physical AI, industrial intelligence, fleet, HRI, edge — SoR for P216; "
+        "IIoT connectors via Integration Platform"
+    ),
+    publishes=(
+        "robotics.foundation.robot.created",
+        "robotics.foundation.mission.started",
+        "robotics.foundation.machine.failure.detected",
+        "robotics.foundation.autonomous.action.completed",
+        "robotics.foundation.fleet.optimization.completed",
+        "robotics.foundation.safety.violation.detected",
+    ),
+    subscribes=("platform.tenant.provisioned",),
+)
+
 AUTHORIZATION = BoundedContext(
     id="authorization",
     display_name="Enterprise Authorization Platform",
@@ -1063,6 +1088,7 @@ ALL_CONTEXTS: tuple[BoundedContext, ...] = (
     DATA_SECURITY,
     DATA_GOVERNANCE,
     QUANTUM,
+    ROBOTICS,
     AUTHORIZATION,
     PERMISSION_REGISTRY,
     COMPLIANCE,

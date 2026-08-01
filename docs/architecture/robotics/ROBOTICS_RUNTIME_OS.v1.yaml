@@ -1,0 +1,35 @@
+# ROBOTICS_RUNTIME_OS.v1.yaml — P216-D
+apiVersion: marpich.io/v1
+kind: RoboticsRuntimeOsCatalog
+metadata:
+  phase: P216-D
+  adr: "476"
+  fabric: meos_robotics_operating_fabric
+  capability: CAP-PLT-RB-001
+spec:
+  eros_vision: "EROS SHALL become the operating intelligence layer that enables every robotic asset inside MEOS to operate securely, autonomously and intelligently."
+  layers:
+    - id: L01
+      name: Hardware Abstraction Layer
+      components: [device_abstraction, sensor_interfaces, actuator_control]
+    - id: L02
+      name: Robot Runtime Layer
+      components: [robot_runtime_engine, task_execution_engine, motion_runtime, sensor_processing_runtime]
+    - id: L03
+      name: Physical AI Runtime Layer
+      components: [vision_runtime, planning_runtime, inference_engine_via_p214z, learning_engine_acl]
+    - id: L04
+      name: Robot Service Layer
+      components: [robot_services, capability_services, mission_services, telemetry_services]
+    - id: L05
+      name: Fleet Control Plane
+      components: [fleet_manager, mission_controller, policy_engine_port, optimization_engine]
+    - id: L06
+      name: MEOS Intelligence Integration Layer
+      components: [p214z_ai_core, p215z_quantum_supreme]
+  runtime_components:
+    - robot_process_manager
+    - task_execution_engine
+    - motion_intelligence_runtime
+    - sensor_fusion_runtime
+    - actuator_control_runtime

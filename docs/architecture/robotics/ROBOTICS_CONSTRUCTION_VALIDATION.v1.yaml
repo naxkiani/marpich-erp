@@ -1,0 +1,32 @@
+# ROBOTICS_CONSTRUCTION_VALIDATION.v1.yaml — P216-K
+apiVersion: marpich.io/v1
+kind: RoboticsConstructionValidationCatalog
+metadata:
+  phase: P216-K
+  adr: "483"
+spec:
+  quality_gates:
+    - Construction Robotics Platform
+    - Smart Infrastructure Platform
+    - Autonomous Building Systems
+    - Construction Digital Twin
+    - Knowledge Graph
+    - CQRS
+    - Event Architecture
+    - Microservices
+    - Zero Trust
+    - Cloud + Edge
+  definition_of_done:
+    - Construction Robotics Platform exists
+    - Smart Infrastructure Platform exists
+    - Autonomous Building Systems exist
+    - Construction AI exists
+    - Digital Twin exists
+    - Knowledge Graph exists
+    - CQRS Architecture exists
+    - Event Architecture exists
+    - Microservice Architecture exists
+    - Deployment Architecture exists
+    - Testing Architecture exists
+    - Foundation for P216-L exists
+  foundation_validator: validate_rb_construction_foundation

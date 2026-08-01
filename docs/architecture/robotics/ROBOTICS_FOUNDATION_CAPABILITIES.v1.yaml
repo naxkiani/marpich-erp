@@ -1,0 +1,48 @@
+# ROBOTICS_FOUNDATION_CAPABILITIES.v1.yaml — P216
+apiVersion: marpich.io/v1
+kind: RoboticsFoundationCapabilityCatalog
+metadata:
+  id: CAP-PLT-RB-001
+  phase: P216
+  adr: "472"
+  fabric: meos_cyber_physical_intelligence_fabric
+  api_prefix: /api/v1/robotics
+spec:
+  principle: >
+    MEOS Cyber-Physical Intelligence Platform SHALL provide the intelligence
+    foundation connecting autonomous software systems with physical machines,
+    robotic platforms and real-world enterprise operations.
+  engines:
+    - id: robotics_operating_system
+      name: MEOS Robotics Operating System
+    - id: autonomous_machine_brain
+      name: MEOS Autonomous Machine Brain
+    - id: physical_ai_engine
+      name: MEOS Physical AI Engine
+    - id: fleet_management
+      name: MEOS Autonomous Fleet Management System
+    - id: physical_digital_twin
+      name: MEOS Physical Digital Twin System
+    - id: edge_ai_platform
+      name: MEOS Edge AI Platform
+    - id: robotics_knowledge_graph
+      name: MEOS Robotics Knowledge Graph
+  permissions:
+    - robotics.read
+    - robotics.write
+    - robotics.admin
+    - robotics.ai.read
+    - robotics.ai.infer
+  hard_laws:
+    - never_replace_core_platform
+    - never_replace_ai_platform
+    - never_replace_p215_z
+    - never_module_local_llm
+    - never_ungated_physical_autonomy
+    - never_opaque_safety_decisions
+    - iiot_via_integration_platform_only
+  forbidden_siblings:
+    - robotics_platform
+    - physical_ai_platform
+    - autonomous_machine_platform
+    - robot_fleet_platform

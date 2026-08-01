@@ -1,0 +1,29 @@
+# ROBOTICS_RUNTIME_SECURITY.v1.yaml — P216-D
+apiVersion: marpich.io/v1
+kind: RoboticsRuntimeSecurityCatalog
+metadata:
+  phase: P216-D
+  adr: "476"
+spec:
+  framework: meos_robotics_zero_trust_runtime_security
+  domains:
+    - robot_identity
+    - runtime_protection
+    - command_authorization
+    - communication_security
+    - firmware_security
+    - ai_runtime_security
+    - edge_security
+  controls:
+    - authentication
+    - authorization
+    - encryption
+    - policy_enforcement
+    - threat_detection
+  hard_laws:
+    - never_replace_p216_c_domain
+    - physical_ai_via_p214z_acl_only
+    - no_module_local_observability_store
+    - never_direct_hardware_bypass_of_hal
+    - ungated_physical_autonomy_forbidden
+    - opaque_safety_forbidden

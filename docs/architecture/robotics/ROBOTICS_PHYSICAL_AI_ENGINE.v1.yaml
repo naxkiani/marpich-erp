@@ -1,0 +1,38 @@
+# ROBOTICS_PHYSICAL_AI_ENGINE.v1.yaml — P216-E
+apiVersion: marpich.io/v1
+kind: RoboticsPhysicalAiEngineCatalog
+metadata:
+  phase: P216-E
+  adr: "477"
+  fabric: meos_physical_ai_intelligence_fabric
+  capability: CAP-PLT-RB-001
+spec:
+  vision: "Physical AI enables robots to perceive, understand, reason, decide and safely act within dynamic real-world environments."
+  core_domain: physical_ai_intelligence_management
+  aggregate: PhysicalAIAggregate
+  perception_components:
+    - vision_intelligence_engine
+    - sensor_fusion_engine
+    - audio_intelligence_engine
+    - lidar_intelligence_engine
+    - radar_intelligence_engine
+    - depth_perception_engine
+    - thermal_perception_engine
+    - environmental_understanding_engine
+  physical_ai_capabilities:
+    - physical_reasoning
+    - object_affordance_understanding
+    - cause_effect_reasoning
+    - physics_awareness
+    - temporal_reasoning
+    - context_understanding
+    - adaptive_behaviour
+    - embodied_intelligence
+  ai_models_via_p214z:
+    - foundation_models
+    - vision_language_models
+    - action_models
+    - planning_models
+    - robot_world_models
+    - physics_models
+    - behaviour_models

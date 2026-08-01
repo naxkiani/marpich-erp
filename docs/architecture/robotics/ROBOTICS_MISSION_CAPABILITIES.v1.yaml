@@ -1,0 +1,45 @@
+# ROBOTICS_MISSION_CAPABILITIES.v1.yaml — P216-A
+apiVersion: marpich.io/v1
+kind: RoboticsMissionCapabilityCatalog
+metadata:
+  id: CAP-PLT-RB-001
+  phase: P216-A
+  adr: "473"
+  fabric: meos_cyber_physical_strategic_intelligence_framework
+  api_prefix: /api/v1/robotics/mission
+spec:
+  mission: >
+    MEOS Enterprise Robotics Platform SHALL provide the intelligent physical automation foundation that connects artificial intelligence, quantum intelligence, autonomous machines and real-world operations into a unified cyber-physical enterprise ecosystem.
+  vision: >
+    To create the world's most advanced cyber-physical enterprise intelligence ecosystem where intelligent machines, autonomous robots and human teams collaborate through AI-driven, secure and continuously evolving physical intelligence.
+  vision_pillars:
+    - intelligent_automation
+    - autonomous_operations
+    - human_machine_symbiosis
+    - physical_ai_evolution
+    - industrial_intelligence
+    - self_optimizing_enterprise_operations
+  objectives:
+    - id: OBJ-01
+      name: Autonomous Enterprise Operations
+    - id: OBJ-02
+      name: Physical AI Integration
+    - id: OBJ-03
+      name: Industrial Intelligence Transformation
+    - id: OBJ-04
+      name: Human-Robot Collaboration
+    - id: OBJ-05
+      name: Autonomous Enterprise Evolution
+  permissions:
+    - robotics.read
+    - robotics.write
+    - robotics.admin
+  hard_laws:
+    - never_replace_p216_foundation
+    - never_replace_core_or_ai_or_p215_z
+    - never_ungated_physical_autonomy_strategy
+    - never_opaque_safety_strategy
+  forbidden_siblings:
+    - robotics_mission_platform
+    - robotics_vision_platform
+    - cyber_physical_strategy_platform

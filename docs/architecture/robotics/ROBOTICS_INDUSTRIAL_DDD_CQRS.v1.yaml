@@ -1,0 +1,43 @@
+# ROBOTICS_INDUSTRIAL_DDD_CQRS.v1.yaml — P216-F
+apiVersion: marpich.io/v1
+kind: RoboticsIndustrialDddCqrsCatalog
+metadata:
+  phase: P216-F
+  adr: "478"
+spec:
+  commands:
+    - CreateProductionOrderCommand
+    - ScheduleProductionCommand
+    - StartProductionCommand
+    - AssignRobotTaskCommand
+    - CompleteInspectionCommand
+    - TriggerMaintenanceCommand
+    - OptimiseFactoryCommand
+  queries:
+    - GetProductionStatusQuery
+    - GetFactoryPerformanceQuery
+    - GetMachineHealthQuery
+    - GetQualityMetricsQuery
+    - GetMaintenanceForecastQuery
+    - GetFactoryDigitalTwinQuery
+  events:
+    - robotics.industrial.production_order.created.v1
+    - robotics.industrial.production.started.v1
+    - robotics.industrial.production.completed.v1
+    - robotics.industrial.robot.operation.completed.v1
+    - robotics.industrial.machine.failure.detected.v1
+    - robotics.industrial.quality.issue.detected.v1
+    - robotics.industrial.maintenance.completed.v1
+    - robotics.industrial.factory.optimisation.completed.v1
+  microservices:
+    - factory_management_service
+    - production_planning_service
+    - manufacturing_execution_service
+    - industrial_robotics_service
+    - industrial_automation_service
+    - quality_management_service
+    - maintenance_intelligence_service
+    - factory_digital_twin_service
+    - industrial_analytics_service
+    - industrial_knowledge_graph_service
+    - energy_intelligence_service

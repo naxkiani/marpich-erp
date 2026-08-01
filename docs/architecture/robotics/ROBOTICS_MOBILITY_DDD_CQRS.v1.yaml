@@ -1,0 +1,44 @@
+# ROBOTICS_MOBILITY_DDD_CQRS.v1.yaml — P216-H
+apiVersion: marpich.io/v1
+kind: RoboticsMobilityDddCqrsCatalog
+metadata:
+  phase: P216-H
+  adr: "480"
+spec:
+  commands:
+    - RegisterVehicleCommand
+    - AssignMissionCommand
+    - LaunchDroneCommand
+    - OptimizeRouteCommand
+    - UpdateNavigationCommand
+    - CompleteMissionCommand
+    - ScheduleMaintenanceCommand
+  queries:
+    - GetVehicleStatusQuery
+    - GetFleetStatusQuery
+    - GetMissionStateQuery
+    - GetTrafficStateQuery
+    - GetDroneStatusQuery
+    - GetDigitalTwinQuery
+  events:
+    - robotics.mobility.vehicle.connected.v1
+    - robotics.mobility.mission.started.v1
+    - robotics.mobility.navigation.updated.v1
+    - robotics.mobility.obstacle.detected.v1
+    - robotics.mobility.drone.takeoff.v1
+    - robotics.mobility.drone.landing.v1
+    - robotics.mobility.traffic.congestion.detected.v1
+    - robotics.mobility.emergency.route.activated.v1
+    - robotics.mobility.vehicle.maintenance.completed.v1
+    - robotics.mobility.fleet.optimization.completed.v1
+  microservices:
+    - vehicle_service
+    - navigation_service
+    - drone_service
+    - fleet_service
+    - traffic_intelligence_service
+    - digital_twin_service
+    - maintenance_service
+    - telematics_service
+    - mobility_analytics_service
+    - knowledge_graph_service

@@ -1,0 +1,28 @@
+# ROBOTICS_CONSTRUCTION_SECURITY.v1.yaml — P216-K
+apiVersion: marpich.io/v1
+kind: RoboticsConstructionSecurityCatalog
+metadata:
+  phase: P216-K
+  adr: "483"
+spec:
+  framework: meos_construction_zero_trust_framework
+  includes:
+    - robot_identity
+    - worker_identity
+    - equipment_identity
+    - building_identity
+    - infrastructure_identity
+    - mission_authorisation
+    - operational_safety
+    - edge_security
+    - threat_detection
+  hard_laws:
+    - bim_gis_scada_via_integration_platform_only
+    - never_direct_bim_gis_scada_bypass
+    - physical_ai_via_p214z_acl_only
+    - no_module_local_llm
+    - never_duplicate_construction_core_logic
+    - never_replace_p216_i_healthcare
+    - ungated_physical_autonomy_forbidden
+    - opaque_safety_forbidden
+    - iso_19650_bim_native

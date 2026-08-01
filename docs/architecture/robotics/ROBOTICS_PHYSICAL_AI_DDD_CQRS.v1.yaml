@@ -1,0 +1,41 @@
+# ROBOTICS_PHYSICAL_AI_DDD_CQRS.v1.yaml — P216-E
+apiVersion: marpich.io/v1
+kind: RoboticsPhysicalAiDddCqrsCatalog
+metadata:
+  phase: P216-E
+  adr: "477"
+spec:
+  commands:
+    - StartPerceptionCommand
+    - UpdateWorldModelCommand
+    - GenerateDecisionCommand
+    - ExecuteActionCommand
+    - LearnFromExperienceCommand
+    - ValidateSafetyCommand
+  queries:
+    - GetRobotPerceptionQuery
+    - GetWorldStateQuery
+    - GetDecisionHistoryQuery
+    - GetLearningStateQuery
+    - GetEnvironmentMapQuery
+    - GetRobotMemoryQuery
+  events:
+    - robotics.physical_ai.perception.started.v1
+    - robotics.physical_ai.object.detected.v1
+    - robotics.physical_ai.environment.mapped.v1
+    - robotics.physical_ai.decision.approved.v1
+    - robotics.physical_ai.action.executed.v1
+    - robotics.physical_ai.behaviour.adapted.v1
+    - robotics.physical_ai.learning.completed.v1
+    - robotics.physical_ai.safety.override.activated.v1
+  microservices:
+    - robot_perception_service
+    - sensor_fusion_service
+    - physical_ai_service
+    - world_model_service
+    - decision_intelligence_service
+    - motion_planning_service
+    - robot_memory_service
+    - learning_intelligence_service
+    - knowledge_graph_service
+    - safety_decision_service

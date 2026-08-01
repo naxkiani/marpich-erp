@@ -1,0 +1,24 @@
+# ROBOTICS_INDUSTRIAL_BOUNDED_CONTEXTS.v1.yaml — P216-F
+apiVersion: marpich.io/v1
+kind: RoboticsIndustrialBoundedContextCatalog
+metadata:
+  phase: P216-F
+  adr: "478"
+spec:
+  bounded_contexts:
+    - id: BC-01
+      name: Factory Management Context
+    - id: BC-02
+      name: Production Planning Context
+    - id: BC-03
+      name: Manufacturing Execution Context
+    - id: BC-04
+      name: Industrial Robotics Context
+    - id: BC-05
+      name: Industrial Quality Context
+    - id: BC-06
+      name: Predictive Maintenance Context
+    - id: BC-07
+      name: Factory Digital Twin Context
+    - id: BC-08
+      name: Industrial Intelligence Context

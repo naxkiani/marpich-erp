@@ -1,0 +1,36 @@
+# ROBOTICS_CONSTRUCTION_DDD_CQRS.v1.yaml — P216-K
+apiVersion: marpich.io/v1
+kind: RoboticsConstructionDddCqrsCatalog
+metadata:
+  phase: P216-K
+  adr: "483"
+spec:
+  commands:
+    - CreateConstructionProjectCommand
+    - AssignRobotMissionCommand
+    - ApproveConstructionPhaseCommand
+    - UpdateDigitalTwinCommand
+    - ScheduleInspectionCommand
+  queries:
+    - GetProjectStatusQuery
+    - GetBuildingStatusQuery
+    - GetInfrastructureHealthQuery
+    - GetRobotFleetQuery
+  events:
+    - robotics.construction.started.v1
+    - robotics.construction.phase.completed.v1
+    - robotics.construction.robot.mission.completed.v1
+    - robotics.construction.inspection.passed.v1
+    - robotics.construction.infrastructure.issue.detected.v1
+    - robotics.construction.building.operational.v1
+  microservices:
+    - construction_management_service
+    - construction_robotics_service
+    - bim_service
+    - infrastructure_monitoring_service
+    - smart_building_service
+    - asset_lifecycle_service
+    - digital_twin_service
+    - knowledge_graph_service
+    - safety_service
+    - construction_analytics_service

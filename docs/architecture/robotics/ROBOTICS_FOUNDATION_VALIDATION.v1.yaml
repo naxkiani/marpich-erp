@@ -1,0 +1,41 @@
+# ROBOTICS_FOUNDATION_VALIDATION.v1.yaml — P216
+apiVersion: marpich.io/v1
+kind: RoboticsFoundationValidationCatalog
+metadata:
+  phase: P216
+  adr: "472"
+spec:
+  quality_gates:
+    - Enterprise Robotics Platform
+    - Autonomous Machine Platform
+    - Physical AI Engine
+    - Industrial Intelligence Platform
+    - Robot Fleet Intelligence
+    - Digital Twin Integration
+    - Edge Intelligence
+    - Human-Robot Collaboration
+    - Cyber-Physical Security
+    - CQRS Architecture
+    - Event Architecture
+    - Microservices Architecture
+    - API First Architecture
+    - Cloud Native Deployment
+  definition_of_done:
+    - Robotics Platform exists
+    - Autonomous Machine Platform exists
+    - Physical AI Platform exists
+    - Industrial Intelligence Platform exists
+    - Robot Fleet Platform exists
+    - Digital Twin Platform exists
+    - Edge Intelligence exists
+    - Human-Robot Collaboration exists
+    - Knowledge Graph exists
+    - CQRS Architecture exists
+    - Event Architecture exists
+    - Microservice Architecture exists
+    - API Platform exists
+    - Security Architecture exists
+    - Governance Architecture exists
+    - Deployment Architecture exists
+    - Testing Architecture exists
+  foundation_validator: validate_rb_foundation_foundation

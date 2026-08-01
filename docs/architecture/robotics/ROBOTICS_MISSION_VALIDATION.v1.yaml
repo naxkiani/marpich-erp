@@ -1,0 +1,31 @@
+# ROBOTICS_MISSION_VALIDATION.v1.yaml — P216-A
+apiVersion: marpich.io/v1
+kind: RoboticsMissionValidationCatalog
+metadata:
+  phase: P216-A
+  adr: "473"
+spec:
+  quality_gates:
+    - Robotics mission defined
+    - Robotics vision defined
+    - Strategic objectives defined
+    - Cyber-physical scope defined
+    - Capability map defined
+    - Operating model defined
+    - MEOS integration defined
+    - Business value framework defined
+    - Evolution roadmap defined
+    - Governance strategy defined
+    - Security strategy defined
+  definition_of_done:
+    - Enterprise Robotics Mission exists
+    - Enterprise Robotics Vision exists
+    - Strategic Scope exists
+    - Capability Framework exists
+    - Operating Model exists
+    - Integration Strategy exists
+    - Governance Strategy exists
+    - Security Strategy exists
+    - Evolution Roadmap exists
+    - Foundation for P216-B exists
+  foundation_validator: validate_rb_mission_foundation
