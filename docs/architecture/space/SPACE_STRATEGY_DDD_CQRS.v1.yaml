@@ -1,0 +1,17 @@
+apiVersion: marpich.io/v1
+kind: SpaceStrategyDddCqrs
+metadata:
+  prompt: P218-B
+  adr: "528"
+bounded_contexts: 7
+commands:
+  - RegisterSpaceCapabilityCommand
+  - PublishSpaceOperatingModelCommand
+  - AssessSpaceMaturityCommand
+queries:
+  - GetSpaceArchitectureQuery
+  - GetSpaceCapabilityModelQuery
+events:
+  - SpaceArchitecturePublishedEvent
+  - SpaceCapabilityRegisteredEvent
+  - SpaceOperatingModelUpdatedEvent

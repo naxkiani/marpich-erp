@@ -1,0 +1,35 @@
+context: space
+architecture_version: "1.0"
+display_name: Enterprise Space Intelligence, Space AI, Orbital Civilization Systems, Autonomous Space Operations & MEOS Space Intelligence Platform
+type: platform
+description: >-
+  MEOS Space Intelligence Fabric — space AI, orbital civilization systems,
+  autonomous space operations, space digital twins, and space trust (P218).
+  Quantum/robotics/bio peers via ACL. External ground/space systems via Integration Platform.
+api: /api/v1/space
+series: P218
+foundation_prompt: P218
+adr: "526"
+capability: CAP-PLT-SP-001
+permissions:
+  - space.read
+  - space.write
+  - space.ai.read
+  - space.ai.infer
+  - space.admin
+ai:
+  surfaces:
+    - insights
+    - predictions
+    - recommendations
+    - summaries
+    - search
+    - assistant
+    - automation
+    - document_intelligence
+    - voice_commands
+    - chat_interface
+    - report_explanation
+    - anomaly_detection
+    - forecasting
+    - optimization_suggestions

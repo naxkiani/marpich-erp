@@ -1,0 +1,50 @@
+# P218_MASTER_SERIES_ROADMAP.v1.yaml
+apiVersion: marpich.io/v1
+kind: MasterSeriesRoadmap
+metadata:
+  series: P218
+  title: Enterprise Space Intelligence, Space AI, Orbital Civilization Systems, Autonomous Space Operations & MEOS Space Intelligence Platform
+summary:
+  - P218..P218-E done (ADRs 526-531); space AI fabric meos_space_ai_intelligence_fabric under /space/space-ai*; inference via P214-Z only; next P218-F Satellite Intelligence
+phases:
+  - id: P218
+    title: Enterprise Space Intelligence Foundation
+    status: done
+    adr: "526"
+    fabric: meos_space_intelligence_fabric
+    api: /api/v1/space*
+    capability: CAP-PLT-SP-001
+  - id: P218-A
+    title: Mission, Vision, Strategic Scope & Capability Framework
+    status: done
+    adr: "527"
+    fabric: meos_space_intelligence_strategic_framework
+    api: /api/v1/space/mission*
+  - id: P218-B
+    title: Strategic Architecture, Capability Model, Operating Model & Space Operating Framework
+    status: done
+    adr: "528"
+    fabric: meos_space_intelligence_strategic_architecture_framework
+    api: /api/v1/space/strategy*
+  - id: P218-C
+    title: Domain Architecture (DDD), Bounded Contexts, Aggregates, Entities, Domain Events & Space Intelligence Domain Model
+    status: done
+    adr: "529"
+    fabric: meos_space_intelligence_domain_architecture_framework
+    api: /api/v1/space/domain*
+  - id: P218-D
+    title: Space Infrastructure, Ground Segment, Mission Control, Space Cloud & MEOS Space Infrastructure Platform
+    status: done
+    adr: "530"
+    fabric: meos_space_intelligence_infrastructure_fabric
+    api: /api/v1/space/infrastructure*
+  - id: P218-E
+    title: Space AI Engine, Mission Intelligence, Autonomous Decision Systems, Space Cognitive Platform & MEOS Space AI Intelligence Core
+    status: done
+    adr: "531"
+    fabric: meos_space_ai_intelligence_fabric
+    api: /api/v1/space/space-ai*
+  - id: P218-F
+    title: Satellite Intelligence, Constellation Management, Orbital Asset Operations & MEOS Satellite Intelligence Platform
+    status: planned
+    api: /api/v1/space/satellite*

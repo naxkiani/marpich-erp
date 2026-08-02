@@ -2,12 +2,15 @@
 from __future__ import annotations
 
 import importlib
+import logging
 from typing import TYPE_CHECKING
 
 from core.presentation.api.app_profiles import filter_specs_by_profile
 
 if TYPE_CHECKING:
     from fastapi import FastAPI
+
+logger = logging.getLogger(__name__)
 
 API_PREFIX = "/api/v1"
 
@@ -24,7 +27,6 @@ CORE_SERVICE_SPECS: list[tuple[str, str]] = [
     ("contexts.identity_federation.container", "get_identity_federation_service"),
     ("contexts.identity_digital_twin.container", "get_identity_digital_twin_service"),
     ("contexts.identity_intelligence.container", "get_identity_intelligence_service"),
-    ("contexts.consent.container", "get_consent_service"),
     ("contexts.identity_federation.container", "get_fabric_security_service"),
     ("contexts.identity_federation.container", "get_fabric_intelligence_service"),
     ("contexts.identity_federation.container", "get_identity_federation_ai_service"),
@@ -132,7 +134,6 @@ ALL_SERVICE_SPECS: list[tuple[str, str]] = [
     ("contexts.currency_exchange.container", "get_fx_workflow_engine_service"),
     ("contexts.currency_exchange.container", "get_fx_security_platform_service"),
     ("contexts.currency_exchange.container", "get_fx_analytics_platform_service"),
-    ("contexts.digital_exchange.container", "get_digital_exchange_layer_service"),
     ("contexts.tax.container", "get_tax_engine_service"),
     ("contexts.tax.container", "get_tax_rule_engine_service"),
     ("contexts.tax.container", "get_tax_calculation_service"),
@@ -188,7 +189,6 @@ ROUTER_SPECS: list[tuple[str, str]] = [
     ("contexts.identity_federation.presentation.router", "identity_federation_router"),
     ("contexts.identity_digital_twin.presentation.router", "identity_digital_twin_router"),
     ("contexts.identity_intelligence.presentation.router", "identity_intelligence_router"),
-    ("contexts.consent.presentation.router", "consent_router"),
     ("contexts.identity_federation.presentation.gateway_router", "federation_gateway_router"),
     ("contexts.identity_federation.presentation.gateway_router", "identity_gateway_router"),
     ("contexts.identity_federation.presentation.fabric_router", "fabric_security_router"),
@@ -258,6 +258,8 @@ ROUTER_SPECS: list[tuple[str, str]] = [
     ("contexts.data_governance.presentation.router", "data_governance_router"),
     ("contexts.quantum.presentation.router", "quantum_router"),
     ("contexts.robotics.presentation.router", "robotics_router"),
+    ("contexts.biotechnology.presentation.router", "biotechnology_router"),
+    ("contexts.space.presentation.router", "space_router"),
     ("contexts.enterprise_executive_dashboard.presentation.router", "enterprise_executive_dashboard_router"),
     ("contexts.enterprise_decision_support.presentation.router", "enterprise_decision_support_router"),
     ("contexts.financial_data_science.presentation.router", "financial_data_science_router"),
@@ -347,7 +349,6 @@ ROUTER_SPECS: list[tuple[str, str]] = [
     ("contexts.currency_exchange.presentation.fx_workflow_router", "fx_workflow_router"),
     ("contexts.currency_exchange.presentation.fx_security_router", "fx_security_router"),
     ("contexts.currency_exchange.presentation.fx_analytics_router", "fx_analytics_router"),
-    ("contexts.digital_exchange.presentation.digital_exchange_router", "digital_exchange_router"),
     ("contexts.tax.presentation.tax_router", "tax_router"),
     ("contexts.tax.presentation.tax_rule_router", "tax_rule_router"),
     ("contexts.tax.presentation.tax_calculation_router", "tax_calculation_router"),
@@ -415,18 +416,28 @@ def register_routers(app: "FastAPI", *, profile: str = "full") -> int:
     if _registered_profiles.get(app_id) == profile:
         return len(router_specs_for_profile(profile))
     specs = router_specs_for_profile(profile)
+    registered = 0
     for module_path, attr in specs:
-        app.include_router(resolve_router(module_path, attr), prefix=API_PREFIX)
+        try:
+            app.include_router(resolve_router(module_path, attr), prefix=API_PREFIX)
+            registered += 1
+        except (ModuleNotFoundError, ImportError, AttributeError) as exc:
+            logger.warning("Skipping router %s.%s — %s", module_path, attr, exc)
     _registered_profiles[app_id] = profile
-    return len(specs)
+    return registered
 
 
 def warmup_services(app: "FastAPI", specs: list[tuple[str, str]]) -> int:
     app_id = id(app)
+    warmed = 0
     for module_path, getter in specs:
-        resolve_service(module_path, getter)
+        try:
+            resolve_service(module_path, getter)
+            warmed += 1
+        except (ModuleNotFoundError, ImportError, AttributeError) as exc:
+            logger.warning("Skipping service %s.%s — %s", module_path, getter, exc)
     _services_warmed_for[app_id] = "done"
-    return len(specs)
+    return warmed
 
 
 def configure_application(

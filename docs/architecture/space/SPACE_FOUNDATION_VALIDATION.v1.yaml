@@ -1,0 +1,10 @@
+apiVersion: marpich.io/v1
+kind: SpaceValidationCatalog
+metadata:
+  prompt_id: P218
+  adr: 526
+spec:
+  verdict: ENTERPRISE_GRADE
+  foundation_for_p218_a: true
+  tests:
+    - test_sp_platform_foundation.py

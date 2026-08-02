@@ -1,0 +1,7 @@
+apiVersion: marpich.io/v1
+kind: SpaceMissionCapabilities
+metadata: {prompt_id: P218-A, adr: 527}
+spec:
+  level_1_count: 20
+  value_stream_count: 10
+  driver_count: 10

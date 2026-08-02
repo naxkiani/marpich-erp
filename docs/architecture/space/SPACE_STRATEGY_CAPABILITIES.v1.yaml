@@ -1,0 +1,13 @@
+apiVersion: marpich.io/v1
+kind: SpaceStrategyCapabilities
+metadata:
+  prompt: P218-B
+  adr: "528"
+l1_count: 20
+groups:
+  - Mission and Orbital Operations
+  - Space AI and Autonomy
+  - Scientific Navigation and Communications
+  - Space Economy and Commercial
+  - Security Governance and Sustainability
+  - Platform Services and Administration

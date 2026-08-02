@@ -1,0 +1,14 @@
+apiVersion: marpich.io/v1
+kind: SpaceSecurityCatalog
+metadata:
+  prompt_id: P218
+  adr: 526
+spec:
+  zero_trust_space_infrastructure: true
+  locks:
+    - never_opaque_mission_critical_decisions
+    - never_ungated_autonomous_mission_release
+    - never_skip_human_mission_oversight
+    - never_skip_space_cybersecurity_controls
+    - never_skip_space_sustainability_requirements
+    - no_module_local_llm

@@ -1,0 +1,16 @@
+apiVersion: marpich.io/v1
+kind: SpaceInfrastructureValidation
+metadata:
+  prompt: P218-D
+  adr: "530"
+verdict: ENTERPRISE_GRADE
+foundation_for: P218-E
+gates:
+  - P218
+  - P218-A
+  - P218-B
+  - P218-C
+  - P217-Z
+  - P216-Z
+  - P215-Z
+  - P214-Z

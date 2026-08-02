@@ -346,7 +346,7 @@ CONSENT = BoundedContext(
     display_name="Enterprise Consent & Privacy Platform",
     context_type=BoundedContextType.PLATFORM,
     schema_name="consent",
-    description="Consent ledger, preferences, DSAR, privacy notices, retention metadata, DPIA hooks",
+    description="Planned (not yet scaffolded): consent ledger, preferences, DSAR, privacy notices, retention metadata, DPIA hooks",
     publishes=(
         "consent.granted",
         "consent.revoked",
@@ -470,7 +470,6 @@ QUANTUM = BoundedContext(
     subscribes=("platform.tenant.provisioned",),
 )
 
-
 ROBOTICS = BoundedContext(
     id="robotics",
     display_name=(
@@ -491,6 +490,58 @@ ROBOTICS = BoundedContext(
         "robotics.foundation.autonomous.action.completed",
         "robotics.foundation.fleet.optimization.completed",
         "robotics.foundation.safety.violation.detected",
+    ),
+    subscribes=("platform.tenant.provisioned",),
+)
+
+BIOTECHNOLOGY = BoundedContext(
+    id="biotechnology",
+    display_name=(
+        "Enterprise Biotechnology, Synthetic Biology, Bio-AI Intelligence, "
+        "Digital Health Evolution & MEOS Bio Intelligence Platform"
+    ),
+    context_type=BoundedContextType.PLATFORM,
+    schema_name="biotechnology",
+    description=(
+        "MEOS Bio Intelligence Fabric — biotechnology research, synthetic biology, "
+        "bio-AI, digital health, precision medicine, biological digital twins — "
+        "SoR for P217; clinical EMR/LIMS/pharmacy remain peer SoRs; research "
+        "connectors via Integration Platform"
+    ),
+    publishes=(
+        "biotechnology.foundation.project.created",
+        "biotechnology.foundation.genome.processed",
+        "biotechnology.foundation.synthetic.completed",
+        "biotechnology.foundation.health.insight.created",
+        "biotechnology.foundation.treatment.validated",
+        "biotechnology.foundation.discovery.generated",
+        "biotechnology.foundation.twin.updated",
+    ),
+    subscribes=("platform.tenant.provisioned",),
+)
+
+SPACE = BoundedContext(
+    id="space",
+    display_name=(
+        "Enterprise Space Intelligence, Space AI, Orbital Civilization Systems, "
+        "Autonomous Space Operations & MEOS Space Intelligence Platform"
+    ),
+    context_type=BoundedContextType.PLATFORM,
+    schema_name="space",
+    description=(
+        "MEOS Space Intelligence Fabric — space AI, orbital civilization, "
+        "autonomous space operations, space digital twins, and space trust — "
+        "SoR for P218; quantum/robotics/bio remain peer SoRs; ground/space "
+        "telemetry connectors via Integration Platform"
+    ),
+    publishes=(
+        "space.foundation.insight.generated",
+        "space.foundation.mission.optimized",
+        "space.foundation.orbital.change",
+        "space.foundation.asset.recovered",
+        "space.foundation.mission.started",
+        "space.foundation.twin.updated",
+        "space.foundation.governance.violation",
     ),
     subscribes=("platform.tenant.provisioned",),
 )
@@ -679,7 +730,7 @@ DIGITAL_EXCHANGE = BoundedContext(
     display_name="Digital Exchange Layer",
     context_type=BoundedContextType.FINANCE,
     schema_name="digital_exchange",
-    description="Modular digital wallets, CBDC, stablecoins, ISO 20022 — flag and policy gated",
+    description="Planned (not yet scaffolded): modular digital wallets, CBDC, stablecoins, ISO 20022 — flag and policy gated",
     publishes=(
         "digital_exchange.extension.registered",
         "digital_exchange.extension.enabled",
@@ -1089,6 +1140,8 @@ ALL_CONTEXTS: tuple[BoundedContext, ...] = (
     DATA_GOVERNANCE,
     QUANTUM,
     ROBOTICS,
+    BIOTECHNOLOGY,
+    SPACE,
     AUTHORIZATION,
     PERMISSION_REGISTRY,
     COMPLIANCE,
@@ -1127,6 +1180,9 @@ ALL_CONTEXTS: tuple[BoundedContext, ...] = (
     MUNICIPALITY,
     NGO,
 )
+
+# Catalog-only contexts intentionally have no package until their implementation is scaffolded.
+PLANNED_CONTEXT_IDS = frozenset({"consent", "digital_exchange"})
 
 CONTEXT_BY_ID: dict[str, BoundedContext] = {c.id: c for c in ALL_CONTEXTS}
 

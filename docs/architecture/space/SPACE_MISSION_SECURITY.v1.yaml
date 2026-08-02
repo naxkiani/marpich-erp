@@ -1,0 +1,10 @@
+apiVersion: marpich.io/v1
+kind: SpaceMissionSecurity
+metadata: {prompt_id: P218-A, adr: 527}
+spec:
+  locks:
+    - never_opaque_mission_critical_strategy
+    - never_ungated_autonomous_mission_strategy
+    - never_skip_human_mission_oversight_strategy
+    - never_skip_space_cybersecurity_strategy
+    - never_skip_space_sustainability_strategy

@@ -1,0 +1,5 @@
+apiVersion: marpich.io/v1
+kind: SpaceMissionBoundedContexts
+metadata: {prompt_id: P218-A, adr: 527}
+spec:
+  context_count: 7

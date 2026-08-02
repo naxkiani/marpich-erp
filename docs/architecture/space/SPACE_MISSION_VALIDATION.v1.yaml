@@ -1,0 +1,7 @@
+apiVersion: marpich.io/v1
+kind: SpaceMissionValidation
+metadata: {prompt_id: P218-A, adr: 527}
+spec:
+  verdict: ENTERPRISE_GRADE
+  foundation_for_p218_b: true
+  tests: [test_sp_platform_mission.py]

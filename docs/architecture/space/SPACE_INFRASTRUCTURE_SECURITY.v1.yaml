@@ -1,0 +1,13 @@
+apiVersion: marpich.io/v1
+kind: SpaceInfrastructureSecurity
+metadata:
+  prompt: P218-D
+  adr: "530"
+zero_trust: true
+locks:
+  - module_local_observability_store_forbidden
+  - never_direct_ground_station_bypass_of_integration_platform
+  - never_skip_human_mission_oversight_strategy
+  - never_skip_space_cybersecurity_strategy
+  - never_opaque_mission_critical_strategy
+  - never_ungated_autonomous_mission_strategy

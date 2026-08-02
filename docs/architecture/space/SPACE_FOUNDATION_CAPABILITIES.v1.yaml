@@ -1,0 +1,16 @@
+apiVersion: marpich.io/v1
+kind: SpaceCapabilitiesCatalog
+metadata:
+  prompt_id: P218
+  adr: 526
+  fabric: meos_space_intelligence_fabric
+spec:
+  capabilities:
+    - space_intelligence_platform
+    - space_ai_operating_system
+    - orbital_civilization
+    - autonomous_space_operations
+    - space_digital_twin
+    - space_knowledge_graph
+    - space_intelligence_agents
+    - space_trust_security
