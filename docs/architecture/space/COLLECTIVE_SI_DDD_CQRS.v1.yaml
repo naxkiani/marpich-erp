@@ -1,0 +1,44 @@
+apiVersion: marpich.io/v1
+kind: CollectiveSiDddCqrs
+metadata:
+  prompt: P218-W
+  adr: "549"
+bounded_contexts:
+  - Collective Intelligence Management
+  - Human-AI Collaboration
+  - Knowledge Network Management
+  - Reasoning Management
+  - Civilization Intelligence
+  - Governance Intelligence
+aggregates:
+  - CollectiveIntelligenceAggregate
+  - CognitiveNetworkAggregate
+  - KnowledgeFusionAggregate
+  - ReasoningSessionAggregate
+  - CivilizationIntelligenceAggregate
+  - GovernanceAggregate
+commands:
+  - ConnectIntelligenceNodeCommand
+  - ShareKnowledgeAssetCommand
+  - StartCollectiveReasoningCommand
+  - FuseKnowledgeCommand
+  - AuthorizeCollectiveDecisionCommand
+  - ValidateIntelligenceAlignmentCommand
+queries:
+  - GetIntelligenceNodeQuery
+  - GetKnowledgeNetworkQuery
+  - GetReasoningSessionQuery
+  - GetCollectiveDecisionQuery
+  - GetCivilizationChallengeQuery
+  - GetAlignmentStatusQuery
+events:
+  - IntelligenceNodeConnectedEvent
+  - KnowledgeSharedEvent
+  - CollectiveReasoningStartedEvent
+  - SolutionGeneratedEvent
+  - DecisionValidatedEvent
+  - AIHumanCollaborationCreatedEvent
+  - CivilizationInsightDiscoveredEvent
+  - CollectiveIntelligenceExpandedEvent
+  - IntelligenceAlignmentValidatedEvent
+  - HumanAuthorityConfirmedEvent

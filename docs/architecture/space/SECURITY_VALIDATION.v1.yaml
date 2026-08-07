@@ -1,0 +1,28 @@
+apiVersion: marpich.io/v1
+kind: SpaceSecurityValidation
+metadata:
+  prompt: P218-P
+  adr: "542"
+verdict: ENTERPRISE_GRADE
+foundation_for: P218-Q
+gates:
+  - P218
+  - P218-A
+  - P218-B
+  - P218-C
+  - P218-D
+  - P218-E
+  - P218-F
+  - P218-G
+  - P218-H
+  - P218-I
+  - P218-J
+  - P218-K
+  - P218-L
+  - P218-M
+  - P218-N
+  - P218-O
+  - P217-Z
+  - P216-Z
+  - P215-Z
+  - P214-Z

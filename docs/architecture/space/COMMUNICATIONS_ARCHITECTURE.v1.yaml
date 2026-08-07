@@ -1,0 +1,14 @@
+apiVersion: marpich.io/v1
+kind: CommunicationsArchitecture
+metadata:
+  prompt: P218-H
+  adr: "534"
+  fabric: meos_space_communications_fabric
+layers:
+  - L01 Physical Communication Layer
+  - L02 Network Layer
+  - L03 Communication Services Layer
+  - L04 Communication Intelligence Layer
+  - L05 Business & Mission Layer
+layer_count: 5
+dtn_native: true

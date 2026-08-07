@@ -1,0 +1,13 @@
+apiVersion: marpich.io/v1
+kind: NavigationArchitecture
+metadata:
+  prompt: P218-I
+  adr: "535"
+  fabric: meos_space_navigation_intelligence_fabric
+layers:
+  - L01 Navigation Sensor Layer
+  - L02 Navigation Processing Layer
+  - L03 Navigation Intelligence Layer
+  - L04 Guidance & Control Layer
+  - L05 Mission Navigation Services
+layer_count: 5

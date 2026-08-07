@@ -1,0 +1,28 @@
+apiVersion: marpich.io/v1
+kind: SpaceCivilizationControls
+metadata:
+  prompt: P218-T
+  adr: "546"
+controls:
+  - ethical_ai_governance
+  - transparent_decision_systems
+  - privacy_protection
+  - identity_sovereignty
+  - trust_framework
+  - human_rights_protection
+  - audit_trails
+  - human_override
+domains:
+  - social_security
+  - governance_security
+  - ai_ethics
+  - human_rights_protection
+  - civilization_resilience
+laws:
+  never_ungated_governance_decision: true
+  never_skip_ethical_ai_review: true
+  never_skip_human_rights_protection: true
+  never_opaque_unexplainable_civilization_decisions: true
+  never_replace_p218_s_education: true
+  space_ai_via_p214z_acl_only: true
+  no_module_local_llm: true

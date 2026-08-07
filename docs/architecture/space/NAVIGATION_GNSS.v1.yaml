@@ -1,0 +1,8 @@
+apiVersion: marpich.io/v1
+kind: NavigationGnss
+metadata:
+  prompt: P218-I
+  adr: "535"
+supported_systems: 7
+capabilities: 8
+spoofing_detection_required: true

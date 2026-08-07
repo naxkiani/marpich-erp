@@ -1,0 +1,13 @@
+apiVersion: marpich.io/v1
+kind: SpaceCommerceArchitecture
+metadata:
+  prompt: P218-R
+  adr: "544"
+  fabric: meos_space_commerce_intelligence_fabric
+layers:
+  - L01 Space Commerce Foundation Layer
+  - L02 Commercial Intelligence Layer
+  - L03 Marketplace Layer
+  - L04 Commercial Operations Layer
+  - L05 Space Economy Intelligence Layer
+layer_count: 5

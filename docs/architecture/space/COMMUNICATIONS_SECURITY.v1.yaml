@@ -1,0 +1,14 @@
+apiVersion: marpich.io/v1
+kind: CommunicationsSecurity
+metadata:
+  prompt: P218-H
+  adr: "534"
+zero_trust: true
+quantum_ready: true
+locks:
+  - no_module_local_llm
+  - no_module_local_telemetry_stack
+  - no_module_local_communications_radio_stack
+  - never_ungated_command_transport
+  - never_skip_delay_tolerant_networking
+  - never_opaque_unexplainable_decisions

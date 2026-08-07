@@ -1,0 +1,45 @@
+apiVersion: marpich.io/v1
+kind: SpaceCivilizationDddCqrs
+metadata:
+  prompt: P218-T
+  adr: "546"
+bounded_contexts:
+  - Civilization Management
+  - Human Society Management
+  - Settlement Governance
+  - Interplanetary Policy
+  - Social Intelligence
+  - Cultural Intelligence
+  - Future Planning
+aggregates:
+  - CivilizationAggregate
+  - SettlementAggregate
+  - SocietyAggregate
+  - GovernanceAggregate
+  - PolicyAggregate
+  - CommunityAggregate
+commands:
+  - CreateSettlementCommand
+  - EstablishCommunityCommand
+  - ApprovePolicyCommand
+  - MakeGovernanceDecisionCommand
+  - GenerateCivilizationScenarioCommand
+  - CreateInterplanetaryAgreementCommand
+queries:
+  - GetCivilizationQuery
+  - GetSettlementQuery
+  - GetSocietyMetricsQuery
+  - GetGovernancePolicyQuery
+  - GetCivilizationForecastQuery
+  - GetSocialRiskQuery
+events:
+  - SettlementCreatedEvent
+  - CommunityEstablishedEvent
+  - PolicyApprovedEvent
+  - GovernanceDecisionMadeEvent
+  - SocialRiskDetectedEvent
+  - CivilizationScenarioGeneratedEvent
+  - FutureModelUpdatedEvent
+  - InterplanetaryAgreementCreatedEvent
+  - CulturalAssetPreservedEvent
+  - EthicsReviewCompletedEvent

@@ -1,0 +1,14 @@
+apiVersion: marpich.io/v1
+kind: ManufacturingSecurity
+metadata:
+  prompt: P218-M
+  adr: "539"
+zero_trust: true
+locks:
+  - no_module_local_llm
+  - never_ungated_autonomous_factory_production
+  - never_skip_quality_validation
+  - never_skip_industrial_safety_certification
+  - never_violate_circular_space_economy_principles
+  - never_opaque_unexplainable_decisions
+  - never_disable_human_override

@@ -1,0 +1,13 @@
+apiVersion: marpich.io/v1
+kind: NavigationSecurity
+metadata:
+  prompt: P218-I
+  adr: "535"
+zero_trust: true
+locks:
+  - no_module_local_llm
+  - no_module_local_gnss_receiver_stack
+  - never_ungated_guidance_command
+  - never_skip_gnss_spoofing_detection
+  - never_disable_human_override
+  - never_opaque_unexplainable_decisions

@@ -1,0 +1,16 @@
+apiVersion: marpich.io/v1
+kind: ExplorationDddCqrs
+metadata:
+  prompt: P218-L
+  adr: "538"
+bounded_contexts: 8
+aggregates:
+  - ExplorationMissionAggregate
+  - PlanetaryBaseAggregate
+  - SurfaceOperationAggregate
+  - RoverFleetAggregate
+  - HabitatAggregate
+  - ScientificCampaignAggregate
+  - ResourceSiteAggregate
+microservices: 10
+core_events: 10

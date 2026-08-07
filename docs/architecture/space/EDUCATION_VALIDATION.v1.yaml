@@ -1,0 +1,20 @@
+apiVersion: marpich.io/v1
+kind: SpaceEducationValidation
+metadata:
+  prompt: P218-S
+  adr: "545"
+fabric: meos_space_education_intelligence_fabric
+api_prefix: /api/v1/space/education
+required:
+  space_education_platform: true
+  space_knowledge_economy: true
+  training_systems: true
+  workforce_intelligence: true
+  learning_ai: true
+  simulation_platform: true
+  knowledge_graph: true
+  education_digital_twin: true
+  governance: true
+  meos_integration: true
+foundation_for: P218-T
+verdict: ENTERPRISE_GRADE

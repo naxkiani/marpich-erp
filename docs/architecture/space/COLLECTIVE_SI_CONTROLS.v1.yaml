@@ -1,0 +1,33 @@
+apiVersion: marpich.io/v1
+kind: CollectiveSiControls
+metadata:
+  prompt: P218-W
+  adr: "549"
+controls:
+  - transparent_reasoning
+  - human_oversight
+  - trust_framework
+  - ethical_validation
+  - decision_auditability
+  - intelligence_alignment
+  - human_authority_preservation
+  - audit_trails
+domains:
+  - intelligence_alignment
+  - human_authority
+  - ai_accountability
+  - knowledge_ownership
+  - cognitive_privacy
+  - collective_decision_ethics
+laws:
+  never_ungated_collective_decision: true
+  never_skip_intelligence_alignment: true
+  never_violate_human_sovereignty: true
+  never_skip_ethical_validation: true
+  never_opaque_unexplainable_intelligence_decisions: true
+  never_skip_human_authority_preservation: true
+  never_replace_p218_v_human_gi: true
+  never_replace_p218_u_human_evolution: true
+  never_replace_p218_t_civilization: true
+  space_ai_via_p214z_acl_only: true
+  no_module_local_llm: true

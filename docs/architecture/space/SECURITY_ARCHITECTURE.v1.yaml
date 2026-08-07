@@ -1,0 +1,13 @@
+apiVersion: marpich.io/v1
+kind: SpaceSecurityArchitecture
+metadata:
+  prompt: P218-P
+  adr: "542"
+  fabric: meos_space_security_intelligence_fabric
+layers:
+  - L01 Space Asset Protection Layer
+  - L02 Cybersecurity Layer
+  - L03 Threat Intelligence Layer
+  - L04 Autonomous Defense Layer
+  - L05 Strategic Resilience Layer
+layer_count: 5

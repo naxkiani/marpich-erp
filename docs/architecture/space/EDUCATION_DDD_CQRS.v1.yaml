@@ -1,0 +1,45 @@
+apiVersion: marpich.io/v1
+kind: SpaceEducationDddCqrs
+metadata:
+  prompt: P218-S
+  adr: "545"
+bounded_contexts:
+  - Space Education Management
+  - Knowledge Management
+  - Training Operations
+  - Workforce Intelligence
+  - Skill Management
+  - Research Education
+  - Certification Management
+aggregates:
+  - LearningJourneyAggregate
+  - TrainingProgramAggregate
+  - SkillProfileAggregate
+  - KnowledgeAssetAggregate
+  - WorkforceProfileAggregate
+  - CertificationAggregate
+commands:
+  - RegisterLearnerCommand
+  - StartTrainingCommand
+  - AssessSkillCommand
+  - AuthorizeCertificationCommand
+  - PublishKnowledgeCommand
+  - MatchTalentCommand
+queries:
+  - GetLearnerQuery
+  - GetTrainingProgramQuery
+  - GetSkillProfileQuery
+  - GetKnowledgeAssetQuery
+  - GetWorkforceForecastQuery
+  - GetCertificationStatusQuery
+events:
+  - LearnerRegisteredEvent
+  - TrainingStartedEvent
+  - SkillAcquiredEvent
+  - CertificationCompletedEvent
+  - KnowledgePublishedEvent
+  - ResearchSharedEvent
+  - TalentMatchedEvent
+  - CareerPathUpdatedEvent
+  - TrainingOptimizedEvent
+  - SimulationCompletedEvent

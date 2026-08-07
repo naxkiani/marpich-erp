@@ -1,0 +1,13 @@
+apiVersion: marpich.io/v1
+kind: LogisticsArchitecture
+metadata:
+  prompt: P218-O
+  adr: "541"
+  fabric: meos_space_logistics_intelligence_fabric
+layers:
+  - L01 Space Transportation Layer
+  - L02 Logistics Network Layer
+  - L03 Logistics Intelligence Layer
+  - L04 Autonomous Operations Layer
+  - L05 Economic Logistics Layer
+layer_count: 5

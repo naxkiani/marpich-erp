@@ -1,0 +1,16 @@
+apiVersion: marpich.io/v1
+kind: CommunicationsDddCqrs
+metadata:
+  prompt: P218-H
+  adr: "534"
+bounded_contexts: 8
+aggregates:
+  - CommunicationNetworkAggregate
+  - GroundStationAggregate
+  - OpticalLinkAggregate
+  - SatelliteLinkAggregate
+  - BandwidthAggregate
+  - MissionChannelAggregate
+  - RoutingAggregate
+microservices: 10
+core_events: 10

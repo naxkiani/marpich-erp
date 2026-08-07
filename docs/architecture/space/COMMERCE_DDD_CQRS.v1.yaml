@@ -1,0 +1,45 @@
+apiVersion: marpich.io/v1
+kind: SpaceCommerceDddCqrs
+metadata:
+  prompt: P218-R
+  adr: "544"
+bounded_contexts:
+  - Space Commerce Management
+  - Marketplace Management
+  - Commercial Operations
+  - Investment Intelligence
+  - Contract Management
+  - Economic Analytics
+  - Business Governance
+aggregates:
+  - SpaceCompanyAggregate
+  - MarketplaceAggregate
+  - CommercialServiceAggregate
+  - InvestmentAggregate
+  - ContractAggregate
+  - SpaceEconomyAggregate
+commands:
+  - RegisterSpaceCompanyCommand
+  - ListCommercialServiceCommand
+  - MatchCustomerCommand
+  - CreateContractCommand
+  - AuthorizeTransactionCommand
+  - IdentifyInvestmentCommand
+queries:
+  - GetSpaceCompanyQuery
+  - GetMarketplaceListingQuery
+  - GetContractQuery
+  - GetInvestmentOpportunityQuery
+  - GetMarketForecastQuery
+  - GetEconomicIndicatorQuery
+events:
+  - CompanyRegisteredEvent
+  - ServiceListedEvent
+  - CustomerMatchedEvent
+  - ContractCreatedEvent
+  - InvestmentIdentifiedEvent
+  - TransactionCompletedEvent
+  - MarketTrendDetectedEvent
+  - BusinessRiskDetectedEvent
+  - CommercialMissionCreatedEvent
+  - SettlementPostedEvent

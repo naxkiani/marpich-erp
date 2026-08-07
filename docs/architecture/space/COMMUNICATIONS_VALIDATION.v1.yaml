@@ -1,0 +1,20 @@
+apiVersion: marpich.io/v1
+kind: CommunicationsValidation
+metadata:
+  prompt: P218-H
+  adr: "534"
+verdict: ENTERPRISE_GRADE
+foundation_for: P218-I
+gates:
+  - P218
+  - P218-A
+  - P218-B
+  - P218-C
+  - P218-D
+  - P218-E
+  - P218-F
+  - P218-G
+  - P217-Z
+  - P216-Z
+  - P215-Z
+  - P214-Z

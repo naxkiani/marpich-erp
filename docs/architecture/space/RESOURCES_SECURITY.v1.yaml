@@ -1,0 +1,14 @@
+apiVersion: marpich.io/v1
+kind: ResourcesSecurity
+metadata:
+  prompt: P218-N
+  adr: "540"
+zero_trust: true
+locks:
+  - no_module_local_llm
+  - never_ungated_resource_extraction_authorization
+  - never_skip_resource_environmental_assessment
+  - never_skip_planetary_protection_for_extraction
+  - never_violate_circular_resource_economy_principles
+  - never_opaque_unexplainable_decisions
+  - never_disable_human_override

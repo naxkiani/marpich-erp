@@ -1,0 +1,16 @@
+apiVersion: marpich.io/v1
+kind: NavigationDddCqrs
+metadata:
+  prompt: P218-I
+  adr: "535"
+bounded_contexts: 8
+aggregates:
+  - NavigationAggregate
+  - TrajectoryAggregate
+  - GuidanceAggregate
+  - AttitudeAggregate
+  - FlightPlanAggregate
+  - LandingAggregate
+  - FormationAggregate
+microservices: 10
+core_events: 10

@@ -1,0 +1,13 @@
+apiVersion: marpich.io/v1
+kind: ResourcesArchitecture
+metadata:
+  prompt: P218-N
+  adr: "540"
+  fabric: meos_space_resource_intelligence_fabric
+layers:
+  - L01 Resource Discovery Layer
+  - L02 Resource Intelligence Layer
+  - L03 Extraction Intelligence Layer
+  - L04 Resource Economy Layer
+  - L05 Resource Governance & Knowledge Layer
+layer_count: 5

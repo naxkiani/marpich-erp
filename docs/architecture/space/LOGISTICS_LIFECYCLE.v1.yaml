@@ -1,0 +1,10 @@
+apiVersion: marpich.io/v1
+kind: LogisticsLifecycle
+metadata:
+  prompt: P218-O
+  adr: "541"
+stage_count: 10
+cargo_launch_authorization_gated: true
+cargo_authentication_required: true
+supply_chain_security_required: true
+emergency_route_activation_gated: true

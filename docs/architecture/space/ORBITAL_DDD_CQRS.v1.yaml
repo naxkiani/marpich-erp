@@ -1,0 +1,15 @@
+apiVersion: marpich.io/v1
+kind: OrbitalDddCqrs
+metadata:
+  prompt: P218-G
+  adr: "533"
+bounded_contexts: 8
+aggregates:
+  - OrbitalObjectAggregate
+  - ConjunctionAggregate
+  - ManeuverAggregate
+  - DebrisFieldAggregate
+  - RiskAssessmentAggregate
+  - TrafficPlanAggregate
+microservices: 10
+core_events: 12

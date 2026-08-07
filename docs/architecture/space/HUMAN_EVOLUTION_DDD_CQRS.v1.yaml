@@ -1,0 +1,45 @@
+apiVersion: marpich.io/v1
+kind: HumanEvolutionDddCqrs
+metadata:
+  prompt: P218-U
+  adr: "547"
+bounded_contexts:
+  - Human Capability Management
+  - Augmentation Management
+  - Cognitive Intelligence
+  - AI Symbiosis Management
+  - Neural Interface Management
+  - Evolution Governance
+  - Ethical Management
+aggregates:
+  - HumanCapabilityAggregate
+  - AugmentationAggregate
+  - SymbiosisAggregate
+  - CognitiveProfileAggregate
+  - EvolutionPolicyAggregate
+  - EthicsAggregate
+commands:
+  - CreateCapabilityProfileCommand
+  - CaptureHumanConsentCommand
+  - ApproveAugmentationCommand
+  - ConnectAICompanionCommand
+  - StartSymbiosisSessionCommand
+  - CompleteEthicalAssessmentCommand
+queries:
+  - GetHumanProfileQuery
+  - GetCapabilityScoreQuery
+  - GetCognitiveProfileQuery
+  - GetAugmentationStatusQuery
+  - GetSymbiosisSessionQuery
+  - GetEvolutionScenarioQuery
+events:
+  - CapabilityProfileCreatedEvent
+  - AICompanionConnectedEvent
+  - AugmentationApprovedEvent
+  - CognitiveImprovementDetectedEvent
+  - SymbiosisSessionStartedEvent
+  - EthicalAssessmentCompletedEvent
+  - EvolutionScenarioGeneratedEvent
+  - HumanCapabilityExpandedEvent
+  - NeuralConsentCapturedEvent
+  - HumanSovereigntyValidatedEvent

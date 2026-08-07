@@ -1,0 +1,25 @@
+apiVersion: marpich.io/v1
+kind: CollectiveSiLifecycle
+metadata:
+  prompt: P218-W
+  adr: "549"
+stages:
+  - intelligence_node_registration
+  - network_joining
+  - knowledge_fusion
+  - collective_reasoning_activation
+  - intelligence_alignment_review
+  - human_authority_confirmation
+  - collective_decision_authorization
+  - civilization_challenge_assignment
+  - ecosystem_monitoring
+  - collective_si_reporting
+stage_count: 10
+gates:
+  never_ungated_collective_decision: true
+  never_skip_intelligence_alignment: true
+  never_violate_human_sovereignty: true
+  never_skip_ethical_validation: true
+  never_opaque_unexplainable_intelligence_decisions: true
+  never_skip_human_authority_preservation: true
+  human_override_required: true

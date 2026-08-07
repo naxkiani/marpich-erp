@@ -1,0 +1,36 @@
+apiVersion: marpich.io/v1
+kind: IntelligenceNexusControls
+metadata:
+  prompt: P218-Z
+  adr: "552"
+controls:
+  - human_authority
+  - transparency
+  - auditability
+  - safety_validation
+  - trust_management
+  - ethical_evolution
+  - alignment_monitoring
+  - audit_trails
+domains:
+  - human_governance
+  - ethical_intelligence_governance
+  - ai_alignment_governance
+  - civilization_governance
+  - ultimate_intelligence_governance
+laws:
+  never_ungated_supreme_decision: true
+  never_skip_intelligence_alignment: true
+  never_violate_human_sovereignty: true
+  never_skip_ethical_validation: true
+  never_opaque_unexplainable_intelligence_decisions: true
+  never_skip_human_authority_preservation: true
+  never_replace_p218_y_ultimate_governance: true
+  never_replace_p218_x_singularity: true
+  never_replace_p218_w_collective_si: true
+  never_replace_p218_v_human_gi: true
+  never_replace_p218_u_human_evolution: true
+  never_replace_p218_t_civilization: true
+  space_ai_via_p214z_acl_only: true
+  no_module_local_llm: true
+series_complete: true
