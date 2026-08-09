@@ -1,0 +1,27 @@
+# CIVILIZATION_RESOURCES_VALIDATION.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationResourcesValidation
+metadata:
+  prompt_id: P219-G
+  adr: "560"
+quality_gates:
+  - global_resource_intelligence_defined
+  - planetary_resource_optimization_defined
+  - energy_intelligence_defined
+  - water_intelligence_defined
+  - food_intelligence_defined
+  - resource_digital_twin_defined
+  - ai_resource_agents_defined
+  - ddd_domain_model_defined
+  - event_architecture_defined
+  - meos_integration_defined
+definition_of_done:
+  - planetary_resource_intelligence_platform_exists
+  - energy_intelligence_platform_exists
+  - water_intelligence_platform_exists
+  - food_intelligence_platform_exists
+  - resource_optimization_engine_exists
+  - resource_digital_twin_exists
+  - meos_planetary_resource_intelligence_core_exists
+  - foundation_ready_for_p219_h
+verdict_required: ENTERPRISE_GRADE

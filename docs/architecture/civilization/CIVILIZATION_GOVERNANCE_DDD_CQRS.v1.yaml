@@ -1,0 +1,67 @@
+# CIVILIZATION_GOVERNANCE_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationGovernanceDddCqrs
+metadata:
+  prompt_id: P219-K
+  adr: "564"
+bounded_contexts:
+  - id: BC-GOV-01
+    name: Governance Intelligence Core
+    type: CORE
+    aggregate: GovernanceAggregate
+  - id: BC-GOV-02
+    name: Policy Intelligence Context
+    type: CORE
+    aggregate: PolicyAggregate
+  - id: BC-GOV-03
+    name: Decision Intelligence Context
+    type: CORE
+    aggregate: DecisionAggregate
+  - id: BC-GOV-04
+    name: Compliance Intelligence Context
+    type: SUPPORTING
+    aggregate: ComplianceAggregate
+  - id: BC-GOV-05
+    name: Ethics Intelligence Context
+    type: SUPPORTING
+    aggregate: EthicsAggregate
+primary_aggregates:
+  - GovernanceAggregate
+  - GovernanceStateAggregate
+  - PolicyAggregate
+  - DecisionAggregate
+  - ComplianceAggregate
+  - EthicsAggregate
+commands:
+  - CreatePolicyCommand
+  - UpdatePolicyCommand
+  - GenerateDecisionCommand
+  - ValidateComplianceCommand
+  - RunGovernanceSimulationCommand
+  - EvaluateEthicsCommand
+  - ApproveGovernanceActionCommand
+queries:
+  - GetGovernanceStatusQuery
+  - GetPolicyStateQuery
+  - GetDecisionHistoryQuery
+  - GetComplianceReportQuery
+  - GetTrustIndexQuery
+  - GetGovernanceForecastQuery
+events:
+  - GovernanceInitializedEvent
+  - GovernanceUpdatedEvent
+  - GovernanceOptimizedEvent
+  - PolicyCreatedEvent
+  - PolicyChangedEvent
+  - PolicyActivatedEvent
+  - PolicyDeprecatedEvent
+  - DecisionGeneratedEvent
+  - DecisionValidatedEvent
+  - DecisionExecutedEvent
+  - DecisionReviewedEvent
+  - ComplianceValidatedEvent
+  - ViolationDetectedEvent
+  - AuditCompletedEvent
+  - EthicsReviewCompletedEvent
+  - TrustChangedEvent
+  - AlignmentVerifiedEvent

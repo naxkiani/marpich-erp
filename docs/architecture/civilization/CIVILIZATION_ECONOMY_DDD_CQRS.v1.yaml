@@ -1,0 +1,42 @@
+# CIVILIZATION_ECONOMY_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationEconomyDddCqrs
+metadata:
+  prompt_id: P219-H
+  adr: "561"
+bounded_contexts:
+  - id: BC-ECO-01
+    name: Economic Intelligence Core
+    aggregate: EconomicSystemAggregate
+  - id: BC-ECO-02
+    name: Market Intelligence Context
+    aggregate: MarketAggregate
+  - id: BC-ECO-03
+    name: Investment Intelligence Context
+    aggregate: InvestmentAggregate
+  - id: BC-ECO-04
+    name: Future Economy Context
+    aggregate: FutureEconomyAggregate
+commands:
+  - CreateEconomicModelCommand
+  - AnalyzeMarketCommand
+  - GenerateEconomicForecastCommand
+  - SimulateFutureEconomyCommand
+  - OptimizeResourceFlowCommand
+  - EvaluateEconomicPolicyCommand
+queries:
+  - GetEconomicStatusQuery
+  - GetMarketPredictionQuery
+  - GetInvestmentAnalysisQuery
+  - GetEconomicScenarioQuery
+  - GetFutureIndustryModelQuery
+core_events:
+  - EconomicStateChangedEvent
+  - MarketShiftDetectedEvent
+  - InvestmentOpportunityCreatedEvent
+  - InnovationAcceleratedEvent
+  - EconomicRiskDetectedEvent
+  - FutureEconomyScenarioGeneratedEvent
+knowledge_graph:
+  nodes: [Organization, Industry, Market, Resource, Technology, HumanCapital, Investment, Currency, TradeNetwork]
+  edges: [PRODUCES, CONSUMES, INVESTS_IN, TRADES_WITH, DEPENDS_ON, INNOVATES]

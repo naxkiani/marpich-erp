@@ -546,6 +546,34 @@ SPACE = BoundedContext(
     subscribes=("platform.tenant.provisioned",),
 )
 
+CIVILIZATION = BoundedContext(
+    id="civilization",
+    display_name=(
+        "Enterprise Civilization Operating System, Planetary Intelligence Governance, "
+        "Global Infrastructure Intelligence, Human Civilization Management & "
+        "MEOS Civilization Operating System Platform"
+    ),
+    context_type=BoundedContextType.PLATFORM,
+    schema_name="civilization",
+    description=(
+        "MEOS Civilization Operating System Fabric — civilization kernel, planetary "
+        "intelligence, infrastructure intelligence, human civilization management, "
+        "digital twin and governance — SoR for P219; AI/quantum/robotics/bio/space/"
+        "intelligence-nexus remain peer SoRs; external planetary systems via Integration Platform"
+    ),
+    publishes=(
+        "civilization.foundation.initialized",
+        "civilization.foundation.system.connected",
+        "civilization.foundation.infrastructure.optimized",
+        "civilization.foundation.policy.evaluated",
+        "civilization.foundation.resource.allocated",
+        "civilization.foundation.social.change",
+        "civilization.foundation.scenario.generated",
+        "civilization.foundation.evolution.milestone",
+    ),
+    subscribes=("platform.tenant.provisioned",),
+)
+
 AUTHORIZATION = BoundedContext(
     id="authorization",
     display_name="Enterprise Authorization Platform",
@@ -1142,6 +1170,7 @@ ALL_CONTEXTS: tuple[BoundedContext, ...] = (
     ROBOTICS,
     BIOTECHNOLOGY,
     SPACE,
+    CIVILIZATION,
     AUTHORIZATION,
     PERMISSION_REGISTRY,
     COMPLIANCE,

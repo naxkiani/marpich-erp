@@ -1,0 +1,25 @@
+# CIVILIZATION_MISSION_VALIDATION.v1.yaml
+apiVersion: marpich.io/v1
+kind: ValidationScorecard
+metadata:
+  prompt_id: P219-A
+  adr: "554"
+  sor: civilization
+quality_gates:
+  - civilization_os_mission_defined
+  - civilization_os_vision_defined
+  - strategic_scope_defined
+  - capability_framework_defined
+  - strategic_pillars_defined
+  - maturity_model_defined
+  - meos_integration_defined
+  - future_civilization_foundation_defined
+definition_of_done:
+  - civilization_os_identity_exists
+  - strategic_direction_exists
+  - capability_framework_exists
+  - civilization_operating_scope_exists
+  - evolution_roadmap_exists
+  - foundation_for_civilization_architecture_exists
+verdict_target: ENTERPRISE_GRADE
+foundation_for_p219_b: true

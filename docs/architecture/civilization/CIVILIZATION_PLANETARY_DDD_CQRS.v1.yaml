@@ -1,0 +1,50 @@
+# CIVILIZATION_PLANETARY_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationPlanetaryDddCqrs
+metadata:
+  prompt_id: P219-D
+  adr: "557"
+bounded_contexts:
+  - id: BC-PLT-01
+    name: Planetary Infrastructure Management
+    aggregate: InfrastructureAggregate
+  - id: BC-PLT-02
+    name: Earth Digital Twin Management
+    aggregate: EarthTwinAggregate
+  - id: BC-PLT-03
+    name: Global Systems Intelligence
+    aggregate: GlobalSystemAggregate
+commands:
+  - RegisterInfrastructureAssetCommand
+  - UpdateEarthModelCommand
+  - RunPlanetarySimulationCommand
+  - OptimizeGlobalSystemCommand
+  - PredictInfrastructureRiskCommand
+queries:
+  - GetPlanetStatusQuery
+  - GetInfrastructureHealthQuery
+  - GetResourceAvailabilityQuery
+  - GetSimulationResultQuery
+  - GetFutureScenarioQuery
+core_events:
+  - AssetFailureDetectedEvent
+  - MaintenanceScheduledEvent
+  - InfrastructureOptimizedEvent
+  - ClimateChangeDetectedEvent
+  - EnvironmentalRiskGeneratedEvent
+  - ResourceShortageDetectedEvent
+  - ResourceAllocationCompletedEvent
+  - InfrastructureImpactDetectedEvent
+  - PlanetaryDecisionGeneratedEvent
+  - TwinCreatedEvent
+  - SimulationCompletedEvent
+  - FutureScenarioGeneratedEvent
+knowledge_graph:
+  nodes: [Planet, Infrastructure, EnergySystem, WaterSystem, TransportationNetwork, City, Resource, Environment, Technology, Organization]
+  edges: [CONNECTED_TO, DEPENDS_ON, SUPPORTS, IMPACTS, OPTIMIZES, LOCATED_IN, PREDICTS]
+ai_agents:
+  - Planetary Monitoring Agent
+  - Infrastructure Optimization Agent
+  - Climate Intelligence Agent
+  - Resource Management Agent
+  - Emergency Response Agent

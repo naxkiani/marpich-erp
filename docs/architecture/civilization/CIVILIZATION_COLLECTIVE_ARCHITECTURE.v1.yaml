@@ -1,0 +1,69 @@
+# CIVILIZATION_COLLECTIVE_ARCHITECTURE.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationCollectiveArchitecture
+metadata:
+  prompt_id: P219-W
+  adr: "576"
+  fabric: meos_civilization_os_collective_intelligence_global_coordination_framework
+maturity:
+  - Individual Knowledge
+  - Shared Information
+  - Collaborative Knowledge
+  - Coordinated Intelligence
+  - Collective Intelligence
+  - Civilization Coordination Intelligence
+layers:
+  - {id: L01, name: Knowledge Communities}
+  - {id: L02, name: Collaboration Layer}
+  - {id: L03, name: Collective Intelligence Layer}
+  - {id: L04, name: Coordination Digital Twin}
+  - {id: L05, name: Decision Support Layer}
+  - {id: L06, name: Adaptive Coordination Layer}
+community_domains:
+  - government
+  - industry
+  - research
+  - healthcare
+  - education
+  - infrastructure
+  - environment
+  - economy
+  - security
+  - space
+knowledge_sources:
+  - enterprise_systems
+  - knowledge_graphs
+  - research
+  - operational_metrics
+  - policies
+  - simulation_outputs
+  - expert_contributions
+  - historical_archives
+consensus_lifecycle:
+  - Problem Definition
+  - Evidence Collection
+  - Alternative Analysis
+  - Impact Assessment
+  - Recommendation
+  - Human Decision
+  - Review
+collective_agents:
+  - Knowledge Coordination Agent
+  - Collaboration Agent
+  - Evidence Intelligence Agent
+  - Recommendation Agent
+  - Learning Agent
+digital_twins:
+  - Organization Twin
+  - Collaboration Twin
+  - Knowledge Twin
+  - Mission Twin
+  - Coordination Twin
+knowledge_graph:
+  entities: [Community, Expert, Organization, Mission, Knowledge, Evidence, Capability, Recommendation, Decision, Relationship]
+  relationships: [CONTRIBUTES_TO, SUPPORTS, VALIDATES, COLLABORATES_WITH, DEPENDS_ON, COORDINATES, SHARES, ENABLES]
+roadmap:
+  - {id: P01, name: Knowledge Foundation}
+  - {id: P02, name: Collaboration Intelligence}
+  - {id: P03, name: Adaptive Coordination}
+  - {id: P04, name: Collective Intelligence}

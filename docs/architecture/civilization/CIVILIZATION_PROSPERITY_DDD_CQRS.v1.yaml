@@ -1,0 +1,55 @@
+# CIVILIZATION_PROSPERITY_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationProsperityDddCqrs
+metadata:
+  prompt_id: P219-O
+  adr: "568"
+bounded_contexts:
+  - id: BC-PRO-01
+    name: Prosperity Intelligence Core
+    type: CORE
+    aggregate: ProsperityAggregate
+  - id: BC-PRO-02
+    name: Human Flourishing Context
+    type: CORE
+    aggregate: FlourishingAggregate
+  - id: BC-PRO-03
+    name: Opportunity Intelligence Context
+    type: CORE
+    aggregate: OpportunityAggregate
+  - id: BC-PRO-04
+    name: Community Prosperity Context
+    type: SUPPORTING
+    aggregate: CommunityAggregate
+primary_aggregates:
+  - ProsperityAggregate
+  - ProsperityStateAggregate
+  - FlourishingAggregate
+  - OpportunityAggregate
+  - CommunityAggregate
+commands:
+  - CreateProsperityPlanCommand
+  - OptimizeCommunityDevelopmentCommand
+  - GenerateOpportunityMatchCommand
+  - EvaluateQualityOfLifeCommand
+  - RunProsperitySimulationCommand
+  - ImproveHumanFlourishingCommand
+queries:
+  - GetProsperityDashboardQuery
+  - GetQualityOfLifeIndexQuery
+  - GetOpportunityMapQuery
+  - GetCommunityHealthQuery
+  - GetHumanDevelopmentForecastQuery
+events:
+  - ProsperityMeasuredEvent
+  - ProsperityImprovedEvent
+  - QualityOfLifeUpdatedEvent
+  - OpportunityDiscoveredEvent
+  - OpportunityMatchedEvent
+  - OpportunityExpandedEvent
+  - CapabilityImprovedEvent
+  - EducationCompletedEvent
+  - EmploymentCreatedEvent
+  - CommunityDevelopedEvent
+  - SocialProgramCompletedEvent
+  - FlourishingMilestoneReachedEvent

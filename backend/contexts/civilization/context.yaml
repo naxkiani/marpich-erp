@@ -1,0 +1,37 @@
+context: civilization
+architecture_version: "1.0"
+display_name: Enterprise Civilization Operating System, Planetary Intelligence Governance, Global Infrastructure Intelligence, Human Civilization Management & MEOS Civilization Operating System Platform
+type: platform
+description: >-
+  MEOS Civilization Operating System Fabric — civilization kernel, planetary
+  intelligence governance, global infrastructure intelligence, human civilization
+  management, civilization digital twin and governance (P219). Peer SoRs via ACL
+  (AI/Quantum/Robotics/Bio/Space/Intelligence Nexus). External planetary systems
+  via Integration Platform.
+api: /api/v1/civilization
+series: P219
+foundation_prompt: P219
+adr: "553"
+capability: CAP-PLT-CIV-001
+permissions:
+  - civilization.read
+  - civilization.write
+  - civilization.ai.read
+  - civilization.ai.infer
+  - civilization.admin
+ai:
+  surfaces:
+    - insights
+    - predictions
+    - recommendations
+    - summaries
+    - search
+    - assistant
+    - automation
+    - document_intelligence
+    - voice_commands
+    - chat_interface
+    - report_explanation
+    - anomaly_detection
+    - forecasting
+    - optimization_suggestions

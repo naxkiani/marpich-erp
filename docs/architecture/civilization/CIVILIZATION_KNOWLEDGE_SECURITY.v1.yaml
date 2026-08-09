@@ -1,0 +1,28 @@
+# CIVILIZATION_KNOWLEDGE_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationKnowledgeSecurity
+metadata:
+  prompt_id: P219-I
+  adr: "562"
+permissions:
+  - civilization.read
+  - civilization.knowledge.read
+  - civilization.knowledge.write
+  - civilization.ai.read
+  - civilization.ai.infer
+locks:
+  never_module_local_llm: true
+  inference_via_p214_z_only: true
+  never_replace_enterprise_search: true
+  never_replace_document_exchange: true
+  never_ungated_knowledge_publication: true
+  never_opaque_unexplainable_knowledge_decisions: true
+  never_skip_human_authority_knowledge: true
+  never_skip_ethical_knowledge_governance: true
+  never_violate_human_sovereignty_knowledge: true
+  never_bypass_trusted_knowledge_validation: true
+  indexing_via_search_events_only: true
+  documents_via_document_id_refs_only: true
+audit:
+  required_on: [create_node, connect_entity, validate_knowledge, generate_insight, create_network, optimize_learning]
+tenant_isolation: required

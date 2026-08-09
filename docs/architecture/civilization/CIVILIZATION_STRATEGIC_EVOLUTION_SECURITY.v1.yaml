@@ -1,0 +1,25 @@
+# CIVILIZATION_STRATEGIC_EVOLUTION_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationStrategicEvolutionSecurity
+metadata:
+  prompt_id: P219-X
+  adr: "577"
+permissions:
+  - civilization.read
+  - civilization.strategic_evolution.read
+  - civilization.strategic_evolution.write
+  - civilization.ai.read
+  - civilization.ai.infer
+locks:
+  never_ungated_strategic_transformation_execution: true
+  never_opaque_unexplainable_transformation_recommendations: true
+  never_autonomous_enterprise_reconfiguration: true
+  never_bypass_human_authority_strategic_evolution: true
+  never_bypass_human_accountability_strategic_evolution: true
+  never_skip_ethical_transformation_governance: true
+  never_violate_institutional_strategy_ownership: true
+  never_module_local_llm: true
+  inference_via_p214_z_only: true
+  approvals_via_workflow: true
+  policy_via_policy_engine: true
+  audit_via_audit: true

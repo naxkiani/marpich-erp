@@ -1,0 +1,55 @@
+# CIVILIZATION_UNIFIED_CONTROL_ARCHITECTURE.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationUnifiedControlArchitecture
+metadata:
+  prompt_id: P219-Z
+  adr: "579"
+maturity:
+  - Domain Control
+  - Cross-Domain Visibility
+  - Federated Coordination
+  - Governance Fabric Integration
+  - Twin-Federated Orchestration
+  - Unified Enterprise Control Intelligence
+layers:
+  - {id: L01, name: Control Plane Foundation}
+  - {id: L02, name: Integrated Enterprise Intelligence}
+  - {id: L03, name: Unified Coordination}
+  - {id: L04, name: Governance Fabric}
+  - {id: L05, name: Digital Twin Federation}
+  - {id: L06, name: Strategic Decision Support}
+orchestration_domains:
+  - mission
+  - strategy
+  - operations
+  - intelligence
+  - governance
+  - trust
+  - transformation
+  - collective
+  - security
+  - sustainability
+control_lifecycle:
+  - Situational Awareness
+  - Intent Alignment
+  - Orchestration Plan
+  - Governance Gate
+  - Human Authorization
+  - Federated Execution
+  - Assurance Review
+  - Continuous Synchronization
+agents:
+  - Control Plane Agent
+  - Intelligence Federation Agent
+  - Orchestration Agent
+  - Governance Fabric Agent
+  - Twin Federation Agent
+digital_twins:
+  - Enterprise Twin
+  - Control Plane Twin
+  - Orchestration Twin
+  - Governance Twin
+  - Federation Twin
+knowledge_graph:
+  entities: [ControlPlane, DomainNode, OrchestrationPlan, GovernanceGate, TwinFederation, Decision, Evidence, Recommendation, Dependency, Outcome]
+  relationships: [ORCHESTRATES, FEDERATES, GOVERNS, DEPENDS_ON, COORDINATES, SUPPORTS, VALIDATES, AUTHORIZES]

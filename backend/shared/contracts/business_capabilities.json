@@ -82,6 +82,7 @@
     {"id": "CAP-PLT-DG-001", "name": "Enterprise Data Governance Data Mesh and Enterprise Intelligence", "tier": "platform", "namespace": "data-governance", "boundedContext": "data_governance", "lifecycle": "own-govern-assure"},
     {"id": "CAP-PLT-RB-001", "name": "Enterprise Robotics Autonomous Machines Physical AI and Cyber-Physical Intelligence", "tier": "platform", "namespace": "robotics", "boundedContext": "robotics", "lifecycle": "sense-decide-actuate-assure"},
     {"id": "CAP-PLT-BIO-001", "name": "Enterprise Biotechnology Synthetic Biology Bio-AI Intelligence Digital Health and Bio Intelligence", "tier": "platform", "namespace": "biotechnology", "boundedContext": "biotechnology", "lifecycle": "discover-engineer-simulate-govern"},
-    {"id": "CAP-PLT-SP-001", "name": "Enterprise Space Intelligence Space AI Orbital Civilization and Autonomous Space Operations", "tier": "platform", "namespace": "space", "boundedContext": "space", "lifecycle": "observe-reason-operate-govern"}
+    {"id": "CAP-PLT-SP-001", "name": "Enterprise Space Intelligence Space AI Orbital Civilization and Autonomous Space Operations", "tier": "platform", "namespace": "space", "boundedContext": "space", "lifecycle": "observe-reason-operate-govern"},
+    {"id": "CAP-PLT-CIV-001", "name": "Enterprise Civilization Operating System Planetary Intelligence Governance Global Infrastructure and Human Civilization Management", "tier": "platform", "namespace": "civilization", "boundedContext": "civilization", "lifecycle": "coordinate-govern-optimize-evolve"}
   ]
 }

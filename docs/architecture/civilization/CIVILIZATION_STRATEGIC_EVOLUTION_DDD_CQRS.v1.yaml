@@ -1,0 +1,52 @@
+# CIVILIZATION_STRATEGIC_EVOLUTION_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationStrategicEvolutionDddCqrs
+metadata:
+  prompt_id: P219-X
+  adr: "577"
+bounded_contexts:
+  - id: BC-SEVO-01
+    name: Strategic Evolution Core
+    aggregates: [EvolutionProgramAggregate, CapabilityRoadmapAggregate]
+  - id: BC-SEVO-02
+    name: Adaptive Transformation Context
+    aggregates: [TransformationInitiativeAggregate]
+  - id: BC-SEVO-03
+    name: Portfolio Evolution Context
+    aggregates: [StrategicPortfolioAggregate]
+  - id: BC-SEVO-04
+    name: Transformation Intelligence Context
+    aggregates: [TransformationIntelligenceAggregate]
+aggregates:
+  - EvolutionProgramAggregate
+  - CapabilityRoadmapAggregate
+  - TransformationInitiativeAggregate
+  - StrategicPortfolioAggregate
+  - TransformationIntelligenceAggregate
+commands:
+  - DefineEvolutionProgramCommand
+  - AssessPortfolioCommand
+  - DesignTransformationInitiativeCommand
+  - SimulateTransformationImpactCommand
+  - AuthorizeTransformationCommand
+  - CaptureTransformationInsightCommand
+queries:
+  - GetEvolutionDashboardQuery
+  - GetPortfolioCatalogQuery
+  - GetCapabilityRoadmapQuery
+  - GetTransformationCatalogQuery
+  - GetAdaptationMetricsQuery
+  - GetTransformationLearningReportQuery
+events:
+  - EvolutionProgramDefinedEvent
+  - PortfolioAssessedEvent
+  - TransformationInitiativeDesignedEvent
+  - TransformationImpactSimulatedEvent
+  - TransformationAuthorizedEvent
+  - TransformationExecutedEvent
+  - CapabilityEvolvedEvent
+  - AdaptationCycleCompletedEvent
+  - TransformationInsightCapturedEvent
+  - StrategicEvolutionKnowledgeGraphUpdatedEvent
+  - TransformationRecommendationPublishedEvent
+  - ImprovementActionInitiatedEvent

@@ -1,0 +1,37 @@
+# CIVILIZATION_RESOURCES_CAPABILITIES.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationResourcesCapabilities
+metadata:
+  prompt_id: P219-G
+  adr: "560"
+  sor: civilization
+  capability: CAP-PLT-CIV-001
+  fabric: meos_civilization_os_planetary_resource_intelligence_framework
+primary_capability: >
+  Create a civilization-scale resource intelligence platform capable of
+  understanding, predicting, optimizing and governing Earth's resources to
+  support sustainable human development and long-term planetary resilience.
+strategic_objectives:
+  - intelligent_resource_management
+  - global_resource_distribution_optimization
+  - energy_security
+  - water_sustainability
+  - global_food_resilience
+  - resource_waste_reduction
+  - circular_resource_systems
+  - future_civilization_expansion_support
+gates:
+  foundation: P219
+  mission: P219-A
+  strategy: P219-B
+  domain: P219-C
+  planetary: P219-D
+  ai_os: P219-E
+  simulation: P219-F
+  intelligence_nexus: P218-Z
+  space: P218
+  bio: P217-Z
+  robotics: P216-Z
+  quantum: P215-Z
+  ai: P214-Z
+foundation_for: P219-H

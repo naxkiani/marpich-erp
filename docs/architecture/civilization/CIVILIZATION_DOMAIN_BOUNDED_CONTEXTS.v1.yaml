@@ -1,0 +1,28 @@
+# CIVILIZATION_DOMAIN_BOUNDED_CONTEXTS.v1.yaml
+apiVersion: marpich.io/v1
+kind: BoundedContextMap
+metadata:
+  prompt_id: P219-C
+  adr: "556"
+  sor: civilization
+contexts:
+  - id: BC-DOM-01
+    name: Civilization Core Context
+  - id: BC-DOM-02
+    name: Planetary Intelligence Context
+  - id: BC-DOM-03
+    name: Human Civilization Context
+  - id: BC-DOM-04
+    name: Infrastructure Intelligence Context
+  - id: BC-DOM-05
+    name: Resource Intelligence Context
+  - id: BC-DOM-06
+    name: Governance Intelligence Context
+  - id: BC-DOM-07
+    name: Knowledge Civilization Context
+  - id: BC-DOM-08
+    name: Economic Civilization Context
+forbidden_sibling_bc:
+  - civilization_domain_model_platform
+  - civilization_ddd_bc
+  - planetary_domain_bc

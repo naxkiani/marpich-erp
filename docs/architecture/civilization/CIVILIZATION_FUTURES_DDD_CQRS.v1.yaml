@@ -1,0 +1,56 @@
+# CIVILIZATION_FUTURES_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationFuturesDddCqrs
+metadata:
+  prompt_id: P219-S
+  adr: "572"
+bounded_contexts:
+  - id: BC-FUT-01
+    name: Futures Intelligence Core
+    type: CORE
+    aggregate: FuturesAggregate
+  - id: BC-FUT-02
+    name: Scenario Planning Context
+    type: CORE
+    aggregate: ScenarioAggregate
+  - id: BC-FUT-03
+    name: Strategic Planning Context
+    type: CORE
+    aggregate: StrategyAggregate
+  - id: BC-FUT-04
+    name: Resilience Context
+    type: SUPPORTING
+    aggregate: ResilienceAggregate
+primary_aggregates:
+  - FuturesAggregate
+  - TrendAggregate
+  - ScenarioAggregate
+  - StrategyAggregate
+  - ResilienceAggregate
+commands:
+  - GenerateScenarioCommand
+  - RunPolicySimulationCommand
+  - DetectTrendCommand
+  - CreateRoadmapCommand
+  - OptimizeStrategyCommand
+  - EvaluateResilienceCommand
+queries:
+  - GetTrendDashboardQuery
+  - GetFutureScenariosQuery
+  - GetStrategicRoadmapQuery
+  - GetResilienceScoreQuery
+  - GetFutureReadinessQuery
+  - GetForecastInsightsQuery
+events:
+  - TrendDetectedEvent
+  - SignalClassifiedEvent
+  - ForecastGeneratedEvent
+  - ScenarioGeneratedEvent
+  - ScenarioComparedEvent
+  - PolicySimulatedEvent
+  - RiskForecastedEvent
+  - ResilienceImprovedEvent
+  - RoadmapPublishedEvent
+  - StrategyUpdatedEvent
+  - FutureAlertGeneratedEvent
+  - PreparednessImprovedEvent

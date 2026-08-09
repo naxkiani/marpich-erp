@@ -1,0 +1,56 @@
+# CIVILIZATION_CONSCIOUSNESS_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationConsciousnessDddCqrs
+metadata:
+  prompt_id: P219-Q
+  adr: "570"
+bounded_contexts:
+  - id: BC-CON-01
+    name: Awareness Intelligence Core
+    type: CORE
+    aggregate: AwarenessAggregate
+  - id: BC-CON-02
+    name: Wisdom Intelligence Context
+    type: CORE
+    aggregate: WisdomAggregate
+  - id: BC-CON-03
+    name: Collective Learning Context
+    type: CORE
+    aggregate: LearningAggregate
+  - id: BC-CON-04
+    name: Civilization Awareness Context
+    type: SUPPORTING
+    aggregate: CivilizationAwarenessAggregate
+primary_aggregates:
+  - AwarenessAggregate
+  - AwarenessStateAggregate
+  - WisdomAggregate
+  - LearningAggregate
+  - CivilizationAwarenessAggregate
+commands:
+  - GenerateInsightCommand
+  - IntegrateKnowledgeCommand
+  - CreateWisdomModelCommand
+  - RunReflectionCommand
+  - UpdateAwarenessCommand
+  - OptimizeLearningCommand
+queries:
+  - GetCivilizationAwarenessQuery
+  - GetStrategicInsightsQuery
+  - GetWisdomRepositoryQuery
+  - GetKnowledgeEvolutionQuery
+  - GetReflectionHistoryQuery
+  - GetCivilizationHealthQuery
+events:
+  - ContextUpdatedEvent
+  - SituationDetectedEvent
+  - InsightGeneratedEvent
+  - WisdomCreatedEvent
+  - EvidenceValidatedEvent
+  - RecommendationIssuedEvent
+  - KnowledgeIntegratedEvent
+  - LearningSharedEvent
+  - EvolutionCompletedEvent
+  - CivilizationStateUpdatedEvent
+  - AwarenessExpandedEvent
+  - ReflectionCompletedEvent

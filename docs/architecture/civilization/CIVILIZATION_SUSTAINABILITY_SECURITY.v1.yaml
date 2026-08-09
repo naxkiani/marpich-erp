@@ -1,0 +1,33 @@
+# CIVILIZATION_SUSTAINABILITY_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationSustainabilitySecurity
+metadata:
+  prompt_id: P219-N
+  adr: "567"
+permissions:
+  - civilization.read
+  - civilization.sustainability.read
+  - civilization.sustainability.write
+  - civilization.sustainability.simulate
+  - civilization.admin
+locks:
+  never_replace_p219_f_simulation: true
+  never_replace_p219_g_resources: true
+  never_opaque_unexplainable_sustainability_decisions: true
+  never_ungated_environmental_policy_execution: true
+  never_treat_climate_forecast_as_binding_policy: true
+  never_skip_planetary_boundaries_governance: true
+  never_skip_human_authority_sustainability: true
+  never_skip_ethical_sustainability_governance: true
+  never_violate_human_sovereignty_sustainability: true
+  never_bypass_trusted_sustainability_validation: true
+  never_bypass_circular_economy_safeguards: true
+  never_module_local_llm: true
+  inference_via_p214_z_only: true
+  environmental_policy_workflow_gated: true
+controls:
+  - planetary_boundaries_first
+  - circular_economy_first
+  - carbon_aware_computing
+  - net_zero_ready
+  - audit_on_sustainability_mutations

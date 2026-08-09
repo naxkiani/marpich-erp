@@ -1,0 +1,26 @@
+# CIVILIZATION_STRATEGY_VALIDATION.v1.yaml
+apiVersion: marpich.io/v1
+kind: ValidationScorecard
+metadata:
+  prompt_id: P219-B
+  adr: "555"
+  sor: civilization
+quality_gates:
+  - strategic_architecture_defined
+  - capability_model_defined
+  - operating_model_defined
+  - service_framework_defined
+  - governance_framework_defined
+  - digital_twin_integration_defined
+  - meos_integration_defined
+  - civilization_scale_operations_defined
+definition_of_done:
+  - civilization_strategic_architecture_exists
+  - enterprise_capability_model_exists
+  - civilization_operating_model_exists
+  - civilization_service_framework_exists
+  - governance_framework_exists
+  - evolution_model_exists
+  - foundation_ready_for_civilization_domain_architecture
+verdict_target: ENTERPRISE_GRADE
+foundation_for_p219_c: true

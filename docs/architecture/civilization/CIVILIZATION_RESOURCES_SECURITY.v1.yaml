@@ -1,0 +1,26 @@
+# CIVILIZATION_RESOURCES_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationResourcesSecurity
+metadata:
+  prompt_id: P219-G
+  adr: "560"
+permissions:
+  - civilization.read
+  - civilization.resources.read
+  - civilization.resources.write
+  - civilization.ai.read
+  - civilization.ai.infer
+locks:
+  never_module_local_llm: true
+  inference_via_p214_z_only: true
+  complex_optimization_via_p215_z: true
+  never_ungated_resource_allocation_execution: true
+  never_opaque_unexplainable_resource_decisions: true
+  never_skip_human_authority_resource: true
+  never_skip_ethical_resource_governance: true
+  never_violate_human_sovereignty_resource: true
+  never_bypass_circular_economy_safeguards: true
+  observation_ingress_via_integration_platform: true
+audit:
+  required_on: [register, monitor, optimize_energy, optimize_water, optimize_food, generate_scenario]
+tenant_isolation: required

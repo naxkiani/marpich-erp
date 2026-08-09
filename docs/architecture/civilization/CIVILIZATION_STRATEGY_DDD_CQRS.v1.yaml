@@ -1,0 +1,34 @@
+# CIVILIZATION_STRATEGY_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: DomainModelCatalog
+metadata:
+  prompt_id: P219-B
+  adr: "555"
+  sor: civilization
+aggregates:
+  - CivilizationStrategyAggregate
+  - CapabilityAggregate
+  - OperatingModelAggregate
+  - ServiceAggregate
+  - GovernanceAggregate
+entities:
+  - CivilizationCapability
+  - StrategicObjective
+  - OperatingService
+  - GovernanceModel
+  - TransformationPlan
+value_objects:
+  - CapabilityLevel
+  - StrategicPriority
+  - ServiceMaturity
+  - OperatingEfficiency
+  - TransformationState
+events:
+  - CapabilityCreatedEvent
+  - StrategyUpdatedEvent
+  - ServiceActivatedEvent
+  - OperatingModelChangedEvent
+  - CivilizationTransformationStartedEvent
+  - ArchitecturePublishedEvent
+  - GovernanceModelUpdatedEvent
+  - DigitalTwinOperatingModelSyncedEvent

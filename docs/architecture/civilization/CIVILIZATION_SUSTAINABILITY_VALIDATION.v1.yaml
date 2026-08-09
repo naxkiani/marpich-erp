@@ -1,0 +1,27 @@
+# CIVILIZATION_SUSTAINABILITY_VALIDATION.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationSustainabilityValidation
+metadata:
+  prompt_id: P219-N
+  adr: "567"
+quality_gates:
+  - civilization_sustainability_intelligence_defined
+  - planetary_sustainability_platform_defined
+  - climate_intelligence_defined
+  - circular_civilization_systems_defined
+  - environmental_digital_twin_defined
+  - sustainability_knowledge_graph_defined
+  - ddd_domain_model_defined
+  - event_architecture_defined
+  - cqrs_defined
+  - meos_integration_defined
+definition_of_done:
+  - civilization_sustainability_intelligence_platform_exists
+  - climate_intelligence_platform_exists
+  - planetary_sustainability_platform_exists
+  - circular_civilization_systems_exist
+  - carbon_intelligence_platform_exists
+  - environmental_digital_twin_exists
+  - meos_civilization_sustainability_intelligence_core_exists
+  - foundation_ready_for_p219_o
+verdict: ENTERPRISE_GRADE

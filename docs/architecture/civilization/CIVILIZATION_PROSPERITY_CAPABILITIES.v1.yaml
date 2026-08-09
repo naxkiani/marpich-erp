@@ -1,0 +1,45 @@
+# CIVILIZATION_PROSPERITY_CAPABILITIES.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationProsperityCapabilities
+metadata:
+  prompt_id: P219-O
+  adr: "568"
+  sor: civilization
+  capability: CAP-PLT-CIV-001
+  fabric: meos_civilization_os_civilization_prosperity_intelligence_framework
+primary_capability: >
+  Create a civilization-scale prosperity intelligence platform capable of
+  continuously improving quality of life, opportunity, wellbeing and human
+  flourishing through intelligent optimization of civilization systems.
+strategic_objectives:
+  - prosperity_intelligence
+  - global_quality_of_life_improvement
+  - opportunity_accessibility_increase
+  - wellbeing_optimization
+  - inclusive_development_support
+  - civilization_flourishing_measurement
+  - prosperity_trend_prediction
+  - adaptive_prosperity_optimization
+gates:
+  foundation: P219
+  mission: P219-A
+  strategy: P219-B
+  domain: P219-C
+  planetary: P219-D
+  ai_os: P219-E
+  simulation: P219-F
+  resources: P219-G
+  economy: P219-H
+  knowledge: P219-I
+  human: P219-J
+  governance: P219-K
+  innovation: P219-L
+  security: P219-M
+  sustainability: P219-N
+  intelligence_nexus: P218-Z
+  space: P218
+  bio: P217-Z
+  robotics: P216-Z
+  quantum: P215-Z
+  ai: P214-Z
+foundation_for: P219-P

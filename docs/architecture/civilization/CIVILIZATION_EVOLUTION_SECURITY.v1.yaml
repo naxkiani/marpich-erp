@@ -1,0 +1,37 @@
+# CIVILIZATION_EVOLUTION_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationEvolutionSecurity
+metadata:
+  prompt_id: P219-R
+  adr: "571"
+permissions:
+  - civilization.read
+  - civilization.evolution.read
+  - civilization.evolution.write
+  - civilization.evolution.simulate
+  - civilization.admin
+locks:
+  never_replace_p219_e_ai_os: true
+  never_replace_p219_f_simulation: true
+  never_replace_p219_k_governance: true
+  never_replace_p219_q_consciousness: true
+  never_opaque_unexplainable_evolution_decisions: true
+  never_ungated_evolution_transformation_execution: true
+  never_treat_forecast_as_binding_policy: true
+  never_skip_ethical_evolution_governance: true
+  never_skip_human_authority_evolution: true
+  never_violate_human_sovereignty_evolution: true
+  never_bypass_trusted_evolution_validation: true
+  never_bypass_human_supervision_evolution: true
+  never_module_local_llm: true
+  inference_via_p214_z_only: true
+  evolution_transformation_workflow_gated: true
+controls:
+  - evolution_by_design
+  - continuous_adaptation
+  - long_term_thinking
+  - futures_by_design
+  - evidence_based_strategy
+  - explainable_strategic_reasoning
+  - human_supervision
+  - audit_on_evolution_mutations

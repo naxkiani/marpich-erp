@@ -1,0 +1,53 @@
+# CIVILIZATION_COLLECTIVE_CAPABILITIES.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationCollectiveCapabilities
+metadata:
+  prompt_id: P219-W
+  adr: "576"
+  sor: civilization
+  capability: CAP-PLT-CIV-001
+  fabric: meos_civilization_os_collective_intelligence_global_coordination_framework
+primary_capability: >
+  Create a civilization-scale collaboration platform capable of
+  integrating distributed expertise, institutional knowledge and AI-assisted analysis
+  into coordinated strategic execution.
+strategic_objectives:
+  - coordinate_distributed_expertise
+  - improve_collaborative_planning
+  - reduce_organizational_silos
+  - increase_knowledge_reuse
+  - improve_decision_quality
+  - accelerate_cross_domain_coordination
+  - strengthen_organizational_resilience
+  - support_transparent_collaboration
+gates:
+  foundation: P219
+  mission: P219-A
+  strategy: P219-B
+  domain: P219-C
+  planetary: P219-D
+  ai_os: P219-E
+  simulation: P219-F
+  resources: P219-G
+  economy: P219-H
+  knowledge: P219-I
+  human: P219-J
+  governance: P219-K
+  innovation: P219-L
+  security: P219-M
+  sustainability: P219-N
+  prosperity: P219-O
+  collaboration: P219-P
+  consciousness: P219-Q
+  evolution: P219-R
+  futures: P219-S
+  intel_gov: P219-T
+  auto_ops: P219-U
+  gen_intel: P219-V
+  intelligence_nexus: P218-Z
+  space: P218
+  bio: P217-Z
+  robotics: P216-Z
+  quantum: P215-Z
+  ai: P214-Z
+foundation_for: P219-X

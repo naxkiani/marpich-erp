@@ -1,0 +1,30 @@
+# CIVILIZATION_FOUNDATION_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: SecurityControls
+metadata:
+  prompt_id: P219
+  adr: "553"
+  sor: civilization
+permissions:
+  - civilization.read
+  - civilization.write
+  - civilization.ai.read
+  - civilization.ai.infer
+  - civilization.admin
+controls:
+  - authentication_via_identity
+  - authorization_via_permission_engine
+  - policy_via_policy_engine
+  - approvals_via_workflow
+  - audit_via_audit_platform
+  - zero_trust_civilization_control_plane
+  - human_authority_override
+locks:
+  never_ungated_civilization_decision: true
+  never_skip_human_authority: true
+  never_opaque_unexplainable_civilization_decisions: true
+  never_skip_ethical_civilization_governance: true
+  never_violate_human_sovereignty: true
+  no_module_local_llm: true
+  civilization_ai_via_p214z_acl_only: true
+  external_systems_via_integration_platform_only: true

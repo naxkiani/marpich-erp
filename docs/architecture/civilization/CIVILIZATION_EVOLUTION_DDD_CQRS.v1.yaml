@@ -1,0 +1,56 @@
+# CIVILIZATION_EVOLUTION_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationEvolutionDddCqrs
+metadata:
+  prompt_id: P219-R
+  adr: "571"
+bounded_contexts:
+  - id: BC-EVO-01
+    name: Evolution Intelligence Core
+    type: CORE
+    aggregate: EvolutionAggregate
+  - id: BC-EVO-02
+    name: Scenario Intelligence Context
+    type: CORE
+    aggregate: ScenarioAggregate
+  - id: BC-EVO-03
+    name: Strategic Planning Context
+    type: CORE
+    aggregate: StrategyAggregate
+  - id: BC-EVO-04
+    name: Adaptive Evolution Context
+    type: SUPPORTING
+    aggregate: AdaptationAggregate
+primary_aggregates:
+  - EvolutionAggregate
+  - EvolutionStateAggregate
+  - ScenarioAggregate
+  - StrategyAggregate
+  - AdaptationAggregate
+commands:
+  - CreateEvolutionScenarioCommand
+  - GenerateStrategicRoadmapCommand
+  - RunCivilizationSimulationCommand
+  - OptimizeEvolutionPlanCommand
+  - StartTransformationCommand
+  - EvaluateFutureStateCommand
+queries:
+  - GetEvolutionDashboardQuery
+  - GetFutureScenariosQuery
+  - GetStrategicRoadmapsQuery
+  - GetAdaptationStatusQuery
+  - GetCivilizationTrajectoryQuery
+  - GetEvolutionInsightsQuery
+events:
+  - TrendDetectedEvent
+  - EvolutionMeasuredEvent
+  - TransformationInitiatedEvent
+  - ScenarioGeneratedEvent
+  - SimulationCompletedEvent
+  - ForecastUpdatedEvent
+  - RoadmapPublishedEvent
+  - StrategicDecisionApprovedEvent
+  - ExecutionStartedEvent
+  - AdaptationTriggeredEvent
+  - OptimizationFinishedEvent
+  - KnowledgeIntegratedEvent

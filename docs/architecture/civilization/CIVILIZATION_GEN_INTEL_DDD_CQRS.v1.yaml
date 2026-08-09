@@ -1,0 +1,56 @@
+# CIVILIZATION_GEN_INTEL_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationGenIntelDddCqrs
+metadata:
+  prompt_id: P219-V
+  adr: "575"
+bounded_contexts:
+  - id: BC-CGI-01
+    name: Intelligence Coordination Core
+    type: CORE
+    aggregate: CoordinationAggregate
+  - id: BC-CGI-02
+    name: Knowledge Fusion Context
+    type: CORE
+    aggregate: KnowledgeAggregate
+  - id: BC-CGI-03
+    name: Decision Support Context
+    type: CORE
+    aggregate: DecisionSupportAggregate
+  - id: BC-CGI-04
+    name: Agent Coordination Context
+    type: SUPPORTING
+    aggregate: AgentAggregate
+primary_aggregates:
+  - CoordinationAggregate
+  - ReasoningAggregate
+  - KnowledgeAggregate
+  - DecisionSupportAggregate
+  - AgentAggregate
+commands:
+  - IntegrateKnowledgeCommand
+  - CoordinateAgentsCommand
+  - GenerateRecommendationCommand
+  - RunReasoningSessionCommand
+  - UpdateKnowledgeGraphCommand
+  - ValidateEvidenceCommand
+queries:
+  - GetKnowledgeContextQuery
+  - GetReasoningResultsQuery
+  - GetDecisionRecommendationsQuery
+  - GetAgentStatusQuery
+  - GetCoordinationDashboardQuery
+  - GetConfidenceReportQuery
+events:
+  - KnowledgeIntegratedEvent
+  - ReasoningStartedEvent
+  - ReasoningCompletedEvent
+  - RecommendationGeneratedEvent
+  - EvidenceValidatedEvent
+  - AgentAssignedEvent
+  - CoordinationUpdatedEvent
+  - DecisionSupportedEvent
+  - KnowledgeGraphUpdatedEvent
+  - ConfidenceCalculatedEvent
+  - KnowledgeSynchronizedEvent
+  - CoordinationCompletedEvent

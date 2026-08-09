@@ -1,0 +1,55 @@
+# CIVILIZATION_MISSION_CAPABILITIES.v1.yaml
+apiVersion: marpich.io/v1
+kind: CapabilityCatalog
+metadata:
+  prompt_id: P219-A
+  adr: "554"
+  sor: civilization
+  capability: CAP-PLT-CIV-001
+  fabric: meos_civilization_os_strategic_framework
+  api_prefix: /api/v1/civilization/mission
+strategic_domains:
+  - planetary_intelligence_management
+  - human_civilization_intelligence
+  - global_infrastructure_intelligence
+  - civilization_governance_intelligence
+  - civilization_knowledge_intelligence
+  - economic_civilization_intelligence
+  - future_civilization_intelligence
+capability_groups:
+  - civilization_intelligence_core
+  - planetary_management_capability
+  - human_development_capability
+  - infrastructure_intelligence_capability
+  - governance_intelligence_capability
+  - knowledge_civilization_capability
+  - autonomous_civilization_capability
+  - space_civilization_capability
+strategic_pillars:
+  - intelligent_civilization
+  - human_advancement
+  - planetary_sustainability
+  - knowledge_civilization
+  - future_readiness
+  - trust_and_governance
+present_required:
+  civilization_os_mission_framework_present_required: true
+  civilization_os_vision_framework_present_required: true
+  strategic_civilization_scope_present_required: true
+  civilization_os_capability_framework_present_required: true
+  strategic_pillars_framework_present_required: true
+  maturity_model_present_required: true
+  governance_framework_present_required: true
+  meos_integration_strategy_present_required: true
+  future_evolution_roadmap_present_required: true
+  value_framework_present_required: true
+  success_metrics_framework_present_required: true
+gates:
+  foundation_gate: P219
+  intelligence_nexus_gate: P218-Z
+  space_gate: P218
+  bio_gate: P217-Z
+  robotics_gate: P216-Z
+  quantum_gate: P215-Z
+  ai_gate: P214-Z
+  foundation_for: P219-B

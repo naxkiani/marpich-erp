@@ -1,0 +1,71 @@
+# CIVILIZATION_GEN_INTEL_ARCHITECTURE.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationGenIntelArchitecture
+metadata:
+  prompt_id: P219-V
+  adr: "575"
+  fabric: meos_civilization_os_civilization_general_intelligence_coordination_framework
+maturity:
+  - Data
+  - Information
+  - Knowledge
+  - Specialized Intelligence
+  - Integrated Intelligence
+  - Coordinated Intelligence
+  - Civilization General Intelligence Coordination
+layers:
+  - {id: L01, name: Knowledge Domain Layer}
+  - {id: L02, name: Knowledge Integration Layer}
+  - {id: L03, name: Intelligence Coordination Layer}
+  - {id: L04, name: Coordination Digital Twin}
+  - {id: L05, name: Decision Support Layer}
+  - {id: L06, name: Adaptive Coordination Layer}
+knowledge_domains:
+  - economy
+  - governance
+  - healthcare
+  - infrastructure
+  - environment
+  - education
+  - science
+  - security
+  - space
+  - innovation
+knowledge_sources:
+  - structured_data
+  - knowledge_graphs
+  - policies
+  - operational_data
+  - scientific_research
+  - simulation_results
+  - expert_contributions
+  - historical_knowledge
+agent_categories:
+  - planning_agents
+  - analysis_agents
+  - monitoring_agents
+  - simulation_agents
+  - optimization_agents
+  - knowledge_agents
+  - policy_agents
+  - audit_agents
+coord_agents:
+  - Knowledge Coordination Agent
+  - Reasoning Coordination Agent
+  - Decision Support Agent
+  - Coordination Intelligence Agent
+  - Learning Intelligence Agent
+digital_twins:
+  - Knowledge Twin
+  - Reasoning Twin
+  - Capability Twin
+  - Coordination Twin
+  - Decision Twin
+knowledge_graph:
+  entities: [Knowledge, Evidence, Capability, Decision, Policy, Model, Agent, Mission, Objective, Recommendation]
+  relationships: [SUPPORTS, DEPENDS_ON, EXPLAINS, GENERATES, VALIDATES, USES, COORDINATES, CONTRIBUTES_TO]
+roadmap:
+  - {id: P01, name: Knowledge Foundation}
+  - {id: P02, name: Coordination Intelligence}
+  - {id: P03, name: Adaptive Coordination}
+  - {id: P04, name: Civilization Intelligence Coordination}

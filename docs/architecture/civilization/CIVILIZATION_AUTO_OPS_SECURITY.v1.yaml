@@ -1,0 +1,40 @@
+# CIVILIZATION_AUTO_OPS_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationAutoOpsSecurity
+metadata:
+  prompt_id: P219-U
+  adr: "574"
+permissions:
+  - civilization.read
+  - civilization.autonomous_operations.read
+  - civilization.autonomous_operations.write
+  - civilization.autonomous_operations.execute
+  - civilization.admin
+locks:
+  never_replace_p219_e_ai_os: true
+  never_replace_p219_f_simulation: true
+  never_replace_p219_k_governance: true
+  never_replace_p219_t_intelligence_governance: true
+  never_replace_workflow: true
+  never_replace_policy_engine: true
+  never_opaque_unexplainable_operations_automation: true
+  never_ungated_autonomous_operations_execution: true
+  never_skip_human_review_gates_operations: true
+  never_skip_ethical_operations_governance: true
+  never_skip_human_authority_operations: true
+  never_violate_human_sovereignty_operations: true
+  never_bypass_trusted_operations_validation: true
+  never_bypass_human_supervision_operations: true
+  never_bypass_human_governed_autonomy: true
+  never_module_local_llm: true
+  inference_via_p214_z_only: true
+  autonomous_execution_workflow_gated: true
+controls:
+  - human_governed_autonomy
+  - mission_oriented_operations
+  - event_driven_operations
+  - explainable_automation
+  - zero_trust_operations
+  - continuous_optimization
+  - operational_resilience
+  - audit_on_operations_mutations

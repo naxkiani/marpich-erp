@@ -1,0 +1,21 @@
+# CIVILIZATION_DOMAIN_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: SecurityControls
+metadata:
+  prompt_id: P219-C
+  adr: "556"
+  sor: civilization
+locks:
+  never_replace_p219_foundation: true
+  never_replace_p219_a_mission: true
+  never_replace_p219_b_strategy: true
+  never_replace_p218_z_intelligence_nexus: true
+  never_replace_space: true
+  never_merge_p218_t_space_civilization: true
+  never_cross_context_aggregate_imports: true
+  never_opaque_unexplainable_civilization_domain_decisions: true
+  never_ungated_civilization_decision_domain: true
+  never_skip_human_authority_domain: true
+  never_skip_ethical_civilization_governance_domain: true
+  never_violate_human_sovereignty_domain: true
+  no_module_local_llm: true

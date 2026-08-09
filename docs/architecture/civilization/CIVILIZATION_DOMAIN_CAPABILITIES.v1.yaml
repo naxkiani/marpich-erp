@@ -1,0 +1,30 @@
+# CIVILIZATION_DOMAIN_CAPABILITIES.v1.yaml
+apiVersion: marpich.io/v1
+kind: CapabilityCatalog
+metadata:
+  prompt_id: P219-C
+  adr: "556"
+  sor: civilization
+  capability: CAP-PLT-CIV-001
+  fabric: meos_civilization_os_domain_architecture_framework
+  api_prefix: /api/v1/civilization/domain
+core_domains: 5
+bounded_contexts: 8
+present_required:
+  civilization_os_domain_model_present_required: true
+  enterprise_ddd_architecture_present_required: true
+  bounded_context_architecture_present_required: true
+  aggregate_model_present_required: true
+  entities_model_present_required: true
+  value_objects_model_present_required: true
+  domain_services_model_present_required: true
+  domain_events_model_present_required: true
+  cqrs_model_present_required: true
+  knowledge_graph_domain_model_present_required: true
+  digital_twin_domain_model_present_required: true
+  meos_integration_domain_map_present_required: true
+gates:
+  foundation_gate: P219
+  mission_gate: P219-A
+  strategy_gate: P219-B
+  foundation_for: P219-D

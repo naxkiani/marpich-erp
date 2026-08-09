@@ -1,0 +1,26 @@
+# CIVILIZATION_SIMULATION_VALIDATION.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationSimulationValidation
+metadata:
+  prompt_id: P219-F
+  adr: "559"
+quality_gates:
+  - planetary_digital_twin_defined
+  - earth_simulation_intelligence_defined
+  - civilization_simulation_engine_defined
+  - future_scenario_modeling_defined
+  - digital_twin_architecture_defined
+  - knowledge_graph_integration_defined
+  - ai_simulation_defined
+  - ddd_model_defined
+  - event_architecture_defined
+  - meos_integration_defined
+definition_of_done:
+  - meos_earth_intelligence_twin_exists
+  - planetary_digital_twin_architecture_exists
+  - earth_simulation_platform_exists
+  - civilization_simulation_engine_exists
+  - future_scenario_intelligence_exists
+  - digital_twin_domain_model_exists
+  - foundation_ready_for_p219_g
+verdict_required: ENTERPRISE_GRADE

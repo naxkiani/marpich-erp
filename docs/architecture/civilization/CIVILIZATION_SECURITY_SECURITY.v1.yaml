@@ -1,0 +1,31 @@
+# CIVILIZATION_SECURITY_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationSecuritySecurity
+metadata:
+  prompt_id: P219-M
+  adr: "566"
+permissions:
+  - civilization.read
+  - civilization.security.read
+  - civilization.security.write
+  - civilization.security.simulate
+  - civilization.security.respond
+  - civilization.admin
+locks:
+  never_replace_identity: true
+  never_opaque_unexplainable_security_decisions: true
+  never_ungated_autonomous_security_response: true
+  never_skip_human_authority_security: true
+  never_skip_ethical_security_governance: true
+  never_violate_human_sovereignty_security: true
+  never_bypass_trusted_security_validation: true
+  never_bypass_zero_trust_controls: true
+  never_module_local_llm: true
+  inference_via_p214_z_only: true
+  critical_response_workflow_gated: true
+controls:
+  - zero_trust_by_design
+  - defense_in_depth
+  - continuous_verification
+  - human_supervised_autonomous_response
+  - audit_on_security_mutations

@@ -1,0 +1,30 @@
+# CIVILIZATION_HUMAN_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationHumanSecurity
+metadata:
+  prompt_id: P219-J
+  adr: "563"
+permissions:
+  - civilization.read
+  - civilization.human.read
+  - civilization.human.write
+  - civilization.human.twin.simulate
+  - civilization.admin
+locks:
+  never_replace_identity: true
+  never_violate_privacy_by_design: true
+  never_ungated_human_profile_mutation: true
+  never_opaque_unexplainable_human_decisions: true
+  never_skip_human_authority: true
+  never_skip_ethical_human_governance: true
+  never_violate_human_sovereignty: true
+  never_bypass_trusted_human_twin_validation: true
+  never_module_local_llm: true
+  inference_via_p214_z_only: true
+  twin_mutations_workflow_gated: true
+controls:
+  - privacy_by_design
+  - tenant_isolation
+  - identity_ref_only
+  - audit_on_profile_and_twin_mutations
+  - policy_engine_ethical_human_governance

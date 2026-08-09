@@ -1,0 +1,27 @@
+# CIVILIZATION_ECONOMY_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationEconomySecurity
+metadata:
+  prompt_id: P219-H
+  adr: "561"
+permissions:
+  - civilization.read
+  - civilization.economy.read
+  - civilization.economy.write
+  - civilization.ai.read
+  - civilization.ai.infer
+locks:
+  never_module_local_llm: true
+  inference_via_p214_z_only: true
+  complex_simulation_via_p215_z: true
+  never_replace_financial_kernel: true
+  never_ungated_economic_policy_execution: true
+  never_opaque_unexplainable_economic_decisions: true
+  never_skip_human_authority_economy: true
+  never_skip_ethical_economic_governance: true
+  never_violate_human_sovereignty_economy: true
+  never_treat_economic_forecast_as_binding_policy: true
+  market_data_ingress_via_integration_platform: true
+audit:
+  required_on: [create_model, analyze_market, generate_forecast, simulate_future, optimize_flow, evaluate_policy]
+tenant_isolation: required

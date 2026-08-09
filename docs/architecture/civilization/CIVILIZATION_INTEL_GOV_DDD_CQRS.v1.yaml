@@ -1,0 +1,56 @@
+# CIVILIZATION_INTEL_GOV_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationIntelGovDddCqrs
+metadata:
+  prompt_id: P219-T
+  adr: "573"
+bounded_contexts:
+  - id: BC-IGOV-01
+    name: Governance Core
+    type: CORE
+    aggregate: GovernanceAggregate
+  - id: BC-IGOV-02
+    name: Strategic Alignment Context
+    type: CORE
+    aggregate: AlignmentAggregate
+  - id: BC-IGOV-03
+    name: Policy Intelligence Context
+    type: CORE
+    aggregate: PolicyAggregate
+  - id: BC-IGOV-04
+    name: Trust & Compliance Context
+    type: SUPPORTING
+    aggregate: ComplianceAggregate
+primary_aggregates:
+  - GovernanceAggregate
+  - GovernanceStateAggregate
+  - AlignmentAggregate
+  - PolicyAggregate
+  - ComplianceAggregate
+commands:
+  - CreatePolicyCommand
+  - ApproveDecisionCommand
+  - RunGovernanceAssessmentCommand
+  - VerifyAlignmentCommand
+  - ValidateComplianceCommand
+  - CalculateTrustCommand
+queries:
+  - GetGovernanceDashboardQuery
+  - GetPolicyRepositoryQuery
+  - GetStrategicAlignmentQuery
+  - GetDecisionAuditTrailQuery
+  - GetTrustScoreQuery
+  - GetComplianceStatusQuery
+events:
+  - PolicyPublishedEvent
+  - PolicyUpdatedEvent
+  - GovernanceChangedEvent
+  - AlignmentVerifiedEvent
+  - DecisionApprovedEvent
+  - DecisionRejectedEvent
+  - AuditCompletedEvent
+  - ComplianceValidatedEvent
+  - TrustCalculatedEvent
+  - StrategicObjectiveUpdatedEvent
+  - ControlValidatedEvent
+  - GovernanceImprovedEvent

@@ -1,0 +1,25 @@
+# CIVILIZATION_UNIFIED_CONTROL_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationUnifiedControlSecurity
+metadata:
+  prompt_id: P219-Z
+  adr: "579"
+permissions:
+  - civilization.read
+  - civilization.unified_control.read
+  - civilization.unified_control.write
+  - civilization.ai.read
+  - civilization.ai.infer
+locks:
+  never_centralized_autonomous_enterprise_control: true
+  never_opaque_unexplainable_control_plane_recommendations: true
+  never_ungated_cross_domain_orchestration_execution: true
+  never_bypass_human_authority_unified_control: true
+  never_bypass_human_accountability_unified_control: true
+  never_skip_governance_fabric_gates: true
+  never_violate_institutional_domain_ownership: true
+  never_module_local_llm: true
+  inference_via_p214_z_only: true
+  approvals_via_workflow: true
+  policy_via_policy_engine: true
+  audit_via_audit: true

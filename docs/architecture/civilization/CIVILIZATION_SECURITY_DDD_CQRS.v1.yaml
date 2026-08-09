@@ -1,0 +1,56 @@
+# CIVILIZATION_SECURITY_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationSecurityDddCqrs
+metadata:
+  prompt_id: P219-M
+  adr: "566"
+bounded_contexts:
+  - id: BC-SEC-01
+    name: Security Intelligence Core
+    type: CORE
+    aggregate: SecurityAggregate
+  - id: BC-SEC-02
+    name: Risk Intelligence Context
+    type: CORE
+    aggregate: RiskAggregate
+  - id: BC-SEC-03
+    name: Incident Response Context
+    type: CORE
+    aggregate: IncidentAggregate
+  - id: BC-SEC-04
+    name: Resilience Intelligence Context
+    type: SUPPORTING
+    aggregate: ResilienceAggregate
+primary_aggregates:
+  - SecurityAggregate
+  - SecurityStateAggregate
+  - RiskAggregate
+  - IncidentAggregate
+  - ResilienceAggregate
+commands:
+  - RegisterThreatCommand
+  - CreateRiskAssessmentCommand
+  - ActivateIncidentResponseCommand
+  - RunSecuritySimulationCommand
+  - UpdateSecurityPolicyCommand
+  - OptimizeResilienceCommand
+queries:
+  - GetThreatStatusQuery
+  - GetRiskDashboardQuery
+  - GetIncidentTimelineQuery
+  - GetResilienceIndexQuery
+  - GetRecoveryStatusQuery
+  - GetSecurityForecastQuery
+events:
+  - ThreatDetectedEvent
+  - ThreatNeutralizedEvent
+  - SecurityControlUpdatedEvent
+  - RiskIdentifiedEvent
+  - RiskForecastGeneratedEvent
+  - RiskMitigatedEvent
+  - IncidentCreatedEvent
+  - IncidentContainedEvent
+  - IncidentResolvedEvent
+  - RecoveryStartedEvent
+  - RecoveryCompletedEvent
+  - ContinuityRestoredEvent

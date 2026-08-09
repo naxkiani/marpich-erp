@@ -1,0 +1,53 @@
+# CIVILIZATION_TRUST_ETHICS_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationTrustEthicsDddCqrs
+metadata:
+  prompt_id: P219-Y
+  adr: "578"
+bounded_contexts:
+  - id: BC-TEA-01
+    name: Trust Context
+    aggregates: [TrustAggregate]
+  - id: BC-TEA-02
+    name: Ethics Context
+    aggregates: [EthicsAggregate]
+  - id: BC-TEA-03
+    name: Alignment Context
+    aggregates: [AlignmentAggregate]
+  - id: BC-TEA-04
+    name: Compliance Context
+    aggregates: [ComplianceIntelligenceAggregate]
+  - id: BC-TEA-05
+    name: Assurance Context
+    aggregates: [AssuranceAggregate]
+aggregates:
+  - TrustAggregate
+  - EthicsAggregate
+  - AlignmentAggregate
+  - ComplianceIntelligenceAggregate
+  - AssuranceAggregate
+commands:
+  - EvaluateTrustCommand
+  - ValidatePolicyCommand
+  - VerifyAlignmentCommand
+  - RunComplianceAssessmentCommand
+  - GenerateAssuranceReportCommand
+queries:
+  - GetTrustDashboardQuery
+  - GetComplianceStatusQuery
+  - GetAlignmentStatusQuery
+  - GetEthicsAssessmentQuery
+  - GetDecisionTraceQuery
+events:
+  - TrustEvaluatedEvent
+  - PolicyValidatedEvent
+  - AlignmentVerifiedEvent
+  - ComplianceCheckedEvent
+  - RiskDetectedEvent
+  - AssuranceCompletedEvent
+  - HumanApprovalGrantedEvent
+  - EthicalImpactAssessedEvent
+  - TrustScoreUpdatedEvent
+  - AssuranceCasePublishedEvent
+  - ExplainabilityTraceRecordedEvent
+  - ContinuousAssuranceCycleCompletedEvent

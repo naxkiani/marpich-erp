@@ -1,0 +1,57 @@
+# CIVILIZATION_COLLABORATION_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationCollaborationDddCqrs
+metadata:
+  prompt_id: P219-P
+  adr: "569"
+bounded_contexts:
+  - id: BC-COL-01
+    name: Collaboration Intelligence Core
+    type: CORE
+    aggregate: CollaborationAggregate
+  - id: BC-COL-02
+    name: Collective Intelligence Context
+    type: CORE
+    aggregate: CollectiveReasoningAggregate
+  - id: BC-COL-03
+    name: Coordination Context
+    type: CORE
+    aggregate: CoordinationAggregate
+  - id: BC-COL-04
+    name: Knowledge Sharing Context
+    type: SUPPORTING
+    aggregate: KnowledgeExchangeAggregate
+primary_aggregates:
+  - CollaborationAggregate
+  - CollaborationNetworkAggregate
+  - CollectiveReasoningAggregate
+  - CoordinationAggregate
+  - KnowledgeExchangeAggregate
+commands:
+  - CreateCollaborationCommand
+  - AssignMissionCommand
+  - GenerateCollectiveSolutionCommand
+  - MatchExpertsCommand
+  - OptimizeCoordinationCommand
+  - ResolveConflictCommand
+queries:
+  - GetCollaborationNetworkQuery
+  - GetMissionStatusQuery
+  - GetConsensusStateQuery
+  - GetExpertDirectoryQuery
+  - GetCoordinationDashboardQuery
+  - GetCollectiveInsightsQuery
+events:
+  - CollaborationInitiatedEvent
+  - PartnerMatchedEvent
+  - TrustEstablishedEvent
+  - CollaborationCompletedEvent
+  - ProblemSubmittedEvent
+  - ConsensusReachedEvent
+  - SolutionApprovedEvent
+  - MissionAssignedEvent
+  - CoordinationOptimizedEvent
+  - ExecutionSynchronizedEvent
+  - KnowledgeSharedEvent
+  - ExpertConnectedEvent
+  - LearningDistributedEvent
