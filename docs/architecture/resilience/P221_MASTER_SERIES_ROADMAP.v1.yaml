@@ -1,0 +1,42 @@
+# EGRCMP Master Series Roadmap (P221)
+
+series: P221
+title: Enterprise Global Resilience & Crisis Management Platform
+governance_standard: "11.0"
+capability: CAP-PLT-EGRCMP-001
+sor: resilience
+fabric: meos_enterprise_global_resilience_crisis_management_platform_framework
+api: /api/v1/resilience*
+phases:
+  - id: P221
+    title: EGRCMP Foundation
+    status: planned
+    adr: "581"
+    fabric: meos_enterprise_global_resilience_crisis_management_platform_framework
+    api: /api/v1/resilience*
+  - id: P221-A
+    title: Domain Model, API Contracts, Event Schema, CQRS Foundation, Core Services
+    status: planned
+    adr: pending
+  - id: P221-B
+    title: AI Crisis Agents, Early Warning Engine, Digital Twin, Knowledge Graph
+    status: planned
+    adr: pending
+  - id: P221-C
+    title: Automated Response, Recovery Automation, Business Continuity, Cross-Domain Orchestration
+    status: planned
+    adr: pending
+  - id: P221-D
+    title: Autonomous Resilience Assist, Global Crisis Coordination, Continuous Learning, Self-Optimization
+    status: planned
+    adr: pending
+locks:
+  never_replace_p210_cyber: true
+  never_replace_p220_epip: true
+  never_replace_p219_z_unified_control: true
+  never_module_local_llm: true
+  never_ungated_crisis_response_autonomy: true
+  never_bypass_human_accountability_egrcmp: true
+  never_direct_physical_actuation_without_workflow: true
+  foundation_for_p221_a: true
+  peer_series_p222_egsrip: true

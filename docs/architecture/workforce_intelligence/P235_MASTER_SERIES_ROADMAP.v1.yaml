@@ -1,0 +1,43 @@
+# EAHRWIP Master Series Roadmap (P235)
+
+series: P235
+title: Enterprise Autonomous Human Resource & Workforce Intelligence Platform
+governance_standard: "11.0"
+capability: CAP-PLT-EAHRWIP-001
+sor: workforce_intelligence
+fabric: meos_enterprise_autonomous_human_resource_workforce_intelligence_platform_framework
+api: /api/v1/workforce-intelligence*
+phases:
+  - id: P235
+    title: EAHRWIP Foundation
+    status: planned
+    adr: "595"
+    fabric: meos_enterprise_autonomous_human_resource_workforce_intelligence_platform_framework
+    api: /api/v1/workforce-intelligence*
+  - id: P235-A
+    title: Workforce Domain Model, HR Data Architecture, API Contracts, Event Foundation, CQRS Services
+    status: planned
+    adr: pending
+  - id: P235-B
+    title: AI Workforce Agents, Talent Intelligence, Workforce Digital Twin, Knowledge Graph Integration
+    status: planned
+    adr: pending
+  - id: P235-C
+    title: Autonomous Workforce Optimization Assist, Human-AI Collaboration, Enterprise Talent Ecosystem, Predictive Workforce Management
+    status: planned
+    adr: pending
+  - id: P235-D
+    title: Civilization-Scale Workforce Intelligence Assist, Autonomous Human Capital Evolution Assist, Global Talent Intelligence Network (Human/Fairness-Gated)
+    status: planned
+    adr: pending
+locks:
+  never_replace_hr_or_payroll: true
+  never_duplicate_p234_as_lms: true
+  never_replace_p230_privacy_trust: true
+  never_module_local_llm: true
+  never_silent_hire_promote_terminate_or_comp_mutation: true
+  never_opaque_or_ungoverned_talent_scores: true
+  never_dual_write_hr_payroll_tables: true
+  never_silent_consent_override: true
+  foundation_for_p235_a: true
+  peer_series_p236_eamii: true

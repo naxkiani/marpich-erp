@@ -1,0 +1,42 @@
+# EAEISR Master Series Roadmap (P237)
+
+series: P237
+title: Enterprise Autonomous Energy Intelligence & Sustainable Resource Platform
+governance_standard: "11.0"
+capability: CAP-PLT-EAEISR-001
+sor: energy_intelligence
+fabric: meos_enterprise_autonomous_energy_intelligence_sustainable_resource_platform_framework
+api: /api/v1/energy-intelligence*
+phases:
+  - id: P237
+    title: EAEISR Foundation
+    status: planned
+    adr: "597"
+    fabric: meos_enterprise_autonomous_energy_intelligence_sustainable_resource_platform_framework
+    api: /api/v1/energy-intelligence*
+  - id: P237-A
+    title: Energy Domain Model, Resource APIs, Event Architecture, CQRS Foundation, Core Energy Services
+    status: planned
+    adr: pending
+  - id: P237-B
+    title: AI Energy Agents, Energy Digital Twin, Knowledge Graph Integration, Predictive Models
+    status: planned
+    adr: pending
+  - id: P237-C
+    title: Autonomous Energy Optimization Assist, Smart Resource Networks, Sustainability Intelligence, Climate Decision Support
+    status: planned
+    adr: pending
+  - id: P237-D
+    title: Civilization-Scale Energy Intelligence, Autonomous Sustainable Ecosystems, Planetary Resource Optimization (Gated)
+    status: planned
+    adr: pending
+locks:
+  never_replace_p222_sustainability_or_p220_planetary: true
+  never_ungated_grid_or_ot_actuation: true
+  never_scada_or_ems_sdk_in_domain: true
+  never_dual_write_esg_carbon_ledgers_or_gl: true
+  never_module_local_llm: true
+  never_bypass_environmental_or_safety_interlocks: true
+  never_opaque_energy_recommendations: true
+  foundation_for_p237_a: true
+  peer_series_p238_eascui: true

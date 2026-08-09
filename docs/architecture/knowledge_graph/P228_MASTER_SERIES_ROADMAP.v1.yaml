@@ -1,0 +1,43 @@
+# EKGSIP Master Series Roadmap (P228)
+
+series: P228
+title: Enterprise Knowledge Graph & Semantic Intelligence Platform
+governance_standard: "11.0"
+capability: CAP-PLT-EKGSIP-001
+sor: knowledge_graph
+fabric: meos_enterprise_knowledge_graph_semantic_intelligence_platform_framework
+api: /api/v1/knowledge-graph*
+phases:
+  - id: P228
+    title: EKGSIP Foundation
+    status: planned
+    adr: "588"
+    fabric: meos_enterprise_knowledge_graph_semantic_intelligence_platform_framework
+    api: /api/v1/knowledge-graph*
+  - id: P228-A
+    title: Knowledge Domain Model, Semantic APIs, Event Architecture, CQRS Foundation, Core Graph Services
+    status: planned
+    adr: pending
+  - id: P228-B
+    title: AI Reasoning Agents, Ontology Engine, Entity Intelligence, Digital Twin Integration
+    status: planned
+    adr: pending
+  - id: P228-C
+    title: Enterprise Knowledge Federation, Autonomous Knowledge Evolution Assist, Cross-Domain Intelligence Network, Semantic Decision Support
+    status: planned
+    adr: pending
+  - id: P228-D
+    title: Civilization-Scale Knowledge Graph Assist, Global Intelligence Network, Self-Evolving Knowledge Infrastructure (Human-Gated Publish)
+    status: planned
+    adr: pending
+locks:
+  never_replace_search_or_documents: true
+  never_replace_p219_i_knowledge: true
+  never_replace_p223_egikep: true
+  never_module_local_llm: true
+  never_module_local_search: true
+  never_cross_schema_graph_sql: true
+  never_fail_open_graph_reads: true
+  never_document_blobs_in_graph_tables: true
+  foundation_for_p228_a: true
+  peer_series_p229_efdmifp: true

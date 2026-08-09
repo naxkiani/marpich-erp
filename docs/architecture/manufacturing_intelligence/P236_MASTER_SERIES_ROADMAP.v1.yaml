@@ -1,0 +1,42 @@
+# EAMII Master Series Roadmap (P236)
+
+series: P236
+title: Enterprise Autonomous Manufacturing & Industrial Intelligence Platform
+governance_standard: "11.0"
+capability: CAP-PLT-EAMII-001
+sor: manufacturing_intelligence
+fabric: meos_enterprise_autonomous_manufacturing_industrial_intelligence_platform_framework
+api: /api/v1/manufacturing-intelligence*
+phases:
+  - id: P236
+    title: EAMII Foundation
+    status: planned
+    adr: "596"
+    fabric: meos_enterprise_autonomous_manufacturing_industrial_intelligence_platform_framework
+    api: /api/v1/manufacturing-intelligence*
+  - id: P236-A
+    title: Industrial Domain Model, Factory APIs, Event Architecture, CQRS Foundation, Core Manufacturing Services
+    status: planned
+    adr: pending
+  - id: P236-B
+    title: AI Industrial Agents, Industrial Digital Twin, IoT Intelligence, Knowledge Graph Integration
+    status: planned
+    adr: pending
+  - id: P236-C
+    title: Autonomous Manufacturing Assist, Robotics Orchestration, Smart Factory Optimization, Industrial Ecosystem Intelligence
+    status: planned
+    adr: pending
+  - id: P236-D
+    title: Civilization-Scale Industrial Intelligence Assist, Self-Optimizing Manufacturing Networks, Autonomous Industrial Evolution (Safety-Gated)
+    status: planned
+    adr: pending
+locks:
+  never_replace_manufacturing_or_robotics: true
+  never_ungated_physical_or_ot_actuation: true
+  never_plc_or_robot_sdk_in_domain: true
+  never_dual_write_production_control_tables: true
+  never_module_local_llm: true
+  never_bypass_safety_interlocks: true
+  never_opaque_production_recommendations: true
+  foundation_for_p236_a: true
+  peer_series_p237_eaeisr: true

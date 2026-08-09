@@ -1,0 +1,44 @@
+# EPDRTIP Master Series Roadmap (P230)
+
+series: P230
+title: Enterprise Privacy, Digital Rights & Trust Intelligence Platform
+governance_standard: "11.0"
+capability: CAP-PLT-EPDRTIP-001
+sor: privacy_trust
+fabric: meos_enterprise_privacy_digital_rights_trust_intelligence_platform_framework
+api: /api/v1/privacy-trust*
+phases:
+  - id: P230
+    title: EPDRTIP Foundation
+    status: planned
+    adr: "590"
+    fabric: meos_enterprise_privacy_digital_rights_trust_intelligence_platform_framework
+    api: /api/v1/privacy-trust*
+  - id: P230-A
+    title: Privacy Domain Model, Consent Architecture, Event Contracts, CQRS Foundation, Trust Services
+    status: planned
+    adr: pending
+  - id: P230-B
+    title: AI Privacy Agents, Knowledge Graph Integration, Digital Rights Engine, Compliance Intelligence
+    status: planned
+    adr: pending
+  - id: P230-C
+    title: Autonomous Privacy Governance Assist, AI Ethics Automation, Trust Analytics, Global Regulatory Intelligence
+    status: planned
+    adr: pending
+  - id: P230-D
+    title: Civilization-Scale Digital Trust Network Assist, Autonomous Rights Protection Assist, Self-Evolving Privacy Intelligence (Human/Subject-Gated)
+    status: planned
+    adr: pending
+locks:
+  never_replace_identity_or_authz: true
+  never_replace_audit_or_compliance: true
+  never_replace_policy_engine: true
+  never_replace_p212_or_p229: true
+  never_module_local_llm: true
+  never_local_audit_or_compliance_sor: true
+  never_silent_consent_override: true
+  never_ungated_rights_fulfillment: true
+  never_opaque_trust_or_ethics_scores: true
+  foundation_for_p230_a: true
+  peer_series_p231_eafieop: true

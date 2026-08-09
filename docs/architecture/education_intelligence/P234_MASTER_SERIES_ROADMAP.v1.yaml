@@ -1,0 +1,42 @@
+# EAEHCEP Master Series Roadmap (P234)
+
+series: P234
+title: Enterprise Autonomous Education & Human Capability Evolution Platform
+governance_standard: "11.0"
+capability: CAP-PLT-EAEHCEP-001
+sor: education_intelligence
+fabric: meos_enterprise_autonomous_education_human_capability_evolution_platform_framework
+api: /api/v1/education-intelligence*
+phases:
+  - id: P234
+    title: EAEHCEP Foundation
+    status: planned
+    adr: "594"
+    fabric: meos_enterprise_autonomous_education_human_capability_evolution_platform_framework
+    api: /api/v1/education-intelligence*
+  - id: P234-A
+    title: Learning Domain Model, Skill Architecture, APIs, Event Contracts, CQRS Foundation
+    status: planned
+    adr: pending
+  - id: P234-B
+    title: AI Learning Agents, Knowledge Graph Integration, Digital Learning Twin, Adaptive Learning Engine
+    status: planned
+    adr: pending
+  - id: P234-C
+    title: Enterprise Skill Intelligence, Workforce Transformation, Autonomous Learning Ecosystem Assist, Career Evolution Intelligence
+    status: planned
+    adr: pending
+  - id: P234-D
+    title: Civilization-Scale Human Capability Network Assist, Self-Evolving Education Intelligence, Global Knowledge Evolution Platform (Human/Ethics-Gated)
+    status: planned
+    adr: pending
+locks:
+  never_replace_university_school_or_hr: true
+  never_merge_university_and_school: true
+  never_replace_p230_privacy_trust: true
+  never_module_local_llm_or_search: true
+  never_content_blobs_in_module_tables: true
+  never_silent_grade_transcript_or_employment_mutation: true
+  never_silent_consent_override: true
+  foundation_for_p234_a: true
+  peer_series_p235_eahrwip: true

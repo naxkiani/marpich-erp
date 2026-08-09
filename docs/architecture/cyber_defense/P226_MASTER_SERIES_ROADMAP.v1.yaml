@@ -1,0 +1,44 @@
+# EACDISP Master Series Roadmap (P226)
+
+series: P226
+title: Enterprise Autonomous Cyber Defense & Digital Immune System Platform
+governance_standard: "11.0"
+capability: CAP-PLT-EACDISP-001
+sor: cyber_defense
+fabric: meos_enterprise_autonomous_cyber_defense_digital_immune_system_platform_framework
+api: /api/v1/cyber-defense*
+phases:
+  - id: P226
+    title: EACDISP Foundation
+    status: planned
+    adr: "586"
+    fabric: meos_enterprise_autonomous_cyber_defense_digital_immune_system_platform_framework
+    api: /api/v1/cyber-defense*
+  - id: P226-A
+    title: Cyber Domain Model, Security APIs, Event Architecture, CQRS Foundation, Threat Intelligence Core
+    status: planned
+    adr: pending
+  - id: P226-B
+    title: AI Cyber Agents, Threat Detection Models, Knowledge Graph Security Model, Cyber Digital Twin
+    status: planned
+    adr: pending
+  - id: P226-C
+    title: Autonomous Defense, Adaptive Security Policies, Automated Response, Cyber Resilience Automation
+    status: planned
+    adr: pending
+  - id: P226-D
+    title: Self-Evolving Digital Immune System Assist, Autonomous Cyber Civilization Defense Assist, Continuous Security Intelligence Evolution (Human-Gated Critical)
+    status: planned
+    adr: pending
+locks:
+  never_replace_p210_cyber: true
+  never_replace_identity_or_zero_trust: true
+  never_replace_secrets: true
+  never_replace_p225_eaoshp: true
+  never_module_local_llm: true
+  never_secrets_in_domain_tables: true
+  never_ungated_destructive_containment: true
+  never_vendor_sdk_in_domain: true
+  never_bypass_human_authority_critical_defense: true
+  foundation_for_p226_a: true
+  peer_series_p227_edtisp: true

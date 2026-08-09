@@ -1,0 +1,45 @@
+# EASRDIP Master Series Roadmap (P242)
+
+series: P242
+title: Enterprise Autonomous Scientific Research & Discovery Intelligence Platform
+governance_standard: "11.0"
+capability: CAP-PLT-EASRDIP-001
+sor: scientific_intelligence
+fabric: meos_enterprise_autonomous_scientific_research_discovery_intelligence_platform_framework
+api: /api/v1/scientific-intelligence*
+phases:
+  - id: P242
+    title: EASRDIP Foundation
+    status: planned
+    adr: "602"
+    fabric: meos_enterprise_autonomous_scientific_research_discovery_intelligence_platform_framework
+    api: /api/v1/scientific-intelligence*
+  - id: P242-A
+    title: Scientific Domain Model, Research APIs, Event Architecture, CQRS Foundation, Knowledge Services
+    status: planned
+    adr: pending
+  - id: P242-B
+    title: AI Discovery Agents, Scientific Knowledge Graph, Research Digital Twin, Simulation Intelligence
+    status: planned
+    adr: pending
+  - id: P242-C
+    title: Autonomous Research Operations Assist, Global Scientific Collaboration, AI-Accelerated Discovery, Innovation Intelligence
+    status: planned
+    adr: pending
+  - id: P242-D
+    title: Civilization-Scale Scientific Intelligence, Autonomous Discovery Ecosystem, Self-Evolving Research Network (Ethics-Gated)
+    status: planned
+    adr: pending
+locks:
+  never_replace_p223_innovation_or_p234_education: true
+  never_merge_hospital_clinic_or_bio_clinical_sors: true
+  never_ungated_wet_lab_or_instrument_actuation: true
+  never_direct_lims_sdk_in_domain: true
+  never_treat_simulation_as_wet_lab_completion: true
+  never_bypass_irb_or_ethics_gates: true
+  never_pdf_or_binary_blobs_in_domain_tables: true
+  never_silent_consent_override: true
+  never_module_local_llm: true
+  never_opaque_unexplainable_scientific_claims: true
+  foundation_for_p242_a: true
+  peer_series_p243_eaivip: true

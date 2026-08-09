@@ -1,5 +1,5 @@
 # ENTERPRISE_CIVILIZATION_OPERATING_SYSTEM_SERIES_COMPLETION.md
 
-**Status:** Planned · Continues from [P219-Z Unified Enterprise Core](ENTERPRISE_CIVILIZATION_OPERATING_SYSTEM_UNIFIED_ENTERPRISE_CORE.md)
+**Status:** Complete (P219) · Continues as [P220 Enterprise Planetary Intelligence Platform (EPIP)](ENTERPRISE_PLANETARY_INTELLIGENCE_PLATFORM.md)
 
-Placeholder for post-P219 stewardship / next series (P220): operating model hardening, production rollout packs and long-horizon civilization OS continuity after MEOS Unified Enterprise Core.
+P219 Civilization OS series closed at P219-Z (Unified Enterprise Control Plane, ADR 579). Next series entry is **P220 EPIP** — SoR `planetary`, fabric `meos_enterprise_planetary_intelligence_platform_framework`, API `/api/v1/planetary*`, capability `CAP-PLT-EPIP-001`, ADR 580.
