@@ -1,0 +1,44 @@
+# EASIEP Master Series Roadmap (P247)
+
+series: P247
+title: Enterprise Autonomous Space Intelligence & Exploration Platform
+governance_standard: "11.0"
+capability: CAP-PLT-EASIEP-001
+sor: space_exploration_intelligence
+fabric: meos_enterprise_autonomous_space_intelligence_exploration_platform_framework
+api: /api/v1/space-exploration-intelligence*
+phases:
+  - id: P247
+    title: EASIEP Foundation
+    status: planned
+    adr: "606"
+    fabric: meos_enterprise_autonomous_space_intelligence_exploration_platform_framework
+    api: /api/v1/space-exploration-intelligence*
+  - id: P247-A
+    title: Space Domain Model (Exploration), Mission APIs, Event Architecture, CQRS Foundation, Space Intelligence Core
+    status: planned
+    adr: pending
+  - id: P247-B
+    title: AI Space Agents, Space Knowledge Graph, Space Digital Twin, Mission Simulation Engine
+    status: planned
+    adr: pending
+  - id: P247-C
+    title: Autonomous Space Operations Assist, Intelligent Exploration Systems, Space Resource Intelligence, Multi-Mission Coordination
+    status: planned
+    adr: pending
+  - id: P247-D
+    title: Civilization-Scale Space Intelligence, Autonomous Space Ecosystem, Interplanetary Intelligence Network (Gated)
+    status: planned
+    adr: pending
+locks:
+  never_replace_p218_space_sor: true
+  never_fork_space_api: true
+  never_dual_write_p218_tables: true
+  never_ungated_spacecraft_or_ground_segment_actuation: true
+  never_direct_ttc_sdk_in_domain: true
+  never_treat_simulation_as_execute: true
+  never_bypass_mission_safety: true
+  never_module_local_llm: true
+  never_opaque_mission_recommendations: true
+  foundation_for_p247_a: true
+  peer_series_p248_eaeipsp: true

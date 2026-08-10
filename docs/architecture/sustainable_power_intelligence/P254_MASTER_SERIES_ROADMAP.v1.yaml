@@ -1,0 +1,44 @@
+# EAEISPP Master Series Roadmap (P254)
+
+series: P254
+title: Enterprise Autonomous Energy Intelligence & Sustainable Power Platform
+governance_standard: "11.0"
+capability: CAP-PLT-EAEISPP-001
+sor: sustainable_power_intelligence
+fabric: meos_enterprise_autonomous_energy_intelligence_sustainable_power_platform_framework
+api: /api/v1/sustainable-power-intelligence*
+phases:
+  - id: P254
+    title: EAEISPP Foundation
+    status: planned
+    adr: "613"
+    fabric: meos_enterprise_autonomous_energy_intelligence_sustainable_power_platform_framework
+    api: /api/v1/sustainable-power-intelligence*
+  - id: P254-A
+    title: Energy Domain Model (Power), Energy Data Architecture, Event Contracts, CQRS Foundation, Energy Intelligence Core
+    status: planned
+    adr: pending
+  - id: P254-B
+    title: AI Energy Agents, Energy Knowledge Graph, Energy Digital Twin, Smart Grid Intelligence
+    status: planned
+    adr: pending
+  - id: P254-C
+    title: Autonomous Energy Operations Assist, Renewable Optimization, Intelligent Energy Markets, Sustainable Power Networks
+    status: planned
+    adr: pending
+  - id: P254-D
+    title: Civilization-Scale Energy Intelligence, Autonomous Global Energy Network, Self-Evolving Sustainable Energy Ecosystem (Gated)
+    status: planned
+    adr: pending
+locks:
+  never_replace_p237_energy_intelligence: true
+  never_fork_energy_intelligence_api: true
+  never_dual_write_p237_or_p222_tables: true
+  never_dual_write_esg_carbon_ledgers: true
+  never_local_gl: true
+  never_ungated_grid_or_ot_actuation: true
+  never_scada_ems_or_psp_sdk_in_domain: true
+  never_treat_simulation_as_execute: true
+  never_module_local_llm: true
+  never_opaque_dispatch_or_trade_recommendations: true
+  foundation_for_p254_a: true

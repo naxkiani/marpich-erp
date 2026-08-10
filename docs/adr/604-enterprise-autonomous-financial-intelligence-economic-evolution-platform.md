@@ -19,4 +19,4 @@ Positive: governed economic-evolution control-tower intelligence federated with 
 Negative: enterprise financial optimization aggregates and GL remain peer-owned — EAFIEEP stores economic models, scenarios, capital intents and peer refs only.
 
 ## Links
-Law: `ENTERPRISE_AUTONOMOUS_FINANCIAL_INTELLIGENCE_ECONOMIC_EVOLUTION_PLATFORM.md` · Prior: ADR 603 · Next: P244-A
+Law: `ENTERPRISE_AUTONOMOUS_FINANCIAL_INTELLIGENCE_ECONOMIC_EVOLUTION_PLATFORM.md` · Prior: ADR 603 · Next: P244-A · Peer: ADR 605 (P246 EASC-DTIP)

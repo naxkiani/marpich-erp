@@ -3,7 +3,7 @@
 **Status:** Normative (P244) — series foundation  
 **SoR:** `economic_evolution` · **ADR:** [604](../adr/604-enterprise-autonomous-financial-intelligence-economic-evolution-platform.md) · **Capability:** `CAP-PLT-EAFIEEP-001`  
 **Fabric:** `meos_enterprise_autonomous_financial_intelligence_economic_evolution_platform_framework` · **Governance Standard:** MEOS 11.0  
-> **API:** `/api/v1/economic-evolution*` · **Builds on:** P243 EAIVIP · P231 EAFIEOP · P224 EADIP · P221 EGRCMP · P240 EAGDGIP · P228 EKGSIP · P227 EDTISP · P229 EFDMIFP · **Financial Kernel** · Compliance · Workflow · Audit · P214-Z · **Next:** P244-A  
+> **API:** `/api/v1/economic-evolution*` · **Builds on:** P243 EAIVIP · P231 EAFIEOP · P224 EADIP · P221 EGRCMP · P240 EAGDGIP · P228 EKGSIP · P227 EDTISP · P229 EFDMIFP · **Financial Kernel** · Compliance · Workflow · Audit · P214-Z · **Next:** P244-A · **Peer series:** [P246 EASC-DTIP](ENTERPRISE_AUTONOMOUS_SECURITY_CYBER_DEFENSE_DIGITAL_TRUST_INTELLIGENCE_PLATFORM.md)  
 **Hard bindings:** Inference → **P214-Z** · Enterprise financial intel/optimization SoR → **P231** (ACL; never replace `/api/v1/financial-intelligence*`) · GL / journals / COA / postings → **Financial Kernel** (`IFinancialKernel`) · Venture capital intel → **P243** (ACL) · Decisions → **P224** · Crisis/macro shock → **P221** · Governance → **P240** · Twin → **P227** · KG → **P228** · Data products → **P229** · Approvals → **Workflow** · Policy → **Policy Engine** · Audit → **Audit** · Market/data vendors → **Integration Platform** · Generic → **Core**.
 
 ---

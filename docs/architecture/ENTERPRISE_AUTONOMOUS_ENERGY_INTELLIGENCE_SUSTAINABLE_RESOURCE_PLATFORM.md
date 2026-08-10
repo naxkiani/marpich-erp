@@ -3,7 +3,7 @@
 **Status:** Normative (P237) — series foundation  
 **SoR:** `energy_intelligence` · **ADR:** [597](../adr/597-enterprise-autonomous-energy-intelligence-sustainable-resource-platform.md) · **Capability:** `CAP-PLT-EAEISR-001`  
 **Fabric:** `meos_enterprise_autonomous_energy_intelligence_sustainable_resource_platform_framework` · **Governance Standard:** MEOS 11.0  
-> **API:** `/api/v1/energy-intelligence*` · **Builds on:** P236 EAMII · P222 EGSRIP · P220 EPIP · P221 EGRCMP · P227 EDTISP · P228 EKGSIP · P225 EAOSHP · P224 EADIP · P229 EFDMIFP · P214-Z · Policy · Workflow · Audit · **Next:** P237-A · **Peer series:** [P238 EASCUI](ENTERPRISE_AUTONOMOUS_SMART_CITY_URBAN_INTELLIGENCE_PLATFORM.md)  
+> **API:** `/api/v1/energy-intelligence*` · **Builds on:** P236 EAMII · P222 EGSRIP · P220 EPIP · P221 EGRCMP · P227 EDTISP · P228 EKGSIP · P225 EAOSHP · P224 EADIP · P229 EFDMIFP · P214-Z · Policy · Workflow · Audit · **Next:** P237-A · **Peer series:** [P238 EASCUI](ENTERPRISE_AUTONOMOUS_SMART_CITY_URBAN_INTELLIGENCE_PLATFORM.md) · [P254 EAEISPP](ENTERPRISE_AUTONOMOUS_ENERGY_INTELLIGENCE_SUSTAINABLE_POWER_PLATFORM.md) (power/grid depth — never fork this API)  
 **Hard bindings:** Inference → **P214-Z** · ESG/regenerative SoR → **P222** (ACL) · Planetary/climate → **P220** (ACL) · Crisis/env risk → **P221** (ACL) · Twin → **P227** · KG → **P228** · Ops healing → **P225** · Decisions → **P224** · Data products → **P229** · Approvals → **Workflow** · Policy → **Policy Engine** · Audit → **Audit** · Grid/OT/utility vendors → **Integration Platform** · Generic → **Core**.
 
 ---

@@ -320,6 +320,60 @@ phases:
     adr: "604"
     fabric: meos_enterprise_autonomous_financial_intelligence_economic_evolution_platform_framework
     api: /api/v1/economic-evolution*
+  - id: P246
+    title: Enterprise Autonomous Security, Cyber Defense & Digital Trust Intelligence Platform (EASC-DTIP)
+    status: planned
+    adr: "605"
+    fabric: meos_enterprise_autonomous_security_cyber_defense_digital_trust_intelligence_platform_framework
+    api: /api/v1/security-trust-intelligence*
+  - id: P247
+    title: Enterprise Autonomous Space Intelligence & Exploration Platform (EASIEP)
+    status: planned
+    adr: "606"
+    fabric: meos_enterprise_autonomous_space_intelligence_exploration_platform_framework
+    api: /api/v1/space-exploration-intelligence*
+  - id: P248
+    title: Enterprise Autonomous Environmental Intelligence & Planetary Sustainability Platform (EAEIPSP)
+    status: planned
+    adr: "607"
+    fabric: meos_enterprise_autonomous_environmental_intelligence_planetary_sustainability_platform_framework
+    api: /api/v1/environmental-planetary-intelligence*
+  - id: P249
+    title: Enterprise Autonomous Digital Economy & Intelligent Marketplace Platform (EADEIMP)
+    status: planned
+    adr: "608"
+    fabric: meos_enterprise_autonomous_digital_economy_intelligent_marketplace_platform_framework
+    api: /api/v1/marketplace-intelligence*
+  - id: P250
+    title: Enterprise Autonomous Knowledge Economy & Global Intelligence Network Platform (EAKEGINP)
+    status: planned
+    adr: "609"
+    fabric: meos_enterprise_autonomous_knowledge_economy_global_intelligence_network_platform_framework
+    api: /api/v1/knowledge-economy-intelligence*
+  - id: P251
+    title: Enterprise Autonomous Human Capability & Digital Workforce Intelligence Platform (EAHCDWIP)
+    status: planned
+    adr: "610"
+    fabric: meos_enterprise_autonomous_human_capability_digital_workforce_intelligence_platform_framework
+    api: /api/v1/human-capability-intelligence*
+  - id: P252
+    title: Enterprise Autonomous Smart Infrastructure & Urban Intelligence Platform (EASIUIP)
+    status: planned
+    adr: "611"
+    fabric: meos_enterprise_autonomous_smart_infrastructure_urban_intelligence_platform_framework
+    api: /api/v1/smart-infrastructure-intelligence*
+  - id: P253
+    title: Enterprise Autonomous Healthcare Intelligence & Life Sciences Platform (EAHILSP)
+    status: planned
+    adr: "612"
+    fabric: meos_enterprise_autonomous_healthcare_intelligence_life_sciences_platform_framework
+    api: /api/v1/health-life-sciences-intelligence*
+  - id: P254
+    title: Enterprise Autonomous Energy Intelligence & Sustainable Power Platform (EAEISPP)
+    status: planned
+    adr: "613"
+    fabric: meos_enterprise_autonomous_energy_intelligence_sustainable_power_platform_framework
+    api: /api/v1/sustainable-power-intelligence*
 
 implementation_phases:
   - id: P01
