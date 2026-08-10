@@ -19,4 +19,4 @@ Positive: control-tower intelligence across federated supply SoRs.
 Negative: stock and shipment truth remain peer-owned — EASCLIP stores networks, forecasts, plans, intents and resilience cases with peer refs only.
 
 ## Links
-Law: `ENTERPRISE_AUTONOMOUS_SUPPLY_CHAIN_GLOBAL_LOGISTICS_INTELLIGENCE_PLATFORM.md` · Prior: ADR 591 · Next: P232-A · Peer: ADR 593 (P233 EAHIBEP)
+Law: `ENTERPRISE_AUTONOMOUS_SUPPLY_CHAIN_GLOBAL_LOGISTICS_INTELLIGENCE_PLATFORM.md` · Prior: ADR 591 · Next: P232-A · Peer: ADR 593 (P233 EAHIBEP) · Peer productization: ADR 629 (P272 MESCIAL)

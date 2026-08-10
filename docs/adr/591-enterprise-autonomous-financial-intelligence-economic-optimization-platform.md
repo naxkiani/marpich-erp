@@ -19,4 +19,4 @@ Positive: governed CFO-grade intelligence and economic simulation without forkin
 Negative: balances and journals remain Kernel-owned — EAFIEOP stores models, scenarios, recommendations and allocation plans with posting-intent refs only.
 
 ## Links
-Law: `ENTERPRISE_AUTONOMOUS_FINANCIAL_INTELLIGENCE_ECONOMIC_OPTIMIZATION_PLATFORM.md` · Prior: ADR 590 · Next: P231-A · Peer: ADR 592 (P232 EASCLIP)
+Law: `ENTERPRISE_AUTONOMOUS_FINANCIAL_INTELLIGENCE_ECONOMIC_OPTIMIZATION_PLATFORM.md` · Prior: ADR 590 · Next: P231-A · Peer: ADR 592 (P232 EASCLIP) · Peer productization: ADR 628 (P271 MEFIAF)

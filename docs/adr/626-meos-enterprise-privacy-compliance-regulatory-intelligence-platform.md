@@ -18,4 +18,4 @@ Positive: governed Trust/Compliance OS (regulatory campaigns, continuous complia
 Negative: consent/violation/evidence truth remains peer-owned — MEPCRI stores operating campaigns and peer refs only.
 
 ## Links
-Law: `ENTERPRISE_MEOS_PRIVACY_COMPLIANCE_REGULATORY_INTELLIGENCE_PLATFORM.md` · Prior: ADR 625 · Next: P269-A · Peer planned: P270 GRC/Strategic Control · Canonical: P230 · Compliance · Audit
+Law: `ENTERPRISE_MEOS_PRIVACY_COMPLIANCE_REGULATORY_INTELLIGENCE_PLATFORM.md` · Prior: ADR 625 · Next: P269-A · Peer: ADR 627 (P270 MEGRSC) · Canonical: P230 · Compliance · Audit

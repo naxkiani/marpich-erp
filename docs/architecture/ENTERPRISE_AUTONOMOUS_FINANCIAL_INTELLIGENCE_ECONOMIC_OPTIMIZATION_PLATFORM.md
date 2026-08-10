@@ -3,7 +3,7 @@
 **Status:** Normative (P231) — series foundation  
 **SoR:** `financial_intelligence` · **ADR:** [591](../adr/591-enterprise-autonomous-financial-intelligence-economic-optimization-platform.md) · **Capability:** `CAP-PLT-EAFIEOP-001`  
 **Fabric:** `meos_enterprise_autonomous_financial_intelligence_economic_optimization_platform_framework` · **Governance Standard:** MEOS 11.0  
-> **API:** `/api/v1/financial-intelligence*` · **Builds on:** P230 EPDRTIP · P229 EFDMIFP · P228 EKGSIP · P227 EDTISP · P224 EADIP · P221 EGRCMP · **Financial Kernel** · Accounting · Treasury · Banking peers · P214-Z · Policy · Workflow · Audit · **Next:** P231-A · **Peer series:** [P232 EASCLIP](ENTERPRISE_AUTONOMOUS_SUPPLY_CHAIN_GLOBAL_LOGISTICS_INTELLIGENCE_PLATFORM.md)  
+> **API:** `/api/v1/financial-intelligence*` · **Builds on:** P230 EPDRTIP · P229 EFDMIFP · P228 EKGSIP · P227 EDTISP · P224 EADIP · P221 EGRCMP · **Financial Kernel** · Accounting · Treasury · Banking peers · P214-Z · Policy · Workflow · Audit · **Next:** P231-A · **Peer series:** [P232 EASCLIP](ENTERPRISE_AUTONOMOUS_SUPPLY_CHAIN_GLOBAL_LOGISTICS_INTELLIGENCE_PLATFORM.md) · [P271 MEFIAF](ENTERPRISE_MEOS_FINANCIAL_INTELLIGENCE_AUTONOMOUS_FINANCE_PLATFORM.md) (Finance OS productization — never fork this API; never duplicate Financial Kernel GL)  
 **Hard bindings:** Inference → **P214-Z** · GL / journals / COA / postings → **Financial Kernel** (`IFinancialKernel`) · Accounting docs → **accounting** (ACL) · Treasury/cash → **treasury** (ACL) · Banking products → **banking** peers (ACL) · Decisions → **P224** · Twin scenarios → **P227** · Data products → **P229** · Approvals → **Workflow** · Policy → **Policy Engine** · Audit → **Audit** · Generic → **Core**.
 
 ---

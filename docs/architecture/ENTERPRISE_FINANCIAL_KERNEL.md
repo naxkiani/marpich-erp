@@ -5,7 +5,8 @@
 **Owner context:** `backend/contexts/financial_kernel/`  
 **Companions:** [INDUSTRY_CATALOG.md](INDUSTRY_CATALOG.md) · [ENTERPRISE_AUDIT_PLATFORM.md](ENTERPRISE_AUDIT_PLATFORM.md) · [ENTERPRISE_COMPLIANCE_FRAMEWORK.md](ENTERPRISE_COMPLIANCE_FRAMEWORK.md) · [ENTERPRISE_POLICY_ENGINE.md](ENTERPRISE_POLICY_ENGINE.md) · [ENTERPRISE_WORKFLOW_ENGINE.md](ENTERPRISE_WORKFLOW_ENGINE.md) · [SHARED_KERNEL.md](SHARED_KERNEL.md)
 
-**Law: This is NOT an Accounting Module. This is the financial foundation of the entire platform. Never duplicate financial logic. Every business module calls Financial Kernel APIs.**
+**Law: This is NOT an Accounting Module. This is the financial foundation of the entire platform. Never duplicate financial logic. Every business module calls Financial Kernel APIs.**  
+**Peer productization:** [P271 MEFIAF](ENTERPRISE_MEOS_FINANCIAL_INTELLIGENCE_AUTONOMOUS_FINANCE_PLATFORM.md) — Autonomous Finance OS fabric over P231 and this Kernel; never local JournalEntry/GL aggregates in MEFIAF; postings only via `IFinancialKernel`.
 
 ---
 

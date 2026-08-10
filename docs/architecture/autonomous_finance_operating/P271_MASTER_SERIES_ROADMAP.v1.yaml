@@ -1,0 +1,50 @@
+# MEFIAF Master Series Roadmap (P271)
+
+series: P271
+title: MEOS Enterprise Financial Intelligence & Autonomous Finance Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEFIAF-001
+sor: autonomous_finance_operating
+fabric: meos_enterprise_financial_intelligence_autonomous_finance_platform_framework
+api: /api/v1/autonomous-finance-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P271
+    title: MEFIAF Foundation
+    status: planned
+    adr: "628"
+    fabric: meos_enterprise_financial_intelligence_autonomous_finance_platform_framework
+    api: /api/v1/autonomous-finance-operating*
+  - id: P271-A
+    title: Financial Intelligence Foundation — Data Model Overlays, Accounting Intelligence Federation, Finance Dashboard, Reporting
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P271-B
+    title: Intelligent Finance Platform — Forecasting AI, Treasury Intelligence, Revenue Analytics
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P271-C
+    title: Autonomous Finance Operations — AI Accounting Intents (Gated), Automated Planning, Financial Optimization (Gated)
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P271-D
+    title: Autonomous Enterprise Finance OS — Self-Optimizing Finance Assists, Autonomous Financial Decisions (Gated), Continuous Value Optimization
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_p231_financial_intelligence: true
+  never_fork_financial_intelligence_api: true
+  never_duplicate_financial_kernel_gl_or_journals: true
+  never_local_journal_entry_aggregates: true
+  never_dual_write_ledger_or_peer_finance_catalogs: true
+  never_module_local_llm: true
+  never_opaque_auto_post_or_auto_pay: true
+  never_ungated_material_post_pay_or_invest: true
+  never_treat_twin_simulation_as_production_post: true
+  foundation_for_p271_a: true
+  unblocks_p272_supply_chain_logistics_os: true
+  peer_series_p272_mescial: true

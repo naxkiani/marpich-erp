@@ -3,7 +3,7 @@
 **Status:** Normative (P221) — series foundation  
 **SoR:** `resilience` · **ADR:** [581](../adr/581-enterprise-global-resilience-crisis-management-platform.md) · **Capability:** `CAP-PLT-EGRCMP-001`  
 **Fabric:** `meos_enterprise_global_resilience_crisis_management_platform_framework` · **Governance Standard:** MEOS 11.0  
-> **API:** `/api/v1/resilience*` · **Builds on:** P220 EPIP · P219-Z Unified Control · P219-M Security · P210 Cyber · P214-Z AI · Policy · Workflow · Audit · **Next:** P221-A · **Peer series:** [P222 EGSRIP](ENTERPRISE_GLOBAL_SUSTAINABILITY_REGENERATIVE_INTELLIGENCE_PLATFORM.md)  
+> **API:** `/api/v1/resilience*` · **Builds on:** P220 EPIP · P219-Z Unified Control · P219-M Security · P210 Cyber · P214-Z AI · Policy · Workflow · Audit · **Next:** P221-A · **Peer series:** [P222 EGSRIP](ENTERPRISE_GLOBAL_SUSTAINABILITY_REGENERATIVE_INTELLIGENCE_PLATFORM.md) · [P270 MEGRSC](ENTERPRISE_MEOS_GOVERNANCE_RISK_STRATEGIC_CONTROL_PLATFORM.md) (Enterprise GRC OS — never fork this API)  
 **Hard bindings:** Inference → **P214-Z** · Planetary/env crises → **P220** (ACL) · Civilization coordination → **P219-Z** · Cyber incidents → **P210** (ACL refs) · Approvals → **Workflow** · Policy → **Policy Engine** · Audit → **Audit** · Notifications → **Notification Platform** · Generic → **Core**.
 
 ---

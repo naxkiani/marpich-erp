@@ -19,4 +19,4 @@ Positive: governed digital-governance control-tower intelligence federated with 
 Negative: cases, permits, rule evaluation and violations remain peer-owned — EAGDGIP stores governance models, policy/regulation intel and peer refs only.
 
 ## Links
-Law: `ENTERPRISE_AUTONOMOUS_GOVERNMENT_DIGITAL_GOVERNANCE_INTELLIGENCE_PLATFORM.md` · Prior: ADR 599 · Next: P240-A · Peer: ADR 601 (P241 EAJLIREP)
+Law: `ENTERPRISE_AUTONOMOUS_GOVERNMENT_DIGITAL_GOVERNANCE_INTELLIGENCE_PLATFORM.md` · Prior: ADR 599 · Next: P240-A · Peer: ADR 601 (P241 EAJLIREP) · Peer productization: ADR 627 (P270 MEGRSC)

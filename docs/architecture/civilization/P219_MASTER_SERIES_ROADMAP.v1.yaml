@@ -465,6 +465,27 @@ phases:
     fabric: meos_enterprise_privacy_compliance_regulatory_intelligence_platform_framework
     api: /api/v1/privacy-compliance-operating*
     phase_theme: productization_and_experience_evolution
+  - id: P270
+    title: MEOS Enterprise Governance, Risk & Strategic Control Platform (MEGRSC)
+    status: planned
+    adr: "627"
+    fabric: meos_enterprise_governance_risk_strategic_control_platform_framework
+    api: /api/v1/governance-risk-operating*
+    phase_theme: productization_and_experience_evolution
+  - id: P271
+    title: MEOS Enterprise Financial Intelligence & Autonomous Finance Platform (MEFIAF)
+    status: planned
+    adr: "628"
+    fabric: meos_enterprise_financial_intelligence_autonomous_finance_platform_framework
+    api: /api/v1/autonomous-finance-operating*
+    phase_theme: productization_and_experience_evolution
+  - id: P272
+    title: MEOS Enterprise Supply Chain Intelligence & Autonomous Logistics Platform (MESCIAL)
+    status: planned
+    adr: "629"
+    fabric: meos_enterprise_supply_chain_intelligence_autonomous_logistics_platform_framework
+    api: /api/v1/supply-network-operating*
+    phase_theme: productization_and_experience_evolution
 
 implementation_phases:
   - id: P01

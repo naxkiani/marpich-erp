@@ -3,7 +3,7 @@
 **Status:** Normative (P232) — series foundation  
 **SoR:** `supply_chain_intelligence` · **ADR:** [592](../adr/592-enterprise-autonomous-supply-chain-global-logistics-intelligence-platform.md) · **Capability:** `CAP-PLT-EASCLIP-001`  
 **Fabric:** `meos_enterprise_autonomous_supply_chain_global_logistics_intelligence_platform_framework` · **Governance Standard:** MEOS 11.0  
-> **API:** `/api/v1/supply-chain-intelligence*` · **Builds on:** P231 EAFIEOP · P229 EFDMIFP · P228 EKGSIP · P227 EDTISP · P225 EAOSHP · P224 EADIP · P221 EGRCMP · Inventory · Logistics · Warehouse · Procurement peers · P214-Z · Policy · Workflow · Audit · **Next:** P232-A · **Peer series:** [P233 EAHIBEP](ENTERPRISE_AUTONOMOUS_HEALTHCARE_INTELLIGENCE_BIO_EVOLUTION_PLATFORM.md)  
+> **API:** `/api/v1/supply-chain-intelligence*` · **Builds on:** P231 EAFIEOP · P229 EFDMIFP · P228 EKGSIP · P227 EDTISP · P225 EAOSHP · P224 EADIP · P221 EGRCMP · Inventory · Logistics · Warehouse · Procurement peers · P214-Z · Policy · Workflow · Audit · **Next:** P232-A · **Peer series:** [P233 EAHIBEP](ENTERPRISE_AUTONOMOUS_HEALTHCARE_INTELLIGENCE_BIO_EVOLUTION_PLATFORM.md) · [P272 MESCIAL](ENTERPRISE_MEOS_SUPPLY_CHAIN_INTELLIGENCE_AUTONOMOUS_LOGISTICS_PLATFORM.md) (Supply Network OS productization — never fork this API)  
 **Hard bindings:** Inference → **P214-Z** · Stock truth → **inventory** (ACL) · Moves/shipments → **logistics** / **warehouse** (ACL) · Purchase docs → **procurement** peers (ACL) · Financial impact → **P231 / Financial Kernel** · Twin scenarios → **P227** · Decisions → **P224** · Ops healing → **P225** · Crisis → **P221** · Approvals → **Workflow** · Policy → **Policy Engine** · Audit → **Audit** · External carriers → **Integration Platform** · Generic → **Core**.
 
 ---

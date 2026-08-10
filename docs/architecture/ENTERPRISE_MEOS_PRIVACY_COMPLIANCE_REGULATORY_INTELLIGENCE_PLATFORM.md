@@ -3,7 +3,7 @@
 **Status:** Normative (P269) — series foundation · **Productization & Experience Evolution Phase**  
 **SoR:** `privacy_compliance_operating` · **ADR:** [626](../adr/626-meos-enterprise-privacy-compliance-regulatory-intelligence-platform.md) · **Capability:** `CAP-PLT-MEPCRI-001`  
 **Fabric:** `meos_enterprise_privacy_compliance_regulatory_intelligence_platform_framework` · **Governance Standard:** MEOS 11.0  
-> **API:** `/api/v1/privacy-compliance-operating*` · **Builds on:** P268 MECZTD · P267 MEAOSH · P266 MEAAOI · P265 MEDTIP · P264 MEKGSI · P263 MEDIMOP · P262 MEIAOI · P261 MEBRDI · P260 MEWEOP · P258 MESCC · P257 MERAF · P259 MDMAL · [P230 EPDRTIP](ENTERPRISE_PRIVACY_DIGITAL_RIGHTS_TRUST_INTELLIGENCE_PLATFORM.md) · [Enterprise Compliance Framework](ENTERPRISE_COMPLIANCE_FRAMEWORK.md) · Audit · Policy Engine · Workflow · Identity · P214-Z · **Next:** P269-A · **Peer series:** [P270 MEOS Enterprise Governance, Risk & Strategic Control](ENTERPRISE_MEOS_GOVERNANCE_RISK_STRATEGIC_CONTROL_PLATFORM.md) (planned)  
+> **API:** `/api/v1/privacy-compliance-operating*` · **Builds on:** P268 MECZTD · P267 MEAOSH · P266 MEAAOI · P265 MEDTIP · P264 MEKGSI · P263 MEDIMOP · P262 MEIAOI · P261 MEBRDI · P260 MEWEOP · P258 MESCC · P257 MERAF · P259 MDMAL · [P230 EPDRTIP](ENTERPRISE_PRIVACY_DIGITAL_RIGHTS_TRUST_INTELLIGENCE_PLATFORM.md) · [Enterprise Compliance Framework](ENTERPRISE_COMPLIANCE_FRAMEWORK.md) · Audit · Policy Engine · Workflow · Identity · P214-Z · **Next:** P269-A · **Peer series:** [P270 MEGRSC](ENTERPRISE_MEOS_GOVERNANCE_RISK_STRATEGIC_CONTROL_PLATFORM.md) (Enterprise GRC / Strategic Control OS — never fork peer governance APIs)  
 **Hard bindings:** Inference → **P214-Z** · Privacy/consent/digital rights SoR → **P230 `privacy_trust`** (ACL; never replace `/api/v1/privacy-trust*`) · Compliance violations/alerts/dashboard SoR → **Compliance** (ACL; never local compliance violation tables in modules) · Immutable audit evidence → **Audit** (ACL; never local audit tables) · Policy evaluate/simulate → **Policy Engine** (ACL) · Security controls evidence → **P226 / P246 / P268** (ACL) · Data classification/mesh → **P229 / P263 / P212** (ACL) · Regulatory semantic mapping → **P228 / P264** (ACL) · Decisions → **P261 / P224** (ACL) · Remediation workflows → **P260 / Workflow** (ACL) · Agents → **P266** (ACL) · Twin compliance simulation → **P227 / P265** (ACL; simulation ≠ enforce) · Experience Trust Command Center → **P258** (ACL) · Subject identity → **Identity** (ACL) · AuthZ → **Authorization** · Generic → **Core**.
 
 ---
@@ -207,7 +207,7 @@ Read models under `privacy_compliance_operating_*` only; pagination mandatory; l
 | P261 · P260 · P262 | Decision · remediation workflow · analytics |
 | P257 · P258 · P259 | Runtime · Trust Command Center · lifecycle |
 | Identity · AuthZ | Subject · access |
-| **P270** | Enterprise GRC / strategic control (planned) |
+| **P270 MEGRSC** | Enterprise GRC / strategic control OS — **never fork peer governance APIs** |
 | Core | Generic platform services |
 
 Permissions: `privacy_compliance_operating.privacy.*` · `privacy_compliance_operating.compliance.*` · `privacy_compliance_operating.regulatory.*` · `privacy_compliance_operating.audit.*` · `privacy_compliance_operating.trust.*` · `privacy_compliance_operating.governance.*` · `privacy_compliance_operating.ai.read` · `privacy_compliance_operating.ai.infer`.
