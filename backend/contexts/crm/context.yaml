@@ -2,6 +2,8 @@ context: crm
 display_name: CRM
 type: generic
 description: Contacts, leads, opportunities, customer 360
+# Peer productization: P273 MECXARP (customer_relationship_operating) — never fork /api/v1/crm*; never dual-write crm_* from operating fabric
+# Peer productization: P277 MESIARO (sales_revenue_operating) — Lead-to-Revenue overlays; CRM remains opportunity/lead truth
 aggregates:
 - Contact
 - Lead

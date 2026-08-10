@@ -1,0 +1,54 @@
+# MEHCAWP Master Series Roadmap (P274)
+
+series: P274
+title: MEOS Enterprise Human Capital Intelligence & Autonomous Workforce Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEHCAWP-001
+sor: human_capital_operating
+fabric: meos_enterprise_human_capital_intelligence_autonomous_workforce_platform_framework
+api: /api/v1/human-capital-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P274
+    title: MEHCAWP Foundation
+    status: planned
+    adr: "631"
+    fabric: meos_enterprise_human_capital_intelligence_autonomous_workforce_platform_framework
+    api: /api/v1/human-capital-operating*
+  - id: P274-A
+    title: Human Capital Foundation — Employee 360 Overlays, Recruitment, Performance, Learning, Workforce Dashboard
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P274-B
+    title: Workforce Intelligence Platform — Skills Intelligence, Talent Intelligence, Workforce Forecasting, Attrition, EX Analytics
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P274-C
+    title: Autonomous Workforce Operations — AI Recruitment Assistance, Workforce Optimization (Gated), Talent Mobility, Personalized Learning, Planning Assists
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P274-D
+    title: Autonomous Human Capital OS — Predictive Workforce Management, Self-Optimizing Capacity Assists, Autonomous Skill Development Assists, Continuous Talent Optimization (Gated)
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_p235_workforce_intelligence: true
+  never_fork_workforce_intelligence_api: true
+  never_replace_p251_human_capability_intelligence: true
+  never_fork_human_capability_intelligence_api: true
+  never_dual_write_employment_or_payroll_ledgers: true
+  never_ungated_hire_terminate_pay_promote_or_comp: true
+  never_opaque_high_impact_employment_decisions: true
+  never_module_local_llm: true
+  never_vendor_ats_hris_lms_sdk_in_domain: true
+  never_treat_twin_simulation_as_execute: true
+  privacy_by_design_fail_closed: true
+  bias_monitoring_required: true
+  human_governance_for_high_impact_hr: true
+  foundation_for_p274_a: true
+  unblocks_p275_asset_intelligence_os: true
+  peer_series_p275_meaiamp: true

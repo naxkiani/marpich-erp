@@ -2,6 +2,9 @@ context: accounting
 display_name: Accounting
 type: generic
 description: Journal entries, AP/AR, general ledger postings
+# Peer productization: P278 MEQTCIP (quote_to_cash_operating) — never fork accounting AR/invoice truth; never dual-write accounting_* from Q2C fabric
+# Peer productization: P279 METRCIP (treasury_cash_operating) — RevRec/cash intelligence overlays; Accounting remains doc truth; P271 remains Financial Control
+# Boundary: P277 = Sales/RevOps · P278 = Quote-to-Cash · P279 = Treasury/RevRec · P271 = Financial Intelligence · P280 = FP&A (planned)
 aggregates:
 - JournalEntry
 - Account

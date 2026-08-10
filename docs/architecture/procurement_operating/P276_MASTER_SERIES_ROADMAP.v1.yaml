@@ -1,0 +1,52 @@
+# MEPIASP Master Series Roadmap (P276)
+
+series: P276
+title: MEOS Enterprise Procurement Intelligence & Autonomous Sourcing Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEPIASP-001
+sor: procurement_operating
+fabric: meos_enterprise_procurement_intelligence_autonomous_sourcing_platform_framework
+api: /api/v1/procurement-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P276
+    title: MEPIASP Foundation
+    status: planned
+    adr: "633"
+    fabric: meos_enterprise_procurement_intelligence_autonomous_sourcing_platform_framework
+    api: /api/v1/procurement-operating*
+  - id: P276-A
+    title: Procurement Foundation — Requests, Supplier Overlays, PO Federation, Approval Workflows, Dashboard
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P276-B
+    title: Procurement Intelligence — Spend, Supplier, Strategic Sourcing, Price, Contract Intelligence
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P276-C
+    title: Autonomous Procurement — AI Supplier Discovery, Automated RFQ/RFP Prep, Bid Comparison, Purchase Optimization, Risk Prediction
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P276-D
+    title: Autonomous Source-to-Pay OS — Autonomous Sourcing Assists, Continuous Spend Optimization, Predictive Supplier Management, Gated Purchase Recommendations
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_procurement_sor: true
+  never_fork_procurement_api: true
+  never_fork_supply_network_operating_api: true
+  never_merge_p272_supply_network_and_p276_s2p: true
+  never_dual_write_po_ledgers: true
+  never_local_gl_or_duplicate_financial_kernel: true
+  never_ungated_material_purchase_commit: true
+  never_opaque_auto_accept_commercial_terms: true
+  human_governance_for_negotiation_and_doa: true
+  never_module_local_llm: true
+  never_contract_blobs_in_module_db: true
+  never_treat_twin_simulation_as_commit: true
+  foundation_for_p276_a: true
+  unblocks_p277_sales_revenue_ops_os: true

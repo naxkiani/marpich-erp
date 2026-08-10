@@ -486,6 +486,55 @@ phases:
     fabric: meos_enterprise_supply_chain_intelligence_autonomous_logistics_platform_framework
     api: /api/v1/supply-network-operating*
     phase_theme: productization_and_experience_evolution
+  - id: P273
+    title: MEOS Enterprise Customer Experience, CRM Intelligence & Autonomous Relationship Platform (MECXARP)
+    status: planned
+    adr: "630"
+    fabric: meos_enterprise_customer_experience_crm_intelligence_autonomous_relationship_platform_framework
+    api: /api/v1/customer-relationship-operating*
+    phase_theme: productization_and_experience_evolution
+  - id: P274
+    title: MEOS Enterprise Human Capital Intelligence & Autonomous Workforce Platform (MEHCAWP)
+    status: planned
+    adr: "631"
+    fabric: meos_enterprise_human_capital_intelligence_autonomous_workforce_platform_framework
+    api: /api/v1/human-capital-operating*
+    phase_theme: productization_and_experience_evolution
+  - id: P275
+    title: MEOS Enterprise Asset Intelligence & Autonomous Asset Management Platform (MEAIAMP)
+    status: planned
+    adr: "632"
+    fabric: meos_enterprise_asset_intelligence_autonomous_asset_management_platform_framework
+    api: /api/v1/enterprise-asset-operating*
+    phase_theme: productization_and_experience_evolution
+  - id: P276
+    title: MEOS Enterprise Procurement Intelligence & Autonomous Sourcing Platform (MEPIASP)
+    status: planned
+    adr: "633"
+    fabric: meos_enterprise_procurement_intelligence_autonomous_sourcing_platform_framework
+    api: /api/v1/procurement-operating*
+    phase_theme: productization_and_experience_evolution
+  - id: P277
+    title: MEOS Enterprise Sales Intelligence & Autonomous Revenue Operations Platform (MESIARO)
+    status: planned
+    adr: "634"
+    fabric: meos_enterprise_sales_intelligence_autonomous_revenue_operations_platform_framework
+    api: /api/v1/sales-revenue-operating*
+    phase_theme: productization_and_experience_evolution
+  - id: P278
+    title: MEOS Enterprise Revenue, Billing & Quote-to-Cash Intelligence Platform (MEQTCIP)
+    status: planned
+    adr: "635"
+    fabric: meos_enterprise_revenue_billing_quote_to_cash_intelligence_platform_framework
+    api: /api/v1/quote-to-cash-operating*
+    phase_theme: productization_and_experience_evolution
+  - id: P279
+    title: MEOS Enterprise Revenue Recognition, Treasury & Cash Intelligence Platform (METRCIP)
+    status: planned
+    adr: "636"
+    fabric: meos_enterprise_revenue_recognition_treasury_cash_intelligence_platform_framework
+    api: /api/v1/treasury-cash-operating*
+    phase_theme: productization_and_experience_evolution
 
 implementation_phases:
   - id: P01

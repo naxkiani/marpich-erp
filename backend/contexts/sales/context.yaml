@@ -2,6 +2,9 @@ context: sales
 display_name: Sales
 type: generic
 description: Quotes, orders, pricing, commissions
+# Peer productization: P277 MESIARO (sales_revenue_operating) — never fork /api/v1/sales*; never dual-write sales_* from operating fabric
+# Peer productization: P278 MEQTCIP (quote_to_cash_operating) — post-acceptance order/billing cycle; Sales remains quote/order truth
+# Boundary: P273 = CX/CRM OS · P277 = Sales/RevOps OS · P278 = Quote-to-Cash · P271 = Financial Intelligence · P279 = Treasury/Cash (planned)
 aggregates:
 - Quote
 - SalesOrder

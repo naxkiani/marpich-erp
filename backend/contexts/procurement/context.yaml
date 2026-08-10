@@ -2,6 +2,7 @@ context: procurement
 display_name: Procurement
 type: generic
 description: Purchase requisitions, POs, vendor management
+# Peer productization: P276 MEPIASP (procurement_operating) — never fork /api/v1/procurement*; never dual-write procurement_* from S2P operating fabric
 aggregates:
 - PurchaseRequisition
 - PurchaseOrder

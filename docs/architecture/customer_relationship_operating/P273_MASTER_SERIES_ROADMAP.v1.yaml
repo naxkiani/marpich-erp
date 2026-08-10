@@ -1,0 +1,52 @@
+# MECXARP Master Series Roadmap (P273)
+
+series: P273
+title: MEOS Enterprise Customer Experience, CRM Intelligence & Autonomous Relationship Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MECXARP-001
+sor: customer_relationship_operating
+fabric: meos_enterprise_customer_experience_crm_intelligence_autonomous_relationship_platform_framework
+api: /api/v1/customer-relationship-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P273
+    title: MECXARP Foundation
+    status: planned
+    adr: "630"
+    fabric: meos_enterprise_customer_experience_crm_intelligence_autonomous_relationship_platform_framework
+    api: /api/v1/customer-relationship-operating*
+  - id: P273-A
+    title: Customer Intelligence Foundation — Customer 360 Overlays, CRM Federation, Sales Pipeline, Service Management, Customer Dashboard
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P273-B
+    title: Customer Intelligence Platform — Journey Intelligence, Sales/Service Intelligence, Value Analytics, Churn Prediction
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P273-C
+    title: Autonomous Customer Operations — Next Best Action, AI Service Automation (Gated), Journey Automation, Retention Automation, Consent-Gated Personalization
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P273-D
+    title: Autonomous Customer Relationship OS — Autonomous Engagement Assists, Predictive CX, Self-Optimizing Journeys, Continuous Value Optimization (Gated)
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_crm_or_sales: true
+  never_fork_crm_or_sales_apis: true
+  never_dual_write_crm_or_sales_ledgers: true
+  never_merge_crm_and_sales_lifecycles: true
+  never_module_local_llm: true
+  never_embed_smtp_sms_in_domain: true
+  never_opaque_auto_outreach: true
+  never_ungated_critical_engagement: true
+  never_outreach_without_consent: true
+  privacy_by_design_fail_closed: true
+  never_treat_twin_simulation_as_engagement_execute: true
+  foundation_for_p273_a: true
+  unblocks_p274_human_capital_workforce_os: true
+  peer_series_p274_mehcawp: true

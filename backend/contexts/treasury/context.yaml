@@ -2,6 +2,8 @@ context: treasury
 display_name: Enterprise Treasury Platform
 type: financial_kernel_satellite
 description: Enterprise liquidity — bank accounts, pools, operations, risk, investments, borrowing, funding, forecasting, analytics, AI. NOT Cash Register.
+# Peer productization: P279 METRCIP (treasury_cash_operating) — never fork /api/v1/treasury*; never dual-write treasury_* from operating fabric
+# Boundary: P278 = Quote-to-Cash · P279 = Treasury/RevRec/Cash OS · P271 = Financial Intelligence/Control · P280 = FP&A (planned)
 aggregates:
   - TreasuryAccount
   - TreasuryTransfer
