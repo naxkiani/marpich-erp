@@ -5,7 +5,8 @@
 **Owner context:** `backend/contexts/policy/` (planned) · complements `identity` authorization PDP  
 **Companions:** [SECURITY_STANDARD.md](SECURITY_STANDARD.md) · [ENTERPRISE_WORKFLOW_ENGINE.md](ENTERPRISE_WORKFLOW_ENGINE.md) · [INDUSTRY_CATALOG.md](INDUSTRY_CATALOG.md) · [CORE_PLATFORM.md](CORE_PLATFORM.md) · [ENTERPRISE_AUDIT_PLATFORM.md](ENTERPRISE_AUDIT_PLATFORM.md)
 
-**Law: Policies are configurable. No hardcoded business rules in modules. Every module reads policies from the Policy Engine.**
+**Law: Policies are configurable. No hardcoded business rules in modules. Every module reads policies from the Policy Engine.**  
+**Peer productization:** [P261 MEBRDI](ENTERPRISE_MEOS_BUSINESS_RULES_DECISION_INTELLIGENCE_PLATFORM.md) — rules/decision studio & explainability fabric over this SoR; never fork `/api/v1/policies*`. Also federate [P224 EADIP](ENTERPRISE_AUTONOMOUS_DECISION_INTELLIGENCE_PLATFORM.md) — never fork `/api/v1/decision-intelligence*`.
 
 ---
 

@@ -374,6 +374,97 @@ phases:
     adr: "613"
     fabric: meos_enterprise_autonomous_energy_intelligence_sustainable_power_platform_framework
     api: /api/v1/sustainable-power-intelligence*
+  - id: P257
+    title: MEOS Enterprise Runtime & Application Framework Platform (MERAF)
+    status: planned
+    adr: "614"
+    fabric: meos_enterprise_runtime_application_framework_platform_framework
+    api: /api/v1/enterprise-runtime*
+    phase_theme: productization_and_experience_evolution
+  - id: P258
+    title: MEOS Enterprise Application Shell & Command Center Platform (MESCC)
+    status: planned
+    adr: "615"
+    fabric: meos_enterprise_application_shell_command_center_platform_framework
+    api: /api/v1/enterprise-experience*
+    phase_theme: productization_and_experience_evolution
+  - id: P259
+    title: MEOS Dynamic Module Activation & Application Lifecycle Platform (MDMAL)
+    status: planned
+    adr: "616"
+    fabric: meos_dynamic_module_activation_application_lifecycle_platform_framework
+    api: /api/v1/module-lifecycle*
+    phase_theme: productization_and_experience_evolution
+  - id: P260
+    title: MEOS Enterprise Workflow Execution & Orchestration Platform (MEWEOP)
+    status: planned
+    adr: "617"
+    fabric: meos_enterprise_workflow_execution_orchestration_platform_framework
+    api: /api/v1/workflow-orchestration*
+    phase_theme: productization_and_experience_evolution
+  - id: P261
+    title: MEOS Enterprise Business Rules & Decision Intelligence Platform (MEBRDI)
+    status: planned
+    adr: "618"
+    fabric: meos_enterprise_business_rules_decision_intelligence_platform_framework
+    api: /api/v1/business-decision*
+    phase_theme: productization_and_experience_evolution
+  - id: P262
+    title: MEOS Enterprise Intelligence Analytics & Operational Insight Platform (MEIAOI)
+    status: planned
+    adr: "619"
+    fabric: meos_enterprise_intelligence_analytics_operational_insight_platform_framework
+    api: /api/v1/operational-insight*
+    phase_theme: productization_and_experience_evolution
+  - id: P263
+    title: MEOS Enterprise Data Intelligence & Data Mesh Operating Platform (MEDIMOP)
+    status: planned
+    adr: "620"
+    fabric: meos_enterprise_data_intelligence_data_mesh_operating_platform_framework
+    api: /api/v1/data-mesh-operating*
+    phase_theme: productization_and_experience_evolution
+  - id: P264
+    title: MEOS Enterprise Knowledge Graph & Semantic Intelligence Platform (MEKGSI)
+    status: planned
+    adr: "621"
+    fabric: meos_enterprise_knowledge_graph_semantic_intelligence_operating_platform_framework
+    api: /api/v1/semantic-knowledge*
+    phase_theme: productization_and_experience_evolution
+  - id: P265
+    title: MEOS Enterprise Digital Twin Intelligence Platform (MEDTIP)
+    status: planned
+    adr: "622"
+    fabric: meos_enterprise_digital_twin_intelligence_operating_platform_framework
+    api: /api/v1/twin-intelligence*
+    phase_theme: productization_and_experience_evolution
+  - id: P266
+    title: MEOS Enterprise AI Agent Orchestration & Autonomous Intelligence Platform (MEAAOI)
+    status: planned
+    adr: "623"
+    fabric: meos_enterprise_ai_agent_orchestration_autonomous_intelligence_platform_framework
+    api: /api/v1/ai-agent-orchestration*
+    phase_theme: productization_and_experience_evolution
+  - id: P267
+    title: MEOS Enterprise Autonomous Operations & Self-Healing Platform (MEAOSH)
+    status: planned
+    adr: "624"
+    fabric: meos_enterprise_autonomous_operations_self_healing_operating_platform_framework
+    api: /api/v1/operations-autonomy*
+    phase_theme: productization_and_experience_evolution
+  - id: P268
+    title: MEOS Enterprise Cybersecurity Intelligence & Zero Trust Defense Platform (MECZTD)
+    status: planned
+    adr: "625"
+    fabric: meos_enterprise_cybersecurity_intelligence_zero_trust_defense_platform_framework
+    api: /api/v1/cyber-security-operating*
+    phase_theme: productization_and_experience_evolution
+  - id: P269
+    title: MEOS Enterprise Privacy, Compliance & Regulatory Intelligence Platform (MEPCRI)
+    status: planned
+    adr: "626"
+    fabric: meos_enterprise_privacy_compliance_regulatory_intelligence_platform_framework
+    api: /api/v1/privacy-compliance-operating*
+    phase_theme: productization_and_experience_evolution
 
 implementation_phases:
   - id: P01

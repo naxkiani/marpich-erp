@@ -3,7 +3,7 @@
 **Status:** Normative (P225) — series foundation  
 **SoR:** `autonomous_operations` · **ADR:** [585](../adr/585-enterprise-autonomous-operations-self-healing-platform.md) · **Capability:** `CAP-PLT-EAOSHP-001`  
 **Fabric:** `meos_enterprise_autonomous_operations_self_healing_platform_framework` · **Governance Standard:** MEOS 11.0  
-> **API:** `/api/v1/autonomous-operations*` · **Builds on:** P224 EADIP · P221 EGRCMP · P219-U Autonomous Ops · Observability · Scheduler · Workflow · P214-Z · P216-Z · Policy · Audit · **Next:** P225-A · **Peer series:** [P226 EACDISP](ENTERPRISE_AUTONOMOUS_CYBER_DEFENSE_DIGITAL_IMMUNE_SYSTEM_PLATFORM.md)  
+> **API:** `/api/v1/autonomous-operations*` · **Builds on:** P224 EADIP · P221 EGRCMP · P219-U Autonomous Ops · Observability · Scheduler · Workflow · P214-Z · P216-Z · Policy · Audit · **Next:** P225-A · **Peer series:** [P226 EACDISP](ENTERPRISE_AUTONOMOUS_CYBER_DEFENSE_DIGITAL_IMMUNE_SYSTEM_PLATFORM.md) · [P267 MEAOSH](ENTERPRISE_MEOS_AUTONOMOUS_OPERATIONS_SELF_HEALING_PLATFORM.md) (Ops OS productization — never fork this API)  
 **Hard bindings:** Inference → **P214-Z** · Metrics/traces/logs → **Observability Platform** (ACL) · Civilization auto-ops → **P219-U** (ACL) · Decisions → **P224** (ACL) · Crisis → **P221** (ACL) · Physical actuation → **P216-Z + Workflow** · Approvals → **Workflow** · Policy → **Policy Engine** · Audit → **Audit** · Jobs → **Scheduler** · Generic → **Core**.
 
 ---

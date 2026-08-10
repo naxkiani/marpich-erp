@@ -1,0 +1,51 @@
+# MEIAOI Master Series Roadmap (P262)
+
+series: P262
+title: MEOS Enterprise Intelligence Analytics & Operational Insight Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEIAOI-001
+sor: operational_insight
+fabric: meos_enterprise_intelligence_analytics_operational_insight_platform_framework
+api: /api/v1/operational-insight*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P262
+    title: MEIAOI Foundation
+    status: planned
+    adr: "619"
+    fabric: meos_enterprise_intelligence_analytics_operational_insight_platform_framework
+    api: /api/v1/operational-insight*
+  - id: P262-A
+    title: Analytics Foundation — Insight Fabric ACL to Analytics, KPI Federation, Dashboard Contracts, Reporting Hooks
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P262-B
+    title: Operational Intelligence — Real-Time Insight, Monitoring Center, Insight Generation, Alert Management
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P262-C
+    title: Predictive Intelligence — AI Prediction Campaigns, Forecasting, Anomaly Detection, Recommendations
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P262-D
+    title: Autonomous Enterprise Intelligence — Autonomous Insight Generation, Self-Optimizing Ops Assists, Predictive Enterprise Management (Gated)
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_analytics_bi: true
+  never_replace_p229_data_mesh: true
+  never_replace_observability_or_reporting: true
+  never_fork_analytics_or_data_mesh_apis: true
+  never_dual_write_analytics_or_data_mesh_tables: true
+  never_local_metrics_stores_in_business_modules: true
+  never_cross_schema_analytics_sql: true
+  never_module_local_llm: true
+  never_opaque_unexplainable_insights_for_gated_actions: true
+  never_treat_insight_as_execute: true
+  foundation_for_p262_a: true
+  unblocks_p263_data_mesh_operating: true
+  peer_series_p263_medimop: true

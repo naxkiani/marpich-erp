@@ -1,0 +1,50 @@
+# MEWEOP Master Series Roadmap (P260)
+
+series: P260
+title: MEOS Enterprise Workflow Execution & Orchestration Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEWEOP-001
+sor: workflow_orchestration
+fabric: meos_enterprise_workflow_execution_orchestration_platform_framework
+api: /api/v1/workflow-orchestration*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P260
+    title: MEWEOP Foundation
+    status: planned
+    adr: "617"
+    fabric: meos_enterprise_workflow_execution_orchestration_platform_framework
+    api: /api/v1/workflow-orchestration*
+  - id: P260-A
+    title: Workflow Foundation — Orchestration ACL to Engine, Process Projections, Task Orchestration, Basic Monitoring
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P260-B
+    title: Intelligent Orchestration — AI Process Builder Intents, Decision Assist, Advanced Rules ACL, Process Analytics
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P260-C
+    title: Autonomous Process Platform — Self-Optimizing Workflows, Predictive Process Management, Autonomous Recovery (Gated)
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P260-D
+    title: Enterprise Autonomous Operations — AI-Generated Processes, Autonomous Business Execution (Gated), Continuous Evolution
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_workflow_engine: true
+  never_fork_workflow_api: true
+  never_dual_write_workflow_tables: true
+  never_module_local_approval_engines: true
+  never_local_policy_tables: true
+  never_module_local_llm: true
+  never_opaque_auto_approvals: true
+  never_ungated_autonomous_recovery: true
+  never_treat_simulation_as_execute: true
+  foundation_for_p260_a: true
+  unblocks_p261_business_rules_decision: true
+  peer_series_p261_mebrdi: true

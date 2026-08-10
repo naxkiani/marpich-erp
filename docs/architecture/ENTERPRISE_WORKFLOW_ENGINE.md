@@ -5,7 +5,8 @@
 **Owner context:** `backend/contexts/workflow/` · `modules/platform/workflow/`  
 **Companions:** [ENTERPRISE_EVENT_BUS.md](ENTERPRISE_EVENT_BUS.md) · [AI_PLATFORM_STANDARD.md](AI_PLATFORM_STANDARD.md) · [CORE_PLATFORM.md](CORE_PLATFORM.md) · [SECURITY_STANDARD.md](SECURITY_STANDARD.md)
 
-**Law: Business modules never implement their own approval engines. Use the Enterprise Workflow Engine.**
+**Law: Business modules never implement their own approval engines. Use the Enterprise Workflow Engine.**  
+**Peer productization:** [P260 MEWEOP](ENTERPRISE_MEOS_WORKFLOW_EXECUTION_ORCHESTRATION_PLATFORM.md) — orchestration/SLA/exception fabric over this SoR; never fork `/api/v1/workflow*`.
 
 ---
 

@@ -3,7 +3,7 @@
 **Status:** Normative (P224) — series foundation  
 **SoR:** `decision_intelligence` · **ADR:** [584](../adr/584-enterprise-autonomous-decision-intelligence-platform.md) · **Capability:** `CAP-PLT-EADIP-001`  
 **Fabric:** `meos_enterprise_autonomous_decision_intelligence_platform_framework` · **Governance Standard:** MEOS 11.0  
-> **API:** `/api/v1/decision-intelligence*` · **Builds on:** P223 EGIKEP · P222 EGSRIP · P221 EGRCMP · P220 EPIP · P219-Z · P219-X · P213 Decision Intelligence · P214-Z · Policy · Workflow · Audit · Analytics · **Next:** P224-A · **Peer series:** [P225 EAOSHP](ENTERPRISE_AUTONOMOUS_OPERATIONS_SELF_HEALING_PLATFORM.md)  
+> **API:** `/api/v1/decision-intelligence*` · **Builds on:** P223 EGIKEP · P222 EGSRIP · P221 EGRCMP · P220 EPIP · P219-Z · P219-X · P213 Decision Intelligence · P214-Z · Policy · Workflow · Audit · Analytics · **Next:** P224-A · **Peer series:** [P225 EAOSHP](ENTERPRISE_AUTONOMOUS_OPERATIONS_SELF_HEALING_PLATFORM.md) · [P261 MEBRDI](ENTERPRISE_MEOS_BUSINESS_RULES_DECISION_INTELLIGENCE_PLATFORM.md) (rules/decision productization — never fork this API)  
 **Hard bindings:** Inference → **P214-Z** · Classical BI/decision analytics → **P213** (ACL) · Strategy/evolution → **P219-X** (ACL) · Control plane → **P219-Z** · Risk/crisis → **P221** · Approvals → **Workflow** · Policy → **Policy Engine** · Audit → **Audit** · Generic → **Core**.
 
 ---

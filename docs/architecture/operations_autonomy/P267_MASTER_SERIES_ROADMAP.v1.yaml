@@ -1,0 +1,50 @@
+# MEAOSH Master Series Roadmap (P267)
+
+series: P267
+title: MEOS Enterprise Autonomous Operations & Self-Healing Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEAOSH-001
+sor: operations_autonomy
+fabric: meos_enterprise_autonomous_operations_self_healing_operating_platform_framework
+api: /api/v1/operations-autonomy*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P267
+    title: MEAOSH Foundation
+    status: planned
+    adr: "624"
+    fabric: meos_enterprise_autonomous_operations_self_healing_operating_platform_framework
+    api: /api/v1/operations-autonomy*
+  - id: P267-A
+    title: Operations Intelligence Foundation — Monitoring Federation, Incident Campaigns, Health Dashboard, Event Correlation
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P267-B
+    title: AI Operations Platform — RCA, Predictive Monitoring, AI Ops Assistant
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P267-C
+    title: Self-Healing Enterprise — Automated Recovery (Gated), Autonomous Remediation Assists, Reliability Optimization
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P267-D
+    title: Autonomous Enterprise Operations OS — Self-Healing OS Assists, Continuous Optimization, Autonomous Reliability Management (Gated)
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_p225_autonomous_operations: true
+  never_fork_autonomous_operations_api: true
+  never_dual_write_autonomous_operations_tables: true
+  never_local_metrics_stores_in_business_modules: true
+  never_module_local_llm: true
+  never_ungated_critical_self_heal: true
+  never_silent_recovery_without_audit: true
+  never_treat_twin_simulation_as_recovery_execute: true
+  never_direct_ot_or_device_sdk: true
+  foundation_for_p267_a: true
+  unblocks_p268_cyber_defense: true
+  peer_series_p268_mecztd: true

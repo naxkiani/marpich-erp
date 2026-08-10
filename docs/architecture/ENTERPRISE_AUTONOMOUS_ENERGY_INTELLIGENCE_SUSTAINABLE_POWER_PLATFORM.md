@@ -3,7 +3,7 @@
 **Status:** Normative (P254) — series foundation  
 **SoR:** `sustainable_power_intelligence` · **ADR:** [613](../adr/613-enterprise-autonomous-energy-intelligence-sustainable-power-platform.md) · **Capability:** `CAP-PLT-EAEISPP-001`  
 **Fabric:** `meos_enterprise_autonomous_energy_intelligence_sustainable_power_platform_framework` · **Governance Standard:** MEOS 11.0  
-> **API:** `/api/v1/sustainable-power-intelligence*` · **Builds on:** P253 EAHILSP · P237 EAEISR · P222 EGSRIP · P248 EAEIPSP · P252 EASIUIP · P221 EGRCMP · P231 EAFIEOP · P244 EAFIEEP · P227 EDTISP · P228 EKGSIP · P229 EFDMIFP · P224 EADIP · Financial Kernel · Workflow · Audit · P214-Z · **Next:** P254-A  
+> **API:** `/api/v1/sustainable-power-intelligence*` · **Builds on:** P253 EAHILSP · P237 EAEISR · P222 EGSRIP · P248 EAEIPSP · P252 EASIUIP · P221 EGRCMP · P231 EAFIEOP · P244 EAFIEEP · P227 EDTISP · P228 EKGSIP · P229 EFDMIFP · P224 EADIP · Financial Kernel · Workflow · Audit · P214-Z · **Next:** P254-A · **Peer series:** [P257 MERAF](ENTERPRISE_MEOS_RUNTIME_APPLICATION_FRAMEWORK_PLATFORM.md) (runtime productization)  
 **Hard bindings:** Inference → **P214-Z** · Energy/resource intel SoR → **P237** (ACL; never replace `/api/v1/energy-intelligence*`) · ESG/carbon SoR → **P222** (ACL; never dual-write carbon ledgers) · Environmental/planetary → **P248/P220** (ACL) · Urban infra energy lens → **P252** (ACL) · Crisis → **P221** · Settlements/trades → **Financial Kernel** / **P231/P244** (ACL) · Twin → **P227** · KG → **P228** · Decisions → **P224** · Approvals → **Workflow** · Policy → **Policy Engine** · Audit → **Audit** · Grid/OT/utility/market vendors → **Integration Platform** · Generic → **Core**.
 
 ---

@@ -19,4 +19,4 @@ Positive: governed power/grid control-tower intelligence federated with energy-r
 Negative: broader energy intel, carbon ledgers and settlements remain peer-owned — EAEISPP stores power models, grid/storage/trading intents and peer refs only.
 
 ## Links
-Law: `ENTERPRISE_AUTONOMOUS_ENERGY_INTELLIGENCE_SUSTAINABLE_POWER_PLATFORM.md` · Prior: ADR 612 · Next: P254-A
+Law: `ENTERPRISE_AUTONOMOUS_ENERGY_INTELLIGENCE_SUSTAINABLE_POWER_PLATFORM.md` · Prior: ADR 612 · Next: P254-A · Peer: ADR 614 (P257 MERAF)

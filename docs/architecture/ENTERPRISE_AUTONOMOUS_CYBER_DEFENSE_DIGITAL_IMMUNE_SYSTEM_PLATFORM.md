@@ -3,7 +3,7 @@
 **Status:** Normative (P226) — series foundation  
 **SoR:** `cyber_defense` · **ADR:** [586](../adr/586-enterprise-autonomous-cyber-defense-digital-immune-system-platform.md) · **Capability:** `CAP-PLT-EACDISP-001`  
 **Fabric:** `meos_enterprise_autonomous_cyber_defense_digital_immune_system_platform_framework` · **Governance Standard:** MEOS 11.0  
-> **API:** `/api/v1/cyber-defense*` · **Builds on:** P225 EAOSHP · P224 EADIP · P221 EGRCMP · P210 Cyber · Identity · Secrets · P214-Z · Policy · Workflow · Audit · **Next:** P226-A · **Peer series:** [P227 EDTISP](ENTERPRISE_DIGITAL_TWIN_INTELLIGENCE_SIMULATION_PLATFORM.md)  
+> **API:** `/api/v1/cyber-defense*` · **Builds on:** P225 EAOSHP · P224 EADIP · P221 EGRCMP · P210 Cyber · Identity · Secrets · P214-Z · Policy · Workflow · Audit · **Next:** P226-A · **Peer series:** [P227 EDTISP](ENTERPRISE_DIGITAL_TWIN_INTELLIGENCE_SIMULATION_PLATFORM.md) · [P268 MECZTD](ENTERPRISE_MEOS_CYBERSECURITY_INTELLIGENCE_ZERO_TRUST_DEFENSE_PLATFORM.md) (Security OS productization — never fork this API)  
 **Hard bindings:** Inference → **P214-Z** · Cyber SoR (SOC/XDR/SOAR/…) → **P210** (ACL) · Identity / Zero Trust → **Identity** (ACL) · Ops healing → **P225** (ACL) · Crisis → **P221** (ACL) · Decisions → **P224** (ACL) · Approvals → **Workflow** · Policy → **Policy Engine** · Audit → **Audit** · Secrets → **Secrets** · Generic → **Core**.
 
 ---

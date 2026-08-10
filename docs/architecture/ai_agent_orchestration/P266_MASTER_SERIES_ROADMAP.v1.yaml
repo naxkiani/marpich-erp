@@ -1,0 +1,49 @@
+# MEAAOI Master Series Roadmap (P266)
+
+series: P266
+title: MEOS Enterprise AI Agent Orchestration & Autonomous Intelligence Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEAAOI-001
+sor: ai_agent_orchestration
+fabric: meos_enterprise_ai_agent_orchestration_autonomous_intelligence_platform_framework
+api: /api/v1/ai-agent-orchestration*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P266
+    title: MEAAOI Foundation
+    status: planned
+    adr: "623"
+    fabric: meos_enterprise_ai_agent_orchestration_autonomous_intelligence_platform_framework
+    api: /api/v1/ai-agent-orchestration*
+  - id: P266-A
+    title: AI Agent Foundation — Registry Overlays, Orchestration Runtime ACL, Basic Multi-Agent, Governance Framework
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P266-B
+    title: Multi-Agent Intelligence — Collaboration, Task Planning, AI Workspace, Marketplace
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P266-C
+    title: Autonomous Enterprise Operations — Autonomous Agents (Gated), Self-Optimization Assists, AI Process Automation
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P266-D
+    title: Enterprise Autonomous Intelligence OS — Self-Evolving Agents (Gated), Autonomous Decision Assists, Continuous Intelligence Evolution
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_ai_platform_or_p214f_agents: true
+  never_fork_ai_apis: true
+  never_dual_write_ai_agent_or_model_catalogs: true
+  never_module_local_llm: true
+  inference_only_via_p214z: true
+  never_opaque_auto_approvals: true
+  never_ungated_critical_autonomous_actions: true
+  never_treat_plan_or_recommendation_as_execute: true
+  foundation_for_p266_a: true
+  unblocks_p267_autonomous_operations: true
+  peer_series_p267_meaosh: true

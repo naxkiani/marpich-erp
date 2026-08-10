@@ -1,0 +1,50 @@
+# MESCC Master Series Roadmap (P258)
+
+series: P258
+title: MEOS Enterprise Application Shell & Command Center Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MESCC-001
+sor: enterprise_experience
+fabric: meos_enterprise_application_shell_command_center_platform_framework
+api: /api/v1/enterprise-experience*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P258
+    title: MESCC Foundation
+    status: planned
+    adr: "615"
+    fabric: meos_enterprise_application_shell_command_center_platform_framework
+    api: /api/v1/enterprise-experience*
+  - id: P258-A
+    title: Enterprise Shell Foundation — Application Shell, Navigation Engine, Component Framework, Workspace Foundation
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P258-B
+    title: Command Center — Enterprise Dashboard, AI Actions, Business Alerts, Intelligent Search
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P258-C
+    title: AI Experience Layer — Experience Copilot, Adaptive UI, Autonomous Recommendations
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P258-D
+    title: Autonomous Enterprise Experience — Self-Optimizing Workspace, Autonomous Discovery, Predictive Interaction
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_p257_enterprise_runtime: true
+  never_fork_enterprise_runtime_api: true
+  never_dual_write_enterprise_runtime_tables: true
+  never_replace_search_or_notifications: true
+  never_reimplement_appshell_widgets_in_modules: true
+  never_module_local_llm: true
+  never_bypass_zero_trust_policy_on_launch: true
+  never_business_aggregates_in_experience_sor: true
+  ui_page_standard_binding_mandatory: true
+  foundation_for_p258_a: true
+  unblocks_p259_module_lifecycle: true
+  peer_series_p259_mdmal: true

@@ -3,7 +3,7 @@
 **Status:** Normative (P228) — series foundation  
 **SoR:** `knowledge_graph` · **ADR:** [588](../adr/588-enterprise-knowledge-graph-semantic-intelligence-platform.md) · **Capability:** `CAP-PLT-EKGSIP-001`  
 **Fabric:** `meos_enterprise_knowledge_graph_semantic_intelligence_platform_framework` · **Governance Standard:** MEOS 11.0  
-> **API:** `/api/v1/knowledge-graph*` · **Builds on:** P227 EDTISP · P224 EADIP · P223 EGIKEP · P219-I Knowledge · P213 Graph BI · Search · P214-Z · Policy · Workflow · Audit · Documents · **Next:** P228-A · **Peer series:** [P229 EFDMIFP](ENTERPRISE_FEDERATED_DATA_MESH_INTELLIGENCE_FABRIC_PLATFORM.md)  
+> **API:** `/api/v1/knowledge-graph*` · **Builds on:** P227 EDTISP · P224 EADIP · P223 EGIKEP · P219-I Knowledge · P213 Graph BI · Search · P214-Z · Policy · Workflow · Audit · Documents · **Next:** P228-A · **Peer series:** [P229 EFDMIFP](ENTERPRISE_FEDERATED_DATA_MESH_INTELLIGENCE_FABRIC_PLATFORM.md) · [P264 MEKGSI](ENTERPRISE_MEOS_KNOWLEDGE_GRAPH_SEMANTIC_INTELLIGENCE_PLATFORM.md) (Knowledge OS productization — never fork this API)  
 **Hard bindings:** Inference → **P214-Z** · Full-text/semantic search query → **Search** (ACL) · Civilization knowledge → **P219-I** (ACL) · Innovation knowledge → **P223** (ACL) · Twin sync → **P227** (ACL) · Decisions → **P224** · Approvals → **Workflow** · Policy → **Policy Engine** · Audit → **Audit** · Blobs → **Documents** · Generic → **Core**.
 
 ---

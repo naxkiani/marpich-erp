@@ -3,7 +3,7 @@
 **Status:** Normative (P230) — series foundation  
 **SoR:** `privacy_trust` · **ADR:** [590](../adr/590-enterprise-privacy-digital-rights-trust-intelligence-platform.md) · **Capability:** `CAP-PLT-EPDRTIP-001`  
 **Fabric:** `meos_enterprise_privacy_digital_rights_trust_intelligence_platform_framework` · **Governance Standard:** MEOS 11.0  
-> **API:** `/api/v1/privacy-trust*` · **Builds on:** P229 EFDMIFP · P228 EKGSIP · P226 EACDISP · P212 · Identity · AuthZ · Audit · Compliance · Policy · P214-Z · Workflow · **Next:** P230-A · **Peer series:** [P231 EAFIEOP](ENTERPRISE_AUTONOMOUS_FINANCIAL_INTELLIGENCE_ECONOMIC_OPTIMIZATION_PLATFORM.md)  
+> **API:** `/api/v1/privacy-trust*` · **Builds on:** P229 EFDMIFP · P228 EKGSIP · P226 EACDISP · P212 · Identity · AuthZ · Audit · Compliance · Policy · P214-Z · Workflow · **Next:** P230-A · **Peer series:** [P231 EAFIEOP](ENTERPRISE_AUTONOMOUS_FINANCIAL_INTELLIGENCE_ECONOMIC_OPTIMIZATION_PLATFORM.md) · [P269 MEPCRI](ENTERPRISE_MEOS_PRIVACY_COMPLIANCE_REGULATORY_INTELLIGENCE_PLATFORM.md) (Trust/Compliance OS productization — never fork this API)  
 **Hard bindings:** Inference → **P214-Z** · Identity/rights subject → **Identity** (ACL) · Authorization checks → **AuthZ** · Immutable audit trail → **Audit** (ACL) · Violations/alerts → **Compliance** (ACL) · Policy decisions → **Policy Engine** · Data mesh classification → **P229 / P212** (ACL) · Approvals → **Workflow** · Generic → **Core**.
 
 ---

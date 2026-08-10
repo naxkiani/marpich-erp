@@ -3,7 +3,7 @@
 **Status:** Normative (P229) — series foundation  
 **SoR:** `data_mesh` · **ADR:** [589](../adr/589-enterprise-federated-data-mesh-intelligence-fabric-platform.md) · **Capability:** `CAP-PLT-EFDMIFP-001`  
 **Fabric:** `meos_enterprise_federated_data_mesh_intelligence_fabric_platform_framework` · **Governance Standard:** MEOS 11.0  
-> **API:** `/api/v1/data-mesh*` · **Builds on:** P228 EKGSIP · P227 EDTISP · P224 EADIP · **P212 Data Governance** · Analytics · Search · P214-Z · Policy · Workflow · Audit · Integration · **Next:** P229-A · **Peer series:** [P230 EPDRTIP](ENTERPRISE_PRIVACY_DIGITAL_RIGHTS_TRUST_INTELLIGENCE_PLATFORM.md)  
+> **API:** `/api/v1/data-mesh*` · **Builds on:** P228 EKGSIP · P227 EDTISP · P224 EADIP · **P212 Data Governance** · Analytics · Search · P214-Z · Policy · Workflow · Audit · Integration · **Next:** P229-A · **Peer series:** [P230 EPDRTIP](ENTERPRISE_PRIVACY_DIGITAL_RIGHTS_TRUST_INTELLIGENCE_PLATFORM.md) · [P262 MEIAOI](ENTERPRISE_MEOS_INTELLIGENCE_ANALYTICS_OPERATIONAL_INSIGHT_PLATFORM.md) · [P263 MEDIMOP](ENTERPRISE_MEOS_DATA_INTELLIGENCE_DATA_MESH_OPERATING_PLATFORM.md) (Data OS productization — never fork this API)  
 **Hard bindings:** Inference → **P214-Z** · Semantic graph → **P228** (ACL) · Twin consumption → **P227** (ACL) · Classical BI → **Analytics / P213** (ACL) · Enterprise data governance → **P212** (ACL) · Search catalog → **Search** · Approvals → **Workflow** · Policy → **Policy Engine** · Audit → **Audit** · External exchange → **Integration Platform** · Generic → **Core**.
 
 ---

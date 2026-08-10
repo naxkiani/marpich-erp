@@ -3,7 +3,7 @@
 **Status:** Normative (P227) — series foundation  
 **SoR:** `digital_twin` · **ADR:** [587](../adr/587-enterprise-digital-twin-intelligence-simulation-platform.md) · **Capability:** `CAP-PLT-EDTISP-001`  
 **Fabric:** `meos_enterprise_digital_twin_intelligence_simulation_platform_framework` · **Governance Standard:** MEOS 11.0  
-> **API:** `/api/v1/digital-twin*` · **Builds on:** P226 EACDISP · P225 EAOSHP · P224 EADIP · P220 EPIP · P219-F Simulation · P215 Twin · P216 Twin · P214-Z · Policy · Workflow · Audit · **Next:** P227-A · **Peer series:** [P228 EKGSIP](ENTERPRISE_KNOWLEDGE_GRAPH_SEMANTIC_INTELLIGENCE_PLATFORM.md)  
+> **API:** `/api/v1/digital-twin*` · **Builds on:** P226 EACDISP · P225 EAOSHP · P224 EADIP · P220 EPIP · P219-F Simulation · P215 Twin · P216 Twin · P214-Z · Policy · Workflow · Audit · **Next:** P227-A · **Peer series:** [P228 EKGSIP](ENTERPRISE_KNOWLEDGE_GRAPH_SEMANTIC_INTELLIGENCE_PLATFORM.md) · [P265 MEDTIP](ENTERPRISE_MEOS_DIGITAL_TWIN_INTELLIGENCE_PLATFORM.md) (Twin OS productization — never fork this API)  
 **Hard bindings:** Inference → **P214-Z** · Civilization Earth/simulation twins → **P219-F / P219-D** (ACL) · Domain twin projections → peer SoRs (refs only) · Decisions → **P224** · Ops → **P225** · Cyber sim → **P226** · Planetary → **P220** · Approvals → **Workflow** · Policy → **Policy Engine** · Audit → **Audit** · Generic → **Core**.
 
 ---

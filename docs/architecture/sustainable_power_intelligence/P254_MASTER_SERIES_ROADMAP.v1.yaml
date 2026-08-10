@@ -42,3 +42,4 @@ locks:
   never_module_local_llm: true
   never_opaque_dispatch_or_trade_recommendations: true
   foundation_for_p254_a: true
+  peer_series_p257_meraf: true

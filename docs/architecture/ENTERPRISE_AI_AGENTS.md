@@ -1,6 +1,7 @@
 # Enterprise AI Agent & Autonomous Intelligence Platform (P214-F)
 
-**SoR:** `ai` · **ADR:** 426 · **API:** `/api/v1/ai/agents*` · **Capability:** `CAP-PLT-AI-001`
+**SoR:** `ai` · **ADR:** 426 · **API:** `/api/v1/ai/agents*` · **Capability:** `CAP-PLT-AI-001`  
+**Peer productization:** [P266 MEAAOI](ENTERPRISE_MEOS_AI_AGENT_ORCHESTRATION_AUTONOMOUS_INTELLIGENCE_PLATFORM.md) — multi-agent orchestration OS over this SoR; never fork `/api/v1/ai*`; inference remains **P214-Z** only.
 
 ## Principle
 
