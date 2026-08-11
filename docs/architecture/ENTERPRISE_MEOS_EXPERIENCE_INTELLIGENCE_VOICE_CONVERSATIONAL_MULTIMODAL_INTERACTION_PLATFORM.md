@@ -3,7 +3,7 @@
 **Status:** Normative (P296) — series foundation · **Productization & Experience Evolution Phase**  
 **SoR:** `conversational_interaction_operating` · **ADR:** [653](../adr/653-meos-enterprise-conversational-voice-multimodal-interaction-intelligence-platform.md) · **Capability:** `CAP-PLT-MECVII-001`  
 **Fabric:** `meos_enterprise_conversational_voice_multimodal_interaction_intelligence_platform_framework` · **Governance Standard:** MEOS 11.0  
-> **API:** `/api/v1/conversational-interaction-operating*` · **Builds on:** P295 MEEPJI · P294 MENCOE · P293 MEESIE · P292 MEAPIE · P291 MEIEII · P270 MEGRSC · P269 MEPCRI · P268 MECZTD · P267 MEAOSH · P266 MEAAOI · P265 MEDTIP · P264 MEKGSI · P263 MEDIMOP · P262 MEIAOI · P261 MEBRDI · P260 MEWEOP · P258 MESCC · P257 MERAF · P259 MDMAL · **Documents** · **Search** · **AI Platform** · **Observability** · **Secrets** · **Localization** · **Feature Flags** · Policy · Workflow · Audit · P214-Z · **Next:** P296-A · **Peer series:** [P297 MEOS Enterprise AI Interaction, Agentic Workspace & Human-AI Collaboration Platform](ENTERPRISE_MEOS_AI_INTERACTION_AGENTIC_WORKSPACE_HUMAN_AI_COLLABORATION_PLATFORM.md) (planned)  
+> **API:** `/api/v1/conversational-interaction-operating*` · **Builds on:** P295 MEEPJI · P294 MENCOE · P293 MEESIE · P292 MEAPIE · P291 MEIEII · P270 MEGRSC · P269 MEPCRI · P268 MECZTD · P267 MEAOSH · P266 MEAAOI · P265 MEDTIP · P264 MEKGSI · P263 MEDIMOP · P262 MEIAOI · P261 MEBRDI · P260 MEWEOP · P258 MESCC · P257 MERAF · P259 MDMAL · **Documents** · **Search** · **AI Platform** · **Observability** · **Secrets** · **Localization** · **Feature Flags** · Policy · Workflow · Audit · P214-Z · **Next:** P296-A · **Peer series:** [P297 MEAWHC](ENTERPRISE_MEOS_AI_INTERACTION_AGENTIC_WORKSPACE_HUMAN_AI_COLLABORATION_PLATFORM.md) (Human-AI Collaboration / Agentic Workspace OS — never replace Conversational Interaction; never replace P266 Agent Orchestration or P260 Workflow; never ungated agent team actions)  
 **Hard bindings:** Inference → **P214-Z** (ACL; **never module-local LLM**) · AI Agent Orchestration → **P266** (ACL; **P296 owns Interaction; P266 owns Agent Orchestration — never replace**) · Workflow execution → **P260** (ACL; **never become Workflow Engine**) · Communication delivery → **P294 / Notifications** (ACL; **never send Email/SMS/Push**) · Experience / Journey / Personalization → **P295** (ACL; adapt conversation style from experience context; never replace Experience SoR) · Application navigation → **P258** (ACL; conversational intent → shell navigation; never replace Application Shell) · Runtime actions → **P257** (ACL) · Business decisions → **P261** (ACL) · Analytics → **P262** (ACL; never local metrics stores) · Data Mesh retrieval → **P263** (ACL; never own Data Products) · Knowledge Graph → **P264** (ACL) · Twin → **P265** (ACL; simulation ≠ execute) · Document/OCR binaries → **Documents** (`document_id` only) · Enterprise search → **Search** (ACL) · API lifecycle → **P292** (ACL) · Event transport → **P291** (ACL) · Event signals → **P293** (ACL) · Cyber / prompt-injection / tool abuse → **P268** (ACL) · Privacy / memory retention / consent → **P269** (ACL) · Model/prompt/tool governance → **P270 · Workflow** (ACL; never local approval engines) · Autonomous conversational actions → **P267** (ACL; autonomy thresholds) · Localization/multilingual → **Localization** (ACL; domain models language-neutral) · Progressive exposure → **Feature Flags** (ACL) · Policy / DoA / Autonomy → **Policy Engine** · Audit → **Audit** · AuthN/AuthZ → **Identity** · Generic → **Core**.
 
 ---
@@ -32,7 +32,7 @@ Users interact with MEOS through the most natural modality while Intent, Context
 - **P294** = Communication / Notification Delivery
 - **P295** = Experience / Journey / Personalization
 - **P296** = Conversational / Voice / Multimodal Interaction
-- **P297** = Human-AI Collaboration / Agentic Workspace (next)
+- **P297** = Human-AI Collaboration / Agentic Workspace (delivered)
 - **P260** = Workflow Execution · **P266** = AI Agent Orchestration
 - Never replace Communication Delivery, Workflow Engine, AI Agent Orchestration, Application Shell, or Experience Personalization
 - No high-impact action without Confirmation where Policy requires; no inference presented as verified fact; all grounded answers preserve source traceability
@@ -233,7 +233,7 @@ Read models under `conversational_interaction_operating_*` only; pagination mand
 | **P262 · P265** | Analytics · conversation twin |
 | **P268 · P269 · P270** | Safety · privacy/memory · model/prompt/tool governance |
 | **P291–P293 · P292** | Event transport/signals · API lifecycle |
-| **P297** | Human-AI Collaboration / Agentic Workspace (planned) |
+| **P297** | Human-AI Collaboration / Agentic Workspace (delivered; distinct) |
 | Localization · Observability · Feature Flags · Audit · Identity | Locale · MLT · progressive exposure · evidence · AuthZ |
 | Core | Generic platform services |
 
@@ -278,7 +278,7 @@ Validate: Conversational interaction OS · DDD · CQRS · events · P258/P260/P2
 - [ ] Dual tests green; scorecard **ENTERPRISE_GRADE**
 - [ ] OpenAPI `/api/v1/conversational-interaction-operating*`
 - [ ] Gated tool/workflow/confirmation path demonstrated
-- [ ] **P296-A** unlocked · **P297** Human-AI Collaboration / Agentic Workspace series unblocked
+- [ ] **P296-A** unlocked · **P297** MEAWHC delivered · **P298** Agentic Process Automation series unblocked
 
 **MECVII is complete when:** MEOS has an Enterprise Conversational/Voice/Multimodal Interaction OS fabric; conversation, intent, entity, dialogue, memory, RAG/grounding, voice, multimodal fusion, tool interaction, confirmation, quality/safety and governance operate under gates; P266 remains agent orchestration; P260 remains workflow; P294 remains delivery; P295 remains experience; no high-impact action without Confirmation when Policy requires; grounded answers preserve Evidence+Confidence+Source Traceability; agents participate within autonomy thresholds; events join the Event Mesh — Governance Standard **11.0**.
 
@@ -288,6 +288,6 @@ Validate: Conversational interaction OS · DDD · CQRS · events · P258/P260/P2
 
 ---
 
-**NEXT EXECUTION:** **P297** — MEOS Enterprise AI Interaction, Agentic Workspace & Human-AI Collaboration Platform — Agentic Enterprise Workspace, Human-AI Collaboration, AI Copilot Workspace, Multi-Agent Collaboration, Agent Team Orchestration, Human/AI/Agent-in-the-Loop, Shared Enterprise Context, Collaborative AI Decisioning, Agent Task/Memory/Goals/Planning/Delegation/Supervision/Accountability/Performance/Governance/Safety, Agent Digital Twin and Agent Knowledge Graph (federate P295–P296, P266, P260, P258, P268–P270; never fork Conversational Interaction or Agent Orchestration; never ungated agent team actions).
+**NEXT EXECUTION:** **P311** — MEOS Enterprise Data Loss Prevention, Information Protection & Adaptive Data Security Control Platform — convert P310 Classification/Sensitivity into operational Data Protection and DLP controls (Prevent / Allow / Block / Quarantine / Redact) under Policy + Context + Risk (federate P310, P268, P269, P270, P260; never fork Classification Intelligence or Cybersecurity; never create parallel mesh/content/records/workflow/agent engines).
 
 > **P296 delivered:** this law · [ADR 653](../adr/653-meos-enterprise-conversational-voice-multimodal-interaction-intelligence-platform.md)

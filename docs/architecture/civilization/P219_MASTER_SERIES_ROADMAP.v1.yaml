@@ -654,6 +654,118 @@ phases:
     fabric: meos_enterprise_conversational_voice_multimodal_interaction_intelligence_platform_framework
     api: /api/v1/conversational-interaction-operating*
     phase_theme: productization_and_experience_evolution
+  - id: P297
+    title: MEOS Enterprise AI Interaction, Agentic Workspace & Human-AI Collaboration Platform (MEAWHC)
+    status: planned
+    adr: "654"
+    fabric: meos_enterprise_ai_interaction_agentic_workspace_human_ai_collaboration_platform_framework
+    api: /api/v1/agentic-workspace-operating*
+    phase_theme: productization_and_experience_evolution
+  - id: P298
+    title: MEOS Enterprise Agentic Process Automation & Autonomous Enterprise Execution Platform (MEAPAE)
+    status: planned
+    adr: "655"
+    fabric: meos_enterprise_agentic_process_automation_autonomous_enterprise_execution_platform_framework
+    api: /api/v1/agentic-process-operating*
+    phase_theme: productization_and_experience_evolution
+  - id: P299
+    title: MEOS Enterprise Process Mining, Process Intelligence & Continuous Optimization Platform (MEPICO)
+    status: planned
+    adr: "656"
+    fabric: meos_enterprise_process_mining_process_intelligence_continuous_optimization_platform_framework
+    api: /api/v1/process-intelligence-operating*
+    phase_theme: productization_and_experience_evolution
+  - id: P300
+    title: MEOS Enterprise Process Automation Marketplace & Reusable Process Intelligence Platform (MEPAMP)
+    status: planned
+    adr: "657"
+    fabric: meos_enterprise_process_automation_marketplace_reusable_process_intelligence_platform_framework
+    api: /api/v1/process-marketplace-operating*
+    phase_theme: productization_and_experience_evolution
+  - id: P301
+    title: MEOS Enterprise Process Composer, Low-Code/No-Code Process Engineering & Visual Automation Platform (MEPCVA)
+    status: planned
+    adr: "658"
+    fabric: meos_enterprise_process_composer_low_code_no_code_process_engineering_visual_automation_platform_framework
+    api: /api/v1/process-composer-operating*
+    phase_theme: productization_and_experience_evolution
+  - id: P302
+    title: MEOS Enterprise Process Testing, Simulation, Quality Assurance & Digital Process Validation Platform (MEPQDV)
+    status: planned
+    adr: "659"
+    fabric: meos_enterprise_process_testing_simulation_quality_assurance_digital_process_validation_platform_framework
+    api: /api/v1/process-quality-operating*
+    phase_theme: productization_and_experience_evolution
+
+  - id: P303
+    title: MEOS Enterprise Process Release, Deployment & Environment Lifecycle Management Platform (MEPRED)
+    status: planned
+    adr: "660"
+    fabric: meos_enterprise_process_release_deployment_environment_lifecycle_management_platform_framework
+    api: /api/v1/process-release-operating*
+    phase_theme: productization_and_experience_evolution
+
+  - id: P304
+    title: MEOS Enterprise Process Observability, Monitoring, SLA/SLO & Continuous Operational Intelligence Platform (MEPOCI)
+    status: planned
+    adr: "661"
+    fabric: meos_enterprise_process_observability_monitoring_sla_slo_continuous_operational_intelligence_platform_framework
+    api: /api/v1/process-observability-operating*
+    phase_theme: productization_and_experience_evolution
+
+
+  - id: P305
+    title: MEOS Enterprise Incident Management, Service Reliability & Resilience Engineering Platform (MEIRRE)
+    status: planned
+    adr: "662"
+    fabric: meos_enterprise_incident_management_service_reliability_resilience_engineering_platform_framework
+    api: /api/v1/incident-reliability-operating*
+    phase_theme: productization_and_experience_evolution
+
+
+  - id: P306
+    title: MEOS Enterprise IT Service Management, Service Catalog, Request Fulfillment & Enterprise Service Operations Platform (MEESOP)
+    status: planned
+    adr: "663"
+    fabric: meos_enterprise_it_service_management_service_catalog_request_fulfillment_enterprise_service_operations_platform_framework
+    api: /api/v1/service-operations-operating*
+    phase_theme: productization_and_experience_evolution
+
+
+  - id: P307
+    title: MEOS Enterprise Knowledge-Centered Service, Enterprise Knowledge Management & Organizational Learning Platform (MEKNOL)
+    status: planned
+    adr: "664"
+    fabric: meos_enterprise_knowledge_centered_service_enterprise_knowledge_management_organizational_learning_platform_framework
+    api: /api/v1/knowledge-operating*
+    phase_theme: productization_and_experience_evolution
+
+
+  - id: P308
+    title: MEOS Enterprise Document Intelligence, Content Lifecycle & Intelligent Information Management Platform (MEDCIM)
+    status: planned
+    adr: "665"
+    fabric: meos_enterprise_document_intelligence_content_lifecycle_intelligent_information_management_platform_framework
+    api: /api/v1/document-intelligence-operating*
+    phase_theme: productization_and_experience_evolution
+
+
+  - id: P309
+    title: MEOS Enterprise Records, Retention, Legal Hold & Information Lifecycle Governance Platform (MERILG)
+    status: planned
+    adr: "666"
+    fabric: meos_enterprise_records_retention_legal_hold_information_lifecycle_governance_platform_framework
+    api: /api/v1/records-lifecycle-operating*
+    phase_theme: productization_and_experience_evolution
+
+
+  - id: P310
+    title: MEOS Enterprise Information Governance, Data Classification & Sensitive Information Intelligence Platform (MEIGSI)
+    status: planned
+    adr: "667"
+    fabric: meos_enterprise_information_governance_data_classification_sensitive_information_intelligence_platform_framework
+    api: /api/v1/information-classification-operating*
+    phase_theme: information_intelligence_and_classification_governance
 
 implementation_phases:
   - id: P01

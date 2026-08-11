@@ -1,0 +1,123 @@
+# MEESOP Master Series Roadmap (P306)
+
+series: P306
+title: MEOS Enterprise IT Service Management, Service Catalog, Request Fulfillment & Enterprise Service Operations Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEESOP-001
+sor: service_operations_operating
+fabric: meos_enterprise_it_service_management_service_catalog_request_fulfillment_enterprise_service_operations_platform_framework
+api: /api/v1/service-operations-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P306
+    title: MEESOP Foundation
+    status: planned
+    adr: "663"
+    fabric: meos_enterprise_it_service_management_service_catalog_request_fulfillment_enterprise_service_operations_platform_framework
+    api: /api/v1/service-operations-operating*
+  - id: P306-A
+    title: Service Catalog Foundation — Model, Categories, Ownership, Lifecycle, Versioning
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P306-B
+    title: Service Request Management — Types, Dynamic Forms, Classification, Prioritization
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P306-C
+    title: Routing & Case Management — Routing, Queues, Assignment, Cases, Escalation
+    status: planned
+    adr: pending
+    window: 9-15_months
+  - id: P306-D
+    title: Approval & Fulfillment — Approval, Fulfillment Plans, P260/P267/P303 Integration
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P306-E
+    title: Service Level Management — SLA, SLO Consume, SLA Clock, Risk, Breach
+    status: planned
+    adr: pending
+    window: 15-24_months
+  - id: P306-F
+    title: Knowledge & Self-Service — Knowledge Base, Search, Portal, AI Knowledge
+    status: planned
+    adr: pending
+    window: 18-30_months
+  - id: P306-G
+    title: Service Desk — Agent Workspace, Queues, Cases, Communications
+    status: planned
+    adr: pending
+    window: 24-36_months
+  - id: P306-H
+    title: Provider Management — Providers, Contracts, Performance, External Services
+    status: planned
+    adr: pending
+    window: 30-42_months
+  - id: P306-I
+    title: Service Analytics — Demand, Cost, SLA, Satisfaction, Fulfillment Performance
+    status: planned
+    adr: pending
+    window: 36-48_months
+  - id: P306-J
+    title: AI Service Operations — AI Desk, Classification, Routing, Knowledge, Fulfillment, Owner Copilot
+    status: planned
+    adr: pending
+    window: 42-54_months
+  - id: P306-K
+    title: Continuous Service Improvement — Demand Analysis, Automation, Improvement, Measurement
+    status: planned
+    adr: pending
+    window: 48-60_months
+locks:
+  never_replace_p285_service_management_operating: true
+  never_replace_p305_incident_reliability_operating: true
+  never_replace_p304_process_observability_operating: true
+  never_replace_p303_process_release_operating: true
+  never_replace_p302_process_quality_operating: true
+  never_replace_p301_process_composer_operating: true
+  never_replace_p299_process_intelligence_operating: true
+  never_replace_p294_notifications: true
+  never_replace_p270_governance: true
+  never_replace_p267_autonomous_operations: true
+  never_replace_p260_workflow: true
+  never_replace_p257_enterprise_runtime: true
+  never_replace_p264_knowledge_graph: true
+  never_become_incident_management_platform: true
+  never_become_observability_platform: true
+  never_become_enterprise_runtime: true
+  never_become_workflow_engine: true
+  never_become_agent_runtime: true
+  never_become_autonomous_remediation_engine: true
+  never_become_governance_engine: true
+  never_become_release_engine: true
+  never_become_process_design_engine: true
+  never_become_process_intelligence_engine: true
+  never_merge_p285_p305_p306_p307: true
+  never_dual_write_workflow_agent_decision_or_runtime_tables: true
+  never_local_metrics_stores: true
+  never_local_approval_workflow_engines: true
+  never_module_local_llm: true
+  observe_via_p304_only: true
+  incident_via_p305_only: true
+  remediate_via_p267_only: true
+  change_via_p303_only: true
+  workflow_via_p260_only: true
+  runtime_via_p257_only: true
+  communications_via_p294_only: true
+  approvals_via_p270_policy_only: true
+  federate_p285_never_merge: true
+  itsm_catalog_distinct_from_reliability_catalog: true
+  ai_must_not_bypass_policy: true
+  fulfillment_traceability_mandatory: true
+  critical_services_require_owner_sla: true
+  requests_require_lifecycle: true
+  approvals_require_audit: true
+  multi_tenant_isolation_mandatory: true
+  foundation_for_p306_a: true
+  unblocks_p307_knowledge_centered_service_enterprise_knowledge_management_organizational_learning_os: true
+  unblocks_p308_document_intelligence_content_lifecycle_intelligent_information_management_os: true
+  unblocks_p309_records_retention_legal_hold_information_lifecycle_governance_os: true
+  unblocks_p310_information_governance_data_classification_sensitive_information_intelligence_os: true
+  unblocks_p311_data_loss_prevention_information_protection_adaptive_data_security_control_os: true

@@ -4,7 +4,7 @@
 - **Date:** 2026-08-11
 - **Deciders:** Chief Enterprise Architect · MEOS Architecture Board
 - **Tags:** meos · p296 · mecvii · conversational · voice · multimodal · dialogue · rag · productization
-- **Related:** [ADR 652](652-meos-enterprise-experience-personalization-customer-journey-context-aware-interaction-platform.md) · [ADR 651](651-meos-enterprise-notification-communication-omnichannel-event-experience-platform.md) · [Law P296](../architecture/ENTERPRISE_MEOS_EXPERIENCE_INTELLIGENCE_VOICE_CONVERSATIONAL_MULTIMODAL_INTERACTION_PLATFORM.md) · [AI_PLATFORM_STANDARD.md](../architecture/AI_PLATFORM_STANDARD.md) · Governance Standard 11.0
+- **Related:** [ADR 654](654-meos-enterprise-ai-interaction-agentic-workspace-human-ai-collaboration-platform.md) · [ADR 652](652-meos-enterprise-experience-personalization-customer-journey-context-aware-interaction-platform.md) · [ADR 651](651-meos-enterprise-notification-communication-omnichannel-event-experience-platform.md) · [Law P296](../architecture/ENTERPRISE_MEOS_EXPERIENCE_INTELLIGENCE_VOICE_CONVERSATIONAL_MULTIMODAL_INTERACTION_PLATFORM.md) · [AI_PLATFORM_STANDARD.md](../architecture/AI_PLATFORM_STANDARD.md) · Governance Standard 11.0
 
 ## Context
 
@@ -18,7 +18,7 @@ MEOS needs a specialized **Conversational / Voice / Multimodal Interaction** pro
    - **P294** = Communication / Notification Delivery
    - **P295** = Experience / Journey / Personalization
    - **P296** = Conversational / Voice / Multimodal Interaction
-   - **P297** = Human-AI Collaboration / Agentic Workspace (next)
+   - **P297** = Human-AI Collaboration / Agentic Workspace (delivered; distinct)
    - **P260** = Workflow Execution · **P266** = AI Agent Orchestration — **never replace**
 4. Federate-by-contract: P266, P260, P295, P294, P258, P257, Search, Documents, P263–P270, P214-Z, Policy, Workflow — never dual-write workflow/agent/notification tables; never embed provider/LLM SDKs in domain; never local metrics/approval engines.
 5. Conversations, voice sessions, multimodal interactions and tool invocations are **versioned, explainable, reproducible, auditable**. Material tool/workflow/enterprise actions require **Authorization + Policy + Confirmation (when required) + Verification + Audit** (or published Autonomy Threshold).
@@ -30,9 +30,9 @@ MEOS needs a specialized **Conversational / Voice / Multimodal Interaction** pro
 
 ## Consequences
 
-- Unlocks Phase 1–7 MECVII roadmap (P296-A…G) and **P297** Human-AI Collaboration / Agentic Workspace series.
+- Unlocks Phase 1–7 MECVII roadmap (P296-A…G); **P297** MEAWHC · **P298** MEAPAE · **P299** MEPICO · **P300** MEPAMP · **P301** MEPCVA · **P302** MEPQDV · **P303** MEPRED · **P304** MEPOCI · **P305** MEIRRE · **P306** MEESOP · **P307** MEKNOL · **P308** MEDCIM · **P309** MERILG · **P310** MEIGSI delivered; **P311** DLP / Information Protection / Adaptive Data Security Control series unblocked.
 - P266 remains agent orchestration; P260 remains workflow; P294 remains delivery; P295 remains experience; MECVII owns conversational/voice/multimodal interaction and tool-interaction interface.
-- Ungated tool/action execution or merging P294–P297 SoRs is an architecture failure.
+- Ungated tool/action execution or merging P294–P303 SoRs is an architecture failure.
 
 ## Alternatives considered
 
@@ -51,4 +51,4 @@ MEOS needs a specialized **Conversational / Voice / Multimodal Interaction** pro
 - [x] Grounding · confirmation gates · no channel delivery · no local LLM
 - [x] P258 · P260 · P266 · P294 · P295 boundaries preserved explicitly
 - [x] No ungated tool/action · inference ≠ verified fact
-- [x] P297 stub announced
+- [x] P297 MEAWHC · P298 MEAPAE · P299 MEPICO · P300 MEPAMP · P301 MEPCVA · P302 MEPQDV delivered · P303 stub announced

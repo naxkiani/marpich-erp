@@ -251,4 +251,6 @@ Validate: KG architecture · DDD · semantic model · events · provenance · en
 
 ---
 
+> **Peer productization:** Federate **P307 MEKNOL** (`knowledge_operating`) for Knowledge Lifecycle / KCS / Organizational Learning — never merge SoRs; P264/P228 remain graph/semantic authority; Search remains query authority; P308 Document Intelligence is next content layer.
+
 **NEXT EXECUTION:** **P265** — MEOS Enterprise Digital Twin Intelligence Platform — Digital Twin layer for simulation, prediction, monitoring and optimization of MEOS entities, processes, infrastructure and capabilities (federate P227; never fork `/api/v1/digital-twin*`).

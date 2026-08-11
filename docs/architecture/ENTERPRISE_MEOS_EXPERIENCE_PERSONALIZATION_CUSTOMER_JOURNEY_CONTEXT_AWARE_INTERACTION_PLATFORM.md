@@ -32,7 +32,7 @@ Every Interaction in MEOS must be Context-aware, Personalized, Policy-governed, 
 - **P294** = Notification / Communication / Omnichannel Delivery
 - **P295** = Experience / Journey / Personalization / Interaction
 - **P296** = Conversational / Voice / Multimodal Interaction (delivered)
-- **P297** = Human-AI Collaboration / Agentic Workspace (next)
+- **P297** = Human-AI Collaboration / Agentic Workspace (delivered)
 - Never replace Event Transport (P291), Notification Delivery (P294/Notifications), Workflow Execution (P260), Application Shell (P258), Identity/Customer/HR SoRs
 - No Personalization without Policy; no Sensitive Context without Privacy Validation; no sensitive AI Recommendation without Governance; all AI scores expose Confidence + Evidence + Model Version
 
@@ -227,6 +227,7 @@ Read models under `experience_personalization_operating_*` only; pagination mand
 | **P264 · P265 · P266 · P267** | KG · twin · agents · gated autonomy |
 | **P268 · P269 · P270** | Security · privacy/consent · standards/approvals |
 | **P296** | Conversational / Voice / Multimodal Interaction (delivered; distinct) |
+| **P297** | Human-AI Collaboration / Agentic Workspace (delivered; distinct) |
 | Localization · Observability · Documents · Feature Flags · Audit | Locale · MLT · docs · progressive exposure · evidence |
 | Core | Generic platform services |
 
@@ -271,7 +272,7 @@ Validate: Experience personalization OS · DDD · CQRS · events · P258/P260/P2
 - [ ] Dual tests green; scorecard **ENTERPRISE_GRADE**
 - [ ] OpenAPI `/api/v1/experience-personalization-operating*`
 - [ ] Gated personalize/NBA/journey path demonstrated
-- [ ] **P295-A** unlocked · **P296** Conversational / Voice / Multimodal series unblocked · **P297** Human-AI Collaboration / Agentic Workspace series announced
+- [ ] **P295-A** unlocked · **P296** MECVII delivered · **P297** MEAWHC delivered · **P298** Agentic Process Automation series announced
 
 **MEEPJI is complete when:** MEOS has an Enterprise Experience Personalization OS fabric; context, intent, journeys, personalization, NBA/NBE, interactions, scoring, friction, experiments and governance operate under gates; P294 remains delivery; P260 remains workflow execution; Experience Profile is context-only; no personalization without Policy; no sensitive context without Privacy Validation; AI recommendations carry Evidence+Confidence+Policy+Human Approval; agents participate within autonomy thresholds; events join the Event Mesh — Governance Standard **11.0**.
 
@@ -281,6 +282,6 @@ Validate: Experience personalization OS · DDD · CQRS · events · P258/P260/P2
 
 ---
 
-**NEXT EXECUTION:** **P297** — MEOS Enterprise AI Interaction, Agentic Workspace & Human-AI Collaboration Platform — Agentic Enterprise Workspace, Human-AI Collaboration, AI Copilot Workspace, Multi-Agent Collaboration, Agent Team Orchestration, Human/AI/Agent-in-the-Loop, Shared Enterprise Context, Collaborative AI Decisioning, Agent Task/Memory/Goals/Planning/Delegation/Supervision/Accountability/Performance/Governance/Safety, Agent Digital Twin and Agent Knowledge Graph (federate P295–P296, P266, P260, P258, P268–P270; never fork Conversational Interaction or Agent Orchestration; never ungated agent team actions).
+**NEXT EXECUTION:** **P311** — MEOS Enterprise Data Loss Prevention, Information Protection & Adaptive Data Security Control Platform — convert P310 Classification/Sensitivity into operational Data Protection and DLP controls (Prevent / Allow / Block / Quarantine / Redact) under Policy + Context + Risk (federate P310, P268, P269, P270, P260; never fork Classification Intelligence or Cybersecurity; never create parallel mesh/content/records/workflow/agent engines).
 
 > **P295 delivered:** this law · [ADR 652](../adr/652-meos-enterprise-experience-personalization-customer-journey-context-aware-interaction-platform.md)

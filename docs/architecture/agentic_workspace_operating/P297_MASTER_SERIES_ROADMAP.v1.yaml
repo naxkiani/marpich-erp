@@ -1,0 +1,97 @@
+# MEAWHC Master Series Roadmap (P297)
+
+series: P297
+title: MEOS Enterprise AI Interaction, Agentic Workspace & Human-AI Collaboration Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEAWHC-001
+sor: agentic_workspace_operating
+fabric: meos_enterprise_ai_interaction_agentic_workspace_human_ai_collaboration_platform_framework
+api: /api/v1/agentic-workspace-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P297
+    title: MEAWHC Foundation
+    status: planned
+    adr: "654"
+    fabric: meos_enterprise_ai_interaction_agentic_workspace_human_ai_collaboration_platform_framework
+    api: /api/v1/agentic-workspace-operating*
+  - id: P297-A
+    title: Agentic Workspace Foundation — Registry, Shared Context, Tasks, Copilot, Agent Status, Collaboration
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P297-B
+    title: Task & Agent Collaboration — Planning, Delegation, Teams, Aggregation, Conflict Detection
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P297-C
+    title: Human Supervision — Approval Center, HITL, Supervision, Escalation, Override, Risk Classification
+    status: planned
+    adr: pending
+    window: 9-15_months
+  - id: P297-D
+    title: Decision Intelligence — Evidence/Recommendation Workspaces, Decision Canvas, Explainability, Decision Audit
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P297-E
+    title: Agentic Execution — Governed Actions, Workflow/App Integration, Tool Execution, Autonomous Tasks under Policy
+    status: planned
+    adr: pending
+    window: 15-24_months
+  - id: P297-F
+    title: Multi-Agent Enterprise — Teams, Parallel Agents, Dependencies, Conflict Resolution, Synthesis
+    status: planned
+    adr: pending
+    window: 18-30_months
+  - id: P297-G
+    title: Governed Autonomy — Dynamic Autonomy, Predictive Delegation, Performance/Cost Optimization, Continuous Governance
+    status: planned
+    adr: pending
+    window: 24-36_months
+locks:
+  never_replace_p266_ai_agent_orchestration: true
+  never_replace_p260_workflow: true
+  never_replace_p296_conversational_interaction_operating: true
+  never_replace_p295_experience_personalization_operating: true
+  never_replace_p294_communication_experience_operating: true
+  never_replace_p264_knowledge_graph: true
+  never_replace_p265_digital_twin: true
+  never_replace_p261_decision_intelligence: true
+  never_become_workflow_engine: true
+  never_become_agent_orchestrator: true
+  never_become_kg_or_twin_engine: true
+  never_implement_channel_delivery: true
+  never_merge_p295_p296_p297_p298: true
+  never_dual_write_orchestration_or_workflow_tables: true
+  never_local_metrics_stores: true
+  never_local_approval_workflow_or_orchestration_engines: true
+  never_module_local_llm: true
+  never_private_chain_of_thought_exposure: true
+  never_silent_conflict_suppression: true
+  never_high_risk_action_without_human_approval_when_policy_requires: true
+  autonomy_levels_policy_configurable: true
+  agent_actions_require_identity_policy_trace_evidence_audit: true
+  agent_execution_via_p266_only: true
+  workflows_via_p260_only: true
+  escalation_delivery_via_p294_only: true
+  interaction_input_via_p296_only: true
+  ai_recommendation_requires_evidence_confidence_policy_human_approval: true
+  simulation_not_execute: true
+  autonomous_requires_policy_authorization_autonomy_level_approval_audit_human_governance: true
+  foundation_for_p297_a: true
+  unblocks_p298_agentic_process_automation_autonomous_enterprise_execution_os: true
+  unblocks_p299_process_mining_process_intelligence_continuous_optimization_os: true
+  unblocks_p300_process_automation_marketplace_reusable_process_intelligence_os: true
+  unblocks_p301_process_composer_low_code_no_code_visual_automation_os: true
+  unblocks_p302_process_testing_simulation_quality_assurance_digital_process_validation_os: true
+  unblocks_p303_process_release_deployment_environment_lifecycle_os: true
+  unblocks_p304_process_observability_monitoring_sla_slo_continuous_operational_intelligence_os: true
+  unblocks_p305_incident_management_service_reliability_resilience_engineering_os: true
+  unblocks_p306_itsm_service_catalog_request_fulfillment_enterprise_service_operations_os: true
+  unblocks_p307_knowledge_centered_service_enterprise_knowledge_management_organizational_learning_os: true
+  unblocks_p308_document_intelligence_content_lifecycle_intelligent_information_management_os: true
+  unblocks_p309_records_retention_legal_hold_information_lifecycle_governance_os: true
+  unblocks_p310_information_governance_data_classification_sensitive_information_intelligence_os: true
+  unblocks_p311_data_loss_prevention_information_protection_adaptive_data_security_control_os: true

@@ -17,146 +17,1245 @@
   ],
   "platformReference": "docs/architecture/CORE_PLATFORM_DESIGN.md",
   "capabilities": [
-    {"id": "CAP-ENT-001", "name": "Customer Management", "tier": "enterprise", "namespace": "crm", "boundedContext": "crm", "lifecycle": null},
-    {"id": "CAP-ENT-002", "name": "Sales Lifecycle", "tier": "enterprise", "namespace": "sales", "boundedContext": "sales", "lifecycle": "quote-order-fulfill"},
-    {"id": "CAP-ENT-010", "name": "Employee Management", "tier": "enterprise", "namespace": "human-resources", "boundedContext": "human_resources", "lifecycle": "hire-transfer-exit"},
-    {"id": "CAP-ENT-011", "name": "Recruitment Management", "tier": "enterprise", "namespace": "human-resources", "boundedContext": "human_resources", "lifecycle": "applicant-offer"},
-    {"id": "CAP-ENT-012", "name": "Attendance Management", "tier": "enterprise", "namespace": "human-resources", "boundedContext": "human_resources", "lifecycle": null},
-    {"id": "CAP-ENT-013", "name": "Leave Management", "tier": "enterprise", "namespace": "human-resources", "boundedContext": "human_resources", "lifecycle": null},
-    {"id": "CAP-ENT-014", "name": "Performance Management", "tier": "enterprise", "namespace": "human-resources", "boundedContext": "human_resources", "lifecycle": null},
-    {"id": "CAP-ENT-015", "name": "Payroll Lifecycle", "tier": "enterprise", "namespace": "payroll", "boundedContext": "payroll", "lifecycle": "accrue-pay-file"},
-    {"id": "CAP-ENT-016", "name": "Benefits Administration", "tier": "enterprise", "namespace": "human-resources", "boundedContext": "human_resources", "lifecycle": null},
-    {"id": "CAP-ENT-020", "name": "Financial Management", "tier": "enterprise", "namespace": "finance", "boundedContext": "finance", "lifecycle": "budget-period-close"},
-    {"id": "CAP-ENT-021", "name": "Accounting and General Ledger", "tier": "enterprise", "namespace": "accounting", "boundedContext": "accounting", "lifecycle": "post-reconcile"},
-    {"id": "CAP-ENT-022", "name": "Accounts Payable", "tier": "enterprise", "namespace": "accounting", "boundedContext": "accounting", "lifecycle": "invoice-pay"},
-    {"id": "CAP-ENT-023", "name": "Accounts Receivable", "tier": "enterprise", "namespace": "accounting", "boundedContext": "accounting", "lifecycle": "invoice-collect"},
-    {"id": "CAP-ENT-024", "name": "Billing and Invoicing", "tier": "enterprise", "namespace": "accounting", "boundedContext": "accounting", "lifecycle": null},
-    {"id": "CAP-ENT-025", "name": "Treasury Management", "tier": "enterprise", "namespace": "treasury", "boundedContext": "treasury", "lifecycle": "liquidity-transfer"},
-    {"id": "CAP-ENT-026", "name": "Tax Processing", "tier": "enterprise", "namespace": "tax", "boundedContext": "tax", "lifecycle": "calculate-file-pay"},
-    {"id": "CAP-ENT-027", "name": "Financial Compliance", "tier": "enterprise", "namespace": "finance", "boundedContext": "finance", "lifecycle": null},
-    {"id": "CAP-ENT-030", "name": "Banking Operations", "tier": "enterprise", "namespace": "banking", "boundedContext": "banking", "lifecycle": "account-transaction"},
-    {"id": "CAP-ENT-031", "name": "Lending and Credit", "tier": "enterprise", "namespace": "banking", "boundedContext": "banking", "lifecycle": "apply-disburse-repay"},
-    {"id": "CAP-ENT-032", "name": "Islamic Banking Products", "tier": "enterprise", "namespace": "islamic-banking", "boundedContext": "islamic_banking", "lifecycle": null},
-    {"id": "CAP-ENT-033", "name": "Sharia Compliance", "tier": "enterprise", "namespace": "islamic-banking", "boundedContext": "islamic_banking", "lifecycle": null},
-    {"id": "CAP-ENT-034", "name": "Currency Exchange Operations", "tier": "enterprise", "namespace": "currency-exchange", "boundedContext": "currency_exchange", "lifecycle": "deal-settle"},
-    {"id": "CAP-ENT-035", "name": "Exchange Rate Management", "tier": "enterprise", "namespace": "currency-exchange", "boundedContext": "currency_exchange", "lifecycle": "quote-publish"},
-    {"id": "CAP-ENT-040", "name": "Procurement Lifecycle", "tier": "enterprise", "namespace": "procurement", "boundedContext": "procurement", "lifecycle": "requisition-po-receive"},
-    {"id": "CAP-ENT-041", "name": "Vendor Management", "tier": "enterprise", "namespace": "procurement", "boundedContext": "procurement", "lifecycle": null},
-    {"id": "CAP-ENT-042", "name": "Inventory Lifecycle", "tier": "enterprise", "namespace": "inventory", "boundedContext": "inventory", "lifecycle": "stock-adjust-count"},
-    {"id": "CAP-ENT-043", "name": "Warehouse Operations", "tier": "enterprise", "namespace": "warehouse", "boundedContext": "warehouse", "lifecycle": "receive-pick-ship"},
-    {"id": "CAP-ENT-044", "name": "Manufacturing and Production", "tier": "enterprise", "namespace": "manufacturing", "boundedContext": "manufacturing", "lifecycle": "plan-produce-complete"},
-    {"id": "CAP-ENT-045", "name": "MRP Planning", "tier": "enterprise", "namespace": "manufacturing", "boundedContext": "manufacturing", "lifecycle": null},
-    {"id": "CAP-ENT-046", "name": "Quality Management", "tier": "enterprise", "namespace": "manufacturing", "boundedContext": "manufacturing", "lifecycle": null},
-    {"id": "CAP-ENT-047", "name": "Project Management", "tier": "enterprise", "namespace": "projects", "boundedContext": "projects", "lifecycle": "initiate-deliver-close"},
-    {"id": "CAP-EDU-001", "name": "Student Lifecycle", "tier": "industry", "namespace": "education", "boundedContext": "university", "lifecycle": "prospect-enroll-graduate"},
-    {"id": "CAP-EDU-002", "name": "Admissions Management", "tier": "industry", "namespace": "education", "boundedContext": "university", "lifecycle": "apply-admit"},
-    {"id": "CAP-EDU-003", "name": "Academics Management", "tier": "industry", "namespace": "education", "boundedContext": "university", "lifecycle": null},
-    {"id": "CAP-EDU-004", "name": "Grading and Assessment", "tier": "industry", "namespace": "education", "boundedContext": "school", "lifecycle": null},
-    {"id": "CAP-EDU-005", "name": "School Attendance", "tier": "industry", "namespace": "education", "boundedContext": "school", "lifecycle": null},
-    {"id": "CAP-HLT-001", "name": "Patient Lifecycle (acute)", "tier": "industry", "namespace": "healthcare", "boundedContext": "hospital", "lifecycle": "register-admit-discharge"},
-    {"id": "CAP-HLT-002", "name": "Outpatient Care Lifecycle", "tier": "industry", "namespace": "healthcare", "boundedContext": "clinic", "lifecycle": "register-visit-followup"},
-    {"id": "CAP-HLT-003", "name": "Appointment Management", "tier": "industry", "namespace": "healthcare", "boundedContext": "clinic", "lifecycle": "schedule-complete"},
-    {"id": "CAP-HLT-004", "name": "Admission and Bed Management", "tier": "industry", "namespace": "healthcare", "boundedContext": "hospital", "lifecycle": "admit-transfer-discharge"},
-    {"id": "CAP-HLT-005", "name": "Clinical Encounter Management", "tier": "industry", "namespace": "healthcare", "boundedContext": "hospital", "lifecycle": "start-document-complete"},
-    {"id": "CAP-HLT-007", "name": "Laboratory LIMS", "tier": "industry", "namespace": "healthcare", "boundedContext": "laboratory", "lifecycle": "order-sample-result"},
-    {"id": "CAP-HLT-008", "name": "Pharmacy and Dispensing", "tier": "industry", "namespace": "healthcare", "boundedContext": "pharmacy", "lifecycle": "prescribe-dispense"},
-    {"id": "CAP-CNS-001", "name": "Construction Lifecycle", "tier": "industry", "namespace": "construction", "boundedContext": "construction", "lifecycle": "tender-build-handover"},
-    {"id": "CAP-CNS-002", "name": "Bill of Quantities", "tier": "industry", "namespace": "construction", "boundedContext": "construction", "lifecycle": null},
-    {"id": "CAP-RE-001", "name": "Property Lifecycle", "tier": "industry", "namespace": "real-estate", "boundedContext": "real_estate", "lifecycle": "list-transact-close"},
-    {"id": "CAP-RE-003", "name": "Property Management", "tier": "industry", "namespace": "real-estate", "boundedContext": "real_estate", "lifecycle": "lease-maintain-renew"},
-    {"id": "CAP-HSP-001", "name": "Hotel Reservation Lifecycle", "tier": "industry", "namespace": "hospitality", "boundedContext": "hotel", "lifecycle": "book-stay-checkout"},
-    {"id": "CAP-HSP-003", "name": "Food and Beverage Operations", "tier": "industry", "namespace": "hospitality", "boundedContext": "restaurant", "lifecycle": null},
-    {"id": "CAP-RTL-002", "name": "POS and In-Store Checkout", "tier": "industry", "namespace": "retail", "boundedContext": "pos", "lifecycle": "shift-sale-receipt"},
-    {"id": "CAP-GOV-002", "name": "Government Permit Management", "tier": "industry", "namespace": "government", "boundedContext": "government", "lifecycle": "apply-issue"},
-    {"id": "CAP-GOV-003", "name": "Municipal Permit Management", "tier": "industry", "namespace": "government", "boundedContext": "municipality", "lifecycle": "apply-inspect-issue"},
-    {"id": "CAP-GOV-004", "name": "Municipal Utility Management", "tier": "industry", "namespace": "government", "boundedContext": "municipality", "lifecycle": "account-bill-collect"},
-    {"id": "CAP-NGO-001", "name": "Grant Lifecycle", "tier": "industry", "namespace": "ngo", "boundedContext": "ngo", "lifecycle": "apply-award-report"},
-    {"id": "CAP-PAM-001", "name": "Privileged Account Management", "tier": "platform", "namespace": "privileged-access", "boundedContext": "privileged_access", "lifecycle": "provision-rotate-retire"},
-    {"id": "CAP-PAM-002", "name": "Credential Checkout Checkin", "tier": "platform", "namespace": "privileged-access", "boundedContext": "privileged_access", "lifecycle": "checkout-use-checkin"},
-    {"id": "CAP-PAM-004", "name": "Privileged Session Broker", "tier": "platform", "namespace": "privileged-access", "boundedContext": "privileged_access", "lifecycle": "start-verify-end"},
-    {"id": "CAP-PAM-005", "name": "Just In Time Elevation", "tier": "platform", "namespace": "privileged-access", "boundedContext": "privileged_access", "lifecycle": "request-approve-expire"},
-    {"id": "CAP-PAM-006", "name": "Break Glass Access", "tier": "platform", "namespace": "privileged-access", "boundedContext": "privileged_access", "lifecycle": "request-grant-revoke"},
-    {"id": "CAP-PLT-QC-001", "name": "Enterprise Quantum Computing and Post-Classical Intelligence", "tier": "platform", "namespace": "quantum", "boundedContext": "quantum", "lifecycle": "govern-compute-assure"},
-    {"id": "CAP-PLT-BI-001", "name": "Enterprise Business Intelligence Analytics and Decision Intelligence", "tier": "platform", "namespace": "analytics", "boundedContext": "analytics", "lifecycle": "ingest-analyze-decide"},
-    {"id": "CAP-PLT-AI-001", "name": "Enterprise Artificial Intelligence Machine Learning and Generative AI", "tier": "platform", "namespace": "ai", "boundedContext": "ai", "lifecycle": "train-govern-infer-learn"},
-    {"id": "CAP-PLT-DG-001", "name": "Enterprise Data Governance Data Mesh and Enterprise Intelligence", "tier": "platform", "namespace": "data-governance", "boundedContext": "data_governance", "lifecycle": "own-govern-assure"},
-    {"id": "CAP-PLT-RB-001", "name": "Enterprise Robotics Autonomous Machines Physical AI and Cyber-Physical Intelligence", "tier": "platform", "namespace": "robotics", "boundedContext": "robotics", "lifecycle": "sense-decide-actuate-assure"},
-    {"id": "CAP-PLT-BIO-001", "name": "Enterprise Biotechnology Synthetic Biology Bio-AI Intelligence Digital Health and Bio Intelligence", "tier": "platform", "namespace": "biotechnology", "boundedContext": "biotechnology", "lifecycle": "discover-engineer-simulate-govern"},
-    {"id": "CAP-PLT-SP-001", "name": "Enterprise Space Intelligence Space AI Orbital Civilization and Autonomous Space Operations", "tier": "platform", "namespace": "space", "boundedContext": "space", "lifecycle": "observe-reason-operate-govern"},
-    {"id": "CAP-PLT-CIV-001", "name": "Enterprise Civilization Operating System Planetary Intelligence Governance Global Infrastructure and Human Civilization Management", "tier": "platform", "namespace": "civilization", "boundedContext": "civilization", "lifecycle": "coordinate-govern-optimize-evolve"},
-    {"id": "CAP-PLT-EPIP-001", "name": "Enterprise Planetary Intelligence Platform Climate Environment Sustainability Earth Digital Twin and Global Decision Support", "tier": "platform", "namespace": "planetary", "boundedContext": "planetary", "lifecycle": "observe-assess-advise-govern"},
-    {"id": "CAP-PLT-EGRCMP-001", "name": "Enterprise Global Resilience and Crisis Management Prediction Prevention Response Recovery and Continuous Resilience", "tier": "platform", "namespace": "resilience", "boundedContext": "resilience", "lifecycle": "predict-prepare-respond-recover-improve"},
-    {"id": "CAP-PLT-EGSRIP-001", "name": "Enterprise Global Sustainability and Regenerative Intelligence ESG Carbon Circular Economy and Ecological Restoration", "tier": "platform", "namespace": "sustainability", "boundedContext": "sustainability", "lifecycle": "measure-optimize-regenerate-govern"},
-    {"id": "CAP-PLT-EGIKEP-001", "name": "Enterprise Global Innovation and Knowledge Evolution Discovery Experimentation Intellectual Assets and Organizational Learning", "tier": "platform", "namespace": "innovation", "boundedContext": "innovation", "lifecycle": "discover-experiment-learn-evolve"},
-    {"id": "CAP-PLT-EADIP-001", "name": "Enterprise Autonomous Decision Intelligence Orchestration Prediction Simulation Recommendation and Decision Governance", "tier": "platform", "namespace": "decision-intelligence", "boundedContext": "decision_intelligence", "lifecycle": "collect-recommend-approve-execute-learn"},
-    {"id": "CAP-PLT-EAOSHP-001", "name": "Enterprise Autonomous Operations and Self-Healing Monitoring Predictive Maintenance AIOps and Continuous Operational Improvement", "tier": "platform", "namespace": "autonomous-operations", "boundedContext": "autonomous_operations", "lifecycle": "observe-heal-optimize-learn"},
-    {"id": "CAP-PLT-EACDISP-001", "name": "Enterprise Autonomous Cyber Defense and Digital Immune System Threat Prediction Autonomous Defense and Adaptive Security Evolution", "tier": "platform", "namespace": "cyber-defense", "boundedContext": "cyber_defense", "lifecycle": "detect-defend-recover-adapt"},
-    {"id": "CAP-PLT-EDTISP-001", "name": "Enterprise Digital Twin Intelligence and Simulation Real-Time Synchronization Scenario Engineering and Predictive Optimization", "tier": "platform", "namespace": "digital-twin", "boundedContext": "digital_twin", "lifecycle": "synchronize-simulate-predict-optimize"},
-    {"id": "CAP-PLT-EKGSIP-001", "name": "Enterprise Knowledge Graph and Semantic Intelligence Ontology Relationship Discovery Reasoning and Enterprise Memory", "tier": "platform", "namespace": "knowledge-graph", "boundedContext": "knowledge_graph", "lifecycle": "collect-connect-reason-evolve"},
-    {"id": "CAP-PLT-EFDMIFP-001", "name": "Enterprise Federated Data Mesh and Intelligence Fabric Data Products Contracts Metadata Quality Lineage and Marketplace", "tier": "platform", "namespace": "data-mesh", "boundedContext": "data_mesh", "lifecycle": "discover-govern-publish-share-improve"},
-    {"id": "CAP-PLT-EPDRTIP-001", "name": "Enterprise Privacy Digital Rights and Trust Intelligence Consent Ethics Regulatory and Human-Centric Digital Governance", "tier": "platform", "namespace": "privacy-trust", "boundedContext": "privacy_trust", "lifecycle": "consent-monitor-govern-improve"},
-    {"id": "CAP-PLT-EAFIEOP-001", "name": "Enterprise Autonomous Financial Intelligence and Economic Optimization Modeling Risk Investment Budget and Value Creation", "tier": "platform", "namespace": "financial-intelligence", "boundedContext": "financial_intelligence", "lifecycle": "analyze-simulate-optimize-govern"},
-    {"id": "CAP-PLT-EASCLIP-001", "name": "Enterprise Autonomous Supply Chain and Global Logistics Intelligence Demand Inventory Logistics Supplier Risk and Resilience", "tier": "platform", "namespace": "supply-chain-intelligence", "boundedContext": "supply_chain_intelligence", "lifecycle": "sense-plan-optimize-recover"},
-    {"id": "CAP-PLT-EAHIBEP-001", "name": "Enterprise Autonomous Healthcare Intelligence and Bio-Evolution Precision Medicine Bioinformatics Population Health and Clinical Decision Support", "tier": "platform", "namespace": "healthcare-intelligence", "boundedContext": "healthcare_intelligence", "lifecycle": "analyze-predict-recommend-govern"},
-    {"id": "CAP-PLT-EAEHCEP-001", "name": "Enterprise Autonomous Education and Human Capability Evolution Personalized Learning Skill Intelligence Talent and Workforce Transformation", "tier": "platform", "namespace": "education-intelligence", "boundedContext": "education_intelligence", "lifecycle": "assess-personalize-learn-evolve"},
-    {"id": "CAP-PLT-EAHRWIP-001", "name": "Enterprise Autonomous Human Resource and Workforce Intelligence Talent Recruitment Planning Performance and Organizational Analytics", "tier": "platform", "namespace": "workforce-intelligence", "boundedContext": "workforce_intelligence", "lifecycle": "discover-match-develop-optimize"},
-    {"id": "CAP-PLT-EAMII-001", "name": "Enterprise Autonomous Manufacturing and Industrial Intelligence Smart Factory Predictive Maintenance Quality and Robotics Coordination", "tier": "platform", "namespace": "manufacturing-intelligence", "boundedContext": "manufacturing_intelligence", "lifecycle": "sense-predict-optimize-govern"},
-    {"id": "CAP-PLT-EAEISR-001", "name": "Enterprise Autonomous Energy Intelligence and Sustainable Resource Smart Grid Renewables Carbon Signals and Climate Scenario Assist", "tier": "platform", "namespace": "energy-intelligence", "boundedContext": "energy_intelligence", "lifecycle": "sense-measure-predict-optimize-govern"},
-    {"id": "CAP-PLT-EASCUI-001", "name": "Enterprise Autonomous Smart City and Urban Intelligence Mobility Infrastructure Citizen Services Safety and City Twin Assist", "tier": "platform", "namespace": "urban-intelligence", "boundedContext": "urban_intelligence", "lifecycle": "sense-understand-predict-optimize-govern-evolve"},
-    {"id": "CAP-PLT-EATMIP-001", "name": "Enterprise Autonomous Transportation and Mobility Intelligence Traffic Fleet Route Transit Safety and Autonomous Mobility Assist", "tier": "platform", "namespace": "mobility-intelligence", "boundedContext": "mobility_intelligence", "lifecycle": "sense-analyze-predict-plan-execute-optimize"},
-    {"id": "CAP-PLT-EAGDGIP-001", "name": "Enterprise Autonomous Government and Digital Governance Intelligence Policy Regulatory Institutional Citizen Engagement and Transparency Assist", "tier": "platform", "namespace": "governance-intelligence", "boundedContext": "governance_intelligence", "lifecycle": "observe-analyze-decide-execute-measure-improve"},
-    {"id": "CAP-PLT-EAJLIREP-001", "name": "Enterprise Autonomous Justice Legal Intelligence and Regulatory Evolution Contract Dispute Compliance Risk and Evidence Assist", "tier": "platform", "namespace": "legal-intelligence", "boundedContext": "legal_intelligence", "lifecycle": "collect-understand-analyze-reason-validate-decide-evolve"},
-    {"id": "CAP-PLT-EASRDIP-001", "name": "Enterprise Autonomous Scientific Research and Discovery Intelligence Hypothesis Experiment Simulation Knowledge and Collaboration Assist", "tier": "platform", "namespace": "scientific-intelligence", "boundedContext": "scientific_intelligence", "lifecycle": "observe-discover-hypothesize-simulate-validate-evolve"},
-    {"id": "CAP-PLT-EAIVIP-001", "name": "Enterprise Autonomous Innovation and Venture Intelligence Opportunity Portfolio Investment Market and Transformation Assist", "tier": "platform", "namespace": "venture-intelligence", "boundedContext": "venture_intelligence", "lifecycle": "discover-evaluate-simulate-invest-execute-scale"},
-    {"id": "CAP-PLT-EAFIEEP-001", "name": "Enterprise Autonomous Financial Intelligence and Economic Evolution Macro Modeling Capital Risk and Scenario Assist", "tier": "platform", "namespace": "economic-evolution", "boundedContext": "economic_evolution", "lifecycle": "collect-analyze-predict-optimize-allocate-evolve"},
-    {"id": "CAP-PLT-EASCDTIP-001", "name": "Enterprise Autonomous Security Cyber Defense and Digital Trust Intelligence Zero Trust Threat Posture and Gated Response Assist", "tier": "platform", "namespace": "security-trust-intelligence", "boundedContext": "security_trust_intelligence", "lifecycle": "observe-detect-analyze-predict-respond-improve"},
-    {"id": "CAP-PLT-EASIEP-001", "name": "Enterprise Autonomous Space Intelligence and Exploration Mission Orbital Planetary Resource and Gated Space Operations Assist", "tier": "platform", "namespace": "space-exploration-intelligence", "boundedContext": "space_exploration_intelligence", "lifecycle": "observe-analyze-predict-plan-execute-expand"},
-    {"id": "CAP-PLT-EAEIPSP-001", "name": "Enterprise Autonomous Environmental Intelligence and Planetary Sustainability Climate Ecosystem Biodiversity and Resilience Assist", "tier": "platform", "namespace": "environmental-planetary-intelligence", "boundedContext": "environmental_planetary_intelligence", "lifecycle": "observe-analyze-predict-simulate-act-sustain"},
-    {"id": "CAP-PLT-EADEIMP-001", "name": "Enterprise Autonomous Digital Economy and Intelligent Marketplace Matching Pricing Trust and Gated Commerce Exchange Assist", "tier": "platform", "namespace": "marketplace-intelligence", "boundedContext": "marketplace_intelligence", "lifecycle": "discover-match-exchange-measure-optimize-evolve"},
-    {"id": "CAP-PLT-EAKEGINP-001", "name": "Enterprise Autonomous Knowledge Economy and Global Intelligence Network Valuation Expert Exchange and Learning Assist", "tier": "platform", "namespace": "knowledge-economy-intelligence", "boundedContext": "knowledge_economy_intelligence", "lifecycle": "create-discover-validate-exchange-apply-evolve"},
-    {"id": "CAP-PLT-EAHCDWIP-001", "name": "Enterprise Autonomous Human Capability and Digital Workforce Intelligence Skills Career Human-AI Collaboration and Capability Evolution Assist", "tier": "platform", "namespace": "human-capability-intelligence", "boundedContext": "human_capability_intelligence", "lifecycle": "discover-assess-develop-deploy-collaborate-evolve"},
-    {"id": "CAP-PLT-EASIUIP-001", "name": "Enterprise Autonomous Smart Infrastructure and Urban Intelligence Asset Lifecycle Twin Risk and Gated City Operations Assist", "tier": "platform", "namespace": "smart-infrastructure-intelligence", "boundedContext": "smart_infrastructure_intelligence", "lifecycle": "sense-analyze-simulate-optimize-execute-improve"},
-    {"id": "CAP-PLT-EAHILSP-001", "name": "Enterprise Autonomous Healthcare Intelligence and Life Sciences Precision Medicine Drug Discovery Population Health and Gated Clinical Assist", "tier": "platform", "namespace": "health-life-sciences-intelligence", "boundedContext": "health_life_sciences_intelligence", "lifecycle": "collect-understand-predict-personalize-execute-improve"},
-    {"id": "CAP-PLT-EAEISPP-001", "name": "Enterprise Autonomous Energy Intelligence and Sustainable Power Smart Grid Renewables Storage Trading and Gated Dispatch Assist", "tier": "platform", "namespace": "sustainable-power-intelligence", "boundedContext": "sustainable_power_intelligence", "lifecycle": "sense-predict-balance-optimize-execute-sustain"},
-    {"id": "CAP-PLT-MERAF-001", "name": "MEOS Enterprise Runtime and Application Framework Dynamic Module Lifecycle Metadata Execution and Permission Aware Activation", "tier": "platform", "namespace": "enterprise-runtime", "boundedContext": "enterprise_runtime", "lifecycle": "register-validate-deploy-activate-monitor-upgrade-retire"},
-    {"id": "CAP-PLT-MESCC-001", "name": "MEOS Enterprise Application Shell and Command Center Workspace Launcher Copilot and Permission Aware Experience", "tier": "platform", "namespace": "enterprise-experience", "boundedContext": "enterprise_experience", "lifecycle": "intent-discover-compose-launch-personalize-optimize"},
-    {"id": "CAP-PLT-MDMAL-001", "name": "MEOS Dynamic Module Activation and Application Lifecycle Registry Dependency Governance and Gated Deploy Activate Retire", "tier": "platform", "namespace": "module-lifecycle", "boundedContext": "module_lifecycle", "lifecycle": "register-validate-deploy-activate-monitor-upgrade-retire"},
-    {"id": "CAP-PLT-MEWEOP-001", "name": "MEOS Enterprise Workflow Execution and Orchestration SLA Exception Task Orchestration and Gated Process Operating Fabric", "tier": "platform", "namespace": "workflow-orchestration", "boundedContext": "workflow_orchestration", "lifecycle": "define-validate-deploy-execute-monitor-optimize"},
-    {"id": "CAP-PLT-MEBRDI-001", "name": "MEOS Enterprise Business Rules and Decision Intelligence Explainable Policy Federated Decision Studio and Gated Enforcement", "tier": "platform", "namespace": "business-decision", "boundedContext": "business_decision", "lifecycle": "discover-evaluate-explain-approve-enforce-optimize"},
-    {"id": "CAP-PLT-MEIAOI-001", "name": "MEOS Enterprise Intelligence Analytics and Operational Insight KPI Predictive Anomaly and Explainable Insight Fabric", "tier": "platform", "namespace": "operational-insight", "boundedContext": "operational_insight", "lifecycle": "ingest-analyze-insight-predict-recommend-optimize"},
-    {"id": "CAP-PLT-MEDIMOP-001", "name": "MEOS Enterprise Data Intelligence and Data Mesh Operating Catalog Marketplace Quality Contracts and Gated Access Fabric", "tier": "platform", "namespace": "data-mesh-operating", "boundedContext": "data_mesh_operating", "lifecycle": "own-create-govern-publish-share-monitor-retire"},
-    {"id": "CAP-PLT-MEKGSI-001", "name": "MEOS Enterprise Knowledge Graph and Semantic Intelligence Ontology Reasoning Memory and Explainable Knowledge Operating Fabric", "tier": "platform", "namespace": "semantic-knowledge", "boundedContext": "semantic_knowledge", "lifecycle": "model-map-graph-reason-explain-evolve"},
-    {"id": "CAP-PLT-MEDTIP-001", "name": "MEOS Enterprise Digital Twin Intelligence Simulation Scenario Predictive Optimization and Gated Reality Operating Fabric", "tier": "platform", "namespace": "twin-intelligence", "boundedContext": "twin_intelligence", "lifecycle": "represent-sync-simulate-predict-optimize-govern"},
-    {"id": "CAP-PLT-MEAAOI-001", "name": "MEOS Enterprise AI Agent Orchestration and Autonomous Intelligence Multi-Agent Planning Governance and Gated Human-AI Collaboration", "tier": "platform", "namespace": "ai-agent-orchestration", "boundedContext": "ai_agent_orchestration", "lifecycle": "discover-plan-collaborate-execute-validate-learn"},
-    {"id": "CAP-PLT-MEAOSH-001", "name": "MEOS Enterprise Autonomous Operations and Self-Healing Incident RCA Gated Recovery and Reliability Operating Fabric", "tier": "platform", "namespace": "operations-autonomy", "boundedContext": "operations_autonomy", "lifecycle": "monitor-detect-analyze-recover-validate-learn"},
-    {"id": "CAP-PLT-MECZTD-001", "name": "MEOS Enterprise Cybersecurity Intelligence and Zero Trust Defense AI-SOC Threat Response and Gated Containment Operating Fabric", "tier": "platform", "namespace": "cyber-security-operating", "boundedContext": "cyber_security_operating", "lifecycle": "verify-monitor-detect-decide-respond-learn"},
-    {"id": "CAP-PLT-MEPCRI-001", "name": "MEOS Enterprise Privacy Compliance and Regulatory Intelligence Continuous Compliance Trust Score and Gated Remediation Operating Fabric", "tier": "platform", "namespace": "privacy-compliance-operating", "boundedContext": "privacy_compliance_operating", "lifecycle": "regulate-map-monitor-assess-remediate-certify"},
-    {"id": "CAP-PLT-MEGRSC-001", "name": "MEOS Enterprise Governance Risk and Strategic Control Board Intelligence Integrated Risk and Gated Strategic Execution Operating Fabric", "tier": "platform", "namespace": "governance-risk-operating", "boundedContext": "governance_risk_operating", "lifecycle": "define-align-monitor-decide-control-evolve"},
-    {"id": "CAP-PLT-MEFIAF-001", "name": "MEOS Enterprise Financial Intelligence and Autonomous Finance Forecasting Treasury Revenue Cost and Gated Kernel Execution Operating Fabric", "tier": "platform", "namespace": "autonomous-finance-operating", "boundedContext": "autonomous_finance_operating", "lifecycle": "ingest-analyze-forecast-decide-execute-optimize"},
-    {"id": "CAP-PLT-MESCIAL-001", "name": "MEOS Enterprise Supply Chain Intelligence and Autonomous Logistics Control Tower Procurement Inventory Logistics and Gated Supply Network Operating Fabric", "tier": "platform", "namespace": "supply-network-operating", "boundedContext": "supply_network_operating", "lifecycle": "sense-forecast-plan-procure-fulfill-optimize"},
-    {"id": "CAP-PLT-MECXARP-001", "name": "MEOS Enterprise Customer Experience CRM Intelligence and Autonomous Relationship Customer 360 Journey Sales Service and Consent Gated Engagement Operating Fabric", "tier": "platform", "namespace": "customer-relationship-operating", "boundedContext": "customer_relationship_operating", "lifecycle": "sense-understand-engage-serve-retain-optimize"},
-    {"id": "CAP-PLT-MEHCAWP-001", "name": "MEOS Enterprise Human Capital Intelligence and Autonomous Workforce Employee 360 Talent Skills Recruitment and Human Gated HR Operating Fabric", "tier": "platform", "namespace": "human-capital-operating", "boundedContext": "human_capital_operating", "lifecycle": "plan-attract-develop-perform-retain-optimize"},
-    {"id": "CAP-PLT-MEAIAMP-001", "name": "MEOS Enterprise Asset Intelligence and Autonomous Asset Management Registry PdM Field Service TCO and Gated OT Operating Fabric", "tier": "platform", "namespace": "enterprise-asset-operating", "boundedContext": "enterprise_asset_operating", "lifecycle": "register-monitor-predict-maintain-optimize-retire"},
-    {"id": "CAP-PLT-MEPIASP-001", "name": "MEOS Enterprise Procurement Intelligence and Autonomous Sourcing Spend Sourcing Contract Purchase and DoA Gated Source-to-Pay Operating Fabric", "tier": "platform", "namespace": "procurement-operating", "boundedContext": "procurement_operating", "lifecycle": "request-source-negotiate-commit-receive-optimize"},
-    {"id": "CAP-PLT-MESIARO-001", "name": "MEOS Enterprise Sales Intelligence and Autonomous Revenue Operations Lead Pipeline Forecast Pricing Quote and DoA Gated Lead-to-Revenue Operating Fabric", "tier": "platform", "namespace": "sales-revenue-operating", "boundedContext": "sales_revenue_operating", "lifecycle": "sense-qualify-opportunity-price-quote-forecast-optimize"},
-    {"id": "CAP-PLT-MEQTCIP-001", "name": "MEOS Enterprise Revenue Billing and Quote-to-Cash Intelligence Order Invoice Receivables Payment and DoA Gated Revenue Cycle Operating Fabric", "tier": "platform", "namespace": "quote-to-cash-operating", "boundedContext": "quote_to_cash_operating", "lifecycle": "accept-order-bill-invoice-collect-reconcile-optimize"},
-    {"id": "CAP-PLT-METRCIP-001", "name": "MEOS Enterprise Revenue Recognition Treasury and Cash Intelligence Liquidity FX Bank Connectivity and Dual-Control Gated Treasury Operating Fabric", "tier": "platform", "namespace": "treasury-cash-operating", "boundedContext": "treasury_cash_operating", "lifecycle": "recognize-position-forecast-decide-execute-reconcile"},
-    {"id": "CAP-PLT-MEFPAPM-001", "name": "MEOS Enterprise Financial Planning Budgeting and Autonomous Performance Management Forecast Scenario Capital and DoA Gated FP&A Operating Fabric", "tier": "platform", "namespace": "financial-planning-operating", "boundedContext": "financial_planning_operating", "lifecycle": "model-budget-forecast-scenario-measure-optimize"},
-    {"id": "CAP-PLT-MEMACPI-001", "name": "MEOS Enterprise Management Accounting Cost and Profitability Intelligence Allocation ABC Unit Economics and DoA Gated Cost Operating Fabric", "tier": "platform", "namespace": "management-accounting-operating", "boundedContext": "management_accounting_operating", "lifecycle": "model-allocate-attribute-measure-optimize"},
-    {"id": "CAP-PLT-MEPRIAP-001", "name": "MEOS Enterprise Pricing Intelligence Revenue Optimization and Autonomous Pricing Management Elasticity Discount Promotion and DoA Gated Pricing Operating Fabric", "tier": "platform", "namespace": "pricing-operating", "boundedContext": "pricing_operating", "lifecycle": "model-simulate-optimize-decide-execute-learn"},
-    {"id": "CAP-PLT-MECIAP-001", "name": "MEOS Enterprise Contract Intelligence Commercial Agreement and Autonomous Contract Management Obligation SLA Renewal and DoA Gated Contract Operating Fabric", "tier": "platform", "namespace": "contract-operating", "boundedContext": "contract_operating", "lifecycle": "draft-negotiate-execute-monitor-renew-amend"},
-    {"id": "CAP-PLT-MECCPI-001", "name": "MEOS Enterprise Commercial Compliance Obligation and Contract Performance Intelligence SLA KPI Penalty Service Credit and DoA Gated Performance Operating Fabric", "tier": "platform", "namespace": "commercial-performance-operating", "boundedContext": "commercial_performance_operating", "lifecycle": "monitor-evaluate-exception-correct-verify"},
-    {"id": "CAP-PLT-MESMIP-001", "name": "MEOS Enterprise Service Management SLA Operations and Intelligent Service Delivery Catalog Incident Problem Change and DoA Gated Service Operating Fabric", "tier": "platform", "namespace": "service-management-operating", "boundedContext": "service_management_operating", "lifecycle": "define-request-fulfill-support-monitor-improve"},
-    {"id": "CAP-PLT-MEITOI-001", "name": "MEOS Enterprise IT Operations Infrastructure and Observability Intelligence AIOps Capacity Remediation and DoA Gated Technology Operations Fabric", "tier": "platform", "namespace": "technology-operations-operating", "boundedContext": "technology_operations_operating", "lifecycle": "discover-monitor-correlate-diagnose-remediate-verify"},
-    {"id": "CAP-PLT-MECPEI-001", "name": "MEOS Enterprise Cloud Platform Engineering and Infrastructure Automation Intelligence IaC GitOps IDP Cost Reliability and DoA Gated Platform Engineering Fabric", "tier": "platform", "namespace": "platform-engineering-operating", "boundedContext": "platform_engineering_operating", "lifecycle": "intent-plan-provision-configure-deploy-optimize"},
-    {"id": "CAP-PLT-MEDSSAD-001", "name": "MEOS Enterprise DevSecOps Secure Software Supply Chain and Application Delivery Intelligence SBOM Provenance Gates and DoA Gated DevSecOps Fabric", "tier": "platform", "namespace": "devsecops-operating", "boundedContext": "devsecops_operating", "lifecycle": "code-scan-validate-prove-gate-release-verify"},
-    {"id": "CAP-PLT-MEAAGSI-001", "name": "MEOS Enterprise Application Architecture API Governance and Software Architecture Intelligence Portfolio Debt Modernization and DoA Gated Architecture Operating Fabric", "tier": "platform", "namespace": "application-architecture-operating", "boundedContext": "application_architecture_operating", "lifecycle": "model-govern-assess-modernize-simulate"},
-    {"id": "CAP-PLT-MEDAMIA-001", "name": "MEOS Enterprise Data Architecture Master Data and Information Architecture Intelligence MDM Contracts Lineage Quality and DoA Gated Data Architecture Fabric", "tier": "platform", "namespace": "data-architecture-operating", "boundedContext": "data_architecture_operating", "lifecycle": "model-govern-quality-migrate-optimize"},
-    {"id": "CAP-PLT-MEIEII-001", "name": "MEOS Enterprise Integration Architecture Event Mesh and Interoperability Intelligence Contracts Reliability Partner and DoA Gated Integration Architecture Fabric", "tier": "platform", "namespace": "integration-architecture-operating", "boundedContext": "integration_architecture_operating", "lifecycle": "design-contract-activate-observe-modernize"},
-    {"id": "CAP-PLT-MEAPIE-001", "name": "MEOS Enterprise API Management Service Gateway and Digital Integration Experience API Product Marketplace Developer Portal and DoA Gated API Management Fabric", "tier": "platform", "namespace": "api-management-operating", "boundedContext": "api_management_operating", "lifecycle": "design-contract-publish-subscribe-consume-retire"},
-    {"id": "CAP-PLT-MEESIE-001", "name": "MEOS Enterprise Event Streaming Intelligence Real-Time Event Platform Event Product Marketplace Correlation Replay and DoA Gated Event Streaming Fabric", "tier": "platform", "namespace": "event-streaming-operating", "boundedContext": "event_streaming_operating", "lifecycle": "define-contract-stream-correlate-productize-retire"},
-    {"id": "CAP-PLT-MENCOE-001", "name": "MEOS Enterprise Notification Communication Omnichannel Event Experience Orchestration Consent Preference Escalation and DoA Gated Communication Experience Fabric", "tier": "platform", "namespace": "communication-experience-operating", "boundedContext": "communication_experience_operating", "lifecycle": "trigger-orchestrate-consent-deliver-acknowledge-optimize"},
-    {"id": "CAP-PLT-MEEPJI-001", "name": "MEOS Enterprise Experience Personalization Customer Journey Context-Aware Interaction Next Best Action and DoA Gated Experience Personalization Fabric", "tier": "platform", "namespace": "experience-personalization-operating", "boundedContext": "experience_personalization_operating", "lifecycle": "context-intent-personalize-journey-interact-learn"},
-    {"id": "CAP-PLT-MECVII-001", "name": "MEOS Enterprise Conversational Voice Multimodal Interaction Intelligence Dialogue RAG Tool Interaction and DoA Gated Conversational Interaction Fabric", "tier": "platform", "namespace": "conversational-interaction-operating", "boundedContext": "conversational_interaction_operating", "lifecycle": "input-understand-dialogue-tool-confirm-respond"}
+    {
+      "id": "CAP-CNS-001",
+      "name": "Construction Lifecycle",
+      "tier": "industry",
+      "namespace": "construction",
+      "boundedContext": "construction",
+      "lifecycle": "tender-build-handover"
+    },
+    {
+      "id": "CAP-CNS-002",
+      "name": "Bill of Quantities",
+      "tier": "industry",
+      "namespace": "construction",
+      "boundedContext": "construction",
+      "lifecycle": null
+    },
+    {
+      "id": "CAP-EDU-001",
+      "name": "Student Lifecycle",
+      "tier": "industry",
+      "namespace": "education",
+      "boundedContext": "university",
+      "lifecycle": "prospect-enroll-graduate"
+    },
+    {
+      "id": "CAP-EDU-002",
+      "name": "Admissions Management",
+      "tier": "industry",
+      "namespace": "education",
+      "boundedContext": "university",
+      "lifecycle": "apply-admit"
+    },
+    {
+      "id": "CAP-EDU-003",
+      "name": "Academics Management",
+      "tier": "industry",
+      "namespace": "education",
+      "boundedContext": "university",
+      "lifecycle": null
+    },
+    {
+      "id": "CAP-EDU-004",
+      "name": "Grading and Assessment",
+      "tier": "industry",
+      "namespace": "education",
+      "boundedContext": "school",
+      "lifecycle": null
+    },
+    {
+      "id": "CAP-EDU-005",
+      "name": "School Attendance",
+      "tier": "industry",
+      "namespace": "education",
+      "boundedContext": "school",
+      "lifecycle": null
+    },
+    {
+      "id": "CAP-ENT-001",
+      "name": "Customer Management",
+      "tier": "enterprise",
+      "namespace": "crm",
+      "boundedContext": "crm",
+      "lifecycle": null
+    },
+    {
+      "id": "CAP-ENT-002",
+      "name": "Sales Lifecycle",
+      "tier": "enterprise",
+      "namespace": "sales",
+      "boundedContext": "sales",
+      "lifecycle": "quote-order-fulfill"
+    },
+    {
+      "id": "CAP-ENT-010",
+      "name": "Employee Management",
+      "tier": "enterprise",
+      "namespace": "human-resources",
+      "boundedContext": "human_resources",
+      "lifecycle": "hire-transfer-exit"
+    },
+    {
+      "id": "CAP-ENT-011",
+      "name": "Recruitment Management",
+      "tier": "enterprise",
+      "namespace": "human-resources",
+      "boundedContext": "human_resources",
+      "lifecycle": "applicant-offer"
+    },
+    {
+      "id": "CAP-ENT-012",
+      "name": "Attendance Management",
+      "tier": "enterprise",
+      "namespace": "human-resources",
+      "boundedContext": "human_resources",
+      "lifecycle": null
+    },
+    {
+      "id": "CAP-ENT-013",
+      "name": "Leave Management",
+      "tier": "enterprise",
+      "namespace": "human-resources",
+      "boundedContext": "human_resources",
+      "lifecycle": null
+    },
+    {
+      "id": "CAP-ENT-014",
+      "name": "Performance Management",
+      "tier": "enterprise",
+      "namespace": "human-resources",
+      "boundedContext": "human_resources",
+      "lifecycle": null
+    },
+    {
+      "id": "CAP-ENT-015",
+      "name": "Payroll Lifecycle",
+      "tier": "enterprise",
+      "namespace": "payroll",
+      "boundedContext": "payroll",
+      "lifecycle": "accrue-pay-file"
+    },
+    {
+      "id": "CAP-ENT-016",
+      "name": "Benefits Administration",
+      "tier": "enterprise",
+      "namespace": "human-resources",
+      "boundedContext": "human_resources",
+      "lifecycle": null
+    },
+    {
+      "id": "CAP-ENT-020",
+      "name": "Financial Management",
+      "tier": "enterprise",
+      "namespace": "finance",
+      "boundedContext": "finance",
+      "lifecycle": "budget-period-close"
+    },
+    {
+      "id": "CAP-ENT-021",
+      "name": "Accounting and General Ledger",
+      "tier": "enterprise",
+      "namespace": "accounting",
+      "boundedContext": "accounting",
+      "lifecycle": "post-reconcile"
+    },
+    {
+      "id": "CAP-ENT-022",
+      "name": "Accounts Payable",
+      "tier": "enterprise",
+      "namespace": "accounting",
+      "boundedContext": "accounting",
+      "lifecycle": "invoice-pay"
+    },
+    {
+      "id": "CAP-ENT-023",
+      "name": "Accounts Receivable",
+      "tier": "enterprise",
+      "namespace": "accounting",
+      "boundedContext": "accounting",
+      "lifecycle": "invoice-collect"
+    },
+    {
+      "id": "CAP-ENT-024",
+      "name": "Billing and Invoicing",
+      "tier": "enterprise",
+      "namespace": "accounting",
+      "boundedContext": "accounting",
+      "lifecycle": null
+    },
+    {
+      "id": "CAP-ENT-025",
+      "name": "Treasury Management",
+      "tier": "enterprise",
+      "namespace": "treasury",
+      "boundedContext": "treasury",
+      "lifecycle": "liquidity-transfer"
+    },
+    {
+      "id": "CAP-ENT-026",
+      "name": "Tax Processing",
+      "tier": "enterprise",
+      "namespace": "tax",
+      "boundedContext": "tax",
+      "lifecycle": "calculate-file-pay"
+    },
+    {
+      "id": "CAP-ENT-027",
+      "name": "Financial Compliance",
+      "tier": "enterprise",
+      "namespace": "finance",
+      "boundedContext": "finance",
+      "lifecycle": null
+    },
+    {
+      "id": "CAP-ENT-030",
+      "name": "Banking Operations",
+      "tier": "enterprise",
+      "namespace": "banking",
+      "boundedContext": "banking",
+      "lifecycle": "account-transaction"
+    },
+    {
+      "id": "CAP-ENT-031",
+      "name": "Lending and Credit",
+      "tier": "enterprise",
+      "namespace": "banking",
+      "boundedContext": "banking",
+      "lifecycle": "apply-disburse-repay"
+    },
+    {
+      "id": "CAP-ENT-032",
+      "name": "Islamic Banking Products",
+      "tier": "enterprise",
+      "namespace": "islamic-banking",
+      "boundedContext": "islamic_banking",
+      "lifecycle": null
+    },
+    {
+      "id": "CAP-ENT-033",
+      "name": "Sharia Compliance",
+      "tier": "enterprise",
+      "namespace": "islamic-banking",
+      "boundedContext": "islamic_banking",
+      "lifecycle": null
+    },
+    {
+      "id": "CAP-ENT-034",
+      "name": "Currency Exchange Operations",
+      "tier": "enterprise",
+      "namespace": "currency-exchange",
+      "boundedContext": "currency_exchange",
+      "lifecycle": "deal-settle"
+    },
+    {
+      "id": "CAP-ENT-035",
+      "name": "Exchange Rate Management",
+      "tier": "enterprise",
+      "namespace": "currency-exchange",
+      "boundedContext": "currency_exchange",
+      "lifecycle": "quote-publish"
+    },
+    {
+      "id": "CAP-ENT-040",
+      "name": "Procurement Lifecycle",
+      "tier": "enterprise",
+      "namespace": "procurement",
+      "boundedContext": "procurement",
+      "lifecycle": "requisition-po-receive"
+    },
+    {
+      "id": "CAP-ENT-041",
+      "name": "Vendor Management",
+      "tier": "enterprise",
+      "namespace": "procurement",
+      "boundedContext": "procurement",
+      "lifecycle": null
+    },
+    {
+      "id": "CAP-ENT-042",
+      "name": "Inventory Lifecycle",
+      "tier": "enterprise",
+      "namespace": "inventory",
+      "boundedContext": "inventory",
+      "lifecycle": "stock-adjust-count"
+    },
+    {
+      "id": "CAP-ENT-043",
+      "name": "Warehouse Operations",
+      "tier": "enterprise",
+      "namespace": "warehouse",
+      "boundedContext": "warehouse",
+      "lifecycle": "receive-pick-ship"
+    },
+    {
+      "id": "CAP-ENT-044",
+      "name": "Manufacturing and Production",
+      "tier": "enterprise",
+      "namespace": "manufacturing",
+      "boundedContext": "manufacturing",
+      "lifecycle": "plan-produce-complete"
+    },
+    {
+      "id": "CAP-ENT-045",
+      "name": "MRP Planning",
+      "tier": "enterprise",
+      "namespace": "manufacturing",
+      "boundedContext": "manufacturing",
+      "lifecycle": null
+    },
+    {
+      "id": "CAP-ENT-046",
+      "name": "Quality Management",
+      "tier": "enterprise",
+      "namespace": "manufacturing",
+      "boundedContext": "manufacturing",
+      "lifecycle": null
+    },
+    {
+      "id": "CAP-ENT-047",
+      "name": "Project Management",
+      "tier": "enterprise",
+      "namespace": "projects",
+      "boundedContext": "projects",
+      "lifecycle": "initiate-deliver-close"
+    },
+    {
+      "id": "CAP-GOV-002",
+      "name": "Government Permit Management",
+      "tier": "industry",
+      "namespace": "government",
+      "boundedContext": "government",
+      "lifecycle": "apply-issue"
+    },
+    {
+      "id": "CAP-GOV-003",
+      "name": "Municipal Permit Management",
+      "tier": "industry",
+      "namespace": "government",
+      "boundedContext": "municipality",
+      "lifecycle": "apply-inspect-issue"
+    },
+    {
+      "id": "CAP-GOV-004",
+      "name": "Municipal Utility Management",
+      "tier": "industry",
+      "namespace": "government",
+      "boundedContext": "municipality",
+      "lifecycle": "account-bill-collect"
+    },
+    {
+      "id": "CAP-HLT-001",
+      "name": "Patient Lifecycle (acute)",
+      "tier": "industry",
+      "namespace": "healthcare",
+      "boundedContext": "hospital",
+      "lifecycle": "register-admit-discharge"
+    },
+    {
+      "id": "CAP-HLT-002",
+      "name": "Outpatient Care Lifecycle",
+      "tier": "industry",
+      "namespace": "healthcare",
+      "boundedContext": "clinic",
+      "lifecycle": "register-visit-followup"
+    },
+    {
+      "id": "CAP-HLT-003",
+      "name": "Appointment Management",
+      "tier": "industry",
+      "namespace": "healthcare",
+      "boundedContext": "clinic",
+      "lifecycle": "schedule-complete"
+    },
+    {
+      "id": "CAP-HLT-004",
+      "name": "Admission and Bed Management",
+      "tier": "industry",
+      "namespace": "healthcare",
+      "boundedContext": "hospital",
+      "lifecycle": "admit-transfer-discharge"
+    },
+    {
+      "id": "CAP-HLT-005",
+      "name": "Clinical Encounter Management",
+      "tier": "industry",
+      "namespace": "healthcare",
+      "boundedContext": "hospital",
+      "lifecycle": "start-document-complete"
+    },
+    {
+      "id": "CAP-HLT-007",
+      "name": "Laboratory LIMS",
+      "tier": "industry",
+      "namespace": "healthcare",
+      "boundedContext": "laboratory",
+      "lifecycle": "order-sample-result"
+    },
+    {
+      "id": "CAP-HLT-008",
+      "name": "Pharmacy and Dispensing",
+      "tier": "industry",
+      "namespace": "healthcare",
+      "boundedContext": "pharmacy",
+      "lifecycle": "prescribe-dispense"
+    },
+    {
+      "id": "CAP-HSP-001",
+      "name": "Hotel Reservation Lifecycle",
+      "tier": "industry",
+      "namespace": "hospitality",
+      "boundedContext": "hotel",
+      "lifecycle": "book-stay-checkout"
+    },
+    {
+      "id": "CAP-HSP-003",
+      "name": "Food and Beverage Operations",
+      "tier": "industry",
+      "namespace": "hospitality",
+      "boundedContext": "restaurant",
+      "lifecycle": null
+    },
+    {
+      "id": "CAP-NGO-001",
+      "name": "Grant Lifecycle",
+      "tier": "industry",
+      "namespace": "ngo",
+      "boundedContext": "ngo",
+      "lifecycle": "apply-award-report"
+    },
+    {
+      "id": "CAP-PAM-001",
+      "name": "Privileged Account Management",
+      "tier": "platform",
+      "namespace": "privileged-access",
+      "boundedContext": "privileged_access",
+      "lifecycle": "provision-rotate-retire"
+    },
+    {
+      "id": "CAP-PAM-002",
+      "name": "Credential Checkout Checkin",
+      "tier": "platform",
+      "namespace": "privileged-access",
+      "boundedContext": "privileged_access",
+      "lifecycle": "checkout-use-checkin"
+    },
+    {
+      "id": "CAP-PAM-004",
+      "name": "Privileged Session Broker",
+      "tier": "platform",
+      "namespace": "privileged-access",
+      "boundedContext": "privileged_access",
+      "lifecycle": "start-verify-end"
+    },
+    {
+      "id": "CAP-PAM-005",
+      "name": "Just In Time Elevation",
+      "tier": "platform",
+      "namespace": "privileged-access",
+      "boundedContext": "privileged_access",
+      "lifecycle": "request-approve-expire"
+    },
+    {
+      "id": "CAP-PAM-006",
+      "name": "Break Glass Access",
+      "tier": "platform",
+      "namespace": "privileged-access",
+      "boundedContext": "privileged_access",
+      "lifecycle": "request-grant-revoke"
+    },
+    {
+      "id": "CAP-PLT-AI-001",
+      "name": "Enterprise Artificial Intelligence Machine Learning and Generative AI",
+      "tier": "platform",
+      "namespace": "ai",
+      "boundedContext": "ai",
+      "lifecycle": "train-govern-infer-learn"
+    },
+    {
+      "id": "CAP-PLT-BI-001",
+      "name": "Enterprise Business Intelligence Analytics and Decision Intelligence",
+      "tier": "platform",
+      "namespace": "analytics",
+      "boundedContext": "analytics",
+      "lifecycle": "ingest-analyze-decide"
+    },
+    {
+      "id": "CAP-PLT-BIO-001",
+      "name": "Enterprise Biotechnology Synthetic Biology Bio-AI Intelligence Digital Health and Bio Intelligence",
+      "tier": "platform",
+      "namespace": "biotechnology",
+      "boundedContext": "biotechnology",
+      "lifecycle": "discover-engineer-simulate-govern"
+    },
+    {
+      "id": "CAP-PLT-CIV-001",
+      "name": "Enterprise Civilization Operating System Planetary Intelligence Governance Global Infrastructure and Human Civilization Management",
+      "tier": "platform",
+      "namespace": "civilization",
+      "boundedContext": "civilization",
+      "lifecycle": "coordinate-govern-optimize-evolve"
+    },
+    {
+      "id": "CAP-PLT-DG-001",
+      "name": "Enterprise Data Governance Data Mesh and Enterprise Intelligence",
+      "tier": "platform",
+      "namespace": "data-governance",
+      "boundedContext": "data_governance",
+      "lifecycle": "own-govern-assure"
+    },
+    {
+      "id": "CAP-PLT-EACDISP-001",
+      "name": "Enterprise Autonomous Cyber Defense and Digital Immune System Threat Prediction Autonomous Defense and Adaptive Security Evolution",
+      "tier": "platform",
+      "namespace": "cyber-defense",
+      "boundedContext": "cyber_defense",
+      "lifecycle": "detect-defend-recover-adapt"
+    },
+    {
+      "id": "CAP-PLT-EADEIMP-001",
+      "name": "Enterprise Autonomous Digital Economy and Intelligent Marketplace Matching Pricing Trust and Gated Commerce Exchange Assist",
+      "tier": "platform",
+      "namespace": "marketplace-intelligence",
+      "boundedContext": "marketplace_intelligence",
+      "lifecycle": "discover-match-exchange-measure-optimize-evolve"
+    },
+    {
+      "id": "CAP-PLT-EADIP-001",
+      "name": "Enterprise Autonomous Decision Intelligence Orchestration Prediction Simulation Recommendation and Decision Governance",
+      "tier": "platform",
+      "namespace": "decision-intelligence",
+      "boundedContext": "decision_intelligence",
+      "lifecycle": "collect-recommend-approve-execute-learn"
+    },
+    {
+      "id": "CAP-PLT-EAEHCEP-001",
+      "name": "Enterprise Autonomous Education and Human Capability Evolution Personalized Learning Skill Intelligence Talent and Workforce Transformation",
+      "tier": "platform",
+      "namespace": "education-intelligence",
+      "boundedContext": "education_intelligence",
+      "lifecycle": "assess-personalize-learn-evolve"
+    },
+    {
+      "id": "CAP-PLT-EAEIPSP-001",
+      "name": "Enterprise Autonomous Environmental Intelligence and Planetary Sustainability Climate Ecosystem Biodiversity and Resilience Assist",
+      "tier": "platform",
+      "namespace": "environmental-planetary-intelligence",
+      "boundedContext": "environmental_planetary_intelligence",
+      "lifecycle": "observe-analyze-predict-simulate-act-sustain"
+    },
+    {
+      "id": "CAP-PLT-EAEISPP-001",
+      "name": "Enterprise Autonomous Energy Intelligence and Sustainable Power Smart Grid Renewables Storage Trading and Gated Dispatch Assist",
+      "tier": "platform",
+      "namespace": "sustainable-power-intelligence",
+      "boundedContext": "sustainable_power_intelligence",
+      "lifecycle": "sense-predict-balance-optimize-execute-sustain"
+    },
+    {
+      "id": "CAP-PLT-EAEISR-001",
+      "name": "Enterprise Autonomous Energy Intelligence and Sustainable Resource Smart Grid Renewables Carbon Signals and Climate Scenario Assist",
+      "tier": "platform",
+      "namespace": "energy-intelligence",
+      "boundedContext": "energy_intelligence",
+      "lifecycle": "sense-measure-predict-optimize-govern"
+    },
+    {
+      "id": "CAP-PLT-EAFIEEP-001",
+      "name": "Enterprise Autonomous Financial Intelligence and Economic Evolution Macro Modeling Capital Risk and Scenario Assist",
+      "tier": "platform",
+      "namespace": "economic-evolution",
+      "boundedContext": "economic_evolution",
+      "lifecycle": "collect-analyze-predict-optimize-allocate-evolve"
+    },
+    {
+      "id": "CAP-PLT-EAFIEOP-001",
+      "name": "Enterprise Autonomous Financial Intelligence and Economic Optimization Modeling Risk Investment Budget and Value Creation",
+      "tier": "platform",
+      "namespace": "financial-intelligence",
+      "boundedContext": "financial_intelligence",
+      "lifecycle": "analyze-simulate-optimize-govern"
+    },
+    {
+      "id": "CAP-PLT-EAGDGIP-001",
+      "name": "Enterprise Autonomous Government and Digital Governance Intelligence Policy Regulatory Institutional Citizen Engagement and Transparency Assist",
+      "tier": "platform",
+      "namespace": "governance-intelligence",
+      "boundedContext": "governance_intelligence",
+      "lifecycle": "observe-analyze-decide-execute-measure-improve"
+    },
+    {
+      "id": "CAP-PLT-EAHCDWIP-001",
+      "name": "Enterprise Autonomous Human Capability and Digital Workforce Intelligence Skills Career Human-AI Collaboration and Capability Evolution Assist",
+      "tier": "platform",
+      "namespace": "human-capability-intelligence",
+      "boundedContext": "human_capability_intelligence",
+      "lifecycle": "discover-assess-develop-deploy-collaborate-evolve"
+    },
+    {
+      "id": "CAP-PLT-EAHIBEP-001",
+      "name": "Enterprise Autonomous Healthcare Intelligence and Bio-Evolution Precision Medicine Bioinformatics Population Health and Clinical Decision Support",
+      "tier": "platform",
+      "namespace": "healthcare-intelligence",
+      "boundedContext": "healthcare_intelligence",
+      "lifecycle": "analyze-predict-recommend-govern"
+    },
+    {
+      "id": "CAP-PLT-EAHILSP-001",
+      "name": "Enterprise Autonomous Healthcare Intelligence and Life Sciences Precision Medicine Drug Discovery Population Health and Gated Clinical Assist",
+      "tier": "platform",
+      "namespace": "health-life-sciences-intelligence",
+      "boundedContext": "health_life_sciences_intelligence",
+      "lifecycle": "collect-understand-predict-personalize-execute-improve"
+    },
+    {
+      "id": "CAP-PLT-EAHRWIP-001",
+      "name": "Enterprise Autonomous Human Resource and Workforce Intelligence Talent Recruitment Planning Performance and Organizational Analytics",
+      "tier": "platform",
+      "namespace": "workforce-intelligence",
+      "boundedContext": "workforce_intelligence",
+      "lifecycle": "discover-match-develop-optimize"
+    },
+    {
+      "id": "CAP-PLT-EAIVIP-001",
+      "name": "Enterprise Autonomous Innovation and Venture Intelligence Opportunity Portfolio Investment Market and Transformation Assist",
+      "tier": "platform",
+      "namespace": "venture-intelligence",
+      "boundedContext": "venture_intelligence",
+      "lifecycle": "discover-evaluate-simulate-invest-execute-scale"
+    },
+    {
+      "id": "CAP-PLT-EAJLIREP-001",
+      "name": "Enterprise Autonomous Justice Legal Intelligence and Regulatory Evolution Contract Dispute Compliance Risk and Evidence Assist",
+      "tier": "platform",
+      "namespace": "legal-intelligence",
+      "boundedContext": "legal_intelligence",
+      "lifecycle": "collect-understand-analyze-reason-validate-decide-evolve"
+    },
+    {
+      "id": "CAP-PLT-EAKEGINP-001",
+      "name": "Enterprise Autonomous Knowledge Economy and Global Intelligence Network Valuation Expert Exchange and Learning Assist",
+      "tier": "platform",
+      "namespace": "knowledge-economy-intelligence",
+      "boundedContext": "knowledge_economy_intelligence",
+      "lifecycle": "create-discover-validate-exchange-apply-evolve"
+    },
+    {
+      "id": "CAP-PLT-EAMII-001",
+      "name": "Enterprise Autonomous Manufacturing and Industrial Intelligence Smart Factory Predictive Maintenance Quality and Robotics Coordination",
+      "tier": "platform",
+      "namespace": "manufacturing-intelligence",
+      "boundedContext": "manufacturing_intelligence",
+      "lifecycle": "sense-predict-optimize-govern"
+    },
+    {
+      "id": "CAP-PLT-EAOSHP-001",
+      "name": "Enterprise Autonomous Operations and Self-Healing Monitoring Predictive Maintenance AIOps and Continuous Operational Improvement",
+      "tier": "platform",
+      "namespace": "autonomous-operations",
+      "boundedContext": "autonomous_operations",
+      "lifecycle": "observe-heal-optimize-learn"
+    },
+    {
+      "id": "CAP-PLT-EASCDTIP-001",
+      "name": "Enterprise Autonomous Security Cyber Defense and Digital Trust Intelligence Zero Trust Threat Posture and Gated Response Assist",
+      "tier": "platform",
+      "namespace": "security-trust-intelligence",
+      "boundedContext": "security_trust_intelligence",
+      "lifecycle": "observe-detect-analyze-predict-respond-improve"
+    },
+    {
+      "id": "CAP-PLT-EASCLIP-001",
+      "name": "Enterprise Autonomous Supply Chain and Global Logistics Intelligence Demand Inventory Logistics Supplier Risk and Resilience",
+      "tier": "platform",
+      "namespace": "supply-chain-intelligence",
+      "boundedContext": "supply_chain_intelligence",
+      "lifecycle": "sense-plan-optimize-recover"
+    },
+    {
+      "id": "CAP-PLT-EASCUI-001",
+      "name": "Enterprise Autonomous Smart City and Urban Intelligence Mobility Infrastructure Citizen Services Safety and City Twin Assist",
+      "tier": "platform",
+      "namespace": "urban-intelligence",
+      "boundedContext": "urban_intelligence",
+      "lifecycle": "sense-understand-predict-optimize-govern-evolve"
+    },
+    {
+      "id": "CAP-PLT-EASIEP-001",
+      "name": "Enterprise Autonomous Space Intelligence and Exploration Mission Orbital Planetary Resource and Gated Space Operations Assist",
+      "tier": "platform",
+      "namespace": "space-exploration-intelligence",
+      "boundedContext": "space_exploration_intelligence",
+      "lifecycle": "observe-analyze-predict-plan-execute-expand"
+    },
+    {
+      "id": "CAP-PLT-EASIUIP-001",
+      "name": "Enterprise Autonomous Smart Infrastructure and Urban Intelligence Asset Lifecycle Twin Risk and Gated City Operations Assist",
+      "tier": "platform",
+      "namespace": "smart-infrastructure-intelligence",
+      "boundedContext": "smart_infrastructure_intelligence",
+      "lifecycle": "sense-analyze-simulate-optimize-execute-improve"
+    },
+    {
+      "id": "CAP-PLT-EASRDIP-001",
+      "name": "Enterprise Autonomous Scientific Research and Discovery Intelligence Hypothesis Experiment Simulation Knowledge and Collaboration Assist",
+      "tier": "platform",
+      "namespace": "scientific-intelligence",
+      "boundedContext": "scientific_intelligence",
+      "lifecycle": "observe-discover-hypothesize-simulate-validate-evolve"
+    },
+    {
+      "id": "CAP-PLT-EATMIP-001",
+      "name": "Enterprise Autonomous Transportation and Mobility Intelligence Traffic Fleet Route Transit Safety and Autonomous Mobility Assist",
+      "tier": "platform",
+      "namespace": "mobility-intelligence",
+      "boundedContext": "mobility_intelligence",
+      "lifecycle": "sense-analyze-predict-plan-execute-optimize"
+    },
+    {
+      "id": "CAP-PLT-EDTISP-001",
+      "name": "Enterprise Digital Twin Intelligence and Simulation Real-Time Synchronization Scenario Engineering and Predictive Optimization",
+      "tier": "platform",
+      "namespace": "digital-twin",
+      "boundedContext": "digital_twin",
+      "lifecycle": "synchronize-simulate-predict-optimize"
+    },
+    {
+      "id": "CAP-PLT-EFDMIFP-001",
+      "name": "Enterprise Federated Data Mesh and Intelligence Fabric Data Products Contracts Metadata Quality Lineage and Marketplace",
+      "tier": "platform",
+      "namespace": "data-mesh",
+      "boundedContext": "data_mesh",
+      "lifecycle": "discover-govern-publish-share-improve"
+    },
+    {
+      "id": "CAP-PLT-EGIKEP-001",
+      "name": "Enterprise Global Innovation and Knowledge Evolution Discovery Experimentation Intellectual Assets and Organizational Learning",
+      "tier": "platform",
+      "namespace": "innovation",
+      "boundedContext": "innovation",
+      "lifecycle": "discover-experiment-learn-evolve"
+    },
+    {
+      "id": "CAP-PLT-EGRCMP-001",
+      "name": "Enterprise Global Resilience and Crisis Management Prediction Prevention Response Recovery and Continuous Resilience",
+      "tier": "platform",
+      "namespace": "resilience",
+      "boundedContext": "resilience",
+      "lifecycle": "predict-prepare-respond-recover-improve"
+    },
+    {
+      "id": "CAP-PLT-EGSRIP-001",
+      "name": "Enterprise Global Sustainability and Regenerative Intelligence ESG Carbon Circular Economy and Ecological Restoration",
+      "tier": "platform",
+      "namespace": "sustainability",
+      "boundedContext": "sustainability",
+      "lifecycle": "measure-optimize-regenerate-govern"
+    },
+    {
+      "id": "CAP-PLT-EKGSIP-001",
+      "name": "Enterprise Knowledge Graph and Semantic Intelligence Ontology Relationship Discovery Reasoning and Enterprise Memory",
+      "tier": "platform",
+      "namespace": "knowledge-graph",
+      "boundedContext": "knowledge_graph",
+      "lifecycle": "collect-connect-reason-evolve"
+    },
+    {
+      "id": "CAP-PLT-EPDRTIP-001",
+      "name": "Enterprise Privacy Digital Rights and Trust Intelligence Consent Ethics Regulatory and Human-Centric Digital Governance",
+      "tier": "platform",
+      "namespace": "privacy-trust",
+      "boundedContext": "privacy_trust",
+      "lifecycle": "consent-monitor-govern-improve"
+    },
+    {
+      "id": "CAP-PLT-EPIP-001",
+      "name": "Enterprise Planetary Intelligence Platform Climate Environment Sustainability Earth Digital Twin and Global Decision Support",
+      "tier": "platform",
+      "namespace": "planetary",
+      "boundedContext": "planetary",
+      "lifecycle": "observe-assess-advise-govern"
+    },
+    {
+      "id": "CAP-PLT-MDMAL-001",
+      "name": "MEOS Dynamic Module Activation and Application Lifecycle Registry Dependency Governance and Gated Deploy Activate Retire",
+      "tier": "platform",
+      "namespace": "module-lifecycle",
+      "boundedContext": "module_lifecycle",
+      "lifecycle": "register-validate-deploy-activate-monitor-upgrade-retire"
+    },
+    {
+      "id": "CAP-PLT-MEAAGSI-001",
+      "name": "MEOS Enterprise Application Architecture API Governance and Software Architecture Intelligence Portfolio Debt Modernization and DoA Gated Architecture Operating Fabric",
+      "tier": "platform",
+      "namespace": "application-architecture-operating",
+      "boundedContext": "application_architecture_operating",
+      "lifecycle": "model-govern-assess-modernize-simulate"
+    },
+    {
+      "id": "CAP-PLT-MEAAOI-001",
+      "name": "MEOS Enterprise AI Agent Orchestration and Autonomous Intelligence Multi-Agent Planning Governance and Gated Human-AI Collaboration",
+      "tier": "platform",
+      "namespace": "ai-agent-orchestration",
+      "boundedContext": "ai_agent_orchestration",
+      "lifecycle": "discover-plan-collaborate-execute-validate-learn"
+    },
+    {
+      "id": "CAP-PLT-MEAIAMP-001",
+      "name": "MEOS Enterprise Asset Intelligence and Autonomous Asset Management Registry PdM Field Service TCO and Gated OT Operating Fabric",
+      "tier": "platform",
+      "namespace": "enterprise-asset-operating",
+      "boundedContext": "enterprise_asset_operating",
+      "lifecycle": "register-monitor-predict-maintain-optimize-retire"
+    },
+    {
+      "id": "CAP-PLT-MEAOSH-001",
+      "name": "MEOS Enterprise Autonomous Operations and Self-Healing Incident RCA Gated Recovery and Reliability Operating Fabric",
+      "tier": "platform",
+      "namespace": "operations-autonomy",
+      "boundedContext": "operations_autonomy",
+      "lifecycle": "monitor-detect-analyze-recover-validate-learn"
+    },
+    {
+      "id": "CAP-PLT-MEAPAE-001",
+      "name": "MEOS Enterprise Agentic Process Automation Autonomous Enterprise Execution Process Intelligence Adaptation Exception and DoA Gated Agentic Process Fabric",
+      "tier": "platform",
+      "namespace": "agentic-process-operating",
+      "boundedContext": "agentic_process_operating",
+      "lifecycle": "discover-plan-coordinate-adapt-optimize-govern"
+    },
+    {
+      "id": "CAP-PLT-MEAPIE-001",
+      "name": "MEOS Enterprise API Management Service Gateway and Digital Integration Experience API Product Marketplace Developer Portal and DoA Gated API Management Fabric",
+      "tier": "platform",
+      "namespace": "api-management-operating",
+      "boundedContext": "api_management_operating",
+      "lifecycle": "design-contract-publish-subscribe-consume-retire"
+    },
+    {
+      "id": "CAP-PLT-MEAWHC-001",
+      "name": "MEOS Enterprise AI Interaction Agentic Workspace Human-AI Collaboration Task Team Approval Autonomy and DoA Gated Agentic Workspace Fabric",
+      "tier": "platform",
+      "namespace": "agentic-workspace-operating",
+      "boundedContext": "agentic_workspace_operating",
+      "lifecycle": "collaborate-plan-delegate-approve-execute-account"
+    },
+    {
+      "id": "CAP-PLT-MEBRDI-001",
+      "name": "MEOS Enterprise Business Rules and Decision Intelligence Explainable Policy Federated Decision Studio and Gated Enforcement",
+      "tier": "platform",
+      "namespace": "business-decision",
+      "boundedContext": "business_decision",
+      "lifecycle": "discover-evaluate-explain-approve-enforce-optimize"
+    },
+    {
+      "id": "CAP-PLT-MECCPI-001",
+      "name": "MEOS Enterprise Commercial Compliance Obligation and Contract Performance Intelligence SLA KPI Penalty Service Credit and DoA Gated Performance Operating Fabric",
+      "tier": "platform",
+      "namespace": "commercial-performance-operating",
+      "boundedContext": "commercial_performance_operating",
+      "lifecycle": "monitor-evaluate-exception-correct-verify"
+    },
+    {
+      "id": "CAP-PLT-MECIAP-001",
+      "name": "MEOS Enterprise Contract Intelligence Commercial Agreement and Autonomous Contract Management Obligation SLA Renewal and DoA Gated Contract Operating Fabric",
+      "tier": "platform",
+      "namespace": "contract-operating",
+      "boundedContext": "contract_operating",
+      "lifecycle": "draft-negotiate-execute-monitor-renew-amend"
+    },
+    {
+      "id": "CAP-PLT-MECPEI-001",
+      "name": "MEOS Enterprise Cloud Platform Engineering and Infrastructure Automation Intelligence IaC GitOps IDP Cost Reliability and DoA Gated Platform Engineering Fabric",
+      "tier": "platform",
+      "namespace": "platform-engineering-operating",
+      "boundedContext": "platform_engineering_operating",
+      "lifecycle": "intent-plan-provision-configure-deploy-optimize"
+    },
+    {
+      "id": "CAP-PLT-MECVII-001",
+      "name": "MEOS Enterprise Conversational Voice Multimodal Interaction Intelligence Dialogue RAG Tool Interaction and DoA Gated Conversational Interaction Fabric",
+      "tier": "platform",
+      "namespace": "conversational-interaction-operating",
+      "boundedContext": "conversational_interaction_operating",
+      "lifecycle": "input-understand-dialogue-tool-confirm-respond"
+    },
+    {
+      "id": "CAP-PLT-MECXARP-001",
+      "name": "MEOS Enterprise Customer Experience CRM Intelligence and Autonomous Relationship Customer 360 Journey Sales Service and Consent Gated Engagement Operating Fabric",
+      "tier": "platform",
+      "namespace": "customer-relationship-operating",
+      "boundedContext": "customer_relationship_operating",
+      "lifecycle": "sense-understand-engage-serve-retain-optimize"
+    },
+    {
+      "id": "CAP-PLT-MECZTD-001",
+      "name": "MEOS Enterprise Cybersecurity Intelligence and Zero Trust Defense AI-SOC Threat Response and Gated Containment Operating Fabric",
+      "tier": "platform",
+      "namespace": "cyber-security-operating",
+      "boundedContext": "cyber_security_operating",
+      "lifecycle": "verify-monitor-detect-decide-respond-learn"
+    },
+    {
+      "id": "CAP-PLT-MEDAMIA-001",
+      "name": "MEOS Enterprise Data Architecture Master Data and Information Architecture Intelligence MDM Contracts Lineage Quality and DoA Gated Data Architecture Fabric",
+      "tier": "platform",
+      "namespace": "data-architecture-operating",
+      "boundedContext": "data_architecture_operating",
+      "lifecycle": "model-govern-quality-migrate-optimize"
+    },
+    {
+      "id": "CAP-PLT-MEDCIM-001",
+      "name": "MEOS Enterprise Document Intelligence Content Lifecycle Intelligent Information Management OCR Knowledge Candidate and DoA Gated Document Intelligence Fabric",
+      "tier": "platform",
+      "namespace": "document-intelligence-operating",
+      "boundedContext": "document_intelligence_operating",
+      "lifecycle": "ingest-understand-classify-govern-discover-extract"
+    },
+    {
+      "id": "CAP-PLT-MEDIMOP-001",
+      "name": "MEOS Enterprise Data Intelligence and Data Mesh Operating Catalog Marketplace Quality Contracts and Gated Access Fabric",
+      "tier": "platform",
+      "namespace": "data-mesh-operating",
+      "boundedContext": "data_mesh_operating",
+      "lifecycle": "own-create-govern-publish-share-monitor-retire"
+    },
+    {
+      "id": "CAP-PLT-MEDSSAD-001",
+      "name": "MEOS Enterprise DevSecOps Secure Software Supply Chain and Application Delivery Intelligence SBOM Provenance Gates and DoA Gated DevSecOps Fabric",
+      "tier": "platform",
+      "namespace": "devsecops-operating",
+      "boundedContext": "devsecops_operating",
+      "lifecycle": "code-scan-validate-prove-gate-release-verify"
+    },
+    {
+      "id": "CAP-PLT-MEDTIP-001",
+      "name": "MEOS Enterprise Digital Twin Intelligence Simulation Scenario Predictive Optimization and Gated Reality Operating Fabric",
+      "tier": "platform",
+      "namespace": "twin-intelligence",
+      "boundedContext": "twin_intelligence",
+      "lifecycle": "represent-sync-simulate-predict-optimize-govern"
+    },
+    {
+      "id": "CAP-PLT-MEEPJI-001",
+      "name": "MEOS Enterprise Experience Personalization Customer Journey Context-Aware Interaction Next Best Action and DoA Gated Experience Personalization Fabric",
+      "tier": "platform",
+      "namespace": "experience-personalization-operating",
+      "boundedContext": "experience_personalization_operating",
+      "lifecycle": "context-intent-personalize-journey-interact-learn"
+    },
+    {
+      "id": "CAP-PLT-MEESIE-001",
+      "name": "MEOS Enterprise Event Streaming Intelligence Real-Time Event Platform Event Product Marketplace Correlation Replay and DoA Gated Event Streaming Fabric",
+      "tier": "platform",
+      "namespace": "event-streaming-operating",
+      "boundedContext": "event_streaming_operating",
+      "lifecycle": "define-contract-stream-correlate-productize-retire"
+    },
+    {
+      "id": "CAP-PLT-MEESOP-001",
+      "name": "MEOS Enterprise IT Service Management Service Catalog Request Fulfillment Service Desk Self-Service and DoA Gated Service Operations Fabric",
+      "tier": "platform",
+      "namespace": "service-operations-operating",
+      "boundedContext": "service_operations_operating",
+      "lifecycle": "discover-request-approve-fulfill-validate-improve"
+    },
+    {
+      "id": "CAP-PLT-MEFIAF-001",
+      "name": "MEOS Enterprise Financial Intelligence and Autonomous Finance Forecasting Treasury Revenue Cost and Gated Kernel Execution Operating Fabric",
+      "tier": "platform",
+      "namespace": "autonomous-finance-operating",
+      "boundedContext": "autonomous_finance_operating",
+      "lifecycle": "ingest-analyze-forecast-decide-execute-optimize"
+    },
+    {
+      "id": "CAP-PLT-MEFPAPM-001",
+      "name": "MEOS Enterprise Financial Planning Budgeting and Autonomous Performance Management Forecast Scenario Capital and DoA Gated FP&A Operating Fabric",
+      "tier": "platform",
+      "namespace": "financial-planning-operating",
+      "boundedContext": "financial_planning_operating",
+      "lifecycle": "model-budget-forecast-scenario-measure-optimize"
+    },
+    {
+      "id": "CAP-PLT-MEGRSC-001",
+      "name": "MEOS Enterprise Governance Risk and Strategic Control Board Intelligence Integrated Risk and Gated Strategic Execution Operating Fabric",
+      "tier": "platform",
+      "namespace": "governance-risk-operating",
+      "boundedContext": "governance_risk_operating",
+      "lifecycle": "define-align-monitor-decide-control-evolve"
+    },
+    {
+      "id": "CAP-PLT-MEHCAWP-001",
+      "name": "MEOS Enterprise Human Capital Intelligence and Autonomous Workforce Employee 360 Talent Skills Recruitment and Human Gated HR Operating Fabric",
+      "tier": "platform",
+      "namespace": "human-capital-operating",
+      "boundedContext": "human_capital_operating",
+      "lifecycle": "plan-attract-develop-perform-retain-optimize"
+    },
+    {
+      "id": "CAP-PLT-MEIAOI-001",
+      "name": "MEOS Enterprise Intelligence Analytics and Operational Insight KPI Predictive Anomaly and Explainable Insight Fabric",
+      "tier": "platform",
+      "namespace": "operational-insight",
+      "boundedContext": "operational_insight",
+      "lifecycle": "ingest-analyze-insight-predict-recommend-optimize"
+    },
+    {
+      "id": "CAP-PLT-MEIEII-001",
+      "name": "MEOS Enterprise Integration Architecture Event Mesh and Interoperability Intelligence Contracts Reliability Partner and DoA Gated Integration Architecture Fabric",
+      "tier": "platform",
+      "namespace": "integration-architecture-operating",
+      "boundedContext": "integration_architecture_operating",
+      "lifecycle": "design-contract-activate-observe-modernize"
+    },
+    {
+      "id": "CAP-PLT-MEIGSI-001",
+      "name": "MEOS Enterprise Information Governance Data Classification Sensitive Information Intelligence Taxonomy Risk Exposure and DoA Gated Classification Fabric",
+      "tier": "platform",
+      "namespace": "information-classification-operating",
+      "boundedContext": "information_classification_operating",
+      "lifecycle": "discover-detect-classify-sensitize-risk-govern"
+    },
+    {
+      "id": "CAP-PLT-MEIRRE-001",
+      "name": "MEOS Enterprise Incident Management Service Reliability Resilience Engineering On-Call Problem Runbook DR and DoA Gated Incident Reliability Fabric",
+      "tier": "platform",
+      "namespace": "incident-reliability-operating",
+      "boundedContext": "incident_reliability_operating",
+      "lifecycle": "detect-triage-command-recover-review-improve"
+    },
+    {
+      "id": "CAP-PLT-MEITOI-001",
+      "name": "MEOS Enterprise IT Operations Infrastructure and Observability Intelligence AIOps Capacity Remediation and DoA Gated Technology Operations Fabric",
+      "tier": "platform",
+      "namespace": "technology-operations-operating",
+      "boundedContext": "technology_operations_operating",
+      "lifecycle": "discover-monitor-correlate-diagnose-remediate-verify"
+    },
+    {
+      "id": "CAP-PLT-MEKGSI-001",
+      "name": "MEOS Enterprise Knowledge Graph and Semantic Intelligence Ontology Reasoning Memory and Explainable Knowledge Operating Fabric",
+      "tier": "platform",
+      "namespace": "semantic-knowledge",
+      "boundedContext": "semantic_knowledge",
+      "lifecycle": "model-map-graph-reason-explain-evolve"
+    },
+    {
+      "id": "CAP-PLT-MEKNOL-001",
+      "name": "MEOS Enterprise Knowledge-Centered Service Knowledge Management Organizational Learning AI Grounding Lessons and DoA Gated Knowledge Operating Fabric",
+      "tier": "platform",
+      "namespace": "knowledge-operating",
+      "boundedContext": "knowledge_operating",
+      "lifecycle": "extract-validate-govern-publish-discover-ground-learn"
+    },
+    {
+      "id": "CAP-PLT-MEMACPI-001",
+      "name": "MEOS Enterprise Management Accounting Cost and Profitability Intelligence Allocation ABC Unit Economics and DoA Gated Cost Operating Fabric",
+      "tier": "platform",
+      "namespace": "management-accounting-operating",
+      "boundedContext": "management_accounting_operating",
+      "lifecycle": "model-allocate-attribute-measure-optimize"
+    },
+    {
+      "id": "CAP-PLT-MENCOE-001",
+      "name": "MEOS Enterprise Notification Communication Omnichannel Event Experience Orchestration Consent Preference Escalation and DoA Gated Communication Experience Fabric",
+      "tier": "platform",
+      "namespace": "communication-experience-operating",
+      "boundedContext": "communication_experience_operating",
+      "lifecycle": "trigger-orchestrate-consent-deliver-acknowledge-optimize"
+    },
+    {
+      "id": "CAP-PLT-MEPAMP-001",
+      "name": "MEOS Enterprise Process Automation Marketplace Reusable Process Asset Certification Installation Activation Coordination and DoA Gated Process Marketplace Fabric",
+      "tier": "platform",
+      "namespace": "process-marketplace-operating",
+      "boundedContext": "process_marketplace_operating",
+      "lifecycle": "discover-validate-certify-install-activate-share"
+    },
+    {
+      "id": "CAP-PLT-MEPCRI-001",
+      "name": "MEOS Enterprise Privacy Compliance and Regulatory Intelligence Continuous Compliance Trust Score and Gated Remediation Operating Fabric",
+      "tier": "platform",
+      "namespace": "privacy-compliance-operating",
+      "boundedContext": "privacy_compliance_operating",
+      "lifecycle": "regulate-map-monitor-assess-remediate-certify"
+    },
+    {
+      "id": "CAP-PLT-MEPCVA-001",
+      "name": "MEOS Enterprise Process Composer Low-Code No-Code Visual Process Engineering Design-Time Validation Release Preparation and DoA Gated Process Composer Fabric",
+      "tier": "platform",
+      "namespace": "process-composer-operating",
+      "boundedContext": "process_composer_operating",
+      "lifecycle": "design-compose-validate-simulate-package-release"
+    },
+    {
+      "id": "CAP-PLT-MEPIASP-001",
+      "name": "MEOS Enterprise Procurement Intelligence and Autonomous Sourcing Spend Sourcing Contract Purchase and DoA Gated Source-to-Pay Operating Fabric",
+      "tier": "platform",
+      "namespace": "procurement-operating",
+      "boundedContext": "procurement_operating",
+      "lifecycle": "request-source-negotiate-commit-receive-optimize"
+    },
+    {
+      "id": "CAP-PLT-MEPICO-001",
+      "name": "MEOS Enterprise Process Mining Process Intelligence Continuous Optimization Conformance Drift Prediction Recommendation and DoA Gated Process Intelligence Fabric",
+      "tier": "platform",
+      "namespace": "process-intelligence-operating",
+      "boundedContext": "process_intelligence_operating",
+      "lifecycle": "observe-discover-analyze-predict-recommend-measure"
+    },
+    {
+      "id": "CAP-PLT-MEPOCI-001",
+      "name": "MEOS Enterprise Process Observability Monitoring SLA SLO Continuous Operational Intelligence Health Alert Incident Signal and DoA Gated Process Observability Fabric",
+      "tier": "platform",
+      "namespace": "process-observability-operating",
+      "boundedContext": "process_observability_operating",
+      "lifecycle": "observe-correlate-detect-analyze-alert-recommend"
+    },
+    {
+      "id": "CAP-PLT-MEPQDV-001",
+      "name": "MEOS Enterprise Process Testing Simulation Quality Assurance Digital Process Validation Quality Gate Certification Evidence and DoA Gated Process Quality Fabric",
+      "tier": "platform",
+      "namespace": "process-quality-operating",
+      "boundedContext": "process_quality_operating",
+      "lifecycle": "test-validate-simulate-remediate-certify-gate"
+    },
+    {
+      "id": "CAP-PLT-MEPRED-001",
+      "name": "MEOS Enterprise Process Release Deployment Environment Lifecycle Progressive Delivery Rollback Evidence and DoA Gated Process Release Fabric",
+      "tier": "platform",
+      "namespace": "process-release-operating",
+      "boundedContext": "process_release_operating",
+      "lifecycle": "certify-release-deploy-validate-promote-rollback"
+    },
+    {
+      "id": "CAP-PLT-MEPRIAP-001",
+      "name": "MEOS Enterprise Pricing Intelligence Revenue Optimization and Autonomous Pricing Management Elasticity Discount Promotion and DoA Gated Pricing Operating Fabric",
+      "tier": "platform",
+      "namespace": "pricing-operating",
+      "boundedContext": "pricing_operating",
+      "lifecycle": "model-simulate-optimize-decide-execute-learn"
+    },
+    {
+      "id": "CAP-PLT-MEQTCIP-001",
+      "name": "MEOS Enterprise Revenue Billing and Quote-to-Cash Intelligence Order Invoice Receivables Payment and DoA Gated Revenue Cycle Operating Fabric",
+      "tier": "platform",
+      "namespace": "quote-to-cash-operating",
+      "boundedContext": "quote_to_cash_operating",
+      "lifecycle": "accept-order-bill-invoice-collect-reconcile-optimize"
+    },
+    {
+      "id": "CAP-PLT-MERAF-001",
+      "name": "MEOS Enterprise Runtime and Application Framework Dynamic Module Lifecycle Metadata Execution and Permission Aware Activation",
+      "tier": "platform",
+      "namespace": "enterprise-runtime",
+      "boundedContext": "enterprise_runtime",
+      "lifecycle": "register-validate-deploy-activate-monitor-upgrade-retire"
+    },
+    {
+      "id": "CAP-PLT-MERILG-001",
+      "name": "MEOS Enterprise Records Retention Legal Hold Information Lifecycle Governance Defensible Disposition Evidence and DoA Gated Records Lifecycle Fabric",
+      "tier": "platform",
+      "namespace": "records-lifecycle-operating",
+      "boundedContext": "records_lifecycle_operating",
+      "lifecycle": "declare-retain-hold-preserve-dispose-certify"
+    },
+    {
+      "id": "CAP-PLT-MESCC-001",
+      "name": "MEOS Enterprise Application Shell and Command Center Workspace Launcher Copilot and Permission Aware Experience",
+      "tier": "platform",
+      "namespace": "enterprise-experience",
+      "boundedContext": "enterprise_experience",
+      "lifecycle": "intent-discover-compose-launch-personalize-optimize"
+    },
+    {
+      "id": "CAP-PLT-MESCIAL-001",
+      "name": "MEOS Enterprise Supply Chain Intelligence and Autonomous Logistics Control Tower Procurement Inventory Logistics and Gated Supply Network Operating Fabric",
+      "tier": "platform",
+      "namespace": "supply-network-operating",
+      "boundedContext": "supply_network_operating",
+      "lifecycle": "sense-forecast-plan-procure-fulfill-optimize"
+    },
+    {
+      "id": "CAP-PLT-MESIARO-001",
+      "name": "MEOS Enterprise Sales Intelligence and Autonomous Revenue Operations Lead Pipeline Forecast Pricing Quote and DoA Gated Lead-to-Revenue Operating Fabric",
+      "tier": "platform",
+      "namespace": "sales-revenue-operating",
+      "boundedContext": "sales_revenue_operating",
+      "lifecycle": "sense-qualify-opportunity-price-quote-forecast-optimize"
+    },
+    {
+      "id": "CAP-PLT-MESMIP-001",
+      "name": "MEOS Enterprise Service Management SLA Operations and Intelligent Service Delivery Catalog Incident Problem Change and DoA Gated Service Operating Fabric",
+      "tier": "platform",
+      "namespace": "service-management-operating",
+      "boundedContext": "service_management_operating",
+      "lifecycle": "define-request-fulfill-support-monitor-improve"
+    },
+    {
+      "id": "CAP-PLT-METRCIP-001",
+      "name": "MEOS Enterprise Revenue Recognition Treasury and Cash Intelligence Liquidity FX Bank Connectivity and Dual-Control Gated Treasury Operating Fabric",
+      "tier": "platform",
+      "namespace": "treasury-cash-operating",
+      "boundedContext": "treasury_cash_operating",
+      "lifecycle": "recognize-position-forecast-decide-execute-reconcile"
+    },
+    {
+      "id": "CAP-PLT-MEWEOP-001",
+      "name": "MEOS Enterprise Workflow Execution and Orchestration SLA Exception Task Orchestration and Gated Process Operating Fabric",
+      "tier": "platform",
+      "namespace": "workflow-orchestration",
+      "boundedContext": "workflow_orchestration",
+      "lifecycle": "define-validate-deploy-execute-monitor-optimize"
+    },
+    {
+      "id": "CAP-PLT-QC-001",
+      "name": "Enterprise Quantum Computing and Post-Classical Intelligence",
+      "tier": "platform",
+      "namespace": "quantum",
+      "boundedContext": "quantum",
+      "lifecycle": "govern-compute-assure"
+    },
+    {
+      "id": "CAP-PLT-RB-001",
+      "name": "Enterprise Robotics Autonomous Machines Physical AI and Cyber-Physical Intelligence",
+      "tier": "platform",
+      "namespace": "robotics",
+      "boundedContext": "robotics",
+      "lifecycle": "sense-decide-actuate-assure"
+    },
+    {
+      "id": "CAP-PLT-SP-001",
+      "name": "Enterprise Space Intelligence Space AI Orbital Civilization and Autonomous Space Operations",
+      "tier": "platform",
+      "namespace": "space",
+      "boundedContext": "space",
+      "lifecycle": "observe-reason-operate-govern"
+    },
+    {
+      "id": "CAP-RE-001",
+      "name": "Property Lifecycle",
+      "tier": "industry",
+      "namespace": "real-estate",
+      "boundedContext": "real_estate",
+      "lifecycle": "list-transact-close"
+    },
+    {
+      "id": "CAP-RE-003",
+      "name": "Property Management",
+      "tier": "industry",
+      "namespace": "real-estate",
+      "boundedContext": "real_estate",
+      "lifecycle": "lease-maintain-renew"
+    },
+    {
+      "id": "CAP-RTL-002",
+      "name": "POS and In-Store Checkout",
+      "tier": "industry",
+      "namespace": "retail",
+      "boundedContext": "pos",
+      "lifecycle": "shift-sale-receipt"
+    }
   ]
 }

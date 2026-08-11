@@ -1,0 +1,116 @@
+# MEPAMP Master Series Roadmap (P300)
+
+series: P300
+title: MEOS Enterprise Process Automation Marketplace & Reusable Process Intelligence Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEPAMP-001
+sor: process_marketplace_operating
+fabric: meos_enterprise_process_automation_marketplace_reusable_process_intelligence_platform_framework
+api: /api/v1/process-marketplace-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P300
+    title: MEPAMP Foundation
+    status: planned
+    adr: "657"
+    fabric: meos_enterprise_process_automation_marketplace_reusable_process_intelligence_platform_framework
+    api: /api/v1/process-marketplace-operating*
+  - id: P300-A
+    title: Asset Foundation — Registry, Metadata, Versioning, Dependency, Categories
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P300-B
+    title: Marketplace — Search, Categories, Listings, Detail, Recommendations
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P300-C
+    title: Validation & Certification — Architecture/Security/Compliance, Simulation, Certification, Trust
+    status: planned
+    adr: pending
+    window: 9-15_months
+  - id: P300-D
+    title: Installation — Dependency Resolution, Compatibility, Plan, Approval, Install
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P300-E
+    title: Activation — P259 Integration, Activation Policy, Runtime Registration, Monitoring
+    status: planned
+    adr: pending
+    window: 15-24_months
+  - id: P300-F
+    title: Process Composition — Package Builder, Workflow/Agent/Decision/Connector Composition
+    status: planned
+    adr: pending
+    window: 18-30_months
+  - id: P300-G
+    title: Intelligent Marketplace — AI Discovery, Recommendation, Semantic Search, Trust Intelligence
+    status: planned
+    adr: pending
+    window: 24-36_months
+  - id: P300-H
+    title: Asset Intelligence — Usage, Performance, Adoption, Outcome, Optimization
+    status: planned
+    adr: pending
+    window: 30-42_months
+  - id: P300-I
+    title: Enterprise Ecosystem — Private/Partner/Industry Marketplaces, Enterprise Asset Exchange
+    status: planned
+    adr: pending
+    window: 36-48_months
+locks:
+  never_replace_p259_application_lifecycle: true
+  never_replace_p260_workflow: true
+  never_replace_p266_ai_agent_orchestration: true
+  never_replace_p261_decision_intelligence: true
+  never_replace_p257_enterprise_runtime: true
+  never_replace_p298_agentic_process_operating: true
+  never_replace_p299_process_intelligence_operating: true
+  never_replace_p270_governance: true
+  never_replace_plugin_platform: true
+  never_become_workflow_engine: true
+  never_become_agent_runtime_or_orchestrator: true
+  never_become_decision_engine: true
+  never_become_application_runtime: true
+  never_become_kg_or_twin_engine: true
+  never_become_governance_engine: true
+  never_become_erp_transaction_engine: true
+  never_merge_p260_p266_p298_p299_p300_p301: true
+  never_dual_write_workflow_agent_runtime_or_plugin_tables: true
+  never_local_metrics_stores: true
+  never_local_approval_workflow_engines: true
+  never_module_local_llm: true
+  never_execute_workflow_agent_transaction_or_decision: true
+  never_ungated_install_or_activate: true
+  never_publish_without_metadata: true
+  never_install_without_compatibility_validation: true
+  never_activate_sensitive_without_security_and_policy: true
+  never_ratings_override_certification: true
+  never_unsigned_packages_in_production: true
+  discover_validate_package_install_coordinate_only: true
+  activation_via_p259_only: true
+  workflows_via_p260_only: true
+  agents_via_p266_only: true
+  decisions_via_p261_only: true
+  runtime_via_p257_only: true
+  escalation_delivery_via_p294_only: true
+  simulation_not_execute: true
+  license_metering_only_billing_outside_p300: true
+  installations_require_trace_id: true
+  activations_require_governance_approval: true
+  high_risk_assets_require_human_review: true
+  asset_versions_rollbackable: true
+  foundation_for_p300_a: true
+  unblocks_p301_process_composer_low_code_no_code_visual_automation_os: true
+  unblocks_p302_process_testing_simulation_quality_assurance_digital_process_validation_os: true
+  unblocks_p303_process_release_deployment_environment_lifecycle_os: true
+  unblocks_p304_process_observability_monitoring_sla_slo_continuous_operational_intelligence_os: true
+  unblocks_p305_incident_management_service_reliability_resilience_engineering_os: true
+  unblocks_p306_itsm_service_catalog_request_fulfillment_enterprise_service_operations_os: true
+  unblocks_p307_knowledge_centered_service_enterprise_knowledge_management_organizational_learning_os: true
+  unblocks_p308_document_intelligence_content_lifecycle_intelligent_information_management_os: true
+  unblocks_p309_records_retention_legal_hold_information_lifecycle_governance_os: true
+  unblocks_p310_information_governance_data_classification_sensitive_information_intelligence_os: true
+  unblocks_p311_data_loss_prevention_information_protection_adaptive_data_security_control_os: true

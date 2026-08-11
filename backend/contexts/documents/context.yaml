@@ -15,6 +15,21 @@ description: "DMS \u2014 upload, version, sign, archive"
 # Peer productization: P294 MENCOE — communication template/journey/evidence docs via document_id only; never file blobs in communication_experience_operating_*
 # Peer productization: P295 MEEPJI — experience/journey/personalization evidence docs via document_id only; never file blobs in experience_personalization_operating_*
 # Peer productization: P296 MECVII — conversation/voice/multimodal evidence docs via document_id only; never file blobs in conversational_interaction_operating_*
+# Peer productization: P297 MEAWHC — agentic workspace / collaboration / approval evidence docs via document_id only; never file blobs in agentic_workspace_operating_*
+# Peer productization: P298 MEAPAE — agentic process / exception / optimization evidence docs via document_id only; never file blobs in agentic_process_operating_*
+# Peer productization: P299 MEPICO — process mining / intelligence / optimization evidence docs via document_id only; never file blobs in process_intelligence_operating_*
+# Peer productization: P300 MEPAMP — process marketplace / certification / package evidence docs via document_id only; never file blobs in process_marketplace_operating_*
+# Peer productization: P301 MEPCVA — process composer / design / release evidence docs via document_id only; never file blobs in process_composer_operating_*
+# Peer productization: P302 MEPQDV — process quality / test evidence / certification docs via document_id only; never file blobs in process_quality_operating_*
+# Peer productization: P303 MEPRED — release/deployment evidence / manifests / change docs via document_id only; never file blobs in process_release_operating_*
+# Peer productization: P304 MEPOCI — operational evidence / incident signal / SLA reports via document_id only; never file blobs in process_observability_operating_*
+# Peer productization: P305 MEIRRE — incident/PIR/runbook/evidence docs via document_id only; never file blobs in incident_reliability_operating_*
+# Peer productization: P306 MEESOP — service request/knowledge/case attachments via document_id only; never file blobs in service_operations_operating_*
+# Peer productization: P307 MEKNOL — knowledge article attachments/evidence via document_id only; never file blobs in knowledge_operating_*
+# Peer productization: P308 MEDCIM — Document Intelligence / Content Lifecycle federates this Documents SoR (document_id / storage abstraction); never fork blob store
+# Peer productization: P309 MERILG — Records / Retention / Legal Hold / ILM specializes over P308 + Documents (source_content_id / document_id refs)
+# Peer productization: P310 MEIGSI — Information Classification / Sensitive Information Intelligence (document_id refs; never fork blob store)
+# Peer productization: P311 (planned) — DLP / Information Protection / Adaptive Data Security Control
 aggregates:
 - Document
 - Folder

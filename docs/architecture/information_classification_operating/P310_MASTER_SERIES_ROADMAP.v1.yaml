@@ -1,0 +1,110 @@
+# MEIGSI Master Series Roadmap (P310)
+
+series: P310
+title: MEOS Enterprise Information Governance, Data Classification & Sensitive Information Intelligence Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEIGSI-001
+sor: information_classification_operating
+fabric: meos_enterprise_information_governance_data_classification_sensitive_information_intelligence_platform_framework
+api: /api/v1/information-classification-operating*
+phase_theme: information_intelligence_and_classification_governance
+phases:
+  - id: P310
+    title: MEIGSI Foundation
+    status: planned
+    adr: "667"
+    fabric: meos_enterprise_information_governance_data_classification_sensitive_information_intelligence_platform_framework
+    api: /api/v1/information-classification-operating*
+  - id: P310-A
+    title: Information Foundation — Object, Discovery, Profiling, Ownership, Metadata
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P310-B
+    title: Classification — Taxonomy, Engine, Sensitivity, Labels, Confidence
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P310-C
+    title: Sensitive Information — PII, Financial, Secrets, IP, Regulatory Detection
+    status: planned
+    adr: pending
+    window: 9-15_months
+  - id: P310-D
+    title: Governance — Policy Integration, Handling Requirements, Exceptions, Human Review
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P310-E
+    title: Risk — Information Risk, Exposure, Classification Drift, Policy Drift
+    status: planned
+    adr: pending
+    window: 15-24_months
+  - id: P310-F
+    title: Lineage — Data Lineage, Classification Propagation, Derived Information
+    status: planned
+    adr: pending
+    window: 18-30_months
+  - id: P310-G
+    title: Intelligence — Governance Score, Analytics, Forecasting, Exposure Intelligence
+    status: planned
+    adr: pending
+    window: 24-36_months
+  - id: P310-H
+    title: AI — Classification/Sensitive/Risk/Drift Agents, Governance Copilot (Human-Gated)
+    status: planned
+    adr: pending
+    window: 30-42_months
+  - id: P310-I
+    title: Continuous Information Governance — Discover/Classify/Drift/Exposure Loop
+    status: planned
+    adr: pending
+    window: 36-48_months
+locks:
+  never_replace_p263_data_mesh: true
+  never_replace_p308_document_intelligence_operating: true
+  never_replace_p309_records_lifecycle_operating: true
+  never_replace_documents_exchange: true
+  never_replace_p268_cybersecurity: true
+  never_replace_p269_privacy: true
+  never_replace_p270_governance: true
+  never_replace_p264_semantic_knowledge: true
+  never_replace_p228_knowledge_graph: true
+  never_replace_p266_ai_agent_orchestration: true
+  never_replace_p260_workflow: true
+  never_become_data_governance_platform: true
+  never_become_data_mesh_platform: true
+  never_become_dlp_platform: true
+  never_become_document_management_platform: true
+  never_become_records_management_platform: true
+  never_become_privacy_compliance_platform: true
+  never_become_cybersecurity_platform: true
+  never_become_knowledge_graph_platform: true
+  never_become_ai_agent_runtime: true
+  never_become_workflow_engine: true
+  never_merge_p308_p309_p310_p311_p263_p268_p269: true
+  never_dual_write_peer_repository_tables_as_second_sor: true
+  never_local_dlp_engine: true
+  never_local_privacy_policy_engine: true
+  never_local_security_control_engine: true
+  never_local_policy_engine: true
+  never_local_approval_workflow_engines: true
+  never_module_local_llm: true
+  never_auto_downgrade_sensitivity: true
+  never_blind_classification_lowering_on_propagation: true
+  never_expose_secrets_via_ai_responses: true
+  never_change_classification_without_authorization: true
+  confidence_and_evidence_mandatory_on_automated_classification: true
+  low_confidence_requires_human_review: true
+  cross_tenant_discovery_deny_by_default: true
+  cross_tenant_ai_learning_deny_by_default: true
+  detect_vs_govern_privacy_p269: true
+  intelligence_vs_defense_p268: true
+  handling_requirements_vs_dlp_execution_p311: true
+  policy_via_p270_only: true
+  workflows_via_p260_only: true
+  agents_via_p266_only: true
+  communications_via_p294_only: true
+  tenant_isolation_mandatory: true
+  foundation_for_p310_a: true
+  unblocks_p311_data_loss_prevention_information_protection_adaptive_data_security_control_os: true

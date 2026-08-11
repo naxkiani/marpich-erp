@@ -1,0 +1,113 @@
+# MEKNOL Master Series Roadmap (P307)
+
+series: P307
+title: MEOS Enterprise Knowledge-Centered Service, Enterprise Knowledge Management & Organizational Learning Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEKNOL-001
+sor: knowledge_operating
+fabric: meos_enterprise_knowledge_centered_service_enterprise_knowledge_management_organizational_learning_platform_framework
+api: /api/v1/knowledge-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P307
+    title: MEKNOL Foundation
+    status: planned
+    adr: "664"
+    fabric: meos_enterprise_knowledge_centered_service_enterprise_knowledge_management_organizational_learning_platform_framework
+    api: /api/v1/knowledge-operating*
+  - id: P307-A
+    title: Knowledge Foundation — Model, Categories, Repository, Ownership, Lifecycle, Versioning
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P307-B
+    title: Knowledge Authoring — Workspace, Templates, Drafting, References, Review
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P307-C
+    title: Knowledge Governance — Classification, Approval, Retention, Expiration, Audit
+    status: planned
+    adr: pending
+    window: 9-15_months
+  - id: P307-D
+    title: Knowledge Discovery — Search, Semantic, Faceted, Related, Personalized
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P307-E
+    title: Knowledge Quality — Trust, Quality, Freshness, Contradiction, Duplicate Detection
+    status: planned
+    adr: pending
+    window: 15-24_months
+  - id: P307-F
+    title: Operational Knowledge — P305/P306/P299/P302/P303 Integration, Lessons Learned
+    status: planned
+    adr: pending
+    window: 18-30_months
+  - id: P307-G
+    title: Knowledge Graph Integration — P264 Entity Mapping, Relationships, Ontology, Contextual Discovery
+    status: planned
+    adr: pending
+    window: 24-36_months
+  - id: P307-H
+    title: AI Grounding — P266 Context Packs, Retrieval, Attribution, Confidence
+    status: planned
+    adr: pending
+    window: 30-42_months
+  - id: P307-I
+    title: Organizational Learning — Lessons, Learning Actions, Practices, Reuse
+    status: planned
+    adr: pending
+    window: 36-48_months
+  - id: P307-J
+    title: Autonomous Knowledge Operations — Gap/Stale/Contradiction Detection (Human-Gated Publication)
+    status: planned
+    adr: pending
+    window: 42-54_months
+locks:
+  never_replace_p264_semantic_knowledge: true
+  never_replace_p228_knowledge_graph: true
+  never_replace_enterprise_search: true
+  never_replace_p266_ai_agent_orchestration: true
+  never_replace_p306_service_operations_operating: true
+  never_replace_p305_incident_reliability_operating: true
+  never_replace_p304_process_observability_operating: true
+  never_replace_p303_process_release_operating: true
+  never_replace_p302_process_quality_operating: true
+  never_replace_p299_process_intelligence_operating: true
+  never_replace_p270_governance: true
+  never_replace_documents_exchange: true
+  never_become_knowledge_graph_platform: true
+  never_become_semantic_intelligence_engine: true
+  never_become_ai_agent_runtime: true
+  never_become_workflow_engine: true
+  never_become_incident_management_platform: true
+  never_become_service_management_platform: true
+  never_become_governance_engine: true
+  never_become_observability_platform: true
+  never_become_process_intelligence_engine: true
+  never_become_document_store: true
+  never_merge_p264_p307_p308_search_documents: true
+  never_dual_write_knowledge_graph_tables: true
+  never_fork_knowledge_graph_api: true
+  never_local_search_engine: true
+  never_local_metrics_stores: true
+  never_local_approval_workflow_engines: true
+  never_module_local_llm: true
+  never_auto_authoritative_ai_knowledge: true
+  human_governance_required_for_authoritative_publication: true
+  source_attribution_mandatory_for_ai_answers: true
+  version_traceability_mandatory: true
+  graph_via_p264_p228_only: true
+  search_via_enterprise_search_only: true
+  agents_via_p266_only: true
+  communications_via_p294_only: true
+  attachments_via_documents_document_id_only: true
+  tenant_isolation_mandatory: true
+  classification_aware_access: true
+  foundation_for_p307_a: true
+  unblocks_p308_document_intelligence_content_lifecycle_intelligent_information_management_os: true
+  unblocks_p309_records_retention_legal_hold_information_lifecycle_governance_os: true
+  unblocks_p310_information_governance_data_classification_sensitive_information_intelligence_os: true
+  unblocks_p311_data_loss_prevention_information_protection_adaptive_data_security_control_os: true

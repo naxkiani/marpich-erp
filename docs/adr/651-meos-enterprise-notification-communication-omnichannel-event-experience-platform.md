@@ -22,7 +22,7 @@ MEOS needs a specialized **Communication / Notification / Omnichannel Experience
    - **P294** = Communication / Notification / Omnichannel Experience
    - **P295** = Experience Personalization / Journey / Interaction (delivered; distinct)
    - **P296** = Conversational / Voice / Multimodal Interaction (delivered; distinct)
-   - **P297** = Human-AI Collaboration / Agentic Workspace (next)
+   - **P297** = Human-AI Collaboration / Agentic Workspace (delivered; distinct)
 4. Federate-by-contract: Notifications Platform, P293, P291, P292, Integration Platform, Secrets, Localization, P260, P262, P268, P269, P270, Workflow, Policy — never fork `/api/v1/notifications*`; never dual-write `notifications_*` or GL/AR; never embed provider SDKs in domain; never local metrics/approval engines.
 5. Communication definitions, templates, journeys and delivery policies are **versioned, explainable, reproducible, auditable**. Material send/escalation/template publish require **Policy + Consent (where required) + Risk + Approval + Verification + Audit** (or published Autonomy Threshold).
 6. No Communication without Policy; no Sensitive Communication without Security Validation; no Consent-required Communication without valid Consent; no AI-generated sensitive send without Validation + Policy + Audit.
@@ -32,7 +32,7 @@ MEOS needs a specialized **Communication / Notification / Omnichannel Experience
 
 ## Consequences
 
-- Unlocks Phase 1–5 MENCOE roadmap (P294-A…E); **P295** MEEPJI and **P296** MECVII delivered; **P297** Human-AI Collaboration / Agentic Workspace series unblocked.
+- Unlocks Phase 1–5 MENCOE roadmap (P294-A…E); **P295** MEEPJI · **P296** MECVII · **P297** MEAWHC · **P298** MEAPAE · **P299** MEPICO · **P300** MEPAMP · **P301** MEPCVA · **P302** MEPQDV · **P303** MEPRED · **P304** MEPOCI · **P305** MEIRRE · **P306** MEESOP · **P307** MEKNOL · **P308** MEDCIM · **P309** MERILG · **P310** MEIGSI delivered; **P311** DLP / Information Protection / Adaptive Data Security Control series unblocked.
 - Notifications Platform remains execution SoR; MENCOE owns communication experience, orchestration overlays, journeys, preference/consent experience and delivery intelligence.
 - Ungated omnichannel send or merging Notifications Platform+P291–P295 SoRs is an architecture failure.
 
@@ -53,4 +53,4 @@ MEOS needs a specialized **Communication / Notification / Omnichannel Experience
 - [x] Consent-by-design · gated send · no dual-write notifications/billing
 - [x] Notifications Platform · P291–P293 boundaries preserved explicitly
 - [x] No ungated omnichannel sends · no AI sensitive send without validation
-- [x] P295 MEEPJI · P296 MECVII delivered · P297 stub announced
+- [x] P295 MEEPJI · P296 MECVII · P297 MEAWHC · P298 MEAPAE · P299 MEPICO · P300 MEPAMP · P301 MEPCVA · P302 MEPQDV delivered · P303 stub announced

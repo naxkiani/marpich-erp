@@ -273,6 +273,8 @@ Validate: service architecture · DDD · CQRS · events · P283/P284 boundaries 
 
 ---
 
-**NEXT EXECUTION:** **P297** — MEOS Enterprise AI Interaction, Agentic Workspace & Human-AI Collaboration Platform — Agentic Enterprise Workspace, Human-AI Collaboration, AI Copilot Workspace, Multi-Agent Collaboration, Agent Team Orchestration, Human/AI/Agent-in-the-Loop, Shared Enterprise Context, Collaborative AI Decisioning, Agent Task/Memory/Goals/Planning/Delegation/Supervision/Accountability/Performance/Governance/Safety, Agent Digital Twin and Agent Knowledge Graph (federate P295–P296, P266, P260, P258, P268–P270; never fork Conversational Interaction or Agent Orchestration; never ungated agent team actions).
+> **Peer productization:** Federate **P306 MEESOP** (`service_operations_operating`) for Enterprise Service Operations / Request Fulfillment experience — never merge SoRs; P305 remains Incident authority; P304 remains Observability.
+
+**NEXT EXECUTION:** **P311** — MEOS Enterprise Data Loss Prevention, Information Protection & Adaptive Data Security Control Platform — convert P310 Classification/Sensitivity into operational Data Protection and DLP controls (Prevent / Allow / Block / Quarantine / Redact) under Policy + Context + Risk (federate P310, P268, P269, P270, P260; never fork Classification Intelligence or Cybersecurity; never create parallel mesh/content/records/workflow/agent engines).
 
 > **P291 delivered:** [MEIEII law](ENTERPRISE_MEOS_INTEGRATION_ARCHITECTURE_EVENT_MESH_INTEROPERABILITY_INTELLIGENCE_PLATFORM.md) · [ADR 648](../adr/648-meos-enterprise-integration-architecture-event-mesh-interoperability-intelligence-platform.md)

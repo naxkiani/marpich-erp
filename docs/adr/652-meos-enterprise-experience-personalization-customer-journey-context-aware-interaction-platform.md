@@ -19,7 +19,7 @@ MEOS needs a specialized **Experience / Journey / Personalization / Interaction*
    - **P294** = Notification / Communication / Omnichannel Delivery
    - **P295** = Experience / Journey / Personalization / Interaction
    - **P296** = Conversational / Voice / Multimodal Interaction (delivered; distinct)
-   - **P297** = Human-AI Collaboration / Agentic Workspace (next)
+   - **P297** = Human-AI Collaboration / Agentic Workspace (delivered; distinct)
    - Never replace P260 Workflow · P258 Application Shell · Identity/Customer/HR SoRs · P291–P292
 4. Experience Profile is **Experience Context only** — never an uncontrolled duplicate of Identity, Customer, or HR masters.
 5. Federate-by-contract: P294, P293, P258, P260, P261, P262, Identity, P264–P270, Policy, Workflow — never implement channel delivery; never dual-write notification/identity/customer/HR tables; never local metrics/approval/workflow engines.
@@ -31,9 +31,9 @@ MEOS needs a specialized **Experience / Journey / Personalization / Interaction*
 
 ## Consequences
 
-- Unlocks Phase 1–6 MEEPJI roadmap (P295-A…F); **P296** MECVII delivered; **P297** Human-AI Collaboration / Agentic Workspace series unblocked.
+- Unlocks Phase 1–6 MEEPJI roadmap (P295-A…F); **P296** MECVII · **P297** MEAWHC · **P298** MEAPAE · **P299** MEPICO · **P300** MEPAMP · **P301** MEPCVA · **P302** MEPQDV · **P303** MEPRED · **P304** MEPOCI · **P305** MEIRRE · **P306** MEESOP · **P307** MEKNOL · **P308** MEDCIM · **P309** MERILG · **P310** MEIGSI delivered; **P311** DLP / Information Protection / Adaptive Data Security Control series unblocked.
 - P294 remains delivery; P260 remains workflow execution; MEEPJI owns experience context, journeys, personalization, NBA/NBE and interaction intelligence.
-- Ungated personalization or merging P293–P297 SoRs is an architecture failure.
+- Ungated personalization or merging P293–P303 SoRs is an architecture failure.
 
 ## Alternatives considered
 
@@ -52,4 +52,4 @@ MEOS needs a specialized **Experience / Journey / Personalization / Interaction*
 - [x] Experience Profile context-only · gated personalize/NBA · no channel delivery
 - [x] P258 · P260 · P293 · P294 boundaries preserved explicitly
 - [x] No ungated personalization · AI explainability required
-- [x] P296 MECVII delivered · P297 stub announced
+- [x] P296 MECVII · P297 MEAWHC · P298 MEAPAE · P299 MEPICO · P300 MEPAMP · P301 MEPCVA · P302 MEPQDV delivered · P303 stub announced
