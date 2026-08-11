@@ -535,6 +535,27 @@ phases:
     fabric: meos_enterprise_revenue_recognition_treasury_cash_intelligence_platform_framework
     api: /api/v1/treasury-cash-operating*
     phase_theme: productization_and_experience_evolution
+  - id: P280
+    title: MEOS Enterprise Financial Planning, Budgeting & Autonomous Performance Management Platform (MEFPAPM)
+    status: planned
+    adr: "637"
+    fabric: meos_enterprise_financial_planning_budgeting_autonomous_performance_management_platform_framework
+    api: /api/v1/financial-planning-operating*
+    phase_theme: productization_and_experience_evolution
+  - id: P281
+    title: MEOS Enterprise Management Accounting, Cost & Profitability Intelligence Platform (MEMACPI)
+    status: planned
+    adr: "638"
+    fabric: meos_enterprise_management_accounting_cost_profitability_intelligence_platform_framework
+    api: /api/v1/management-accounting-operating*
+    phase_theme: productization_and_experience_evolution
+  - id: P282
+    title: MEOS Enterprise Pricing Intelligence, Revenue Optimization & Autonomous Pricing Management Platform (MEPRIAP)
+    status: planned
+    adr: "639"
+    fabric: meos_enterprise_pricing_intelligence_revenue_optimization_autonomous_pricing_platform_framework
+    api: /api/v1/pricing-operating*
+    phase_theme: productization_and_experience_evolution
 
 implementation_phases:
   - id: P01

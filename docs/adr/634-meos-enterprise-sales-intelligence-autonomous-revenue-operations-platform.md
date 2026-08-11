@@ -4,7 +4,7 @@
 - **Date:** 2026-08-10
 - **Deciders:** Chief Enterprise Architect · MEOS Architecture Board
 - **Tags:** meos · p277 · mesiaro · sales · revenue-operations · lead-to-revenue · pipeline · forecasting · pricing · quotes · productization
-- **Related:** [ADR 633](633-meos-enterprise-procurement-intelligence-autonomous-sourcing-platform.md) · [ADR 630](630-meos-enterprise-customer-experience-crm-intelligence-autonomous-relationship-platform.md) · [ADR 628](628-meos-enterprise-financial-intelligence-autonomous-finance-platform.md) · [ADR 635](635-meos-enterprise-revenue-billing-quote-to-cash-intelligence-platform.md) · [Law P277](../architecture/ENTERPRISE_MEOS_SALES_INTELLIGENCE_AUTONOMOUS_REVENUE_OPERATIONS_PLATFORM.md) · Governance Standard 11.0
+- **Related:** [ADR 633](633-meos-enterprise-procurement-intelligence-autonomous-sourcing-platform.md) · [ADR 630](630-meos-enterprise-customer-experience-crm-intelligence-autonomous-relationship-platform.md) · [ADR 628](628-meos-enterprise-financial-intelligence-autonomous-finance-platform.md) · [ADR 635](635-meos-enterprise-revenue-billing-quote-to-cash-intelligence-platform.md) · [ADR 639](639-meos-enterprise-pricing-intelligence-revenue-optimization-autonomous-pricing-platform.md) · [Law P277](../architecture/ENTERPRISE_MEOS_SALES_INTELLIGENCE_AUTONOMOUS_REVENUE_OPERATIONS_PLATFORM.md) · Governance Standard 11.0
 
 ## Context
 

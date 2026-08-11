@@ -1,0 +1,59 @@
+# MEFPAPM Master Series Roadmap (P280)
+
+series: P280
+title: MEOS Enterprise Financial Planning, Budgeting & Autonomous Performance Management Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEFPAPM-001
+sor: financial_planning_operating
+fabric: meos_enterprise_financial_planning_budgeting_autonomous_performance_management_platform_framework
+api: /api/v1/financial-planning-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P280
+    title: MEFPAPM Foundation
+    status: planned
+    adr: "637"
+    fabric: meos_enterprise_financial_planning_budgeting_autonomous_performance_management_platform_framework
+    api: /api/v1/financial-planning-operating*
+  - id: P280-A
+    title: Financial Planning Foundation — Planning Model, Budget Management, Versioning, Forecast Foundation, Command Center, Basic Variance
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P280-B
+    title: Performance Intelligence — Rolling Forecast, Scenario, Cost, Profitability, Performance Management, Capital Planning
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P280-C
+    title: Predictive Financial Planning — AI Forecasting, Driver-Based Planning, Automated Scenarios, Predictive Variance, Capital Optimization
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P280-D
+    title: Autonomous Financial Planning OS — Continuous Planning, Autonomous Forecast Refresh, Budget Optimization Assists, Self-Optimizing Planning
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_p271_financial_control: true
+  never_replace_p279_treasury_cash: true
+  never_fork_autonomous_finance_operating_api: true
+  never_fork_treasury_cash_operating_api: true
+  never_merge_p271_finance_and_p280_planning: true
+  never_merge_p279_treasury_and_p280_planning: true
+  never_dual_write_budget_or_performance_into_gl: true
+  never_local_gl_or_duplicate_financial_kernel: true
+  never_direct_unauthorized_ledger_mutation: true
+  never_ungated_material_budget_capital_target_change: true
+  never_opaque_plan_auto_mutation: true
+  versioned_planning_models: true
+  scenario_isolation: true
+  deterministic_financial_calculations: true
+  segregation_of_duties: true
+  human_governance_for_material_planning_actions: true
+  never_module_local_llm: true
+  never_treat_twin_or_scenario_as_published_plan: true
+  foundation_for_p280_a: true
+  unblocks_p281_management_accounting_cost_profitability_os: true
+  # P281 delivered as CAP-PLT-MEMACPI-001 / ADR 638

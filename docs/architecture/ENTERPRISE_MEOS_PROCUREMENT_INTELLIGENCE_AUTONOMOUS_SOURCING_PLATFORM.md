@@ -279,6 +279,6 @@ Validate: procurement domain architecture · DDD · CQRS · events · supplier i
 
 ---
 
-**NEXT EXECUTION:** **P280** — MEOS Enterprise Financial Planning, Budgeting & Autonomous Performance Management Platform — Enterprise Budgeting, Forecasting, Scenario Planning, Management Accounting, Cost/Profitability Intelligence, Capital Planning and Autonomous Financial Planning (federate P279 as Treasury/Liquidity and P271 as Financial Control; never fork Finance/Treasury APIs or dual-write budget ledgers).
+**NEXT EXECUTION:** **P283** — MEOS Enterprise Contract Intelligence, Commercial Agreement & Autonomous Contract Management Platform — Contract Lifecycle, Agreement Modeling, Commercial Terms, Contract Risk, Obligation/SLA Intelligence, Renewal, Contract Profitability, Compliance, AI Contract Analysis, Negotiation Intelligence and Autonomous Contract Operations (federate P277/P278/P279/P280/P281/P282; never fork peer APIs or ungated contract commits).
 
-> **P279 delivered:** [METRCIP law](ENTERPRISE_MEOS_REVENUE_RECOGNITION_TREASURY_CASH_INTELLIGENCE_PLATFORM.md) · [ADR 636](../adr/636-meos-enterprise-revenue-recognition-treasury-cash-intelligence-platform.md)
+> **P282 delivered:** [MEPRIAP law](ENTERPRISE_MEOS_PRICING_INTELLIGENCE_REVENUE_OPTIMIZATION_AUTONOMOUS_PRICING_PLATFORM.md) · [ADR 639](../adr/639-meos-enterprise-pricing-intelligence-revenue-optimization-autonomous-pricing-platform.md)

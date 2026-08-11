@@ -58,3 +58,4 @@ locks:
   never_treat_twin_simulation_as_commit: true
   foundation_for_p279_a: true
   unblocks_p280_fpa_budgeting_performance_os: true
+  # P280 delivered as CAP-PLT-MEFPAPM-001 / ADR 637

@@ -4,7 +4,7 @@
 - **Date:** 2026-08-10
 - **Deciders:** Chief Enterprise Architect · MEOS Architecture Board
 - **Tags:** meos · p279 · metrcip · treasury · cash · liquidity · revenue-recognition · fx · working-capital · bank-connectivity · productization
-- **Related:** [ADR 635](635-meos-enterprise-revenue-billing-quote-to-cash-intelligence-platform.md) · [ADR 634](634-meos-enterprise-sales-intelligence-autonomous-revenue-operations-platform.md) · [ADR 628](628-meos-enterprise-financial-intelligence-autonomous-finance-platform.md) · [Law P279](../architecture/ENTERPRISE_MEOS_REVENUE_RECOGNITION_TREASURY_CASH_INTELLIGENCE_PLATFORM.md) · Governance Standard 11.0
+- **Related:** [ADR 635](635-meos-enterprise-revenue-billing-quote-to-cash-intelligence-platform.md) · [ADR 634](634-meos-enterprise-sales-intelligence-autonomous-revenue-operations-platform.md) · [ADR 628](628-meos-enterprise-financial-intelligence-autonomous-finance-platform.md) · [ADR 637](637-meos-enterprise-financial-planning-budgeting-autonomous-performance-management-platform.md) · [Law P279](../architecture/ENTERPRISE_MEOS_REVENUE_RECOGNITION_TREASURY_CASH_INTELLIGENCE_PLATFORM.md) · Governance Standard 11.0
 
 ## Context
 
@@ -26,7 +26,7 @@ MEOS needs a specialized **Revenue Recognition / Treasury / Cash Intelligence** 
 
 ## Consequences
 
-- Unlocks Phase 1–4 METRCIP roadmap (P279-A…D) and **P280** FP&A / Budgeting / Performance series.
+- Unlocks Phase 1–4 METRCIP roadmap (P279-A…D) and **P280** FP&A / Budgeting / Performance series (delivered as normative law + ADR 637).
 - Treasury and Banking remain canonical for cash/bank truth; P271 remains final accounting/control; METRCIP owns operating campaigns and intelligence overlays.
 - Treasury auto-commit without Dual Control/DoA is an architecture failure.
 
@@ -47,4 +47,4 @@ MEOS needs a specialized **Revenue Recognition / Treasury / Cash Intelligence** 
 - [x] Peer federation matrix (Treasury · Banking · P278 · P271 · Integration · Policy · Workflow · Audit)
 - [x] Material treasury gate law + Dual Control + idempotent payment law
 - [x] P271 financial boundary preserved explicitly
-- [x] P280 stub announced
+- [x] P280 delivered — [ADR 637 / MEFPAPM](637-meos-enterprise-financial-planning-budgeting-autonomous-performance-management-platform.md)
