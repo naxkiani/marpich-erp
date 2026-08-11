@@ -1,0 +1,69 @@
+# MEAPIE Master Series Roadmap (P292)
+
+series: P292
+title: MEOS Enterprise API Management, Service Gateway & Digital Integration Experience Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEAPIE-001
+sor: api_management_operating
+fabric: meos_enterprise_api_management_service_gateway_digital_integration_experience_platform_framework
+api: /api/v1/api-management-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P292
+    title: MEAPIE Foundation
+    status: planned
+    adr: "649"
+    fabric: meos_enterprise_api_management_service_gateway_digital_integration_experience_platform_framework
+    api: /api/v1/api-management-operating*
+  - id: P292-A
+    title: API Foundation — Registry, Catalog, Contracts, Lifecycle, Basic Gateway, AuthN/Z, Routing, Basic Observability
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P292-B
+    title: API Management — Policy, Consumers, Subscriptions, Credentials, Versions, SLA, Rate Limits, Quotas, Analytics
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P292-C
+    title: API Experience — Developer Portal, Docs, Explorer, Marketplace, Products, Plans, SDK/Examples, Sandbox
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P292-D
+    title: Intelligent API Platform — Traffic/Risk/Dependency/Quality/Security Intelligence, Twin, AI Copilot
+    status: planned
+    adr: pending
+    window: 12-24_months
+  - id: P292-E
+    title: API Economy & Autonomous Management — Monetization Metering, Partner APIs, Predictive Reliability, Gated Autonomy
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_p289_application_architecture_operating: true
+  never_replace_p291_integration_architecture_operating: true
+  never_replace_integration_platform: true
+  never_replace_p263_data_mesh_operating: true
+  never_own_data_products: true
+  never_merge_p289_p291_p292_p293: true
+  never_plaintext_credentials: true
+  never_dual_write_financial_ledgers: true
+  never_local_metrics_stores: true
+  never_local_approval_engines: true
+  never_ungated_external_api_exposure: true
+  never_production_api_without_contract_governance: true
+  never_breaking_change_without_impact_analysis: true
+  versioned_api_contracts: true
+  designed_vs_actual_api_drift_detectable: true
+  monetization_metering_only_billing_via_financial_peers: true
+  ai_recommendation_requires_evidence_confidence_policy_human_approval: true
+  simulation_not_execute: true
+  autonomous_requires_policy_authorization_audit_human_governance: true
+  never_module_local_llm: true
+  foundation_for_p292_a: true
+  unblocks_p293_event_streaming_realtime_event_product_marketplace_os: true
+  unblocks_p294_notification_communication_omnichannel_event_experience_os: true
+  unblocks_p295_experience_personalization_customer_journey_context_aware_interaction_os: true
+  unblocks_p296_experience_intelligence_voice_conversational_multimodal_interaction_os: true
+  unblocks_p297_ai_interaction_agentic_workspace_human_ai_collaboration_os: true

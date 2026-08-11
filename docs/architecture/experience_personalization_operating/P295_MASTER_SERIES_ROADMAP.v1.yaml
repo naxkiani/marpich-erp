@@ -1,0 +1,78 @@
+# MEEPJI Master Series Roadmap (P295)
+
+series: P295
+title: MEOS Enterprise Experience Personalization, Customer Journey & Context-Aware Interaction Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEEPJI-001
+sor: experience_personalization_operating
+fabric: meos_enterprise_experience_personalization_customer_journey_context_aware_interaction_platform_framework
+api: /api/v1/experience-personalization-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P295
+    title: MEEPJI Foundation
+    status: planned
+    adr: "652"
+    fabric: meos_enterprise_experience_personalization_customer_journey_context_aware_interaction_platform_framework
+    api: /api/v1/experience-personalization-operating*
+  - id: P295-A
+    title: Experience Foundation — Experience/Context/Journey/Interaction Registries, Experience Profile, Basic Personalization
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P295-B
+    title: Journey Intelligence — Designer, Stages, Rules, Analytics, Health, Drop-Off
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P295-C
+    title: Personalization — Engine, Context/Role/Behavior, Real-Time Personalization
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P295-D
+    title: Decision Intelligence — NBA, NBE, Recommendations, Intent, Scoring, Friction
+    status: planned
+    adr: pending
+    window: 12-24_months
+  - id: P295-E
+    title: AI Experience — Copilot, AI Journey Optimization, Predictive Experience, Simulation
+    status: planned
+    adr: pending
+    window: 18-30_months
+  - id: P295-F
+    title: Autonomous Experience — Adaptive Journeys, Gated Autonomous Optimization, Predictive Intervention
+    status: planned
+    adr: pending
+    window: 24-36_months
+locks:
+  never_replace_p294_communication_experience_operating: true
+  never_replace_notifications_platform: true
+  never_replace_p293_event_streaming_operating: true
+  never_replace_p291_integration_architecture_operating: true
+  never_replace_p292_api_management_operating: true
+  never_replace_p260_workflow: true
+  never_replace_p258_application_shell: true
+  never_duplicate_identity_customer_hr_sor: true
+  experience_profile_is_context_only: true
+  never_implement_channel_delivery: true
+  never_merge_p293_p294_p295_p296: true
+  never_dual_write_identity_customer_hr_tables: true
+  never_dual_write_notifications_tables: true
+  never_local_metrics_stores: true
+  never_local_approval_or_workflow_engines: true
+  never_ungated_personalization_mutations: true
+  never_personalization_without_policy: true
+  never_sensitive_context_without_privacy_validation: true
+  never_sensitive_ai_recommendation_without_governance: true
+  ai_scores_require_confidence_evidence_model_version: true
+  communication_intent_via_p294_only: true
+  executable_workflows_via_p260_only: true
+  shell_personalization_via_p258_contracts_only: true
+  ai_recommendation_requires_evidence_confidence_policy_human_approval: true
+  simulation_not_execute: true
+  autonomous_requires_policy_privacy_consent_authorization_audit_human_governance: true
+  never_module_local_llm: true
+  foundation_for_p295_a: true
+  unblocks_p296_experience_intelligence_voice_conversational_multimodal_interaction_os: true
+  unblocks_p297_ai_interaction_agentic_workspace_human_ai_collaboration_os: true

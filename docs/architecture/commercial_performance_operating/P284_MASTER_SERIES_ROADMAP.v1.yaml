@@ -1,0 +1,61 @@
+# MECCPI Master Series Roadmap (P284)
+
+series: P284
+title: MEOS Enterprise Commercial Compliance, Obligation & Contract Performance Intelligence Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MECCPI-001
+sor: commercial_performance_operating
+fabric: meos_enterprise_commercial_compliance_obligation_contract_performance_intelligence_platform_framework
+api: /api/v1/commercial-performance-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P284
+    title: MECCPI Foundation
+    status: planned
+    adr: "641"
+    fabric: meos_enterprise_commercial_compliance_obligation_contract_performance_intelligence_platform_framework
+    api: /api/v1/commercial-performance-operating*
+  - id: P284-A
+    title: Performance Foundation — Monitoring, Evidence, Compliance Rules, Command Center
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P284-B
+    title: Performance Intelligence — Analytics, Exceptions, Root Cause, Prediction, Benchmarking
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P284-C
+    title: Commercial Assurance — Penalty, Service Credit, Revenue/Margin-at-Risk, Corrective Intelligence
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P284-D
+    title: Autonomous Performance OS — Continuous Monitoring, Governed Autonomous Interventions, Continuous Learning
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_p283_contract_operating: true
+  never_merge_p283_and_p284: true
+  never_replace_p277_through_p282: true
+  never_replace_p271_financial_control: true
+  never_replace_document_exchange: true
+  never_fork_contract_operating_api: true
+  never_dual_write_peer_ledgers: true
+  never_local_gl: true
+  never_store_pdf_or_binary_in_performance_tables: true
+  document_id_evidence_refs_only: true
+  never_ungated_penalty_service_credit_or_binding_corrective_action: true
+  never_bypass_performance_policy: true
+  versioned_performance_policies: true
+  versioned_sla_kpi_compliance_definitions: true
+  reproducible_compliance_decisions: true
+  autonomy_thresholds_mandatory: true
+  segregation_of_duties: true
+  human_governance_for_material_commercial_actions: true
+  never_module_local_llm: true
+  never_treat_twin_scenario_as_enforced_penalty_or_credit: true
+  foundation_for_p284_a: true
+  unblocks_p285_service_management_sla_operations_os: true
+  # P285 delivered as CAP-PLT-MESMIP-001 / ADR 642

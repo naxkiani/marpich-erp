@@ -63,3 +63,4 @@ locks:
   never_treat_twin_scenario_as_published_price_book: true
   foundation_for_p282_a: true
   unblocks_p283_contract_intelligence_commercial_agreement_os: true
+  # P283 delivered as CAP-PLT-MECIAP-001 / ADR 640

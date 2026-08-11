@@ -3,7 +3,7 @@
 **Status:** Normative (P282) — series foundation · **Productization & Experience Evolution Phase**  
 **SoR:** `pricing_operating` · **ADR:** [639](../adr/639-meos-enterprise-pricing-intelligence-revenue-optimization-autonomous-pricing-platform.md) · **Capability:** `CAP-PLT-MEPRIAP-001`  
 **Fabric:** `meos_enterprise_pricing_intelligence_revenue_optimization_autonomous_pricing_platform_framework` · **Governance Standard:** MEOS 11.0  
-> **API:** `/api/v1/pricing-operating*` · **Builds on:** P281 MEMACPI · P280 MEFPAPM · P279 METRCIP · P278 MEQTCIP · P277 MESIARO · P276 MEPIASP · P275 MEAIAMP · P274 MEHCAWP · P273 MECXARP · P272 MESCIAL · P271 MEFIAF · P270 MEGRSC · P269 MEPCRI · P268 MECZTD · P267 MEAOSH · P266 MEAAOI · P265 MEDTIP · P264 MEKGSI · P263 MEDIMOP · P262 MEIAOI · P261 MEBRDI · P260 MEWEOP · P258 MESCC · P257 MERAF · P259 MDMAL · Sales · Policy · Workflow · Audit · P214-Z · **Next:** P282-A · **Peer series:** [P283 MEOS Enterprise Contract Intelligence, Commercial Agreement & Autonomous Contract Management](ENTERPRISE_MEOS_CONTRACT_INTELLIGENCE_COMMERCIAL_AGREEMENT_AUTONOMOUS_CONTRACT_PLATFORM.md) (planned)  
+> **API:** `/api/v1/pricing-operating*` · **Builds on:** P281 MEMACPI · P280 MEFPAPM · P279 METRCIP · P278 MEQTCIP · P277 MESIARO · P276 MEPIASP · P275 MEAIAMP · P274 MEHCAWP · P273 MECXARP · P272 MESCIAL · P271 MEFIAF · P270 MEGRSC · P269 MEPCRI · P268 MECZTD · P267 MEAOSH · P266 MEAAOI · P265 MEDTIP · P264 MEKGSI · P263 MEDIMOP · P262 MEIAOI · P261 MEBRDI · P260 MEWEOP · P258 MESCC · P257 MERAF · P259 MDMAL · Sales · Policy · Workflow · Audit · P214-Z · **Next:** P282-A · **Peer series:** [P283 MECIAP](ENTERPRISE_MEOS_CONTRACT_INTELLIGENCE_COMMERCIAL_AGREEMENT_AUTONOMOUS_CONTRACT_PLATFORM.md) (Contract / Agreement OS — never ungated binding commits; never replace Pricing) · [P284 Commercial Compliance](ENTERPRISE_MEOS_COMMERCIAL_COMPLIANCE_OBLIGATION_CONTRACT_PERFORMANCE_INTELLIGENCE_PLATFORM.md) (planned)  
 **Hard bindings:** Inference → **P214-Z** · Sales / RevOps → **P277 `sales_revenue_operating`** (ACL; **P282 does not replace P277**; never replace `/api/v1/sales-revenue-operating*`) · Quote-to-Cash → **P278 `quote_to_cash_operating`** (ACL; never replace `/api/v1/quote-to-cash-operating*`) · Treasury / Liquidity → **P279** (ACL; never replace `/api/v1/treasury-cash-operating*`) · FP&A / Planning → **P280** (ACL; never replace `/api/v1/financial-planning-operating*`) · Cost / Profitability → **P281 `management_accounting_operating`** (ACL; **margin-aware pricing mandatory when P281 data available**; never replace `/api/v1/management-accounting-operating*`) · Financial Control → **P271 / Financial Kernel** (ACL; never local GL · never mutate ledger · never replace `/api/v1/autonomous-finance-operating*`) · Customer economics → **P273** (ACL) · Inventory/capacity → **P272** (ACL) · Procurement cost floor → **P276** (ACL) · Twin price/demand scenarios → **P265 / P227** (ACL; simulation ≠ publish price / execute quote) · KG → **P264 / P228** (ACL) · Pricing decisions → **P261 / P224** (ACL) · Discount/price approvals → **P260 / Workflow** (ACL) · Agents → **P266** (ACL) · Experience Pricing Command Center → **P258** (ACL) · Analytics → **P262** (ACL) · Pricing governance → **P270** (ACL) · Privacy → **P269** (ACL) · Zero Trust → **P268** (ACL) · Policy / DoA / Autonomy thresholds → **Policy Engine** · Audit → **Audit** · AuthN/AuthZ → **Identity** · Competitive/market data vendors → **Integration Platform** · Generic → **Core**.
 
 ---
@@ -237,7 +237,8 @@ Read models under `pricing_operating_*` only; pagination mandatory; live cost/sa
 | P263 · P264 · P265 · P266 · P267 | Mesh · KG · twin · agents · ops |
 | P257 · P258 · P259 | Runtime · Command Center · lifecycle |
 | Policy · Audit · Identity | DoA · autonomy · evidence · authority |
-| **P283** | Contract Intelligence OS (planned) |
+| **P283 MECIAP** | Contract / Agreement OS — **never ungated binding commits; consumes pricing terms** |
+| **P284** | Commercial Compliance / Obligation Performance OS (planned) |
 | Core | Generic platform services |
 
 Permissions: `pricing_operating.model.*` · `pricing_operating.price_book.*` · `pricing_operating.elasticity.*` · `pricing_operating.customer.*` · `pricing_operating.product.*` · `pricing_operating.discount.*` · `pricing_operating.promotion.*` · `pricing_operating.optimization.*` · `pricing_operating.simulation.*` · `pricing_operating.governance.*` · `pricing_operating.ai.read` · `pricing_operating.ai.infer`.
@@ -280,7 +281,7 @@ Validate: pricing architecture · DDD · CQRS · events · peer boundaries · wo
 - [ ] Dual tests green; scorecard **ENTERPRISE_GRADE**
 - [ ] OpenAPI `/api/v1/pricing-operating*`
 - [ ] Versioned price book + reproducible gated pricing decision path demonstrated
-- [ ] **P282-A** unlocked · **P283** contract intelligence series unblocked
+- [ ] **P282-A** unlocked · **P283** contract intelligence series delivered (ADR 640)
 
 **MEPRIAP is complete when:** MEOS has a Pricing Intelligence OS fabric over Sales/Q2C/Cost/Planning; price models, books, elasticity, discount, promotion, simulation and revenue/margin optimization operate under gates; agents participate within autonomy thresholds; events join the Event Mesh; KG/twin support price scenarios; P277–P281 and P271 boundaries preserved; material pricing decisions remain under Policy and Human Governance; no agent changes price outside Policy Boundary and Autonomy Threshold; MEOS progresses toward Continuous Pricing Intelligence and Governed Autonomous Pricing — Governance Standard **11.0**.
 
@@ -288,6 +289,9 @@ Validate: pricing architecture · DDD · CQRS · events · peer boundaries · wo
 
 ---
 
-**NEXT EXECUTION:** **P283** — MEOS Enterprise Contract Intelligence, Commercial Agreement & Autonomous Contract Management Platform — Contract Lifecycle, Agreement Modeling, Commercial Terms, Contract Risk, Obligation/SLA Intelligence, Renewal, Contract Profitability, Compliance, AI Contract Analysis, Negotiation Intelligence and Autonomous Contract Operations (federate P277 Sales, P278 Q2C, P279 Treasury, P280 Planning, P281 Cost/Profitability, P282 Pricing; never fork peer APIs or ungated contract commits).
+**NEXT EXECUTION:** **P287** — MEOS Enterprise Cloud, Platform Engineering & Infrastructure Automation Intelligence Platform — Cloud Infrastructure Management, Multi/Hybrid Cloud, Kubernetes Platform Engineering, Container Management, IaC, Configuration Management, Environment Management, Deployment Automation, Release Engineering, CI/CD Intelligence, Internal Developer Platform, Cloud Cost Intelligence, Policy-as-Code, GitOps, DevOps Intelligence and Autonomous Infrastructure Operations (federate P257–P270, P275, P283–P286; never fork peer APIs or ungated infrastructure mutations).
 
-> **P282 delivered:** this law · [ADR 639](../adr/639-meos-enterprise-pricing-intelligence-revenue-optimization-autonomous-pricing-platform.md)
+> **P283 delivered:** [MECIAP law](ENTERPRISE_MEOS_CONTRACT_INTELLIGENCE_COMMERCIAL_AGREEMENT_AUTONOMOUS_CONTRACT_PLATFORM.md) · [ADR 640](../adr/640-meos-enterprise-contract-intelligence-commercial-agreement-autonomous-contract-platform.md)  
+> **P284 delivered:** [MECCPI law](ENTERPRISE_MEOS_COMMERCIAL_COMPLIANCE_OBLIGATION_CONTRACT_PERFORMANCE_INTELLIGENCE_PLATFORM.md) · [ADR 641](../adr/641-meos-enterprise-commercial-compliance-obligation-contract-performance-intelligence-platform.md)  
+> **P285 delivered:** [MESMIP law](ENTERPRISE_MEOS_SERVICE_MANAGEMENT_SLA_OPERATIONS_INTELLIGENT_SERVICE_DELIVERY_PLATFORM.md) · [ADR 642](../adr/642-meos-enterprise-service-management-sla-operations-intelligent-service-delivery-platform.md)  
+> **P286 delivered:** [MEITOI law](ENTERPRISE_MEOS_IT_OPERATIONS_INFRASTRUCTURE_OBSERVABILITY_INTELLIGENCE_PLATFORM.md) · [ADR 643](../adr/643-meos-enterprise-it-operations-infrastructure-observability-intelligence-platform.md)

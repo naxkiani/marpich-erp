@@ -4,7 +4,7 @@
 - **Date:** 2026-08-11
 - **Deciders:** Chief Enterprise Architect · MEOS Architecture Board
 - **Tags:** meos · p282 · mepriap · pricing · revenue-optimization · elasticity · discount · promotion · margin-aware · productization
-- **Related:** [ADR 638](638-meos-enterprise-management-accounting-cost-profitability-intelligence-platform.md) · [ADR 637](637-meos-enterprise-financial-planning-budgeting-autonomous-performance-management-platform.md) · [ADR 635](635-meos-enterprise-revenue-billing-quote-to-cash-intelligence-platform.md) · [ADR 634](634-meos-enterprise-sales-intelligence-autonomous-revenue-operations-platform.md) · [ADR 628](628-meos-enterprise-financial-intelligence-autonomous-finance-platform.md) · [Law P282](../architecture/ENTERPRISE_MEOS_PRICING_INTELLIGENCE_REVENUE_OPTIMIZATION_AUTONOMOUS_PRICING_PLATFORM.md) · Governance Standard 11.0
+- **Related:** [ADR 638](638-meos-enterprise-management-accounting-cost-profitability-intelligence-platform.md) · [ADR 637](637-meos-enterprise-financial-planning-budgeting-autonomous-performance-management-platform.md) · [ADR 635](635-meos-enterprise-revenue-billing-quote-to-cash-intelligence-platform.md) · [ADR 634](634-meos-enterprise-sales-intelligence-autonomous-revenue-operations-platform.md) · [ADR 628](628-meos-enterprise-financial-intelligence-autonomous-finance-platform.md) · [ADR 640](640-meos-enterprise-contract-intelligence-commercial-agreement-autonomous-contract-platform.md) · [Law P282](../architecture/ENTERPRISE_MEOS_PRICING_INTELLIGENCE_REVENUE_OPTIMIZATION_AUTONOMOUS_PRICING_PLATFORM.md) · Governance Standard 11.0
 
 ## Context
 
@@ -30,7 +30,7 @@ MEOS needs a specialized **Pricing Intelligence / Revenue Optimization / Autonom
 
 ## Consequences
 
-- Unlocks Phase 1–4 MEPRIAP roadmap (P282-A…D) and **P283** Contract Intelligence / Commercial Agreement series.
+- Unlocks Phase 1–4 MEPRIAP roadmap (P282-A…D) and **P283** Contract Intelligence / Commercial Agreement series (delivered as normative law + ADR 640).
 - P277 remains Sales; P278 remains Q2C execution; P281 remains cost/profitability; MEPRIAP owns pricing campaigns, versioned books and governed pricing decision overlays.
 - Uncontrolled price mutation or policy bypass is an architecture failure.
 
@@ -51,4 +51,4 @@ MEOS needs a specialized **Pricing Intelligence / Revenue Optimization / Autonom
 - [x] Versioned pricing models/books/policies · deterministic/reproducible decisions
 - [x] P277–P281 and P271 boundaries preserved explicitly
 - [x] Margin-aware pricing when P281 available
-- [x] P283 stub announced
+- [x] P283 delivered — [ADR 640 / MECIAP](640-meos-enterprise-contract-intelligence-commercial-agreement-autonomous-contract-platform.md)

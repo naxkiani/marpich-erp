@@ -2,6 +2,19 @@ context: documents
 display_name: Documents
 type: platform
 description: "DMS \u2014 upload, version, sign, archive"
+# Peer productization: P283 MECIAP (contract_operating) — contract intelligence overlays; store document_id only; never dual-write document blobs into contract_operating_*
+# Peer productization: P284 MECCPI (commercial_performance_operating) — performance evidence overlays; document_id evidence refs only
+# Peer productization: P285 MESMIP (service_management_operating) — knowledge/runbook overlays; document_id refs only
+# Peer productization: P286 MEITOI / P287 MECPEI — runbooks and IaC docs via document_id only; never file blobs in ops/platform schemas
+# Peer productization: P288 MEDSSAD — SBOM/evidence/compliance docs via document_id only; never file blobs in DevSecOps schemas
+# Peer productization: P289 MEAAGSI — ADR/architecture evidence docs via document_id only; never file blobs in architecture schemas
+# Peer productization: P290 MEDAMIA — data catalog/contract/lineage evidence docs via document_id only; never file blobs in data architecture schemas
+# Peer productization: P291 MEIEII — integration/event-contract evidence docs via document_id only; never file blobs in integration architecture schemas
+# Peer productization: P292 MEAPIE — API product/portal/docs evidence via document_id only; never file blobs in api_management_operating_*
+# Peer productization: P293 MEESIE — event product/schema/portal evidence via document_id only; never file blobs in event_streaming_operating_*
+# Peer productization: P294 MENCOE — communication template/journey/evidence docs via document_id only; never file blobs in communication_experience_operating_*
+# Peer productization: P295 MEEPJI — experience/journey/personalization evidence docs via document_id only; never file blobs in experience_personalization_operating_*
+# Peer productization: P296 MECVII — conversation/voice/multimodal evidence docs via document_id only; never file blobs in conversational_interaction_operating_*
 aggregates:
 - Document
 - Folder

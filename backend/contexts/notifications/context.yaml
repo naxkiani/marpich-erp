@@ -2,6 +2,7 @@ context: notifications
 display_name: Notifications
 type: platform
 description: Email, SMS, push, in-app notifications
+# Boundary: Notifications Platform = sole notification execution SoR (/api/v1/notifications*). P293 MEESIE = event product / streaming / real-time intelligence (emits business signals; never send channels directly). P294 MENCOE = Notification / Omnichannel Experience OS (productizes communication experience — never replace this context's queue/adapters). P295 MEEPJI = Experience Personalization / Journey (emits Communication Intent to MENCOE; never implement channel delivery). P296 MECVII = Conversational / Voice / Multimodal (emits Communication Intent when needed; never send channels). P297 = Human-AI Collaboration / Agentic Workspace (planned).
 aggregates:
 - NotificationTemplate
 - NotificationQueue
