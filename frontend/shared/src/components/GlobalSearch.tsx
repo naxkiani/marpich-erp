@@ -2,10 +2,29 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useLocale } from "../i18n/LocaleProvider";
-import { API_URL, getPlatformAuthHeaders } from "../platform/session";
+import { API_URL, getPlatformAuthHeaders, loadPlatformSession } from "../platform/session";
 import { searchApplicationNav } from "../platform/applicationRegistry";
+import { matchesPermission } from "../platform/permissions";
 
 type SearchHit = { id: string; title: string; subtitle?: string; href?: string };
+
+async function loadSessionPermissions(): Promise<string[]> {
+  const session = loadPlatformSession();
+  if (!session) return [];
+  try {
+    const res = await fetch(`${API_URL}/api/v1/auth/me`, {
+      headers: {
+        Authorization: `Bearer ${session.accessToken}`,
+        "X-Tenant-ID": session.tenantId,
+      },
+    });
+    if (!res.ok) return [];
+    const json = (await res.json()) as { data?: { permissions?: string[] }; permissions?: string[] };
+    return json.data?.permissions ?? json.permissions ?? [];
+  } catch {
+    return [];
+  }
+}
 
 export function GlobalSearch() {
   const { t } = useLocale();
@@ -13,6 +32,11 @@ export function GlobalSearch() {
   const [hits, setHits] = useState<SearchHit[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [permissions, setPermissions] = useState<string[]>([]);
+
+  useEffect(() => {
+    void loadSessionPermissions().then(setPermissions);
+  }, []);
 
   const search = useCallback(async (q: string) => {
     if (!q.trim()) {
@@ -22,7 +46,8 @@ export function GlobalSearch() {
     }
     setLoading(true);
     setError(null);
-    const navHits: SearchHit[] = searchApplicationNav(q).map((app) => ({
+    const can = (code: string) => matchesPermission(permissions, code);
+    const navHits: SearchHit[] = searchApplicationNav(q, can).map((app) => ({
       id: `nav:${app.id}`,
       title: app.label,
       subtitle: "Application",
@@ -64,7 +89,7 @@ export function GlobalSearch() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [permissions]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => void search(query), 300);

@@ -18,11 +18,18 @@ export {
   APPLICATION_NAV,
   NAV_GROUP_LABELS,
   NAV_GROUP_ORDER,
+  canAccessApp,
+  filterApplicationNav,
   groupedApplicationNav,
   searchApplicationNav,
   type AppNavItem,
   type NavGroupId,
+  type PermissionPredicate,
 } from "./platform/applicationRegistry";
+export {
+  matchesAnyPermission,
+  matchesPermission,
+} from "./platform/permissions";
 
 export { CommandPalette, type CommandItem } from "./components/CommandPalette";
 export { GlobalSearch } from "./components/GlobalSearch";

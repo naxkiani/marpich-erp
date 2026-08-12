@@ -63,3 +63,35 @@ class JournalPostedIntegration(IntegrationEvent):
             "currency": self.currency,
             "lines": list(self.lines),
         }
+
+
+@dataclass(frozen=True, kw_only=True)
+class InvoiceIssuedIntegration(IntegrationEvent):
+    invoice_id: UniqueId
+    sales_order_id: UniqueId
+    contact_id: UniqueId
+    title: str
+    amount: str
+    currency: str
+
+    @property
+    def event_name(self) -> str:
+        return "accounting.invoice.issued"
+
+    @property
+    def source_context(self) -> str:
+        return "accounting"
+
+    @property
+    def event_version(self) -> int:
+        return 1
+
+    def to_payload(self) -> dict:
+        return {
+            "invoice_id": str(self.invoice_id),
+            "sales_order_id": str(self.sales_order_id),
+            "contact_id": str(self.contact_id),
+            "title": self.title,
+            "amount": self.amount,
+            "currency": self.currency,
+        }

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "inventory.stock.reserved",
+  "type": "object",
+  "required": [
+    "stock_id",
+    "sku",
+    "quantity_reserved_delta",
+    "quantity_reserved",
+    "quantity_available",
+    "order_id",
+    "reason"
+  ],
+  "properties": {
+    "stock_id": { "type": "string", "format": "uuid" },
+    "sku": { "type": "string" },
+    "quantity_reserved_delta": { "type": "string" },
+    "quantity_reserved": { "type": "string" },
+    "quantity_available": { "type": "string" },
+    "order_id": { "type": "string", "format": "uuid" },
+    "reason": { "type": "string" }
+  }
+}

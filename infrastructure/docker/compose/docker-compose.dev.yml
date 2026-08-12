@@ -11,7 +11,8 @@ services:
       POSTGRES_PASSWORD: marpich
       POSTGRES_DB: marpich_platform
     ports:
-      - "5432:5432"
+      # Host 5432 is often occupied; Wave 01 defaults to 5433 (see MEOS_WAVE01_POSTGRES_RUNBOOK.md).
+      - "${MARPICH_PG_HOST_PORT:-5433}:5432"
     volumes:
       - marpich_pg_data:/var/lib/postgresql/data
       - ../init-db.sql:/docker-entrypoint-initdb.d/01_init.sql:ro

@@ -1,17 +1,42 @@
 context: procurement
 display_name: Procurement
 type: generic
-description: Purchase requisitions, POs, vendor management
-# Peer productization: P276 MEPIASP (procurement_operating) — never fork /api/v1/procurement*; never dual-write procurement_* from S2P operating fabric
+description: Purchase requisitions from low stock — CAP-ENT-040 (Wave 02 Functional)
 aggregates:
-- PurchaseRequisition
-- PurchaseOrder
-- Vendor
-- GoodsReceipt
+  - PurchaseRequisition
+  - PurchaseOrder
+  - Vendor
+  - GoodsReceipt
 publishes:
-- procurement.po.approved
-- procurement.goods.received
+  - procurement.requisition.created
+  - procurement.requisition.submitted
+  - procurement.po.approved
+  - procurement.goods.received
 subscribes:
-- inventory.reorder.triggered
-- workflow.process.approved
+  - inventory.reorder.triggered
+  - workflow.process.approved
 schema: procurement
+permissions:
+  - procurement.requisitions.read
+  - procurement.requisitions.write
+  - procurement.ai.read
+  - procurement.ai.infer
+ai:
+  surfaces:
+    - insights
+    - predictions
+    - recommendations
+    - summaries
+    - search
+    - assistant
+    - automation
+    - document_intelligence
+    - voice_commands
+    - chat
+    - report_explanation
+    - anomaly_detection
+    - forecasting
+    - optimization
+  prompt_templates:
+    - procurement.requisition.summary
+    - procurement.vendor.insights

@@ -39,16 +39,19 @@ export function MarpichProviders({ children }: { children: ReactNode }) {
 export function AppShell({
   children,
   nav,
+  commands: commandsProp,
 }: {
   children: ReactNode;
   nav?: ReactNode;
+  /** When provided (e.g. AuthZ-filtered), replaces default registry commands. */
+  commands?: CommandItem[];
 }) {
   const { t } = useLocale();
   const [commandOpen, setCommandOpen] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
 
-  const commands = useMemo<CommandItem[]>(
+  const defaultCommands = useMemo<CommandItem[]>(
     () => [
       ...APPLICATION_NAV.map((app) => ({
         id: `nav-${app.id}`,
@@ -75,6 +78,7 @@ export function AppShell({
     ],
     [],
   );
+  const commands = commandsProp ?? defaultCommands;
 
   const onCommandPalette = useCallback(() => setCommandOpen(true), []);
   const onFocusSearch = useCallback(() => {

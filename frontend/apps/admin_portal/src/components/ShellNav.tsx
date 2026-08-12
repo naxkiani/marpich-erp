@@ -4,13 +4,24 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@marpich/auth-provider";
 import { groupedApplicationNav, useLocale } from "@marpich/shared";
+import { useMemo } from "react";
 
 export function ShellNav() {
   const pathname = usePathname();
   const router = useRouter();
   const { t } = useLocale();
-  const { isAuthenticated, isLoading, session, user, logout } = useAuth();
-  const groups = groupedApplicationNav();
+  const { isAuthenticated, isLoading, session, user, logout, hasPermission } = useAuth();
+  const groups = useMemo(() => {
+    if (!isAuthenticated) {
+      return groupedApplicationNav()
+        .map((g) => ({
+          ...g,
+          items: g.items.filter((i) => i.group === "home" || i.id === "security"),
+        }))
+        .filter((g) => g.items.length > 0);
+    }
+    return groupedApplicationNav(hasPermission);
+  }, [hasPermission, isAuthenticated]);
 
   async function onLogout() {
     await logout();

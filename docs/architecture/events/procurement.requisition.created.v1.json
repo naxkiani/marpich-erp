@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "procurement.requisition.created",
+  "type": "object",
+  "required": ["requisition_id", "sku", "quantity", "quantity_available", "reorder_threshold"],
+  "properties": {
+    "requisition_id": { "type": "string", "format": "uuid" },
+    "sku": { "type": "string" },
+    "quantity": { "type": "string" },
+    "quantity_available": { "type": "string" },
+    "reorder_threshold": { "type": "string" }
+  }
+}

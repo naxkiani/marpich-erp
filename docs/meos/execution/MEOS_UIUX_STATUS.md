@@ -8,20 +8,20 @@
 - Design tokens: light/dark in `frontend/shared/src/theme/tokens.css` (blue accent family)  
 - ~23 routes in admin portal (healthcare, education, banking analytics, enterprise desks, account)
 
-## Gaps (P0)
+## Gaps (P0) — mitigated
 
-| Capability | Gap |
-|------------|-----|
-| ONE NAV | Flat hardcoded links; not grouped / registry-driven |
-| ONE SEARCH | Auth + tenant headers; registry app hits; no fake success without auth |
+| Capability | Status |
+|------------|--------|
+| ONE NAV | AuthZ-filtered registry groups |
+| ONE SEARCH | Auth + tenant headers; permission-filtered app hits |
 | ONE NOTIFICATION | Auth inbox; mark-read; desk deep-link |
 | ONE AI | Platform session headers only |
-| Command palette | Registry-driven open routes |
+| Command palette | AuthZ-filtered registry routes |
 | Mobile | Menu toggle + drawer sidebar |
 | Route guard | `/` and `/modules` protected |
 | Workflow UX | `/enterprise/workflows` Task Center |
 | Visual language | Royal blue / silver token pass (Wave 01) |
 
-## Target (Wave 01)
+## Target (Wave 01 / P0)
 
-Grouped nav + auth-wired search/notify/AI + registry command palette + mobile drawer + Workflow Task Center + protect `/` and `/modules` — **implemented**.
+Grouped nav + auth-wired search/notify/AI + registry command palette + mobile drawer + Workflow Task Center + protect `/` and `/modules` + **permission-aware nav/search/palette** — **implemented**.

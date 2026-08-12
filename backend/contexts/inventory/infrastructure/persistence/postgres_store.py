@@ -24,12 +24,14 @@ class PostgresStockLevelRepository(IStockLevelRepository):
                         tenant_id=stock.tenant_id,
                         sku=stock.sku,
                         quantity_on_hand=stock.quantity_on_hand,
+                        quantity_reserved=stock.quantity_reserved,
                         updated_at=stock.updated_at,
                     )
                 )
             else:
                 row.sku = stock.sku
                 row.quantity_on_hand = stock.quantity_on_hand
+                row.quantity_reserved = stock.quantity_reserved
                 row.updated_at = stock.updated_at
 
     async def find_by_sku(self, tenant_id: str, sku: str) -> StockLevel | None:
@@ -64,5 +66,6 @@ def _stock_from_row(row: InventoryStockLevelRow) -> StockLevel:
         tenant_id=row.tenant_id,
         sku=row.sku,
         quantity_on_hand=Decimal(str(row.quantity_on_hand)),
+        quantity_reserved=Decimal(str(getattr(row, "quantity_reserved", 0) or 0)),
         updated_at=row.updated_at,
     )

@@ -6,6 +6,13 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 COMPOSE_FILE="${COMPOSE_FILE:-$ROOT/infrastructure/docker/compose/docker-compose.dev.yml}"
 COMPOSE_PROFILES="${COMPOSE_PROFILES:-}"
 
+# Align with compose host port mapping (default 5433).
+export PGPORT="${PGPORT:-5433}"
+export PGHOST="${PGHOST:-127.0.0.1}"
+export PGUSER="${PGUSER:-marpich}"
+export PGPASSWORD="${PGPASSWORD:-marpich}"
+export PGDATABASE="${PGDATABASE:-marpich_platform}"
+
 cd "$ROOT"
 
 echo "Starting Marpich platform services..."
@@ -19,7 +26,8 @@ fi
 "$ROOT/scripts/run-migrations.sh"
 
 echo "Local platform is ready."
-echo "  Postgres: localhost:5432"
+echo "  Postgres: localhost:${PGPORT:-5433} (compose default MARPICH_PG_HOST_PORT)"
 echo "  Redis:    localhost:6379"
 echo "  Kafka:    localhost:9092"
 echo "Run backend: cd backend && uvicorn core.presentation.api.main:app --reload --port 8000"
+echo "Wave 01 loop: ./scripts/meos-wave01-user-loop.sh"

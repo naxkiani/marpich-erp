@@ -1,34 +1,29 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "marpich.sales.order.placed.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "sales.order.placed",
-  "description": "Sales order confirmed — triggers inventory reservation and finance",
   "type": "object",
-  "required": ["event_name", "event_version", "source_context", "tenant_id", "payload"],
+  "required": ["order_id", "contact_id", "title", "amount", "currency"],
   "properties": {
-    "event_name": { "const": "sales.order.placed" },
-    "event_version": { "const": 1 },
-    "source_context": { "const": "sales" },
-    "payload": {
-      "type": "object",
-      "required": ["order_id", "customer_id", "lines", "total_amount", "currency"],
-      "properties": {
-        "order_id": { "type": "string", "format": "uuid" },
-        "customer_id": { "type": "string", "format": "uuid" },
-        "lines": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": ["item_id", "quantity", "unit_price"],
-            "properties": {
-              "item_id": { "type": "string", "format": "uuid" },
-              "quantity": { "type": "number" },
-              "unit_price": { "type": "number" }
-            }
-          }
-        },
-        "total_amount": { "type": "number" },
-        "currency": { "type": "string", "minLength": 3, "maxLength": 3 }
+    "order_id": { "type": "string", "format": "uuid" },
+    "customer_id": { "type": "string", "format": "uuid" },
+    "contact_id": { "type": "string", "format": "uuid" },
+    "quotation_id": { "type": ["string", "null"], "format": "uuid" },
+    "opportunity_id": { "type": ["string", "null"], "format": "uuid" },
+    "title": { "type": "string" },
+    "total_amount": { "type": "number" },
+    "amount": { "type": "string" },
+    "currency": { "type": "string", "minLength": 3, "maxLength": 3 },
+    "lines": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["item_id", "quantity", "unit_price"],
+        "properties": {
+          "item_id": { "type": "string" },
+          "sku": { "type": "string" },
+          "quantity": { "type": "number" },
+          "unit_price": { "type": "number" }
+        }
       }
     }
   }

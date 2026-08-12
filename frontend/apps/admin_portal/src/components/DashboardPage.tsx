@@ -324,10 +324,10 @@ export function DashboardPage() {
 
   const workflowSteps = useMemo(
     () => [
-      { id: "signIn", label: t("dashboard.step.signIn") },
-      { id: "catalog", label: t("dashboard.step.catalog") },
-      { id: "provision", label: t("dashboard.step.provision") },
-      { id: "operate", label: t("dashboard.step.operate") },
+      t("dashboard.step.signIn"),
+      t("dashboard.step.catalog"),
+      t("dashboard.step.provision"),
+      t("dashboard.step.operate"),
     ],
     [t],
   );

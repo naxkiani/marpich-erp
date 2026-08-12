@@ -1,21 +1,40 @@
 context: sales
 display_name: Sales
 type: generic
-description: Quotes, orders, pricing, commissions
-# Peer productization: P277 MESIARO (sales_revenue_operating) — never fork /api/v1/sales*; never dual-write sales_* from operating fabric
-# Peer productization: P278 MEQTCIP (quote_to_cash_operating) — post-acceptance order/billing cycle; Sales remains quote/order truth
-# Boundary: P273 = CX/CRM OS · P277 = Sales/RevOps OS · P278 = Quote-to-Cash · P282 = Pricing OS · P283 = Contract OS · P271 = Financial Intelligence · P279 = Treasury/Cash · P284 = Commercial Performance · P285 = Service Management · P286 = IT Ops · P287 = Cloud Platform Engineering (MECPEI) · P288 = DevSecOps (MEDSSAD) · P289 = Application Architecture (MEAAGSI) · P290 = Data Architecture (MEDAMIA) · P291 = Integration Architecture (MEIEII) · P292 = API Management (MEAPIE) · P293 = Event Streaming / Real-Time Event Product (MEESIE) · P294 = Notification / Omnichannel Experience (MENCOE) · P295 = Experience Personalization / Journey (MEEPJI) · P296 = Conversational / Voice / Multimodal (MECVII) · P297 = Human-AI Collaboration / Agentic Workspace (MEAWHC) · P298 = Agentic Process Automation (MEAPAE) · P299 = Process Mining / Intelligence (MEPICO) · P300 = Process Marketplace (MEPAMP) · P301 = Visual Process Composer (MEPCVA) · P302 = Process Quality (MEPQDV) · P303 = Process Release (MEPRED) · P304 = Process Observability (MEPOCI) · P305 = Incident / Reliability (MEIRRE) · P306 = Service Operations (MEESOP) · P307 = Knowledge (MEKNOL) · P308 = Document Intelligence (MEDCIM) · P309 = Records / Retention / Legal Hold (MERILG) · P310 = Information Classification (MEIGSI) · P311 = DLP / Information Protection / Deployment (planned)
+description: Quotes and orders from CRM won opportunities — CAP-ENT-002 (Wave 02 Functional)
+# Peer productization: P277 MESIARO — never fork /api/v1/sales*; never dual-write sales_* from operating fabric
 aggregates:
-- Quote
-- SalesOrder
-- PriceList
-- Commission
+  - Quotation
+  - SalesOrder
+permissions:
+  - sales.quotations.read
+  - sales.quotations.write
+  - sales.orders.read
+  - sales.orders.write
+  - sales.ai.read
+  - sales.ai.infer
 publishes:
-- sales.order.placed
-- sales.order.fulfilled
-- sales.quote.accepted
+  - sales.quotation.sent
+  - sales.order.placed
 subscribes:
-- crm.opportunity.won
-- inventory.stock.reserved
-- warehouse.shipment.dispatched
+  - crm.opportunity.won
 schema: sales
+ai:
+  surfaces:
+    - insights
+    - predictions
+    - recommendations
+    - summaries
+    - search
+    - assistant
+    - automation
+    - document_intelligence
+    - voice_commands
+    - chat
+    - report_explanation
+    - anomaly_detection
+    - forecasting
+    - optimization
+  prompt_templates:
+    - sales.quotation.summary
+    - sales.pipeline.insights

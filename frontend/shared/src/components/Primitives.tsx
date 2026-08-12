@@ -57,15 +57,35 @@ export function ProgressBar({ value, label }: { value: number; label?: string })
   );
 }
 
-export function StepProgress({ steps, current }: { steps: string[]; current: number }) {
+export type StepProgressItem = string | { id?: string; label: string };
+
+function resolveStep(step: StepProgressItem, index: number): { key: string; label: string } {
+  if (typeof step === "string") {
+    return { key: `step-${index}-${step}`, label: step };
+  }
+  const label = typeof step?.label === "string" ? step.label : String(step ?? "");
+  const id = typeof step?.id === "string" && step.id ? step.id : `idx-${index}`;
+  return { key: `step-${id}`, label };
+}
+
+export function StepProgress({
+  steps,
+  current,
+}: {
+  steps: StepProgressItem[];
+  current: number;
+}) {
   return (
     <ol className="mp-step-progress">
-      {steps.map((step, i) => (
-        <li key={step} className={clsx(i <= current && "mp-step-active")}>
-          <span className="mp-step-index">{i + 1}</span>
-          <span>{step}</span>
-        </li>
-      ))}
+      {steps.map((step, i) => {
+        const resolved = resolveStep(step, i);
+        return (
+          <li key={resolved.key} className={clsx(i <= current && "mp-step-active")}>
+            <span className="mp-step-index">{i + 1}</span>
+            <span>{resolved.label}</span>
+          </li>
+        );
+      })}
     </ol>
   );
 }

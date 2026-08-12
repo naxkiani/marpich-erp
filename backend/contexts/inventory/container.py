@@ -1,8 +1,9 @@
-"""Inventory DI container + POS event subscription."""
+"""Inventory DI container + POS/Sales event subscriptions."""
 from __future__ import annotations
 
 from contexts.inventory.application.service import InventoryApplicationService
 from contexts.inventory.infrastructure.acl.pos_events import handle_pos_sale_completed
+from contexts.inventory.infrastructure.acl.sales_events import handle_sales_order_placed
 from contexts.inventory.infrastructure.persistence.memory_store import InMemoryStockLevelRepository
 from contexts.inventory.infrastructure.persistence.postgres_store import PostgresStockLevelRepository
 from shared.infrastructure.messaging.event_bus import InProcessEventBus
@@ -21,6 +22,7 @@ def get_inventory_service() -> InventoryApplicationService:
             _service = InventoryApplicationService(stock=InMemoryStockLevelRepository())
     if not _registered:
         InProcessEventBus.subscribe("pos.sale.completed", handle_pos_sale_completed)
+        InProcessEventBus.subscribe("sales.order.placed", handle_sales_order_placed)
         _registered = True
     return _service
 

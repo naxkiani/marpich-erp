@@ -147,19 +147,48 @@ applications:
   - id: crm
     name: CRM
     domain: business
-    status: SCAFFOLDED
+    status: TESTED
     wave: 2
-    frontend: false
-    backend: false
-    score: 15
+    frontend: true
+    backend: true
+    routes: ["/crm"]
+    score: 72
   - id: sales
     name: Sales
     domain: business
-    status: SCAFFOLDED
+    status: TESTED
     wave: 2
-    frontend: false
-    backend: false
-    score: 15
+    frontend: true
+    backend: true
+    routes: ["/sales"]
+    score: 70
+  - id: inventory
+    name: Inventory
+    domain: business
+    status: TESTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/inventory"]
+    score: 68
+  - id: accounting
+    name: Accounting AR
+    domain: finance
+    status: TESTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/accounting"]
+    score: 70
+  - id: procurement
+    name: Procurement
+    domain: business
+    status: TESTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/procurement"]
+    score: 68
   - id: tax
     name: Tax
     domain: finance
@@ -198,7 +227,23 @@ verification:
   wave01_router_honesty: verified
   wave01_ci: verified
   wave01_postgres_runbook: verified
+  wave01_authz_nav: verified
+  wave01_orphan_clients_gated: verified
+  wave01_postgres_port_5433: verified
+  wave01_identity_postgres_save_fix: verified
+  wave02_crm_functional: verified
+  wave02_sales_functional: verified
+  wave02_inventory_functional: verified
+  wave02_accounting_ar_functional: verified
+  wave02_procurement_functional: verified
   notes: >
     Shell widgets use marpich_auth_session headers; Workflow Task Center at
-    /enterprise/workflows; unavailable ROUTER modules omitted before register;
-    Wave 01 CI workflow meos-wave01-smoke.yml added. Overall platform remains NOT_READY.
+    /enterprise/workflows; AuthZ filters nav/command/search; orphan FE clients gated;
+    Postgres host port 5433; identity Postgres tenant_id bug fixed; CRM CAP-ENT-001
+    contacts/opportunities Functional (API+UI+events+migration 046); Sales CAP-ENT-002
+    quotations/orders Functional (CRM win ACL + API+UI+events+migration 047);
+    Inventory CAP-ENT-042 stock reservations on sales.order.placed (API+UI+events+migration 048);
+    Accounting AR CAP-ENT-023 invoices from sales.order.placed (API+UI+events+migration 049);
+    Procurement CAP-ENT-040 requisitions from inventory.reorder.triggered (API+UI+events+migration 050).
+    Overall NOT_READY.
+

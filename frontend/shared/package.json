@@ -12,7 +12,8 @@
   },
   "scripts": {
     "lint": "tsc --noEmit",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:unit": "node --test src/platform/applicationRegistry.test.mjs"
   },
   "peerDependencies": {
     "react": "^19.0.0",

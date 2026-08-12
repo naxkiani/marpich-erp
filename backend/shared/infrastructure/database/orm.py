@@ -222,6 +222,29 @@ class BillingEncounterRow(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
+class AccountingInvoiceRow(Base):
+    __tablename__ = "invoices"
+    __table_args__ = (
+        Index("ix_accounting_invoices_tenant", "tenant_id", "status"),
+        Index("ix_accounting_invoices_order", "tenant_id", "sales_order_id", unique=True),
+        {"schema": "accounting"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    sales_order_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
+    contact_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
+    title: Mapped[str] = mapped_column(String(256), nullable=False)
+    amount: Mapped[object] = mapped_column(Numeric(18, 4), nullable=False)
+    currency: Mapped[str] = mapped_column(String(3), nullable=False, default="USD")
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="draft")
+    line_items: Mapped[list] = mapped_column(JSONB, nullable=False, default=list)
+    correlation_id: Mapped[str] = mapped_column(String(64), nullable=False, default="")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    issued_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
 class AccountRow(Base):
     __tablename__ = "accounts"
     __table_args__ = {"schema": "finance"}
@@ -1101,6 +1124,7 @@ class InventoryStockLevelRow(Base):
     tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
     sku: Mapped[str] = mapped_column(String(64), nullable=False)
     quantity_on_hand: Mapped[float] = mapped_column(Numeric(18, 4), nullable=False, default=0)
+    quantity_reserved: Mapped[float] = mapped_column(Numeric(18, 4), nullable=False, default=0)
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
@@ -1376,3 +1400,697 @@ class PharmacyDispenseRecordRow(Base):
     quantity_dispensed: Mapped[float] = mapped_column(Numeric(18, 4), nullable=False)
     dispensed_by: Mapped[str | None] = mapped_column(String(128))
     dispensed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+# --- Financial Kernel money-path (GL) — CAP financial kernel ---
+
+
+class FinancialKernelChartOfAccountRow(Base):
+    __tablename__ = "chart_of_accounts"
+    __table_args__ = (
+        Index("ix_fk_coa_tenant_code", "tenant_id", "code", unique=True),
+        Index("ix_fk_coa_tenant_key", "tenant_id", "account_key"),
+        {"schema": "financial_kernel"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    code: Mapped[str] = mapped_column(String(64), nullable=False)
+    account_key: Mapped[str | None] = mapped_column(String(128))
+    parent_account_id: Mapped[str | None] = mapped_column(String(64))
+    tree_id: Mapped[str | None] = mapped_column(String(64))
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class FinancialKernelJournalRow(Base):
+    __tablename__ = "journals"
+    __table_args__ = (
+        Index("ix_fk_journals_tenant_idemp", "tenant_id", "idempotency_key", unique=True),
+        Index("ix_fk_journals_tenant_posted", "tenant_id", "posted_at"),
+        {"schema": "financial_kernel"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    idempotency_key: Mapped[str] = mapped_column(String(128), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="draft")
+    period_id: Mapped[str | None] = mapped_column(String(64))
+    posted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class FinancialKernelFiscalYearRow(Base):
+    __tablename__ = "fiscal_years"
+    __table_args__ = (
+        Index("ix_fk_fy_tenant", "tenant_id"),
+        {"schema": "financial_kernel"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    name: Mapped[str] = mapped_column(String(128), nullable=False)
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+
+
+class FinancialKernelFiscalPeriodRow(Base):
+    __tablename__ = "fiscal_periods"
+    __table_args__ = (
+        Index("ix_fk_fp_tenant_status", "tenant_id", "status"),
+        Index("ix_fk_fp_tenant_year", "tenant_id", "fiscal_year_id"),
+        {"schema": "financial_kernel"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    fiscal_year_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="open")
+    organization_id: Mapped[str | None] = mapped_column(String(64))
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+
+
+# --- Banking money-path ---
+
+
+class BankingCustomerRow(Base):
+    __tablename__ = "customers"
+    __table_args__ = (
+        Index("ix_banking_customers_tenant_email", "tenant_id", "email", unique=True),
+        {"schema": "banking"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    email: Mapped[str] = mapped_column(String(256), nullable=False)
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class BankingAccountProductRow(Base):
+    __tablename__ = "account_products"
+    __table_args__ = (
+        Index("ix_banking_products_tenant_code", "tenant_id", "product_code", unique=True),
+        {"schema": "banking"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    product_code: Mapped[str] = mapped_column(String(64), nullable=False)
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+
+
+class BankingAccountRow(Base):
+    __tablename__ = "accounts"
+    __table_args__ = (
+        Index("ix_banking_accounts_tenant_number", "tenant_id", "account_number", unique=True),
+        Index("ix_banking_accounts_tenant_customer", "tenant_id", "customer_id"),
+        {"schema": "banking"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    customer_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    account_number: Mapped[str] = mapped_column(String(64), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="pending")
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class BankingPaymentTransferRow(Base):
+    __tablename__ = "payment_transfers"
+    __table_args__ = (
+        Index("ix_banking_transfers_tenant_ref", "tenant_id", "transfer_ref", unique=True),
+        Index("ix_banking_transfers_tenant_status", "tenant_id", "status"),
+        Index("ix_banking_transfers_batch", "batch_id"),
+        {"schema": "banking"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    transfer_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="draft")
+    source_account_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    customer_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    batch_id: Mapped[str | None] = mapped_column(String(64))
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class BankingDepositProfileRow(Base):
+    __tablename__ = "deposit_profiles"
+    __table_args__ = (
+        Index("ix_banking_deposit_profiles_tenant_account", "tenant_id", "account_id"),
+        Index("ix_banking_deposit_profiles_tenant_customer", "tenant_id", "customer_id"),
+        Index("ix_banking_deposit_profiles_tenant_status", "tenant_id", "status"),
+        {"schema": "banking"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    account_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    customer_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="pending_approval")
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class BankingDepositTransactionRow(Base):
+    __tablename__ = "deposit_transactions"
+    __table_args__ = (
+        Index("ix_banking_deposit_tx_tenant_ref", "tenant_id", "transaction_ref", unique=True),
+        Index("ix_banking_deposit_tx_deposit", "tenant_id", "deposit_id"),
+        {"schema": "banking"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    deposit_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    transaction_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+
+
+class BankingDepositAccrualRow(Base):
+    __tablename__ = "deposit_accruals"
+    __table_args__ = (
+        Index("ix_banking_deposit_accruals_deposit", "tenant_id", "deposit_id"),
+        {"schema": "banking"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    deposit_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+
+
+class BankingProfitRuleRow(Base):
+    __tablename__ = "profit_rules"
+    __table_args__ = (
+        Index("ix_banking_profit_rules_tenant_code", "tenant_id", "rule_code", unique=True),
+        {"schema": "banking"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    rule_code: Mapped[str] = mapped_column(String(64), nullable=False)
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+
+
+class BankingLoanProfileRow(Base):
+    __tablename__ = "loan_profiles"
+    __table_args__ = (
+        Index("ix_banking_loan_profiles_tenant_ref", "tenant_id", "loan_ref", unique=True),
+        Index("ix_banking_loan_profiles_tenant_account", "tenant_id", "account_id"),
+        Index("ix_banking_loan_profiles_tenant_status", "tenant_id", "status"),
+        {"schema": "banking"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    account_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    loan_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="draft")
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class BankingLoanTransactionRow(Base):
+    __tablename__ = "loan_transactions"
+    __table_args__ = (
+        Index("ix_banking_loan_tx_tenant_ref", "tenant_id", "transaction_ref", unique=True),
+        Index("ix_banking_loan_tx_loan", "tenant_id", "loan_id"),
+        {"schema": "banking"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    loan_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    transaction_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+
+
+class BankingLoanInstallmentRow(Base):
+    __tablename__ = "loan_installments"
+    __table_args__ = (
+        Index("ix_banking_loan_installments_loan", "tenant_id", "loan_id"),
+        {"schema": "banking"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    loan_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+
+
+class BankingLoanCollateralRow(Base):
+    __tablename__ = "loan_collaterals"
+    __table_args__ = (
+        Index("ix_banking_loan_collaterals_loan", "tenant_id", "loan_id"),
+        {"schema": "banking"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    loan_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+
+
+class BankingLoanGuarantorRow(Base):
+    __tablename__ = "loan_guarantors"
+    __table_args__ = (
+        Index("ix_banking_loan_guarantors_loan", "tenant_id", "loan_id"),
+        {"schema": "banking"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    loan_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+
+
+class BankingLoanCreditRiskRow(Base):
+    __tablename__ = "loan_credit_risks"
+    __table_args__ = (
+        Index("ix_banking_loan_credit_risks_loan", "tenant_id", "loan_id"),
+        {"schema": "banking"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    loan_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+
+
+# --- Treasury money-path ---
+
+
+class TreasuryAccountRow(Base):
+    __tablename__ = "accounts"
+    __table_args__ = (
+        Index("ix_treasury_accounts_tenant_code", "tenant_id", "code", unique=True),
+        {"schema": "treasury"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    code: Mapped[str] = mapped_column(String(64), nullable=False)
+    account_type: Mapped[str] = mapped_column(String(32), nullable=False)
+    currency: Mapped[str] = mapped_column(String(8), nullable=False, default="USD")
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class TreasuryTransferRow(Base):
+    __tablename__ = "transfers"
+    __table_args__ = (
+        Index("ix_treasury_transfers_tenant_ref", "tenant_id", "reference", unique=True),
+        Index("ix_treasury_transfers_tenant_status", "tenant_id", "status"),
+        {"schema": "treasury"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    reference: Mapped[str] = mapped_column(String(128), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="draft")
+    from_account_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    to_account_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class TreasuryCashLocationRow(Base):
+    __tablename__ = "cash_locations"
+    __table_args__ = (
+        Index("ix_treasury_cash_loc_tenant_code", "tenant_id", "code", unique=True),
+        {"schema": "treasury"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    code: Mapped[str] = mapped_column(String(64), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="active")
+    currency: Mapped[str] = mapped_column(String(8), nullable=False, default="USD")
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class TreasuryCashTransactionRow(Base):
+    __tablename__ = "cash_transactions"
+    __table_args__ = (
+        Index("ix_treasury_cash_tx_location", "tenant_id", "location_id"),
+        {"schema": "treasury"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    location_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    transaction_type: Mapped[str] = mapped_column(String(32), nullable=False)
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class TreasuryBankAccountRow(Base):
+    __tablename__ = "bank_accounts"
+    __table_args__ = (
+        Index("ix_treasury_bank_accounts_tenant_code", "tenant_id", "code", unique=True),
+        Index("ix_treasury_bank_accounts_bank", "tenant_id", "bank_id"),
+        {"schema": "treasury"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    bank_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    code: Mapped[str] = mapped_column(String(64), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="draft")
+    currency: Mapped[str] = mapped_column(String(8), nullable=False, default="USD")
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class TreasuryCashPoolRow(Base):
+    __tablename__ = "cash_pools"
+    __table_args__ = (
+        Index("ix_treasury_cash_pools_tenant_code", "tenant_id", "code", unique=True),
+        Index("ix_treasury_cash_pools_tenant_status", "tenant_id", "status"),
+        {"schema": "treasury"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    code: Mapped[str] = mapped_column(String(64), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="active")
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+
+
+class TreasuryLiquiditySnapshotRow(Base):
+    __tablename__ = "liquidity_snapshots"
+    __table_args__ = (
+        Index("ix_treasury_liquidity_snapshots_tenant_period_date", "tenant_id", "period_type", "as_of_date"),
+        {"schema": "treasury"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    period_type: Mapped[str] = mapped_column(String(32), nullable=False)
+    as_of_date: Mapped[str] = mapped_column(String(32), nullable=False)
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+
+
+class TreasuryFundingNeedRow(Base):
+    __tablename__ = "funding_needs"
+    __table_args__ = (
+        Index("ix_treasury_funding_needs_tenant_status", "tenant_id", "status"),
+        {"schema": "treasury"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="open")
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+
+
+class TreasuryBankStatementImportRow(Base):
+    __tablename__ = "bank_statement_imports"
+    __table_args__ = (
+        Index("ix_treasury_bank_statement_imports_account", "tenant_id", "treasury_account_id", "status"),
+        {"schema": "treasury"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    treasury_account_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="imported")
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+
+
+class TreasuryBankReconciliationRow(Base):
+    __tablename__ = "bank_reconciliations"
+    __table_args__ = (
+        Index("ix_treasury_bank_reconciliations_account", "tenant_id", "treasury_account_id", "status"),
+        {"schema": "treasury"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    treasury_account_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="draft")
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+
+
+class TreasuryBankReconciliationAuditRow(Base):
+    __tablename__ = "bank_reconciliation_audits"
+    __table_args__ = (
+        Index("ix_treasury_bank_reconciliation_audits_reconciliation", "tenant_id", "reconciliation_id"),
+        {"schema": "treasury"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    reconciliation_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+
+
+class TreasuryCashReconciliationRunRow(Base):
+    __tablename__ = "cash_reconciliation_runs"
+    __table_args__ = (
+        Index("ix_treasury_cash_reconciliation_runs_location", "tenant_id", "location_id", "status"),
+        Index("ix_treasury_cash_reconciliation_runs_branch", "tenant_id", "branch_id"),
+        {"schema": "treasury"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    location_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    branch_id: Mapped[str | None] = mapped_column(String(64))
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="draft")
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+
+
+class TreasuryCashReconciliationAuditRow(Base):
+    __tablename__ = "cash_reconciliation_audits"
+    __table_args__ = (
+        Index("ix_treasury_cash_reconciliation_audits_reconciliation", "tenant_id", "reconciliation_id"),
+        {"schema": "treasury"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    reconciliation_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    document: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+
+
+# --- Identity Federation (EIFTP SoR) ---
+
+
+class FederationIdentityProviderRow(Base):
+    __tablename__ = "identity_providers"
+    __table_args__ = (
+        Index("uq_federation_idp_tenant_ref", "tenant_id", "provider_ref", unique=True),
+        {"schema": "federation"},
+    )
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    provider_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    protocol: Mapped[str] = mapped_column(String(32), nullable=False)
+    name: Mapped[str] = mapped_column(String(256), nullable=False)
+    config: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+    enabled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    plugin_id: Mapped[str | None] = mapped_column(String(128))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class FederationTrustRelationshipRow(Base):
+    __tablename__ = "trust_relationships"
+    __table_args__ = (
+        Index("uq_federation_trust_ref", "tenant_id", "trust_ref", unique=True),
+        {"schema": "federation"},
+    )
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    trust_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    source_entity_type: Mapped[str] = mapped_column(String(32), nullable=False)
+    source_entity_id: Mapped[str] = mapped_column(String(128), nullable=False)
+    target_entity_type: Mapped[str] = mapped_column(String(32), nullable=False)
+    target_entity_id: Mapped[str] = mapped_column(String(128), nullable=False)
+    trust_score: Mapped[int] = mapped_column(Integer, nullable=False, default=50)
+    trust_level: Mapped[str] = mapped_column(String(16), nullable=False, default="medium")
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="active")
+    valid_from: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    valid_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    metadata_json: Mapped[dict] = mapped_column("metadata", JSONB, nullable=False, default=dict)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class FederationClaimsMappingRow(Base):
+    __tablename__ = "claims_mappings"
+    __table_args__ = (
+        Index("uq_federation_claims_ref", "tenant_id", "mapping_ref", unique=True),
+        {"schema": "federation"},
+    )
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    mapping_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    provider_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
+    source_claim: Mapped[str] = mapped_column(String(128), nullable=False)
+    target_claim: Mapped[str] = mapped_column(String(128), nullable=False)
+    transform_type: Mapped[str] = mapped_column(String(32), nullable=False, default="direct")
+    transform_config: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+    enabled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    priority: Mapped[int] = mapped_column(Integer, nullable=False, default=100)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class FederationIdentityLinkRow(Base):
+    __tablename__ = "identity_links"
+    __table_args__ = (
+        Index("uq_federation_link_ref", "tenant_id", "link_ref", unique=True),
+        Index("uq_federation_link_external", "tenant_id", "provider_id", "external_subject", unique=True),
+        {"schema": "federation"},
+    )
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    link_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    user_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
+    provider_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
+    external_subject: Mapped[str] = mapped_column(String(256), nullable=False)
+    link_status: Mapped[str] = mapped_column(String(32), nullable=False, default="active")
+    linked_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    last_used_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    metadata_json: Mapped[dict] = mapped_column("metadata", JSONB, nullable=False, default=dict)
+
+
+class FederationSessionRow(Base):
+    __tablename__ = "federation_sessions"
+    __table_args__ = (
+        Index("ix_federation_sessions_ref", "tenant_id", "session_ref"),
+        {"schema": "federation"},
+    )
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), primary_key=True)
+    session_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    user_id: Mapped[UUID | None] = mapped_column(PG_UUID(as_uuid=True))
+    provider_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
+    protocol: Mapped[str] = mapped_column(String(32), nullable=False)
+    idp_session_id: Mapped[str | None] = mapped_column(String(256))
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="active")
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+
+
+class FederationRefCounterRow(Base):
+    __tablename__ = "ref_counters"
+    __table_args__ = {"schema": "federation"}
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    prefix: Mapped[str] = mapped_column(String(64), primary_key=True)
+    next_value: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+
+
+# ── CRM bounded context (CAP-ENT-001) ──────────────────────────────────────
+
+
+class CrmContactRow(Base):
+    __tablename__ = "contacts"
+    __table_args__ = (
+        Index("ix_crm_contacts_tenant_email", "tenant_id", "email", unique=True),
+        {"schema": "crm"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    email: Mapped[str] = mapped_column(String(256), nullable=False)
+    full_name: Mapped[str] = mapped_column(String(128), nullable=False)
+    company: Mapped[str | None] = mapped_column(String(128))
+    phone: Mapped[str | None] = mapped_column(String(32))
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="active")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class CrmOpportunityRow(Base):
+    __tablename__ = "opportunities"
+    __table_args__ = (
+        Index("ix_crm_opportunities_tenant", "tenant_id", "stage"),
+        {"schema": "crm"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    contact_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
+    title: Mapped[str] = mapped_column(String(256), nullable=False)
+    amount: Mapped[object] = mapped_column(Numeric(18, 4), nullable=False)
+    currency: Mapped[str] = mapped_column(String(3), nullable=False, default="USD")
+    stage: Mapped[str] = mapped_column(String(32), nullable=False, default="qualifying")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    closed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class SalesQuotationRow(Base):
+    __tablename__ = "quotations"
+    __table_args__ = (
+        Index("ix_sales_quotations_tenant", "tenant_id", "status"),
+        Index("ix_sales_quotations_opportunity", "tenant_id", "opportunity_id"),
+        {"schema": "sales"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    contact_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
+    opportunity_id: Mapped[UUID | None] = mapped_column(PG_UUID(as_uuid=True))
+    title: Mapped[str] = mapped_column(String(256), nullable=False)
+    amount: Mapped[object] = mapped_column(Numeric(18, 4), nullable=False)
+    currency: Mapped[str] = mapped_column(String(3), nullable=False, default="USD")
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="draft")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    sent_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    accepted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class SalesOrderRow(Base):
+    __tablename__ = "orders"
+    __table_args__ = (
+        Index("ix_sales_orders_tenant", "tenant_id", "status"),
+        {"schema": "sales"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    contact_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
+    quotation_id: Mapped[UUID | None] = mapped_column(PG_UUID(as_uuid=True))
+    opportunity_id: Mapped[UUID | None] = mapped_column(PG_UUID(as_uuid=True))
+    title: Mapped[str] = mapped_column(String(256), nullable=False)
+    amount: Mapped[object] = mapped_column(Numeric(18, 4), nullable=False)
+    currency: Mapped[str] = mapped_column(String(3), nullable=False, default="USD")
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="confirmed")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class ProcurementRequisitionRow(Base):
+    __tablename__ = "requisitions"
+    __table_args__ = (
+        Index("ix_procurement_requisitions_tenant", "tenant_id", "status"),
+        {"schema": "procurement"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    sku: Mapped[str] = mapped_column(String(64), nullable=False)
+    quantity: Mapped[object] = mapped_column(Numeric(18, 4), nullable=False)
+    quantity_available: Mapped[object] = mapped_column(Numeric(18, 4), nullable=False)
+    reorder_threshold: Mapped[object] = mapped_column(Numeric(18, 4), nullable=False)
+    stock_id: Mapped[UUID | None] = mapped_column(PG_UUID(as_uuid=True))
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="draft")
+    reason: Mapped[str] = mapped_column(String(256), nullable=False, default="")
+    correlation_id: Mapped[str] = mapped_column(String(64), nullable=False, default="")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    submitted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    approved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

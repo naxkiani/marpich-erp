@@ -24,12 +24,27 @@
 | `settings` | Settings | IMPLEMENTED | partial | APIs | |
 | `application_registry` | MEOS App Registry | IMPLEMENTED | nav/palette | docs+TS | metadata-driven nav |
 
+## Wave 02 — Business Core (first Functional)
+
+| App ID | Name | Status | FE | BE | Notes |
+|--------|------|--------|----|----|-------|
+| `crm` | CRM (CAP-ENT-001) | TESTED | `/crm` desk | contacts + opportunities | create/list/win/lose + events + Postgres schema |
+| `sales` | Sales (CAP-ENT-002) | TESTED | `/sales` desk | quotations + orders | CRM win → draft quote → send → order + events + Postgres schema |
+| `inventory` | Inventory (CAP-ENT-042) | TESTED | `/inventory` desk | stock levels + reservations | sales.order.placed → reserve SKU + events + migration 048 |
+| `accounting` | Accounting AR (CAP-ENT-023) | TESTED | `/accounting` desk | AR invoices | sales.order.placed → draft → issue + journal intent + migration 049 |
+| `procurement` | Procurement (CAP-ENT-040) | TESTED | `/procurement` desk | requisitions | inventory.reorder.triggered → draft → submit → approve + migration 050 |
+
 ## Domain apps with UI (demo / partial)
 
 | App ID | Status | Route |
 |--------|--------|-------|
 | `hospital` | IMPLEMENTED | `/healthcare/hospital` |
 | `clinic` | IMPLEMENTED | `/healthcare/clinic` |
+| `crm` | TESTED | `/crm` |
+| `sales` | TESTED | `/sales` |
+| `inventory` | TESTED | `/inventory` |
+| `accounting` | TESTED | `/accounting` |
+| `procurement` | TESTED | `/procurement` |
 | `pharmacy` | IMPLEMENTED | `/healthcare/pharmacy` |
 | `laboratory` | IMPLEMENTED | `/healthcare/laboratory` |
 | `university` | IMPLEMENTED | `/education/university` |
@@ -44,7 +59,7 @@
 
 ## Empty scaffolds (not ACTIVE)
 
-`construction`, `crm`, `currency_exchange`, `government`, `hotel`, `human_resources`, `islamic_banking`, `manufacturing`, `ngo`, `payroll`, `procurement`, `projects`, `real_estate`, `restaurant`, `sales`, `school`, `tax`, `warehouse` — status **SCAFFOLDED** / empty tree.
+`construction`, `currency_exchange`, `government`, `hotel`, `human_resources`, `islamic_banking`, `manufacturing`, `ngo`, `payroll`, `projects`, `real_estate`, `restaurant`, `school`, `tax`, `warehouse` — status **SCAFFOLDED** / empty tree.
 
 ## Missing packages referenced by ROUTER_SPECS (gated)
 
@@ -57,6 +72,6 @@
 | Architecture docs | 90 |
 | Platform core APIs | 72 |
 | ONE shell UX | 78 (Wave 01 auth-wired) |
-| Persistence (default memory) | 40 (Postgres runbook) |
-| CI / tests gate | 55 (Wave 01 smoke workflow) |
-| Production readiness | 32 |
+| Persistence (default memory) | 65 (Postgres :5433 + CRM + Sales + Inventory + AR invoices) |
+| CI / tests gate | 80 (Wave 01 smoke + CRM + Sales + Inventory + AR + Procurement flow tests) |
+| Production readiness | 35 |

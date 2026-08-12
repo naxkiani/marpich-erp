@@ -1,7 +1,7 @@
 context: inventory
 display_name: Inventory
 type: generic
-description: Stock levels, items, batches, valuation
+description: Stock levels + sales order reservations — CAP-ENT-042 (Wave 02 Functional)
 aggregates:
   - StockLevel
 publishes:
@@ -18,3 +18,24 @@ schema: inventory
 permissions:
   - inventory.stock.read
   - inventory.stock.write
+  - inventory.ai.read
+  - inventory.ai.infer
+ai:
+  surfaces:
+    - insights
+    - predictions
+    - recommendations
+    - summaries
+    - search
+    - assistant
+    - automation
+    - document_intelligence
+    - voice_commands
+    - chat
+    - report_explanation
+    - anomaly_detection
+    - forecasting
+    - optimization
+  prompt_templates:
+    - inventory.stock.summary
+    - inventory.reorder.insights
