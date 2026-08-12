@@ -200,11 +200,21 @@ applications:
   - id: human_resources
     name: Human Resources
     domain: business
-    status: SCAFFOLDED
+    status: TESTED
     wave: 2
-    frontend: false
-    backend: false
-    score: 12
+    frontend: true
+    backend: true
+    routes: ["/hr"]
+    score: 68
+  - id: payroll
+    name: Payroll
+    domain: business
+    status: TESTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/payroll"]
+    score: 68
 nav_groups:
   - id: home
     label: Home
@@ -236,6 +246,9 @@ verification:
   wave02_inventory_functional: verified
   wave02_accounting_ar_functional: verified
   wave02_procurement_functional: verified
+  wave02_q2c_loop_script: verified
+  wave02_hr_functional: verified
+  wave02_payroll_functional: verified
   notes: >
     Shell widgets use marpich_auth_session headers; Workflow Task Center at
     /enterprise/workflows; AuthZ filters nav/command/search; orphan FE clients gated;
@@ -243,7 +256,10 @@ verification:
     contacts/opportunities Functional (API+UI+events+migration 046); Sales CAP-ENT-002
     quotations/orders Functional (CRM win ACL + API+UI+events+migration 047);
     Inventory CAP-ENT-042 stock reservations on sales.order.placed (API+UI+events+migration 048);
-    Accounting AR CAP-ENT-023 invoices from sales.order.placed (API+UI+events+migration 049);
-    Procurement CAP-ENT-040 requisitions from inventory.reorder.triggered (API+UI+events+migration 050).
+    Accounting AR CAP-ENT-023 invoices from sales.order.placed (API+UI+events+migration 049/052 payment received);
+    Procurement CAP-ENT-040 requisitions from inventory.reorder.triggered (API+UI+events+migration 050/051);
+    HR CAP-ENT-010 employees hire/list/terminate (API+UI+events+migration 053);
+    Payroll CAP-ENT-015 hire ACL projection + pay runs (API+UI+events+migration 054);
+    Wave 02 harden: scripts/meos-wave02-q2c-loop.sh + .github/workflows/meos-wave02-smoke.yml.
     Overall NOT_READY.
 

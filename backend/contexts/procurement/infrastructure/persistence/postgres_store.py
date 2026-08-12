@@ -37,6 +37,7 @@ class PostgresRequisitionRepository(IRequisitionRepository):
                         updated_at=requisition.updated_at,
                         submitted_at=requisition.submitted_at,
                         approved_at=requisition.approved_at,
+                        received_at=requisition.received_at,
                     )
                 )
             else:
@@ -45,6 +46,7 @@ class PostgresRequisitionRepository(IRequisitionRepository):
                 row.updated_at = requisition.updated_at
                 row.submitted_at = requisition.submitted_at
                 row.approved_at = requisition.approved_at
+                row.received_at = requisition.received_at
                 row.correlation_id = requisition.correlation_id
 
     async def find_by_id(
@@ -93,4 +95,5 @@ def _requisition_from_row(row: ProcurementRequisitionRow) -> PurchaseRequisition
         updated_at=row.updated_at,
         submitted_at=row.submitted_at,
         approved_at=row.approved_at,
+        received_at=getattr(row, "received_at", None),
     )

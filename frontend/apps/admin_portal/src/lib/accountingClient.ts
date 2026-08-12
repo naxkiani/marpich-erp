@@ -11,6 +11,7 @@ export type ArInvoice = {
   currency: string;
   status: string;
   issued_at?: string | null;
+  paid_at?: string | null;
 };
 
 export type Page<T> = { items: T[]; total: number; limit: number; offset: number };
@@ -25,4 +26,15 @@ export async function fetchArInvoices(session: ApiSession): Promise<Page<ArInvoi
 
 export async function issueArInvoice(session: ApiSession, invoiceId: string): Promise<ArInvoice> {
   return apiPost<ArInvoice>(`/api/v1/accounting/invoices/${invoiceId}/issue`, session, {});
+}
+
+export async function receiveArPayment(
+  session: ApiSession,
+  invoiceId: string,
+): Promise<ArInvoice> {
+  return apiPost<ArInvoice>(
+    `/api/v1/accounting/invoices/${invoiceId}/receive-payment`,
+    session,
+    {},
+  );
 }

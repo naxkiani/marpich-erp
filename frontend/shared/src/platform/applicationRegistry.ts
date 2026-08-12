@@ -111,6 +111,22 @@ export const APPLICATION_NAV: AppNavItem[] = [
     permission: "procurement.requisitions.read",
   },
   {
+    id: "human_resources",
+    label: "Human Resources",
+    href: "/hr",
+    group: "applications",
+    keywords: ["employees", "hr", "hire", "terminate", "workforce"],
+    permission: "human_resources.employees.read",
+  },
+  {
+    id: "payroll",
+    label: "Payroll",
+    href: "/payroll",
+    group: "applications",
+    keywords: ["payslip", "salary", "pay run", "compensation"],
+    permission: ["payroll.employees.read", "payroll.runs.read"],
+  },
+  {
     id: "documents",
     label: "Document Studio",
     href: "/enterprise/document-studio",

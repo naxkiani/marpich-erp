@@ -25,6 +25,7 @@ class InventoryApplicationService:
         self._stock = stock
         self._processed_sales: set[str] = set()
         self._processed_orders: set[str] = set()
+        self._processed_receipts: set[str] = set()
 
     async def upsert_stock(
         self,
@@ -175,3 +176,49 @@ class InventoryApplicationService:
 
         self._processed_orders.add(dedupe)
         return Result.ok(reserved)
+
+    async def apply_goods_receipt_restock(
+        self,
+        *,
+        tenant_id: str,
+        requisition_id: str,
+        lines: list[dict],
+        correlation_id: str,
+    ) -> Result[list[dict]]:
+        """Idempotent stock restock for received procurement goods."""
+        dedupe = f"{tenant_id}:gr:{requisition_id}"
+        if dedupe in self._processed_receipts:
+            return Result.ok([])
+
+        restocked: list[dict] = []
+        for line in lines:
+            sku = str(line.get("sku") or line.get("item_id") or "").strip().upper()
+            qty = Decimal(str(line.get("quantity") or 0))
+            if not sku or qty <= 0:
+                continue
+            row = await self._stock.find_by_sku(tenant_id, sku)
+            if not row:
+                try:
+                    row = StockLevel.seed(tenant_id=tenant_id, sku=sku, quantity=Decimal("0"))
+                except ValueError as exc:
+                    return Result.fail(str(exc))
+            try:
+                row.restock(qty)
+            except ValueError as exc:
+                return Result.fail(str(exc))
+            await self._stock.save(row)
+            event = StockAdjustedIntegration(
+                tenant_id=TenantId.create(tenant_id),
+                correlation_id=correlation_id,
+                stock_id=row.id,
+                sku=sku,
+                quantity_delta=str(qty),
+                quantity_on_hand=str(row.quantity_on_hand),
+                reason="procurement.goods.received",
+                source_document_id=requisition_id,
+            )
+            await publish_integration_event(event)
+            restocked.append(row.to_dict())
+
+        self._processed_receipts.add(dedupe)
+        return Result.ok(restocked)

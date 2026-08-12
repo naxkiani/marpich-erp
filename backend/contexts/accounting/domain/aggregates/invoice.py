@@ -6,7 +6,10 @@ from datetime import UTC, datetime
 from decimal import Decimal
 from enum import StrEnum
 
-from contexts.accounting.domain.events.integration_events import InvoiceIssuedIntegration
+from contexts.accounting.domain.events.integration_events import (
+    InvoiceIssuedIntegration,
+    PaymentReceivedIntegration,
+)
 from shared.domain.aggregates.aggregate_root import AggregateRoot
 from shared.domain.value_objects.tenant_id import TenantId
 from shared.domain.value_objects.unique_id import UniqueId
@@ -33,6 +36,7 @@ class Invoice(AggregateRoot):
     created_at: datetime = field(default_factory=lambda: datetime.now(UTC))
     updated_at: datetime = field(default_factory=lambda: datetime.now(UTC))
     issued_at: datetime | None = None
+    paid_at: datetime | None = None
 
     @classmethod
     def draft_from_sales_order(
@@ -79,6 +83,23 @@ class Invoice(AggregateRoot):
             currency=self.currency,
         )
 
+    def receive_payment(self, *, correlation_id: str) -> PaymentReceivedIntegration:
+        if self.status != InvoiceStatus.ISSUED:
+            raise ValueError("accounting.errors.invoice_not_issued")
+        self.status = InvoiceStatus.PAID
+        self.paid_at = datetime.now(UTC)
+        self.updated_at = self.paid_at
+        self.correlation_id = correlation_id or self.correlation_id
+        return PaymentReceivedIntegration(
+            tenant_id=TenantId.create(self.tenant_id),
+            correlation_id=self.correlation_id,
+            invoice_id=self.id,
+            sales_order_id=self.sales_order_id,
+            contact_id=self.contact_id,
+            amount=str(self.amount),
+            currency=self.currency,
+        )
+
     def to_dict(self) -> dict:
         return {
             "id": str(self.id),
@@ -94,4 +115,5 @@ class Invoice(AggregateRoot):
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat(),
             "issued_at": self.issued_at.isoformat() if self.issued_at else None,
+            "paid_at": self.paid_at.isoformat() if self.paid_at else None,
         }

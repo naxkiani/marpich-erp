@@ -88,3 +88,31 @@ class PurchaseOrderApprovedIntegration(IntegrationEvent):
             "sku": self.sku,
             "quantity": self.quantity,
         }
+
+
+@dataclass(frozen=True, kw_only=True)
+class GoodsReceivedIntegration(IntegrationEvent):
+    requisition_id: UniqueId
+    sku: str
+    quantity: str
+
+    @property
+    def event_name(self) -> str:
+        return "procurement.goods.received"
+
+    @property
+    def source_context(self) -> str:
+        return "procurement"
+
+    @property
+    def event_version(self) -> int:
+        return 1
+
+    def to_payload(self) -> dict:
+        return {
+            "requisition_id": str(self.requisition_id),
+            "purchase_order_id": str(self.requisition_id),
+            "sku": self.sku,
+            "quantity": self.quantity,
+            "lines": [{"sku": self.sku, "quantity": float(self.quantity)}],
+        }

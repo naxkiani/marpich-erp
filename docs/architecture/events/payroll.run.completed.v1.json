@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "payroll.run.completed",
+  "type": "object",
+  "required": ["run_id", "period_label", "employee_count", "total_gross", "total_net", "currency"],
+  "properties": {
+    "run_id": { "type": "string", "format": "uuid" },
+    "period_label": { "type": "string" },
+    "employee_count": { "type": "integer", "minimum": 0 },
+    "total_gross": { "type": "string" },
+    "total_net": { "type": "string" },
+    "currency": { "type": "string", "minLength": 3, "maxLength": 3 }
+  }
+}

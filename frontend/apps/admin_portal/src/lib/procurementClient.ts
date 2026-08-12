@@ -43,3 +43,14 @@ export async function approveRequisition(
     {},
   );
 }
+
+export async function receiveRequisition(
+  session: ApiSession,
+  requisitionId: string,
+): Promise<PurchaseRequisition> {
+  return apiPost<PurchaseRequisition>(
+    `/api/v1/procurement/requisitions/${requisitionId}/receive`,
+    session,
+    {},
+  );
+}

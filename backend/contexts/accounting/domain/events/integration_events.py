@@ -95,3 +95,33 @@ class InvoiceIssuedIntegration(IntegrationEvent):
             "amount": self.amount,
             "currency": self.currency,
         }
+
+
+@dataclass(frozen=True, kw_only=True)
+class PaymentReceivedIntegration(IntegrationEvent):
+    invoice_id: UniqueId
+    sales_order_id: UniqueId
+    contact_id: UniqueId
+    amount: str
+    currency: str
+
+    @property
+    def event_name(self) -> str:
+        return "accounting.payment.received"
+
+    @property
+    def source_context(self) -> str:
+        return "accounting"
+
+    @property
+    def event_version(self) -> int:
+        return 1
+
+    def to_payload(self) -> dict:
+        return {
+            "invoice_id": str(self.invoice_id),
+            "sales_order_id": str(self.sales_order_id),
+            "contact_id": str(self.contact_id),
+            "amount": self.amount,
+            "currency": self.currency,
+        }

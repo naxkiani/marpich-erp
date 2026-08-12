@@ -89,6 +89,10 @@ POST_WAVE01_MIGRATIONS=(
   048_inventory_stock_reserved.sql
   049_accounting_ar_invoices.sql
   050_procurement_requisitions.sql
+  051_procurement_goods_received.sql
+  052_accounting_payment_received.sql
+  053_human_resources_employees.sql
+  054_payroll_employees_runs.sql
 )
 
 for migration in "${WAVE01_MIGRATIONS[@]}"; do

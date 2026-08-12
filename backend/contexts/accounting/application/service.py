@@ -1,6 +1,7 @@
 """Accounting application service — hospital billing + CAP-ENT-023 AR invoices.
 
 Sales orders → draft invoice (ACL). Issue publishes accounting.invoice.issued + journal intent.
+Receive payment on issued invoices publishes accounting.payment.received + cash/AR journal intent.
 """
 from __future__ import annotations
 
@@ -215,6 +216,59 @@ class AccountingApplicationService:
             resource_type="invoice",
             resource_id=str(invoice.id),
             payload={"sales_order_id": str(invoice.sales_order_id), "amount": str(invoice.amount)},
+        )
+        return Result.ok(invoice.to_dict())
+
+    async def receive_payment(
+        self, *, tenant_id: str, invoice_id: str, correlation_id: str
+    ) -> Result[dict]:
+        if self._invoices is None:
+            return Result.fail("accounting.errors.invoices_unavailable")
+        invoice = await self._invoices.find_by_id(tenant_id, UniqueId.from_string(invoice_id))
+        if not invoice:
+            return Result.fail("accounting.errors.invoice_not_found")
+        try:
+            payment_event = invoice.receive_payment(correlation_id=correlation_id)
+        except ValueError as exc:
+            return Result.fail(str(exc))
+        await self._invoices.save(invoice)
+        await publish_integration_event(payment_event)
+
+        amount = float(invoice.amount)
+        journal_event = JournalPostedIntegration(
+            tenant_id=TenantId.create(tenant_id),
+            correlation_id=correlation_id,
+            journal_id=UniqueId.generate(),
+            source_type="ar_payment",
+            source_id=str(invoice.id),
+            currency=invoice.currency,
+            lines=(
+                {
+                    "account_code": "1000",
+                    "account_name": "Cash",
+                    "debit": amount,
+                    "credit": 0.0,
+                },
+                {
+                    "account_code": "1200",
+                    "account_name": "Accounts Receivable",
+                    "debit": 0.0,
+                    "credit": amount,
+                },
+            ),
+        )
+        await publish_integration_event(journal_event)
+        await self._audit.log(
+            tenant_id=tenant_id,
+            correlation_id=correlation_id,
+            action="accounting.payment.received",
+            resource_type="invoice",
+            resource_id=str(invoice.id),
+            payload={
+                "sales_order_id": str(invoice.sales_order_id),
+                "amount": str(invoice.amount),
+                "currency": invoice.currency,
+            },
         )
         return Result.ok(invoice.to_dict())
 

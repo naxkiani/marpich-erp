@@ -100,3 +100,20 @@ async def issue_invoice(
     if not result.succeeded:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, result.error)
     return {"data": result.unwrap(), "meta": {"correlation_id": correlation_id}}
+
+
+@router.post("/invoices/{invoice_id}/receive-payment")
+async def receive_payment(
+    invoice_id: str,
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    correlation_id: Annotated[str, Depends(get_correlation_id)],
+    _user: Annotated[dict, Depends(require_permissions("accounting.invoice.write"))],
+):
+    result = await get_accounting_service().receive_payment(
+        tenant_id=tenant_id,
+        invoice_id=invoice_id,
+        correlation_id=correlation_id,
+    )
+    if not result.succeeded:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, result.error)
+    return {"data": result.unwrap(), "meta": {"correlation_id": correlation_id}}

@@ -8,6 +8,7 @@ import { useCallback, useEffect, useState } from "react";
 import {
   approveRequisition,
   fetchRequisitions,
+  receiveRequisition,
   submitRequisition,
   type PurchaseRequisition,
 } from "@/lib/procurementClient";
@@ -131,6 +132,25 @@ export function ProcurementDeskPage() {
                       }
                     >
                       Approve PO
+                    </button>
+                  );
+                }
+                if (row.status === "approved") {
+                  return (
+                    <button
+                      type="button"
+                      className="mp-btn"
+                      onClick={() =>
+                        void receiveRequisition(session, row.id)
+                          .then(loadData)
+                          .catch((err) =>
+                            push({
+                              message: err instanceof Error ? err.message : "Receive failed",
+                            }),
+                          )
+                      }
+                    >
+                      Receive goods
                     </button>
                   );
                 }

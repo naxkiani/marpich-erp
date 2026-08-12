@@ -7,6 +7,7 @@ from decimal import Decimal
 from enum import StrEnum
 
 from contexts.procurement.domain.events.integration_events import (
+    GoodsReceivedIntegration,
     PurchaseOrderApprovedIntegration,
     RequisitionCreatedIntegration,
     RequisitionSubmittedIntegration,
@@ -20,6 +21,7 @@ class RequisitionStatus(StrEnum):
     DRAFT = "draft"
     SUBMITTED = "submitted"
     APPROVED = "approved"
+    RECEIVED = "received"
     CANCELLED = "cancelled"
 
 
@@ -38,6 +40,7 @@ class PurchaseRequisition(AggregateRoot):
     updated_at: datetime = field(default_factory=lambda: datetime.now(UTC))
     submitted_at: datetime | None = None
     approved_at: datetime | None = None
+    received_at: datetime | None = None
 
     @classmethod
     def draft_from_reorder(
@@ -106,6 +109,21 @@ class PurchaseRequisition(AggregateRoot):
             quantity=str(self.quantity),
         )
 
+    def receive_goods(self, *, correlation_id: str) -> GoodsReceivedIntegration:
+        if self.status != RequisitionStatus.APPROVED:
+            raise ValueError("procurement.errors.requisition_not_approved")
+        self.status = RequisitionStatus.RECEIVED
+        self.received_at = datetime.now(UTC)
+        self.updated_at = self.received_at
+        self.correlation_id = correlation_id or self.correlation_id
+        return GoodsReceivedIntegration(
+            tenant_id=TenantId.create(self.tenant_id),
+            correlation_id=self.correlation_id,
+            requisition_id=self.id,
+            sku=self.sku,
+            quantity=str(self.quantity),
+        )
+
     def to_dict(self) -> dict:
         return {
             "id": str(self.id),
@@ -122,4 +140,5 @@ class PurchaseRequisition(AggregateRoot):
             "updated_at": self.updated_at.isoformat(),
             "submitted_at": self.submitted_at.isoformat() if self.submitted_at else None,
             "approved_at": self.approved_at.isoformat() if self.approved_at else None,
+            "received_at": self.received_at.isoformat() if self.received_at else None,
         }

@@ -146,6 +146,20 @@ async def test_sales_order_drafts_ar_invoice_then_issue(client):
     assert issued.status_code == 200, issued.text
     assert issued.json()["data"]["status"] == "issued"
 
+    paid = await client.post(
+        f"/api/v1/accounting/invoices/{invoice_id}/receive-payment",
+        headers=headers,
+    )
+    assert paid.status_code == 200, paid.text
+    assert paid.json()["data"]["status"] == "paid"
+    assert paid.json()["data"]["paid_at"] is not None
+
+    again_pay = await client.post(
+        f"/api/v1/accounting/invoices/{invoice_id}/receive-payment",
+        headers=headers,
+    )
+    assert again_pay.status_code == 400
+
     again = await client.post(
         f"/api/v1/accounting/invoices/{invoice_id}/issue",
         headers=headers,

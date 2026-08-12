@@ -60,3 +60,20 @@ async def approve_requisition(
     if not result.succeeded:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, result.error)
     return {"data": result.unwrap(), "meta": {"correlation_id": correlation_id}}
+
+
+@router.post("/requisitions/{requisition_id}/receive")
+async def receive_goods(
+    requisition_id: str,
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    correlation_id: Annotated[str, Depends(get_correlation_id)],
+    _user: Annotated[dict, Depends(require_permissions("procurement.requisitions.write"))],
+):
+    result = await get_procurement_service().receive_goods(
+        tenant_id=tenant_id,
+        requisition_id=requisition_id,
+        correlation_id=correlation_id,
+    )
+    if not result.succeeded:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, result.error)
+    return {"data": result.unwrap(), "meta": {"correlation_id": correlation_id}}

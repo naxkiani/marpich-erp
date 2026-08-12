@@ -57,6 +57,12 @@ class StockLevel(AggregateRoot):
         self.quantity_reserved += quantity
         self.updated_at = datetime.now(UTC)
 
+    def restock(self, quantity: Decimal) -> None:
+        if quantity <= 0:
+            raise ValueError("inventory.errors.invalid_restock")
+        self.quantity_on_hand += quantity
+        self.updated_at = datetime.now(UTC)
+
     @property
     def quantity_available(self) -> Decimal:
         return self.quantity_on_hand - self.quantity_reserved

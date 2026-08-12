@@ -18,6 +18,13 @@
 | Unit/integration tests | Empty `.gitkeep` only |
 | Typecheck | Available via package scripts |
 
+## Wave 02 CI target
+
+Added: [`.github/workflows/meos-wave02-smoke.yml`](../../../.github/workflows/meos-wave02-smoke.yml)
+
+- Memory pytest: CRM + Sales + Inventory + AR invoice + Procurement flow  
+- Postgres: migrations → API → [`scripts/meos-wave02-q2c-loop.sh`](../../../scripts/meos-wave02-q2c-loop.sh) closed loop
+
 ## Wave 01 CI target
 
 Added: [`.github/workflows/meos-wave01-smoke.yml`](../../../.github/workflows/meos-wave01-smoke.yml)
@@ -25,4 +32,4 @@ Added: [`.github/workflows/meos-wave01-smoke.yml`](../../../.github/workflows/me
 - Focused pytest: identity + search + notifications + workflow smoke  
 - Typecheck for `@marpich/shared` (and core best-effort)
 
-Do not claim green platform until Wave 01 smoke is green on CI runners.
+Do not claim green platform until Wave 01 + Wave 02 smoke are green on CI runners.

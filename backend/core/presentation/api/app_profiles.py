@@ -89,6 +89,10 @@ BANKING_CONTEXTS = frozenset({
 INDUSTRY_CONTEXTS = frozenset({
     "hospital",
     "clinic",
+    "crm",
+    "human_resources",
+    "payroll",
+    "sales",
     "pharmacy",
     "laboratory",
     "municipality",
@@ -96,6 +100,7 @@ INDUSTRY_CONTEXTS = frozenset({
     "inventory",
     "financial_kernel",
     "accounting",
+    "procurement",
     "analytics",
     "university",
     "enterprise_connector_framework",

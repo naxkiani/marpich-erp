@@ -5,7 +5,7 @@ from datetime import date, datetime
 from uuid import UUID
 
 from sqlalchemy import Boolean, Date, DateTime, Index, Integer, Numeric, String, Text, func
-from sqlalchemy.dialects.postgresql import JSONB, UUID as PG_UUID
+from sqlalchemy.dialects.postgresql import INET, JSONB, UUID as PG_UUID
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 
@@ -58,7 +58,7 @@ class SessionRow(Base):
     tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
     user_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
     refresh_token_hash: Mapped[str] = mapped_column(String(256), nullable=False)
-    ip_address: Mapped[str | None] = mapped_column(String(64))
+    ip_address: Mapped[str | None] = mapped_column(INET)
     user_agent: Mapped[str | None] = mapped_column(Text)
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
@@ -243,6 +243,7 @@ class AccountingInvoiceRow(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     issued_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    paid_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
 class AccountRow(Base):
@@ -2012,6 +2013,73 @@ class CrmContactRow(Base):
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
+class HrEmployeeRow(Base):
+    __tablename__ = "employees"
+    __table_args__ = (
+        Index("ix_hr_employees_tenant_email", "tenant_id", "email", unique=True),
+        Index("ix_hr_employees_tenant_status", "tenant_id", "status"),
+        {"schema": "human_resources"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    email: Mapped[str] = mapped_column(String(256), nullable=False)
+    full_name: Mapped[str] = mapped_column(String(128), nullable=False)
+    job_title: Mapped[str] = mapped_column(String(128), nullable=False, default="")
+    department: Mapped[str] = mapped_column(String(128), nullable=False, default="")
+    employee_number: Mapped[str] = mapped_column(String(64), nullable=False, default="")
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="active")
+    hired_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    terminated_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    termination_reason: Mapped[str] = mapped_column(String(512), nullable=False, default="")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class PayrollEmployeeRow(Base):
+    __tablename__ = "employees"
+    __table_args__ = (
+        Index("ix_payroll_employees_tenant_hr", "tenant_id", "hr_employee_id", unique=True),
+        Index("ix_payroll_employees_tenant_status", "tenant_id", "status"),
+        {"schema": "payroll"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    hr_employee_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
+    email: Mapped[str] = mapped_column(String(256), nullable=False)
+    full_name: Mapped[str] = mapped_column(String(128), nullable=False)
+    job_title: Mapped[str] = mapped_column(String(128), nullable=False, default="")
+    department: Mapped[str] = mapped_column(String(128), nullable=False, default="")
+    employee_number: Mapped[str] = mapped_column(String(64), nullable=False, default="")
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="active")
+    base_salary: Mapped[object] = mapped_column(Numeric(18, 4), nullable=False, default=0)
+    currency: Mapped[str] = mapped_column(String(3), nullable=False, default="USD")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class PayrollRunRow(Base):
+    __tablename__ = "runs"
+    __table_args__ = (
+        Index("ix_payroll_runs_tenant_status", "tenant_id", "status"),
+        {"schema": "payroll"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    period_label: Mapped[str] = mapped_column(String(64), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="draft")
+    currency: Mapped[str] = mapped_column(String(3), nullable=False, default="USD")
+    total_gross: Mapped[object] = mapped_column(Numeric(18, 4), nullable=False, default=0)
+    total_net: Mapped[object] = mapped_column(Numeric(18, 4), nullable=False, default=0)
+    payslips: Mapped[list] = mapped_column(JSONB, nullable=False, default=list)
+    correlation_id: Mapped[str] = mapped_column(String(64), nullable=False, default="")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
 class CrmOpportunityRow(Base):
     __tablename__ = "opportunities"
     __table_args__ = (
@@ -2094,3 +2162,4 @@ class ProcurementRequisitionRow(Base):
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     submitted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     approved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    received_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

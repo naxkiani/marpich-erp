@@ -87,6 +87,7 @@ class PostgresInvoiceRepository(IInvoiceRepository):
                         created_at=invoice.created_at,
                         updated_at=invoice.updated_at,
                         issued_at=invoice.issued_at,
+                        paid_at=invoice.paid_at,
                     )
                 )
             else:
@@ -95,6 +96,7 @@ class PostgresInvoiceRepository(IInvoiceRepository):
                 row.amount = invoice.amount
                 row.updated_at = invoice.updated_at
                 row.issued_at = invoice.issued_at
+                row.paid_at = invoice.paid_at
                 row.correlation_id = invoice.correlation_id
 
     async def find_by_id(self, tenant_id: str, invoice_id: UniqueId) -> Invoice | None:
@@ -155,4 +157,5 @@ def _invoice_from_row(row: AccountingInvoiceRow) -> Invoice:
         created_at=row.created_at,
         updated_at=row.updated_at,
         issued_at=row.issued_at,
+        paid_at=row.paid_at,
     )

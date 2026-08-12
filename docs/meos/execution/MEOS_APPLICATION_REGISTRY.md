@@ -31,8 +31,12 @@
 | `crm` | CRM (CAP-ENT-001) | TESTED | `/crm` desk | contacts + opportunities | create/list/win/lose + events + Postgres schema |
 | `sales` | Sales (CAP-ENT-002) | TESTED | `/sales` desk | quotations + orders | CRM win → draft quote → send → order + events + Postgres schema |
 | `inventory` | Inventory (CAP-ENT-042) | TESTED | `/inventory` desk | stock levels + reservations | sales.order.placed → reserve SKU + events + migration 048 |
-| `accounting` | Accounting AR (CAP-ENT-023) | TESTED | `/accounting` desk | AR invoices | sales.order.placed → draft → issue + journal intent + migration 049 |
-| `procurement` | Procurement (CAP-ENT-040) | TESTED | `/procurement` desk | requisitions | inventory.reorder.triggered → draft → submit → approve + migration 050 |
+| `accounting` | Accounting AR (CAP-ENT-023) | TESTED | `/accounting` desk | AR invoices | sales.order.placed → draft → issue → receive-payment → accounting.payment.received + migration 052 |
+| `procurement` | Procurement (CAP-ENT-040) | TESTED | `/procurement` desk | requisitions + goods receipt | reorder → draft → approve → receive → inventory restock + migration 051 |
+| `human_resources` | HR (CAP-ENT-010) | TESTED | `/hr` desk | employees | hire → list → terminate + events + migration 053 |
+| `payroll` | Payroll (CAP-ENT-015) | TESTED | `/payroll` desk | employee projection + runs | HR hire ACL → pay run → payroll.run.completed + migration 054 |
+
+**Harden:** `scripts/meos-wave02-q2c-loop.sh` + `.github/workflows/meos-wave02-smoke.yml` — full closed loop on Postgres.
 
 ## Domain apps with UI (demo / partial)
 
@@ -45,6 +49,8 @@
 | `inventory` | TESTED | `/inventory` |
 | `accounting` | TESTED | `/accounting` |
 | `procurement` | TESTED | `/procurement` |
+| `human_resources` | TESTED | `/hr` |
+| `payroll` | TESTED | `/payroll` |
 | `pharmacy` | IMPLEMENTED | `/healthcare/pharmacy` |
 | `laboratory` | IMPLEMENTED | `/healthcare/laboratory` |
 | `university` | IMPLEMENTED | `/education/university` |
@@ -59,7 +65,7 @@
 
 ## Empty scaffolds (not ACTIVE)
 
-`construction`, `currency_exchange`, `government`, `hotel`, `human_resources`, `islamic_banking`, `manufacturing`, `ngo`, `payroll`, `projects`, `real_estate`, `restaurant`, `school`, `tax`, `warehouse` — status **SCAFFOLDED** / empty tree.
+`construction`, `currency_exchange`, `government`, `hotel`, `islamic_banking`, `manufacturing`, `ngo`, `projects`, `real_estate`, `restaurant`, `school`, `tax`, `warehouse` — status **SCAFFOLDED** / empty tree.
 
 ## Missing packages referenced by ROUTER_SPECS (gated)
 
@@ -73,5 +79,5 @@
 | Platform core APIs | 72 |
 | ONE shell UX | 78 (Wave 01 auth-wired) |
 | Persistence (default memory) | 65 (Postgres :5433 + CRM + Sales + Inventory + AR invoices) |
-| CI / tests gate | 80 (Wave 01 smoke + CRM + Sales + Inventory + AR + Procurement flow tests) |
+| CI / tests gate | 82 (Wave 01 smoke + Wave 02 Q2C memory/postgres loop) |
 | Production readiness | 35 |

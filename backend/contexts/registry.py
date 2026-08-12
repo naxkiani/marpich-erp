@@ -694,11 +694,12 @@ ACCOUNTING = BoundedContext(
     publishes=(
         "accounting.journal.posted",
         "accounting.invoice.issued",
-        "accounting.payment.recorded",
+        "accounting.payment.received",
     ),
     subscribes=(
-        "sales.order.invoiced",
-        "procurement.invoice.received",
+        "sales.order.placed",
+        "hospital.encounter.completed",
+        "procurement.po.received",
         "payroll.run.completed",
     ),
 )

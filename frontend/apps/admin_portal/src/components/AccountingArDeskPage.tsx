@@ -5,7 +5,7 @@ import { useAuth } from "@marpich/auth-provider";
 import { DataTable, EmptyState, ProgressBar, SkeletonTable, useToast } from "@marpich/shared";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import { fetchArInvoices, issueArInvoice, type ArInvoice } from "@/lib/accountingClient";
+import { fetchArInvoices, issueArInvoice, receiveArPayment, type ArInvoice } from "@/lib/accountingClient";
 
 export function AccountingArDeskPage() {
   const { push } = useToast();
@@ -69,8 +69,8 @@ export function AccountingArDeskPage() {
       {error ? <p className="mp-error">{error}</p> : null}
 
       <p className="mp-nav-muted" style={{ marginBlock: "0.75rem" }}>
-        Placed sales orders create draft invoices. Issue to post AR + revenue journal intent.{" "}
-        <Link href="/sales">Open Sales</Link>
+        Placed sales orders create draft invoices. Issue posts AR; record payment clears AR and emits{" "}
+        <code>accounting.payment.received</code>. <Link href="/sales">Open Sales</Link>
       </p>
 
       {loading ? (
@@ -90,26 +90,47 @@ export function AccountingArDeskPage() {
             {
               key: "id",
               header: "Actions",
-              render: (row: ArInvoice) =>
-                row.status === "draft" ? (
-                  <button
-                    type="button"
-                    className="mp-btn"
-                    onClick={() =>
-                      void issueArInvoice(session, row.id)
-                        .then(loadData)
-                        .catch((err) =>
-                          push({
-                            message: err instanceof Error ? err.message : "Issue failed",
-                          }),
-                        )
-                    }
-                  >
-                    Issue
-                  </button>
-                ) : (
-                  <span className="mp-nav-muted">{row.status}</span>
-                ),
+              render: (row: ArInvoice) => {
+                if (row.status === "draft") {
+                  return (
+                    <button
+                      type="button"
+                      className="mp-btn"
+                      onClick={() =>
+                        void issueArInvoice(session, row.id)
+                          .then(loadData)
+                          .catch((err) =>
+                            push({
+                              message: err instanceof Error ? err.message : "Issue failed",
+                            }),
+                          )
+                      }
+                    >
+                      Issue
+                    </button>
+                  );
+                }
+                if (row.status === "issued") {
+                  return (
+                    <button
+                      type="button"
+                      className="mp-btn"
+                      onClick={() =>
+                        void receiveArPayment(session, row.id)
+                          .then(loadData)
+                          .catch((err) =>
+                            push({
+                              message: err instanceof Error ? err.message : "Payment failed",
+                            }),
+                          )
+                      }
+                    >
+                      Record payment
+                    </button>
+                  );
+                }
+                return <span className="mp-nav-muted">{row.status}</span>;
+              },
             },
           ]}
           rows={invoices}

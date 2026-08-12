@@ -29,7 +29,7 @@
 | Performance | NOT MEASURED |
 | Observability | PARTIAL |
 | Backup / DR | FAIL |
-| CI/CD | PARTIAL (meos-wave01-smoke hardened) |
+| CI/CD | PARTIAL (meos-wave01-smoke + meos-wave02-smoke) |
 | Documentation | PARTIAL (this pack) |
 | Production hardening | FAIL |
 
@@ -44,6 +44,7 @@
 7. ~~Dead FE clients without pages~~ → **Gated** under `frontend/apps/admin_portal/src/lib/_orphan/`
 8. ~~Identity Postgres register crash~~ → **Fixed** `tenant_id` in role/user/session saves
 9. ~~Wave 02 first business app~~ → **CRM Functional** (CAP-ENT-001) TESTED
+10. ~~Wave 02 Q2C closed loop~~ → **harden script + CI** (`meos-wave02-q2c-loop.sh`)
 
 ## Wave 01 / P0 verification marks
 
@@ -60,7 +61,9 @@
 | Orphan FE clients gated | verified |
 | Wave 01 CI smoke workflow | verified |
 | User-loop script `scripts/meos-wave01-user-loop.sh` | verified |
+| Wave 02 Q2C loop `scripts/meos-wave02-q2c-loop.sh` | verified |
+| Wave 02 CI smoke workflow | verified |
 
 ## After Wave 01 / P0
 
-Overall remains **`NOT_READY`**. Platform Core can be **CONDITIONALLY_READY** for demos with Postgres. Next: prove loop on running API, then Wave 02 first Functional business app.
+Overall remains **`NOT_READY`**. Platform Core can be **CONDITIONALLY_READY** for demos with Postgres. Wave 02 Q2C + HR + Payroll are Functional; next Wave 02 candidates: Tax or remaining scaffolds.

@@ -105,3 +105,19 @@ class ProcurementApplicationService:
         await self._requisitions.save(requisition)
         await publish_integration_event(event)
         return Result.ok(requisition.to_dict())
+
+    async def receive_goods(
+        self, *, tenant_id: str, requisition_id: str, correlation_id: str
+    ) -> Result[dict]:
+        requisition = await self._requisitions.find_by_id(
+            tenant_id, UniqueId.from_string(requisition_id)
+        )
+        if not requisition:
+            return Result.fail("procurement.errors.requisition_not_found")
+        try:
+            event = requisition.receive_goods(correlation_id=correlation_id)
+        except ValueError as exc:
+            return Result.fail(str(exc))
+        await self._requisitions.save(requisition)
+        await publish_integration_event(event)
+        return Result.ok(requisition.to_dict())

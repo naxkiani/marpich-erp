@@ -148,3 +148,25 @@ async def test_low_stock_triggers_requisition_submit_approve(client):
     )
     assert approved.status_code == 200, approved.text
     assert approved.json()["data"]["status"] == "approved"
+
+    before = await client.get("/api/v1/inventory/stock/SALES-STD", headers=headers)
+    assert before.status_code == 200, before.text
+    on_hand_before = Decimal(before.json()["data"]["quantity_on_hand"])
+
+    received = await client.post(
+        f"/api/v1/procurement/requisitions/{req_id}/receive",
+        headers=headers,
+    )
+    assert received.status_code == 200, received.text
+    assert received.json()["data"]["status"] == "received"
+    qty = Decimal(received.json()["data"]["quantity"])
+
+    after = await client.get("/api/v1/inventory/stock/SALES-STD", headers=headers)
+    assert after.status_code == 200, after.text
+    assert Decimal(after.json()["data"]["quantity_on_hand"]) == on_hand_before + qty
+
+    again = await client.post(
+        f"/api/v1/procurement/requisitions/{req_id}/receive",
+        headers=headers,
+    )
+    assert again.status_code == 400
