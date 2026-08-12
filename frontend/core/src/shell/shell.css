@@ -35,17 +35,55 @@
 }
 
 .mp-shell-sidebar {
-  width: 240px;
+  width: 260px;
   flex-shrink: 0;
   padding: 1rem;
   border-inline-end: 1px solid var(--mp-border);
   background: var(--mp-bg-elevated);
+  overflow: auto;
 }
 
 .mp-shell-sidebar nav {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+}
+
+.mp-nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin-bottom: 0.75rem;
+}
+
+.mp-nav-group-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mp-fg-muted);
+  padding: 0.35rem 0.75rem;
+}
+
+.mp-nav-toggle {
+  display: none;
+}
+
+.mp-nav-backdrop {
+  display: none;
+}
+
+.mp-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.mp-link {
+  color: var(--mp-accent);
+  text-decoration: none;
+  font-size: 0.85rem;
 }
 
 .mp-shell-sidebar a {
@@ -107,8 +145,36 @@
     flex-wrap: wrap;
   }
 
+  .mp-nav-toggle {
+    display: inline-flex;
+  }
+
   .mp-shell-sidebar {
-    display: none;
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: 0;
+    z-index: 30;
+    width: min(86vw, 300px);
+    transform: translateX(-105%);
+    transition: transform var(--mp-transition);
+    box-shadow: none;
+  }
+
+  [dir="rtl"] .mp-shell-sidebar {
+    transform: translateX(105%);
+  }
+
+  .mp-shell.mp-nav-open .mp-shell-sidebar {
+    transform: translateX(0);
+  }
+
+  .mp-nav-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 25;
+    border: 0;
+    background: rgb(15 23 42 / 45%);
   }
 
   .mp-shell-actions {

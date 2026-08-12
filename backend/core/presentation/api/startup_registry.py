@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import importlib
+import importlib.util
 import logging
 from typing import TYPE_CHECKING
 
@@ -13,6 +14,36 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 API_PREFIX = "/api/v1"
+
+# Modules omitted because the package/module is not present (Wave 01 honesty).
+OMITTED_ROUTER_MODULES: list[str] = []
+OMITTED_SERVICE_MODULES: list[str] = []
+
+
+def _module_available(module_path: str) -> bool:
+    """Return False when importlib cannot find the module (no silent OpenAPI ghosts)."""
+    try:
+        return importlib.util.find_spec(module_path) is not None
+    except (ModuleNotFoundError, ValueError, AttributeError):
+        return False
+
+
+def filter_available_specs(
+    specs: list[tuple[str, str]],
+    *,
+    kind: str,
+) -> list[tuple[str, str]]:
+    available: list[tuple[str, str]] = []
+    omitted = OMITTED_ROUTER_MODULES if kind == "router" else OMITTED_SERVICE_MODULES
+    for module_path, attr in specs:
+        if not _module_available(module_path):
+            if module_path not in omitted:
+                omitted.append(module_path)
+                logger.info("Omitting unavailable %s module %s", kind, module_path)
+            continue
+        available.append((module_path, attr))
+    return available
+
 
 # Eager-loaded at startup in lazy mode (auth, policy, platform shell).
 CORE_SERVICE_SPECS: list[tuple[str, str]] = [
@@ -415,8 +446,8 @@ def service_specs_for_profile(profile: str, startup_mode: str) -> list[tuple[str
 def register_routers(app: "FastAPI", *, profile: str = "full") -> int:
     app_id = id(app)
     if _registered_profiles.get(app_id) == profile:
-        return len(router_specs_for_profile(profile))
-    specs = router_specs_for_profile(profile)
+        return len(filter_available_specs(router_specs_for_profile(profile), kind="router"))
+    specs = filter_available_specs(router_specs_for_profile(profile), kind="router")
     registered = 0
     for module_path, attr in specs:
         try:
@@ -431,7 +462,8 @@ def register_routers(app: "FastAPI", *, profile: str = "full") -> int:
 def warmup_services(app: "FastAPI", specs: list[tuple[str, str]]) -> int:
     app_id = id(app)
     warmed = 0
-    for module_path, getter in specs:
+    available = filter_available_specs(specs, kind="service")
+    for module_path, getter in available:
         try:
             resolve_service(module_path, getter)
             warmed += 1
@@ -459,7 +491,10 @@ def configure_application(
         "startup_mode": mode,
         "routes": routes,
         "services": services,
+        "omitted_routers": list(OMITTED_ROUTER_MODULES),
+        "omitted_services": list(OMITTED_SERVICE_MODULES),
     }
+
 
 
 def reset_startup_state() -> None:

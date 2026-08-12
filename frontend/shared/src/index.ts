@@ -7,6 +7,23 @@ export {
   type Locale,
 } from "./i18n/LocaleProvider";
 
+export {
+  API_URL,
+  getPlatformAuthHeaders,
+  loadPlatformSession,
+  PLATFORM_SESSION_KEY,
+  type PlatformSession,
+} from "./platform/session";
+export {
+  APPLICATION_NAV,
+  NAV_GROUP_LABELS,
+  NAV_GROUP_ORDER,
+  groupedApplicationNav,
+  searchApplicationNav,
+  type AppNavItem,
+  type NavGroupId,
+} from "./platform/applicationRegistry";
+
 export { CommandPalette, type CommandItem } from "./components/CommandPalette";
 export { GlobalSearch } from "./components/GlobalSearch";
 export {

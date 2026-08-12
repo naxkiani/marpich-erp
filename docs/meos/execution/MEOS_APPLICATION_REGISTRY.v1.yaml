@@ -1,0 +1,204 @@
+version: "1.0"
+generated: "2026-08-12"
+overall_status: NOT_READY
+wave: "01"
+applications:
+  - id: identity
+    name: Identity & Access
+    domain: platform
+    status: INTEGRATED
+    wave: 1
+    frontend: true
+    backend: true
+    routes: ["/login", "/account/security", "/account/mfa", "/account/passkeys", "/account/change-password"]
+    api_prefix: /api/v1/auth
+    score: 78
+  - id: authorization
+    name: Authorization
+    domain: platform
+    status: IMPLEMENTED
+    wave: 1
+    frontend: false
+    backend: true
+    api_prefix: /api/v1/authorization
+    score: 70
+  - id: core_platform
+    name: Core Platform / Tenants
+    domain: platform
+    status: INTEGRATED
+    wave: 1
+    frontend: true
+    backend: true
+    routes: ["/", "/modules"]
+    score: 75
+  - id: notifications
+    name: Notifications
+    domain: platform
+    status: INTEGRATED
+    wave: 1
+    frontend: true
+    backend: true
+    routes: ["/enterprise/notifications"]
+    api_prefix: /api/v1/notifications
+    score: 72
+  - id: search
+    name: Enterprise Search
+    domain: platform
+    status: INTEGRATED
+    wave: 1
+    frontend: true
+    backend: true
+    routes: []
+    api_prefix: /api/v1/search
+    score: 68
+  - id: audit
+    name: Audit
+    domain: platform
+    status: INTEGRATED
+    wave: 1
+    frontend: true
+    backend: true
+    routes: ["/enterprise/audit"]
+    api_prefix: /api/v1/audit
+    score: 70
+  - id: workflow
+    name: Workflow
+    domain: platform
+    status: INTEGRATED
+    wave: 1
+    frontend: true
+    backend: true
+    routes: ["/enterprise/workflows"]
+    api_prefix: /api/v1/workflow
+    score: 68
+  - id: ai
+    name: AI Platform
+    domain: platform
+    status: IMPLEMENTED
+    wave: 1
+    frontend: true
+    backend: true
+    api_prefix: /api/v1/ai
+    score: 65
+  - id: documents
+    name: Document Exchange
+    domain: platform
+    status: IMPLEMENTED
+    wave: 1
+    frontend: true
+    backend: true
+    routes: ["/enterprise/document-studio"]
+    api_prefix: /api/v1/documents
+    score: 66
+  - id: hospital
+    name: Hospital
+    domain: healthcare
+    status: IMPLEMENTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/healthcare/hospital"]
+    score: 62
+  - id: clinic
+    name: Clinic
+    domain: healthcare
+    status: IMPLEMENTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/healthcare/clinic"]
+    score: 62
+  - id: pharmacy
+    name: Pharmacy
+    domain: healthcare
+    status: IMPLEMENTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/healthcare/pharmacy"]
+    score: 60
+  - id: laboratory
+    name: Laboratory
+    domain: healthcare
+    status: IMPLEMENTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/healthcare/laboratory"]
+    score: 60
+  - id: university
+    name: University
+    domain: education
+    status: IMPLEMENTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/education/university"]
+    score: 58
+  - id: banking
+    name: Banking Analytics
+    domain: banking
+    status: IMPLEMENTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/banking/analytics"]
+    score: 55
+  - id: crm
+    name: CRM
+    domain: business
+    status: SCAFFOLDED
+    wave: 2
+    frontend: false
+    backend: false
+    score: 15
+  - id: sales
+    name: Sales
+    domain: business
+    status: SCAFFOLDED
+    wave: 2
+    frontend: false
+    backend: false
+    score: 15
+  - id: tax
+    name: Tax
+    domain: finance
+    status: SCAFFOLDED
+    wave: 2
+    frontend: false
+    backend: false
+    score: 12
+  - id: human_resources
+    name: Human Resources
+    domain: business
+    status: SCAFFOLDED
+    wave: 2
+    frontend: false
+    backend: false
+    score: 12
+nav_groups:
+  - id: home
+    label: Home
+    items: [core_platform]
+  - id: applications
+    label: Applications
+    items: [hospital, clinic, pharmacy, laboratory, university, banking, documents, messenger]
+  - id: platform
+    label: Platform
+    items: [notifications, audit, workflow, search, ai]
+  - id: security
+    label: Security
+    items: [identity, identity_federation]
+  - id: administration
+    label: Administration
+    items: [plugins, enterprise_observability, enterprise_scheduler, enterprise_connector_framework, enterprise_integration_studio]
+verification:
+  wave01_shell_auth: verified
+  wave01_workflow_ui: verified
+  wave01_router_honesty: verified
+  wave01_ci: verified
+  wave01_postgres_runbook: verified
+  notes: >
+    Shell widgets use marpich_auth_session headers; Workflow Task Center at
+    /enterprise/workflows; unavailable ROUTER modules omitted before register;
+    Wave 01 CI workflow meos-wave01-smoke.yml added. Overall platform remains NOT_READY.
