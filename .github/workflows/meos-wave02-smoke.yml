@@ -34,6 +34,7 @@ jobs:
             contexts/procurement/tests/test_procurement_flow.py \
             contexts/human_resources/tests/test_hr_employee_flow.py \
             contexts/payroll/tests/test_payroll_flow.py \
+            contexts/tax/tests/test_tax_flow.py \
             --maxfail=5 \
             -k "not postgres"
 

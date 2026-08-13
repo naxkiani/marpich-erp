@@ -1,0 +1,15 @@
+# BIOTECHNOLOGY_BIO_SECURITY_ARCHITECTURE.v1.yaml — P217-S
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioSecurityArchitecture
+metadata:
+  phase: P217-S
+  adr: "518"
+  fabric: meos_bio_security_intelligence_fabric
+spec:
+  layers:
+    - L01_bio_asset_protection
+    - L02_bio_cybersecurity
+    - L03_biological_risk_intelligence
+    - L04_threat_intelligence
+    - L05_resilience_engineering
+    - L06_governance

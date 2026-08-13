@@ -1,0 +1,31 @@
+# ROBOTICS_FINANCE_DDD_CQRS.v1.yaml — P216-R
+apiVersion: marpich.io/v1
+kind: RoboticsFinanceDddCqrs
+metadata:
+  phase: P216-R
+  adr: "490"
+spec:
+  core_domain: enterprise_financial_intelligence
+  aggregate: FinancialIntelligenceAggregate
+  commands:
+    - CreateTransactionCommand
+    - ExecutePaymentCommand
+    - AssignFinanceRobotCommand
+    - RunRiskAnalysisCommand
+    - ApproveComplianceCommand
+    - UpdateFinanceTwinCommand
+  queries:
+    - GetAccountStatusQuery
+    - GetTransactionHistoryQuery
+    - GetRiskProfileQuery
+    - GetComplianceStatusQuery
+    - GetFinancialTwinQuery
+  events:
+    - TransactionCreatedEvent
+    - PaymentCompletedEvent
+    - RiskDetectedEvent
+    - FraudAlertEvent
+    - ComplianceValidatedEvent
+    - FinancialRobotCompletedEvent
+    - AuditGeneratedEvent
+    - FinancialOptimisedEvent

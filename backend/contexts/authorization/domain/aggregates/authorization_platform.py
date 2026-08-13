@@ -11,6 +11,7 @@ from shared.domain.value_objects.unique_id import UniqueId
 
 class AuthorizationCapability(StrEnum):
     RBAC_EVALUATION = "rbac_evaluation"
+    REBAC_EVALUATION = "rebac_evaluation"
     ABAC_EVALUATION = "abac_evaluation"
     PBAC_EVALUATION = "pbac_evaluation"
     BATCH_CHECK = "batch_check"
@@ -18,6 +19,7 @@ class AuthorizationCapability(StrEnum):
     DECISION_AUDIT = "decision_audit"
     POLICY_DRIVEN_PDP = "policy_driven_pdp"
     AUTHORIZATION_DASHBOARD = "authorization_dashboard"
+    DECISION_CACHE = "decision_cache"
 
 
 class DecisionEffect(StrEnum):
@@ -35,6 +37,7 @@ class AuthorizationProfile(AggregateRoot):
     tenant_id: str
     profile_ref: str
     rbac_enabled: bool = True
+    rebac_enabled: bool = True
     abac_enabled: bool = True
     pbac_enabled: bool = True
     default_decision: str = "deny"
@@ -50,6 +53,7 @@ class AuthorizationProfile(AggregateRoot):
             "profile_ref": self.profile_ref,
             "tenant_id": self.tenant_id,
             "rbac_enabled": self.rbac_enabled,
+            "rebac_enabled": self.rebac_enabled,
             "abac_enabled": self.abac_enabled,
             "pbac_enabled": self.pbac_enabled,
             "default_decision": self.default_decision,
@@ -168,5 +172,59 @@ class AccessDecision(AggregateRoot):
             "policy_keys": self.policy_keys,
             "obligations": self.obligations,
             "facts": self.facts,
+            "created_at": self.created_at.isoformat(),
+        }
+
+
+@dataclass(eq=False, kw_only=True)
+class RelationTuple(AggregateRoot):
+    """Zanzibar-style relation tuple — ReBAC edge (tenant-scoped)."""
+
+    tenant_id: str
+    relation_ref: str
+    object_type: str
+    object_id: str
+    relation: str
+    subject_type: str
+    subject_id: str
+    active: bool = True
+    created_at: datetime = field(default_factory=lambda: datetime.now(UTC))
+
+    @classmethod
+    def write(
+        cls,
+        *,
+        tenant_id: str,
+        relation_ref: str,
+        object_type: str,
+        object_id: str,
+        relation: str,
+        subject_type: str,
+        subject_id: str,
+    ) -> RelationTuple:
+        return cls(
+            id=UniqueId.generate(),
+            tenant_id=tenant_id,
+            relation_ref=relation_ref,
+            object_type=object_type.strip().lower(),
+            object_id=object_id.strip(),
+            relation=relation.strip().lower(),
+            subject_type=subject_type.strip().lower(),
+            subject_id=subject_id.strip(),
+        )
+
+    def revoke(self) -> None:
+        self.active = False
+
+    def to_dict(self) -> dict:
+        return {
+            "relation_ref": self.relation_ref,
+            "tenant_id": self.tenant_id,
+            "object_type": self.object_type,
+            "object_id": self.object_id,
+            "relation": self.relation,
+            "subject_type": self.subject_type,
+            "subject_id": self.subject_id,
+            "active": self.active,
             "created_at": self.created_at.isoformat(),
         }

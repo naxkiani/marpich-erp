@@ -1,0 +1,26 @@
+# BIOTECHNOLOGY_STRATEGY_DDD_CQRS.v1.yaml — P217-B
+apiVersion: marpich.io/v1
+kind: BiotechnologyStrategyDddCqrs
+metadata:
+  phase: P217-B
+  adr: "501"
+spec:
+  core_domain: enterprise_biotechnology_strategic_architecture
+  commands:
+    - RegisterBioCapabilityCommand
+    - PublishOperatingModelCommand
+    - AssessBioMaturityCommand
+    - LaunchBioTransformationCommand
+    - UpdateBioServiceCatalogCommand
+  queries:
+    - GetBioArchitectureQuery
+    - GetCapabilityModelQuery
+    - GetOperatingFrameworkQuery
+    - GetServiceCatalogQuery
+    - GetTransformationStatusQuery
+  events:
+    - BioArchitecturePublishedEvent
+    - BioCapabilityRegisteredEvent
+    - BioOperatingModelUpdatedEvent
+    - BioMaturityAssessedEvent
+    - BioTransformationAdvancedEvent

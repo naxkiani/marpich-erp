@@ -1,0 +1,15 @@
+# BIOTECHNOLOGY_BIO_SUPPLY_CHAIN_ARCHITECTURE.v1.yaml — P217-M
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioSupplyChainArchitecture
+metadata:
+  phase: P217-M
+  adr: "512"
+  fabric: meos_bio_supply_chain_intelligence_fabric
+spec:
+  layers:
+    - L01_biological_asset_intelligence
+    - L02_supply_chain_data_intelligence
+    - L03_bio_logistics_intelligence
+    - L04_cold_chain_intelligence
+    - L05_autonomous_supply_operations
+    - L06_governance

@@ -1,0 +1,37 @@
+# EILMP Lifecycle State Machine — P201 Foundation · ADR-227
+version: "1.0"
+prompt_id: P201-A1
+adr: "227"
+sor_context: identity_lifecycle
+
+canonical_states:
+  - draft
+  - invited
+  - registered
+  - pending_verification
+  - verified
+  - active
+  - suspended
+  - temporarily_disabled
+  - under_investigation
+  - archived
+  - recovery_pending
+  - merged
+  - soft_deleted
+  - hard_deleted
+
+# Ultra-prompt aliases map onto canonical states (no parallel SoR)
+aliases:
+  requested: registered
+  pending_validation: pending_verification
+  approved: verified
+  provisioned: active
+  operational: active
+  temporarily_suspended: suspended
+  reactivated: active
+  inactive: soft_deleted
+  deleted: hard_deleted
+
+notes: |
+  Registration aggregate (P201-A) owns pre-case statuses (requested…activation_requested).
+  LifecycleCase owns post-approval case state machine below.

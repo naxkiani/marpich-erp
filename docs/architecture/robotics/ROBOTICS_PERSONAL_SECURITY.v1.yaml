@@ -1,0 +1,33 @@
+# ROBOTICS_PERSONAL_SECURITY.v1.yaml — P216-W
+apiVersion: marpich.io/v1
+kind: RoboticsPersonalSecurity
+metadata:
+  phase: P216-W
+  adr: "495"
+spec:
+  framework: meos_personal_zero_trust_framework
+  domains:
+    - personal_identity
+    - private_data
+    - personal_ai_memory
+    - robot_security
+    - device_security
+    - consent_management
+    - ai_transparency
+  controls:
+    - data_sovereignty
+    - encryption
+    - privacy_policies
+    - permission_management
+    - audit_trails
+    - user_control_center
+  hard_locks:
+    - privacy_by_design
+    - personal_data_sovereignty
+    - human_control_by_design
+    - consent_management
+    - explainable_ai
+    - never_replace_identity_platform
+    - no_module_local_llm
+    - physical_ai_via_p214z_acl_only
+    - ungated_physical_autonomy_forbidden

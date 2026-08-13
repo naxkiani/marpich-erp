@@ -1,0 +1,28 @@
+# BIOTECHNOLOGY_DIGITAL_HEALTH_DDD_CQRS.v1.yaml — P217-H
+apiVersion: marpich.io/v1
+kind: BiotechnologyDigitalHealthDddCqrs
+metadata:
+  phase: P217-H
+  adr: "507"
+spec:
+  commands:
+    - UpdatePatientIntelligenceCommand
+    - GenerateClinicalRecommendationCommand
+    - CreateHealthPredictionCommand
+    - ValidatePhysicianDecisionCommand
+    - CertifyHealthAiModelCommand
+  queries:
+    - GetDigitalHealthPlatformQuery
+    - GetPatientIntelligenceQuery
+    - GetClinicalRecommendationQuery
+    - GetHealthPredictionQuery
+    - GetHealthGovernanceQuery
+  events:
+    - DigitalHealthPlatformActivatedEvent
+    - PatientHealthUpdatedEvent
+    - RiskDetectedEvent
+    - DiagnosisGeneratedEvent
+    - RecommendationCreatedEvent
+    - HealthPredictionCreatedEvent
+    - ForecastGeneratedEvent
+    - HealthAiGovernanceViolationEvent

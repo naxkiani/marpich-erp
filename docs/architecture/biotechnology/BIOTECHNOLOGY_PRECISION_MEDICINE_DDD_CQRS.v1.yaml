@@ -1,0 +1,28 @@
+# BIOTECHNOLOGY_PRECISION_MEDICINE_DDD_CQRS.v1.yaml — P217-I
+apiVersion: marpich.io/v1
+kind: BiotechnologyPrecisionMedicineDddCqrs
+metadata:
+  phase: P217-I
+  adr: "508"
+spec:
+  commands:
+    - CreateGenomeProfileCommand
+    - InterpretVariantCommand
+    - GenerateMolecularPredictionCommand
+    - RecommendPersonalizedTherapyCommand
+    - ValidatePhysicianTherapyDecisionCommand
+  queries:
+    - GetPrecisionMedicinePlatformQuery
+    - GetGenomeProfileQuery
+    - GetMolecularProfileQuery
+    - GetTherapyRecommendationQuery
+    - GetPrecisionGovernanceQuery
+  events:
+    - PrecisionMedicinePlatformActivatedEvent
+    - GenomeProfileCreatedEvent
+    - VariantDetectedEvent
+    - MolecularProfileUpdatedEvent
+    - MolecularPredictionGeneratedEvent
+    - TherapyRecommendedEvent
+    - TreatmentOutcomeRecordedEvent
+    - PrecisionMedicineGovernanceViolationEvent

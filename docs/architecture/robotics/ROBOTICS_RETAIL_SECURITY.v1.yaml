@@ -1,0 +1,35 @@
+# ROBOTICS_RETAIL_SECURITY.v1.yaml — P216-O
+apiVersion: marpich.io/v1
+kind: RoboticsRetailSecurityCatalog
+metadata:
+  phase: P216-O
+  adr: "487"
+spec:
+  framework: meos_retail_zero_trust_framework
+  domains:
+    - customer_identity
+    - robot_identity
+    - store_identity
+    - product_identity
+    - transaction_security
+    - payment_protection
+    - data_privacy
+    - ai_governance
+    - audit_management
+  controls:
+    - continuous_authentication
+    - encryption
+    - access_governance
+    - fraud_detection
+    - privacy_management
+  hard_laws:
+    - payment_via_integration_platform_only
+    - never_direct_payment_bypass
+    - never_duplicate_pos_sales_crm_core_logic
+    - physical_ai_via_p214z_acl_only
+    - no_module_local_llm
+    - never_replace_p216_l_public_safety
+    - privacy_by_design_required
+    - responsible_ai_required
+    - ungated_physical_autonomy_forbidden
+    - opaque_safety_forbidden

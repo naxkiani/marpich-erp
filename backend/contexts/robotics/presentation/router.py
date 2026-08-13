@@ -1461,3 +1461,1564 @@ async def public_safety_readiness(
     _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
 ) -> dict:
     return {"data": get_robotics_service().public_safety_readiness()}
+
+
+@robotics_router.get("/retail")
+async def retail_summary(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().platform_retail()}
+
+
+@robotics_router.get("/retail/vision")
+async def retail_vision(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().retail_vision()}
+
+
+@robotics_router.get("/retail/domain")
+async def retail_domain(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().retail_domain()}
+
+
+@robotics_router.get("/retail/bounded-contexts")
+async def retail_bounded_contexts(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().retail_bounded_contexts()}
+
+
+@robotics_router.get("/retail/robotics")
+async def retail_robotics(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().retail_robotics()}
+
+
+@robotics_router.get("/retail/customer-experience")
+async def retail_customer_experience(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().retail_customer_experience()}
+
+
+@robotics_router.get("/retail/commerce")
+async def retail_commerce(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().retail_commerce()}
+
+
+@robotics_router.get("/retail/smart-store")
+async def retail_smart_store(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().retail_smart_store()}
+
+
+@robotics_router.get("/retail/commerce-ai")
+async def retail_commerce_ai(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().retail_commerce_ai()}
+
+
+@robotics_router.get("/retail/digital-twin")
+async def retail_digital_twin(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().retail_digital_twin()}
+
+
+@robotics_router.get("/retail/knowledge-graph")
+async def retail_knowledge_graph(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().retail_knowledge_graph()}
+
+
+@robotics_router.get("/retail/observability")
+async def retail_observability(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().retail_observability()}
+
+
+@robotics_router.get("/retail/security")
+async def retail_security(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().retail_security()}
+
+
+@robotics_router.get("/retail/cqrs")
+async def retail_cqrs(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().retail_cqrs()}
+
+
+@robotics_router.get("/retail/events")
+async def retail_events(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().retail_events()}
+
+
+@robotics_router.get("/retail/microservices")
+async def retail_microservices(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().retail_microservices()}
+
+
+@robotics_router.get("/retail/integration")
+async def retail_integration(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().retail_integration()}
+
+
+@robotics_router.get("/retail/deployment")
+async def retail_deployment(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().retail_deployment()}
+
+
+@robotics_router.get("/retail/testing")
+async def retail_testing(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().retail_testing()}
+
+
+@robotics_router.get("/retail/readiness")
+async def retail_readiness(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().retail_readiness()}
+
+
+@robotics_router.get("/hospitality")
+async def hospitality_summary(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().platform_hospitality()}
+
+
+@robotics_router.get("/hospitality/vision")
+async def hospitality_vision(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().hospitality_vision()}
+
+
+@robotics_router.get("/hospitality/domain")
+async def hospitality_domain(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().hospitality_domain()}
+
+
+@robotics_router.get("/hospitality/bounded-contexts")
+async def hospitality_bounded_contexts(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().hospitality_bounded_contexts()}
+
+
+@robotics_router.get("/hospitality/robotics")
+async def hospitality_robotics(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().hospitality_robotics()}
+
+
+@robotics_router.get("/hospitality/smart-hotel")
+async def hospitality_smart_hotel(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().hospitality_smart_hotel()}
+
+
+@robotics_router.get("/hospitality/guest-experience")
+async def hospitality_guest_experience(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().hospitality_guest_experience()}
+
+
+@robotics_router.get("/hospitality/autonomous-services")
+async def hospitality_autonomous_services(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().hospitality_autonomous_services()}
+
+
+@robotics_router.get("/hospitality/ai")
+async def hospitality_ai(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().hospitality_ai()}
+
+
+@robotics_router.get("/hospitality/digital-twin")
+async def hospitality_digital_twin(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().hospitality_digital_twin()}
+
+
+@robotics_router.get("/hospitality/knowledge-graph")
+async def hospitality_knowledge_graph(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().hospitality_knowledge_graph()}
+
+
+@robotics_router.get("/hospitality/observability")
+async def hospitality_observability(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().hospitality_observability()}
+
+
+@robotics_router.get("/hospitality/security")
+async def hospitality_security(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().hospitality_security()}
+
+
+@robotics_router.get("/hospitality/cqrs")
+async def hospitality_cqrs(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().hospitality_cqrs()}
+
+
+@robotics_router.get("/hospitality/events")
+async def hospitality_events(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().hospitality_events()}
+
+
+@robotics_router.get("/hospitality/microservices")
+async def hospitality_microservices(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().hospitality_microservices()}
+
+
+@robotics_router.get("/hospitality/integration")
+async def hospitality_integration(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().hospitality_integration()}
+
+
+@robotics_router.get("/hospitality/deployment")
+async def hospitality_deployment(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().hospitality_deployment()}
+
+
+@robotics_router.get("/hospitality/testing")
+async def hospitality_testing(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().hospitality_testing()}
+
+
+@robotics_router.get("/hospitality/readiness")
+async def hospitality_readiness(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().hospitality_readiness()}
+
+
+@robotics_router.get("/education")
+async def education_summary(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().platform_education()}
+
+
+@robotics_router.get("/education/vision")
+async def education_vision(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().education_vision()}
+
+
+@robotics_router.get("/education/domain")
+async def education_domain(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().education_domain()}
+
+
+@robotics_router.get("/education/bounded-contexts")
+async def education_bounded_contexts(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().education_bounded_contexts()}
+
+
+@robotics_router.get("/education/robotics")
+async def education_robotics(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().education_robotics()}
+
+
+@robotics_router.get("/education/ai-learning")
+async def education_ai_learning(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().education_ai_learning()}
+
+
+@robotics_router.get("/education/smart-campus")
+async def education_smart_campus(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().education_smart_campus()}
+
+
+@robotics_router.get("/education/autonomous-operations")
+async def education_autonomous_operations(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().education_autonomous_operations()}
+
+
+@robotics_router.get("/education/academic-intelligence")
+async def education_academic_intelligence(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().education_academic_intelligence()}
+
+
+@robotics_router.get("/education/digital-twin")
+async def education_digital_twin(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().education_digital_twin()}
+
+
+@robotics_router.get("/education/knowledge-graph")
+async def education_knowledge_graph(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().education_knowledge_graph()}
+
+
+@robotics_router.get("/education/observability")
+async def education_observability(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().education_observability()}
+
+
+@robotics_router.get("/education/security")
+async def education_security(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().education_security()}
+
+
+@robotics_router.get("/education/cqrs")
+async def education_cqrs(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().education_cqrs()}
+
+
+@robotics_router.get("/education/events")
+async def education_events(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().education_events()}
+
+
+@robotics_router.get("/education/microservices")
+async def education_microservices(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().education_microservices()}
+
+
+@robotics_router.get("/education/integration")
+async def education_integration(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().education_integration()}
+
+
+@robotics_router.get("/education/deployment")
+async def education_deployment(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().education_deployment()}
+
+
+@robotics_router.get("/education/testing")
+async def education_testing(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().education_testing()}
+
+
+@robotics_router.get("/education/readiness")
+async def education_readiness(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().education_readiness()}
+
+
+@robotics_router.get("/finance")
+async def finance_summary(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().platform_finance()}
+
+
+@robotics_router.get("/finance/vision")
+async def finance_vision(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().finance_vision()}
+
+
+@robotics_router.get("/finance/domain")
+async def finance_domain(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().finance_domain()}
+
+
+@robotics_router.get("/finance/bounded-contexts")
+async def finance_bounded_contexts(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().finance_bounded_contexts()}
+
+
+@robotics_router.get("/finance/robotics")
+async def finance_robotics(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().finance_robotics()}
+
+
+@robotics_router.get("/finance/autonomous-banking")
+async def finance_autonomous_banking(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().finance_autonomous_banking()}
+
+
+@robotics_router.get("/finance/automation")
+async def finance_automation(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().finance_automation()}
+
+
+@robotics_router.get("/finance/ai")
+async def finance_ai(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().finance_ai()}
+
+
+@robotics_router.get("/finance/risk")
+async def finance_risk(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().finance_risk()}
+
+
+@robotics_router.get("/finance/compliance")
+async def finance_compliance(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().finance_compliance()}
+
+
+@robotics_router.get("/finance/digital-twin")
+async def finance_digital_twin(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().finance_digital_twin()}
+
+
+@robotics_router.get("/finance/knowledge-graph")
+async def finance_knowledge_graph(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().finance_knowledge_graph()}
+
+
+@robotics_router.get("/finance/observability")
+async def finance_observability(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().finance_observability()}
+
+
+@robotics_router.get("/finance/security")
+async def finance_security(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().finance_security()}
+
+
+@robotics_router.get("/finance/cqrs")
+async def finance_cqrs(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().finance_cqrs()}
+
+
+@robotics_router.get("/finance/events")
+async def finance_events(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().finance_events()}
+
+
+@robotics_router.get("/finance/microservices")
+async def finance_microservices(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().finance_microservices()}
+
+
+@robotics_router.get("/finance/integration")
+async def finance_integration(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().finance_integration()}
+
+
+@robotics_router.get("/finance/deployment")
+async def finance_deployment(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().finance_deployment()}
+
+
+@robotics_router.get("/finance/testing")
+async def finance_testing(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().finance_testing()}
+
+
+@robotics_router.get("/finance/readiness")
+async def finance_readiness(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().finance_readiness()}
+
+
+@robotics_router.get("/government")
+async def government_summary(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().platform_government()}
+
+
+@robotics_router.get("/government/vision")
+async def government_vision(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().government_vision()}
+
+
+@robotics_router.get("/government/domain")
+async def government_domain(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().government_domain()}
+
+
+@robotics_router.get("/government/bounded-contexts")
+async def government_bounded_contexts(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().government_bounded_contexts()}
+
+
+@robotics_router.get("/government/robotics")
+async def government_robotics(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().government_robotics()}
+
+
+@robotics_router.get("/government/public-services")
+async def government_public_services(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().government_public_services()}
+
+
+@robotics_router.get("/government/digital-government")
+async def government_digital_government(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().government_digital_government()}
+
+
+@robotics_router.get("/government/smart-governance")
+async def government_smart_governance(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().government_smart_governance()}
+
+
+@robotics_router.get("/government/citizen-intelligence")
+async def government_citizen_intelligence(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().government_citizen_intelligence()}
+
+
+@robotics_router.get("/government/policy-intelligence")
+async def government_policy_intelligence(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().government_policy_intelligence()}
+
+
+@robotics_router.get("/government/digital-twin")
+async def government_digital_twin(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().government_digital_twin()}
+
+
+@robotics_router.get("/government/knowledge-graph")
+async def government_knowledge_graph(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().government_knowledge_graph()}
+
+
+@robotics_router.get("/government/observability")
+async def government_observability(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().government_observability()}
+
+
+@robotics_router.get("/government/security")
+async def government_security(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().government_security()}
+
+
+@robotics_router.get("/government/cqrs")
+async def government_cqrs(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().government_cqrs()}
+
+
+@robotics_router.get("/government/events")
+async def government_events(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().government_events()}
+
+
+@robotics_router.get("/government/microservices")
+async def government_microservices(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().government_microservices()}
+
+
+@robotics_router.get("/government/integration")
+async def government_integration(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().government_integration()}
+
+
+@robotics_router.get("/government/deployment")
+async def government_deployment(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().government_deployment()}
+
+
+@robotics_router.get("/government/testing")
+async def government_testing(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().government_testing()}
+
+
+@robotics_router.get("/government/readiness")
+async def government_readiness(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().government_readiness()}
+
+
+@robotics_router.get("/defense")
+async def defense_summary(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().platform_defense()}
+
+
+@robotics_router.get("/defense/vision")
+async def defense_vision(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().defense_vision()}
+
+
+@robotics_router.get("/defense/domain")
+async def defense_domain(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().defense_domain()}
+
+
+@robotics_router.get("/defense/bounded-contexts")
+async def defense_bounded_contexts(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().defense_bounded_contexts()}
+
+
+@robotics_router.get("/defense/robotics")
+async def defense_robotics(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().defense_robotics()}
+
+
+@robotics_router.get("/defense/strategic-intelligence")
+async def defense_strategic_intelligence(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().defense_strategic_intelligence()}
+
+
+@robotics_router.get("/defense/autonomous-governance")
+async def defense_autonomous_governance(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().defense_autonomous_governance()}
+
+
+@robotics_router.get("/defense/ai")
+async def defense_ai(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().defense_ai()}
+
+
+@robotics_router.get("/defense/mission-intelligence")
+async def defense_mission_intelligence(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().defense_mission_intelligence()}
+
+
+@robotics_router.get("/defense/resilience")
+async def defense_resilience(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().defense_resilience()}
+
+
+@robotics_router.get("/defense/digital-twin")
+async def defense_digital_twin(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().defense_digital_twin()}
+
+
+@robotics_router.get("/defense/knowledge-graph")
+async def defense_knowledge_graph(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().defense_knowledge_graph()}
+
+
+@robotics_router.get("/defense/observability")
+async def defense_observability(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().defense_observability()}
+
+
+@robotics_router.get("/defense/security")
+async def defense_security(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().defense_security()}
+
+
+@robotics_router.get("/defense/cqrs")
+async def defense_cqrs(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().defense_cqrs()}
+
+
+@robotics_router.get("/defense/events")
+async def defense_events(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().defense_events()}
+
+
+@robotics_router.get("/defense/microservices")
+async def defense_microservices(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().defense_microservices()}
+
+
+@robotics_router.get("/defense/integration")
+async def defense_integration(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().defense_integration()}
+
+
+@robotics_router.get("/defense/deployment")
+async def defense_deployment(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().defense_deployment()}
+
+
+@robotics_router.get("/defense/testing")
+async def defense_testing(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().defense_testing()}
+
+
+@robotics_router.get("/defense/readiness")
+async def defense_readiness(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().defense_readiness()}
+
+
+@robotics_router.get("/science")
+async def science_summary(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().platform_science()}
+
+
+@robotics_router.get("/science/vision")
+async def science_vision(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().science_vision()}
+
+
+@robotics_router.get("/science/domain")
+async def science_domain(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().science_domain()}
+
+
+@robotics_router.get("/science/bounded-contexts")
+async def science_bounded_contexts(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().science_bounded_contexts()}
+
+
+@robotics_router.get("/science/robotics")
+async def science_robotics(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().science_robotics()}
+
+
+@robotics_router.get("/science/autonomous-laboratory")
+async def science_autonomous_laboratory(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().science_autonomous_laboratory()}
+
+
+@robotics_router.get("/science/ai-scientist")
+async def science_ai_scientist(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().science_ai_scientist()}
+
+
+@robotics_router.get("/science/discovery")
+async def science_discovery(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().science_discovery()}
+
+
+@robotics_router.get("/science/research-automation")
+async def science_research_automation(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().science_research_automation()}
+
+
+@robotics_router.get("/science/digital-twin")
+async def science_digital_twin(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().science_digital_twin()}
+
+
+@robotics_router.get("/science/knowledge-graph")
+async def science_knowledge_graph(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().science_knowledge_graph()}
+
+
+@robotics_router.get("/science/observability")
+async def science_observability(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().science_observability()}
+
+
+@robotics_router.get("/science/security")
+async def science_security(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().science_security()}
+
+
+@robotics_router.get("/science/cqrs")
+async def science_cqrs(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().science_cqrs()}
+
+
+@robotics_router.get("/science/events")
+async def science_events(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().science_events()}
+
+
+@robotics_router.get("/science/microservices")
+async def science_microservices(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().science_microservices()}
+
+
+@robotics_router.get("/science/integration")
+async def science_integration(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().science_integration()}
+
+
+@robotics_router.get("/science/deployment")
+async def science_deployment(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().science_deployment()}
+
+
+@robotics_router.get("/science/testing")
+async def science_testing(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().science_testing()}
+
+
+@robotics_router.get("/science/readiness")
+async def science_readiness(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().science_readiness()}
+
+
+@robotics_router.get("/personal")
+async def personal_summary(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().platform_personal()}
+
+
+@robotics_router.get("/personal/vision")
+async def personal_vision(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().personal_vision()}
+
+
+@robotics_router.get("/personal/domain")
+async def personal_domain(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().personal_domain()}
+
+
+@robotics_router.get("/personal/bounded-contexts")
+async def personal_bounded_contexts(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().personal_bounded_contexts()}
+
+
+@robotics_router.get("/personal/robotics")
+async def personal_robotics(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().personal_robotics()}
+
+
+@robotics_router.get("/personal/ai-companion")
+async def personal_ai_companion(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().personal_ai_companion()}
+
+
+@robotics_router.get("/personal/smart-home")
+async def personal_smart_home(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().personal_smart_home()}
+
+
+@robotics_router.get("/personal/human-augmentation")
+async def personal_human_augmentation(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().personal_human_augmentation()}
+
+
+@robotics_router.get("/personal/life-automation")
+async def personal_life_automation(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().personal_life_automation()}
+
+
+@robotics_router.get("/personal/digital-twin")
+async def personal_digital_twin(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().personal_digital_twin()}
+
+
+@robotics_router.get("/personal/knowledge-graph")
+async def personal_knowledge_graph(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().personal_knowledge_graph()}
+
+
+@robotics_router.get("/personal/observability")
+async def personal_observability(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().personal_observability()}
+
+
+@robotics_router.get("/personal/security")
+async def personal_security(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().personal_security()}
+
+
+@robotics_router.get("/personal/cqrs")
+async def personal_cqrs(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().personal_cqrs()}
+
+
+@robotics_router.get("/personal/events")
+async def personal_events(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().personal_events()}
+
+
+@robotics_router.get("/personal/microservices")
+async def personal_microservices(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().personal_microservices()}
+
+
+@robotics_router.get("/personal/integration")
+async def personal_integration(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().personal_integration()}
+
+
+@robotics_router.get("/personal/deployment")
+async def personal_deployment(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().personal_deployment()}
+
+
+@robotics_router.get("/personal/testing")
+async def personal_testing(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().personal_testing()}
+
+
+@robotics_router.get("/personal/readiness")
+async def personal_readiness(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().personal_readiness()}
+
+
+@robotics_router.get("/entertainment")
+async def entertainment_summary(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().platform_entertainment()}
+
+
+@robotics_router.get("/entertainment/vision")
+async def entertainment_vision(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().entertainment_vision()}
+
+
+@robotics_router.get("/entertainment/domain")
+async def entertainment_domain(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().entertainment_domain()}
+
+
+@robotics_router.get("/entertainment/bounded-contexts")
+async def entertainment_bounded_contexts(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().entertainment_bounded_contexts()}
+
+
+@robotics_router.get("/entertainment/robotics")
+async def entertainment_robotics(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().entertainment_robotics()}
+
+
+@robotics_router.get("/entertainment/creative-ai")
+async def entertainment_creative_ai(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().entertainment_creative_ai()}
+
+
+@robotics_router.get("/entertainment/media-production")
+async def entertainment_media_production(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().entertainment_media_production()}
+
+
+@robotics_router.get("/entertainment/digital-experience")
+async def entertainment_digital_experience(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().entertainment_digital_experience()}
+
+
+@robotics_router.get("/entertainment/immersive-reality")
+async def entertainment_immersive_reality(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().entertainment_immersive_reality()}
+
+
+@robotics_router.get("/entertainment/digital-twin")
+async def entertainment_digital_twin(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().entertainment_digital_twin()}
+
+
+@robotics_router.get("/entertainment/knowledge-graph")
+async def entertainment_knowledge_graph(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().entertainment_knowledge_graph()}
+
+
+@robotics_router.get("/entertainment/observability")
+async def entertainment_observability(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().entertainment_observability()}
+
+
+@robotics_router.get("/entertainment/security")
+async def entertainment_security(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().entertainment_security()}
+
+
+@robotics_router.get("/entertainment/cqrs")
+async def entertainment_cqrs(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().entertainment_cqrs()}
+
+
+@robotics_router.get("/entertainment/events")
+async def entertainment_events(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().entertainment_events()}
+
+
+@robotics_router.get("/entertainment/microservices")
+async def entertainment_microservices(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().entertainment_microservices()}
+
+
+@robotics_router.get("/entertainment/integration")
+async def entertainment_integration(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().entertainment_integration()}
+
+
+@robotics_router.get("/entertainment/deployment")
+async def entertainment_deployment(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().entertainment_deployment()}
+
+
+@robotics_router.get("/entertainment/testing")
+async def entertainment_testing(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().entertainment_testing()}
+
+
+@robotics_router.get("/entertainment/readiness")
+async def entertainment_readiness(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().entertainment_readiness()}
+
+
+@robotics_router.get("/ultimate")
+async def ultimate_summary(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().platform_ultimate()}
+
+
+@robotics_router.get("/ultimate/vision")
+async def ultimate_vision(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().ultimate_vision()}
+
+
+@robotics_router.get("/ultimate/domain")
+async def ultimate_domain(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().ultimate_domain()}
+
+
+@robotics_router.get("/ultimate/bounded-contexts")
+async def ultimate_bounded_contexts(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().ultimate_bounded_contexts()}
+
+
+@robotics_router.get("/ultimate/future-robotics")
+async def ultimate_future_robotics(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().ultimate_future_robotics()}
+
+
+@robotics_router.get("/ultimate/symbiosis")
+async def ultimate_symbiosis(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().ultimate_symbiosis()}
+
+
+@robotics_router.get("/ultimate/evolution")
+async def ultimate_evolution(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().ultimate_evolution()}
+
+
+@robotics_router.get("/ultimate/cognitive")
+async def ultimate_cognitive(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().ultimate_cognitive()}
+
+
+@robotics_router.get("/ultimate/autonomous-intelligence")
+async def ultimate_autonomous_intelligence(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().ultimate_autonomous_intelligence()}
+
+
+@robotics_router.get("/ultimate/digital-twin")
+async def ultimate_digital_twin(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().ultimate_digital_twin()}
+
+
+@robotics_router.get("/ultimate/knowledge-graph")
+async def ultimate_knowledge_graph(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().ultimate_knowledge_graph()}
+
+
+@robotics_router.get("/ultimate/observability")
+async def ultimate_observability(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().ultimate_observability()}
+
+
+@robotics_router.get("/ultimate/security")
+async def ultimate_security(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().ultimate_security()}
+
+
+@robotics_router.get("/ultimate/cqrs")
+async def ultimate_cqrs(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().ultimate_cqrs()}
+
+
+@robotics_router.get("/ultimate/events")
+async def ultimate_events(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().ultimate_events()}
+
+
+@robotics_router.get("/ultimate/microservices")
+async def ultimate_microservices(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().ultimate_microservices()}
+
+
+@robotics_router.get("/ultimate/integration")
+async def ultimate_integration(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().ultimate_integration()}
+
+
+@robotics_router.get("/ultimate/deployment")
+async def ultimate_deployment(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().ultimate_deployment()}
+
+
+@robotics_router.get("/ultimate/testing")
+async def ultimate_testing(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().ultimate_testing()}
+
+
+@robotics_router.get("/ultimate/readiness")
+async def ultimate_readiness(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().ultimate_readiness()}
+
+
+@robotics_router.get("/supreme")
+async def supreme_summary(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().platform_supreme()}
+
+
+@robotics_router.get("/supreme/vision")
+async def supreme_vision(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().supreme_vision()}
+
+
+@robotics_router.get("/supreme/domain")
+async def supreme_domain(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().supreme_domain()}
+
+
+@robotics_router.get("/supreme/bounded-contexts")
+async def supreme_bounded_contexts(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().supreme_bounded_contexts()}
+
+
+@robotics_router.get("/supreme/control-plane")
+async def supreme_control_plane(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().supreme_control_plane()}
+
+
+@robotics_router.get("/supreme/universal-network")
+async def supreme_universal_network(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().supreme_universal_network()}
+
+
+@robotics_router.get("/supreme/civilization")
+async def supreme_civilization(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().supreme_civilization()}
+
+
+@robotics_router.get("/supreme/collective-intelligence")
+async def supreme_collective_intelligence(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().supreme_collective_intelligence()}
+
+
+@robotics_router.get("/supreme/digital-twin")
+async def supreme_digital_twin(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().supreme_digital_twin()}
+
+
+@robotics_router.get("/supreme/knowledge-graph")
+async def supreme_knowledge_graph(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().supreme_knowledge_graph()}
+
+
+@robotics_router.get("/supreme/governance")
+async def supreme_governance(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().supreme_governance()}
+
+
+@robotics_router.get("/supreme/observability")
+async def supreme_observability(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().supreme_observability()}
+
+
+@robotics_router.get("/supreme/security")
+async def supreme_security(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().supreme_security()}
+
+
+@robotics_router.get("/supreme/cqrs")
+async def supreme_cqrs(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().supreme_cqrs()}
+
+
+@robotics_router.get("/supreme/events")
+async def supreme_events(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().supreme_events()}
+
+
+@robotics_router.get("/supreme/microservices")
+async def supreme_microservices(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().supreme_microservices()}
+
+
+@robotics_router.get("/supreme/integration")
+async def supreme_integration(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().supreme_integration()}
+
+
+@robotics_router.get("/supreme/deployment")
+async def supreme_deployment(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().supreme_deployment()}
+
+
+@robotics_router.get("/supreme/testing")
+async def supreme_testing(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().supreme_testing()}
+
+
+@robotics_router.get("/supreme/readiness")
+async def supreme_readiness(
+    _user: Annotated[dict, Depends(require_permissions("robotics.read"))],
+) -> dict:
+    return {"data": get_robotics_service().supreme_readiness()}

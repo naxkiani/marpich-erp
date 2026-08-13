@@ -1,0 +1,30 @@
+# ROBOTICS_EDUCATION_SECURITY.v1.yaml — P216-Q
+apiVersion: marpich.io/v1
+kind: RoboticsEducationSecurity
+metadata:
+  phase: P216-Q
+  adr: "489"
+spec:
+  framework: meos_education_zero_trust_framework
+  domains:
+    - student_identity
+    - teacher_identity
+    - robot_identity
+    - institution_identity
+    - research_data_protection
+    - academic_privacy
+    - ai_governance
+    - audit_management
+  controls:
+    - identity_governance
+    - encryption
+    - access_control
+    - privacy_protection
+    - ai_transparency
+    - compliance_monitoring
+  hard_locks:
+    - privacy_by_design
+    - accessibility_by_design
+    - never_duplicate_sis_lms_core_logic
+    - no_module_local_llm
+    - physical_ai_via_p214z_acl_only

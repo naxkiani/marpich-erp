@@ -1,0 +1,24 @@
+# ROBOTICS_SUPREME_BOUNDED_CONTEXTS.v1.yaml — P216-Z
+apiVersion: marpich.io/v1
+kind: RoboticsSupremeBoundedContexts
+metadata:
+  phase: P216-Z
+  adr: "498"
+spec:
+  contexts:
+    - id: BC-01
+      name: Supreme Control Plane Context
+    - id: BC-02
+      name: Universal Robotics Network Context
+    - id: BC-03
+      name: Robotics Civilization Context
+    - id: BC-04
+      name: Collective Intelligence Context
+    - id: BC-05
+      name: Universal Digital Twin Context
+    - id: BC-06
+      name: Knowledge Graph Universe Context
+    - id: BC-07
+      name: Autonomous Governance Context
+    - id: BC-08
+      name: Robotics Security Intelligence Context

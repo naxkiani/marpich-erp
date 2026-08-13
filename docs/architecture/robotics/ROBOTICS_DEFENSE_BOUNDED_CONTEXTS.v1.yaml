@@ -1,0 +1,24 @@
+# ROBOTICS_DEFENSE_BOUNDED_CONTEXTS.v1.yaml — P216-U
+apiVersion: marpich.io/v1
+kind: RoboticsDefenseBoundedContexts
+metadata:
+  phase: P216-U
+  adr: "493"
+spec:
+  contexts:
+    - id: BC-01
+      name: Strategic Intelligence Context
+    - id: BC-02
+      name: Defense Robotics Context
+    - id: BC-03
+      name: Security Operations Context
+    - id: BC-04
+      name: Cyber Defense Intelligence Context
+    - id: BC-05
+      name: Mission Intelligence Context
+    - id: BC-06
+      name: Defense Asset Intelligence Context
+    - id: BC-07
+      name: Defense Digital Twin Context
+    - id: BC-08
+      name: Defense Governance Context

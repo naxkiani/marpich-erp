@@ -1,0 +1,24 @@
+# BIOTECHNOLOGY_CLINICAL_RESEARCH_SECURITY.v1.yaml — P217-J
+apiVersion: marpich.io/v1
+kind: BiotechnologyClinicalResearchSecurity
+metadata:
+  phase: P217-J
+  adr: "509"
+spec:
+  framework: meos_clinical_research_governance_framework
+  hard_locks:
+    - bio_ai_via_p214z_acl_only
+    - trial_simulation_via_p217g_acl_only
+    - lab_automation_via_p216z_acl_only
+    - no_module_local_llm
+    - never_opaque_unexplainable_decisions
+    - never_autonomous_clinical_trial_without_ethics_approval
+    - never_skip_human_researcher_oversight
+    - genomic_privacy_strategy
+    - ethical_bioengineering_strategy
+    - scientific_integrity_strategy
+    - opaque_bio_safety_strategy_forbidden
+    - never_replace_p217_i_precision_medicine
+    - never_replace_hospital_emr
+    - never_replace_laboratory_lims
+    - never_replace_pharmacy

@@ -1,0 +1,11 @@
+# BIOTECHNOLOGY_BIO_GI_VALIDATION.v1.yaml — P217-V
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioGiValidation
+metadata:
+  phase: P217-V
+  adr: "521"
+spec:
+  verdict_required: ENTERPRISE_GRADE
+  foundation: validate_bio_gi_foundation
+  dual_tests_required: true
+  expected_pytest_passed: 8

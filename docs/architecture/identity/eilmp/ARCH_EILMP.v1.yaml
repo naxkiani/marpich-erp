@@ -1,0 +1,32 @@
+# EILMP Architecture — P201 Foundation · ADR-227
+version: "1.0"
+prompt_id: P201-A1
+adr: "227"
+sor_context: identity_lifecycle
+forbidden_sibling_bc: eilmp
+
+c4_context:
+  system: Enterprise Identity Lifecycle Management Platform
+  users: [HR, Admin, Partner_Admin, Automation]
+  external_systems: [HRIS, IdP_via_Federation, Directory, Workflow]
+
+platform_integrations:
+  identity: user_records
+  directory: catalog_scim_ldap
+  identity_governance: access_reviews_sod
+  identity_federation: trust_facts_only
+  authorization: zt_context_facts_not_pdp
+  identity_risk: risk_signals
+  workflow: approvals
+  policy: lifecycle_rules
+  audit: immutable_trail
+  authentication: credential_crypto_delegate
+
+bounded_contexts_logical:
+  - identity_registration
+  - identity_provisioning_orchestration
+  - joiner_mover_leaver
+  - credential_lifecycle_policy
+  - lifecycle_governance
+
+api_prefix: /api/v1/identity-lifecycle

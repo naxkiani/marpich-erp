@@ -1,0 +1,15 @@
+# BIOTECHNOLOGY_CLINICAL_RESEARCH_ARCHITECTURE.v1.yaml — P217-J
+apiVersion: marpich.io/v1
+kind: BiotechnologyClinicalResearchArchitecture
+metadata:
+  phase: P217-J
+  adr: "509"
+  fabric: meos_clinical_innovation_intelligence_fabric
+spec:
+  layers:
+    - L01_research_data_intelligence
+    - L02_biomedical_knowledge_intelligence
+    - L03_ai_research_intelligence
+    - L04_clinical_trial_intelligence
+    - L05_research_automation
+    - L06_governance

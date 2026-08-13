@@ -1,0 +1,30 @@
+# ROBOTICS_ENTERTAINMENT_DDD_CQRS.v1.yaml — P216-X
+apiVersion: marpich.io/v1
+kind: RoboticsEntertainmentDddCqrs
+metadata:
+  phase: P216-X
+  adr: "496"
+spec:
+  core_domain: enterprise_creative_intelligence
+  aggregate: CreativeIntelligenceAggregate
+  commands:
+    - CreateCreativeProjectCommand
+    - GenerateContentCommand
+    - CreateVirtualExperienceCommand
+    - StartProductionCommand
+    - OptimiseAudienceExperienceCommand
+    - UpdateCreativeTwinCommand
+  queries:
+    - GetCreativeProjectQuery
+    - GetContentQualityQuery
+    - GetAudienceInsightQuery
+    - GetExperienceStatusQuery
+    - GetCreativeTwinQuery
+  events:
+    - CreativeCreatedEvent
+    - ContentGeneratedEvent
+    - ProductionCompletedEvent
+    - AudienceEngagedEvent
+    - ExperienceUpdatedEvent
+    - RightsVerifiedEvent
+    - InnovationGeneratedEvent

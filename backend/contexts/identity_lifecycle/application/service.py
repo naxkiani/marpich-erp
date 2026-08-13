@@ -178,8 +178,45 @@ class IdentityLifecycleApplicationService:
             "verification_types": engine.list_verification_types(),
             "lifecycle_actions": workflow.list_workflow_actions(),
             "lifecycle_states": workflow.list_lifecycle_states(),
+            "jml_actions": workflow.list_jml_actions(),
+            "state_machine": workflow.state_machine_surface(),
             "workflow_graph": workflow.build_workflow_graph(),
             "dependency_map": engine.dependency_map(),
+            "prompt": "P201-A1",
+            "adr": 227,
+            "sor": "identity_lifecycle",
+            "forbidden_sibling": "eilmp",
+        })
+
+    async def get_state_machine(self) -> Result[dict]:
+        return Result.ok(workflow.state_machine_surface())
+
+    async def get_eilmp_surface(self) -> Result[dict]:
+        return Result.ok({
+            "prompt": "P201-A1",
+            "adr": 227,
+            "sor": "identity_lifecycle",
+            "forbidden_sibling": "eilmp",
+            "apis": [
+                "/api/v1/identity-lifecycle/eilmp/surface",
+                "/api/v1/identity-lifecycle/state-machine",
+                "/api/v1/identity-lifecycle/jml/actions",
+                "/api/v1/identity-lifecycle/jml/{case_ref}/apply",
+                "/api/v1/identity-lifecycle/registration/*",
+            ],
+            "state_machine": workflow.state_machine_surface(),
+            "boundaries": {
+                "owns": ["lifecycle_state", "jml", "registration_onboarding"],
+                "delegates": {
+                    "approvals": "workflow",
+                    "rules": "policy",
+                    "user_records": "identity",
+                    "sync": "directory",
+                    "iga": "identity_governance",
+                    "trust_facts": "identity_federation",
+                    "permit_deny": "authorization",
+                },
+            },
         })
 
     async def seed(self, tenant_id: str) -> Result[dict]:
@@ -228,12 +265,19 @@ class IdentityLifecycleApplicationService:
         display_name: str,
         identity_ref: str | None = None,
         user_id: str | None = None,
+        identity_type: str = "employee",
         correlation_id: str,
         actor_id: str | None = None,
     ) -> Result[dict]:
+        from contexts.identity_lifecycle.domain.aggregates.registration_onboarding import (
+            SUPPORTED_IDENTITY_TYPES,
+        )
+
         policy = await self._policy_params(tenant_id)
         if not policy["registration_enabled"]:
             return Result.fail("identity_lifecycle.errors.registration_disabled")
+        if identity_type not in SUPPORTED_IDENTITY_TYPES:
+            return Result.fail("identity_lifecycle.errors.invalid_identity_type")
         case_ref = self._cases.next_case_ref(tenant_id)
         case = LifecycleCase.open(
             tenant_id=tenant_id,
@@ -242,6 +286,8 @@ class IdentityLifecycleApplicationService:
             email=email,
             display_name=display_name,
             user_id=user_id,
+            identity_type=identity_type,
+            metadata={"identity_type": identity_type},
         )
         await self._cases.save(case)
         await self._audit(
@@ -249,7 +295,7 @@ class IdentityLifecycleApplicationService:
             case_ref=case_ref,
             action=LifecycleAction.REGISTRATION.value,
             actor_id=actor_id,
-            details={"email": email},
+            details={"email": email, "identity_type": identity_type},
         )
         await publish_integration_event(
             LifecycleCaseOpenedIntegration(
@@ -261,6 +307,40 @@ class IdentityLifecycleApplicationService:
             )
         )
         return Result.ok(case.to_dict())
+
+    async def apply_jml(
+        self,
+        tenant_id: str,
+        case_ref: str,
+        *,
+        action: str,
+        reason: str = "",
+        metadata: dict | None = None,
+        correlation_id: str,
+        actor_id: str | None = None,
+    ) -> Result[dict]:
+        jml_actions = {a["action"] for a in workflow.list_jml_actions()}
+        if action not in jml_actions:
+            return Result.fail("identity_lifecycle.errors.invalid_jml_action")
+        case = await self._cases.find_by_ref(tenant_id, case_ref)
+        if not case:
+            return Result.fail("identity_lifecycle.errors.case_not_found")
+        result = await self._transition(
+            tenant_id,
+            case,
+            action,
+            actor_id=actor_id,
+            reason=reason,
+            correlation_id=correlation_id,
+            metadata=metadata,
+        )
+        if not result.succeeded:
+            return result
+        updated = result.unwrap()
+        if metadata:
+            updated.metadata = {**updated.metadata, **metadata}
+            await self._cases.save(updated)
+        return Result.ok(updated.to_dict())
 
     async def invite(
         self,

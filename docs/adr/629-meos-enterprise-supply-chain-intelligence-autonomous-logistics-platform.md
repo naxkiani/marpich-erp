@@ -18,4 +18,4 @@ Positive: governed Supply Network OS (Control Tower, forecast/procure/inventory/
 Negative: stock/PO/shipment truth remains peer-owned — MESCIAL stores operating campaigns and peer refs only.
 
 ## Links
-Law: `ENTERPRISE_MEOS_SUPPLY_CHAIN_INTELLIGENCE_AUTONOMOUS_LOGISTICS_PLATFORM.md` · Prior: ADR 628 · Next: P272-A · Peer planned: P273 CRM/Customer Experience OS · Canonical: P232 · inventory · warehouse · procurement · logistics
+Law: `ENTERPRISE_MEOS_SUPPLY_CHAIN_INTELLIGENCE_AUTONOMOUS_LOGISTICS_PLATFORM.md` · Prior: ADR 628 · Next: P272-A · Peer: ADR 630 (P273 MECXARP) · Canonical: P232 · inventory · warehouse · procurement · logistics

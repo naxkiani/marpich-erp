@@ -1,0 +1,13 @@
+# BIOTECHNOLOGY_BIO_MARKETPLACE_MODELS.v1.yaml — P217-P
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioMarketplaceModels
+metadata:
+  phase: P217-P
+  adr: "515"
+spec:
+  exchange_domains: 4
+  innovation_capabilities: 4
+  commercial_engines: 4
+  asset_classes: 4
+  agents: 6
+  knowledge_graph: meos_bio_economy_knowledge_graph

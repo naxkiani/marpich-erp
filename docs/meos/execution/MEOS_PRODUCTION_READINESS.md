@@ -66,4 +66,4 @@
 
 ## After Wave 01 / P0
 
-Overall remains **`NOT_READY`**. Platform Core can be **CONDITIONALLY_READY** for demos with Postgres. Wave 02 Q2C + HR + Payroll are Functional; next Wave 02 candidates: Tax or remaining scaffolds.
+Overall remains **`NOT_READY`**. Platform Core can be **CONDITIONALLY_READY** for demos with Postgres. Wave 02 Q2C + HR + Payroll + Tax are Functional; remaining Wave 02 scaffolds are industry verticals.

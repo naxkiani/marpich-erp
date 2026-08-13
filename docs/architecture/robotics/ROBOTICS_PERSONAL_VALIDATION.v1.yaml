@@ -1,0 +1,36 @@
+# ROBOTICS_PERSONAL_VALIDATION.v1.yaml — P216-W
+apiVersion: marpich.io/v1
+kind: RoboticsPersonalValidationCatalog
+metadata:
+  phase: P216-W
+  adr: "495"
+spec:
+  quality_gates:
+    - Personal Robotics Platform
+    - AI Companion Platform
+    - Smart Home Intelligence
+    - Personal Digital Twin
+    - Human Augmentation Platform
+    - Personal Knowledge Graph
+    - Life Automation Platform
+    - CQRS Architecture
+    - Event Architecture
+    - Microservice Architecture
+    - Zero Trust Security
+    - Privacy Sovereignty
+    - Enterprise Integration
+  definition_of_done:
+    - Personal Robotics Platform exists
+    - Personal AI Assistant Platform exists
+    - Smart Home Intelligence exists
+    - Human Augmentation Platform exists
+    - Personal Digital Twin exists
+    - Personal Knowledge Graph exists
+    - Security Architecture exists
+    - CQRS Architecture exists
+    - Event Architecture exists
+    - Microservice Architecture exists
+    - Deployment Architecture exists
+    - Testing Architecture exists
+    - Foundation for P216-X exists
+  foundation_validator: validate_rb_personal_foundation

@@ -1,0 +1,20 @@
+# BIOTECHNOLOGY_BIO_MARKETPLACE_SECURITY.v1.yaml — P217-P
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioMarketplaceSecurity
+metadata:
+  phase: P217-P
+  adr: "515"
+spec:
+  zero_trust: true
+  protects:
+    - scientific_assets
+    - intellectual_property
+    - commercial_data
+    - research_information
+    - transaction_records
+  hard_locks:
+    - never_unverified_scientific_asset_listing
+    - never_skip_ip_protection_controls
+    - never_skip_human_marketplace_oversight
+    - no_module_local_llm
+    - never_opaque_unexplainable_decisions

@@ -1,0 +1,17 @@
+apiVersion: marpich.io/v1
+kind: BiotechnologyDddCqrs
+metadata:
+  prompt_id: P217-Z
+  adr: 525
+spec:
+  cqrs: true
+  event_count: 8
+  commands:
+    - ActivateBioNexusCommand
+    - OrchestrateControlPlaneCommand
+    - RegisterNexusCapabilityCommand
+    - PublishCivilizationStrategyCommand
+  queries:
+    - GetNexusStateQuery
+    - GetControlPlaneHealthQuery
+    - GetCivilizationCoreQuery

@@ -1,0 +1,14 @@
+# BIOTECHNOLOGY_INFRASTRUCTURE_ARCHITECTURE.v1.yaml — P217-D
+apiVersion: marpich.io/v1
+kind: BiotechnologyInfrastructureArchitecture
+metadata:
+  phase: P217-D
+  adr: "503"
+  fabric: meos_bio_intelligence_infrastructure_fabric
+spec:
+  layers:
+    - L01_physical_computing
+    - L02_edge_bio_intelligence
+    - L03_bio_cloud_computing
+    - L04_bio_data_infrastructure
+    - L05_bio_intelligence_platform

@@ -92,6 +92,7 @@ INDUSTRY_CONTEXTS = frozenset({
     "crm",
     "human_resources",
     "payroll",
+    "tax",
     "sales",
     "pharmacy",
     "laboratory",

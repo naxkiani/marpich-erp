@@ -1,0 +1,15 @@
+# BIOTECHNOLOGY_BIO_REGULATORY_ARCHITECTURE.v1.yaml — P217-N
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioRegulatoryArchitecture
+metadata:
+  phase: P217-N
+  adr: "513"
+  fabric: meos_bio_regulatory_intelligence_fabric
+spec:
+  layers:
+    - L01_regulatory_knowledge_foundation
+    - L02_regulatory_intelligence
+    - L03_compliance_management
+    - L04_risk_intelligence
+    - L05_autonomous_governance
+    - L06_trust_and_accountability

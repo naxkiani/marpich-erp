@@ -1,0 +1,12 @@
+apiVersion: marpich.io/v1
+kind: BiotechnologyArchitectureCatalog
+metadata:
+  prompt_id: P217-Z
+  adr: 525
+  fabric: meos_final_bio_intelligence_architecture
+  sor: biotechnology
+spec:
+  layers: 6
+  control_domains: 4
+  bounded_contexts: 7
+  microservices: 10

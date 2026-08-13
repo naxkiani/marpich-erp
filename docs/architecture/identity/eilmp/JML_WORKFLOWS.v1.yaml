@@ -1,0 +1,53 @@
+# Joiner-Mover-Leaver workflows — P201 Foundation · ADR-227
+version: "1.0"
+prompt_id: P201-A1
+adr: "227"
+sor_context: identity_lifecycle
+
+workflows:
+  joiner:
+    action: joiner
+    from: [draft, registered, verified]
+    to: active
+    description: Hire / onboard into operational state after verification
+  mover:
+    action: mover
+    from: [active]
+    to: active
+    description: Department or org move — metadata update, stays operational
+  promotion:
+    action: role_change
+    from: [active]
+    to: active
+    description: Role change — emits role_changed; IGA may certify separately
+  transfer:
+    action: transfer
+    from: [active]
+    to: active
+    description: Cross-org transfer within tenant
+  leave:
+    action: temporary_disable
+    from: [active]
+    to: temporarily_disabled
+  termination:
+    action: leaver
+    from: [active, suspended, temporarily_disabled]
+    to: soft_deleted
+  retirement:
+    action: identity_archive
+    from: [active, suspended]
+    to: archived
+  rehire:
+    action: rehire
+    from: [soft_deleted, archived, recovery_pending]
+    to: active
+  under_investigation:
+    action: place_under_investigation
+    from: [active, suspended]
+    to: under_investigation
+
+delegates:
+  access_certification_after_mover: identity_governance
+  user_record_updates: identity
+  directory_sync: directory
+  approvals: workflow

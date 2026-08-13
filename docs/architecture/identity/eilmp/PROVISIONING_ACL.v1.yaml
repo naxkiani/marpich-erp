@@ -1,0 +1,29 @@
+# P201-A2 — Provisioning ACL (EILMP SoR: identity_lifecycle)
+version: 1
+phase: P201-A2
+sor: identity_lifecycle
+forbidden_sibling: eilmp
+
+definition_key: identity_lifecycle.registration.approval
+
+ports:
+  IIdentityUserProvisioner:
+    methods: [provision_user]
+    target: identity.provision_directory_user
+  IWorkflowApprovalPort:
+    methods: [ensure_definition, start_registration_approval]
+    target: workflow.start_instance
+
+events:
+  publishes:
+    - identity_lifecycle.provisioning.requested
+    - identity_lifecycle.provisioning.completed
+    - identity_lifecycle.provisioning.failed
+  subscribes:
+    - workflow.process.completed
+    - identity_lifecycle.provisioning.requested
+
+rules:
+  - Approvals via Workflow Engine only — no local approval engine growth
+  - Provisioning ACL in infrastructure — domain emits intent only
+  - Store peer user_id / workflow_instance_id refs only

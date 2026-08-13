@@ -2,7 +2,7 @@
 
 **SoR:** `civilization` · **ADR:** 579 · **Capability:** `CAP-PLT-CIV-001`  
 **Fabric:** `meos_civilization_os_unified_enterprise_control_plane_framework` · **Governance Standard:** MEOS 11.0  
-> **API:** `/api/v1/civilization/unified-control*` · **Builds on:** P219–P219-Y · P218-Z Intelligence Nexus · P214-Z AI · peers · **Series:** P219 complete · **Next:** [P220](ENTERPRISE_CIVILIZATION_OPERATING_SYSTEM_SERIES_COMPLETION.md)  
+> **API:** `/api/v1/civilization/unified-control*` · **Builds on:** P219–P219-Y · P218-Z Intelligence Nexus · P214-Z AI · peers · **Series:** P219 complete · **Next:** [P220 EPIP](ENTERPRISE_PLANETARY_INTELLIGENCE_PLATFORM.md)  
 **Hard bindings:** Inference → **P214-Z** · Nexus → **P218-Z** · Trust/Ethics → **P219-Y** · Strategic evolution → **P219-X** · Collective → **P219-W** · Governance → **P219-K** · Intelligence governance → **P219-T** · Approvals → **Workflow** · Policy → **Policy Engine** · Audit → **Audit** · Generic → **Core**.
 
 ## Principle
@@ -79,4 +79,4 @@ P219-Z establishes the unified enterprise control plane of MEOS Civilization OS.
 
 Primary capability: integrating enterprise intelligence, unified coordination, governance fabric, cross-domain orchestration, digital twin federation and strategic decision support into MEOS Unified Enterprise Core.
 
-**P219 series complete.** Continues with platform stewardship / next series entry [P220](ENTERPRISE_CIVILIZATION_OPERATING_SYSTEM_SERIES_COMPLETION.md).
+**P219 series complete.** Continues with [P220 Enterprise Planetary Intelligence Platform (EPIP)](ENTERPRISE_PLANETARY_INTELLIGENCE_PLATFORM.md).

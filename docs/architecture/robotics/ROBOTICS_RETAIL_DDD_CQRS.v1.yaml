@@ -1,0 +1,39 @@
+# ROBOTICS_RETAIL_DDD_CQRS.v1.yaml — P216-O
+apiVersion: marpich.io/v1
+kind: RoboticsRetailDddCqrsCatalog
+metadata:
+  phase: P216-O
+  adr: "487"
+spec:
+  commands:
+    - RegisterCustomerCommand
+    - AssignRetailRobotCommand
+    - CreateRecommendationCommand
+    - OptimiseInventoryCommand
+    - LaunchStoreAutomationCommand
+    - UpdateCommerceTwinCommand
+  queries:
+    - GetCustomerProfileQuery
+    - GetStoreStatusQuery
+    - GetInventoryStatusQuery
+    - GetRobotStatusQuery
+    - GetCommerceTwinQuery
+  events:
+    - robotics.retail.customer.interaction.v1
+    - robotics.retail.recommendation.created.v1
+    - robotics.retail.robot.task.completed.v1
+    - robotics.retail.inventory.changed.v1
+    - robotics.retail.order.processed.v1
+    - robotics.retail.store.optimised.v1
+    - robotics.retail.customer.experience.updated.v1
+  microservices:
+    - customer_intelligence_service
+    - retail_robotics_service
+    - store_operations_service
+    - inventory_intelligence_service
+    - commerce_ai_service
+    - recommendation_service
+    - order_intelligence_service
+    - digital_twin_service
+    - knowledge_graph_service
+    - analytics_service

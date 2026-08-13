@@ -1,0 +1,32 @@
+# ROBOTICS_ULTIMATE_SECURITY.v1.yaml — P216-Y
+apiVersion: marpich.io/v1
+kind: RoboticsUltimateSecurity
+metadata:
+  phase: P216-Y
+  adr: "497"
+spec:
+  framework: meos_ultimate_robotics_trust_framework
+  domains:
+    - robot_identity
+    - ai_controller_security
+    - human_authority
+    - capability_safety
+    - autonomous_behaviour
+    - data_protection
+    - evolution_governance
+  controls:
+    - safety_validation
+    - explainability
+    - human_override
+    - continuous_monitoring
+    - capability_certification
+    - audit_intelligence
+  hard_locks:
+    - human_control_preservation
+    - safety_by_design
+    - human_override_authority
+    - explainable_intelligence
+    - never_replace_identity_platform
+    - no_module_local_llm
+    - physical_ai_via_p214z_acl_only
+    - ungated_physical_autonomy_forbidden

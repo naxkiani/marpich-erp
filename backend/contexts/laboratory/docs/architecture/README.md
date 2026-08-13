@@ -17,6 +17,13 @@ Deferred: QualityControl, full instrument integration.
 
 Peer `patient_ref` only — never shared EMR patient tables.
 
+## Persistence
+
+- Schema: `laboratory` (migration `039_laboratory_pharmacy_postgres.sql`)
+- Adapters: `memory_store` (default/tests) · `postgres_store` when `use_postgres()`
+
 ## Events
 
-`laboratory.sample.received` · `laboratory.result.available`
+Publishes: `laboratory.sample.received` · `laboratory.result.available`  
+Subscribes (ACL): `hospital.encounter.started` · `hospital.encounter.completed`  
+→ idempotent REVIEW order on completed (`HOSP-{encounter}`) with `source_encounter_ref`

@@ -6,11 +6,13 @@ from contexts.authorization.domain.services import authorization_engine as engin
 
 
 @pytest.mark.unit
-def test_capability_catalog_has_eight_capabilities():
+def test_capability_catalog_has_ten_capabilities():
     caps = {c["capability"] for c in engine.list_capability_catalog()}
     assert AuthorizationCapability.RBAC_EVALUATION.value in caps
+    assert AuthorizationCapability.REBAC_EVALUATION.value in caps
+    assert AuthorizationCapability.DECISION_CACHE.value in caps
     assert AuthorizationCapability.PBAC_EVALUATION.value in caps
-    assert len(caps) == 8
+    assert len(caps) == 10
 
 
 @pytest.mark.unit

@@ -1,0 +1,26 @@
+# BIOTECHNOLOGY_MISSION_DDD_CQRS.v1.yaml — P217-A
+apiVersion: marpich.io/v1
+kind: BiotechnologyMissionDddCqrs
+metadata:
+  phase: P217-A
+  adr: "500"
+spec:
+  core_domain: enterprise_biotechnology_strategy_management
+  commands:
+    - CreateBioStrategyCommand
+    - DefineBioVisionCommand
+    - AssessBioReadinessCommand
+    - LaunchBioInitiativeCommand
+    - UpdateBioRoadmapCommand
+  queries:
+    - GetBioMissionQuery
+    - GetBioVisionQuery
+    - GetStrategicScopeQuery
+    - GetCapabilityFrameworkQuery
+    - GetMaturityStatusQuery
+  events:
+    - BioStrategyCreatedEvent
+    - BioVisionDefinedEvent
+    - StrategicScopePublishedEvent
+    - BioRoadmapUpdatedEvent
+    - BioReadinessImprovedEvent

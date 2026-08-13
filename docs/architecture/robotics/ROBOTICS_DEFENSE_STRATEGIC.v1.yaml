@@ -1,0 +1,33 @@
+# ROBOTICS_DEFENSE_STRATEGIC.v1.yaml — P216-U
+apiVersion: marpich.io/v1
+kind: RoboticsDefenseStrategicCatalog
+metadata:
+  phase: P216-U
+  adr: "493"
+  fabric: meos_defense_intelligence_fabric
+spec:
+  defense_robotics:
+    platform: meos_defense_robotics_platform
+    components:
+      - defense_robotics_registry
+      - autonomous_system_manager
+      - robotics_lifecycle_controller
+      - mission_intelligence_engine
+      - asset_monitoring_platform
+      - defense_operations_dashboard
+    supported_systems:
+      - ground_robotics_systems
+      - aerial_robotics_systems
+      - maritime_robotics_systems
+      - inspection_robotics_systems
+      - infrastructure_monitoring_systems
+  strategic_intelligence:
+    engine: meos_strategic_intelligence_engine
+    via_p214_z: true
+  autonomous_system_governance:
+    platform: meos_autonomous_system_governance_platform
+    human_authorization_required: true
+  defense_digital_twin:
+    platform: meos_defense_digital_twin_platform
+  defense_knowledge_graph:
+    graph: meos_defense_knowledge_graph

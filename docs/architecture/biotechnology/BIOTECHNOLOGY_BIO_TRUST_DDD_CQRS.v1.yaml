@@ -1,0 +1,17 @@
+# BIOTECHNOLOGY_BIO_TRUST_DDD_CQRS.v1.yaml — P217-Y
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioTrustDddCqrs
+metadata:
+  phase: P217-Y
+  adr: "523"
+spec:
+  bounded_contexts: 7
+  domain_models: 3
+  aggregates:
+    - BioTrustAggregate
+    - BioAlignmentAggregate
+    - BioEthicsGovernanceAggregate
+  commands: 5
+  queries: 5
+  core_events: 8
+  microservices: 10

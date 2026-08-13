@@ -134,6 +134,8 @@ identity_lifecycle_metrics:
   scrape_paths:
     - /api/v1/identity-lifecycle/dashboard
     - /api/v1/identity-lifecycle/eilmp/surface
+    - /api/v1/identity-lifecycle/state-machine
+    - /api/v1/identity-lifecycle/jml/actions
   prometheus_prefix: marpich_lifecycle_
   slo:
     registration_p95_ms: 500

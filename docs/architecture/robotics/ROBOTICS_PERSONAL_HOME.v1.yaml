@@ -1,0 +1,33 @@
+# ROBOTICS_PERSONAL_HOME.v1.yaml — P216-W
+apiVersion: marpich.io/v1
+kind: RoboticsPersonalHomeCatalog
+metadata:
+  phase: P216-W
+  adr: "495"
+  fabric: meos_personal_intelligence_fabric
+spec:
+  personal_robotics:
+    platform: meos_personal_robotics_platform
+    components:
+      - personal_robot_registry
+      - robot_interaction_engine
+      - personal_robot_controller
+      - home_assistance_engine
+      - companion_intelligence_layer
+      - robot_experience_dashboard
+    supported_robotics:
+      - home_assistant_robots
+      - companion_robots
+      - accessibility_robots
+      - personal_service_robots
+      - learning_support_robots
+      - elder_assistance_robots
+  personal_ai_companion:
+    engine: meos_personal_ai_companion_engine
+    via_p214_z: true
+  smart_home:
+    platform: meos_home_intelligence_platform
+  personal_digital_twin:
+    platform: meos_personal_digital_twin_platform
+  personal_knowledge_graph:
+    graph: meos_personal_knowledge_graph

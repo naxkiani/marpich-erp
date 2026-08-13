@@ -1,0 +1,20 @@
+# BIOTECHNOLOGY_BIO_INNOVATION_SECURITY.v1.yaml — P217-Q
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioInnovationSecurity
+metadata:
+  phase: P217-Q
+  adr: "516"
+spec:
+  zero_trust: true
+  protects:
+    - research_data
+    - scientific_discoveries
+    - intellectual_property
+    - innovation_assets
+    - collaboration_records
+  hard_locks:
+    - never_unverified_innovation_release
+    - never_skip_ip_protection_controls
+    - never_skip_human_innovation_oversight
+    - no_module_local_llm
+    - never_opaque_unexplainable_decisions

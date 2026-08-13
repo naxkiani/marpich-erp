@@ -7,13 +7,18 @@
 
 | Phase | Title | Status |
 |-------|-------|--------|
+| **P201-A1** | Series Foundation + SoR Alignment | **Done — ADR-227** |
 | **P201-A** | Registration & Onboarding | **Done — ADR-227** |
-| P201-A2 | Provisioning ACL + Workflow approvals | Pending |
-| P201-A3 | Credential lifecycle orchestration | Pending |
+| P201-A2 | Provisioning ACL + Workflow approvals | **Done** |
+| P201-A3 | Credential lifecycle orchestration | Done |
 | P201-A4 | Sync (SCIM/LDAP via Directory) | Pending |
 | P201-A5 | Zero Trust continuous hooks | Pending |
 | P201-A6 | AI / KG / Twin contracts | Pending |
 | P201-A7 | Ops + series DoD | Pending |
+
+## Foundation catalogs
+
+`ARCH_EILMP` · `IDENTITY_TYPES` · `STATE_MACHINE` · `JML_WORKFLOWS` · `EVENT_CATALOG` · `CQRS_SURFACE` · `CAPABILITY_MAP` · `BOUNDARIES` · `DEFINITION_OF_DONE`
 
 ## Boundaries
 

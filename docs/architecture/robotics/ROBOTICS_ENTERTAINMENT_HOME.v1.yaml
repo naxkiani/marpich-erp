@@ -1,0 +1,36 @@
+# ROBOTICS_ENTERTAINMENT_HOME.v1.yaml — P216-X
+apiVersion: marpich.io/v1
+kind: RoboticsEntertainmentHomeCatalog
+metadata:
+  phase: P216-X
+  adr: "496"
+  fabric: meos_creative_intelligence_fabric
+spec:
+  entertainment_robotics:
+    platform: meos_entertainment_robotics_platform
+    components:
+      - creative_robot_registry
+      - studio_robot_controller
+      - performance_automation_engine
+      - virtual_production_controller
+      - creative_workflow_manager
+      - entertainment_operations_dashboard
+    supported_robotics:
+      - production_robots
+      - performance_robots
+      - interactive_experience_robots
+      - theme_entertainment_robots
+      - creative_assistance_robots
+  creative_ai:
+    engine: meos_creative_intelligence_engine
+    via_p214_z: true
+  autonomous_media_studio:
+    platform: meos_autonomous_media_studio
+  digital_experience:
+    engine: meos_experience_intelligence_engine
+  immersive_reality:
+    platform: meos_immersive_reality_intelligence_platform
+  creative_digital_twin:
+    platform: meos_creative_digital_twin_platform
+  entertainment_knowledge_graph:
+    graph: meos_entertainment_knowledge_graph

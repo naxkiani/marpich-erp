@@ -1,0 +1,22 @@
+# BIOTECHNOLOGY_MISSION_BOUNDED_CONTEXTS.v1.yaml — P217-A
+apiVersion: marpich.io/v1
+kind: BiotechnologyMissionBoundedContexts
+metadata:
+  phase: P217-A
+  adr: "500"
+spec:
+  contexts:
+    - id: BC-01
+      name: Bio Mission and Vision Context
+    - id: BC-02
+      name: Strategic Scope and Purpose Context
+    - id: BC-03
+      name: Bio Capability Framework Context
+    - id: BC-04
+      name: Bio Value Streams Context
+    - id: BC-05
+      name: Bio Maturity Model Context
+    - id: BC-06
+      name: Bio Governance Strategy Context
+    - id: BC-07
+      name: Integration and Evolution Roadmap Context

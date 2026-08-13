@@ -1,0 +1,31 @@
+# BIOTECHNOLOGY_BIO_REGULATORY_SECURITY.v1.yaml — P217-N
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioRegulatorySecurity
+metadata:
+  phase: P217-N
+  adr: "513"
+spec:
+  framework: meos_responsible_regulatory_intelligence_framework
+  hard_locks:
+    - bio_ai_via_p214z_acl_only
+    - regulatory_twins_via_p217g_acl_only
+    - manufacturing_compliance_via_p217l_acl_only
+    - distribution_compliance_via_p217m_acl_only
+    - drug_regulatory_via_p217k_acl_only
+    - robotics_via_p216z_acl_only
+    - quantum_optimization_via_p215z_acl_only
+    - no_module_local_llm
+    - never_opaque_unexplainable_decisions
+    - never_skip_human_regulatory_oversight
+    - never_autonomous_regulatory_submission_without_approval
+    - never_skip_explainable_regulatory_ai
+    - genomic_privacy_strategy
+    - ethical_bioengineering_strategy
+    - scientific_integrity_strategy
+    - opaque_bio_safety_strategy_forbidden
+    - never_replace_p217_m_bio_supply_chain
+    - never_replace_hospital_emr
+    - never_replace_laboratory_lims
+    - never_replace_pharmacy
+    - never_replace_compliance_platform
+    - immutable_audit_trails_required

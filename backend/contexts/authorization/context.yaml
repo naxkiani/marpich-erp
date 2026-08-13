@@ -7,9 +7,11 @@ aggregates:
   - AuthorizationProfile
   - AbacPolicy
   - AccessDecision
+  - RelationTuple
 publishes:
   - authorization.access.granted
   - authorization.access.denied
+  - authorization.relation.changed
   - authorization.dashboard.generated
 subscribes:
   - platform.tenant.provisioned

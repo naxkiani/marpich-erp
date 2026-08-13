@@ -1,0 +1,14 @@
+# BIOTECHNOLOGY_BIO_AI_ARCHITECTURE.v1.yaml — P217-E
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioAiArchitecture
+metadata:
+  phase: P217-E
+  adr: "504"
+  fabric: meos_bio_ai_intelligence_fabric
+spec:
+  layers:
+    - L01_biological_data_intelligence
+    - L02_biological_foundation_model
+    - L03_ai_biology_reasoning
+    - L04_computational_life_intelligence
+    - L05_ai_governance

@@ -1,0 +1,21 @@
+# BIOTECHNOLOGY_BIO_INVESTMENT_SECURITY.v1.yaml — P217-R
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioInvestmentSecurity
+metadata:
+  phase: P217-R
+  adr: "517"
+spec:
+  zero_trust: true
+  protects:
+    - investment_data
+    - financial_information
+    - scientific_assets
+    - intellectual_property
+    - funding_records
+  hard_locks:
+    - never_unverified_investment_recommendation
+    - never_skip_financial_transparency_controls
+    - never_skip_human_investment_oversight
+    - never_replace_financial_kernel
+    - no_module_local_llm
+    - never_opaque_unexplainable_decisions

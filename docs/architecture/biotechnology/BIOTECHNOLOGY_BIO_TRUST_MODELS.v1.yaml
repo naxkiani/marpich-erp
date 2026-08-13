@@ -1,0 +1,13 @@
+# BIOTECHNOLOGY_BIO_TRUST_MODELS.v1.yaml — P217-Y
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioTrustModels
+metadata:
+  phase: P217-Y
+  adr: "523"
+spec:
+  alignment_capabilities: 4
+  ethics_pillars: 4
+  trust_architecture_components: 4
+  agents: 6
+  knowledge_graph: meos_bio_trust_knowledge_graph
+  assurance: meos_bio_trust_assurance_platform

@@ -1,0 +1,20 @@
+# BIOTECHNOLOGY_STRATEGY_ARCHITECTURE.v1.yaml — P217-B
+apiVersion: marpich.io/v1
+kind: BiotechnologyStrategyArchitecture
+metadata:
+  phase: P217-B
+  adr: "501"
+  fabric: meos_biotechnology_strategic_architecture_framework
+spec:
+  layers:
+    - L01_bio_strategy
+    - L02_bio_capability
+    - L03_bio_intelligence_platform
+    - L04_bio_execution
+    - L05_bio_governance
+  reference_domains:
+    - bio_research_intelligence
+    - synthetic_biology_architecture
+    - computational_biology_architecture
+    - digital_health_architecture
+    - bio_innovation_architecture

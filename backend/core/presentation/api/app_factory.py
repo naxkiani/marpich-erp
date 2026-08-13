@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
+from typing import Any
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -9,13 +10,17 @@ from fastapi.middleware.cors import CORSMiddleware
 from core.presentation.api.startup_registry import configure_application
 from core.presentation.middleware.platform_gateway import PlatformGatewayMiddleware
 from core.presentation.middleware.tenant_rls import TenantRlsMiddleware
-from contexts.enterprise_message_orchestration.infrastructure.workers.orchestration_worker import (
-    get_orchestration_worker,
-)
 from shared.infrastructure.messaging.dispatcher import get_outbox_dispatcher
-from shared.infrastructure.messaging.transport_registry import get_transport_registry
 from shared.infrastructure.observability.telemetry import setup_observability, shutdown_observability
 from shared.infrastructure.settings import settings
+
+
+def _try_import(attr: str, module: str) -> Any | None:
+    try:
+        mod = __import__(module, fromlist=[attr])
+        return getattr(mod, attr)
+    except (ModuleNotFoundError, AttributeError):
+        return None
 
 
 def create_app(
@@ -35,15 +40,28 @@ def create_app(
             startup_mode=app_startup_mode,
         )
         dispatcher = get_outbox_dispatcher()
-        await get_transport_registry().start()
+        get_transport_registry = _try_import(
+            "get_transport_registry",
+            "shared.infrastructure.messaging.transport_registry",
+        )
+        transport = get_transport_registry() if get_transport_registry else None
+        if transport is not None:
+            await transport.start()
         await dispatcher.start()
-        orchestration_worker = get_orchestration_worker()
-        await orchestration_worker.start()
+        get_orchestration_worker = _try_import(
+            "get_orchestration_worker",
+            "contexts.enterprise_message_orchestration.infrastructure.workers.orchestration_worker",
+        )
+        orchestration_worker = get_orchestration_worker() if get_orchestration_worker else None
+        if orchestration_worker is not None:
+            await orchestration_worker.start()
         setup_observability(app)
         yield
-        await orchestration_worker.stop()
+        if orchestration_worker is not None:
+            await orchestration_worker.stop()
         await dispatcher.stop()
-        await get_transport_registry().stop()
+        if transport is not None:
+            await transport.stop()
         shutdown_observability()
 
     application = FastAPI(

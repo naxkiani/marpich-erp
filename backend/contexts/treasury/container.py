@@ -85,7 +85,37 @@ from contexts.treasury.infrastructure.persistence.memory_store import (
     InMemoryTreasuryAccountRepository,
     InMemoryTreasuryTransferRepository,
 )
+from contexts.treasury.infrastructure.persistence.postgres_store import (
+    PostgresBankAccountRepository,
+    PostgresBankStatementImportRepository,
+    PostgresCashLocationRepository,
+    PostgresCashPoolRepository,
+    PostgresCashReconciliationAuditRepository,
+    PostgresCashReconciliationRunRepository,
+    PostgresCashTransactionRepository,
+    PostgresEnterpriseBankReconciliationRepository,
+    PostgresFundingNeedRepository,
+    PostgresLiquiditySnapshotRepository,
+    PostgresReconciliationAuditRepository,
+    PostgresTreasuryAccountRepository,
+    PostgresTreasuryTransferRepository,
+)
 from shared.infrastructure.messaging.event_bus import InProcessEventBus
+from shared.infrastructure.settings import use_postgres
+
+_treasury_account_repo = None
+_treasury_transfer_repo = None
+_cash_location_repo = None
+_cash_transaction_repo = None
+_bank_account_repo = None
+_cash_pool_repo = None
+_liquidity_snapshot_repo = None
+_funding_need_repo = None
+_bank_statement_import_repo = None
+_enterprise_bank_reconciliation_repo = None
+_bank_reconciliation_audit_repo = None
+_cash_reconciliation_run_repo = None
+_cash_reconciliation_audit_repo = None
 
 _service: TreasuryApplicationService | None = None
 _bank_account_service: BankAccountApplicationService | None = None
@@ -113,12 +143,59 @@ _security_registered = False
 _analytics_registered = False
 
 
+def _ensure_money_path_repos() -> None:
+    global _treasury_account_repo, _treasury_transfer_repo, _cash_location_repo
+    global _cash_transaction_repo, _bank_account_repo
+    if _treasury_account_repo is not None:
+        return
+    if use_postgres():
+        _treasury_account_repo = PostgresTreasuryAccountRepository()
+        _treasury_transfer_repo = PostgresTreasuryTransferRepository()
+        _cash_location_repo = PostgresCashLocationRepository()
+        _cash_transaction_repo = PostgresCashTransactionRepository()
+        _bank_account_repo = PostgresBankAccountRepository()
+    else:
+        _treasury_account_repo = InMemoryTreasuryAccountRepository()
+        _treasury_transfer_repo = InMemoryTreasuryTransferRepository()
+        _cash_location_repo = InMemoryCashLocationRepository()
+        _cash_transaction_repo = InMemoryCashTransactionRepository()
+        _bank_account_repo = InMemoryBankAccountRepository()
+
+
+def _ensure_recon_liquidity_repos() -> None:
+    global _cash_pool_repo, _liquidity_snapshot_repo, _funding_need_repo
+    global _bank_statement_import_repo, _enterprise_bank_reconciliation_repo
+    global _bank_reconciliation_audit_repo, _cash_reconciliation_run_repo
+    global _cash_reconciliation_audit_repo
+    if _cash_pool_repo is not None:
+        return
+    if use_postgres():
+        _cash_pool_repo = PostgresCashPoolRepository()
+        _liquidity_snapshot_repo = PostgresLiquiditySnapshotRepository()
+        _funding_need_repo = PostgresFundingNeedRepository()
+        _bank_statement_import_repo = PostgresBankStatementImportRepository()
+        _enterprise_bank_reconciliation_repo = PostgresEnterpriseBankReconciliationRepository()
+        _bank_reconciliation_audit_repo = PostgresReconciliationAuditRepository()
+        _cash_reconciliation_run_repo = PostgresCashReconciliationRunRepository()
+        _cash_reconciliation_audit_repo = PostgresCashReconciliationAuditRepository()
+    else:
+        _cash_pool_repo = InMemoryCashPoolRepository()
+        _liquidity_snapshot_repo = InMemoryLiquiditySnapshotRepository()
+        _funding_need_repo = InMemoryFundingNeedRepository()
+        _bank_statement_import_repo = InMemoryBankStatementImportRepository()
+        _enterprise_bank_reconciliation_repo = InMemoryEnterpriseBankReconciliationRepository()
+        _bank_reconciliation_audit_repo = InMemoryReconciliationAuditRepository()
+        _cash_reconciliation_run_repo = InMemoryCashReconciliationRunRepository()
+        _cash_reconciliation_audit_repo = InMemoryCashReconciliationAuditRepository()
+
+
 def get_treasury_service() -> TreasuryApplicationService:
     global _service, _registered
+    _ensure_money_path_repos()
     if _service is None:
         _service = TreasuryApplicationService(
-            accounts=InMemoryTreasuryAccountRepository(),
-            transfers=InMemoryTreasuryTransferRepository(),
+            accounts=_treasury_account_repo,
+            transfers=_treasury_transfer_repo,
             reconciliations=InMemoryBankReconciliationRepository(),
             forecasts=InMemoryCashForecastRepository(),
         )
@@ -133,12 +210,13 @@ def get_treasury_service() -> TreasuryApplicationService:
 
 def get_bank_account_service() -> BankAccountApplicationService:
     global _bank_account_service
+    _ensure_money_path_repos()
     if _bank_account_service is None:
         get_treasury_service()
         _bank_account_service = BankAccountApplicationService(
             banks=InMemoryBankRepository(),
             branches=InMemoryBankBranchRepository(),
-            accounts=InMemoryBankAccountRepository(),
+            accounts=_bank_account_repo,
             signatories=InMemorySignatoryRepository(),
             documents=InMemoryBankAccountDocumentRepository(),
         )
@@ -147,11 +225,12 @@ def get_bank_account_service() -> BankAccountApplicationService:
 
 def get_cash_management_service() -> CashManagementApplicationService:
     global _cash_management_service, _cash_registered
+    _ensure_money_path_repos()
     if _cash_management_service is None:
         get_treasury_service()
         _cash_management_service = CashManagementApplicationService(
-            locations=InMemoryCashLocationRepository(),
-            transactions=InMemoryCashTransactionRepository(),
+            locations=_cash_location_repo,
+            transactions=_cash_transaction_repo,
             counts=InMemoryCashCountRepository(),
             verifications=InMemoryCashVerificationRepository(),
             closings=InMemoryCashClosingRepository(),
@@ -180,14 +259,15 @@ def get_treasury_transaction_service() -> TreasuryTransactionApplicationService:
 
 def get_liquidity_service() -> LiquidityApplicationService:
     global _liquidity_service, _liquidity_registered
+    _ensure_recon_liquidity_repos()
     if _liquidity_service is None:
         treasury = get_treasury_service()
         _liquidity_service = LiquidityApplicationService(
             accounts=treasury._accounts,
             forecasts=treasury._forecasts,
-            pools=InMemoryCashPoolRepository(),
-            snapshots=InMemoryLiquiditySnapshotRepository(),
-            funding_needs=InMemoryFundingNeedRepository(),
+            pools=_cash_pool_repo,
+            snapshots=_liquidity_snapshot_repo,
+            funding_needs=_funding_need_repo,
         )
     if not _liquidity_registered:
         InProcessEventBus.subscribe(
@@ -218,26 +298,28 @@ def get_cash_forecast_service() -> CashForecastApplicationService:
 
 def get_bank_reconciliation_service() -> BankReconciliationApplicationService:
     global _bank_reconciliation_service
+    _ensure_recon_liquidity_repos()
     if _bank_reconciliation_service is None:
         treasury = get_treasury_service()
         _bank_reconciliation_service = BankReconciliationApplicationService(
             accounts=treasury._accounts,
             transfers=treasury._transfers,
-            statements=InMemoryBankStatementImportRepository(),
-            reconciliations=InMemoryEnterpriseBankReconciliationRepository(),
-            audits=InMemoryReconciliationAuditRepository(),
+            statements=_bank_statement_import_repo,
+            reconciliations=_enterprise_bank_reconciliation_repo,
+            audits=_bank_reconciliation_audit_repo,
         )
     return _bank_reconciliation_service
 
 
 def get_cash_reconciliation_service() -> CashReconciliationApplicationService:
     global _cash_reconciliation_service
+    _ensure_recon_liquidity_repos()
     if _cash_reconciliation_service is None:
         cash_mgmt = get_cash_management_service()
         _cash_reconciliation_service = CashReconciliationApplicationService(
             locations=cash_mgmt._locations,
-            runs=InMemoryCashReconciliationRunRepository(),
-            audits=InMemoryCashReconciliationAuditRepository(),
+            runs=_cash_reconciliation_run_repo,
+            audits=_cash_reconciliation_audit_repo,
         )
     return _cash_reconciliation_service
 
@@ -373,6 +455,10 @@ def get_treasury_analytics_service() -> TreasuryAnalyticsApplicationService:
 
 def reset_treasury_service() -> None:
     global _service, _bank_account_service, _cash_management_service, _transaction_service, _liquidity_service, _cash_forecast_service, _bank_reconciliation_service, _cash_reconciliation_service, _investment_service, _risk_service, _multi_currency_service, _treasury_workflow_service, _treasury_security_service, _treasury_analytics_service, _registered, _cash_registered, _liquidity_registered, _forecast_registered, _investment_registered, _risk_registered, _fx_registered, _workflow_registered, _security_registered, _analytics_registered
+    global _treasury_account_repo, _treasury_transfer_repo, _cash_location_repo, _cash_transaction_repo, _bank_account_repo
+    global _cash_pool_repo, _liquidity_snapshot_repo, _funding_need_repo, _bank_statement_import_repo
+    global _enterprise_bank_reconciliation_repo, _bank_reconciliation_audit_repo
+    global _cash_reconciliation_run_repo, _cash_reconciliation_audit_repo
     _service = None
     _bank_account_service = None
     _cash_management_service = None
@@ -387,6 +473,19 @@ def reset_treasury_service() -> None:
     _treasury_workflow_service = None
     _treasury_security_service = None
     _treasury_analytics_service = None
+    _treasury_account_repo = None
+    _treasury_transfer_repo = None
+    _cash_location_repo = None
+    _cash_transaction_repo = None
+    _bank_account_repo = None
+    _cash_pool_repo = None
+    _liquidity_snapshot_repo = None
+    _funding_need_repo = None
+    _bank_statement_import_repo = None
+    _enterprise_bank_reconciliation_repo = None
+    _bank_reconciliation_audit_repo = None
+    _cash_reconciliation_run_repo = None
+    _cash_reconciliation_audit_repo = None
     _registered = False
     _cash_registered = False
     _liquidity_registered = False

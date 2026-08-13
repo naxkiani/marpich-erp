@@ -2080,6 +2080,47 @@ class PayrollRunRow(Base):
     completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
+class TaxLiabilityRow(Base):
+    __tablename__ = "liabilities"
+    __table_args__ = (
+        Index("ix_tax_liabilities_tenant_run", "tenant_id", "payroll_run_id", unique=True),
+        Index("ix_tax_liabilities_tenant_status", "tenant_id", "status"),
+        {"schema": "tax"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    payroll_run_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
+    period_label: Mapped[str] = mapped_column(String(64), nullable=False)
+    taxable_base: Mapped[object] = mapped_column(Numeric(18, 4), nullable=False)
+    tax_amount: Mapped[object] = mapped_column(Numeric(18, 4), nullable=False)
+    currency: Mapped[str] = mapped_column(String(3), nullable=False, default="USD")
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="open")
+    correlation_id: Mapped[str] = mapped_column(String(64), nullable=False, default="")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class TaxReturnRow(Base):
+    __tablename__ = "returns"
+    __table_args__ = (
+        Index("ix_tax_returns_tenant_status", "tenant_id", "status"),
+        {"schema": "tax"},
+    )
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(63), nullable=False)
+    period_label: Mapped[str] = mapped_column(String(64), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="draft")
+    liability_ids: Mapped[list] = mapped_column(JSONB, nullable=False, default=list)
+    total_tax: Mapped[object] = mapped_column(Numeric(18, 4), nullable=False, default=0)
+    currency: Mapped[str] = mapped_column(String(3), nullable=False, default="USD")
+    correlation_id: Mapped[str] = mapped_column(String(64), nullable=False, default="")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    filed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
 class CrmOpportunityRow(Base):
     __tablename__ = "opportunities"
     __table_args__ = (

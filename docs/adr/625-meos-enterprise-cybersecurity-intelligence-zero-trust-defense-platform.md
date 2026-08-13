@@ -19,3 +19,5 @@ Negative: defense/trust/SOC truth remains peer-owned — MECZTD stores operating
 
 ## Links
 Law: `ENTERPRISE_MEOS_CYBERSECURITY_INTELLIGENCE_ZERO_TRUST_DEFENSE_PLATFORM.md` · Prior: ADR 624 · Next: P268-A · Peer: ADR 626 (P269 MEPCRI) · Canonical: P226 · P246 · P210
+
+Peer: [ADR 645 / P288 MEDSSAD](645-meos-enterprise-devsecops-secure-software-supply-chain-application-delivery-intelligence-platform.md) (DevSecOps — never replace Cyber; never ungated insecure releases)

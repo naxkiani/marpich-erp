@@ -1,6 +1,12 @@
 """Pharmacy application service — CAP-HLT-008."""
 from __future__ import annotations
 
+import logging
+
+from contexts.pharmacy.application.commands.link_hospital_encounter import (
+    LinkHospitalEncounterCommand,
+)
+from contexts.pharmacy.application.commands.note_stock_adjusted import NoteStockAdjustedCommand
 from contexts.pharmacy.domain.aggregates.dispense_record import DispenseRecord
 from contexts.pharmacy.domain.aggregates.prescription import Prescription
 from contexts.pharmacy.domain.events.integration_events import (
@@ -13,6 +19,8 @@ from shared.domain.value_objects.tenant_id import TenantId
 from shared.domain.value_objects.unique_id import UniqueId
 from shared.infrastructure.messaging.event_bus import publish_integration_event
 
+logger = logging.getLogger(__name__)
+
 
 class PharmacyApplicationService:
     def __init__(
@@ -22,6 +30,45 @@ class PharmacyApplicationService:
     ) -> None:
         self._prescriptions = prescriptions
         self._dispenses = dispenses
+
+    async def link_hospital_encounter(self, command: LinkHospitalEncounterCommand) -> Result[dict]:
+        """Idempotent encounter-linked review Rx — peer IDs only (ACL entry)."""
+        if not command.tenant_id or not command.encounter_ref or not command.patient_ref:
+            return Result.fail("pharmacy.errors.invalid_encounter_link")
+        short = command.encounter_ref.replace("-", "")[:12].upper()
+        rx_number = f"HOSP-{short}"
+        existing = await self._prescriptions.find_by_rx_number(command.tenant_id, rx_number)
+        if existing:
+            return Result.ok(existing.to_dict())
+        return await self.receive_prescription(
+            tenant_id=command.tenant_id,
+            rx_number=rx_number,
+            patient_ref=command.patient_ref,
+            drug_code="REVIEW",
+            drug_name="Encounter review",
+            quantity=1.0,
+            correlation_id=command.correlation_id,
+            source_encounter_ref=command.encounter_ref,
+        )
+
+    async def note_stock_adjusted(self, command: NoteStockAdjustedCommand) -> Result[dict]:
+        """Inventory stock fact — pharmacy never queries inventory schema."""
+        if not command.tenant_id or not command.sku:
+            return Result.fail("pharmacy.errors.invalid_stock_fact")
+        logger.info(
+            "pharmacy noted stock adjust tenant=%s sku=%s qty=%s reason=%s",
+            command.tenant_id,
+            command.sku,
+            command.quantity_on_hand,
+            command.reason,
+        )
+        return Result.ok(
+            {
+                "noted": True,
+                "sku": command.sku,
+                "quantity_on_hand": command.quantity_on_hand,
+            }
+        )
 
     async def receive_prescription(
         self,

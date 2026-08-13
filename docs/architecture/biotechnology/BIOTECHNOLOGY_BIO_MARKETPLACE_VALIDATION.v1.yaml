@@ -1,0 +1,11 @@
+# BIOTECHNOLOGY_BIO_MARKETPLACE_VALIDATION.v1.yaml — P217-P
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioMarketplaceValidation
+metadata:
+  phase: P217-P
+  adr: "515"
+spec:
+  verdict_required: ENTERPRISE_GRADE
+  foundation: validate_bio_marketplace_foundation
+  dual_tests_required: true
+  expected_pytest_passed: 8

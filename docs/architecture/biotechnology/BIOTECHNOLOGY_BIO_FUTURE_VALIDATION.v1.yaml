@@ -1,0 +1,11 @@
+# BIOTECHNOLOGY_BIO_FUTURE_VALIDATION.v1.yaml — P217-T
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioFutureValidation
+metadata:
+  phase: P217-T
+  adr: "519"
+spec:
+  verdict_required: ENTERPRISE_GRADE
+  foundation: validate_bio_future_foundation
+  dual_tests_required: true
+  expected_pytest_passed: 8

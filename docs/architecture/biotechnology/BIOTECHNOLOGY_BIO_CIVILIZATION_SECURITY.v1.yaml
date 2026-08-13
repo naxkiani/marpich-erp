@@ -1,0 +1,18 @@
+apiVersion: marpich.io/v1
+kind: BiotechnologySecurityCatalog
+metadata:
+  prompt_id: P217-W
+  adr: 524
+spec:
+  zero_trust: true
+  locks:
+    - never_ungoverned_cross_tenant_intelligence_federation
+    - never_opaque_collective_decisions
+    - never_skip_human_civilization_oversight
+    - never_skip_collective_bio_ethics_controls
+    - never_skip_human_bio_ai_symbiosis_controls
+    - never_unvalidated_civilization_scenario_release
+    - no_module_local_llm
+  permissions:
+    - biotechnology.read
+    - biotechnology.write

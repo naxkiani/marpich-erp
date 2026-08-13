@@ -1,0 +1,30 @@
+# BIOTECHNOLOGY_FOUNDATION_DDD_CQRS.v1.yaml — P217
+apiVersion: marpich.io/v1
+kind: BiotechnologyFoundationDddCqrs
+metadata:
+  phase: P217
+  adr: "499"
+spec:
+  core_domain: enterprise_biological_intelligence_management
+  aggregate: BioIntelligenceAggregate
+  commands:
+    - CreateBioResearchProjectCommand
+    - AnalyzeGenomeCommand
+    - DesignSyntheticSystemCommand
+    - GenerateHealthInsightCommand
+    - UpdateBioDigitalTwinCommand
+    - ValidateTherapeuticSolutionCommand
+  queries:
+    - GetBiologicalProfileQuery
+    - GetGenomeAnalysisQuery
+    - GetHealthPredictionQuery
+    - GetDigitalTwinStateQuery
+    - GetResearchDiscoveryQuery
+  events:
+    - BioProjectCreatedEvent
+    - GenomeProcessedEvent
+    - SyntheticDesignCompletedEvent
+    - HealthInsightCreatedEvent
+    - TreatmentValidatedEvent
+    - DiscoveryGeneratedEvent
+    - BiologicalTwinUpdatedEvent

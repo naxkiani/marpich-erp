@@ -19,4 +19,4 @@ Positive: governed smart-factory control-tower intelligence across manufacturing
 Negative: work orders, machine control and robot missions remain peer-owned — EAMII stores factory models, predictions, plans and safety cases with peer refs only.
 
 ## Links
-Law: `ENTERPRISE_AUTONOMOUS_MANUFACTURING_INDUSTRIAL_INTELLIGENCE_PLATFORM.md` · Prior: ADR 595 · Next: P236-A · Peer: ADR 597 (P237 EAEISR)
+Law: `ENTERPRISE_AUTONOMOUS_MANUFACTURING_INDUSTRIAL_INTELLIGENCE_PLATFORM.md` · Prior: ADR 595 · Next: P236-A · Peer: ADR 597 (P237 EAEISR) · Peer productization: ADR 632 (P275 MEAIAMP)

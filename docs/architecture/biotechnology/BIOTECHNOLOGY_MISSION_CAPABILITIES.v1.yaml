@@ -1,0 +1,24 @@
+# BIOTECHNOLOGY_MISSION_CAPABILITIES.v1.yaml — P217-A
+apiVersion: marpich.io/v1
+kind: BiotechnologyMissionCapabilities
+metadata:
+  phase: P217-A
+  adr: "500"
+  fabric: meos_bio_intelligence_strategic_framework
+spec:
+  capability_levels:
+    - level: 1
+      name: foundation_capabilities
+    - level: 2
+      name: advanced_capabilities
+    - level: 3
+      name: strategic_capabilities
+    - level: 4
+      name: future_capabilities
+  domains:
+    - biotechnology_intelligence
+    - synthetic_biology_intelligence
+    - bio_ai_intelligence
+    - digital_health_intelligence
+    - precision_medicine_intelligence
+    - biological_digital_twin_intelligence

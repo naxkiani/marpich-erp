@@ -1,0 +1,28 @@
+# BIOTECHNOLOGY_BIO_SUSTAINABILITY_DDD_CQRS.v1.yaml — P217-O
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioSustainabilityDddCqrs
+metadata:
+  phase: P217-O
+  adr: "514"
+spec:
+  commands:
+    - RecordEnvironmentalObservationCommand
+    - DetectEcosystemRiskCommand
+    - OptimizeCarbonProfileCommand
+    - CreateSustainableProcessCommand
+    - ApproveEnvironmentalInterventionCommand
+  queries:
+    - GetBioSustainabilityPlatformQuery
+    - GetEcosystemQuery
+    - GetClimateScenarioQuery
+    - GetGreenProjectQuery
+    - GetSustainabilityGovernanceQuery
+  events:
+    - BioSustainabilityPlatformActivatedEvent
+    - EnvironmentalChangeDetectedEvent
+    - EcosystemRiskDetectedEvent
+    - ClimateRiskDetectedEvent
+    - CarbonTargetAchievedEvent
+    - SustainableProcessCreatedEvent
+    - ResourceCycleOptimizedEvent
+    - BioSustainabilityGovernanceViolationEvent

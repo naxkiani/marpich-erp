@@ -1,0 +1,21 @@
+# BIOTECHNOLOGY_BIO_AUTONOMOUS_SECURITY.v1.yaml — P217-U
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioAutonomousSecurity
+metadata:
+  phase: P217-U
+  adr: "520"
+spec:
+  zero_trust: true
+  protects:
+    - autonomous_decisions
+    - optimization_cycles
+    - learning_models
+    - closed_loop_actions
+    - autonomy_policies
+  hard_locks:
+    - never_unsupervised_autonomous_bio_action
+    - never_skip_human_autonomy_oversight
+    - never_skip_responsible_bio_autonomy_controls
+    - never_opaque_autonomous_decisions
+    - no_module_local_llm
+    - never_opaque_unexplainable_decisions

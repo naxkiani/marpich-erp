@@ -1,6 +1,6 @@
 # Enterprise Identity Lifecycle Management Platform (EILMP)
 
-**Prompt track:** P201 · **Phase:** P201-A Registration & Onboarding  
+**Prompt track:** P201 · **Phases:** P201-A1 Foundation + P201-A Registration & Onboarding  
 **ADR:** [227](../adr/227-enterprise-identity-lifecycle-management-platform.md) · SoR: [`identity_lifecycle`](../adr/192-enterprise-identity-lifecycle-platform.md)  
 **API:** `/api/v1/identity-lifecycle` · **Forbidden:** `backend/contexts/eilmp/`
 
@@ -8,7 +8,7 @@
 
 ## 1. Mission
 
-EILMP is the authoritative MEOS identity lifecycle engine. **P201-A** is the secure entry point: every supported identity type is registered, validated, duplicate-checked, risk/policy evaluated, approved, profile-initialized, and onboarded — policy-driven, event-driven, AI-assisted, Zero Trust — before provisioning.
+EILMP is the authoritative MEOS identity lifecycle engine. **P201-A1** aligns SoR, state machine, JML, and catalogs. **P201-A** is the secure entry point: every supported identity type is registered, validated, duplicate-checked, risk/policy evaluated, approved, profile-initialized, and onboarded — policy-driven, event-driven, AI-assisted, Zero Trust — before provisioning.
 
 ---
 

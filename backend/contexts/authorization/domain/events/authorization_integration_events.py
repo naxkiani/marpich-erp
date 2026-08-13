@@ -82,3 +82,35 @@ class AuthorizationDashboardGeneratedIntegration(IntegrationEvent):
             "decisions_total": self.decisions_total,
             "policies_total": self.policies_total,
         }
+
+
+@dataclass(frozen=True, kw_only=True)
+class RelationChangedIntegration(IntegrationEvent):
+    relation_ref: str
+    change: str
+    object_type: str
+    object_id: str
+    relation: str
+    subject_id: str
+
+    @property
+    def event_name(self) -> str:
+        return "authorization.relation.changed"
+
+    @property
+    def source_context(self) -> str:
+        return "authorization"
+
+    @property
+    def event_version(self) -> int:
+        return 1
+
+    def to_payload(self) -> dict:
+        return {
+            "relation_ref": self.relation_ref,
+            "change": self.change,
+            "object_type": self.object_type,
+            "object_id": self.object_id,
+            "relation": self.relation,
+            "subject_id": self.subject_id,
+        }

@@ -338,6 +338,58 @@ class LifecycleProvisioningRequestedIntegration(IntegrationEvent):
 
 
 @dataclass(frozen=True, kw_only=True)
+class LifecycleProvisioningCompletedIntegration(IntegrationEvent):
+    registration_ref: str
+    case_ref: str
+    user_id: str
+
+    @property
+    def event_name(self) -> str:
+        return "identity_lifecycle.provisioning.completed"
+
+    @property
+    def source_context(self) -> str:
+        return "identity_lifecycle"
+
+    @property
+    def event_version(self) -> int:
+        return 1
+
+    def to_payload(self) -> dict:
+        return {
+            "registration_ref": self.registration_ref,
+            "case_ref": self.case_ref,
+            "user_id": self.user_id,
+        }
+
+
+@dataclass(frozen=True, kw_only=True)
+class LifecycleProvisioningFailedIntegration(IntegrationEvent):
+    registration_ref: str
+    case_ref: str
+    error: str
+
+    @property
+    def event_name(self) -> str:
+        return "identity_lifecycle.provisioning.failed"
+
+    @property
+    def source_context(self) -> str:
+        return "identity_lifecycle"
+
+    @property
+    def event_version(self) -> int:
+        return 1
+
+    def to_payload(self) -> dict:
+        return {
+            "registration_ref": self.registration_ref,
+            "case_ref": self.case_ref,
+            "error": self.error,
+        }
+
+
+@dataclass(frozen=True, kw_only=True)
 class LifecycleWelcomeGeneratedIntegration(IntegrationEvent):
     registration_ref: str
 
@@ -378,4 +430,119 @@ class LifecycleActivationRequestedIntegration(IntegrationEvent):
         return {
             "registration_ref": self.registration_ref,
             "case_ref": self.case_ref,
+        }
+
+
+@dataclass(frozen=True, kw_only=True)
+class LifecycleCredentialIssuedIntegration(IntegrationEvent):
+    registration_ref: str
+    user_id: str
+
+    @property
+    def event_name(self) -> str:
+        return "identity_lifecycle.credential.issued"
+
+    @property
+    def source_context(self) -> str:
+        return "identity_lifecycle"
+
+    @property
+    def event_version(self) -> int:
+        return 1
+
+    def to_payload(self) -> dict:
+        return {"registration_ref": self.registration_ref, "user_id": self.user_id}
+
+
+@dataclass(frozen=True, kw_only=True)
+class LifecycleCredentialRotationRequestedIntegration(IntegrationEvent):
+    registration_ref: str
+    user_id: str
+
+    @property
+    def event_name(self) -> str:
+        return "identity_lifecycle.credential.rotation_requested"
+
+    @property
+    def source_context(self) -> str:
+        return "identity_lifecycle"
+
+    @property
+    def event_version(self) -> int:
+        return 1
+
+    def to_payload(self) -> dict:
+        return {"registration_ref": self.registration_ref, "user_id": self.user_id}
+
+
+@dataclass(frozen=True, kw_only=True)
+class LifecycleCredentialMfaEnrollmentRequestedIntegration(IntegrationEvent):
+    registration_ref: str
+    user_id: str
+
+    @property
+    def event_name(self) -> str:
+        return "identity_lifecycle.credential.mfa_enrollment_requested"
+
+    @property
+    def source_context(self) -> str:
+        return "identity_lifecycle"
+
+    @property
+    def event_version(self) -> int:
+        return 1
+
+    def to_payload(self) -> dict:
+        return {"registration_ref": self.registration_ref, "user_id": self.user_id}
+
+
+@dataclass(frozen=True, kw_only=True)
+class LifecycleCredentialRevokedIntegration(IntegrationEvent):
+    registration_ref: str
+    user_id: str
+    revoked_count: int
+
+    @property
+    def event_name(self) -> str:
+        return "identity_lifecycle.credential.revoked"
+
+    @property
+    def source_context(self) -> str:
+        return "identity_lifecycle"
+
+    @property
+    def event_version(self) -> int:
+        return 1
+
+    def to_payload(self) -> dict:
+        return {
+            "registration_ref": self.registration_ref,
+            "user_id": self.user_id,
+            "revoked_count": self.revoked_count,
+        }
+
+
+@dataclass(frozen=True, kw_only=True)
+class LifecycleCredentialFailedIntegration(IntegrationEvent):
+    registration_ref: str
+    user_id: str
+    error: str
+
+    @property
+    def event_name(self) -> str:
+        return "identity_lifecycle.credential.failed"
+
+    @property
+    def source_context(self) -> str:
+        return "identity_lifecycle"
+
+    @property
+    def event_version(self) -> int:
+        return 1
+
+    def to_payload(self) -> dict:
+        return {
+            "registration_ref": self.registration_ref,
+            "user_id": self.user_id,
+            "error": self.error,
         }

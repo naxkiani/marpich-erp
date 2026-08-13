@@ -1,0 +1,15 @@
+apiVersion: marpich.io/v1
+kind: BiotechnologyArchitectureCatalog
+metadata:
+  prompt_id: P217-W
+  adr: 524
+  fabric: meos_bio_civilization_intelligence_fabric
+  sor: biotechnology
+spec:
+  layers: 6
+  domains:
+    - collective_biological_intelligence
+    - global_bio_cognitive_ecosystem
+    - human_bio_ai_symbiosis
+  bounded_contexts: 7
+  microservices: 10

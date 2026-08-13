@@ -1,0 +1,33 @@
+# P201-A2 — Workflow approvals for registration
+version: 1
+phase: P201-A2
+sor: identity_lifecycle
+
+definition:
+  key: identity_lifecycle.registration.approval
+  name: Identity registration approval
+  steps:
+    - key: registration_review
+      name: Review registration
+
+approval_modes:
+  automatic:
+    workflow: false
+  manual:
+    workflow: true
+  multi_level:
+    workflow: true
+  department:
+    workflow: true
+  hr:
+    workflow: true
+  security:
+    workflow: true
+  risk_based:
+    workflow: true
+  ai_assisted:
+    workflow: true
+
+outcomes:
+  completed: approve_registration
+  rejected: reject_registration

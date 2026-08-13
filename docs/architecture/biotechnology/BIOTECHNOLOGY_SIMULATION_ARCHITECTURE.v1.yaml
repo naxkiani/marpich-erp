@@ -1,0 +1,15 @@
+# BIOTECHNOLOGY_SIMULATION_ARCHITECTURE.v1.yaml — P217-G
+apiVersion: marpich.io/v1
+kind: BiotechnologySimulationArchitecture
+metadata:
+  phase: P217-G
+  adr: "506"
+  fabric: meos_biological_simulation_intelligence_fabric
+spec:
+  layers:
+    - L01_physical_biology
+    - L02_biological_data
+    - L03_digital_twin_modeling
+    - L04_simulation_intelligence
+    - L05_ai_intelligence
+    - L06_governance

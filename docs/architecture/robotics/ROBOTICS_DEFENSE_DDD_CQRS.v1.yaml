@@ -1,0 +1,28 @@
+# ROBOTICS_DEFENSE_DDD_CQRS.v1.yaml — P216-U
+apiVersion: marpich.io/v1
+kind: RoboticsDefenseDddCqrs
+metadata:
+  phase: P216-U
+  adr: "493"
+spec:
+  core_domain: enterprise_defense_intelligence
+  aggregate: DefenseIntelligenceAggregate
+  commands:
+    - RegisterDefenseAssetCommand
+    - AnalyseSecurityScenarioCommand
+    - ActivateAutonomousSystemCommand
+    - GenerateStrategicAssessmentCommand
+    - UpdateDefenseTwinCommand
+  queries:
+    - GetAssetStatusQuery
+    - GetSecurityAssessmentQuery
+    - GetRiskScenarioQuery
+    - GetStrategicAnalysisQuery
+    - GetDefenseTwinQuery
+  events:
+    - SecurityEventDetectedEvent
+    - IntelligenceUpdatedEvent
+    - AssetStatusChangedEvent
+    - ScenarioCompletedEvent
+    - RiskAssessmentGeneratedEvent
+    - SystemReadinessUpdatedEvent

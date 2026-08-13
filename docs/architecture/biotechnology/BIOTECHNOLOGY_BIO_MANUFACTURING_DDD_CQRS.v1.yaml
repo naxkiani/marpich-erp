@@ -1,0 +1,29 @@
+# BIOTECHNOLOGY_BIO_MANUFACTURING_DDD_CQRS.v1.yaml — P217-L
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioManufacturingDddCqrs
+metadata:
+  phase: P217-L
+  adr: "511"
+spec:
+  commands:
+    - StartProductionBatchCommand
+    - OptimizeBioprocessCommand
+    - TriggerFactoryAutomationCommand
+    - ApproveQualityReleaseCommand
+    - RecordDeviationCommand
+  queries:
+    - GetBioManufacturingPlatformQuery
+    - GetProductionBatchQuery
+    - GetFactoryTwinQuery
+    - GetQualityProfileQuery
+    - GetManufacturingGovernanceQuery
+  events:
+    - BioManufacturingPlatformActivatedEvent
+    - ProductionStartedEvent
+    - BatchCompletedEvent
+    - ProcessOptimizedEvent
+    - FactoryConnectedEvent
+    - AutomationTriggeredEvent
+    - QualityApprovedEvent
+    - DeviationDetectedEvent
+    - BioManufacturingGovernanceViolationEvent

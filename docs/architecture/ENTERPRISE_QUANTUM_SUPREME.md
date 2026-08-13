@@ -3,7 +3,7 @@
 > **Status:** Normative (P215-Z) — **closes P215 series**  
 > **Capability:** `CAP-PLT-QC-001` · **ADR:** [471](../adr/471-enterprise-quantum-supreme.md)  
 > **SoR:** `quantum` · **Fabric:** `meos_quantum_supreme_intelligence_fabric`  
-> **API:** `/api/v1/quantum/supreme*` · **Builds on:** P215-A–Y · **Preceded by:** [P215-Y](ENTERPRISE_QUANTUM_ULTIMATE_TRUST.md) · **Next series:** P216  
+> **API:** `/api/v1/quantum/supreme*` · **Builds on:** P215-A–Y · **Preceded by:** [P215-Y](ENTERPRISE_QUANTUM_ULTIMATE_TRUST.md) · **Next series:** [P216](ENTERPRISE_ROBOTICS_FOUNDATION.md)  
 
 ---
 

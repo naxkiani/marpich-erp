@@ -18,4 +18,4 @@ Positive: governed Twin OS (scenarios, predictive/optimization campaigns) over c
 Negative: twin model/state/simulation-run truth remains P227-owned — MEDTIP stores operating campaigns, scenario packs and peer refs only.
 
 ## Links
-Law: `ENTERPRISE_MEOS_DIGITAL_TWIN_INTELLIGENCE_PLATFORM.md` · Prior: ADR 621 · Next: P265-A · Peer: ADR 623 (P266 MEAAOI) · Canonical: P227 EDTISP
+Law: `ENTERPRISE_MEOS_DIGITAL_TWIN_INTELLIGENCE_PLATFORM.md` · Prior: ADR 621 · Next: P265-A · Peer: ADR 623 (P266 MEAAOI) · Peer productization: ADR 632 (P275 MEAIAMP) · Canonical: P227 EDTISP

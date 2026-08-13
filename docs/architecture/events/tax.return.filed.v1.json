@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "tax.return.filed",
+  "type": "object",
+  "required": ["return_id", "period_label", "liability_count", "total_tax", "currency"],
+  "properties": {
+    "return_id": { "type": "string", "format": "uuid" },
+    "period_label": { "type": "string" },
+    "liability_count": { "type": "integer", "minimum": 0 },
+    "total_tax": { "type": "string" },
+    "currency": { "type": "string", "minLength": 3, "maxLength": 3 }
+  }
+}

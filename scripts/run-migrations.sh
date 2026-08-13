@@ -93,6 +93,7 @@ POST_WAVE01_MIGRATIONS=(
   052_accounting_payment_received.sql
   053_human_resources_employees.sql
   054_payroll_employees_runs.sql
+  055_tax_liabilities_returns.sql
 )
 
 for migration in "${WAVE01_MIGRATIONS[@]}"; do

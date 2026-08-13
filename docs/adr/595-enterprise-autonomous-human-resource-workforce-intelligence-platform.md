@@ -19,4 +19,4 @@ Positive: governed workforce control-tower intelligence across HR and learning p
 Negative: employment and payroll truth remain peer-owned — EAHRWIP stores talent/recruitment/planning/performance projections with peer employee refs only.
 
 ## Links
-Law: `ENTERPRISE_AUTONOMOUS_HUMAN_RESOURCE_WORKFORCE_INTELLIGENCE_PLATFORM.md` · Prior: ADR 594 · Next: P235-A · Peer: ADR 596 (P236 EAMII)
+Law: `ENTERPRISE_AUTONOMOUS_HUMAN_RESOURCE_WORKFORCE_INTELLIGENCE_PLATFORM.md` · Prior: ADR 594 · Next: P235-A · Peer: ADR 596 (P236 EAMII) · Peer productization: ADR 631 (P274 MEHCAWP)

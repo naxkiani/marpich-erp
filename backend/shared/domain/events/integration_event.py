@@ -66,3 +66,28 @@ class IntegrationEvent(ABC):
             "security_context": self.security_context or self._default_security_context(),
             "payload": self.to_payload(),
         }
+
+
+class BoundedContextType:
+    """Strategic classification for context map entries."""
+
+    PLATFORM = "platform"
+    SUPPORTING = "supporting"
+    FINANCE = "finance"
+    OPERATIONS = "operations"
+    INDUSTRY = "industry"
+    GENERIC = "generic"
+    CORE = "core"
+
+
+@dataclass(frozen=True, kw_only=True)
+class BoundedContext:
+    """Catalog entry for a bounded context (registry / context map)."""
+
+    id: str
+    display_name: str
+    context_type: str
+    schema_name: str
+    description: str = ""
+    publishes: tuple[str, ...] = ()
+    subscribes: tuple[str, ...] = ()

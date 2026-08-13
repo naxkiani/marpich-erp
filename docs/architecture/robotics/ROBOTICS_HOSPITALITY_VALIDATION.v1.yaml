@@ -1,0 +1,37 @@
+# ROBOTICS_HOSPITALITY_VALIDATION.v1.yaml — P216-P
+apiVersion: marpich.io/v1
+kind: RoboticsHospitalityValidationCatalog
+metadata:
+  phase: P216-P
+  adr: "488"
+spec:
+  quality_gates:
+    - Hospitality Robotics Platform
+    - Smart Hotel Platform
+    - Autonomous Guest Services
+    - Hospitality AI Platform
+    - Guest Experience Intelligence
+    - Hotel Digital Twin
+    - Hospitality Knowledge Graph
+    - CQRS Architecture
+    - Event Architecture
+    - Microservice Architecture
+    - Zero Trust Security
+    - Cloud-Edge Architecture
+    - Enterprise Integration
+  definition_of_done:
+    - Hospitality Robotics Platform exists
+    - Smart Hotel Platform exists
+    - Guest Intelligence Platform exists
+    - Autonomous Service Platform exists
+    - Hospitality AI Platform exists
+    - Hotel Digital Twin exists
+    - Hospitality Knowledge Graph exists
+    - Security Architecture exists
+    - CQRS Architecture exists
+    - Event Architecture exists
+    - Microservice Architecture exists
+    - Deployment Architecture exists
+    - Testing Architecture exists
+    - Foundation for P216-Q exists
+  foundation_validator: validate_rb_hospitality_foundation

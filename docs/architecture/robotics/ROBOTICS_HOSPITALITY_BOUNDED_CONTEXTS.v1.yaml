@@ -1,0 +1,24 @@
+# ROBOTICS_HOSPITALITY_BOUNDED_CONTEXTS.v1.yaml — P216-P
+apiVersion: marpich.io/v1
+kind: RoboticsHospitalityBoundedContextCatalog
+metadata:
+  phase: P216-P
+  adr: "488"
+spec:
+  bounded_contexts:
+    - id: BC-01
+      name: Guest Experience Context
+    - id: BC-02
+      name: Hospitality Robotics Context
+    - id: BC-03
+      name: Smart Hotel Operations Context
+    - id: BC-04
+      name: Room Intelligence Context
+    - id: BC-05
+      name: Hospitality AI Context
+    - id: BC-06
+      name: Tourism Intelligence Context
+    - id: BC-07
+      name: Hospitality Digital Twin Context
+    - id: BC-08
+      name: Hospitality Governance Context

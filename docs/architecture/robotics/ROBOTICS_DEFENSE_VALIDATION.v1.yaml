@@ -1,0 +1,35 @@
+# ROBOTICS_DEFENSE_VALIDATION.v1.yaml — P216-U
+apiVersion: marpich.io/v1
+kind: RoboticsDefenseValidationCatalog
+metadata:
+  phase: P216-U
+  adr: "493"
+spec:
+  quality_gates:
+    - Military Robotics Platform
+    - Strategic Intelligence Platform
+    - Autonomous System Governance
+    - Defense AI Platform
+    - Defense Digital Twin
+    - Security Knowledge Graph
+    - CQRS Architecture
+    - Event Architecture
+    - Microservice Architecture
+    - Zero Trust Security
+    - Human Oversight Architecture
+    - Enterprise Integration
+  definition_of_done:
+    - Defense Robotics Platform exists
+    - Strategic Intelligence Platform exists
+    - Defense AI Platform exists
+    - Autonomous System Governance exists
+    - Defense Digital Twin exists
+    - Defense Knowledge Graph exists
+    - Security Architecture exists
+    - CQRS Architecture exists
+    - Event Architecture exists
+    - Microservice Architecture exists
+    - Deployment Architecture exists
+    - Testing Architecture exists
+    - Foundation for P216-V exists
+  foundation_validator: validate_rb_defense_foundation

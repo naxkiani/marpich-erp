@@ -11,6 +11,7 @@ from contexts.identity_lifecycle.container import get_identity_lifecycle_service
 from contexts.identity_lifecycle.presentation.schemas import (
     ConsentRequest,
     DeleteIdentityRequest,
+    JmlApplyRequest,
     MergeIdentityRequest,
     ReasonRequest,
     RegisterLifecycleRequest,
@@ -30,6 +31,55 @@ async def catalog(
     _user: Annotated[dict, Depends(require_permissions("identity_lifecycle.read"))],
 ):
     return {"data": (await get_identity_lifecycle_service().list_catalog()).unwrap()}
+
+
+@identity_lifecycle_router.get("/eilmp/surface")
+async def eilmp_surface(
+    _tenant_id: Annotated[str, Depends(get_tenant_id)],
+    _user: Annotated[dict, Depends(require_permissions("identity_lifecycle.read"))],
+):
+    return {"data": (await get_identity_lifecycle_service().get_eilmp_surface()).unwrap()}
+
+
+@identity_lifecycle_router.get("/state-machine")
+async def state_machine(
+    _tenant_id: Annotated[str, Depends(get_tenant_id)],
+    _user: Annotated[dict, Depends(require_permissions("identity_lifecycle.read"))],
+):
+    return {"data": (await get_identity_lifecycle_service().get_state_machine()).unwrap()}
+
+
+@identity_lifecycle_router.get("/jml/actions")
+async def jml_actions(
+    _tenant_id: Annotated[str, Depends(get_tenant_id)],
+    _user: Annotated[dict, Depends(require_permissions("identity_lifecycle.read"))],
+):
+    from contexts.identity_lifecycle.domain.services import lifecycle_workflow_engine as workflow
+
+    return {"data": {"actions": workflow.list_jml_actions()}}
+
+
+@identity_lifecycle_router.post("/jml/{case_ref}/apply")
+async def apply_jml(
+    case_ref: str,
+    body: JmlApplyRequest,
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    user: Annotated[dict, Depends(require_permissions("identity_lifecycle.cases.write"))],
+    correlation_id: Annotated[str, Depends(get_correlation_id)] = "",
+):
+    correlation_id = correlation_id or str(uuid.uuid4())
+    result = await get_identity_lifecycle_service().apply_jml(
+        tenant_id,
+        case_ref,
+        action=body.action,
+        reason=body.reason,
+        metadata=body.metadata,
+        correlation_id=correlation_id,
+        actor_id=str(user.get("id", "")),
+    )
+    if not result.succeeded:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, result.error)
+    return {"data": result.unwrap(), "meta": {"correlation_id": correlation_id}}
 
 
 @identity_lifecycle_router.post("/seed")
@@ -70,6 +120,7 @@ async def register_case(
         display_name=body.display_name,
         identity_ref=body.identity_ref,
         user_id=body.user_id,
+        identity_type=body.identity_type,
         correlation_id=correlation_id,
         actor_id=str(user.get("id", "")),
     )

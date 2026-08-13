@@ -23,7 +23,7 @@ forbidden_sibling_bc:
   - quantum_audit_platform
 notes:
   - PQC cryptography SoR remains secrets (P209); quantum binds via ACL only
-  - P215-A–Z COMPLETE; fabric meos_quantum_supreme_intelligence_fabric (ADR 471) under /quantum/supreme* orchestrates A–Y without replacing Core/T/Y/K; ungated supreme autonomy and opaque master decisions forbidden; next series P216 robotics / cyber-physical
+  - P215-A–Z COMPLETE; fabric meos_quantum_supreme_intelligence_fabric (ADR 471) under /quantum/supreme* orchestrates A–Y without replacing Core/T/Y/K; ungated supreme autonomy and opaque master decisions forbidden; P216 foundation delivered (ADR 472, SoR robotics, CAP-PLT-RB-001); series continues P216-A+
 
 phases:
   - id: P215-A
@@ -185,6 +185,10 @@ phases:
     series_status: P215_COMPLETE
   - id: P216
     title: Enterprise Robotics, Autonomous Machines, Physical AI, Industrial Intelligence & MEOS Cyber-Physical Intelligence Platform
-    status: planned
+    status: done
+    adr: "472"
+    fabric: meos_cyber_physical_intelligence_fabric
     api: /api/v1/robotics*
+    capability: CAP-PLT-RB-001
+    sor: robotics
 

@@ -12,9 +12,16 @@ from contexts.identity_lifecycle.domain.aggregates.registration_onboarding impor
 )
 from contexts.identity_lifecycle.domain.events.identity_lifecycle_integration_events import (
     LifecycleActivationRequestedIntegration,
+    LifecycleCredentialFailedIntegration,
+    LifecycleCredentialIssuedIntegration,
+    LifecycleCredentialMfaEnrollmentRequestedIntegration,
+    LifecycleCredentialRevokedIntegration,
+    LifecycleCredentialRotationRequestedIntegration,
     LifecycleIdentityCreatedIntegration,
     LifecycleOnboardingStartedIntegration,
     LifecycleProfileInitializedIntegration,
+    LifecycleProvisioningCompletedIntegration,
+    LifecycleProvisioningFailedIntegration,
     LifecycleProvisioningRequestedIntegration,
     LifecycleRegistrationApprovedIntegration,
     LifecycleRegistrationDuplicateDetectedIntegration,
@@ -23,8 +30,16 @@ from contexts.identity_lifecycle.domain.events.identity_lifecycle_integration_ev
     LifecycleRegistrationValidatedIntegration,
     LifecycleWelcomeGeneratedIntegration,
 )
+from contexts.identity_lifecycle.domain.ports.credentials import ICredentialLifecyclePort
+from contexts.identity_lifecycle.domain.ports.provisioning import (
+    IIdentityUserProvisioner,
+    IWorkflowApprovalPort,
+)
 from contexts.identity_lifecycle.domain.ports.registration_repositories import (
     IIdentityRegistrationRepository,
+)
+from contexts.identity_lifecycle.infrastructure.adapters.authentication_credential_adapter import (
+    AuthenticationCredentialAdapter,
 )
 from contexts.identity_lifecycle.domain.services import registration_onboarding_engine as eng
 from shared.application.result import Result
@@ -37,15 +52,23 @@ class RegistrationOnboardingApplicationService:
         self,
         registrations: IIdentityRegistrationRepository,
         lifecycle: IdentityLifecycleApplicationService,
+        user_provisioner: IIdentityUserProvisioner | None = None,
+        workflow_approvals: IWorkflowApprovalPort | None = None,
+        credentials: ICredentialLifecyclePort | None = None,
+        passkey_revoker: AuthenticationCredentialAdapter | None = None,
     ) -> None:
         self._regs = registrations
         self._lifecycle = lifecycle
+        self._provisioner = user_provisioner
+        self._workflow = workflow_approvals
+        self._credentials = credentials
+        self._passkeys = passkey_revoker
 
     def surface(self) -> dict:
         return {
             **eng.catalog(),
             "apis": [
-                "/api/v1/identity-lifecycle/eilmp/surface",
+                "/api/v1/identity-lifecycle/registration/surface",
                 "/api/v1/identity-lifecycle/registration/catalog",
                 "/api/v1/identity-lifecycle/registration/register",
             ],
@@ -144,6 +167,16 @@ class RegistrationOnboardingApplicationService:
                 if not approved.succeeded:
                     return approved
                 return Result.ok(approved.unwrap())
+            if reg.approval_mode != ApprovalMode.AUTOMATIC.value:
+                pending = await self.request_workflow_approval(
+                    tenant_id,
+                    reg.registration_ref,
+                    correlation_id=corr,
+                    actor_id=actor_id or "system",
+                )
+                if not pending.succeeded:
+                    return pending
+                return Result.ok(pending.unwrap())
 
         refreshed = await self._regs.find_by_ref(tenant_id, reg.registration_ref)
         assert refreshed is not None
@@ -381,6 +414,94 @@ class RegistrationOnboardingApplicationService:
         )
         return Result.ok(reg.to_dict())
 
+    async def request_workflow_approval(
+        self,
+        tenant_id: str,
+        registration_ref: str,
+        *,
+        correlation_id: str = "",
+        actor_id: str | None = None,
+        assignee_id: str | None = None,
+    ) -> Result[dict]:
+        reg = await self._regs.find_by_ref(tenant_id, registration_ref)
+        if not reg:
+            return Result.fail("identity_lifecycle.errors.registration_not_found")
+        if not self._workflow:
+            return Result.fail("identity_lifecycle.errors.workflow_port_unavailable")
+        corr = correlation_id or str(uuid.uuid4())
+        try:
+            started = await self._workflow.start_registration_approval(
+                tenant_id=tenant_id,
+                correlation_id=corr,
+                registration_ref=reg.registration_ref,
+                started_by=actor_id or "system",
+                assignee_id=assignee_id or actor_id or "system",
+            )
+        except ValueError as exc:
+            return Result.fail(str(exc))
+        instance = (started.get("instance") or {})
+        reg.metadata["workflow_instance_id"] = str(instance.get("id") or "")
+        reg.metadata["workflow_definition_key"] = "identity_lifecycle.registration.approval"
+        reg.touch(RegistrationStatus.PENDING_APPROVAL.value)
+        await self._regs.save(reg)
+        return Result.ok(reg.to_dict())
+
+    async def execute_provisioning(
+        self,
+        tenant_id: str,
+        registration_ref: str,
+        *,
+        correlation_id: str = "",
+    ) -> Result[dict]:
+        reg = await self._regs.find_by_ref(tenant_id, registration_ref)
+        if not reg:
+            return Result.fail("identity_lifecycle.errors.registration_not_found")
+        provisioning = dict(reg.onboarding.get("provisioning") or {})
+        if provisioning.get("user_id"):
+            return Result.ok(reg.to_dict())
+        if not self._provisioner:
+            return Result.fail("identity_lifecycle.errors.provisioner_unavailable")
+        corr = correlation_id or str(uuid.uuid4())
+        try:
+            user = await self._provisioner.provision_user(
+                tenant_id=tenant_id,
+                email=reg.email,
+                display_name=reg.display_name,
+                external_id=reg.registration_ref,
+                correlation_id=corr,
+            )
+        except Exception as exc:  # noqa: BLE001 — ACL records failure, does not crash bus
+            provisioning["error"] = str(exc)
+            provisioning["status"] = "failed"
+            reg.onboarding["provisioning"] = provisioning
+            await self._regs.save(reg)
+            await publish_integration_event(
+                LifecycleProvisioningFailedIntegration(
+                    tenant_id=TenantId(tenant_id),
+                    correlation_id=corr,
+                    registration_ref=reg.registration_ref,
+                    case_ref=reg.case_ref or "",
+                    error=str(exc),
+                )
+            )
+            return Result.fail(str(exc))
+        user_id = str(user.get("id") or "")
+        provisioning["user_id"] = user_id
+        provisioning["status"] = "completed"
+        provisioning["delegate_to"] = ["identity", "directory"]
+        reg.onboarding["provisioning"] = provisioning
+        await self._regs.save(reg)
+        await publish_integration_event(
+            LifecycleProvisioningCompletedIntegration(
+                tenant_id=TenantId(tenant_id),
+                correlation_id=corr,
+                registration_ref=reg.registration_ref,
+                case_ref=reg.case_ref or "",
+                user_id=user_id,
+            )
+        )
+        return Result.ok(reg.to_dict())
+
     async def request_provisioning(
         self,
         tenant_id: str,
@@ -401,6 +522,7 @@ class RegistrationOnboardingApplicationService:
             "requested": True,
             "delegate_to": ["identity", "directory"],
             "case_ref": reg.case_ref,
+            "status": "requested",
         }
         reg.touch(RegistrationStatus.PROVISIONING_REQUESTED.value)
         await self._regs.save(reg)
@@ -413,6 +535,9 @@ class RegistrationOnboardingApplicationService:
                 identity_type=reg.identity_type,
             )
         )
+        # Refresh after ACL execution (in-process bus is synchronous).
+        reg = await self._regs.find_by_ref(tenant_id, registration_ref)
+        assert reg is not None
         reg.touch(RegistrationStatus.ACTIVATION_REQUESTED.value)
         await self._regs.save(reg)
         await publish_integration_event(
@@ -423,7 +548,115 @@ class RegistrationOnboardingApplicationService:
                 case_ref=reg.case_ref or "",
             )
         )
+        # Refresh after credential ACL (in-process bus is synchronous).
+        reg = await self._regs.find_by_ref(tenant_id, registration_ref)
+        assert reg is not None
         return Result.ok(reg.to_dict())
+
+    async def orchestrate_credentials(
+        self,
+        tenant_id: str,
+        registration_ref: str,
+        *,
+        correlation_id: str = "",
+    ) -> Result[dict]:
+        """P201-A3 — orchestrate password must-change / MFA / passkey revoke via peers."""
+        reg = await self._regs.find_by_ref(tenant_id, registration_ref)
+        if not reg:
+            return Result.fail("identity_lifecycle.errors.registration_not_found")
+        provisioning = dict(reg.onboarding.get("provisioning") or {})
+        user_id = str(provisioning.get("user_id") or "")
+        if not user_id:
+            return Result.fail("identity_lifecycle.errors.user_not_provisioned")
+        existing = dict(reg.onboarding.get("credentials") or {})
+        if existing.get("status") == "orchestrated":
+            return Result.ok(reg.to_dict())
+        if not self._credentials:
+            return Result.fail("identity_lifecycle.errors.credential_port_unavailable")
+        corr = correlation_id or str(uuid.uuid4())
+        try:
+            password = await self._credentials.require_password_change(
+                tenant_id=tenant_id, user_id=user_id, correlation_id=corr
+            )
+            await publish_integration_event(
+                LifecycleCredentialRotationRequestedIntegration(
+                    tenant_id=TenantId(tenant_id),
+                    correlation_id=corr,
+                    registration_ref=reg.registration_ref,
+                    user_id=user_id,
+                )
+            )
+            mfa = await self._credentials.request_mfa_enrollment(
+                tenant_id=tenant_id, user_id=user_id, correlation_id=corr
+            )
+            await publish_integration_event(
+                LifecycleCredentialMfaEnrollmentRequestedIntegration(
+                    tenant_id=TenantId(tenant_id),
+                    correlation_id=corr,
+                    registration_ref=reg.registration_ref,
+                    user_id=user_id,
+                )
+            )
+            if self._passkeys:
+                revoked = await self._passkeys.revoke_passkeys(
+                    tenant_id=tenant_id, user_id=user_id, correlation_id=corr
+                )
+            else:
+                revoked = await self._credentials.revoke_passkeys(
+                    tenant_id=tenant_id, user_id=user_id, correlation_id=corr
+                )
+            revoked_count = int(revoked.get("count") or 0)
+            if revoked_count:
+                await publish_integration_event(
+                    LifecycleCredentialRevokedIntegration(
+                        tenant_id=TenantId(tenant_id),
+                        correlation_id=corr,
+                        registration_ref=reg.registration_ref,
+                        user_id=user_id,
+                        revoked_count=revoked_count,
+                    )
+                )
+            status = await self._credentials.get_credential_status(
+                tenant_id=tenant_id, user_id=user_id
+            )
+            reg.onboarding["credentials"] = {
+                "status": "orchestrated",
+                "user_id": user_id,
+                "password_must_change": bool(
+                    password.get("password_must_change")
+                    or status.get("password_must_change")
+                ),
+                "mfa_enrollment_required": bool(mfa.get("enrollment_required")),
+                "passkeys_revoked": revoked_count,
+                "delegate_to": ["identity", "authentication"],
+            }
+            await self._regs.save(reg)
+            await publish_integration_event(
+                LifecycleCredentialIssuedIntegration(
+                    tenant_id=TenantId(tenant_id),
+                    correlation_id=corr,
+                    registration_ref=reg.registration_ref,
+                    user_id=user_id,
+                )
+            )
+            return Result.ok(reg.to_dict())
+        except Exception as exc:  # noqa: BLE001 — ACL records failure, does not crash bus
+            reg.onboarding["credentials"] = {
+                "status": "failed",
+                "user_id": user_id,
+                "error": str(exc),
+            }
+            await self._regs.save(reg)
+            await publish_integration_event(
+                LifecycleCredentialFailedIntegration(
+                    tenant_id=TenantId(tenant_id),
+                    correlation_id=corr,
+                    registration_ref=reg.registration_ref,
+                    user_id=user_id,
+                    error=str(exc),
+                )
+            )
+            return Result.fail(str(exc))
 
     async def get_registration(
         self, tenant_id: str, registration_ref: str

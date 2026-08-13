@@ -1,0 +1,24 @@
+# BIOTECHNOLOGY_FOUNDATION_BOUNDED_CONTEXTS.v1.yaml — P217
+apiVersion: marpich.io/v1
+kind: BiotechnologyFoundationBoundedContexts
+metadata:
+  phase: P217
+  adr: "499"
+spec:
+  contexts:
+    - id: BC-01
+      name: Biotechnology Research Context
+    - id: BC-02
+      name: Synthetic Biology Context
+    - id: BC-03
+      name: Bioinformatics Intelligence Context
+    - id: BC-04
+      name: Bio-AI Intelligence Context
+    - id: BC-05
+      name: Digital Health Intelligence Context
+    - id: BC-06
+      name: Precision Medicine Context
+    - id: BC-07
+      name: Biological Digital Twin Context
+    - id: BC-08
+      name: Bio Governance Context

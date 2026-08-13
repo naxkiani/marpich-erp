@@ -1,0 +1,28 @@
+# BIOTECHNOLOGY_BIO_AI_DDD_CQRS.v1.yaml — P217-E
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioAiDddCqrs
+metadata:
+  phase: P217-E
+  adr: "504"
+spec:
+  commands:
+    - RegisterFoundationModelCommand
+    - RunBiologicalReasoningCommand
+    - GenerateBioPredictionCommand
+    - LaunchScientificAgentCommand
+    - ApproveBioAiDecisionCommand
+  queries:
+    - GetBioAiPlatformQuery
+    - GetFoundationModelQuery
+    - GetLifeIntelligenceStateQuery
+    - GetAgentStatusQuery
+    - GetModelGovernanceQuery
+  events:
+    - BioAiPlatformActivatedEvent
+    - FoundationModelRegisteredEvent
+    - BiologicalReasoningCompletedEvent
+    - BioPredictionGeneratedEvent
+    - ScientificAgentLaunchedEvent
+    - BioKnowledgeGraphUpdatedEvent
+    - BioAiDecisionExplainedEvent
+    - BioAiGovernanceViolationEvent

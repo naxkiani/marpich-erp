@@ -1,0 +1,36 @@
+# ROBOTICS_SCIENCE_VALIDATION.v1.yaml — P216-V
+apiVersion: marpich.io/v1
+kind: RoboticsScienceValidationCatalog
+metadata:
+  phase: P216-V
+  adr: "494"
+spec:
+  quality_gates:
+    - Science Robotics Platform
+    - Autonomous Laboratory Platform
+    - AI Scientist Platform
+    - Scientific Discovery Engine
+    - Research Automation Platform
+    - Scientific Digital Twin
+    - Scientific Knowledge Graph
+    - CQRS Architecture
+    - Event Architecture
+    - Microservice Architecture
+    - Zero Trust Security
+    - Human Scientific Oversight
+    - Enterprise Integration
+  definition_of_done:
+    - Science Robotics Platform exists
+    - Autonomous Laboratory Platform exists
+    - AI Scientist Platform exists
+    - Discovery Acceleration Platform exists
+    - Scientific Digital Twin exists
+    - Scientific Knowledge Graph exists
+    - Security Architecture exists
+    - CQRS Architecture exists
+    - Event Architecture exists
+    - Microservice Architecture exists
+    - Deployment Architecture exists
+    - Testing Architecture exists
+    - Foundation for P216-W exists
+  foundation_validator: validate_rb_science_foundation

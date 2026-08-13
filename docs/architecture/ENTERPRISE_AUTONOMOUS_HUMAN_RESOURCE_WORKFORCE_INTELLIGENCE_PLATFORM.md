@@ -3,7 +3,7 @@
 **Status:** Normative (P235) — series foundation  
 **SoR:** `workforce_intelligence` · **ADR:** [595](../adr/595-enterprise-autonomous-human-resource-workforce-intelligence-platform.md) · **Capability:** `CAP-PLT-EAHRWIP-001`  
 **Fabric:** `meos_enterprise_autonomous_human_resource_workforce_intelligence_platform_framework` · **Governance Standard:** MEOS 11.0  
-> **API:** `/api/v1/workforce-intelligence*` · **Builds on:** P234 EAEHCEP · P231 EAFIEOP · P230 EPDRTIP · P229 EFDMIFP · P228 EKGSIP · P227 EDTISP · P224 EADIP · HR · Payroll peers · P214-Z · Policy · Workflow · Audit · Documents · **Next:** P235-A · **Peer series:** [P236 EAMII](ENTERPRISE_AUTONOMOUS_MANUFACTURING_INDUSTRIAL_INTELLIGENCE_PLATFORM.md)  
+> **API:** `/api/v1/workforce-intelligence*` · **Builds on:** P234 EAEHCEP · P231 EAFIEOP · P230 EPDRTIP · P229 EFDMIFP · P228 EKGSIP · P227 EDTISP · P224 EADIP · HR · Payroll peers · P214-Z · Policy · Workflow · Audit · Documents · **Next:** P235-A · **Peer series:** [P236 EAMII](ENTERPRISE_AUTONOMOUS_MANUFACTURING_INDUSTRIAL_INTELLIGENCE_PLATFORM.md) · [P274 MEHCAWP](ENTERPRISE_MEOS_HUMAN_CAPITAL_INTELLIGENCE_AUTONOMOUS_WORKFORCE_PLATFORM.md) (Human Capital OS productization — never fork this API; never ungated hire/terminate/pay)  
 **Hard bindings:** Inference → **P214-Z** · Employment SoR → **hr / human_resources** (ACL) · Payroll/comp → **payroll** peers (ACL) · Learning/skills deepen → **P234** (ACL) · Privacy → **P230** · Twin → **P227** · KG → **P228** · Decisions → **P224** · Finance impact → **P231 / Financial Kernel** · Approvals → **Workflow** · Policy → **Policy Engine** · Audit → **Audit** · Blobs → **Documents** · ATS/HRIS vendors → **Integration Platform** · Generic → **Core**.
 
 ---

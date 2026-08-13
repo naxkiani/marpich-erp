@@ -4,19 +4,32 @@ from __future__ import annotations
 import uuid
 from datetime import UTC, datetime
 
-from contexts.authorization.domain.aggregates.authorization_platform import AbacPolicy, AccessDecision, AuthorizationProfile
+from contexts.authorization.domain.aggregates.authorization_platform import (
+    AbacPolicy,
+    AccessDecision,
+    AuthorizationProfile,
+    RelationTuple,
+)
 from contexts.authorization.domain.events.authorization_integration_events import (
     AccessDeniedIntegration,
     AccessGrantedIntegration,
     AuthorizationDashboardGeneratedIntegration,
+    RelationChangedIntegration,
 )
 from contexts.authorization.domain.ports.authorization_repositories import (
     IAbacPolicyRepository,
     IAccessDecisionRepository,
     IAuthorizationProfileRepository,
     IPrincipalAccessPort,
+    IRelationTupleRepository,
 )
 from contexts.authorization.domain.services import authorization_engine as engine
+from contexts.authorization.domain.services import rebac_engine, rule_compiler
+from contexts.authorization.domain.services.decision_cache import (
+    IDecisionCache,
+    InMemoryDecisionCache,
+    build_cache_key,
+)
 from shared.application.ports.policy import IPolicyEvaluator
 from shared.application.result import Result
 from shared.domain.value_objects.tenant_id import TenantId
@@ -31,17 +44,22 @@ class AuthorizationApplicationService:
         decisions: IAccessDecisionRepository,
         principals: IPrincipalAccessPort,
         policy_evaluator: IPolicyEvaluator,
+        relations: IRelationTupleRepository,
+        decision_cache: IDecisionCache | None = None,
     ) -> None:
         self._profiles = profiles
         self._abac_policies = abac_policies
         self._decisions = decisions
         self._principals = principals
         self._policy = policy_evaluator
+        self._relations = relations
+        self._cache = decision_cache or InMemoryDecisionCache()
 
     async def _policy_params(self, tenant_id: str) -> dict:
         profile = await self._profiles.find_by_tenant(tenant_id)
         params = {
             "rbac_enabled": profile.rbac_enabled if profile else True,
+            "rebac_enabled": profile.rebac_enabled if profile else True,
             "abac_enabled": profile.abac_enabled if profile else True,
             "pbac_enabled": profile.pbac_enabled if profile else True,
             "default_decision": profile.default_decision if profile else "deny",
@@ -79,6 +97,12 @@ class AuthorizationApplicationService:
             "capabilities": engine.list_capability_catalog(),
             "policy_keys": engine.list_policy_keys(),
             "evaluation_order": engine.dependency_map()["evaluation_order"],
+            "rule_compiler": rule_compiler.catalog(),
+            "rebac": {
+                "action_relation_map": rebac_engine.ACTION_RELATION_MAP,
+                "resource_uri": "marpich://{object_type}/{object_id}",
+            },
+            "decision_cache": {"ttl_profile_field": "decision_cache_ttl_seconds"},
             "delegation": {
                 "principal_permissions": "identity",
                 "pbac_rules": "policy",
@@ -173,6 +197,33 @@ class AuthorizationApplicationService:
         facts = await self._build_facts(tenant_id, principal_id, context)
         abac_policies = [p.to_dict() for p in await self._abac_policies.list_by_tenant(tenant_id)]
 
+        cache_ttl = int((profile or {}).get("decision_cache_ttl_seconds") or 30)
+        cache_key = build_cache_key(
+            tenant_id=tenant_id,
+            principal_id=principal_id,
+            permission_code=perm,
+            resource=resource,
+            action=action,
+            facts=facts,
+        )
+        if not simulate and record and cache_ttl > 0:
+            cached = await self._cache.get(cache_key)
+            if cached:
+                cached = {**cached, "cache_hit": True}
+                return Result.ok(cached)
+
+        object_type = str(facts.get("object_type") or "")
+        object_id = str(facts.get("object_id") or "")
+        parsed = rebac_engine.parse_resource_uri(resource)
+        if parsed and not object_type:
+            object_type, object_id = parsed
+        relation_tuples: list[dict] = []
+        if object_type and object_id:
+            relation_tuples = [
+                t.to_dict()
+                for t in await self._relations.list_by_object(tenant_id, object_type, object_id)
+            ]
+
         policy_key = await self._resolve_policy_key(tenant_id, perm, context)
         policy_decision = None
         if policy_key and (profile or {}).get("pbac_enabled", True):
@@ -194,8 +245,11 @@ class AuthorizationApplicationService:
             facts=facts,
             policy_decision=policy_decision,
             policy_key=policy_key,
+            relation_tuples=relation_tuples,
+            principal_id=principal_id,
             simulate=simulate,
         )
+        result["cache_hit"] = False
 
         if record and not simulate:
             decision = AccessDecision.record(
@@ -237,6 +291,9 @@ class AuthorizationApplicationService:
                     )
                 )
 
+        if not simulate and record and cache_ttl > 0:
+            await self._cache.set(cache_key, {k: v for k, v in result.items() if k != "cache_hit"}, cache_ttl)
+
         return Result.ok(result)
 
     async def check_access_batch(
@@ -265,9 +322,142 @@ class AuthorizationApplicationService:
                 results.append(result.unwrap())
         return Result.ok(results)
 
+    async def write_relation(
+        self,
+        tenant_id: str,
+        *,
+        object_type: str,
+        object_id: str,
+        relation: str,
+        subject_type: str,
+        subject_id: str,
+    ) -> Result[dict]:
+        existing = await self._relations.find_exact(
+            tenant_id,
+            object_type=object_type,
+            object_id=object_id,
+            relation=relation,
+            subject_type=subject_type,
+            subject_id=subject_id,
+        )
+        if existing and existing.active:
+            return Result.ok(existing.to_dict())
+        if existing and not existing.active:
+            existing.active = True
+            await self._relations.save(existing)
+            tuple_ = existing
+        else:
+            tuple_ = RelationTuple.write(
+                tenant_id=tenant_id,
+                relation_ref=self._relations.next_relation_ref(tenant_id),
+                object_type=object_type,
+                object_id=object_id,
+                relation=relation,
+                subject_type=subject_type,
+                subject_id=subject_id,
+            )
+            await self._relations.save(tuple_)
+        await self._cache.invalidate_tenant(tenant_id)
+        await publish_integration_event(
+            RelationChangedIntegration(
+                tenant_id=TenantId(tenant_id),
+                correlation_id=str(uuid.uuid4()),
+                relation_ref=tuple_.relation_ref,
+                change="written",
+                object_type=tuple_.object_type,
+                object_id=tuple_.object_id,
+                relation=tuple_.relation,
+                subject_id=tuple_.subject_id,
+            )
+        )
+        return Result.ok(tuple_.to_dict())
+
+    async def revoke_relation(
+        self,
+        tenant_id: str,
+        *,
+        object_type: str,
+        object_id: str,
+        relation: str,
+        subject_type: str,
+        subject_id: str,
+    ) -> Result[dict]:
+        existing = await self._relations.find_exact(
+            tenant_id,
+            object_type=object_type,
+            object_id=object_id,
+            relation=relation,
+            subject_type=subject_type,
+            subject_id=subject_id,
+        )
+        if not existing:
+            return Result.fail("relation_not_found")
+        existing.revoke()
+        await self._relations.save(existing)
+        await self._cache.invalidate_tenant(tenant_id)
+        await publish_integration_event(
+            RelationChangedIntegration(
+                tenant_id=TenantId(tenant_id),
+                correlation_id=str(uuid.uuid4()),
+                relation_ref=existing.relation_ref,
+                change="revoked",
+                object_type=existing.object_type,
+                object_id=existing.object_id,
+                relation=existing.relation,
+                subject_id=existing.subject_id,
+            )
+        )
+        return Result.ok(existing.to_dict())
+
+    async def list_relations_for_object(
+        self, tenant_id: str, object_type: str, object_id: str
+    ) -> Result[list[dict]]:
+        items = await self._relations.list_by_object(tenant_id, object_type, object_id)
+        return Result.ok([t.to_dict() for t in items])
+
+    async def invalidate_decision_cache(self, tenant_id: str) -> Result[dict]:
+        await self._cache.invalidate_tenant(tenant_id)
+        return Result.ok({"invalidated": True, "tenant_id": tenant_id})
+
     async def list_abac_policies(self, tenant_id: str) -> Result[list[dict]]:
         policies = await self._abac_policies.list_by_tenant(tenant_id)
         return Result.ok([p.to_dict() for p in policies])
+
+    async def create_abac_policy(
+        self,
+        tenant_id: str,
+        *,
+        name: str,
+        effect: str,
+        permission_pattern: str,
+        conditions: list[dict] | None = None,
+        priority: int = 100,
+    ) -> Result[dict]:
+        try:
+            compiled = rule_compiler.compile_conditions(conditions)
+        except rule_compiler.RuleCompilationError as exc:
+            return Result.fail(f"invalid_abac_conditions:{exc}")
+        if effect not in {"allow", "deny"}:
+            return Result.fail("invalid_abac_effect")
+        policy = AbacPolicy.create(
+            tenant_id=tenant_id,
+            policy_ref=self._abac_policies.next_policy_ref(tenant_id),
+            name=name,
+            effect=effect,
+            permission_pattern=permission_pattern,
+            conditions=compiled.to_dicts(),
+            priority=priority,
+        )
+        await self._abac_policies.save(policy)
+        await self._cache.invalidate_tenant(tenant_id)
+        return Result.ok(policy.to_dict())
+
+    async def compile_abac_rules(self, conditions: list[dict] | None) -> Result[dict]:
+        try:
+            compiled = rule_compiler.compile_conditions(conditions)
+        except rule_compiler.RuleCompilationError as exc:
+            return Result.fail(f"invalid_abac_conditions:{exc}")
+        return Result.ok({"conditions": compiled.to_dicts(), "valid": True})
 
     async def list_decisions(self, tenant_id: str) -> Result[list[dict]]:
         decisions = await self._decisions.list_by_tenant(tenant_id)

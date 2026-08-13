@@ -18,7 +18,8 @@ async def test_api_catalog_smoke(integration_client):
     assert resp.status_code == 200
     caps = {c["capability"] for c in resp.json()["data"]["capabilities"]}
     assert AuthorizationCapability.RBAC_EVALUATION.value in caps
-    assert len(caps) == 8
+    assert AuthorizationCapability.REBAC_EVALUATION.value in caps
+    assert len(caps) == 10
 
 
 @pytest.mark.integration

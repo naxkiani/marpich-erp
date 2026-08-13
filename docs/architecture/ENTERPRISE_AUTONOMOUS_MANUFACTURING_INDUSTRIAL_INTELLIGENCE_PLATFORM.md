@@ -3,7 +3,7 @@
 **Status:** Normative (P236) — series foundation  
 **SoR:** `manufacturing_intelligence` · **ADR:** [596](../adr/596-enterprise-autonomous-manufacturing-industrial-intelligence-platform.md) · **Capability:** `CAP-PLT-EAMII-001`  
 **Fabric:** `meos_enterprise_autonomous_manufacturing_industrial_intelligence_platform_framework` · **Governance Standard:** MEOS 11.0  
-> **API:** `/api/v1/manufacturing-intelligence*` · **Builds on:** P235 EAHRWIP · P232 EASCLIP · P227 EDTISP · P225 EAOSHP · P224 EADIP · P216 Robotics · Manufacturing peers · P214-Z · Policy · Workflow · Audit · **Next:** P236-A · **Peer series:** [P237 EAEISR](ENTERPRISE_AUTONOMOUS_ENERGY_INTELLIGENCE_SUSTAINABLE_RESOURCE_PLATFORM.md)  
+> **API:** `/api/v1/manufacturing-intelligence*` · **Builds on:** P235 EAHRWIP · P232 EASCLIP · P227 EDTISP · P225 EAOSHP · P224 EADIP · P216 Robotics · Manufacturing peers · P214-Z · Policy · Workflow · Audit · **Next:** P236-A · **Peer series:** [P237 EAEISR](ENTERPRISE_AUTONOMOUS_ENERGY_INTELLIGENCE_SUSTAINABLE_RESOURCE_PLATFORM.md) · [P275 MEAIAMP](ENTERPRISE_MEOS_ASSET_INTELLIGENCE_AUTONOMOUS_ASSET_MANAGEMENT_PLATFORM.md) (Enterprise Asset OS productization — never fork this API; never ungated OT actuation)  
 **Hard bindings:** Inference → **P214-Z** · Production SoR → **manufacturing** (ACL) · Physical robots → **P216 / robotics** (ACL) · Ops healing → **P225** (ACL) · Supply sync → **P232** (ACL) · Twin → **P227** · KG → **P228** · Decisions → **P224** · Approvals → **Workflow** · Policy → **Policy Engine** · Audit → **Audit** · IIoT/OT vendors → **Integration Platform** · Generic → **Core**.
 
 ---

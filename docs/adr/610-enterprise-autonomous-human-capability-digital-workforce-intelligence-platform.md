@@ -19,4 +19,4 @@ Positive: governed human-capability control-tower intelligence federated with wo
 Negative: employment, payroll, workforce intel and LMS remain peer-owned — EAHCDWIP stores capability models, digital-worker orchestration and peer refs only.
 
 ## Links
-Law: `ENTERPRISE_AUTONOMOUS_HUMAN_CAPABILITY_DIGITAL_WORKFORCE_INTELLIGENCE_PLATFORM.md` · Prior: ADR 609 · Next: P251-A · Peer: ADR 611 (P252 EASIUIP)
+Law: `ENTERPRISE_AUTONOMOUS_HUMAN_CAPABILITY_DIGITAL_WORKFORCE_INTELLIGENCE_PLATFORM.md` · Prior: ADR 609 · Next: P251-A · Peer: ADR 611 (P252 EASIUIP) · Peer productization: ADR 631 (P274 MEHCAWP)

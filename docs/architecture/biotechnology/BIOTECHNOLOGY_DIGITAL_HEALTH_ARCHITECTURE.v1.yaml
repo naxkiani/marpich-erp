@@ -1,0 +1,15 @@
+# BIOTECHNOLOGY_DIGITAL_HEALTH_ARCHITECTURE.v1.yaml — P217-H
+apiVersion: marpich.io/v1
+kind: BiotechnologyDigitalHealthArchitecture
+metadata:
+  phase: P217-H
+  adr: "507"
+  fabric: meos_digital_health_intelligence_fabric
+spec:
+  layers:
+    - L01_patient_data_intelligence
+    - L02_health_knowledge_intelligence
+    - L03_healthcare_ai_intelligence
+    - L04_predictive_medicine
+    - L05_patient_intelligence
+    - L06_governance

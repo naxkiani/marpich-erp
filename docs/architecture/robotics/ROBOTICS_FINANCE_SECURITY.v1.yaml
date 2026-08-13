@@ -1,0 +1,33 @@
+# ROBOTICS_FINANCE_SECURITY.v1.yaml — P216-R
+apiVersion: marpich.io/v1
+kind: RoboticsFinanceSecurity
+metadata:
+  phase: P216-R
+  adr: "490"
+spec:
+  framework: meos_financial_zero_trust_framework
+  domains:
+    - customer_identity
+    - financial_identity
+    - transaction_security
+    - payment_security
+    - robot_identity
+    - ai_model_security
+    - regulatory_compliance
+    - audit_protection
+  controls:
+    - multi_factor_authentication
+    - encryption
+    - fraud_detection
+    - continuous_monitoring
+    - financial_policy_enforcement
+    - ai_explainability
+  hard_locks:
+    - regulatory_compliance_by_design
+    - explainable_financial_ai
+    - never_duplicate_core_banking_logic
+    - never_duplicate_accounting_gl_logic
+    - never_replace_financial_kernel
+    - payment_via_integration_platform_only
+    - no_module_local_llm
+    - physical_ai_via_p214z_acl_only

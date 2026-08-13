@@ -1,0 +1,13 @@
+# BIOTECHNOLOGY_BIO_AUTONOMOUS_MODELS.v1.yaml — P217-U
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioAutonomousModels
+metadata:
+  phase: P217-U
+  adr: "520"
+spec:
+  autonomy_engine_capabilities: 4
+  agents: 6
+  knowledge_graph: meos_autonomous_biology_knowledge_graph
+  digital_twin: meos_autonomous_bio_digital_twin
+  closed_loop: observation_analysis_decision_action_feedback_improvement
+  autonomous_biology_os: meos_autonomous_biology_operating_system

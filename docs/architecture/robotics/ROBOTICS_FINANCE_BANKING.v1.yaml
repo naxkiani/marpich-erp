@@ -1,0 +1,34 @@
+# ROBOTICS_FINANCE_BANKING.v1.yaml — P216-R
+apiVersion: marpich.io/v1
+kind: RoboticsFinanceBankingCatalog
+metadata:
+  phase: P216-R
+  adr: "490"
+  fabric: meos_financial_intelligence_fabric
+spec:
+  financial_robotics:
+    platform: meos_financial_robotics_platform
+    components:
+      - finance_robot_registry
+      - financial_agent_manager
+      - transaction_automation_engine
+      - accounting_robot_controller
+      - compliance_robot_engine
+      - finance_operations_dashboard
+    supported_robotics:
+      - accounting_robots
+      - banking_service_robots
+      - customer_finance_assistants
+      - audit_robots
+      - compliance_monitoring_agents
+      - treasury_automation_agents
+  autonomous_banking:
+    platform: meos_autonomous_banking_intelligence_platform
+    via_p214_z: true
+  finance_automation:
+    engine: meos_finance_automation_engine
+  financial_digital_twin:
+    platform: meos_finance_digital_twin_platform
+  financial_knowledge_graph:
+    graph: meos_financial_knowledge_graph
+  via_financial_kernel: true

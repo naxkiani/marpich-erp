@@ -1,0 +1,32 @@
+# ROBOTICS_SUPREME_SECURITY.v1.yaml — P216-Z
+apiVersion: marpich.io/v1
+kind: RoboticsSupremeSecurity
+metadata:
+  phase: P216-Z
+  adr: "498"
+spec:
+  framework: meos_robotics_zero_trust_intelligence_shield
+  domains:
+    - robot_identity
+    - ai_controller_security
+    - communication_security
+    - physical_security
+    - autonomous_decision_security
+    - data_security
+    - governance_security
+  controls:
+    - continuous_authentication
+    - encryption
+    - policy_enforcement
+    - threat_intelligence
+    - safety_monitoring
+    - human_authorization
+  hard_locks:
+    - human_authority_framework
+    - safety_by_design
+    - human_override_authority
+    - explainable_autonomous_systems
+    - never_replace_identity_platform
+    - no_module_local_llm
+    - physical_ai_via_p214z_acl_only
+    - ungated_physical_autonomy_forbidden

@@ -1,0 +1,28 @@
+# BIOTECHNOLOGY_SIMULATION_DDD_CQRS.v1.yaml — P217-G
+apiVersion: marpich.io/v1
+kind: BiotechnologySimulationDddCqrs
+metadata:
+  phase: P217-G
+  adr: "506"
+spec:
+  commands:
+    - CreateDigitalTwinCommand
+    - StartSimulationCommand
+    - GeneratePredictionCommand
+    - ImproveModelCommand
+    - CertifySimulationModelCommand
+  queries:
+    - GetSimulationPlatformQuery
+    - GetDigitalTwinQuery
+    - GetSimulationExperimentQuery
+    - GetPredictionResultQuery
+    - GetModelGovernanceQuery
+  events:
+    - SimulationPlatformActivatedEvent
+    - DigitalTwinCreatedEvent
+    - SimulationStartedEvent
+    - SimulationCompletedEvent
+    - PredictionGeneratedEvent
+    - ModelImprovedEvent
+    - SimulationModelCertifiedEvent
+    - SimulationGovernanceViolationEvent

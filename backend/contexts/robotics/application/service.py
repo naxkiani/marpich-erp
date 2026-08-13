@@ -18,8 +18,19 @@ class RoboticsApplicationService:
         from contexts.robotics.domain.services import rb_platform_mobility as mobility
         from contexts.robotics.domain.services import rb_platform_physical_ai as physical_ai
         from contexts.robotics.domain.services import rb_platform_public_safety as public_safety
+        from contexts.robotics.domain.services import rb_platform_defense as defense
+        from contexts.robotics.domain.services import rb_platform_education as education
+        from contexts.robotics.domain.services import rb_platform_finance as finance
+        from contexts.robotics.domain.services import rb_platform_government as government
+        from contexts.robotics.domain.services import rb_platform_hospitality as hospitality
+        from contexts.robotics.domain.services import rb_platform_retail as retail
         from contexts.robotics.domain.services import rb_platform_runtime as runtime
+        from contexts.robotics.domain.services import rb_platform_entertainment as entertainment
+        from contexts.robotics.domain.services import rb_platform_personal as personal
+        from contexts.robotics.domain.services import rb_platform_science as science
         from contexts.robotics.domain.services import rb_platform_strategy as strategy
+        from contexts.robotics.domain.services import rb_platform_supreme as supreme
+        from contexts.robotics.domain.services import rb_platform_ultimate as ultimate
 
         return Result.ok(
             {
@@ -27,6 +38,138 @@ class RoboticsApplicationService:
                 "sor": "robotics",
                 "capability": "CAP-PLT-RB-001",
                 "series": "P216",
+                "platform_supreme": {
+                    "prompt_id": "P216-Z",
+                    "adr": 498,
+                    "sor": "robotics",
+                    "product": supreme.PRODUCT,
+                    "principle": supreme.SUPREME_VISION,
+                    "fabric": supreme.FABRIC,
+                    "routes": supreme.supreme_surface().get("routes"),
+                    "forbidden_sibling_bc": list(
+                        supreme.catalog()["forbidden_sibling_bc"]
+                    ),
+                },
+                "platform_ultimate": {
+                    "prompt_id": "P216-Y",
+                    "adr": 497,
+                    "sor": "robotics",
+                    "product": ultimate.PRODUCT,
+                    "principle": ultimate.ULTIMATE_VISION,
+                    "fabric": ultimate.FABRIC,
+                    "routes": ultimate.ultimate_surface().get("routes"),
+                    "forbidden_sibling_bc": list(
+                        ultimate.catalog()["forbidden_sibling_bc"]
+                    ),
+                },
+                "platform_entertainment": {
+                    "prompt_id": "P216-X",
+                    "adr": 496,
+                    "sor": "robotics",
+                    "product": entertainment.PRODUCT,
+                    "principle": entertainment.CREATIVE_VISION,
+                    "fabric": entertainment.FABRIC,
+                    "routes": entertainment.entertainment_surface().get("routes"),
+                    "forbidden_sibling_bc": list(
+                        entertainment.catalog()["forbidden_sibling_bc"]
+                    ),
+                },
+                "platform_personal": {
+                    "prompt_id": "P216-W",
+                    "adr": 495,
+                    "sor": "robotics",
+                    "product": personal.PRODUCT,
+                    "principle": personal.PERSONAL_VISION,
+                    "fabric": personal.FABRIC,
+                    "routes": personal.personal_surface().get("routes"),
+                    "forbidden_sibling_bc": list(
+                        personal.catalog()["forbidden_sibling_bc"]
+                    ),
+                },
+                "platform_science": {
+                    "prompt_id": "P216-V",
+                    "adr": 494,
+                    "sor": "robotics",
+                    "product": science.PRODUCT,
+                    "principle": science.SCIENCE_VISION,
+                    "fabric": science.FABRIC,
+                    "routes": science.science_surface().get("routes"),
+                    "forbidden_sibling_bc": list(
+                        science.catalog()["forbidden_sibling_bc"]
+                    ),
+                },
+                "platform_defense": {
+                    "prompt_id": "P216-U",
+                    "adr": 493,
+                    "sor": "robotics",
+                    "product": defense.PRODUCT,
+                    "principle": defense.DEFENSE_VISION,
+                    "fabric": defense.FABRIC,
+                    "routes": defense.defense_surface().get("routes"),
+                    "forbidden_sibling_bc": list(
+                        defense.catalog()["forbidden_sibling_bc"]
+                    ),
+                },
+                "platform_government": {
+                    "prompt_id": "P216-T",
+                    "adr": 492,
+                    "sor": "robotics",
+                    "product": government.PRODUCT,
+                    "principle": government.GOVERNMENT_VISION,
+                    "fabric": government.FABRIC,
+                    "routes": government.government_surface().get("routes"),
+                    "forbidden_sibling_bc": list(
+                        government.catalog()["forbidden_sibling_bc"]
+                    ),
+                },
+                "platform_finance": {
+                    "prompt_id": "P216-R",
+                    "adr": 490,
+                    "sor": "robotics",
+                    "product": finance.PRODUCT,
+                    "principle": finance.FINANCE_VISION,
+                    "fabric": finance.FABRIC,
+                    "routes": finance.finance_surface().get("routes"),
+                    "forbidden_sibling_bc": list(
+                        finance.catalog()["forbidden_sibling_bc"]
+                    ),
+                },
+                "platform_education": {
+                    "prompt_id": "P216-Q",
+                    "adr": 489,
+                    "sor": "robotics",
+                    "product": education.PRODUCT,
+                    "principle": education.EDUCATION_VISION,
+                    "fabric": education.FABRIC,
+                    "routes": education.education_surface().get("routes"),
+                    "forbidden_sibling_bc": list(
+                        education.catalog()["forbidden_sibling_bc"]
+                    ),
+                },
+                "platform_hospitality": {
+                    "prompt_id": "P216-P",
+                    "adr": 488,
+                    "sor": "robotics",
+                    "product": hospitality.PRODUCT,
+                    "principle": hospitality.HOSPITALITY_VISION,
+                    "fabric": hospitality.FABRIC,
+                    "routes": hospitality.hospitality_surface().get("routes"),
+                    "forbidden_sibling_bc": list(
+                        hospitality.catalog()["forbidden_sibling_bc"]
+                    ),
+                },
+                "platform_retail": {
+                    "prompt_id": "P216-O",
+                    "adr": 487,
+                    "sor": "robotics",
+                    "product": retail.PRODUCT,
+                    "principle": retail.RETAIL_VISION,
+                    "fabric": retail.FABRIC,
+                    "routes": retail.retail_surface().get("routes"),
+                    "forbidden_sibling_bc": list(
+                        retail.catalog()["forbidden_sibling_bc"]
+                    ),
+                },
                 "platform_public_safety": {
                     "prompt_id": "P216-L",
                     "adr": 484,
@@ -1153,3 +1296,1053 @@ class RoboticsApplicationService:
             validate_rb_public_safety_foundation,
         )
         return validate_rb_public_safety_foundation()
+
+    def platform_retail(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_retail as mod
+        cat = mod.catalog()
+        return {
+            "prompt_id": cat["prompt_id"], "adr": cat["adr"], "sor": cat["sor"],
+            "capability": cat["capability"], "retail_vision": cat["retail_vision"],
+            "fabric": cat["fabric"], "foundation_gate": cat["foundation_gate"],
+            "public_safety_gate": cat["public_safety_gate"], "logistics_gate": cat["logistics_gate"],
+            "physical_ai_gate": cat["physical_ai_gate"], "runtime_gate": cat["runtime_gate"],
+            "supreme_gate": cat["supreme_gate"], "ai_gate": cat["ai_gate"],
+            "builds_on": cat["builds_on"],
+            "context_count": cat["bounded_contexts"]["context_count"],
+            "entity_count": cat["domain_model"]["entity_count"],
+            "production_readiness": cat["production_readiness"],
+        }
+
+    def retail_vision(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_retail as mod
+        return mod.vision_pack()
+
+    def retail_domain(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_retail as mod
+        return mod.domain_model()
+
+    def retail_bounded_contexts(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_retail as mod
+        return mod.bounded_contexts()
+
+    def retail_robotics(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_retail as mod
+        return mod.robotics_platform()
+
+    def retail_customer_experience(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_retail as mod
+        return mod.customer_experience()
+
+    def retail_commerce(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_retail as mod
+        return mod.commerce()
+
+    def retail_smart_store(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_retail as mod
+        return mod.smart_store()
+
+    def retail_commerce_ai(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_retail as mod
+        return mod.commerce_ai()
+
+    def retail_digital_twin(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_retail as mod
+        return mod.digital_twin()
+
+    def retail_knowledge_graph(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_retail as mod
+        return mod.knowledge_graph()
+
+    def retail_observability(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_retail as mod
+        return mod.observability()
+
+    def retail_security(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_retail as mod
+        return mod.security()
+
+    def retail_cqrs(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_retail as mod
+        return mod.cqrs()
+
+    def retail_events(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_retail as mod
+        return mod.events()
+
+    def retail_microservices(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_retail as mod
+        return mod.microservices()
+
+    def retail_integration(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_retail as mod
+        return mod.integration()
+
+    def retail_deployment(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_retail as mod
+        return mod.deployment()
+
+    def retail_testing(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_retail as mod
+        return mod.testing()
+
+    def retail_readiness(self) -> dict:
+        from contexts.robotics.application.rb_retail_foundation import (
+            validate_rb_retail_foundation,
+        )
+        return validate_rb_retail_foundation()
+
+    def platform_hospitality(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_hospitality as mod
+        cat = mod.catalog()
+        return {
+            "prompt_id": cat["prompt_id"], "adr": cat["adr"], "sor": cat["sor"],
+            "capability": cat["capability"], "hospitality_vision": cat["hospitality_vision"],
+            "fabric": cat["fabric"], "foundation_gate": cat["foundation_gate"],
+            "retail_gate": cat["retail_gate"], "mobility_gate": cat["mobility_gate"],
+            "physical_ai_gate": cat["physical_ai_gate"], "runtime_gate": cat["runtime_gate"],
+            "supreme_gate": cat["supreme_gate"], "ai_gate": cat["ai_gate"],
+            "builds_on": cat["builds_on"],
+            "context_count": cat["bounded_contexts"]["context_count"],
+            "entity_count": cat["domain_model"]["entity_count"],
+            "production_readiness": cat["production_readiness"],
+        }
+
+    def hospitality_vision(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_hospitality as mod
+        return mod.vision_pack()
+
+    def hospitality_domain(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_hospitality as mod
+        return mod.domain_model()
+
+    def hospitality_bounded_contexts(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_hospitality as mod
+        return mod.bounded_contexts()
+
+    def hospitality_robotics(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_hospitality as mod
+        return mod.robotics_platform()
+
+    def hospitality_smart_hotel(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_hospitality as mod
+        return mod.smart_hotel()
+
+    def hospitality_guest_experience(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_hospitality as mod
+        return mod.guest_experience()
+
+    def hospitality_autonomous_services(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_hospitality as mod
+        return mod.autonomous_services()
+
+    def hospitality_ai(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_hospitality as mod
+        return mod.hospitality_ai()
+
+    def hospitality_digital_twin(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_hospitality as mod
+        return mod.digital_twin()
+
+    def hospitality_knowledge_graph(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_hospitality as mod
+        return mod.knowledge_graph()
+
+    def hospitality_observability(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_hospitality as mod
+        return mod.observability()
+
+    def hospitality_security(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_hospitality as mod
+        return mod.security()
+
+    def hospitality_cqrs(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_hospitality as mod
+        return mod.cqrs()
+
+    def hospitality_events(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_hospitality as mod
+        return mod.events()
+
+    def hospitality_microservices(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_hospitality as mod
+        return mod.microservices()
+
+    def hospitality_integration(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_hospitality as mod
+        return mod.integration()
+
+    def hospitality_deployment(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_hospitality as mod
+        return mod.deployment()
+
+    def hospitality_testing(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_hospitality as mod
+        return mod.testing()
+
+    def hospitality_readiness(self) -> dict:
+        from contexts.robotics.application.rb_hospitality_foundation import (
+            validate_rb_hospitality_foundation,
+        )
+        return validate_rb_hospitality_foundation()
+
+    def platform_education(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_education as mod
+        cat = mod.catalog()
+        return {
+            "prompt_id": cat["prompt_id"], "adr": cat["adr"], "sor": cat["sor"],
+            "capability": cat["capability"], "education_vision": cat["education_vision"],
+            "fabric": cat["fabric"], "foundation_gate": cat["foundation_gate"],
+            "hospitality_gate": cat["hospitality_gate"],
+            "physical_ai_gate": cat["physical_ai_gate"], "runtime_gate": cat["runtime_gate"],
+            "supreme_gate": cat["supreme_gate"], "ai_gate": cat["ai_gate"],
+            "builds_on": cat["builds_on"],
+            "context_count": cat["bounded_contexts"]["context_count"],
+            "entity_count": cat["domain_model"]["entity_count"],
+            "production_readiness": cat["production_readiness"],
+        }
+
+    def education_vision(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_education as mod
+        return mod.vision_pack()
+
+    def education_domain(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_education as mod
+        return mod.domain_model()
+
+    def education_bounded_contexts(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_education as mod
+        return mod.bounded_contexts()
+
+    def education_robotics(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_education as mod
+        return mod.robotics_platform()
+
+    def education_ai_learning(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_education as mod
+        return mod.ai_learning()
+
+    def education_smart_campus(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_education as mod
+        return mod.smart_campus()
+
+    def education_autonomous_operations(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_education as mod
+        return mod.autonomous_operations()
+
+    def education_academic_intelligence(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_education as mod
+        return mod.academic_intelligence()
+
+    def education_digital_twin(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_education as mod
+        return mod.digital_twin()
+
+    def education_knowledge_graph(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_education as mod
+        return mod.knowledge_graph()
+
+    def education_observability(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_education as mod
+        return mod.observability()
+
+    def education_security(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_education as mod
+        return mod.security()
+
+    def education_cqrs(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_education as mod
+        return mod.cqrs()
+
+    def education_events(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_education as mod
+        return mod.events()
+
+    def education_microservices(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_education as mod
+        return mod.microservices()
+
+    def education_integration(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_education as mod
+        return mod.integration()
+
+    def education_deployment(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_education as mod
+        return mod.deployment()
+
+    def education_testing(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_education as mod
+        return mod.testing()
+
+    def education_readiness(self) -> dict:
+        from contexts.robotics.application.rb_education_foundation import (
+            validate_rb_education_foundation,
+        )
+        return validate_rb_education_foundation()
+
+    def platform_finance(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_finance as mod
+        cat = mod.catalog()
+        return {
+            "prompt_id": cat["prompt_id"], "adr": cat["adr"], "sor": cat["sor"],
+            "capability": cat["capability"], "finance_vision": cat["finance_vision"],
+            "fabric": cat["fabric"], "foundation_gate": cat["foundation_gate"],
+            "education_gate": cat["education_gate"], "logistics_gate": cat["logistics_gate"],
+            "physical_ai_gate": cat["physical_ai_gate"], "runtime_gate": cat["runtime_gate"],
+            "supreme_gate": cat["supreme_gate"], "ai_gate": cat["ai_gate"],
+            "builds_on": cat["builds_on"],
+            "context_count": cat["bounded_contexts"]["context_count"],
+            "entity_count": cat["domain_model"]["entity_count"],
+            "production_readiness": cat["production_readiness"],
+        }
+
+    def finance_vision(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_finance as mod
+        return mod.vision_pack()
+
+    def finance_domain(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_finance as mod
+        return mod.domain_model()
+
+    def finance_bounded_contexts(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_finance as mod
+        return mod.bounded_contexts()
+
+    def finance_robotics(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_finance as mod
+        return mod.robotics_platform()
+
+    def finance_autonomous_banking(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_finance as mod
+        return mod.autonomous_banking()
+
+    def finance_automation(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_finance as mod
+        return mod.finance_automation()
+
+    def finance_ai(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_finance as mod
+        return mod.ai_finance()
+
+    def finance_risk(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_finance as mod
+        return mod.risk_intelligence()
+
+    def finance_compliance(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_finance as mod
+        return mod.compliance()
+
+    def finance_digital_twin(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_finance as mod
+        return mod.digital_twin()
+
+    def finance_knowledge_graph(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_finance as mod
+        return mod.knowledge_graph()
+
+    def finance_observability(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_finance as mod
+        return mod.observability()
+
+    def finance_security(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_finance as mod
+        return mod.security()
+
+    def finance_cqrs(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_finance as mod
+        return mod.cqrs()
+
+    def finance_events(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_finance as mod
+        return mod.events()
+
+    def finance_microservices(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_finance as mod
+        return mod.microservices()
+
+    def finance_integration(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_finance as mod
+        return mod.integration()
+
+    def finance_deployment(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_finance as mod
+        return mod.deployment()
+
+    def finance_testing(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_finance as mod
+        return mod.testing()
+
+    def finance_readiness(self) -> dict:
+        from contexts.robotics.application.rb_finance_foundation import (
+            validate_rb_finance_foundation,
+        )
+        return validate_rb_finance_foundation()
+
+    def platform_government(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_government as mod
+        cat = mod.catalog()
+        return {
+            "prompt_id": cat["prompt_id"], "adr": cat["adr"], "sor": cat["sor"],
+            "capability": cat["capability"], "government_vision": cat["government_vision"],
+            "fabric": cat["fabric"], "foundation_gate": cat["foundation_gate"],
+            "finance_gate": cat["finance_gate"], "public_safety_gate": cat["public_safety_gate"],
+            "physical_ai_gate": cat["physical_ai_gate"], "runtime_gate": cat["runtime_gate"],
+            "supreme_gate": cat["supreme_gate"], "ai_gate": cat["ai_gate"],
+            "builds_on": cat["builds_on"],
+            "context_count": cat["bounded_contexts"]["context_count"],
+            "entity_count": cat["domain_model"]["entity_count"],
+            "production_readiness": cat["production_readiness"],
+        }
+
+    def government_vision(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_government as mod
+        return mod.vision_pack()
+
+    def government_domain(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_government as mod
+        return mod.domain_model()
+
+    def government_bounded_contexts(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_government as mod
+        return mod.bounded_contexts()
+
+    def government_robotics(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_government as mod
+        return mod.robotics_platform()
+
+    def government_public_services(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_government as mod
+        return mod.public_services()
+
+    def government_digital_government(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_government as mod
+        return mod.digital_government()
+
+    def government_smart_governance(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_government as mod
+        return mod.smart_governance()
+
+    def government_citizen_intelligence(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_government as mod
+        return mod.citizen_intelligence()
+
+    def government_policy_intelligence(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_government as mod
+        return mod.policy_intelligence()
+
+    def government_digital_twin(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_government as mod
+        return mod.digital_twin()
+
+    def government_knowledge_graph(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_government as mod
+        return mod.knowledge_graph()
+
+    def government_observability(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_government as mod
+        return mod.observability()
+
+    def government_security(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_government as mod
+        return mod.security()
+
+    def government_cqrs(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_government as mod
+        return mod.cqrs()
+
+    def government_events(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_government as mod
+        return mod.events()
+
+    def government_microservices(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_government as mod
+        return mod.microservices()
+
+    def government_integration(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_government as mod
+        return mod.integration()
+
+    def government_deployment(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_government as mod
+        return mod.deployment()
+
+    def government_testing(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_government as mod
+        return mod.testing()
+
+    def government_readiness(self) -> dict:
+        from contexts.robotics.application.rb_government_foundation import (
+            validate_rb_government_foundation,
+        )
+        return validate_rb_government_foundation()
+
+    def platform_defense(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_defense as mod
+        cat = mod.catalog()
+        return {
+            "prompt_id": cat["prompt_id"], "adr": cat["adr"], "sor": cat["sor"],
+            "capability": cat["capability"], "defense_vision": cat["defense_vision"],
+            "fabric": cat["fabric"], "foundation_gate": cat["foundation_gate"],
+            "government_gate": cat["government_gate"], "public_safety_gate": cat["public_safety_gate"],
+            "physical_ai_gate": cat["physical_ai_gate"], "runtime_gate": cat["runtime_gate"],
+            "supreme_gate": cat["supreme_gate"], "ai_gate": cat["ai_gate"],
+            "builds_on": cat["builds_on"],
+            "context_count": cat["bounded_contexts"]["context_count"],
+            "entity_count": cat["domain_model"]["entity_count"],
+            "production_readiness": cat["production_readiness"],
+        }
+
+    def defense_vision(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_defense as mod
+        return mod.vision_pack()
+
+    def defense_domain(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_defense as mod
+        return mod.domain_model()
+
+    def defense_bounded_contexts(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_defense as mod
+        return mod.bounded_contexts()
+
+    def defense_robotics(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_defense as mod
+        return mod.robotics_platform()
+
+    def defense_strategic_intelligence(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_defense as mod
+        return mod.strategic_intelligence()
+
+    def defense_autonomous_governance(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_defense as mod
+        return mod.autonomous_governance()
+
+    def defense_ai(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_defense as mod
+        return mod.defense_ai()
+
+    def defense_mission_intelligence(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_defense as mod
+        return mod.mission_intelligence()
+
+    def defense_resilience(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_defense as mod
+        return mod.resilience()
+
+    def defense_digital_twin(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_defense as mod
+        return mod.digital_twin()
+
+    def defense_knowledge_graph(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_defense as mod
+        return mod.knowledge_graph()
+
+    def defense_observability(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_defense as mod
+        return mod.observability()
+
+    def defense_security(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_defense as mod
+        return mod.security()
+
+    def defense_cqrs(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_defense as mod
+        return mod.cqrs()
+
+    def defense_events(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_defense as mod
+        return mod.events()
+
+    def defense_microservices(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_defense as mod
+        return mod.microservices()
+
+    def defense_integration(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_defense as mod
+        return mod.integration()
+
+    def defense_deployment(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_defense as mod
+        return mod.deployment()
+
+    def defense_testing(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_defense as mod
+        return mod.testing()
+
+    def defense_readiness(self) -> dict:
+        from contexts.robotics.application.rb_defense_foundation import (
+            validate_rb_defense_foundation,
+        )
+        return validate_rb_defense_foundation()
+
+    def platform_science(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_science as mod
+        cat = mod.catalog()
+        return {
+            "prompt_id": cat["prompt_id"], "adr": cat["adr"], "sor": cat["sor"],
+            "capability": cat["capability"], "science_vision": cat["science_vision"],
+            "fabric": cat["fabric"], "foundation_gate": cat["foundation_gate"],
+            "defense_gate": cat["defense_gate"], "healthcare_gate": cat["healthcare_gate"],
+            "physical_ai_gate": cat["physical_ai_gate"], "runtime_gate": cat["runtime_gate"],
+            "supreme_gate": cat["supreme_gate"], "ai_gate": cat["ai_gate"],
+            "builds_on": cat["builds_on"],
+            "context_count": cat["bounded_contexts"]["context_count"],
+            "entity_count": cat["domain_model"]["entity_count"],
+            "production_readiness": cat["production_readiness"],
+        }
+
+    def science_vision(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_science as mod
+        return mod.vision_pack()
+
+    def science_domain(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_science as mod
+        return mod.domain_model()
+
+    def science_bounded_contexts(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_science as mod
+        return mod.bounded_contexts()
+
+    def science_robotics(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_science as mod
+        return mod.robotics_platform()
+
+    def science_autonomous_laboratory(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_science as mod
+        return mod.autonomous_laboratory()
+
+    def science_ai_scientist(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_science as mod
+        return mod.ai_scientist()
+
+    def science_discovery(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_science as mod
+        return mod.discovery()
+
+    def science_research_automation(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_science as mod
+        return mod.research_automation()
+
+    def science_digital_twin(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_science as mod
+        return mod.digital_twin()
+
+    def science_knowledge_graph(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_science as mod
+        return mod.knowledge_graph()
+
+    def science_observability(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_science as mod
+        return mod.observability()
+
+    def science_security(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_science as mod
+        return mod.security()
+
+    def science_cqrs(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_science as mod
+        return mod.cqrs()
+
+    def science_events(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_science as mod
+        return mod.events()
+
+    def science_microservices(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_science as mod
+        return mod.microservices()
+
+    def science_integration(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_science as mod
+        return mod.integration()
+
+    def science_deployment(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_science as mod
+        return mod.deployment()
+
+    def science_testing(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_science as mod
+        return mod.testing()
+
+    def science_readiness(self) -> dict:
+        from contexts.robotics.application.rb_science_foundation import (
+            validate_rb_science_foundation,
+        )
+        return validate_rb_science_foundation()
+
+    def platform_personal(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_personal as mod
+        cat = mod.catalog()
+        return {
+            "prompt_id": cat["prompt_id"], "adr": cat["adr"], "sor": cat["sor"],
+            "capability": cat["capability"], "personal_vision": cat["personal_vision"],
+            "fabric": cat["fabric"], "foundation_gate": cat["foundation_gate"],
+            "science_gate": cat["science_gate"], "healthcare_gate": cat["healthcare_gate"],
+            "education_gate": cat["education_gate"],
+            "physical_ai_gate": cat["physical_ai_gate"], "runtime_gate": cat["runtime_gate"],
+            "supreme_gate": cat["supreme_gate"], "ai_gate": cat["ai_gate"],
+            "builds_on": cat["builds_on"],
+            "context_count": cat["bounded_contexts"]["context_count"],
+            "entity_count": cat["domain_model"]["entity_count"],
+            "production_readiness": cat["production_readiness"],
+        }
+
+    def personal_vision(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_personal as mod
+        return mod.vision_pack()
+
+    def personal_domain(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_personal as mod
+        return mod.domain_model()
+
+    def personal_bounded_contexts(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_personal as mod
+        return mod.bounded_contexts()
+
+    def personal_robotics(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_personal as mod
+        return mod.robotics_platform()
+
+    def personal_ai_companion(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_personal as mod
+        return mod.ai_companion()
+
+    def personal_smart_home(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_personal as mod
+        return mod.smart_home()
+
+    def personal_human_augmentation(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_personal as mod
+        return mod.human_augmentation()
+
+    def personal_life_automation(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_personal as mod
+        return mod.life_automation()
+
+    def personal_digital_twin(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_personal as mod
+        return mod.digital_twin()
+
+    def personal_knowledge_graph(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_personal as mod
+        return mod.knowledge_graph()
+
+    def personal_observability(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_personal as mod
+        return mod.observability()
+
+    def personal_security(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_personal as mod
+        return mod.security()
+
+    def personal_cqrs(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_personal as mod
+        return mod.cqrs()
+
+    def personal_events(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_personal as mod
+        return mod.events()
+
+    def personal_microservices(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_personal as mod
+        return mod.microservices()
+
+    def personal_integration(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_personal as mod
+        return mod.integration()
+
+    def personal_deployment(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_personal as mod
+        return mod.deployment()
+
+    def personal_testing(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_personal as mod
+        return mod.testing()
+
+    def personal_readiness(self) -> dict:
+        from contexts.robotics.application.rb_personal_foundation import (
+            validate_rb_personal_foundation,
+        )
+        return validate_rb_personal_foundation()
+
+    def platform_entertainment(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_entertainment as mod
+        cat = mod.catalog()
+        return {
+            "prompt_id": cat["prompt_id"], "adr": cat["adr"], "sor": cat["sor"],
+            "capability": cat["capability"], "creative_vision": cat["creative_vision"],
+            "fabric": cat["fabric"], "foundation_gate": cat["foundation_gate"],
+            "personal_gate": cat["personal_gate"],
+            "physical_ai_gate": cat["physical_ai_gate"], "runtime_gate": cat["runtime_gate"],
+            "supreme_gate": cat["supreme_gate"], "ai_gate": cat["ai_gate"],
+            "builds_on": cat["builds_on"],
+            "context_count": cat["bounded_contexts"]["context_count"],
+            "entity_count": cat["domain_model"]["entity_count"],
+            "production_readiness": cat["production_readiness"],
+        }
+
+    def entertainment_vision(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_entertainment as mod
+        return mod.vision_pack()
+
+    def entertainment_domain(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_entertainment as mod
+        return mod.domain_model()
+
+    def entertainment_bounded_contexts(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_entertainment as mod
+        return mod.bounded_contexts()
+
+    def entertainment_robotics(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_entertainment as mod
+        return mod.robotics_platform()
+
+    def entertainment_creative_ai(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_entertainment as mod
+        return mod.creative_ai()
+
+    def entertainment_media_production(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_entertainment as mod
+        return mod.media_production()
+
+    def entertainment_digital_experience(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_entertainment as mod
+        return mod.digital_experience()
+
+    def entertainment_immersive_reality(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_entertainment as mod
+        return mod.immersive_reality()
+
+    def entertainment_digital_twin(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_entertainment as mod
+        return mod.digital_twin()
+
+    def entertainment_knowledge_graph(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_entertainment as mod
+        return mod.knowledge_graph()
+
+    def entertainment_observability(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_entertainment as mod
+        return mod.observability()
+
+    def entertainment_security(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_entertainment as mod
+        return mod.security()
+
+    def entertainment_cqrs(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_entertainment as mod
+        return mod.cqrs()
+
+    def entertainment_events(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_entertainment as mod
+        return mod.events()
+
+    def entertainment_microservices(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_entertainment as mod
+        return mod.microservices()
+
+    def entertainment_integration(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_entertainment as mod
+        return mod.integration()
+
+    def entertainment_deployment(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_entertainment as mod
+        return mod.deployment()
+
+    def entertainment_testing(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_entertainment as mod
+        return mod.testing()
+
+    def entertainment_readiness(self) -> dict:
+        from contexts.robotics.application.rb_entertainment_foundation import (
+            validate_rb_entertainment_foundation,
+        )
+        return validate_rb_entertainment_foundation()
+
+    def platform_ultimate(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_ultimate as mod
+        cat = mod.catalog()
+        return {
+            "prompt_id": cat["prompt_id"], "adr": cat["adr"], "sor": cat["sor"],
+            "capability": cat["capability"], "ultimate_vision": cat["ultimate_vision"],
+            "fabric": cat["fabric"], "foundation_gate": cat["foundation_gate"],
+            "entertainment_gate": cat["entertainment_gate"],
+            "personal_gate": cat["personal_gate"],
+            "physical_ai_gate": cat["physical_ai_gate"], "runtime_gate": cat["runtime_gate"],
+            "supreme_gate": cat["supreme_gate"], "ai_gate": cat["ai_gate"],
+            "builds_on": cat["builds_on"],
+            "context_count": cat["bounded_contexts"]["context_count"],
+            "entity_count": cat["domain_model"]["entity_count"],
+            "production_readiness": cat["production_readiness"],
+        }
+
+    def ultimate_vision(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_ultimate as mod
+        return mod.vision_pack()
+
+    def ultimate_domain(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_ultimate as mod
+        return mod.domain_model()
+
+    def ultimate_bounded_contexts(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_ultimate as mod
+        return mod.bounded_contexts()
+
+    def ultimate_future_robotics(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_ultimate as mod
+        return mod.future_robotics()
+
+    def ultimate_symbiosis(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_ultimate as mod
+        return mod.symbiosis()
+
+    def ultimate_evolution(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_ultimate as mod
+        return mod.evolution()
+
+    def ultimate_cognitive(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_ultimate as mod
+        return mod.cognitive()
+
+    def ultimate_autonomous_intelligence(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_ultimate as mod
+        return mod.autonomous_intelligence()
+
+    def ultimate_digital_twin(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_ultimate as mod
+        return mod.digital_twin()
+
+    def ultimate_knowledge_graph(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_ultimate as mod
+        return mod.knowledge_graph()
+
+    def ultimate_observability(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_ultimate as mod
+        return mod.observability()
+
+    def ultimate_security(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_ultimate as mod
+        return mod.security()
+
+    def ultimate_cqrs(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_ultimate as mod
+        return mod.cqrs()
+
+    def ultimate_events(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_ultimate as mod
+        return mod.events()
+
+    def ultimate_microservices(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_ultimate as mod
+        return mod.microservices()
+
+    def ultimate_integration(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_ultimate as mod
+        return mod.integration()
+
+    def ultimate_deployment(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_ultimate as mod
+        return mod.deployment()
+
+    def ultimate_testing(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_ultimate as mod
+        return mod.testing()
+
+    def ultimate_readiness(self) -> dict:
+        from contexts.robotics.application.rb_ultimate_foundation import (
+            validate_rb_ultimate_foundation,
+        )
+        return validate_rb_ultimate_foundation()
+
+    def platform_supreme(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_supreme as mod
+        cat = mod.catalog()
+        return {
+            "prompt_id": cat["prompt_id"], "adr": cat["adr"], "sor": cat["sor"],
+            "capability": cat["capability"], "supreme_vision": cat["supreme_vision"],
+            "fabric": cat["fabric"], "foundation_gate": cat["foundation_gate"],
+            "ultimate_gate": cat["ultimate_gate"],
+            "entertainment_gate": cat["entertainment_gate"],
+            "physical_ai_gate": cat["physical_ai_gate"], "runtime_gate": cat["runtime_gate"],
+            "quantum_gate": cat["quantum_gate"], "ai_gate": cat["ai_gate"],
+            "builds_on": cat["builds_on"],
+            "context_count": cat["bounded_contexts"]["context_count"],
+            "entity_count": cat["domain_model"]["entity_count"],
+            "completes_p216_master_series": cat["completes_p216_master_series"],
+            "production_readiness": cat["production_readiness"],
+        }
+
+    def supreme_vision(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_supreme as mod
+        return mod.vision_pack()
+
+    def supreme_domain(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_supreme as mod
+        return mod.domain_model()
+
+    def supreme_bounded_contexts(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_supreme as mod
+        return mod.bounded_contexts()
+
+    def supreme_control_plane(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_supreme as mod
+        return mod.control_plane()
+
+    def supreme_universal_network(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_supreme as mod
+        return mod.universal_network()
+
+    def supreme_civilization(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_supreme as mod
+        return mod.civilization()
+
+    def supreme_collective_intelligence(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_supreme as mod
+        return mod.collective_intelligence()
+
+    def supreme_digital_twin(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_supreme as mod
+        return mod.digital_twin()
+
+    def supreme_knowledge_graph(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_supreme as mod
+        return mod.knowledge_graph()
+
+    def supreme_governance(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_supreme as mod
+        return mod.governance()
+
+    def supreme_observability(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_supreme as mod
+        return mod.observability()
+
+    def supreme_security(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_supreme as mod
+        return mod.security()
+
+    def supreme_cqrs(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_supreme as mod
+        return mod.cqrs()
+
+    def supreme_events(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_supreme as mod
+        return mod.events()
+
+    def supreme_microservices(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_supreme as mod
+        return mod.microservices()
+
+    def supreme_integration(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_supreme as mod
+        return mod.integration()
+
+    def supreme_deployment(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_supreme as mod
+        return mod.deployment()
+
+    def supreme_testing(self) -> dict:
+        from contexts.robotics.domain.services import rb_platform_supreme as mod
+        return mod.testing()
+
+    def supreme_readiness(self) -> dict:
+        from contexts.robotics.application.rb_supreme_foundation import (
+            validate_rb_supreme_foundation,
+        )
+        return validate_rb_supreme_foundation()

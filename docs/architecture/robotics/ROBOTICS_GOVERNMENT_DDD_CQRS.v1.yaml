@@ -1,0 +1,30 @@
+# ROBOTICS_GOVERNMENT_DDD_CQRS.v1.yaml — P216-T
+apiVersion: marpich.io/v1
+kind: RoboticsGovernmentDddCqrs
+metadata:
+  phase: P216-T
+  adr: "492"
+spec:
+  core_domain: enterprise_government_intelligence
+  aggregate: GovernmentIntelligenceAggregate
+  commands:
+    - RegisterCitizenCommand
+    - RequestPublicServiceCommand
+    - ActivateGovernmentAgentCommand
+    - AnalysePolicyCommand
+    - OptimiseGovernmentWorkflowCommand
+    - UpdateGovernmentTwinCommand
+  queries:
+    - GetCitizenProfileQuery
+    - GetServiceStatusQuery
+    - GetPolicyImpactQuery
+    - GetGovernmentStatusQuery
+    - GetNationalTwinQuery
+  events:
+    - CitizenInteractionEvent
+    - ServiceRequestCreatedEvent
+    - GovernmentAgentCompletedEvent
+    - PolicyImpactCalculatedEvent
+    - RegulationChangedEvent
+    - PublicServiceCompletedEvent
+    - GovernanceRiskDetectedEvent

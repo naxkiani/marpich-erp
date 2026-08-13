@@ -1,0 +1,20 @@
+# BIOTECHNOLOGY_BIO_FUTURE_SECURITY.v1.yaml — P217-T
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioFutureSecurity
+metadata:
+  phase: P217-T
+  adr: "519"
+spec:
+  zero_trust: true
+  protects:
+    - evolutionary_models
+    - future_scenarios
+    - civilization_models
+    - biological_intelligence
+    - singularity_assessments
+  hard_locks:
+    - never_unvalidated_evolution_scenario_release
+    - never_skip_ethical_evolution_controls
+    - never_skip_human_future_oversight
+    - no_module_local_llm
+    - never_opaque_unexplainable_decisions

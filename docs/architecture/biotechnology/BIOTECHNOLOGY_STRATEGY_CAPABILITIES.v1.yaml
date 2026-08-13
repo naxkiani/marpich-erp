@@ -1,0 +1,20 @@
+# BIOTECHNOLOGY_STRATEGY_CAPABILITIES.v1.yaml — P217-B
+apiVersion: marpich.io/v1
+kind: BiotechnologyStrategyCapabilities
+metadata:
+  phase: P217-B
+  adr: "501"
+spec:
+  capability_groups:
+    - scientific_intelligence
+    - biological_engineering
+    - health_intelligence
+    - ai_biology
+    - bio_data
+    - bio_governance
+  maturity_levels:
+    - bio_digital_foundation
+    - bio_intelligence_enablement
+    - bio_platform_maturity
+    - autonomous_bio_operations
+    - meos_bio_intelligence_ecosystem

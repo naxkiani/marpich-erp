@@ -18,4 +18,4 @@ Positive: governed Data OS experience (portal, marketplace, certification) over 
 Negative: product/contract/lineage truth remains P229-owned — MEDIMOP stores operating state, portal projections and peer refs only.
 
 ## Links
-Law: `ENTERPRISE_MEOS_DATA_INTELLIGENCE_DATA_MESH_OPERATING_PLATFORM.md` · Prior: ADR 619 · Next: P263-A · Peer: ADR 621 (P264 MEKGSI) · Canonical: P229 EFDMIFP
+Law: `ENTERPRISE_MEOS_DATA_INTELLIGENCE_DATA_MESH_OPERATING_PLATFORM.md` · Prior: ADR 619 · Next: P263-A · Peer: ADR 621 (P264 MEKGSI) · Peer: [ADR 647 / P290 MEDAMIA](647-meos-enterprise-data-architecture-master-data-information-architecture-intelligence-platform.md) (Data Architecture / MDM — never replace Data Mesh runtime) · Canonical: P229 EFDMIFP

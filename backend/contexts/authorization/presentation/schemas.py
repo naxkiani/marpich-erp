@@ -24,3 +24,23 @@ class AuthorizationSimulateRequest(BaseModel):
     action: str = ""
     permission_code: str | None = None
     context: dict = Field(default_factory=dict)
+
+
+class AbacPolicyCreateRequest(BaseModel):
+    name: str
+    effect: str = "deny"
+    permission_pattern: str = "*"
+    conditions: list[dict] = Field(default_factory=list)
+    priority: int = 100
+
+
+class RuleCompileRequest(BaseModel):
+    conditions: list[dict] = Field(default_factory=list)
+
+
+class RelationWriteRequest(BaseModel):
+    object_type: str
+    object_id: str
+    relation: str
+    subject_type: str = "user"
+    subject_id: str

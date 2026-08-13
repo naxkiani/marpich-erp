@@ -1,0 +1,15 @@
+# BIOTECHNOLOGY_DRUG_DISCOVERY_ARCHITECTURE.v1.yaml — P217-K
+apiVersion: marpich.io/v1
+kind: BiotechnologyDrugDiscoveryArchitecture
+metadata:
+  phase: P217-K
+  adr: "510"
+  fabric: meos_drug_intelligence_fabric
+spec:
+  layers:
+    - L01_pharmaceutical_knowledge
+    - L02_molecular_intelligence
+    - L03_drug_design_intelligence
+    - L04_drug_simulation
+    - L05_therapeutic_intelligence
+    - L06_governance
