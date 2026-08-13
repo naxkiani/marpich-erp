@@ -2,13 +2,17 @@
 
 import { PageLayout } from "@marpich/core";
 import { useAuth } from "@marpich/auth-provider";
-import { DataTable, EmptyState, ProgressBar, SkeletonTable, useToast } from "@marpich/shared";
+import { DataTable, EmptyState, ProgressBar, SkeletonTable, useToast,
+  DeskAlert,
+  DeskChrome,
+  useLocale} from "@marpich/shared";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { fetchArInvoices, issueArInvoice, receiveArPayment, type ArInvoice } from "@/lib/accountingClient";
 
 export function AccountingArDeskPage() {
   const { push } = useToast();
+  const { t } = useLocale();
   const { session, isAuthenticated, isLoading: authLoading } = useAuth();
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(20);
@@ -65,8 +69,9 @@ export function AccountingArDeskPage() {
 
   return (
     <PageLayout title="Accounting" subtitle="AR Invoices (CAP-ENT-023)">
+      <DeskChrome>
       <ProgressBar value={progress} />
-      {error ? <p className="mp-error">{error}</p> : null}
+      {error ? <DeskAlert>{error}</DeskAlert> : null}
 
       <p className="mp-nav-muted" style={{ marginBlock: "0.75rem" }}>
         Placed sales orders create draft invoices. Issue posts AR; record payment clears AR and emits{" "}
@@ -136,6 +141,7 @@ export function AccountingArDeskPage() {
           rows={invoices}
         />
       )}
+          </DeskChrome>
     </PageLayout>
   );
 }

@@ -35,6 +35,7 @@
 | `procurement` | Procurement (CAP-ENT-040) | TESTED | `/procurement` desk | requisitions + goods receipt | reorder → draft → approve → receive → inventory restock + migration 051 |
 | `human_resources` | HR (CAP-ENT-010) | TESTED | `/hr` desk | employees | hire → list → terminate + events + migration 053 |
 | `payroll` | Payroll (CAP-ENT-015) | TESTED | `/payroll` desk | employee projection + runs | HR hire ACL → pay run → payroll.run.completed + migration 054 |
+| `tax` | Tax (CAP-ENT-026) | TESTED | `/tax` desk | liabilities + returns | payroll.run.completed → liability → file return + migration 055 |
 
 **Harden:** `scripts/meos-wave02-q2c-loop.sh` + `.github/workflows/meos-wave02-smoke.yml` — full closed loop on Postgres.
 
@@ -51,6 +52,7 @@
 | `procurement` | TESTED | `/procurement` |
 | `human_resources` | TESTED | `/hr` |
 | `payroll` | TESTED | `/payroll` |
+| `tax` | TESTED | `/tax` |
 | `pharmacy` | IMPLEMENTED | `/healthcare/pharmacy` |
 | `laboratory` | IMPLEMENTED | `/healthcare/laboratory` |
 | `university` | IMPLEMENTED | `/education/university` |
@@ -65,7 +67,7 @@
 
 ## Empty scaffolds (not ACTIVE)
 
-`construction`, `currency_exchange`, `government`, `hotel`, `islamic_banking`, `manufacturing`, `ngo`, `projects`, `real_estate`, `restaurant`, `school`, `tax`, `warehouse` — status **SCAFFOLDED** / empty tree.
+`construction`, `currency_exchange`, `government`, `hotel`, `islamic_banking`, `manufacturing`, `ngo`, `projects`, `real_estate`, `restaurant`, `school`, `warehouse` — status **SCAFFOLDED** / empty tree.
 
 ## Missing packages referenced by ROUTER_SPECS (gated)
 

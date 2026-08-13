@@ -192,11 +192,12 @@ applications:
   - id: tax
     name: Tax
     domain: finance
-    status: SCAFFOLDED
+    status: TESTED
     wave: 2
-    frontend: false
-    backend: false
-    score: 12
+    frontend: true
+    backend: true
+    routes: ["/tax"]
+    score: 68
   - id: human_resources
     name: Human Resources
     domain: business
@@ -246,9 +247,15 @@ verification:
   wave02_inventory_functional: verified
   wave02_accounting_ar_functional: verified
   wave02_procurement_functional: verified
+  ui_modules_desk_activation: verified
+  ui_enabled_modules_nav_gate: verified
+  ui_desk_chrome_wave02: verified
+  ui_pharmacy_lab_platform_auth: verified
+  ui_module_pack_launch_catalog: verified
   wave02_q2c_loop_script: verified
   wave02_hr_functional: verified
   wave02_payroll_functional: verified
+  wave02_tax_functional: verified
   notes: >
     Shell widgets use marpich_auth_session headers; Workflow Task Center at
     /enterprise/workflows; AuthZ filters nav/command/search; orphan FE clients gated;
@@ -260,6 +267,7 @@ verification:
     Procurement CAP-ENT-040 requisitions from inventory.reorder.triggered (API+UI+events+migration 050/051);
     HR CAP-ENT-010 employees hire/list/terminate (API+UI+events+migration 053);
     Payroll CAP-ENT-015 hire ACL projection + pay runs (API+UI+events+migration 054);
+    Tax CAP-ENT-026 payroll ACL liability + file return (API+UI+events+migration 055);
     Wave 02 harden: scripts/meos-wave02-q2c-loop.sh + .github/workflows/meos-wave02-smoke.yml.
     Overall NOT_READY.
 

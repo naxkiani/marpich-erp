@@ -2,7 +2,10 @@
 
 import { PageLayout } from "@marpich/core";
 import { useAuth } from "@marpich/auth-provider";
-import { DataTable, EmptyState, ProgressBar, SkeletonTable, useToast } from "@marpich/shared";
+import { DataTable, EmptyState, ProgressBar, SkeletonTable, useToast,
+  DeskAlert,
+  DeskChrome,
+  useLocale} from "@marpich/shared";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import {
@@ -18,6 +21,7 @@ import { fetchCrmContacts, type CrmContact } from "@/lib/crmClient";
 
 export function SalesDeskPage() {
   const { push } = useToast();
+  const { t } = useLocale();
   const { session, isAuthenticated, isLoading: authLoading } = useAuth();
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(20);
@@ -103,8 +107,9 @@ export function SalesDeskPage() {
 
   return (
     <PageLayout title="Sales" subtitle="Quotations · Orders (CAP-ENT-002)">
+      <DeskChrome>
       <ProgressBar value={progress} />
-      {error ? <p className="mp-error">{error}</p> : null}
+      {error ? <DeskAlert>{error}</DeskAlert> : null}
 
       <p className="mp-nav-muted" style={{ marginBlock: "0.75rem" }}>
         Won CRM opportunities auto-create draft quotations.{" "}
@@ -218,6 +223,7 @@ export function SalesDeskPage() {
           )}
         </>
       )}
+          </DeskChrome>
     </PageLayout>
   );
 }

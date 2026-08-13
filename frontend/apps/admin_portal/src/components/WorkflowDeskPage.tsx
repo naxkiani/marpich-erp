@@ -3,7 +3,12 @@
 import { PageLayout } from "@marpich/core";
 import {
   DataTable,
+  DeskAlert,
+  DeskChrome,
+  DeskMetrics,
+  DeskPanel,
   EmptyState,
+  ProgressBar,
   SkeletonTable,
   useLocale,
   useToast,
@@ -112,13 +117,17 @@ export function WorkflowDeskPage() {
         </button>
       }
     >
+      <DeskChrome>
+      <ProgressBar value={loading ? 40 : 100} label={loading ? t("desk.loading") : t("desk.ready")} />
+      <DeskMetrics items={[
+        { label: "Tasks", value: tasks.length },
+        { label: "Definitions", value: definitions.length },
+      ]} />
       {!isAuthenticated && !authLoading ? (
-        <EmptyState title="Sign in required" description="Authenticate to load workflow tasks." />
+        <EmptyState title={t("desk.signInRequired")} description={t("desk.signInRequired")} />
       ) : null}
       {error ? (
-        <p role="alert" className="mp-error">
-          {error}
-        </p>
+        <DeskAlert>{error}</DeskAlert>
       ) : null}
 
       <section className="mp-panel" style={{ padding: "1rem", marginBottom: "1rem" }}>
@@ -201,6 +210,7 @@ export function WorkflowDeskPage() {
           </>
         )}
       </section>
+      </DeskChrome>
     </PageLayout>
   );
 }

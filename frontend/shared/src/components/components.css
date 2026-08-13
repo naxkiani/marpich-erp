@@ -22,38 +22,68 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.5rem 0.85rem;
+  padding: 0.45rem 0.9rem;
   border: 1px solid var(--mp-border);
   border-radius: var(--mp-radius-sm);
   background: var(--mp-bg-elevated);
   color: var(--mp-fg);
   cursor: pointer;
-  transition: transform var(--mp-transition), background var(--mp-transition);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition:
+    background var(--mp-transition),
+    border-color var(--mp-transition),
+    color var(--mp-transition),
+    box-shadow var(--mp-transition);
 }
 
 .mp-btn:hover {
   background: var(--mp-bg-muted);
+  border-color: var(--mp-border-strong);
 }
 
 .mp-btn-primary {
-  background: var(--mp-accent);
-  border-color: var(--mp-accent);
+  background: var(--mp-primary);
+  border-color: var(--mp-primary);
   color: var(--mp-accent-fg);
 }
 
 .mp-btn-primary:hover {
-  background: var(--mp-accent-hover);
+  background: var(--mp-primary-hover);
+  border-color: var(--mp-primary-hover);
 }
 
 .mp-btn-accent {
-  background: linear-gradient(135deg, var(--mp-accent), #7c3aed);
-  border: none;
+  background: var(--mp-secondary);
+  border: 1px solid var(--mp-secondary);
   color: #fff;
 }
 
+.mp-btn-accent:hover {
+  background: var(--mp-secondary-hover);
+  border-color: var(--mp-secondary-hover);
+}
+
+.mp-btn-danger {
+  background: var(--mp-orange);
+  border: 1px solid var(--mp-orange);
+  color: #fff;
+}
+
+.mp-btn-danger:hover {
+  background: color-mix(in srgb, var(--mp-orange) 88%, #000);
+  border-color: color-mix(in srgb, var(--mp-orange) 88%, #000);
+}
+
 .mp-btn-ghost {
-  border: none;
+  border-color: transparent;
   background: transparent;
+  color: var(--mp-fg-muted);
+}
+
+.mp-btn-ghost:hover {
+  background: var(--mp-bg-muted);
+  color: var(--mp-fg);
 }
 
 .mp-input,
@@ -72,6 +102,7 @@
 .mp-textarea:focus {
   outline: 2px solid var(--mp-ring);
   outline-offset: 1px;
+  border-color: var(--mp-royal-bright);
 }
 
 .mp-overlay {
@@ -327,8 +358,24 @@
 
 .mp-progress-fill {
   height: 100%;
+  background: linear-gradient(90deg, var(--mp-gold), var(--mp-gold-soft));
+  transition: width var(--mp-transition), background var(--mp-transition);
+}
+
+.mp-progress-fill--accent {
   background: var(--mp-accent);
-  transition: width var(--mp-transition);
+}
+
+.mp-progress-fill--gold {
+  background: linear-gradient(90deg, var(--mp-gold), var(--mp-gold-soft));
+}
+
+.mp-progress-fill--orange {
+  background: var(--mp-orange);
+}
+
+.mp-progress-fill--emerald {
+  background: var(--mp-emerald);
 }
 
 .mp-step-progress {
@@ -401,11 +448,13 @@
 .mp-table thead th {
   position: sticky;
   top: 0;
-  background: var(--mp-bg-muted);
-  font-size: 0.8rem;
+  background: var(--mp-bg-subtle);
+  font-size: 0.72rem;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
+  font-weight: 600;
   color: var(--mp-fg-muted);
+  border-bottom: 1px solid var(--mp-border);
 }
 
 .mp-table-sort {
@@ -417,7 +466,7 @@
 }
 
 .mp-table-row-selected {
-  background: rgb(37 99 235 / 8%);
+  background: color-mix(in srgb, var(--mp-royal) 7%, transparent);
 }
 
 .mp-form {
@@ -443,6 +492,12 @@
   margin-top: 0.25rem;
   color: var(--mp-danger);
   font-size: 0.8rem;
+}
+
+.mp-error {
+  margin: 0.5rem 0;
+  color: var(--mp-orange);
+  font-size: 0.9rem;
 }
 
 .mp-filter-bar {

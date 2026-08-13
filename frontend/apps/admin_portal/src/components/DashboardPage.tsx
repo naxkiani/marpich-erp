@@ -14,6 +14,7 @@ import {
   StepProgress,
   useAutosave,
   useLocale,
+  useTenantModules,
   useToast,
 } from "@marpich/shared";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -62,6 +63,7 @@ function StatusChip({ status, label }: { status: string; label?: string }) {
 
 export function DashboardPage() {
   const { t } = useLocale();
+  const { setEnabledModules, refresh: refreshTenantModules } = useTenantModules();
   const { push } = useToast();
   const { session: authSession, isAuthenticated, isLoading: authLoading, login } = useAuth();
 
@@ -385,6 +387,11 @@ export function DashboardPage() {
       const updated = await activatePlatformModule(session, selectedTenantSlug, moduleToActivate);
       push({ message: `${t("dashboard.moduleActivated")}: ${moduleToActivate}` });
       setTenants((prev) => prev.map((x) => (x.slug === updated.slug ? updated : x)));
+      setEnabledModules(updated.slug, updated.enabled_modules ?? [], {
+        name: updated.name,
+        industryPack: updated.industry_pack,
+      });
+      await refreshTenantModules();
       setModuleToActivate("");
       setLastAction("activate");
     } catch (err) {
@@ -1023,8 +1030,8 @@ export function DashboardPage() {
       <style jsx>{`
         .mp-dash-layout {
           display: grid;
-          grid-template-columns: minmax(300px, 360px) 1fr;
-          gap: 1.25rem;
+          grid-template-columns: minmax(260px, 300px) minmax(0, 1fr);
+          gap: 1.5rem;
           align-items: start;
           /* Keep the control rail on the visual left in LTR and RTL. */
           direction: ltr;
@@ -1033,7 +1040,7 @@ export function DashboardPage() {
         .mp-dash-main {
           display: flex;
           flex-direction: column;
-          gap: 1rem;
+          gap: 0.85rem;
           min-width: 0;
           direction: inherit;
         }
@@ -1046,7 +1053,8 @@ export function DashboardPage() {
           top: 4.5rem;
           max-height: calc(100vh - 5.5rem);
           overflow: auto;
-          padding-inline-end: 0.15rem;
+          padding-inline-end: 0.25rem;
+          scrollbar-gutter: stable;
         }
         .mp-dash-session {
           border: 1px solid var(--mp-border);
@@ -1079,31 +1087,53 @@ export function DashboardPage() {
           border: 1px solid var(--mp-border);
           border-radius: var(--mp-radius);
           background: var(--mp-bg-elevated);
-          box-shadow: var(--mp-shadow);
+          box-shadow: none;
           overflow: hidden;
         }
+        .mp-dash-aside .mp-dash-panel-card {
+          box-shadow: 0 1px 2px rgb(20 24 32 / 4%);
+        }
         .mp-dash-panel-head {
-          padding: 0.7rem 1rem;
-          color: #fff;
+          padding: 0.55rem 0.85rem;
+          color: var(--mp-fg);
+          background: var(--mp-bg-subtle, var(--mp-bg-muted));
+          border-block-end: 2px solid var(--mp-gold);
         }
         .mp-dash-panel-head h2 {
           margin: 0;
-          font-size: 0.85rem;
-          letter-spacing: 0.05em;
+          font-size: 0.72rem;
+          letter-spacing: 0.06em;
           text-transform: uppercase;
-          font-weight: 600;
+          font-weight: 650;
+          color: var(--mp-fg);
+        }
+        /* Calm rail headers — gold accent only (no rainbow blocks). */
+        .mp-dash-aside .mp-dash-jewel-bar--forest,
+        .mp-dash-aside .mp-dash-jewel-bar--royal,
+        .mp-dash-aside .mp-dash-jewel-bar--emerald,
+        .mp-dash-aside .mp-dash-jewel-bar--gold {
+          background: var(--mp-bg-subtle, var(--mp-bg-muted));
+          color: var(--mp-fg);
+          box-shadow: none;
+        }
+        .mp-dash-aside .mp-dash-jewel-bar--gold h2,
+        .mp-dash-aside .mp-dash-panel-head h2 {
+          color: var(--mp-fg);
         }
         .mp-dash-jewel-bar--forest {
           background: linear-gradient(120deg, var(--mp-forest), #2f5a48);
           box-shadow: inset 0 -2px 0 var(--mp-gold-soft);
+          color: #fff;
         }
         .mp-dash-jewel-bar--royal {
           background: linear-gradient(120deg, var(--mp-royal), var(--mp-royal-bright));
           box-shadow: inset 0 -2px 0 var(--mp-gold-soft);
+          color: #fff;
         }
         .mp-dash-jewel-bar--emerald {
           background: linear-gradient(120deg, var(--mp-emerald), var(--mp-emerald-bright));
           box-shadow: inset 0 -2px 0 var(--mp-gold-soft);
+          color: #fff;
         }
         .mp-dash-jewel-bar--gold {
           background: linear-gradient(120deg, var(--mp-gold), var(--mp-gold-soft));
@@ -1114,10 +1144,10 @@ export function DashboardPage() {
           color: #1a1a1a;
         }
         .mp-dash-panel-body {
-          padding: 1rem;
+          padding: 0.85rem;
         }
         .mp-dash-panel-body--tight {
-          padding: 0.65rem;
+          padding: 0.5rem 0.55rem;
         }
         .mp-dash-form-grid {
           display: grid;

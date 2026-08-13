@@ -2,7 +2,20 @@
 
 import { PageLayout } from "@marpich/core";
 import { useAuth } from "@marpich/auth-provider";
-import { DataTable, EmptyState, ProgressBar, SkeletonTable, useToast } from "@marpich/shared";
+import {
+  DataTable,
+  DeskAlert,
+  DeskChrome,
+  DeskFormRow,
+  DeskMetrics,
+  DeskPanel,
+  DeskToolbar,
+  EmptyState,
+  ProgressBar,
+  SkeletonTable,
+  useLocale,
+  useToast,
+} from "@marpich/shared";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import {
@@ -12,17 +25,19 @@ import {
   fetchCrmOpportunities,
   loseCrmOpportunity,
   winCrmOpportunity,
-  type CrmContact,
   type CrmOpportunity,
 } from "@/lib/crmClient";
 
 export function CrmDeskPage() {
   const { push } = useToast();
+  const { t } = useLocale();
   const { session, isAuthenticated, isLoading: authLoading } = useAuth();
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(20);
   const [error, setError] = useState<string | null>(null);
-  const [contacts, setContacts] = useState<CrmContact[]>([]);
+  const [contacts, setContacts] = useState<
+    Array<{ id: string; full_name: string; email: string; company?: string | null; status: string }>
+  >([]);
   const [opportunities, setOpportunities] = useState<CrmOpportunity[]>([]);
 
   const [email, setEmail] = useState("buyer@acme.io");
@@ -87,7 +102,7 @@ export function CrmDeskPage() {
 
   if (authLoading) {
     return (
-      <PageLayout title="CRM" subtitle="Customer Management">
+      <PageLayout title={t("nav.app.crm")} subtitle="CAP-ENT-001">
         <SkeletonTable rows={4} />
       </PageLayout>
     );
@@ -95,13 +110,13 @@ export function CrmDeskPage() {
 
   if (!isAuthenticated || !session) {
     return (
-      <PageLayout title="CRM" subtitle="Customer Management">
+      <PageLayout title={t("nav.app.crm")} subtitle="CAP-ENT-001">
         <EmptyState
-          title="Sign in required"
-          description="Authenticate to manage contacts and opportunities."
+          title={t("desk.signInRequired")}
+          description={t("desk.signInRequired")}
           action={
-            <Link className="mp-btn mp-btn-accent" href="/login">
-              Sign in
+            <Link className="mp-btn mp-btn-primary" href="/login?returnTo=/crm">
+              {t("dashboard.signIn")}
             </Link>
           }
         />
@@ -110,129 +125,174 @@ export function CrmDeskPage() {
   }
 
   return (
-    <PageLayout title="CRM" subtitle="Contacts · Opportunities (CAP-ENT-001)">
-      <ProgressBar value={progress} />
-      {error ? <p className="mp-error">{error}</p> : null}
+    <PageLayout
+      title={t("nav.app.crm")}
+      subtitle="Contacts · Opportunities (CAP-ENT-001)"
+      actions={
+        <button type="button" className="mp-btn" onClick={() => void loadData()} disabled={loading}>
+          {t("desk.refresh")}
+        </button>
+      }
+    >
+      <DeskChrome>
+        <ProgressBar value={progress} label={loading ? t("desk.loading") : t("desk.ready")} />
+        {error ? <DeskAlert>{error}</DeskAlert> : null}
+        <DeskMetrics
+          items={[
+            { label: "Contacts", value: contacts.length },
+            { label: "Opportunities", value: opportunities.length },
+            {
+              label: "Open",
+              value: opportunities.filter((o) => o.stage !== "won" && o.stage !== "lost").length,
+            },
+          ]}
+        />
 
-      <section className="mp-stack" style={{ marginBlock: "1rem" }}>
-        <h2>New contact</h2>
-        <div className="mp-form-row">
-          <input className="mp-input" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-          <input
-            className="mp-input"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-            placeholder="Full name"
-          />
-          <input
-            className="mp-input"
-            value={company}
-            onChange={(e) => setCompany(e.target.value)}
-            placeholder="Company"
-          />
-          <button type="button" className="mp-btn mp-btn-accent" onClick={() => void onCreateContact()}>
-            Create contact
-          </button>
-        </div>
-      </section>
+        <DeskPanel title="New contact">
+          <DeskFormRow>
+            <div className="mp-field">
+              <label htmlFor="crm-email">Email</label>
+              <input id="crm-email" className="mp-input" value={email} onChange={(e) => setEmail(e.target.value)} />
+            </div>
+            <div className="mp-field">
+              <label htmlFor="crm-name">Full name</label>
+              <input
+                id="crm-name"
+                className="mp-input"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+              />
+            </div>
+            <div className="mp-field">
+              <label htmlFor="crm-company">Company</label>
+              <input
+                id="crm-company"
+                className="mp-input"
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
+              />
+            </div>
+            <DeskToolbar>
+              <button type="button" className="mp-btn mp-btn-primary" onClick={() => void onCreateContact()}>
+                Create contact
+              </button>
+            </DeskToolbar>
+          </DeskFormRow>
+        </DeskPanel>
 
-      <section className="mp-stack" style={{ marginBlock: "1rem" }}>
-        <h2>New opportunity</h2>
-        <div className="mp-form-row">
-          <select
-            className="mp-input"
-            value={selectedContactId}
-            onChange={(e) => setSelectedContactId(e.target.value)}
-          >
-            <option value="">Select contact</option>
-            {contacts.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.full_name} ({c.email})
-              </option>
-            ))}
-          </select>
-          <input className="mp-input" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title" />
-          <input className="mp-input" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Amount" />
-          <button type="button" className="mp-btn mp-btn-accent" onClick={() => void onCreateOpportunity()}>
-            Open opportunity
-          </button>
-        </div>
-      </section>
+        <DeskPanel title="New opportunity">
+          <DeskFormRow>
+            <div className="mp-field">
+              <label htmlFor="crm-contact">Contact</label>
+              <select
+                id="crm-contact"
+                className="mp-select"
+                value={selectedContactId}
+                onChange={(e) => setSelectedContactId(e.target.value)}
+              >
+                <option value="">Select contact</option>
+                {contacts.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.full_name} ({c.email})
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="mp-field">
+              <label htmlFor="crm-title">Title</label>
+              <input id="crm-title" className="mp-input" value={title} onChange={(e) => setTitle(e.target.value)} />
+            </div>
+            <div className="mp-field">
+              <label htmlFor="crm-amount">Amount</label>
+              <input id="crm-amount" className="mp-input" value={amount} onChange={(e) => setAmount(e.target.value)} />
+            </div>
+            <DeskToolbar>
+              <button type="button" className="mp-btn mp-btn-primary" onClick={() => void onCreateOpportunity()}>
+                Open opportunity
+              </button>
+            </DeskToolbar>
+          </DeskFormRow>
+        </DeskPanel>
 
-      {loading ? (
-        <SkeletonTable rows={5} />
-      ) : (
-        <>
-          <h2>Contacts</h2>
-          {contacts.length === 0 ? (
-            <EmptyState title="No contacts" description="Create a contact to start the pipeline." />
-          ) : (
-            <DataTable
-              columns={[
-                { key: "full_name", header: "Name" },
-                { key: "email", header: "Email" },
-                { key: "company", header: "Company" },
-                { key: "status", header: "Status" },
-              ]}
-              rows={contacts}
-            />
-          )}
+        {loading ? (
+          <SkeletonTable rows={5} />
+        ) : (
+          <>
+            <DeskPanel title="Contacts">
+              {contacts.length === 0 ? (
+                <EmptyState title="No contacts" description="Create a contact to start the pipeline." />
+              ) : (
+                <DataTable
+                  columns={[
+                    { key: "full_name", header: "Name" },
+                    { key: "email", header: "Email" },
+                    { key: "company", header: "Company" },
+                    { key: "status", header: "Status" },
+                  ]}
+                  rows={contacts}
+                />
+              )}
+            </DeskPanel>
 
-          <h2 style={{ marginBlockStart: "1.5rem" }}>Opportunities</h2>
-          {opportunities.length === 0 ? (
-            <EmptyState title="No opportunities" description="Open an opportunity against a contact." />
-          ) : (
-            <DataTable
-              columns={[
-                { key: "title", header: "Title" },
-                { key: "amount", header: "Amount" },
-                { key: "currency", header: "CCY" },
-                { key: "stage", header: "Stage" },
-                {
-                  key: "id",
-                  header: "Actions",
-                  render: (row: CrmOpportunity) =>
-                    row.stage === "won" || row.stage === "lost" ? (
-                      <span className="mp-nav-muted">Closed</span>
-                    ) : (
-                      <span className="mp-form-row">
-                        <button
-                          type="button"
-                          className="mp-btn"
-                          onClick={() =>
-                            void winCrmOpportunity(session, row.id).then(loadData).catch((err) =>
-                              push({
-                                message: err instanceof Error ? err.message : "Win failed",
-                              }),
-                            )
-                          }
-                        >
-                          Win
-                        </button>
-                        <button
-                          type="button"
-                          className="mp-btn"
-                          onClick={() =>
-                            void loseCrmOpportunity(session, row.id, "Not a fit")
-                              .then(loadData)
-                              .catch((err) =>
-                                push({
-                                  message: err instanceof Error ? err.message : "Lose failed",
-                                }),
-                              )
-                          }
-                        >
-                          Lose
-                        </button>
-                      </span>
-                    ),
-                },
-              ]}
-              rows={opportunities}
-            />
-          )}
-        </>
-      )}
+            <DeskPanel title="Opportunities">
+              {opportunities.length === 0 ? (
+                <EmptyState title="No opportunities" description="Open an opportunity against a contact." />
+              ) : (
+                <DataTable
+                  columns={[
+                    { key: "title", header: "Title" },
+                    { key: "amount", header: "Amount" },
+                    { key: "currency", header: "CCY" },
+                    { key: "stage", header: "Stage" },
+                    {
+                      key: "id",
+                      header: "Actions",
+                      render: (row: CrmOpportunity) =>
+                        row.stage === "won" || row.stage === "lost" ? (
+                          <span className="mp-nav-muted">Closed</span>
+                        ) : (
+                          <span className="mp-form-row">
+                            <button
+                              type="button"
+                              className="mp-btn"
+                              onClick={() =>
+                                void winCrmOpportunity(session, row.id)
+                                  .then(loadData)
+                                  .catch((err) =>
+                                    push({
+                                      message: err instanceof Error ? err.message : "Win failed",
+                                    }),
+                                  )
+                              }
+                            >
+                              Win
+                            </button>
+                            <button
+                              type="button"
+                              className="mp-btn"
+                              onClick={() =>
+                                void loseCrmOpportunity(session, row.id, "Not a fit")
+                                  .then(loadData)
+                                  .catch((err) =>
+                                    push({
+                                      message: err instanceof Error ? err.message : "Lose failed",
+                                    }),
+                                  )
+                              }
+                            >
+                              Lose
+                            </button>
+                          </span>
+                        ),
+                    },
+                  ]}
+                  rows={opportunities}
+                />
+              )}
+            </DeskPanel>
+          </>
+        )}
+      </DeskChrome>
     </PageLayout>
   );
 }

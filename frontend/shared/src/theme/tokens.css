@@ -1,46 +1,136 @@
+/**
+ * Marpich design tokens — chic minimalist jewel palette.
+ *
+ * Neutrals carry the UI (silver). Accents are restrained:
+ *   Forest green → shell header / brand chrome
+ *   Royal blue   → primary actions
+ *   Emerald      → secondary actions + success
+ *   Gold         → highlight / premium
+ *   Orange       → warning / caution
+ *   Purple       → info / AI
+ *   Silver       → borders & muted surfaces
+ */
 :root {
-  /* MEOS Design System — royal blue + white + neutral grey + silver */
-  --mp-font-sans: "Segoe UI", "Helvetica Neue", system-ui, -apple-system, sans-serif;
-  --mp-radius: 8px;
-  --mp-radius-sm: 4px;
-  --mp-shadow: 0 1px 2px rgb(15 23 42 / 6%), 0 8px 24px rgb(15 23 42 / 6%);
-  --mp-transition: 160ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* Named jewels (use sparingly in UI) */
+  --mp-royal: #1a365d;
+  --mp-royal-bright: #234e82;
+  --mp-forest: #1e3a2f;
+  --mp-emerald: #0f766e;
+  --mp-emerald-bright: #0d9488;
+  --mp-orange: #c2410c;
+  --mp-gold: #b8952c;
+  --mp-gold-soft: #d4b85a;
+  --mp-silver: #a8adb7;
+  --mp-silver-soft: #e5e7eb;
+  --mp-purple: #5b4b8a;
+  --mp-purple-soft: #7c6ba8;
 
-  --mp-bg: #f7f8fb;
+  --mp-font-sans:
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+  --mp-radius: 6px;
+  --mp-radius-sm: 4px;
+  --mp-shadow: 0 1px 2px rgb(26 54 93 / 4%), 0 8px 24px rgb(26 54 93 / 6%);
+  --mp-transition: 180ms ease;
+
+  /* Surfaces — silver neutrals */
+  --mp-bg: #f5f6f8;
   --mp-bg-elevated: #ffffff;
-  --mp-bg-muted: #eef1f6;
-  --mp-fg: #0b1b33;
-  --mp-fg-muted: #5b6b7c;
-  --mp-border: #d7dde5;
-  --mp-silver: #c5ccd6;
-  --mp-accent: #1e3a8a;
-  --mp-accent-hover: #1d4ed8;
+  --mp-bg-muted: #eceef2;
+  --mp-bg-subtle: #f9fafb;
+  /* Brand chrome — forest green (header / shell) */
+  --mp-bg-brand: var(--mp-forest);
+  --mp-bg-brand-hover: #152a22;
+
+  /* Text */
+  --mp-fg: #141820;
+  --mp-fg-muted: #6b7280;
+  --mp-fg-on-brand: #f8fafc;
+  --mp-text-muted: #6b7280;
+
+  /* Borders — silver */
+  --mp-border: #d8dce3;
+  --mp-border-strong: #b8bec8;
+
+  /* Actions — royal primary, emerald secondary */
+  --mp-primary: var(--mp-royal);
+  --mp-primary-hover: #142848;
+  --mp-secondary: var(--mp-emerald);
+  --mp-secondary-hover: #0b5f59;
+  --mp-accent: var(--mp-primary);
+  --mp-accent-hover: var(--mp-primary-hover);
   --mp-accent-fg: #ffffff;
-  --mp-success: #047857;
-  --mp-warning: #b45309;
-  --mp-danger: #b91c1c;
-  --mp-info: #0369a1;
-  --mp-ring: rgb(30 58 138 / 28%);
-  --mp-skeleton: #e2e8f0;
+
+  /* Semantic (jewel-mapped, muted) */
+  --mp-success: var(--mp-emerald);
+  --mp-success-bg: #e6f4f2;
+  --mp-warning: var(--mp-gold);
+  --mp-warning-bg: #f8f3e4;
+  --mp-danger: var(--mp-orange);
+  --mp-danger-bg: #f8ebe6;
+  --mp-info: var(--mp-purple);
+  --mp-info-bg: #eeeaf5;
+
+  --mp-ring: rgb(26 54 93 / 28%);
+  --mp-skeleton: #e5e7eb;
+  --mp-focus-gold: rgb(184 149 44 / 35%);
 }
 
 [data-theme="dark"] {
-  --mp-bg: #0a1220;
-  --mp-bg-elevated: #111a2b;
-  --mp-bg-muted: #1a2436;
-  --mp-fg: #f1f5f9;
+  --mp-royal: #7ba3d4;
+  --mp-royal-bright: #9bb8e0;
+  --mp-forest: #6b9b84;
+  --mp-emerald: #2dd4bf;
+  --mp-emerald-bright: #5eead4;
+  --mp-orange: #fb923c;
+  --mp-gold: #e0c35a;
+  --mp-gold-soft: #f0d98a;
+  --mp-silver: #94a3b8;
+  --mp-silver-soft: #334155;
+  --mp-purple: #a78bfa;
+  --mp-purple-soft: #c4b5fd;
+
+  --mp-bg: #0f1218;
+  --mp-bg-elevated: #171b24;
+  --mp-bg-muted: #222833;
+  --mp-bg-subtle: #141820;
+  --mp-bg-brand: #152a22;
+  --mp-bg-brand-hover: #1e3a2f;
+
+  --mp-fg: #eef1f5;
   --mp-fg-muted: #94a3b8;
-  --mp-border: #2a364a;
-  --mp-silver: #64748b;
-  --mp-accent: #3b82f6;
-  --mp-accent-hover: #60a5fa;
-  --mp-accent-fg: #0a1220;
-  --mp-success: #34d399;
-  --mp-warning: #fbbf24;
-  --mp-danger: #f87171;
-  --mp-info: #38bdf8;
-  --mp-ring: rgb(59 130 246 / 35%);
-  --mp-skeleton: #2a364a;
+  --mp-fg-on-brand: #f8fafc;
+  --mp-text-muted: #94a3b8;
+
+  --mp-border: #2a3140;
+  --mp-border-strong: #3d4658;
+
+  --mp-primary: var(--mp-royal);
+  --mp-primary-hover: var(--mp-royal-bright);
+  --mp-secondary: var(--mp-emerald);
+  --mp-secondary-hover: var(--mp-emerald-bright);
+  --mp-accent: var(--mp-primary);
+  --mp-accent-hover: var(--mp-primary-hover);
+  --mp-accent-fg: #0f1218;
+
+  --mp-success: var(--mp-emerald);
+  --mp-success-bg: rgb(45 212 191 / 12%);
+  --mp-warning: var(--mp-gold);
+  --mp-warning-bg: rgb(224 195 90 / 12%);
+  --mp-danger: var(--mp-orange);
+  --mp-danger-bg: rgb(251 146 60 / 12%);
+  --mp-info: var(--mp-purple);
+  --mp-info-bg: rgb(167 139 250 / 12%);
+
+  --mp-ring: rgb(123 163 212 / 35%);
+  --mp-skeleton: #222833;
+  --mp-focus-gold: rgb(224 195 90 / 30%);
+  --mp-shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 12px 32px rgb(0 0 0 / 35%);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -62,6 +152,7 @@ body {
   font-family: var(--mp-font-sans);
   background: var(--mp-bg);
   color: var(--mp-fg);
+  letter-spacing: 0.01em;
 }
 
 button,
@@ -90,7 +181,7 @@ textarea {
 @keyframes mp-fade-in {
   from {
     opacity: 0;
-    transform: translateY(4px);
+    transform: translateY(2px);
   }
   to {
     opacity: 1;

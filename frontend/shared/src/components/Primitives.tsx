@@ -51,7 +51,7 @@ export function ProgressBar({ value, label }: { value: number; label?: string })
     <div className="mp-progress" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}>
       {label ? <span className="mp-progress-label">{label}</span> : null}
       <div className="mp-progress-track">
-        <div className="mp-progress-fill" style={{ width: `${pct}%` }} />
+        <div className="mp-progress-fill mp-progress-fill--gold" style={{ width: `${pct}%` }} />
       </div>
     </div>
   );

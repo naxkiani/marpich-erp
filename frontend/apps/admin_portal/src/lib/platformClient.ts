@@ -1,5 +1,17 @@
 import { API_URL } from "@marpich/auth-provider";
+import {
+  activatableModulesForPack,
+  isPackComingSoon,
+  launchHrefForModule,
+  launchHrefForPack as sharedLaunchHrefForPack,
+} from "@marpich/shared";
 import { type ApiSession, apiGet, apiPost } from "./clientAuth";
+
+export {
+  activatableModulesForPack,
+  isPackComingSoon,
+  launchHrefForModule,
+};
 
 export type ModuleJewel =
   | "forest"
@@ -122,16 +134,6 @@ const PACK_CATEGORIES: Record<string, ModuleCategory> = {
   hr_company: "operations",
 };
 
-const PACK_LAUNCH_HREFS: Record<string, string> = {
-  hospital: "/healthcare/hospital",
-  clinic: "/healthcare/clinic",
-  pharmacy: "/healthcare/pharmacy",
-  laboratory: "/healthcare/laboratory",
-  university: "/education/university",
-  bank: "/banking/analytics",
-  islamic_bank: "/banking/analytics",
-};
-
 export const PLATFORM_LAUNCH_LINKS: PlatformLaunchLink[] = [
   { id: "hospital", href: "/healthcare/hospital", labelKey: "dashboard.launch.hospital" },
   { id: "clinic", href: "/healthcare/clinic", labelKey: "dashboard.launch.clinic" },
@@ -139,6 +141,14 @@ export const PLATFORM_LAUNCH_LINKS: PlatformLaunchLink[] = [
   { id: "laboratory", href: "/healthcare/laboratory", labelKey: "dashboard.launch.laboratory" },
   { id: "university", href: "/education/university", labelKey: "dashboard.launch.university" },
   { id: "banking", href: "/banking/analytics", labelKey: "dashboard.launch.banking" },
+  { id: "crm", href: "/crm", labelKey: "nav.app.crm" },
+  { id: "sales", href: "/sales", labelKey: "nav.app.sales" },
+  { id: "inventory", href: "/inventory", labelKey: "nav.app.inventory" },
+  { id: "accounting", href: "/accounting", labelKey: "nav.app.accounting" },
+  { id: "procurement", href: "/procurement", labelKey: "nav.app.procurement" },
+  { id: "hr", href: "/hr", labelKey: "nav.app.hr" },
+  { id: "payroll", href: "/payroll", labelKey: "nav.app.payroll" },
+  { id: "tax", href: "/tax", labelKey: "nav.app.tax" },
   { id: "documents", href: "/enterprise/document-studio", labelKey: "dashboard.launch.documents" },
   { id: "messenger", href: "/enterprise/messenger", labelKey: "dashboard.launch.messenger" },
   { id: "observability", href: "/enterprise/observability", labelKey: "dashboard.launch.observability" },
@@ -174,7 +184,14 @@ export function categoryForPack(packId: string): ModuleCategory {
 }
 
 export function launchHrefForPack(packId: string): string | null {
-  return PACK_LAUNCH_HREFS[packId] ?? null;
+  return sharedLaunchHrefForPack(packId);
+}
+
+export async function fetchPlatformTenant(
+  session: ApiSession,
+  slug: string,
+): Promise<PlatformTenant> {
+  return apiGet<PlatformTenant>(`/api/v1/platform/tenants/${encodeURIComponent(slug)}`, session);
 }
 
 async function publicGet<T>(path: string): Promise<T> {

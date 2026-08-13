@@ -16,20 +16,47 @@ export {
 } from "./platform/session";
 export {
   APPLICATION_NAV,
+  MODULE_LAUNCH_CATALOG,
+  NAV_GROUP_LABEL_KEYS,
   NAV_GROUP_LABELS,
   NAV_GROUP_ORDER,
+  PACK_LAUNCH_CATALOG,
+  activatableModulesForPack,
   canAccessApp,
   filterApplicationNav,
   groupedApplicationNav,
+  isModuleEnabledForApp,
+  isPackComingSoon,
+  launchEntryForModule,
+  launchHrefForModule,
+  launchHrefForPack,
+  packLaunchEntry,
   searchApplicationNav,
   type AppNavItem,
+  type ModuleLaunchEntry,
+  type ModuleLaunchStatus,
   type NavGroupId,
+  type PackLaunchEntry,
   type PermissionPredicate,
 } from "./platform/applicationRegistry";
+export {
+  TenantModulesProvider,
+  useTenantModules,
+  type TenantModulesSnapshot,
+} from "./platform/TenantModulesProvider";
 export {
   matchesAnyPermission,
   matchesPermission,
 } from "./platform/permissions";
+export {
+  DeskAlert,
+  DeskChrome,
+  DeskFormRow,
+  DeskMetrics,
+  DeskPanel,
+  DeskStack,
+  DeskToolbar,
+} from "./components/DeskChrome";
 
 export { CommandPalette, type CommandItem } from "./components/CommandPalette";
 export { GlobalSearch } from "./components/GlobalSearch";

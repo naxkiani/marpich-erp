@@ -2,13 +2,17 @@
 
 import { PageLayout } from "@marpich/core";
 import { useAuth } from "@marpich/auth-provider";
-import { DataTable, EmptyState, ProgressBar, SkeletonTable, useToast } from "@marpich/shared";
+import { DataTable, EmptyState, ProgressBar, SkeletonTable, useToast,
+  DeskAlert,
+  DeskChrome,
+  useLocale} from "@marpich/shared";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { fetchStockLevels, upsertStock, type StockLevel } from "@/lib/inventoryClient";
 
 export function InventoryDeskPage() {
   const { push } = useToast();
+  const { t } = useLocale();
   const { session, isAuthenticated, isLoading: authLoading } = useAuth();
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(20);
@@ -78,8 +82,9 @@ export function InventoryDeskPage() {
 
   return (
     <PageLayout title="Inventory" subtitle="Stock · Reservations (CAP-ENT-042)">
+      <DeskChrome>
       <ProgressBar value={progress} />
-      {error ? <p className="mp-error">{error}</p> : null}
+      {error ? <DeskAlert>{error}</DeskAlert> : null}
 
       <p className="mp-nav-muted" style={{ marginBlock: "0.75rem" }}>
         Placed sales orders reserve SKU <code>SALES-STD</code>.{" "}
@@ -117,6 +122,7 @@ export function InventoryDeskPage() {
           rows={stock}
         />
       )}
+          </DeskChrome>
     </PageLayout>
   );
 }
