@@ -19,13 +19,11 @@ API_PREFIX = "/api/v1"
 OMITTED_ROUTER_MODULES: list[str] = []
 OMITTED_SERVICE_MODULES: list[str] = []
 
-# Packages without installable routers/services — keep out of live registration (P0 honesty).
-# Empty scaffolds + missing packages. Re-add only when code + migrations exist.
-DEFERRED_CONTEXT_IDS: frozenset[str] = frozenset(
+# Empty industry scaffolds (placeholder trees only) — P2: keep coming_soon, do not expand.
+EMPTY_INDUSTRY_SCAFFOLD_IDS: frozenset[str] = frozenset(
     {
-        # Empty industry scaffolds (placeholder trees only)
-        "currency_exchange",
         "construction",
+        "currency_exchange",
         "government",
         "hotel",
         "islamic_banking",
@@ -36,6 +34,26 @@ DEFERRED_CONTEXT_IDS: frozenset[str] = frozenset(
         "restaurant",
         "school",
         "warehouse",
+    }
+)
+
+# Speculative MEOS fabrics — docs/catalog heavy, not Functional apps (P2 blueprint honesty).
+# Live OpenAPI registration requires MARPICH_ENABLE_BLUEPRINT_APIS=true (or profile=blueprint).
+BLUEPRINT_CONTEXT_IDS: frozenset[str] = frozenset(
+    {
+        "quantum",
+        "robotics",
+        "biotechnology",
+        "space",
+        "civilization",
+    }
+)
+
+# Packages without installable routers/services — keep out of live registration (P0 honesty).
+# Empty scaffolds + missing packages. Re-add only when code + migrations exist.
+DEFERRED_CONTEXT_IDS: frozenset[str] = frozenset(
+    {
+        *EMPTY_INDUSTRY_SCAFFOLD_IDS,
         # Missing packages referenced by historical ROUTER/SERVICE_SPECS
         "adaptive_authentication",
         "ai_cfo_assistant",
@@ -74,10 +92,25 @@ def _context_id_from_module(module_path: str) -> str | None:
     return None
 
 
+def _blueprint_apis_enabled() -> bool:
+    """Blueprint fabrics stay off live registration unless explicitly opted in."""
+    try:
+        from shared.infrastructure.settings import settings
+
+        if bool(getattr(settings, "marpich_enable_blueprint_apis", False)):
+            return True
+        profile = (getattr(settings, "marpich_app_profile", "") or "").strip().lower()
+        return profile == "blueprint"
+    except Exception:
+        return False
+
+
 def _module_available(module_path: str) -> bool:
     """Return False when importlib cannot find the module (no silent OpenAPI ghosts)."""
     ctx = _context_id_from_module(module_path)
     if ctx and ctx in DEFERRED_CONTEXT_IDS:
+        return False
+    if ctx and ctx in BLUEPRINT_CONTEXT_IDS and not _blueprint_apis_enabled():
         return False
     try:
         return importlib.util.find_spec(module_path) is not None

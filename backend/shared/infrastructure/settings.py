@@ -85,8 +85,16 @@ class Settings(BaseSettings):
     saml_relay_state_ttl_seconds: int = 300
     # Multi-region identity resilience (Phase P8)
     marpich_region_id: str = "eu-west-1"
-    # app profile: core | enterprise | financial | banking | industry | test | full
+    # app profile: core | enterprise | financial | banking | industry | blueprint | test | full
     marpich_app_profile: str = "full"
+    # P2: speculative fabrics (quantum/robotics/space/bio/civilization) off by default
+    marpich_enable_blueprint_apis: bool = Field(
+        default=False,
+        validation_alias=AliasChoices(
+            "marpich_enable_blueprint_apis",
+            "MARPICH_ENABLE_BLUEPRINT_APIS",
+        ),
+    )
     # event discovery: cached (manifest) | scan (filesystem import on demand)
     marpich_event_discovery_mode: str = "cached"
     # PostgreSQL RLS (Phase P5) — defense-in-depth tenant isolation

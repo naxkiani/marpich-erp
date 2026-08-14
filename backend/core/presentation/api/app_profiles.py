@@ -107,6 +107,16 @@ INDUSTRY_CONTEXTS = frozenset({
     "enterprise_connector_framework",
 })
 
+# Speculative fabrics — catalog/docs only until activation (P2). Opt-in via profile=blueprint
+# or MARPICH_ENABLE_BLUEPRINT_APIS=true (see startup_registry.BLUEPRINT_CONTEXT_IDS).
+BLUEPRINT_CONTEXTS = frozenset({
+    "quantum",
+    "robotics",
+    "biotechnology",
+    "space",
+    "civilization",
+})
+
 # Minimal slice for integration smoke tests.
 TEST_CONTEXTS = frozenset({
     "identity",
@@ -150,8 +160,9 @@ PROFILE_LABELS: dict[str, str] = {
     "financial": "Core + financial kernel, treasury, tax, reporting",
     "banking": "Core + banking and FX",
     "industry": "Core + vertical industry modules",
+    "blueprint": "Core + speculative quantum/robotics/space/bio/civilization fabrics",
     "test": "Minimal routers for platform smoke tests",
-    "full": "All bounded contexts",
+    "full": "All bounded contexts (blueprint APIs still gated unless enabled)",
 }
 
 
@@ -169,6 +180,8 @@ def contexts_for_profile(profile: str) -> frozenset[str] | None:
         return CORE_CONTEXTS | BANKING_CONTEXTS
     if profile == "industry":
         return CORE_CONTEXTS | INDUSTRY_CONTEXTS
+    if profile == "blueprint":
+        return CORE_CONTEXTS | BLUEPRINT_CONTEXTS
     if profile == "test":
         return TEST_CONTEXTS
     raise ValueError(f"Unknown app profile: {profile}")

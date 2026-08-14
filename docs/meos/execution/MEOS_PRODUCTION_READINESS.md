@@ -82,9 +82,12 @@
 | `DEFERRED_CONTEXT_IDS` router/service honesty | verified |
 | Production settings gates (JWT/Postgres/outbox/OTel) | verified |
 | DR runbook link (`MEOS_WAVE04_DR_RUNBOOK.md`) | verified |
+| P2 blueprint fabrics gated (`BLUEPRINT_CONTEXT_IDS`) | verified |
+| P2 empty scaffolds frozen `coming_soon` | verified |
+| P3 router package contracts + CI | verified |
 
-## After Wave 01 / P0 / Healthcare harden / Waves 03–05 gates
+## After Wave 01 / P0 / Healthcare harden / Waves 03–05 gates / P2–P3 honesty
 
-Overall remains **`NOT_READY`** for full production. Platform Core + Wave 02 Q2C + Healthcare care loop are **CONDITIONALLY_READY** for demos with Postgres. Wave 03 Intelligence smoke activated; Wave 04 Privacy/DR/Policy desk + perf baseline shipped; Wave 05 Autonomy is **deny-by-default gated**. Empty industry scaffolds remain `coming_soon` and are excluded via `DEFERRED_CONTEXT_IDS`.
+Overall remains **`NOT_READY`** for full production. Platform Core + Wave 02 Q2C + Healthcare care loop are **CONDITIONALLY_READY** for demos with Postgres. Wave 03 Intelligence smoke activated; Wave 04 Privacy/DR/Policy desk + perf baseline shipped; Wave 05 Autonomy is **deny-by-default gated**. Empty industry scaffolds remain `coming_soon` and are excluded via `DEFERRED_CONTEXT_IDS`. Speculative fabrics (`quantum` / `robotics` / `biotechnology` / `space` / `civilization`) are **`BLUEPRINT`** — APIs off unless `MARPICH_ENABLE_BLUEPRINT_APIS` or `MARPICH_APP_PROFILE=blueprint` (see `docs/adr/p2-blueprint-scaffold-honesty.md`). P3 freezes missing ROUTER/SERVICE modules in `missing_router_packages_baseline.json` and fails CI on growth (`.github/workflows/meos-p3-router-contracts.yml`).
 
-**Remaining production risks:** automated offsite backup + monitored restore SLO (see DR runbook); deferred identity/authz SQL (018–027, 030, 037) still memory-path until committed; industry scaffolds not live.
+**Remaining production risks:** automated offsite backup + monitored restore SLO (see DR runbook); deferred identity/authz SQL (018–027, 030, 037) still memory-path until P1 lands; industry scaffolds not live; grandfathered missing router modules still need real packages over time.
