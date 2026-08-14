@@ -234,8 +234,23 @@ export async function fetchIndustryPacks(): Promise<IndustryPack[]> {
   return publicGet<IndustryPack[]>("/api/v1/platform/industry-packs");
 }
 
-export async function fetchPlatformTenants(session: ApiSession): Promise<PlatformTenant[]> {
-  return apiGet<PlatformTenant[]>("/api/v1/platform/tenants", session);
+export async function fetchPlatformTenants(
+  session: ApiSession,
+  opts: { limit?: number; offset?: number } = {},
+): Promise<PlatformTenant[]> {
+  const limit = opts.limit ?? 100;
+  const offset = opts.offset ?? 0;
+  const qs = new URLSearchParams({
+    limit: String(Math.max(1, Math.min(limit, 100))),
+    offset: String(Math.max(0, offset)),
+  });
+  const data = await apiGet<PlatformTenant[] | { items: PlatformTenant[]; total: number }>(
+    `/api/v1/platform/tenants?${qs}`,
+    session,
+  );
+  if (Array.isArray(data)) return data;
+  if (data && Array.isArray(data.items)) return data.items;
+  return [];
 }
 
 export async function provisionPlatformTenant(

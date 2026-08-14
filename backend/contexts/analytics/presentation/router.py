@@ -45,6 +45,26 @@ async def list_dashboards(
     return {"data": result.unwrap()}
 
 
+@router.get("/home-pulse")
+async def home_pulse(
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    _user: Annotated[dict, Depends(require_permissions("analytics.dashboards.read"))],
+):
+    """Lightweight home dashboard counts — no per-widget N+1."""
+    svc = get_analytics_service()
+    metrics = (await svc.list_metrics(tenant_id)).unwrap()
+    dashboards = (await svc.list_dashboards(tenant_id)).unwrap()
+    alerts = (await svc.list_alerts(tenant_id)).unwrap()
+    return {
+        "data": {
+            "metrics_count": len(metrics) if isinstance(metrics, list) else 0,
+            "dashboards_count": len(dashboards) if isinstance(dashboards, list) else 0,
+            "alerts_count": len(alerts) if isinstance(alerts, list) else 0,
+            "tenant_id": tenant_id,
+        }
+    }
+
+
 @router.get("/dashboards/{dashboard_id}")
 async def get_dashboard(
     dashboard_id: str,

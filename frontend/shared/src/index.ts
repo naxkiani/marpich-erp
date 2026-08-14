@@ -56,6 +56,7 @@ export {
   DeskPanel,
   DeskStack,
   DeskToolbar,
+  KpiStrip,
 } from "./components/DeskChrome";
 
 export { CommandPalette, type CommandItem } from "./components/CommandPalette";

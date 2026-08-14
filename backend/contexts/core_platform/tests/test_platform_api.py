@@ -77,9 +77,17 @@ async def test_provision_hospital_tenant(client):
     assert "healthcare.pharmacy" in data["enabled_modules"]
     assert "platform.identity" in data["enabled_modules"]
 
-    get_resp = await client.get("/api/v1/platform/tenants/acme-hospital")
+    headers = await _auth_headers(client, "acme-hospital")
+    get_resp = await client.get("/api/v1/platform/tenants/acme-hospital", headers=headers)
     assert get_resp.status_code == 200
     assert get_resp.json()["data"]["name"] == "Acme Hospital"
+
+    listed = await client.get("/api/v1/platform/tenants?limit=10&offset=0", headers=headers)
+    assert listed.status_code == 200
+    page = listed.json()["data"]
+    assert "items" in page and "total" in page
+    assert page["total"] >= 1
+    assert any(t["slug"] == "acme-hospital" for t in page["items"])
 
 
 @pytest.mark.asyncio
