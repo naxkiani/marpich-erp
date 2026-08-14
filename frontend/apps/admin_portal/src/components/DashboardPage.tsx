@@ -291,14 +291,31 @@ export function DashboardPage() {
     const active = tenants.filter((x) => x.status === "active").length;
     const suspended = tenants.filter((x) => x.status === "suspended").length;
     const modules = tenants.reduce((n, x) => n + (x.enabled_modules?.length ?? 0), 0);
+    const locked = !isAuthenticated;
     return [
-      { label: t("dashboard.stat.packs"), value: packs.length },
-      { label: t("dashboard.stat.tenants"), value: tenants.length },
-      { label: t("dashboard.stat.active"), value: active },
-      { label: t("dashboard.stat.suspended"), value: suspended },
-      { label: t("dashboard.stat.modules"), value: modules },
+      { label: t("dashboard.stat.packs"), value: packs.length, locked: false },
+      {
+        label: t("dashboard.stat.tenants"),
+        value: locked ? "—" : tenants.length,
+        locked,
+      },
+      {
+        label: t("dashboard.stat.active"),
+        value: locked ? "—" : active,
+        locked,
+      },
+      {
+        label: t("dashboard.stat.suspended"),
+        value: locked ? "—" : suspended,
+        locked,
+      },
+      {
+        label: t("dashboard.stat.modules"),
+        value: locked ? "—" : modules,
+        locked,
+      },
     ];
-  }, [packs.length, tenants, t]);
+  }, [isAuthenticated, packs.length, tenants, t]);
 
   const pulseKpis = useMemo(() => {
     const unread = pulse?.unreadNotifications ?? 0;
@@ -507,8 +524,8 @@ export function DashboardPage() {
             {t("common.refresh")}
           </button>
           {!isAuthenticated ? (
-            <Link href="/login?returnTo=/" className="mp-btn mp-btn-primary">
-              {t("dashboard.signIn")}
+            <Link href="/login?returnTo=/" className="mp-btn">
+              {t("dashboard.openLogin")}
             </Link>
           ) : null}
         </>
@@ -526,7 +543,11 @@ export function DashboardPage() {
       ) : null}
 
       {!isAuthenticated && !authLoading ? (
-        <section className="mp-dash-session" aria-label={t("dashboard.session")}>
+        <section
+          id="dash-session"
+          className="mp-dash-session"
+          aria-label={t("dashboard.session")}
+        >
           <div className="mp-dash-session-banner">
             <h2>{t("dashboard.sessionHint")}</h2>
             <p>{t("dashboard.sessionHelp")}</p>
@@ -628,7 +649,7 @@ export function DashboardPage() {
                 </div>
                 <div className="mp-dash-status-row">
                   <span className="mp-dash-status-label">{t("dashboard.stat.tenants")}</span>
-                  <strong>{tenants.length}</strong>
+                  <strong>{isAuthenticated ? tenants.length : "—"}</strong>
                 </div>
                 {isAuthenticated && session ? (
                   <p className="mp-field-help mp-dash-status-hint">
@@ -638,9 +659,15 @@ export function DashboardPage() {
                   <p className="mp-field-help">{t("dashboard.authRequiredOps")}</p>
                 )}
                 <div className="mp-dash-actions">
-                  <Link href="/modules" className="mp-btn mp-btn-primary">
-                    {t("modules.title")}
-                  </Link>
+                  {!isAuthenticated ? (
+                    <a href="#dash-session" className="mp-btn mp-btn-primary">
+                      {t("dashboard.signIn")}
+                    </a>
+                  ) : (
+                    <Link href="/modules" className="mp-btn mp-btn-primary">
+                      {t("modules.title")}
+                    </Link>
+                  )}
                   <button
                     type="button"
                     className="mp-btn"
@@ -725,6 +752,8 @@ export function DashboardPage() {
               </section>
             ) : null}
 
+            {isAuthenticated ? (
+              <>
             <section className="mp-dash-panel-card">
               <header className="mp-dash-panel-head mp-dash-jewel-bar--forest">
                 <h2>{t("dashboard.provision")}</h2>
@@ -856,6 +885,8 @@ export function DashboardPage() {
                 </div>
               </div>
             </section>
+              </>
+            ) : null}
           </aside>
 
           <div className="mp-dash-main">
@@ -863,9 +894,15 @@ export function DashboardPage() {
               {stats.map((s, i) => {
                 const jewel = METRIC_JEWELS[i % METRIC_JEWELS.length]!;
                 return (
-                  <div key={s.label} className={`mp-dash-metric mp-dash-metric--${jewel}`}>
+                  <div
+                    key={s.label}
+                    className={`mp-dash-metric mp-dash-metric--${jewel}${s.locked ? " mp-dash-metric--locked" : ""}`}
+                    title={s.locked ? t("dashboard.authRequiredOps") : undefined}
+                  >
                     <span className="mp-dash-metric-label">{s.label}</span>
-                    <strong>{s.value}</strong>
+                    <strong aria-label={s.locked ? t("dashboard.authRequiredOps") : undefined}>
+                      {s.value}
+                    </strong>
                   </div>
                 );
               })}
@@ -1154,11 +1191,9 @@ export function DashboardPage() {
       <style jsx>{`
         .mp-dash-layout {
           display: grid;
-          grid-template-columns: minmax(260px, 300px) minmax(0, 1fr);
-          gap: 1.5rem;
+          grid-template-columns: minmax(300px, 340px) minmax(0, 1fr);
+          gap: 1.25rem 1.5rem;
           align-items: start;
-          /* Keep the control rail on the visual left in LTR and RTL. */
-          direction: ltr;
         }
         .mp-dash-aside,
         .mp-dash-main {
@@ -1166,19 +1201,37 @@ export function DashboardPage() {
           flex-direction: column;
           gap: 0.85rem;
           min-width: 0;
-          direction: inherit;
-        }
-        :global([dir="rtl"]) .mp-dash-aside,
-        :global([dir="rtl"]) .mp-dash-main {
-          direction: rtl;
         }
         .mp-dash-aside {
           position: sticky;
           top: 4.5rem;
+          align-self: start;
           max-height: calc(100vh - 5.5rem);
           overflow: auto;
-          padding-inline-end: 0.25rem;
+          padding-inline-end: 0.15rem;
           scrollbar-gutter: stable;
+        }
+        /* Vertical lifecycle steps — horizontal wrap was crushing the narrow rail */
+        .mp-dash-aside :global(.mp-step-progress) {
+          display: flex;
+          flex-direction: column;
+          flex-wrap: nowrap;
+          align-items: stretch;
+          gap: 0.4rem;
+          margin-block-end: 0.65rem;
+        }
+        .mp-dash-aside :global(.mp-step-progress li) {
+          width: 100%;
+          box-sizing: border-box;
+          padding: 0.4rem 0.5rem;
+          border-radius: var(--mp-radius-sm);
+          background: color-mix(in srgb, var(--mp-bg-muted) 65%, transparent);
+        }
+        .mp-dash-aside :global(.mp-step-active) {
+          background: color-mix(in srgb, var(--mp-forest) 10%, transparent);
+        }
+        .mp-dash-aside :global(.mp-step-index) {
+          flex-shrink: 0;
         }
         .mp-dash-session {
           border: 1px solid var(--mp-border);
@@ -1275,9 +1328,14 @@ export function DashboardPage() {
         }
         .mp-dash-form-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
           gap: 0.65rem 0.75rem;
           margin-block-end: 0.75rem;
+        }
+        @media (max-width: 720px) {
+          .mp-dash-form-grid {
+            grid-template-columns: 1fr;
+          }
         }
         .mp-dash-form-stack {
           display: flex;
@@ -1373,6 +1431,13 @@ export function DashboardPage() {
           border: 1px solid var(--mp-border);
           border-block-start: 3px solid var(--mp-silver);
           box-shadow: var(--mp-shadow);
+        }
+        .mp-dash-metric--locked {
+          opacity: 0.72;
+        }
+        .mp-dash-metric--locked strong {
+          color: var(--mp-fg-muted);
+          font-weight: 600;
         }
         .mp-dash-metric--forest {
           border-block-start-color: var(--mp-forest);
@@ -1608,6 +1673,14 @@ export function DashboardPage() {
         @media (max-width: 960px) {
           .mp-dash-layout {
             grid-template-columns: 1fr;
+          }
+          .mp-dash-aside {
+            position: static;
+            max-height: none;
+            order: 2;
+          }
+          .mp-dash-main {
+            order: 1;
           }
           .mp-dash-metrics {
             grid-template-columns: repeat(2, minmax(0, 1fr));
