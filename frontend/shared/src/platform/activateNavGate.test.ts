@@ -33,9 +33,9 @@ test("activate→nav: healthcare modules gate hospital desk", () => {
   // undefined enabledModules → Shell skips module filter via filterApplicationNav
   const untilLoaded = filterApplicationNav(() => true, APPLICATION_NAV, undefined);
   assert.ok(untilLoaded.some((a) => a.id === "hospital"));
-  assert.equal(isModuleEnabledForApp(hospital, []), false);
+  assert.equal(isModuleEnabledForApp(hospital!, []), false);
   assert.equal(
-    isModuleEnabledForApp(hospital, ["healthcare.patient-management"]),
+    isModuleEnabledForApp(hospital!, ["healthcare.patient-management"]),
     true,
   );
 });

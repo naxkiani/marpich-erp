@@ -25,8 +25,8 @@ test("module launch map unlocks Wave 02 apps", () => {
 test("nav filter requires enabled module when gated", () => {
   const crm = APPLICATION_NAV.find((a) => a.id === "crm");
   assert.ok(crm);
-  assert.equal(isModuleEnabledForApp(crm, ["platform.crm"]), true);
-  assert.equal(isModuleEnabledForApp(crm, []), false);
+  assert.equal(isModuleEnabledForApp(crm!, ["platform.crm"]), true);
+  assert.equal(isModuleEnabledForApp(crm!, []), false);
   const visible = filterApplicationNav(() => true, APPLICATION_NAV, ["platform.crm"]);
   assert.ok(visible.some((a) => a.id === "crm"));
   assert.ok(visible.some((a) => a.id === "dashboard"));
