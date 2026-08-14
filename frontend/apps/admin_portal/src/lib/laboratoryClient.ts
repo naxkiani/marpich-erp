@@ -32,7 +32,12 @@ export async function fetchLabOrders(session: ApiSession): Promise<Page<LabOrder
 
 export async function placeLabOrder(
   session: ApiSession,
-  body: { order_number: string; patient_ref: string; test_code: string },
+  body: {
+    order_number: string;
+    patient_ref: string;
+    test_code: string;
+    source_encounter_ref?: string;
+  },
 ): Promise<LabOrder> {
   return apiPost("/api/v1/laboratory/orders", session, body);
 }

@@ -33,10 +33,19 @@ class PharmacyApplicationService:
 
     async def link_hospital_encounter(self, command: LinkHospitalEncounterCommand) -> Result[dict]:
         """Idempotent encounter-linked review Rx — peer IDs only (ACL entry)."""
+        return await self._link_care_encounter(command, rx_prefix="HOSP")
+
+    async def link_clinic_encounter(self, command: LinkHospitalEncounterCommand) -> Result[dict]:
+        """Idempotent clinic encounter → REVIEW Rx (peer IDs only)."""
+        return await self._link_care_encounter(command, rx_prefix="CLN")
+
+    async def _link_care_encounter(
+        self, command: LinkHospitalEncounterCommand, *, rx_prefix: str
+    ) -> Result[dict]:
         if not command.tenant_id or not command.encounter_ref or not command.patient_ref:
             return Result.fail("pharmacy.errors.invalid_encounter_link")
         short = command.encounter_ref.replace("-", "")[:12].upper()
-        rx_number = f"HOSP-{short}"
+        rx_number = f"{rx_prefix}-{short}"
         existing = await self._prescriptions.find_by_rx_number(command.tenant_id, rx_number)
         if existing:
             return Result.ok(existing.to_dict())

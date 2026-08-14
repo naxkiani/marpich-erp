@@ -93,39 +93,39 @@ applications:
   - id: hospital
     name: Hospital
     domain: healthcare
-    status: IMPLEMENTED
+    status: TESTED
     wave: 2
     frontend: true
     backend: true
     routes: ["/healthcare/hospital"]
-    score: 62
+    score: 78
   - id: clinic
     name: Clinic
     domain: healthcare
-    status: IMPLEMENTED
+    status: TESTED
     wave: 2
     frontend: true
     backend: true
     routes: ["/healthcare/clinic"]
-    score: 62
+    score: 74
   - id: pharmacy
     name: Pharmacy
     domain: healthcare
-    status: IMPLEMENTED
+    status: TESTED
     wave: 2
     frontend: true
     backend: true
     routes: ["/healthcare/pharmacy"]
-    score: 60
+    score: 76
   - id: laboratory
     name: Laboratory
     domain: healthcare
-    status: IMPLEMENTED
+    status: TESTED
     wave: 2
     frontend: true
     backend: true
     routes: ["/healthcare/laboratory"]
-    score: 60
+    score: 76
   - id: university
     name: University
     domain: education
@@ -256,6 +256,12 @@ verification:
   wave02_hr_functional: verified
   wave02_payroll_functional: verified
   wave02_tax_functional: verified
+  healthcare_closed_loop: verified
+  healthcare_clinic_lab_pharmacy_acl: verified
+  money_path_migrations_038_045: verified
+  money_path_roundtrip_ci: verified
+  ui_activate_nav_gate_unit: verified
+  wave02_audit_proof_script: verified
   notes: >
     Shell widgets use marpich_auth_session headers; Workflow Task Center at
     /enterprise/workflows; AuthZ filters nav/command/search; orphan FE clients gated;
@@ -267,6 +273,9 @@ verification:
     Procurement CAP-ENT-040 requisitions from inventory.reorder.triggered (API+UI+events+migration 050/051);
     HR CAP-ENT-010 employees hire/list/terminate (API+UI+events+migration 053);
     Payroll CAP-ENT-015 hire ACL projection + pay runs (API+UI+events+migration 054);
+    Tax CAP-ENT-026 liabilities/returns from payroll (API+UI+events+migration 055);
+    Healthcare Hospital→Lab→Pharmacy care-events TESTED (scripts/meos-healthcare-loop.sh + CI);
+    Clinic encounter → lab/pharmacy REVIEW ACL + lab result notes; money-path migrations 038–045;
     Tax CAP-ENT-026 payroll ACL liability + file return (API+UI+events+migration 055);
     Wave 02 harden: scripts/meos-wave02-q2c-loop.sh + .github/workflows/meos-wave02-smoke.yml.
     Overall NOT_READY.

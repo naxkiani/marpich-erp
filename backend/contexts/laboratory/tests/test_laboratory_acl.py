@@ -87,3 +87,31 @@ async def test_hospital_encounter_started_does_not_create_order():
     )
     orders = await get_laboratory_service().list_orders(tenant)
     assert orders.unwrap()["total"] == 0
+
+
+@pytest.mark.asyncio
+async def test_clinic_encounter_completed_creates_review_order():
+    tenant = "lab-acl-clinic"
+    encounter_id = "cccccccc-bbbb-cccc-dddd-eeeeeeeeeeee"
+    patient_id = "22222222-2222-3333-4444-555555555555"
+
+    await InProcessEventBus.publish(
+        {
+            "event_name": "clinic.encounter.completed",
+            "event_id": "evt-cln-1",
+            "tenant_id": tenant,
+            "correlation_id": "corr-cln-1",
+            "payload": {
+                "encounter_id": encounter_id,
+                "patient_id": patient_id,
+            },
+        }
+    )
+
+    orders = await get_laboratory_service().list_orders(tenant)
+    assert orders.succeeded
+    items = orders.unwrap()["items"]
+    assert len(items) == 1
+    assert items[0]["order_number"].startswith("CLN-")
+    assert items[0]["test_code"] == "REVIEW"
+    assert items[0]["source_encounter_ref"] == encounter_id

@@ -25,10 +25,16 @@
 
 ## Remaining (backlog)
 
-- 12 empty industry scaffolds (warehouse, manufacturing, …) still `coming_soon`
-- Healthcare / education / banking desks still `IMPLEMENTED` demos (not full Functional loops)
-- FE unit/e2e coverage for activate→nav path
+- 12 empty industry scaffolds (warehouse, manufacturing, …) still `coming_soon` — intentional
+- Education / banking desks still demo-depth (not full Functional loops)
 - Physical margin leftovers in legacy `globals.css` saga styles
+- Production hardening: automated offsite backup + monitored restore SLO
+
+## Wave progress
+
+- Wave 03 Intelligence: `MEOS_WAVE03_INTELLIGENCE_STATUS.md` + `meos-wave03-intelligence-loop.sh`
+- Wave 04 Governance: privacy/DR runbooks + Policy desk `/enterprise/policies` + perf baseline
+- Wave 05 Autonomy: gated — `AutonomyGate` deny-by-default until flag+policy+human approval
 
 ## Target acceptance (this phase)
 

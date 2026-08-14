@@ -30,6 +30,10 @@ apply_migration() {
   local file="$1"
   local version
   version="$(basename "$file")"
+  if [[ ! -f "$MIGRATIONS/$file" ]]; then
+    echo "WARNING: migration file missing — skipping ${version} (see infrastructure/docker/migrations/DEFERRED_MIGRATIONS.md)"
+    return 0
+  fi
   if migration_applied "$version"; then
     echo "Skipping ${version} (already applied)."
     return 0
@@ -62,28 +66,26 @@ WAVE01_MIGRATIONS=(
   016_identity_rls_principals.sql
 )
 
+# Only migrations present on disk. Deferred (missing SQL): see DEFERRED_MIGRATIONS.md
 POST_WAVE01_MIGRATIONS=(
   017_eif_fabric_schema.sql
-  018_enterprise_directory_service.sql
   019_identity_lifecycle_platform.sql
-  020_enterprise_organization_directory.sql
-  021_enterprise_identity_graph.sql
-  022_enterprise_authentication_platform.sql
-  023_enterprise_password_authentication_engine.sql
-  024_security_trusted_devices.sql
-  025_enterprise_passkey_webauthn_platform.sql
-  026_enterprise_adaptive_mfa_platform.sql
-  027_enterprise_adaptive_risk_auth_engine.sql
   028_enterprise_identity_federation_platform.sql
   029_enterprise_identity_digital_twin.sql
-  030_enterprise_authorization_platform.sql
   031_enterprise_identity_digital_twin_p199a.sql
   032_documents_rsa_signature_evidence.sql
   033_clinic_walkin_encounters.sql
   034_university_inventory_postgres.sql
   035_messenger_postgres.sql
   036_hospital_beds_cap_hlt_004.sql
-  037_identity_governance.sql
+  038_hospital_care_event_projections.sql
+  039_laboratory_pharmacy_postgres.sql
+  040_financial_kernel_money_path.sql
+  041_banking_money_path.sql
+  042_treasury_money_path.sql
+  043_federation_sor_depth.sql
+  044_banking_deposit_loan_money_path.sql
+  045_treasury_recon_liquidity_satellites.sql
   046_crm_contacts_opportunities.sql
   047_sales_quotations_orders.sql
   048_inventory_stock_reserved.sql

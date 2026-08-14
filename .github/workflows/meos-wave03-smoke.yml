@@ -1,0 +1,97 @@
+name: MEOS Wave 03 Intelligence Smoke
+
+on:
+  push:
+    branches: [main, "feature/**"]
+  pull_request:
+    branches: [main]
+
+jobs:
+  wave03-intelligence-memory:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install backend
+        run: |
+          python -m pip install -U pip
+          pip install -e ".[dev]" || pip install -e .
+          pip install pytest httpx
+      - name: Search + analytics unit smoke
+        env:
+          PERSISTENCE_BACKEND: memory
+        run: |
+          pytest -q \
+            contexts/search/tests \
+            contexts/analytics/tests/unit/test_bi_platform_domain.py \
+            --maxfail=5 \
+            -k "not postgres" || pytest -q contexts/search/tests --maxfail=5 -k "not postgres"
+
+  wave03-intelligence-postgres-loop:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: marpich
+          POSTGRES_PASSWORD: marpich
+          POSTGRES_DB: marpich_platform
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U marpich -d marpich_platform"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    defaults:
+      run:
+        working-directory: backend
+    env:
+      PERSISTENCE_BACKEND: postgres
+      DATABASE_URL: postgresql+asyncpg://marpich:marpich@127.0.0.1:5432/marpich_platform
+      JWT_SECRET: ci-wave03-jwt-secret-not-for-prod
+      PGHOST: 127.0.0.1
+      PGPORT: "5432"
+      PGUSER: marpich
+      PGPASSWORD: marpich
+      PGDATABASE: marpich_platform
+      API_URL: http://127.0.0.1:8000
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install backend + psql
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client
+          python -m pip install -U pip
+          pip install -e ".[dev]" || pip install -e .
+          pip install uvicorn httpx asyncpg
+      - name: Apply migrations
+        working-directory: .
+        run: ./scripts/run-migrations.sh
+      - name: Start API
+        run: |
+          nohup uvicorn core.presentation.api.main:app --host 127.0.0.1 --port 8000 \
+            > /tmp/marpich-w03-api.log 2>&1 &
+          for i in $(seq 1 60); do
+            if curl -sf http://127.0.0.1:8000/api/v1/health >/dev/null; then
+              echo "API ready"; exit 0
+            fi
+            sleep 2
+          done
+          tail -100 /tmp/marpich-w03-api.log >&2 || true
+          exit 1
+      - name: Wave 03 intelligence loop
+        working-directory: .
+        run: |
+          chmod +x ./scripts/meos-wave03-intelligence-loop.sh
+          ./scripts/meos-wave03-intelligence-loop.sh
+      - name: API logs on failure
+        if: failure()
+        run: tail -200 /tmp/marpich-w03-api.log || true

@@ -39,12 +39,21 @@
 
 **Harden:** `scripts/meos-wave02-q2c-loop.sh` + `.github/workflows/meos-wave02-smoke.yml` — full closed loop on Postgres.
 
+| `hospital` | Hospital (CAP-HLT-001+) | TESTED | `/healthcare/hospital` | patients/admissions/encounters + care-events | Hospital→Lab→Pharmacy loop + `meos-healthcare-loop.sh` |
+| `clinic` | Clinic (CAP-HLT-002+) | TESTED | `/healthcare/clinic` | outpatient + lab result notes | `clinic.encounter.completed` → lab/pharmacy ACL |
+| `pharmacy` | Pharmacy (CAP-HLT-008) | TESTED | `/healthcare/pharmacy` | Rx + dispense | events → hospital care-events |
+| `laboratory` | Laboratory (CAP-HLT-007) | TESTED | `/healthcare/laboratory` | order→sample→result | events → hospital care-events |
+
+**Harden:** `scripts/meos-wave02-q2c-loop.sh` + `.github/workflows/meos-wave02-smoke.yml` — full closed loop on Postgres.  
+**Healthcare:** `scripts/meos-healthcare-loop.sh` + `.github/workflows/meos-healthcare-smoke.yml`.  
+**Money-path:** migrations 038–045 via `run-migrations.sh` + `.github/workflows/meos-money-path-smoke.yml`.
+
 ## Domain apps with UI (demo / partial)
 
 | App ID | Status | Route |
 |--------|--------|-------|
-| `hospital` | IMPLEMENTED | `/healthcare/hospital` |
-| `clinic` | IMPLEMENTED | `/healthcare/clinic` |
+| `hospital` | TESTED | `/healthcare/hospital` |
+| `clinic` | TESTED | `/healthcare/clinic` |
 | `crm` | TESTED | `/crm` |
 | `sales` | TESTED | `/sales` |
 | `inventory` | TESTED | `/inventory` |
@@ -53,8 +62,8 @@
 | `human_resources` | TESTED | `/hr` |
 | `payroll` | TESTED | `/payroll` |
 | `tax` | TESTED | `/tax` |
-| `pharmacy` | IMPLEMENTED | `/healthcare/pharmacy` |
-| `laboratory` | IMPLEMENTED | `/healthcare/laboratory` |
+| `pharmacy` | TESTED | `/healthcare/pharmacy` |
+| `laboratory` | TESTED | `/healthcare/laboratory` |
 | `university` | IMPLEMENTED | `/education/university` |
 | `banking` | IMPLEMENTED | `/banking/analytics` |
 | `messenger` | IMPLEMENTED | `/enterprise/messenger` |

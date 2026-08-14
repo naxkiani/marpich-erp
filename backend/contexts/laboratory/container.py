@@ -2,6 +2,9 @@
 from __future__ import annotations
 
 from contexts.laboratory.application.service import LaboratoryApplicationService
+from contexts.laboratory.infrastructure.acl.clinic_events import (
+    handle_clinic_encounter_completed,
+)
 from contexts.laboratory.infrastructure.acl.hospital_events import (
     handle_hospital_encounter_completed,
     handle_hospital_encounter_started,
@@ -42,6 +45,10 @@ def get_laboratory_service() -> LaboratoryApplicationService:
         InProcessEventBus.subscribe(
             "hospital.encounter.completed",
             handle_hospital_encounter_completed,
+        )
+        InProcessEventBus.subscribe(
+            "clinic.encounter.completed",
+            handle_clinic_encounter_completed,
         )
         _registered = True
     return _service

@@ -1,7 +1,7 @@
 # MEOS Production Readiness
 
 **Overall status:** `NOT_READY`  
-**Date:** 2026-08-12 · **P0 slice:** largely mitigated for Platform Core
+**Date:** 2026-08-14 · **P0 slice:** mitigated for Platform Core (migrations / router honesty / settings gates)
 
 ## Launch gates
 
@@ -11,27 +11,36 @@
 | UI/UX | PARTIAL (AuthZ nav + shell) |
 | Frontend | PARTIAL (orphan clients gated) |
 | Backend | PARTIAL |
-| Database | PARTIAL (Postgres :5433 path + migrations) |
-| API | PARTIAL (ROUTER honesty) |
-| Authentication | PASS (core JWT) |
+| Database | PARTIAL (Postgres :5433 path + migrations; deferred SQL documented) |
+| API | PARTIAL (ROUTER honesty + `DEFERRED_CONTEXT_IDS`) |
+| Authentication | PASS (core JWT; production rejects default secret) |
 | Authorization | PARTIAL → UI nav/command/search filtered |
 | Multi-tenancy | PARTIAL |
 | Workflow | PARTIAL (API + Task Center UI) |
-| Events | PARTIAL |
+| Events | PARTIAL (production forces `event_bus_mode=outbox`) |
 | AI | PARTIAL |
 | Search | PARTIAL |
 | Notifications | PARTIAL |
 | Analytics | PARTIAL |
 | Audit | PARTIAL |
 | Security | PARTIAL |
-| Privacy | NOT STARTED (activation) |
-| Testing | PARTIAL (Wave 01 memory + Postgres CI) |
-| Performance | NOT MEASURED |
-| Observability | PARTIAL |
-| Backup / DR | FAIL |
-| CI/CD | PARTIAL (meos-wave01-smoke + meos-wave02-smoke) |
-| Documentation | PARTIAL (this pack) |
-| Production hardening | FAIL |
+| Privacy | PARTIAL (activation pack + Policy desk — Wave 04) |
+| Testing | PARTIAL (Wave 01/02 + healthcare + money-path + Wave03/05 CI) |
+| Performance | PARTIAL (baseline script `meos-wave04-perf-baseline.sh`) |
+| Observability | PARTIAL (OTel warn-if-off in production) |
+| Backup / DR | PARTIAL — see [MEOS_WAVE04_DR_RUNBOOK.md](./MEOS_WAVE04_DR_RUNBOOK.md) |
+| CI/CD | PARTIAL (wave01–05 smoke/governance workflows) |
+| Documentation | PARTIAL (this pack + Wave 03–05 status) |
+| Production hardening | PARTIAL (P0 settings gates shipped; offsite backup automation still pending) |
+
+## P0 mitigations (2026-08-14)
+
+| Item | Mitigation |
+|------|------------|
+| Missing migrations 018–027, 030, 037 | Pruned from `POST_WAVE01_MIGRATIONS`; `apply_migration` skips missing files with WARNING; catalogued in `infrastructure/docker/migrations/DEFERRED_MIGRATIONS.md` |
+| Empty scaffolds / missing packages as live routers | `DEFERRED_CONTEXT_IDS` + `_module_available` / `filter_available_specs` in `startup_registry.py` — deferred contexts never register |
+| Production JWT / outbox / OTel | `MARPICH_ENVIRONMENT=production` hard gates in `shared/infrastructure/settings.py`: reject default/short JWT, require Postgres, force outbox, warn if OTel or document signing secret off |
+| DR checklist | Wave 04 runbook: [MEOS_WAVE04_DR_RUNBOOK.md](./MEOS_WAVE04_DR_RUNBOOK.md) (RPO/RTO, backup, restore drill, failover notes) |
 
 ## Critical blockers
 
@@ -45,6 +54,8 @@
 8. ~~Identity Postgres register crash~~ → **Fixed** `tenant_id` in role/user/session saves
 9. ~~Wave 02 first business app~~ → **CRM Functional** (CAP-ENT-001) TESTED
 10. ~~Wave 02 Q2C closed loop~~ → **harden script + CI** (`meos-wave02-q2c-loop.sh`)
+11. ~~Healthcare Functional loop~~ → **Hospital→Lab→Pharmacy** TESTED (`meos-healthcare-loop.sh`)
+12. ~~Money-path migrations missing from runner~~ → **038–045 wired** + CI
 
 ## Wave 01 / P0 verification marks
 
@@ -63,7 +74,17 @@
 | User-loop script `scripts/meos-wave01-user-loop.sh` | verified |
 | Wave 02 Q2C loop `scripts/meos-wave02-q2c-loop.sh` | verified |
 | Wave 02 CI smoke workflow | verified |
+| Healthcare loop `scripts/meos-healthcare-loop.sh` | verified |
+| Money-path migrations 038–045 + CI | verified |
+| Activate→nav FE unit tests | verified |
+| Wave 02 audit proof script | verified |
+| Deferred migrations 018–027/030/037 skip + docs | verified |
+| `DEFERRED_CONTEXT_IDS` router/service honesty | verified |
+| Production settings gates (JWT/Postgres/outbox/OTel) | verified |
+| DR runbook link (`MEOS_WAVE04_DR_RUNBOOK.md`) | verified |
 
-## After Wave 01 / P0
+## After Wave 01 / P0 / Healthcare harden / Waves 03–05 gates
 
-Overall remains **`NOT_READY`**. Platform Core can be **CONDITIONALLY_READY** for demos with Postgres. Wave 02 Q2C + HR + Payroll + Tax are Functional; remaining Wave 02 scaffolds are industry verticals.
+Overall remains **`NOT_READY`** for full production. Platform Core + Wave 02 Q2C + Healthcare care loop are **CONDITIONALLY_READY** for demos with Postgres. Wave 03 Intelligence smoke activated; Wave 04 Privacy/DR/Policy desk + perf baseline shipped; Wave 05 Autonomy is **deny-by-default gated**. Empty industry scaffolds remain `coming_soon` and are excluded via `DEFERRED_CONTEXT_IDS`.
+
+**Remaining production risks:** automated offsite backup + monitored restore SLO (see DR runbook); deferred identity/authz SQL (018–027, 030, 037) still memory-path until committed; industry scaffolds not live.

@@ -932,7 +932,11 @@ export function BankingAnalyticsDashboardPage() {
 
               {tab === "ai" ? (
                 <section className="ba-ai">
-                  <p className="mp-field-help">{assistant?.explanation ?? t("banking.aiHint")}</p>
+                  <p className="mp-field-help">
+                    {typeof assistant?.explanation === "string" && assistant.explanation
+                      ? assistant.explanation
+                      : t("banking.aiHint")}
+                  </p>
                   {assistantRows.length === 0 ? (
                     <EmptyState title={t("banking.noInsights")} description={t("banking.aiHint")} />
                   ) : (

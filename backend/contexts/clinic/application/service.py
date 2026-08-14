@@ -6,6 +6,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
+from contexts.clinic.application.commands.note_lab_result import NoteLabResultCommand
 from contexts.clinic.domain.aggregates.appointment import Appointment
 from contexts.clinic.domain.aggregates.outpatient_encounter import OutpatientEncounter
 from contexts.clinic.domain.aggregates.patient import ClinicPatient
@@ -35,6 +36,8 @@ class ClinicApplicationService:
         self._appointments = appointments
         self._encounters = encounters
         self._referrals = referrals
+        # Local projection of peer lab facts (IDs only) — not a peer DB join
+        self._lab_result_notes: list[dict] = []
 
     async def register_patient(
         self,
@@ -234,3 +237,36 @@ class ClinicApplicationService:
 
         await self._referrals.save(referral)
         return Result.ok(referral.to_dict())
+
+    async def note_lab_result(self, command: NoteLabResultCommand) -> Result[dict]:
+        """Idempotent ACL note for laboratory.result.available (peer IDs only)."""
+        if not command.tenant_id or not command.order_ref:
+            return Result.fail("clinic.errors.invalid_lab_result_note")
+        for existing in self._lab_result_notes:
+            if (
+                existing.get("tenant_id") == command.tenant_id
+                and existing.get("order_ref") == command.order_ref
+            ):
+                return Result.ok(existing)
+        note = {
+            "tenant_id": command.tenant_id,
+            "correlation_id": command.correlation_id,
+            "order_ref": command.order_ref,
+            "patient_ref": command.patient_ref,
+            "test_code": command.test_code,
+            "result_value": command.result_value,
+            "result_unit": command.result_unit,
+        }
+        self._lab_result_notes.append(note)
+        return Result.ok(note)
+
+    async def list_lab_result_notes(
+        self, tenant_id: str, *, limit: int = 50, offset: int = 0
+    ) -> Result[dict]:
+        limit = max(1, min(limit, 100))
+        offset = max(0, offset)
+        items = [n for n in self._lab_result_notes if n.get("tenant_id") == tenant_id]
+        page = items[offset : offset + limit]
+        return Result.ok(
+            {"items": page, "total": len(items), "limit": limit, "offset": offset}
+        )

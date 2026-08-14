@@ -45,6 +45,7 @@ export async function receivePrescription(
     drug_code: string;
     drug_name: string;
     quantity: number;
+    source_encounter_ref?: string;
   },
 ): Promise<PharmacyPrescription> {
   return apiPost("/api/v1/pharmacy/prescriptions", session, body);
@@ -53,6 +54,10 @@ export async function receivePrescription(
 export async function dispensePrescription(
   session: ApiSession,
   prescription_id: string,
+  quantity_dispensed?: number,
 ): Promise<PharmacyDispense> {
-  return apiPost("/api/v1/pharmacy/dispenses", session, { prescription_id });
+  return apiPost("/api/v1/pharmacy/dispenses", session, {
+    prescription_id,
+    ...(quantity_dispensed != null ? { quantity_dispensed } : {}),
+  });
 }

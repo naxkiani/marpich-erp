@@ -19,9 +19,66 @@ API_PREFIX = "/api/v1"
 OMITTED_ROUTER_MODULES: list[str] = []
 OMITTED_SERVICE_MODULES: list[str] = []
 
+# Packages without installable routers/services — keep out of live registration (P0 honesty).
+# Empty scaffolds + missing packages. Re-add only when code + migrations exist.
+DEFERRED_CONTEXT_IDS: frozenset[str] = frozenset(
+    {
+        # Empty industry scaffolds (placeholder trees only)
+        "currency_exchange",
+        "construction",
+        "government",
+        "hotel",
+        "islamic_banking",
+        "manufacturing",
+        "ngo",
+        "projects",
+        "real_estate",
+        "restaurant",
+        "school",
+        "warehouse",
+        # Missing packages referenced by historical ROUTER/SERVICE_SPECS
+        "adaptive_authentication",
+        "ai_cfo_assistant",
+        "ai_governance",
+        "ai_security",
+        "data_protection",
+        "enterprise_api_gateway",
+        "enterprise_automation_platform",
+        "enterprise_decision_support",
+        "enterprise_event_bus",
+        "enterprise_executive_dashboard",
+        "enterprise_forecasting",
+        "enterprise_integration_security",
+        "enterprise_message_orchestration",
+        "enterprise_reliability_platform",
+        "enterprise_saga_orchestration",
+        "enterprise_webhook_platform",
+        "financial_ai_analytics",
+        "financial_anomaly_detection",
+        "financial_data_science",
+        "financial_kpi",
+        "fraud_detection",
+        "grc",
+        "mfa",
+        "natural_language_analytics",
+        "reporting",
+        "security",
+    }
+)
+
+
+def _context_id_from_module(module_path: str) -> str | None:
+    parts = module_path.split(".")
+    if len(parts) >= 2 and parts[0] == "contexts":
+        return parts[1]
+    return None
+
 
 def _module_available(module_path: str) -> bool:
     """Return False when importlib cannot find the module (no silent OpenAPI ghosts)."""
+    ctx = _context_id_from_module(module_path)
+    if ctx and ctx in DEFERRED_CONTEXT_IDS:
+        return False
     try:
         return importlib.util.find_spec(module_path) is not None
     except (ModuleNotFoundError, ValueError, AttributeError):

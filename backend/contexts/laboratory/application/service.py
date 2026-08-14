@@ -32,10 +32,19 @@ class LaboratoryApplicationService:
 
     async def link_hospital_encounter(self, command: LinkHospitalEncounterCommand) -> Result[dict]:
         """Idempotent encounter-linked review order — peer IDs only (ACL entry)."""
+        return await self._link_care_encounter(command, order_prefix="HOSP")
+
+    async def link_clinic_encounter(self, command: LinkHospitalEncounterCommand) -> Result[dict]:
+        """Idempotent clinic encounter → REVIEW order (peer IDs only)."""
+        return await self._link_care_encounter(command, order_prefix="CLN")
+
+    async def _link_care_encounter(
+        self, command: LinkHospitalEncounterCommand, *, order_prefix: str
+    ) -> Result[dict]:
         if not command.tenant_id or not command.encounter_ref or not command.patient_ref:
             return Result.fail("laboratory.errors.invalid_encounter_link")
         short = command.encounter_ref.replace("-", "")[:12].upper()
-        order_number = f"HOSP-{short}"
+        order_number = f"{order_prefix}-{short}"
         existing = await self._orders.find_by_number(command.tenant_id, order_number)
         if existing:
             return Result.ok(existing.to_dict())

@@ -2,6 +2,9 @@
 from __future__ import annotations
 
 from contexts.pharmacy.application.service import PharmacyApplicationService
+from contexts.pharmacy.infrastructure.acl.clinic_events import (
+    handle_clinic_encounter_completed,
+)
 from contexts.pharmacy.infrastructure.acl.hospital_inventory_events import (
     handle_hospital_encounter_completed,
     handle_inventory_stock_adjusted,
@@ -38,6 +41,10 @@ def get_pharmacy_service() -> PharmacyApplicationService:
         InProcessEventBus.subscribe(
             "hospital.encounter.completed",
             handle_hospital_encounter_completed,
+        )
+        InProcessEventBus.subscribe(
+            "clinic.encounter.completed",
+            handle_clinic_encounter_completed,
         )
         InProcessEventBus.subscribe(
             "inventory.stock.adjusted",

@@ -51,6 +51,10 @@ Never implement P5 while P0/P1 is broken.
 4. Workflow Task Center UI  
 5. ROUTER_SPECS honesty + Postgres Wave 01 runbook  
 6. Design tokens + Wave 01 CI smoke  
+7. **Phase A complete:** Healthcare loop + money-path 038–045 + activate→nav tests  
+8. **Wave 03 activated:** intelligence smoke (search/analytics/AI)  
+9. **Wave 04 activated:** privacy/DR runbooks + policy desk + perf baseline  
+10. **Wave 05 gated:** AutonomyGate deny-by-default + flag/policy/workflow requirements  
 
 ## Definition of Functional
 

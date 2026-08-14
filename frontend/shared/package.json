@@ -13,7 +13,7 @@
   "scripts": {
     "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
-    "test:unit": "tsx --test src/platform/applicationRegistry.test.ts"
+    "test:unit": "tsx --test src/platform/applicationRegistry.test.ts src/platform/activateNavGate.test.ts"
   },
   "peerDependencies": {
     "react": "^19.0.0",

@@ -70,3 +70,29 @@ async def test_inventory_stock_adjusted_noted():
     # no crash; prescriptions unchanged
     listed = await get_pharmacy_service().list_prescriptions(tenant)
     assert listed.unwrap()["total"] == 0
+
+
+@pytest.mark.asyncio
+async def test_clinic_encounter_completed_creates_review_rx():
+    tenant = "rx-acl-clinic"
+    encounter_id = "dddddddd-bbbb-cccc-dddd-eeeeeeeeeeee"
+    patient_id = "bbbbbbbb-2222-3333-4444-555555555555"
+
+    await InProcessEventBus.publish(
+        {
+            "event_name": "clinic.encounter.completed",
+            "event_id": "evt-rx-cln",
+            "tenant_id": tenant,
+            "correlation_id": "corr-rx-cln",
+            "payload": {
+                "encounter_id": encounter_id,
+                "patient_id": patient_id,
+            },
+        }
+    )
+
+    listed = await get_pharmacy_service().list_prescriptions(tenant)
+    items = listed.unwrap()["items"]
+    assert len(items) == 1
+    assert items[0]["rx_number"].startswith("CLN-")
+    assert items[0]["drug_code"] == "REVIEW"

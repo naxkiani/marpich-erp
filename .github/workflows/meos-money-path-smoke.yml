@@ -1,0 +1,81 @@
+name: MEOS Money-Path Smoke
+
+on:
+  push:
+    branches: [main, "feature/**"]
+  pull_request:
+    branches: [main]
+
+jobs:
+  money-path-roundtrip:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install backend
+        run: |
+          python -m pip install -U pip
+          pip install -e ".[dev]" || pip install -e .
+          pip install pytest
+      - name: Money-path document round-trips
+        run: |
+          pytest -q \
+            contexts/financial_kernel/tests/test_money_path_postgres_roundtrip.py \
+            contexts/banking/tests/test_money_path_postgres_roundtrip.py \
+            contexts/treasury/tests/test_money_path_postgres_roundtrip.py \
+            --maxfail=3
+
+  money-path-migrations:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: marpich
+          POSTGRES_PASSWORD: marpich
+          POSTGRES_DB: marpich_platform
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U marpich -d marpich_platform"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: "5432"
+      PGUSER: marpich
+      PGPASSWORD: marpich
+      PGDATABASE: marpich_platform
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install psql
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client
+      - name: Apply migrations including 040–045
+        run: ./scripts/run-migrations.sh
+      - name: Assert money-path schemas exist
+        run: |
+          psql -h "$PGHOST" -p "$PGPORT" -U "$PGUSER" -d "$PGDATABASE" -v ON_ERROR_STOP=1 <<'SQL'
+            SELECT to_regclass('financial_kernel.journals') IS NOT NULL AS fk_journals;
+            SELECT to_regclass('banking.accounts') IS NOT NULL AS banking_accounts;
+            SELECT to_regclass('laboratory.test_orders') IS NOT NULL AS lab_orders;
+            SELECT to_regclass('pharmacy.prescriptions') IS NOT NULL AS pharmacy_rx;
+          SQL
+          for v in \
+            038_hospital_care_event_projections.sql \
+            039_laboratory_pharmacy_postgres.sql \
+            040_financial_kernel_money_path.sql \
+            041_banking_money_path.sql \
+            042_treasury_money_path.sql \
+            043_federation_sor_depth.sql \
+            044_banking_deposit_loan_money_path.sql \
+            045_treasury_recon_liquidity_satellites.sql; do
+            psql -h "$PGHOST" -p "$PGPORT" -U "$PGUSER" -d "$PGDATABASE" -tAc \
+              "SELECT 1 FROM platform.schema_migrations WHERE version='${v}'" | grep -q 1
+            echo "ok ${v}"
+          done

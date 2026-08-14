@@ -335,6 +335,15 @@ export const APPLICATION_NAV: AppNavItem[] = [
     moduleIds: ["platform.workflow"],
   },
   {
+    id: "policy",
+    label: "Policy",
+    labelKey: "nav.app.policy",
+    href: "/enterprise/policies",
+    group: "platform",
+    keywords: ["compliance", "governance", "evaluate"],
+    permission: ["policies.evaluate", "policies.read"],
+  },
+  {
     id: "federation",
     label: "Federation",
     labelKey: "nav.app.federation",
