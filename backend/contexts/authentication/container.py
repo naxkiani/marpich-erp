@@ -11,8 +11,15 @@ from contexts.authentication.infrastructure.persistence.authentication_memory_st
     InMemoryWebAuthnChallengeStore,
     InMemoryWebAuthnCredentialRepository,
 )
+from contexts.authentication.infrastructure.persistence.authentication_postgres_store import (
+    PostgresAuthenticationProfileRepository,
+    PostgresOidcProviderRepository,
+    PostgresWebAuthnCredentialRepository,
+    _RefCounterMixin as _AuthPgRefCounter,
+)
 from contexts.policy.container import get_policy_evaluator
 from shared.infrastructure.messaging.event_bus import InProcessEventBus
+from shared.infrastructure.settings import use_postgres
 
 _service: AuthenticationApplicationService | None = None
 _registered = False
@@ -21,10 +28,18 @@ _registered = False
 def get_authentication_service() -> AuthenticationApplicationService:
     global _service, _registered
     if _service is None:
+        if use_postgres():
+            profiles: object = PostgresAuthenticationProfileRepository()
+            credentials: object = PostgresWebAuthnCredentialRepository()
+            providers: object = PostgresOidcProviderRepository()
+        else:
+            profiles = InMemoryAuthenticationProfileRepository()
+            credentials = InMemoryWebAuthnCredentialRepository()
+            providers = InMemoryOidcProviderRepository()
         _service = AuthenticationApplicationService(
-            profiles=InMemoryAuthenticationProfileRepository(),
-            credentials=InMemoryWebAuthnCredentialRepository(),
-            providers=InMemoryOidcProviderRepository(),
+            profiles=profiles,
+            credentials=credentials,
+            providers=providers,
             challenges=InMemoryWebAuthnChallengeStore(),
             oidc_states=InMemoryOidcStateStore(),
             identity=IdentityTokenAdapter(),
@@ -41,3 +56,4 @@ def reset_authentication_service() -> None:
     _service = None
     _registered = False
     InMemoryAuthenticationStore.reset()
+    _AuthPgRefCounter.reset_counters()
