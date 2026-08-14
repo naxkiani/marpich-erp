@@ -9,8 +9,16 @@ from contexts.identity_risk.infrastructure.persistence.identity_risk_memory_stor
     InMemoryRiskScoreRepository,
     InMemoryRiskSignalRepository,
 )
+from contexts.identity_risk.infrastructure.persistence.identity_risk_postgres_store import (
+    PostgresAnomalyAlertRepository,
+    PostgresRiskProfileRepository,
+    PostgresRiskScoreRepository,
+    PostgresRiskSignalRepository,
+    _RefCounterMixin as _RiskPgRefCounter,
+)
 from contexts.policy.container import get_policy_evaluator
 from shared.infrastructure.messaging.event_bus import InProcessEventBus
+from shared.infrastructure.settings import use_postgres
 
 _service: IdentityRiskApplicationService | None = None
 _registered = False
@@ -19,11 +27,21 @@ _registered = False
 def get_identity_risk_service() -> IdentityRiskApplicationService:
     global _service, _registered
     if _service is None:
+        if use_postgres():
+            profiles: object = PostgresRiskProfileRepository()
+            signals: object = PostgresRiskSignalRepository()
+            scores: object = PostgresRiskScoreRepository()
+            alerts: object = PostgresAnomalyAlertRepository()
+        else:
+            profiles = InMemoryRiskProfileRepository()
+            signals = InMemoryRiskSignalRepository()
+            scores = InMemoryRiskScoreRepository()
+            alerts = InMemoryAnomalyAlertRepository()
         _service = IdentityRiskApplicationService(
-            profiles=InMemoryRiskProfileRepository(),
-            signals=InMemoryRiskSignalRepository(),
-            scores=InMemoryRiskScoreRepository(),
-            alerts=InMemoryAnomalyAlertRepository(),
+            profiles=profiles,
+            signals=signals,
+            scores=scores,
+            alerts=alerts,
             policy_evaluator=get_policy_evaluator(),
         )
     if not _registered:
@@ -42,3 +60,4 @@ def reset_identity_risk_service() -> None:
     _service = None
     _registered = False
     InMemoryIdentityRiskStore.reset()
+    _RiskPgRefCounter.reset_counters()

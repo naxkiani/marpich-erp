@@ -12,8 +12,8 @@ from contexts.financial_kernel.application.service import FinancialKernelApplica
 logger = logging.getLogger(__name__)
 
 _KEY_CHAIN: dict[str, list[str]] = {
-    "bank": ["bank", "cash", "treasury_cash"],
-    "cash": ["cash", "treasury_cash", "pos_cash"],
+    "bank": ["bank", "cash", "treasury_cash", "cash_reserves"],
+    "cash": ["cash", "treasury_cash", "pos_cash", "cash_reserves"],
     "petty_cash": ["petty_cash", "cash", "treasury_cash"],
     "vault": ["cash", "treasury_cash"],
     "safe": ["cash", "treasury_cash"],
