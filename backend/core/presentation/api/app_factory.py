@@ -99,6 +99,14 @@ def create_app(
         allow_headers=["*"],
     )
 
+    # Register routers at build time so ASGI tests without lifespan still resolve
+    # /api/v1/* routes. Lifespan configure_application remains idempotent.
+    configure_application(
+        application,
+        profile=app_profile,
+        startup_mode=app_startup_mode,
+    )
+
     @application.get("/api/v1/health", tags=["Monitoring"])
     async def health() -> dict[str, str]:
         return {

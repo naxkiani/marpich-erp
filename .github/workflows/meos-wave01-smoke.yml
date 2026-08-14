@@ -94,7 +94,8 @@ jobs:
           node-version: "22"
       - uses: pnpm/action-setup@v4
         with:
-          version: 9
+          # Must match root package.json "packageManager" (pnpm/action-setup rejects major-only).
+          version: 9.15.0
       - name: Install
         run: pnpm install --frozen-lockfile || pnpm install
       - name: Typecheck shared + core + auth-provider

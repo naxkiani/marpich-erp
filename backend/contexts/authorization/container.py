@@ -45,6 +45,11 @@ def get_authorization_service() -> AuthorizationApplicationService:
     return _service
 
 
+def get_authorization_evaluator() -> AuthorizationApplicationService:
+    """PEP alias — Documents and peers depend on IAuthorizationEvaluator."""
+    return get_authorization_service()
+
+
 def reset_authorization_service() -> None:
     global _service, _registered, _cache
     _service = None
