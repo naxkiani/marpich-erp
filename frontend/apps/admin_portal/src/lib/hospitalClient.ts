@@ -171,6 +171,14 @@ export async function startHospitalEncounter(
   return apiPost("/api/v1/hospital/encounters", session, body);
 }
 
+export async function documentHospitalEncounter(
+  session: ApiSession,
+  encounterId: string,
+  body: { procedure_codes?: string[]; diagnosis_codes?: string[] } = {},
+): Promise<HospitalEncounter> {
+  return apiPost(`/api/v1/hospital/encounters/${encounterId}/document`, session, body);
+}
+
 export async function completeHospitalEncounter(
   session: ApiSession,
   encounterId: string,

@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
-from typing import Any
+from typing import Any, Protocol
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -15,12 +15,37 @@ from shared.infrastructure.observability.telemetry import setup_observability, s
 from shared.infrastructure.settings import settings
 
 
-def _try_import(attr: str, module: str) -> Any | None:
-    try:
-        mod = __import__(module, fromlist=[attr])
-        return getattr(mod, attr)
-    except (ModuleNotFoundError, AttributeError):
+class _LifecycleWorker(Protocol):
+    async def start(self) -> None: ...
+    async def stop(self) -> None: ...
+
+
+class _NoopLifecycle:
+    async def start(self) -> None:
         return None
+
+    async def stop(self) -> None:
+        return None
+
+
+def _optional_orchestration_worker() -> _LifecycleWorker | None:
+    """Message orchestration context may be absent when sources are not restored."""
+    try:
+        from contexts.enterprise_message_orchestration.infrastructure.workers.orchestration_worker import (
+            get_orchestration_worker,
+        )
+    except ModuleNotFoundError:
+        return None
+    return get_orchestration_worker()
+
+
+def _transport_registry() -> _LifecycleWorker:
+    """Prefer shared transport registry; fall back to no-op when module is missing."""
+    try:
+        from shared.infrastructure.messaging.transport_registry import get_transport_registry
+    except ModuleNotFoundError:
+        return _NoopLifecycle()
+    return get_transport_registry()
 
 
 def create_app(
@@ -40,19 +65,10 @@ def create_app(
             startup_mode=app_startup_mode,
         )
         dispatcher = get_outbox_dispatcher()
-        get_transport_registry = _try_import(
-            "get_transport_registry",
-            "shared.infrastructure.messaging.transport_registry",
-        )
-        transport = get_transport_registry() if get_transport_registry else None
-        if transport is not None:
-            await transport.start()
+        transport = _transport_registry()
+        await transport.start()
         await dispatcher.start()
-        get_orchestration_worker = _try_import(
-            "get_orchestration_worker",
-            "contexts.enterprise_message_orchestration.infrastructure.workers.orchestration_worker",
-        )
-        orchestration_worker = get_orchestration_worker() if get_orchestration_worker else None
+        orchestration_worker = _optional_orchestration_worker()
         if orchestration_worker is not None:
             await orchestration_worker.start()
         setup_observability(app)
@@ -60,8 +76,7 @@ def create_app(
         if orchestration_worker is not None:
             await orchestration_worker.stop()
         await dispatcher.stop()
-        if transport is not None:
-            await transport.stop()
+        await transport.stop()
         shutdown_observability()
 
     application = FastAPI(

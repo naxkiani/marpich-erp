@@ -1,4 +1,4 @@
-"""Encounter aggregate — Hospital bounded context."""
+"""Encounter aggregate — CAP-HLT-005 Start → Document → Complete."""
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -9,7 +9,10 @@ from shared.domain.aggregates.aggregate_root import AggregateRoot
 from shared.domain.value_objects.tenant_id import TenantId
 from shared.domain.value_objects.unique_id import UniqueId
 
-from contexts.hospital.domain.events.integration_events import EncounterCompletedIntegration
+from contexts.hospital.domain.events.integration_events import (
+    EncounterCompletedIntegration,
+    EncounterDocumentedIntegration,
+)
 
 
 class EncounterStatus(StrEnum):
@@ -46,9 +49,44 @@ class Encounter(AggregateRoot):
 
     def add_procedure(self, code: str) -> None:
         if self.status != EncounterStatus.IN_PROGRESS:
-            raise ValueError("Cannot modify completed encounter")
-        if code not in self.procedure_codes:
-            self.procedure_codes.append(code)
+            raise ValueError("hospital.errors.encounter_not_in_progress")
+        normalized = code.strip()
+        if not normalized:
+            return
+        if normalized not in self.procedure_codes:
+            self.procedure_codes.append(normalized)
+
+    def add_diagnosis(self, code: str) -> None:
+        if self.status != EncounterStatus.IN_PROGRESS:
+            raise ValueError("hospital.errors.encounter_not_in_progress")
+        normalized = code.strip()
+        if not normalized:
+            return
+        if normalized not in self.diagnosis_codes:
+            self.diagnosis_codes.append(normalized)
+
+    def document(
+        self,
+        *,
+        procedure_codes: list[str] | None,
+        diagnosis_codes: list[str] | None,
+        correlation_id: str,
+    ) -> EncounterDocumentedIntegration:
+        if self.status != EncounterStatus.IN_PROGRESS:
+            raise ValueError("hospital.errors.encounter_not_in_progress")
+        for code in procedure_codes or []:
+            self.add_procedure(code)
+        for code in diagnosis_codes or []:
+            self.add_diagnosis(code)
+        return EncounterDocumentedIntegration(
+            tenant_id=TenantId.create(self.tenant_id),
+            correlation_id=correlation_id,
+            encounter_id=self.id,
+            patient_id=self.patient_id,
+            admission_id=self.admission_id,
+            procedure_codes=tuple(self.procedure_codes),
+            diagnosis_codes=tuple(self.diagnosis_codes),
+        )
 
     def complete(
         self,
@@ -56,7 +94,9 @@ class Encounter(AggregateRoot):
         correlation_id: str,
     ) -> EncounterCompletedIntegration:
         if self.status == EncounterStatus.COMPLETED:
-            raise ValueError("Encounter already completed")
+            raise ValueError("hospital.errors.encounter_already_completed")
+        if self.status != EncounterStatus.IN_PROGRESS:
+            raise ValueError("hospital.errors.encounter_not_in_progress")
         self.status = EncounterStatus.COMPLETED
         self.completed_at = datetime.now(UTC)
         return EncounterCompletedIntegration(

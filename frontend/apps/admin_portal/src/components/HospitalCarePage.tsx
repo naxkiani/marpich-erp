@@ -23,6 +23,7 @@ import {
   completeHospitalEncounter,
   createHospitalBed,
   dischargeHospitalAdmission,
+  documentHospitalEncounter,
   fetchBillings,
   fetchHospitalAdmissions,
   fetchHospitalBeds,
@@ -149,6 +150,15 @@ export function HospitalCarePage() {
   const [filterStatus, setFilterStatus] = useState("");
   const [confirmDischarge, setConfirmDischarge] = useState(false);
   const [draftReady, setDraftReady] = useState(false);
+  const [procedureCodes, setProcedureCodes] = useState("99223");
+  const [diagnosisCodes, setDiagnosisCodes] = useState("J18.9");
+
+  const parseCodes = useCallback((raw: string) => {
+    return raw
+      .split(/[,;\s]+/)
+      .map((c) => c.trim())
+      .filter(Boolean);
+  }, []);
 
   const draft = useMemo(
     () => ({ mrn, firstName, lastName, dob, ward, room, bedCode }),
@@ -840,17 +850,18 @@ export function HospitalCarePage() {
                       const enc = await startHospitalEncounter(session, {
                         admission_id: selectedAdmissionId,
                       });
-                      await completeHospitalEncounter(session, enc.id, {
-                        procedure_codes: ["99223"],
-                        diagnosis_codes: ["J18.9"],
+                      await documentHospitalEncounter(session, enc.id, {
+                        procedure_codes: parseCodes(procedureCodes),
+                        diagnosis_codes: parseCodes(diagnosisCodes),
                       });
-                      const billing = await waitForBillingByEncounter(session, enc.id);
+                      const completed = await completeHospitalEncounter(session, enc.id, {});
+                      const billing = await waitForBillingByEncounter(session, completed.id);
                       if (billing) {
                         setBillingsByEncounter((prev) => ({
                           ...prev,
-                          [enc.id]: billing,
+                          [completed.id]: billing,
                         }));
-                        setSelectedEncounterId(enc.id);
+                        setSelectedEncounterId(completed.id);
                         push({
                           message: `${t("hospital.billingPosted")}: ${billing.total_amount} ${billing.currency ?? "USD"}`,
                         });
@@ -1117,24 +1128,105 @@ export function HospitalCarePage() {
               ) : null}
 
               {tab === "encounters" ? (
-                encounters.length === 0 ? (
+                <>
+                  <div className="mp-hosp-seed-bar mp-hosp-encounter-bar">
+                    <label className="mp-field">
+                      <span>{t("hospital.procedureCodes")}</span>
+                      <input
+                        value={procedureCodes}
+                        onChange={(e) => setProcedureCodes(e.target.value)}
+                        disabled={busy}
+                      />
+                    </label>
+                    <label className="mp-field">
+                      <span>{t("hospital.diagnosisCodes")}</span>
+                      <input
+                        value={diagnosisCodes}
+                        onChange={(e) => setDiagnosisCodes(e.target.value)}
+                        disabled={busy}
+                      />
+                    </label>
+                    <button
+                      type="button"
+                      className="mp-btn"
+                      disabled={busy || !canActOnAdmission}
+                      onClick={() =>
+                        void runAction(t("hospital.startEncounter"), async () => {
+                          const enc = await startHospitalEncounter(session, {
+                            admission_id: selectedAdmissionId,
+                          });
+                          setSelectedEncounterId(enc.id);
+                        })
+                      }
+                    >
+                      {t("hospital.startEncounter")}
+                    </button>
+                    <button
+                      type="button"
+                      className="mp-btn"
+                      disabled={busy || !selectedEncounterId}
+                      onClick={() =>
+                        void runAction(t("hospital.documentEncounter"), async () => {
+                          await documentHospitalEncounter(session, selectedEncounterId, {
+                            procedure_codes: parseCodes(procedureCodes),
+                            diagnosis_codes: parseCodes(diagnosisCodes),
+                          });
+                        })
+                      }
+                    >
+                      {t("hospital.documentEncounter")}
+                    </button>
+                    <button
+                      type="button"
+                      className="mp-btn"
+                      disabled={busy || !selectedEncounterId}
+                      onClick={() =>
+                        void runAction(t("hospital.completeEncounter"), async () => {
+                          const completed = await completeHospitalEncounter(
+                            session,
+                            selectedEncounterId,
+                            {
+                              procedure_codes: parseCodes(procedureCodes),
+                              diagnosis_codes: parseCodes(diagnosisCodes),
+                            },
+                          );
+                          const billing = await waitForBillingByEncounter(
+                            session,
+                            completed.id,
+                          );
+                          if (billing) {
+                            setBillingsByEncounter((prev) => ({
+                              ...prev,
+                              [completed.id]: billing,
+                            }));
+                            push({
+                              message: `${t("hospital.billingPosted")}: ${billing.total_amount} ${billing.currency ?? "USD"}`,
+                            });
+                          } else {
+                            push({ message: t("hospital.billingPending") });
+                          }
+                        })
+                      }
+                    >
+                      {t("hospital.completeEncounter")}
+                    </button>
+                    <button
+                      type="button"
+                      className="mp-btn"
+                      disabled={busy}
+                      onClick={() => void onSeedCareEvents()}
+                    >
+                      {t("hospital.seedCareEvents")}
+                    </button>
+                    <p className="mp-field-help">{t("hospital.encounterLifecycleHelp")}</p>
+                  </div>
+                  {encounters.length === 0 ? (
                   <EmptyState
                     title={t("hospital.noEncounters")}
                     description={t("hospital.noEncountersHint")}
                   />
                 ) : (
                   <>
-                    <div className="mp-hosp-seed-bar">
-                      <button
-                        type="button"
-                        className="mp-btn"
-                        disabled={busy}
-                        onClick={() => void onSeedCareEvents()}
-                      >
-                        {t("hospital.seedCareEvents")}
-                      </button>
-                      <p className="mp-field-help">{t("hospital.seedCareEventsHelp")}</p>
-                    </div>
                     <DataTable
                       columns={[
                         { key: "id", header: t("hospital.col.encounter"), sortable: true },
@@ -1269,7 +1361,8 @@ export function HospitalCarePage() {
                       </section>
                     ) : null}
                   </>
-                )
+                )}
+                </>
               ) : null}
             </div>
           </div>

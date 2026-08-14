@@ -126,6 +126,60 @@ async def test_hospital_to_accounting_event_flow(client):
 
 
 @pytest.mark.asyncio
+async def test_hospital_demo_procedure_99223_fee(client):
+    """UI demo uses 99223 — fee schedule must price it for visible billing totals."""
+    tenant = "fee-hospital"
+    headers = await _auth_headers(client, tenant)
+
+    patient = await client.post(
+        "/api/v1/hospital/patients",
+        json={
+            "mrn": "MRN-99223",
+            "first_name": "Demo",
+            "last_name": "Patient",
+            "date_of_birth": "1992-03-03",
+        },
+        headers=headers,
+    )
+    patient_id = patient.json()["data"]["id"]
+    admission = await client.post(
+        "/api/v1/hospital/admissions",
+        json={"patient_id": patient_id, "ward": "ICU-A"},
+        headers=headers,
+    )
+    admission_id = admission.json()["data"]["id"]
+    encounter = await client.post(
+        "/api/v1/hospital/encounters",
+        json={"admission_id": admission_id},
+        headers=headers,
+    )
+    encounter_id = encounter.json()["data"]["id"]
+    complete = await client.post(
+        f"/api/v1/hospital/encounters/{encounter_id}/complete",
+        json={"procedure_codes": ["99223"], "diagnosis_codes": ["J18.9"]},
+        headers=headers,
+    )
+    assert complete.status_code == 200
+    billing = await client.get(
+        f"/api/v1/accounting/billings/by-encounter/{encounter_id}",
+        headers=headers,
+    )
+    assert billing.status_code == 200, billing.text
+    data = billing.json()["data"]
+    assert data["total_amount"] == 350.0
+    assert data["status"] == "posted"
+
+
+@pytest.mark.unit
+def test_hospital_staff_can_read_billing():
+    from contexts.identity.domain.aggregates.role import Role
+
+    role = Role.create_hospital_staff("hospital-demo")
+    assert "accounting.billing.read" in role.permission_ids
+    assert "hospital.encounters.write" in role.permission_ids
+
+
+@pytest.mark.asyncio
 async def test_accounting_idempotent_on_duplicate_event(client):
     tenant = "dup-hospital"
     headers = await _auth_headers(client, tenant)
