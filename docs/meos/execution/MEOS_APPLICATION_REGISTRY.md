@@ -74,13 +74,27 @@
 | `enterprise_connector_framework` | IMPLEMENTED | `/enterprise/connector-framework` |
 | `enterprise_integration_studio` | IMPLEMENTED | `/enterprise/integration-studio` |
 
-## Empty scaffolds (not ACTIVE)
+## Empty scaffolds (not ACTIVE) — P2 keep coming_soon
 
-`construction`, `currency_exchange`, `government`, `hotel`, `islamic_banking`, `manufacturing`, `ngo`, `projects`, `real_estate`, `restaurant`, `school`, `warehouse` — status **SCAFFOLDED** / empty tree.
+`construction`, `currency_exchange`, `government`, `hotel`, `islamic_banking`, `manufacturing`, `ngo`, `projects`, `real_estate`, `restaurant`, `school`, `warehouse` — status **SCAFFOLDED** / empty tree. Frozen in `EMPTY_INDUSTRY_SCAFFOLD_IDS` + `DEFERRED_CONTEXT_IDS`. **Do not expand** without a Functional vertical slice.
 
-## Missing packages referenced by ROUTER_SPECS (gated)
+## Blueprint fabrics (not Functional) — P2 stop catalog inflation
+
+| App ID | Status | Notes |
+|--------|--------|-------|
+| `quantum` | BLUEPRINT | P215 catalogs/docs; APIs off unless `MARPICH_ENABLE_BLUEPRINT_APIS` or `profile=blueprint` |
+| `robotics` | BLUEPRINT | P216 |
+| `biotechnology` | BLUEPRINT | P217 |
+| `space` | BLUEPRINT | P218 |
+| `civilization` | BLUEPRINT | P219 |
+
+Law: `docs/adr/p2-blueprint-scaffold-honesty.md`. Blueprint ≠ TESTED / PRODUCTION_READY / ACTIVE.
+
+## Missing packages referenced by ROUTER_SPECS (gated) — P3 contract
 
 `mfa`, `adaptive_authentication`, `reporting`, `fraud_detection`, `data_protection`, `ai_governance`, `ai_security`, `ai_cfo_assistant`, `enterprise_*` extras, `grc`, `security`, financial AI extras — see Architecture Status. Status **DESIGNED** (no package).
+
+**P3:** module-path baseline `backend/tests/architecture/missing_router_packages_baseline.json` + contracts `tests/contracts/test_router_package_contracts.py` + CI `meos-p3-router-contracts.yml`. New missing ROUTER/SERVICE specs fail CI; landing a package requires shrinking the baseline (ADR: `docs/adr/p3-router-package-contracts.md`).
 
 ## Score summary (honest)
 
@@ -92,3 +106,8 @@
 | Persistence (default memory) | 65 (Postgres :5433 + CRM + Sales + Inventory + AR invoices) |
 | CI / tests gate | 82 (Wave 01 smoke + Wave 02 Q2C memory/postgres loop) |
 | Production readiness | 35 |
+
+## Status legend (extended)
+
+`DESIGNED` → `SCAFFOLDED` → **`BLUEPRINT`** (catalog/docs only) → `IMPLEMENTED` → … → `ACTIVE`  
+`BLUEPRINT` never counts toward production readiness scores.

@@ -456,9 +456,9 @@ QUANTUM = BoundedContext(
     context_type=BoundedContextType.PLATFORM,
     schema_name="quantum",
     description=(
-        "Quantum Intelligence Fabric — infrastructure, algorithms, Quantum AI/ML, "
-        "optimization/simulation, security bindings, data intelligence, networking, "
-        "governance/ethics/compliance — SoR for P215; PQC remains secrets (P209)"
+        "BLUEPRINT (P2) — Quantum Intelligence Fabric catalogs/docs; not a Functional "
+        "app. SoR for P215 architecture; enable APIs only via MARPICH_ENABLE_BLUEPRINT_APIS "
+        "or profile=blueprint. PQC remains secrets (P209)."
     ),
     publishes=(
         "quantum.governance.policy.created",
@@ -479,9 +479,9 @@ ROBOTICS = BoundedContext(
     context_type=BoundedContextType.PLATFORM,
     schema_name="robotics",
     description=(
-        "MEOS Cyber-Physical Intelligence Fabric — robotics OS, autonomous machines, "
-        "physical AI, industrial intelligence, fleet, HRI, edge — SoR for P216; "
-        "IIoT connectors via Integration Platform"
+        "BLUEPRINT (P2) — Cyber-Physical Intelligence Fabric catalogs/docs; not a "
+        "Functional app. SoR for P216 architecture; APIs gated until blueprint opt-in. "
+        "IIoT connectors via Integration Platform."
     ),
     publishes=(
         "robotics.foundation.robot.created",
@@ -503,10 +503,9 @@ BIOTECHNOLOGY = BoundedContext(
     context_type=BoundedContextType.PLATFORM,
     schema_name="biotechnology",
     description=(
-        "MEOS Bio Intelligence Fabric — biotechnology research, synthetic biology, "
-        "bio-AI, digital health, precision medicine, biological digital twins — "
-        "SoR for P217; clinical EMR/LIMS/pharmacy remain peer SoRs; research "
-        "connectors via Integration Platform"
+        "BLUEPRINT (P2) — Bio Intelligence Fabric catalogs/docs; not a Functional app. "
+        "SoR for P217 architecture; APIs gated until blueprint opt-in. Clinical "
+        "EMR/LIMS/pharmacy remain peer SoRs."
     ),
     publishes=(
         "biotechnology.foundation.project.created",
@@ -529,10 +528,8 @@ SPACE = BoundedContext(
     context_type=BoundedContextType.PLATFORM,
     schema_name="space",
     description=(
-        "MEOS Space Intelligence Fabric — space AI, orbital civilization, "
-        "autonomous space operations, space digital twins, and space trust — "
-        "SoR for P218; quantum/robotics/bio remain peer SoRs; ground/space "
-        "telemetry connectors via Integration Platform"
+        "BLUEPRINT (P2) — Space Intelligence Fabric catalogs/docs; not a Functional "
+        "app. SoR for P218 architecture; APIs gated until blueprint opt-in."
     ),
     publishes=(
         "space.foundation.insight.generated",
@@ -556,10 +553,8 @@ CIVILIZATION = BoundedContext(
     context_type=BoundedContextType.PLATFORM,
     schema_name="civilization",
     description=(
-        "MEOS Civilization Operating System Fabric — civilization kernel, planetary "
-        "intelligence, infrastructure intelligence, human civilization management, "
-        "digital twin and governance — SoR for P219; AI/quantum/robotics/bio/space/"
-        "intelligence-nexus remain peer SoRs; external planetary systems via Integration Platform"
+        "BLUEPRINT (P2) — Civilization OS Fabric catalogs/docs; not a Functional app. "
+        "SoR for P219 architecture; APIs gated until blueprint opt-in."
     ),
     publishes=(
         "civilization.foundation.initialized",

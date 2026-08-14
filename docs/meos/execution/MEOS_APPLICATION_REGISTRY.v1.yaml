@@ -216,6 +216,52 @@ applications:
     backend: true
     routes: ["/payroll"]
     score: 68
+  - id: quantum
+    name: Quantum Intelligence Fabric
+    domain: blueprint
+    status: BLUEPRINT
+    wave: null
+    frontend: false
+    backend: true
+    api_prefix: /api/v1/quantum
+    score: 15
+    notes: P2 gated — catalogs/docs only unless MARPICH_ENABLE_BLUEPRINT_APIS
+  - id: robotics
+    name: Robotics / Cyber-Physical Fabric
+    domain: blueprint
+    status: BLUEPRINT
+    wave: null
+    frontend: false
+    backend: true
+    api_prefix: /api/v1/robotics
+    score: 15
+  - id: biotechnology
+    name: Bio Intelligence Fabric
+    domain: blueprint
+    status: BLUEPRINT
+    wave: null
+    frontend: false
+    backend: true
+    api_prefix: /api/v1/biotechnology
+    score: 15
+  - id: space
+    name: Space Intelligence Fabric
+    domain: blueprint
+    status: BLUEPRINT
+    wave: null
+    frontend: false
+    backend: true
+    api_prefix: /api/v1/space
+    score: 15
+  - id: civilization
+    name: Civilization OS Fabric
+    domain: blueprint
+    status: BLUEPRINT
+    wave: null
+    frontend: false
+    backend: true
+    api_prefix: /api/v1/civilization
+    score: 15
 nav_groups:
   - id: home
     label: Home
@@ -262,6 +308,10 @@ verification:
   money_path_roundtrip_ci: verified
   ui_activate_nav_gate_unit: verified
   wave02_audit_proof_script: verified
+  p2_blueprint_fabrics_gated: verified
+  p2_empty_scaffolds_coming_soon: verified
+  p3_router_package_contracts: verified
+  p3_missing_router_baseline: verified
   notes: >
     Shell widgets use marpich_auth_session headers; Workflow Task Center at
     /enterprise/workflows; AuthZ filters nav/command/search; orphan FE clients gated;
@@ -278,5 +328,9 @@ verification:
     Clinic encounter → lab/pharmacy REVIEW ACL + lab result notes; money-path migrations 038–045;
     Tax CAP-ENT-026 payroll ACL liability + file return (API+UI+events+migration 055);
     Wave 02 harden: scripts/meos-wave02-q2c-loop.sh + .github/workflows/meos-wave02-smoke.yml.
+    P2: quantum/robotics/biotechnology/space/civilization are BLUEPRINT (APIs gated);
+    12 empty industry scaffolds remain coming_soon / deferred — no catalog inflation.
+    P3: missing ROUTER/SERVICE module baseline + CI fail on growth
+    (missing_router_packages_baseline.json / meos-p3-router-contracts.yml).
     Overall NOT_READY.
 

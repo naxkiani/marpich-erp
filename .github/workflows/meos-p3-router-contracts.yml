@@ -1,0 +1,39 @@
+name: MEOS P3 Router Package Contracts
+
+on:
+  push:
+    branches: [main, "feature/**"]
+  pull_request:
+    branches: [main]
+
+jobs:
+  router-package-contracts:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install backend
+        run: |
+          python -m pip install -U pip
+          pip install -e ".[dev]" || pip install -e .
+          pip install pytest
+      - name: P3 router package contracts
+        env:
+          PERSISTENCE_BACKEND: memory
+          MARPICH_ENABLE_BLUEPRINT_APIS: "false"
+        run: |
+          pytest -q \
+            tests/contracts/test_router_package_contracts.py \
+            tests/architecture/test_deferred_context_honesty.py \
+            tests/architecture/test_p2_blueprint_honesty.py \
+            --maxfail=5
+      - name: P3 check script
+        working-directory: .
+        run: |
+          chmod +x scripts/check-missing-router-packages.py
+          python3 scripts/check-missing-router-packages.py
