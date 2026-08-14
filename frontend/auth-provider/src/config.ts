@@ -1,4 +1,6 @@
-export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000";
+export const API_URL =
+  (globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env
+    ?.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000";
 
 export const SESSION_STORAGE_KEY = "marpich_auth_session";
 
