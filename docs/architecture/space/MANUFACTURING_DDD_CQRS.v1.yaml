@@ -1,0 +1,16 @@
+apiVersion: marpich.io/v1
+kind: ManufacturingDddCqrs
+metadata:
+  prompt: P218-M
+  adr: "539"
+bounded_contexts: 8
+aggregates:
+  - SpaceFactoryAggregate
+  - ProductionOrderAggregate
+  - ManufacturingProcessAggregate
+  - MaterialAggregate
+  - RobotOperationAggregate
+  - QualityInspectionAggregate
+  - IndustrialResourceAggregate
+microservices: 10
+core_events: 10

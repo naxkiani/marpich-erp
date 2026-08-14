@@ -1,0 +1,95 @@
+/* Shared desk chrome — Modules / Wave 02 desks */
+
+.mp-desk-chrome {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.mp-desk-chrome-alert {
+  margin: 0;
+  color: var(--mp-danger);
+  font-size: 0.9rem;
+}
+
+.mp-desk-chrome-panel {
+  border: 1px solid var(--mp-border);
+  border-radius: var(--mp-radius);
+  background: var(--mp-bg-elevated);
+  overflow: hidden;
+}
+
+.mp-desk-chrome-head {
+  padding: 0.55rem 0.85rem;
+  background: var(--mp-bg-subtle, var(--mp-bg-muted));
+  border-block-end: 2px solid var(--mp-gold);
+}
+
+.mp-desk-chrome-head h2 {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 650;
+  color: var(--mp-fg);
+}
+
+.mp-desk-chrome-body {
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mp-desk-chrome-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  gap: 0.65rem;
+}
+
+.mp-desk-chrome-metric {
+  border: 1px solid var(--mp-border);
+  border-radius: var(--mp-radius-sm);
+  background: var(--mp-bg-elevated);
+  padding: 0.65rem 0.75rem;
+  border-block-start: 3px solid var(--mp-gold);
+}
+
+.mp-desk-chrome-metric span {
+  display: block;
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--mp-fg-muted);
+}
+
+.mp-desk-chrome-metric strong {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 1.25rem;
+  color: var(--mp-forest);
+}
+
+.mp-desk-chrome-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.mp-desk-chrome-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.mp-desk-chrome-form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.65rem;
+  align-items: end;
+}
+
+.mp-desk-chrome-form-row .mp-field {
+  margin: 0;
+}

@@ -1,0 +1,45 @@
+apiVersion: marpich.io/v1
+kind: IntelligenceNexusDddCqrs
+metadata:
+  prompt: P218-Z
+  adr: "552"
+bounded_contexts:
+  - Supreme Intelligence Management
+  - Civilization Intelligence
+  - Autonomous Agent Management
+  - Universal Knowledge Management
+  - Decision Intelligence
+  - Governance Intelligence
+  - Evolution Management
+aggregates:
+  - SupremeIntelligenceAggregate
+  - CivilizationNexusAggregate
+  - AgentNetworkAggregate
+  - KnowledgeUniverseAggregate
+  - DecisionAggregate
+  - GovernanceAggregate
+commands:
+  - CreateIntelligenceNetworkCommand
+  - ActivateControlPlaneCommand
+  - DeployAutonomousAgentCommand
+  - IntegrateUniversalKnowledgeCommand
+  - AuthorizeSupremeDecisionCommand
+  - ValidateNexusGovernanceCommand
+queries:
+  - GetIntelligenceCoreQuery
+  - GetCivilizationModelQuery
+  - GetAgentNetworkQuery
+  - GetKnowledgeUniverseQuery
+  - GetDecisionConfidenceQuery
+  - GetNexusGovernanceQuery
+events:
+  - IntelligenceNetworkCreatedEvent
+  - CivilizationModelUpdatedEvent
+  - AgentActivatedEvent
+  - KnowledgeIntegratedEvent
+  - DecisionOptimizedEvent
+  - GovernanceValidatedEvent
+  - EvolutionMilestoneReachedEvent
+  - SupremeIntelligenceExpandedEvent
+  - HumanAuthorityConfirmedEvent
+  - ControlPlaneActivatedEvent

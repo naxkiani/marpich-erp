@@ -1,0 +1,13 @@
+apiVersion: marpich.io/v1
+kind: ManufacturingArchitecture
+metadata:
+  prompt: P218-M
+  adr: "539"
+  fabric: meos_space_manufacturing_intelligence_fabric
+layers:
+  - L01 Space Industrial Infrastructure Layer
+  - L02 Production Intelligence Layer
+  - L03 Manufacturing Execution Layer
+  - L04 Autonomous Factory Layer
+  - L05 Space Economy Layer
+layer_count: 5

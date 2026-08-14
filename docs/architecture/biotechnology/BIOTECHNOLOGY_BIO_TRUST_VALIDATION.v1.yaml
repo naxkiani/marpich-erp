@@ -1,0 +1,11 @@
+# BIOTECHNOLOGY_BIO_TRUST_VALIDATION.v1.yaml — P217-Y
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioTrustValidation
+metadata:
+  phase: P217-Y
+  adr: "523"
+spec:
+  verdict_required: ENTERPRISE_GRADE
+  foundation: validate_bio_trust_foundation
+  dual_tests_required: true
+  expected_pytest_passed: 8

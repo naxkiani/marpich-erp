@@ -2,6 +2,7 @@
 
 import {
   AIAssistantPanel,
+  APPLICATION_NAV,
   Breadcrumb,
   CommandPalette,
   DirectionProvider,
@@ -38,34 +39,46 @@ export function MarpichProviders({ children }: { children: ReactNode }) {
 export function AppShell({
   children,
   nav,
+  commands: commandsProp,
 }: {
   children: ReactNode;
   nav?: ReactNode;
+  /** When provided (e.g. AuthZ-filtered), replaces default registry commands. */
+  commands?: CommandItem[];
 }) {
   const { t } = useLocale();
   const [commandOpen, setCommandOpen] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
 
-  const commands = useMemo<CommandItem[]>(
+  const defaultCommands = useMemo<CommandItem[]>(
     () => [
-      {
-        id: "home",
-        label: "Go to Dashboard",
-        shortcut: "G D",
+      ...APPLICATION_NAV.map((app) => ({
+        id: `nav-${app.id}`,
+        label: `Open ${app.label}`,
         onSelect: () => {
-          window.location.href = "/";
+          window.location.href = app.href;
         },
-      },
+      })),
       {
         id: "theme",
         label: "Toggle theme",
-        onSelect: () => document.documentElement.dataset.theme === "dark"
-          ? (document.documentElement.dataset.theme = "light")
-          : (document.documentElement.dataset.theme = "dark"),
+        onSelect: () =>
+          document.documentElement.dataset.theme === "dark"
+            ? (document.documentElement.dataset.theme = "light")
+            : (document.documentElement.dataset.theme = "dark"),
+      },
+      {
+        id: "ask-ai",
+        label: "Ask AI",
+        onSelect: () => {
+          document.querySelector<HTMLButtonElement>(".mp-btn-accent")?.click();
+        },
       },
     ],
     [],
   );
+  const commands = commandsProp ?? defaultCommands;
 
   const onCommandPalette = useCallback(() => setCommandOpen(true), []);
   const onFocusSearch = useCallback(() => {
@@ -76,11 +89,28 @@ export function AppShell({
   useGlobalKeyboardShortcuts({ onCommandPalette, onFocusSearch, onShowShortcuts });
 
   return (
-    <div className="mp-shell">
+    <div className={`mp-shell${navOpen ? " mp-nav-open" : ""}`}>
       <a href="#main-content" className="sr-only">
         Skip to content
       </a>
+      {navOpen ? (
+        <button
+          type="button"
+          className="mp-nav-backdrop"
+          aria-label="Close navigation"
+          onClick={() => setNavOpen(false)}
+        />
+      ) : null}
       <header className="mp-shell-header">
+        <button
+          type="button"
+          className="mp-btn mp-nav-toggle"
+          aria-label="Open navigation"
+          aria-expanded={navOpen}
+          onClick={() => setNavOpen((v) => !v)}
+        >
+          Menu
+        </button>
         <div className="mp-shell-brand">
           <strong>{t("app.name")}</strong>
         </div>
@@ -102,7 +132,11 @@ export function AppShell({
         </div>
       </header>
       <div className="mp-shell-body">
-        {nav ? <aside className="mp-shell-sidebar">{nav}</aside> : null}
+        {nav ? (
+          <aside className="mp-shell-sidebar" id="mp-shell-sidebar">
+            {nav}
+          </aside>
+        ) : null}
         <main id="main-content" className="mp-shell-main">
           {children}
         </main>
@@ -126,16 +160,11 @@ export function PageLayout({
   actions?: ReactNode;
   children: ReactNode;
 }) {
-  const crumbs = breadcrumb ?? [
-    { label: "Marpich", href: "/" },
-    { label: title },
-  ];
-
   return (
-    <div className="mp-page mp-animate-in">
+    <div className="mp-page">
       <header className="mp-page-header">
         <div>
-          <Breadcrumb items={crumbs} />
+          {breadcrumb ? <Breadcrumb items={breadcrumb} /> : null}
           <h1>{title}</h1>
           {subtitle ? <p className="mp-page-subtitle">{subtitle}</p> : null}
         </div>

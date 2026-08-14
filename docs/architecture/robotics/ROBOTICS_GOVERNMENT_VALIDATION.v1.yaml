@@ -1,0 +1,37 @@
+# ROBOTICS_GOVERNMENT_VALIDATION.v1.yaml — P216-T
+apiVersion: marpich.io/v1
+kind: RoboticsGovernmentValidationCatalog
+metadata:
+  phase: P216-T
+  adr: "492"
+spec:
+  quality_gates:
+    - Government Robotics Platform
+    - Autonomous Public Services
+    - Digital Government Intelligence
+    - Smart Governance Automation
+    - Citizen Intelligence Platform
+    - Policy Intelligence Platform
+    - Government Digital Twin
+    - Public Knowledge Graph
+    - CQRS Architecture
+    - Event Architecture
+    - Microservice Architecture
+    - Zero Trust Security
+    - Enterprise Integration
+  definition_of_done:
+    - Government Robotics Platform exists
+    - Autonomous Public Service Platform exists
+    - Digital Government Platform exists
+    - Citizen Intelligence Platform exists
+    - Policy Intelligence Platform exists
+    - Government Digital Twin exists
+    - Public Knowledge Graph exists
+    - Security Architecture exists
+    - CQRS Architecture exists
+    - Event Architecture exists
+    - Microservice Architecture exists
+    - Deployment Architecture exists
+    - Testing Architecture exists
+    - Foundation for P216-U exists
+  foundation_validator: validate_rb_government_foundation

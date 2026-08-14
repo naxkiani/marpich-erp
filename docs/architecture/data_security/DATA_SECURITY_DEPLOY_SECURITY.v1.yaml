@@ -1,0 +1,37 @@
+# P211-O — Deploy / DevSecOps security requirements
+version: "1.0"
+prompt_id: P211-O
+adr: "390"
+requirements:
+  - automated_deployment
+  - security_scanning
+  - scalable_infrastructure
+  - complete_monitoring
+  - defined_disaster_recovery
+  - runtime_security
+  - zero_trust_infrastructure
+  - signed_images
+  - network_policies
+  - pod_security_standards
+standards:
+  - iso_27001
+  - soc_2
+  - nist
+  - cis_kubernetes_benchmark
+  - gdpr
+permissions:
+  read: data_security.read
+  write: data_security.write
+  admin: data_security.admin
+  deploy: data_security.deploy.write
+audit:
+  via_integration_events: true
+  local_audit_tables_forbidden: true
+observability:
+  via_platform_otel: true
+  module_local_metrics_store_forbidden: true
+secrets:
+  via_p209: true
+  secrets_in_source_forbidden: true
+cyber:
+  via_p210_siem_soar_xdr: true

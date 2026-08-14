@@ -35,11 +35,26 @@ class LifecycleState(StrEnum):
     ACTIVE = "active"
     SUSPENDED = "suspended"
     TEMPORARILY_DISABLED = "temporarily_disabled"
+    UNDER_INVESTIGATION = "under_investigation"
     ARCHIVED = "archived"
     RECOVERY_PENDING = "recovery_pending"
     MERGED = "merged"
     SOFT_DELETED = "soft_deleted"
     HARD_DELETED = "hard_deleted"
+
+
+# Ultra-prompt aliases → canonical LifecycleState values
+STATE_ALIASES: dict[str, str] = {
+    "requested": LifecycleState.REGISTERED.value,
+    "pending_validation": LifecycleState.PENDING_VERIFICATION.value,
+    "approved": LifecycleState.VERIFIED.value,
+    "provisioned": LifecycleState.ACTIVE.value,
+    "operational": LifecycleState.ACTIVE.value,
+    "temporarily_suspended": LifecycleState.SUSPENDED.value,
+    "reactivated": LifecycleState.ACTIVE.value,
+    "inactive": LifecycleState.SOFT_DELETED.value,
+    "deleted": LifecycleState.HARD_DELETED.value,
+}
 
 
 class LifecycleAction(StrEnum):
@@ -64,6 +79,14 @@ class LifecycleAction(StrEnum):
     SOFT_DELETE = "soft_delete"
     HARD_DELETE = "hard_delete"
     CONSENT_MANAGEMENT = "consent_management"
+    # Joiner-Mover-Leaver (P201-A1)
+    JOINER = "joiner"
+    MOVER = "mover"
+    LEAVER = "leaver"
+    TRANSFER = "transfer"
+    ROLE_CHANGE = "role_change"
+    REHIRE = "rehire"
+    PLACE_UNDER_INVESTIGATION = "place_under_investigation"
 
 
 class VerificationStatus(StrEnum):
@@ -111,6 +134,7 @@ class LifecycleCase(AggregateRoot):
     email: str
     display_name: str
     state: str = LifecycleState.DRAFT.value
+    identity_type: str = "employee"
     user_id: str | None = None
     merged_into: str | None = None
     metadata: dict = field(default_factory=dict)
@@ -127,6 +151,8 @@ class LifecycleCase(AggregateRoot):
         email: str,
         display_name: str,
         user_id: str | None = None,
+        identity_type: str = "employee",
+        metadata: dict | None = None,
     ) -> LifecycleCase:
         return cls(
             id=UniqueId.generate(),
@@ -136,6 +162,8 @@ class LifecycleCase(AggregateRoot):
             email=email.lower(),
             display_name=display_name,
             user_id=user_id,
+            identity_type=identity_type,
+            metadata=dict(metadata or {}),
             state=LifecycleState.REGISTERED.value,
         )
 
@@ -151,6 +179,7 @@ class LifecycleCase(AggregateRoot):
             "email": self.email,
             "display_name": self.display_name,
             "state": self.state,
+            "identity_type": self.identity_type,
             "user_id": self.user_id,
             "merged_into": self.merged_into,
             "metadata": self.metadata,

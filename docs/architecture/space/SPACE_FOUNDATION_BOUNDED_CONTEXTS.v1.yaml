@@ -1,0 +1,16 @@
+apiVersion: marpich.io/v1
+kind: SpaceBoundedContexts
+metadata:
+  prompt_id: P218
+  adr: 526
+spec:
+  context_count: 8
+  contexts:
+    - BC-01 Space Intelligence Core
+    - BC-02 Space AI Operating System
+    - BC-03 Orbital Intelligence
+    - BC-04 Autonomous Space Operations
+    - BC-05 Orbital Civilization
+    - BC-06 Space Digital Twin
+    - BC-07 Space Knowledge Graph
+    - BC-08 Space Trust & Security

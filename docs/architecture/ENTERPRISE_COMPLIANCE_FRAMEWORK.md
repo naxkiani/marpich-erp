@@ -5,7 +5,8 @@
 **Owner context:** `backend/contexts/compliance/`  
 **Companions:** [ENTERPRISE_AUDIT_PLATFORM.md](ENTERPRISE_AUDIT_PLATFORM.md) · [ENTERPRISE_POLICY_ENGINE.md](ENTERPRISE_POLICY_ENGINE.md) · [ENTERPRISE_DOCUMENT_EXCHANGE.md](ENTERPRISE_DOCUMENT_EXCHANGE.md) · [SECURITY_STANDARD.md](SECURITY_STANDARD.md) · [INDUSTRY_CATALOG.md](INDUSTRY_CATALOG.md)
 
-**Law: Compliance is continuous — monitor every domain, detect violations, alert immediately, report on demand. Modules never implement local compliance engines.**
+**Law: Compliance is continuous — monitor every domain, detect violations, alert immediately, report on demand. Modules never implement local compliance engines.**  
+**Peer productization:** [P269 MEPCRI](ENTERPRISE_MEOS_PRIVACY_COMPLIANCE_REGULATORY_INTELLIGENCE_PLATFORM.md) — Trust/Compliance OS fabric over this SoR and P230; never dual-write local compliance violation tables in modules.
 
 ---
 

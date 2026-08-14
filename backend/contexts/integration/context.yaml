@@ -2,6 +2,7 @@ context: integration
 display_name: Integration
 type: platform
 description: Webhooks, connectors, and external system sync
+# Boundary: Integration Platform = sole connector execution SoR (/api/v1/integrations*). P291 MEIEII = integration architecture / event-mesh intelligence (never replace this context). P292 MEAPIE = API management / gateway / product experience (never replace connectors). P293 MEESIE = event product / streaming experience (never replace event-mesh ownership). P294 MENCOE = communication experience (channel providers via Integration adapters; never embed SMTP/Twilio/FCM in MENCOE domain). P295 = experience personalization (planned).
 aggregates:
 - Connector
 - WebhookSubscription

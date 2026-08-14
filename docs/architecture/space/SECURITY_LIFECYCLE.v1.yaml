@@ -1,0 +1,10 @@
+apiVersion: marpich.io/v1
+kind: SpaceSecurityLifecycle
+metadata:
+  prompt: P218-P
+  adr: "542"
+stage_count: 10
+autonomous_security_response_gated: true
+command_authentication_required: true
+satellite_identity_verification_required: true
+human_override_required: true

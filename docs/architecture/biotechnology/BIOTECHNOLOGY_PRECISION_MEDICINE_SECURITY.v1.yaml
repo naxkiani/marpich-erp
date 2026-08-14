@@ -1,0 +1,25 @@
+# BIOTECHNOLOGY_PRECISION_MEDICINE_SECURITY.v1.yaml — P217-I
+apiVersion: marpich.io/v1
+kind: BiotechnologyPrecisionMedicineSecurity
+metadata:
+  phase: P217-I
+  adr: "508"
+spec:
+  framework: meos_precision_medicine_governance_framework
+  hard_locks:
+    - bio_ai_via_p214z_acl_only
+    - precision_twins_via_p217g_p217h_acl_only
+    - no_module_local_llm
+    - never_opaque_unexplainable_decisions
+    - never_autonomous_clinical_action_without_physician
+    - never_unconsented_genomic_processing
+    - genomic_privacy_strategy
+    - ethical_bioengineering_strategy
+    - scientific_integrity_strategy
+    - opaque_bio_safety_strategy_forbidden
+    - never_replace_p217_h_digital_health
+    - never_replace_hospital_emr
+    - never_replace_laboratory_lims
+    - never_replace_pharmacy
+    - consent_management_required
+    - privacy_preserving_computation_required

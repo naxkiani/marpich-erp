@@ -1,0 +1,13 @@
+# BIOTECHNOLOGY_BIO_SECURITY_MODELS.v1.yaml — P217-S
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioSecurityModels
+metadata:
+  phase: P217-S
+  adr: "518"
+spec:
+  cybersecurity_domains: 4
+  risk_engines: 3
+  threat_sources: 5
+  agents: 6
+  knowledge_graph: meos_bio_security_knowledge_graph
+  digital_twin: meos_bio_security_digital_twin

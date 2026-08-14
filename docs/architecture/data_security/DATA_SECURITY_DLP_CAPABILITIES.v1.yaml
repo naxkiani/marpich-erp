@@ -1,0 +1,34 @@
+# P211-G — DLP capabilities
+version: "1.0"
+prompt_id: P211-G
+adr: "382"
+sor: data_security
+capability: CAP-PLT-DS-001
+api_prefix: /api/v1/data-security/dlp
+builds_on:
+  - P211-A
+  - P211-B
+  - P211-C
+  - P211-D
+  - P211-E
+  - P211-F
+  - ADR-381
+
+sensitive_data_identifiable_required: true
+data_movement_monitored_required: true
+policies_enforceable_required: true
+ai_leakage_managed_required: true
+insider_risk_visible_required: true
+violations_investigable_required: true
+automated_response_available_required: true
+sibling_dlp_bc_forbidden: true
+via_p211_d_discovery: true
+via_p211_e_classification: true
+via_p211_f_dspm: true
+via_enterprise_ai: true
+via_policy_engine: true
+via_workflow: true
+via_p207: true
+via_p208: true
+via_p209: true
+via_p210: true

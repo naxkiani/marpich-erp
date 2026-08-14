@@ -1,0 +1,43 @@
+# EAFIEOP Master Series Roadmap (P231)
+
+series: P231
+title: Enterprise Autonomous Financial Intelligence & Economic Optimization Platform
+governance_standard: "11.0"
+capability: CAP-PLT-EAFIEOP-001
+sor: financial_intelligence
+fabric: meos_enterprise_autonomous_financial_intelligence_economic_optimization_platform_framework
+api: /api/v1/financial-intelligence*
+phases:
+  - id: P231
+    title: EAFIEOP Foundation
+    status: planned
+    adr: "591"
+    fabric: meos_enterprise_autonomous_financial_intelligence_economic_optimization_platform_framework
+    api: /api/v1/financial-intelligence*
+  - id: P231-A
+    title: Financial Domain Model, Economic Data Architecture, Event Contracts, CQRS Foundation, Core Financial Services
+    status: planned
+    adr: pending
+  - id: P231-B
+    title: AI Financial Agents, Economic Simulation, Knowledge Graph Integration, Predictive Models
+    status: planned
+    adr: pending
+  - id: P231-C
+    title: Autonomous Financial Optimization Assist, Intelligent Capital Management, Enterprise Economic Intelligence
+    status: planned
+    adr: pending
+  - id: P231-D
+    title: Civilization-Scale Economic Intelligence Assist, Autonomous Value Optimization Assist, Self-Evolving Financial Systems (Human-Gated Execute)
+    status: planned
+    adr: pending
+locks:
+  never_replace_financial_kernel: true
+  never_replace_accounting_treasury_banking: true
+  never_local_journal_or_gl_aggregates: true
+  never_hardcoded_account_codes: true
+  never_module_local_llm: true
+  never_ungated_capital_budget_or_investment_execute: true
+  never_opaque_financial_recommendations: true
+  never_bypass_human_authority_high_impact_finance: true
+  foundation_for_p231_a: true
+  peer_series_p232_easclip: true

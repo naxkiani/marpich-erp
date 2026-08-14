@@ -1,0 +1,52 @@
+prompt_id: P215-N
+adr: "459"
+sor: quantum
+capability: CAP-PLT-QC-001
+api_prefix: /api/v1/quantum/operations
+fabric: meos_quantum_autonomous_operations_fabric
+principle: >-
+  MEOS Quantum Operations Platform SHALL provide an autonomous operational
+  intelligence layer capable of monitoring, predicting, optimizing and healing
+  quantum enterprise infrastructure.
+quantum_operations_platform_present_required: true
+quantum_aiops_platform_present_required: true
+autonomous_management_present_required: true
+self_healing_infrastructure_present_required: true
+observability_intelligence_present_required: true
+incident_automation_present_required: true
+reliability_engineering_present_required: true
+performance_intelligence_present_required: true
+knowledge_graph_integration_present_required: true
+digital_twin_integration_present_required: true
+cqrs_architecture_present_required: true
+event_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_architecture_present_required: true
+cloud_native_deployment_present_required: true
+via_observability_platform: true
+via_p214_j: true
+via_p215_f: true
+via_policy_engine: true
+via_workflow: true
+module_local_metrics_store_forbidden: true
+module_local_aiops_engine_forbidden: true
+builds_on_p215_a: true
+builds_on_p215_d: true
+builds_on_p215_f: true
+builds_on_p215_h: true
+builds_on_p215_i: true
+builds_on_p215_j: true
+builds_on_p215_l: true
+builds_on_p215_m: true
+governed_by_p215_k: true
+closed_loop:
+  - observe
+  - analyze
+  - decide
+  - act
+  - learn
+forbidden_siblings:
+  - quantum_operations_platform
+  - quantum_aiops_platform
+  - quantum_self_healing_platform
+  - quantum_observability_platform

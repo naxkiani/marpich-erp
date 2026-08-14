@@ -1,0 +1,31 @@
+# ROBOTICS_INDUSTRIAL_FACTORY.v1.yaml — P216-F
+apiVersion: marpich.io/v1
+kind: RoboticsIndustrialFactoryCatalog
+metadata:
+  phase: P216-F
+  adr: "478"
+  fabric: meos_industrial_intelligence_fabric
+  capability: CAP-PLT-RB-001
+spec:
+  vision: "MEOS Smart Factory Platform SHALL integrate industrial equipment, robotics, AI, analytics, digital twins and enterprise intelligence into a single autonomous manufacturing ecosystem."
+  core_domain: industrial_manufacturing_intelligence
+  aggregate: IndustrialManufacturingAggregate
+  standards: [ISA-95, ISA-88, IEC-62443, Industry-4.0, Industry-5.0]
+  smart_factory_components:
+    - factory_registry
+    - production_control_centre
+    - work_cell_manager
+    - production_scheduler
+    - industrial_workflow_engine
+    - robot_coordinator
+    - material_flow_manager
+    - industrial_dashboard
+  ot_protocols_via_integration:
+    - OPC_UA
+    - MQTT
+    - Modbus_TCP
+    - PROFINET
+    - EtherNet_IP
+    - EtherCAT
+    - CAN_Bus
+    - BACnet

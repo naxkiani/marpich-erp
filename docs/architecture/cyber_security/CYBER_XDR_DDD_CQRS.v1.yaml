@@ -1,0 +1,51 @@
+# P210-G — DDD / CQRS
+version: "1.0"
+prompt_id: P210-G
+adr: "366"
+sor: cyber_security
+bounded_context: cyber_security.xdr
+logical_subdomains:
+  - edr
+  - ndr
+  - xdr_correlation
+  - detection_engine
+  - threat_hunting
+  - response_engine
+  - agent_integrity
+
+aggregates:
+  - CsXdrEndpointTelemetryCompleteRoot
+  - CsXdrNetworkVisibilityRoot
+  - CsXdrUnifiedCorrelationRoot
+  - CsXdrAiAnalyticsRoot
+  - CsXdrEvolvableDetectionRoot
+  - CsXdrResponseSafeguardsRoot
+  - CsXdrAgentIntegrityRoot
+  - CsXdrThreatDetectedRoot
+
+commands:
+  - RegisterEndpoint
+  - CollectTelemetry
+  - DeployDetectionRule
+  - ExecuteIsolation
+  - BlockThreat
+  - TriggerResponse
+  - UpdatePolicy
+  - CloseIncident
+
+queries:
+  - GetEndpointStatus
+  - GetThreatMap
+  - GetAttackTimeline
+  - GetDetectionMetrics
+  - GetResponseHistory
+
+events:
+  - EndpointRegistered
+  - TelemetryCollected
+  - ThreatDetected
+  - ThreatCorrelated
+  - EndpointIsolated
+  - NetworkBlocked
+  - ThreatContained
+  - RecoveryCompleted

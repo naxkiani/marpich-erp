@@ -1,0 +1,18 @@
+# BIOTECHNOLOGY_BIO_AI_SECURITY.v1.yaml — P217-E
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioAiSecurity
+metadata:
+  phase: P217-E
+  adr: "504"
+spec:
+  framework: meos_responsible_bio_ai_framework
+  hard_locks:
+    - bio_ai_via_p214z_acl_only
+    - no_module_local_llm
+    - never_opaque_unexplainable_decisions
+    - genomic_privacy_strategy
+    - ethical_bioengineering_strategy
+    - scientific_integrity_strategy
+    - opaque_bio_safety_strategy_forbidden
+    - never_replace_p217_d_infrastructure
+    - never_replace_hospital_emr

@@ -1,0 +1,15 @@
+apiVersion: marpich.io/v1
+kind: SpaceDomainBoundedContexts
+metadata:
+  prompt: P218-C
+  adr: "529"
+contexts:
+  - BC-01 Mission Management
+  - BC-02 Orbital Operations
+  - BC-03 Satellite Fleet
+  - BC-04 Space AI
+  - BC-05 Scientific Research
+  - BC-06 Space Economy
+  - BC-07 Space Security
+  - BC-08 Space Digital Twin
+context_count: 8

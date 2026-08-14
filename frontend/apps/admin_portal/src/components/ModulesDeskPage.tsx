@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { PageLayout } from "@marpich/core";
+import { useAuth } from "@marpich/auth-provider";
 import {
   EmptyState,
   ExportButton,
@@ -9,20 +11,28 @@ import {
   ProgressBar,
   Skeleton,
   StepProgress,
+  launchEntryForModule,
+  launchHrefForModule,
   useAutosave,
   useLocale,
+  useTenantModules,
   useToast,
 } from "@marpich/shared";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
+  activatePlatformModule,
+  activatableModulesForPack,
   categoryForPack,
   fetchIndustryPacks,
+  fetchPlatformTenants,
+  isPackComingSoon,
   jewelForPack,
   launchHrefForPack,
   packInitials,
   type IndustryPack,
   type ModuleCategory,
   type ModuleJewel,
+  type PlatformTenant,
 } from "@/lib/platformClient";
 
 const DRAFT_KEY = "marpich.modules.desk.draft";
@@ -56,9 +66,16 @@ function categoryLabelKey(cat: ModuleCategory): string {
 export function ModulesDeskPage() {
   const { t } = useLocale();
   const { push } = useToast();
+  const router = useRouter();
+  const { session, isAuthenticated, isLoading: authLoading } = useAuth();
+  const { setEnabledModules, refresh: refreshTenantModules } = useTenantModules();
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(25);
   const [packs, setPacks] = useState<IndustryPack[]>([]);
+  const [tenants, setTenants] = useState<PlatformTenant[]>([]);
+  const [tenantSlug, setTenantSlug] = useState("");
+  const [moduleToActivate, setModuleToActivate] = useState("");
+  const [activating, setActivating] = useState(false);
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<ModuleCategory | "all">("all");
   const [view, setView] = useState<ViewMode>("desk");
@@ -122,6 +139,19 @@ export function ModulesDeskPage() {
         if (prev && data.some((p) => p.pack_id === prev)) return prev;
         return data[0]?.pack_id ?? null;
       });
+      setProgress(70);
+      if (session) {
+        try {
+          const tenantRows = await fetchPlatformTenants(session);
+          setTenants(tenantRows);
+          setTenantSlug((prev) => {
+            if (prev && tenantRows.some((x) => x.slug === prev)) return prev;
+            return tenantRows[0]?.slug ?? "";
+          });
+        } catch {
+          /* catalog still usable */
+        }
+      }
       setLastAction("catalog");
       setProgress(100);
     } catch (err) {
@@ -132,11 +162,11 @@ export function ModulesDeskPage() {
     } finally {
       setLoading(false);
     }
-  }, [push, t]);
+  }, [push, session, t]);
 
   useEffect(() => {
-    void load();
-  }, [load]);
+    if (!authLoading) void load();
+  }, [authLoading, load]);
 
   const filtered = useMemo(() => {
     const q = query.toLowerCase().trim();
@@ -175,20 +205,63 @@ export function ModulesDeskPage() {
     [packs, selectedId, filtered],
   );
 
+  const selectedTenant = useMemo(
+    () => tenants.find((x) => x.slug === tenantSlug) ?? null,
+    [tenantSlug, tenants],
+  );
+
+  const activatable = useMemo(() => {
+    if (!selectedTenant) return [];
+    const pack =
+      packs.find((p) => p.pack_id === selectedTenant.industry_pack) ?? selected ?? null;
+    if (!pack) return [];
+    return activatableModulesForPack(pack, selectedTenant.enabled_modules ?? []);
+  }, [packs, selected, selectedTenant]);
+
+  useEffect(() => {
+    if (!moduleToActivate && activatable[0]) setModuleToActivate(activatable[0]);
+    if (moduleToActivate && activatable.length > 0 && !activatable.includes(moduleToActivate)) {
+      setModuleToActivate(activatable[0] ?? "");
+    }
+  }, [activatable, moduleToActivate]);
+
+  async function onActivateModule() {
+    if (!session || !selectedTenant || !moduleToActivate) return;
+    setActivating(true);
+    try {
+      const updated = await activatePlatformModule(session, selectedTenant.slug, moduleToActivate);
+      setTenants((rows) => rows.map((r) => (r.slug === updated.slug ? updated : r)));
+      setEnabledModules(updated.slug, updated.enabled_modules ?? [], {
+        name: updated.name,
+        industryPack: updated.industry_pack,
+      });
+      await refreshTenantModules();
+      push({ message: `${t("modules.activated")} ${moduleToActivate}` });
+      setLastAction("activate");
+      const href = launchHrefForModule(moduleToActivate);
+      if (href) router.push(href);
+    } catch (err) {
+      push({ message: err instanceof Error ? err.message : t("modules.activateFailed") });
+    } finally {
+      setActivating(false);
+    }
+  }
+
   const lifecycleStep = useMemo(() => {
+    if (selectedTenant && moduleToActivate) return 3;
     if (selected && launchHrefForPack(selected.pack_id)) return 3;
     if (selected) return 2;
     if (query.trim() || category !== "all") return 1;
     if (packs.length > 0) return 0;
     return 0;
-  }, [category, packs.length, query, selected]);
+  }, [category, moduleToActivate, packs.length, query, selected, selectedTenant]);
 
   const workflowSteps = useMemo(
     () => [
       { id: "browse", label: t("modules.step.browse") },
       { id: "filter", label: t("modules.step.filter") },
       { id: "select", label: t("modules.step.select") },
-      { id: "launch", label: t("modules.step.launch") },
+      { id: "launch", label: t("modules.step.activate") },
     ],
     [t],
   );
@@ -514,14 +587,84 @@ export function ModulesDeskPage() {
                   )}
 
                   <div className="mp-desk-detail-actions">
+                    {isAuthenticated ? (
+                      <div className="mp-desk-activate">
+                        <div className="mp-field">
+                          <label htmlFor="modules-tenant">{t("modules.tenant")}</label>
+                          <select
+                            id="modules-tenant"
+                            className="mp-select"
+                            value={tenantSlug}
+                            onChange={(e) => setTenantSlug(e.target.value)}
+                            disabled={!tenants.length}
+                          >
+                            <option value="">—</option>
+                            {tenants.map((row) => (
+                              <option key={row.slug} value={row.slug}>
+                                {row.name} ({row.slug})
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        {selectedTenant ? (
+                          <p className="mp-field-help">
+                            {t("modules.enabledCount")}: {(selectedTenant.enabled_modules ?? []).length} ·{" "}
+                            {selectedTenant.industry_pack}
+                          </p>
+                        ) : (
+                          <p className="mp-field-help">{t("modules.pickTenant")}</p>
+                        )}
+                        <div className="mp-field">
+                          <label htmlFor="modules-activate">{t("modules.activateModule")}</label>
+                          <select
+                            id="modules-activate"
+                            className="mp-select"
+                            value={moduleToActivate}
+                            onChange={(e) => setModuleToActivate(e.target.value)}
+                            disabled={!activatable.length}
+                          >
+                            <option value="">—</option>
+                            {activatable.map((m) => {
+                              const entry = launchEntryForModule(m);
+                              const suffix =
+                                entry?.status === "coming_soon"
+                                  ? ` (${t("modules.comingSoon")})`
+                                  : entry?.href
+                                    ? ` → ${entry.href}`
+                                    : "";
+                              return (
+                                <option key={m} value={m}>
+                                  {m}
+                                  {suffix}
+                                </option>
+                              );
+                            })}
+                          </select>
+                        </div>
+                        <button
+                          type="button"
+                          className="mp-btn mp-btn-primary"
+                          disabled={!selectedTenant || !moduleToActivate || activating}
+                          onClick={() => void onActivateModule()}
+                        >
+                          {activating ? t("modules.activating") : t("modules.activate")}
+                        </button>
+                      </div>
+                    ) : (
+                      <Link href="/login?returnTo=/modules" className="mp-btn mp-btn-primary">
+                        {t("dashboard.signIn")}
+                      </Link>
+                    )}
                     {launchHrefForPack(selected.pack_id) ? (
                       <Link
                         href={launchHrefForPack(selected.pack_id)!}
-                        className="mp-btn mp-btn-primary"
+                        className="mp-btn"
                         onClick={() => setLastAction("launch")}
                       >
                         {t("modules.openApp")}
                       </Link>
+                    ) : isPackComingSoon(selected.pack_id) ? (
+                      <span className="mp-field-help">{t("modules.comingSoon")}</span>
                     ) : (
                       <span className="mp-field-help">{t("modules.noAppRoute")}</span>
                     )}
@@ -965,9 +1108,18 @@ export function ModulesDeskPage() {
         }
         .mp-desk-detail-actions {
           display: flex;
-          flex-wrap: wrap;
-          gap: 0.5rem;
+          flex-direction: column;
+          gap: 0.65rem;
           margin-top: 1.15rem;
+        }
+        .mp-desk-activate {
+          display: flex;
+          flex-direction: column;
+          gap: 0.55rem;
+          padding: 0.75rem;
+          border: 1px solid var(--mp-border);
+          border-radius: var(--mp-radius-sm);
+          background: var(--mp-bg-subtle, var(--mp-bg-muted));
         }
         .mp-desk-skeleton {
           display: grid;

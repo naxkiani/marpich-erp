@@ -1,0 +1,29 @@
+# BIOTECHNOLOGY_BIO_MANUFACTURING_SECURITY.v1.yaml — P217-L
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioManufacturingSecurity
+metadata:
+  phase: P217-L
+  adr: "511"
+spec:
+  framework: meos_bio_manufacturing_governance_platform
+  hard_locks:
+    - bio_ai_via_p214z_acl_only
+    - manufacturing_twins_via_p217g_acl_only
+    - product_intelligence_via_p217k_acl_only
+    - robotics_via_p216z_acl_only
+    - quantum_optimization_via_p215z_acl_only
+    - no_module_local_llm
+    - never_opaque_unexplainable_decisions
+    - never_skip_gmp_compliance
+    - never_skip_human_manufacturing_oversight
+    - never_autonomous_release_without_quality_approval
+    - genomic_privacy_strategy
+    - ethical_bioengineering_strategy
+    - scientific_integrity_strategy
+    - opaque_bio_safety_strategy_forbidden
+    - never_replace_p217_k_drug_discovery
+    - never_replace_hospital_emr
+    - never_replace_laboratory_lims
+    - never_replace_pharmacy
+    - ot_security_required
+    - batch_traceability_required

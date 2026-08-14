@@ -2,27 +2,53 @@
 
 import { useEffect, useState } from "react";
 import { useLocale } from "../i18n/LocaleProvider";
+import { API_URL, getPlatformAuthHeaders } from "../platform/session";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000";
-
-type Notification = { id: string; title: string; body?: string; read?: boolean };
+type Notification = { id: string; title: string; body?: string; read?: boolean; status?: string };
 
 export function NotificationCenter() {
   const { t } = useLocale();
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState<Notification[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!open) return;
-    fetch(`${API_URL}/api/v1/notifications/inbox`)
-      .then((r) => (r.ok ? r.json() : []))
-      .then((data) => setItems(Array.isArray(data) ? data : data.items ?? []))
-      .catch(() =>
-        setItems([
-          { id: "1", title: "Welcome to Marpich", body: "Platform shell is ready." },
-        ]),
-      );
+    const headers = getPlatformAuthHeaders();
+    if (!headers) {
+      setItems([]);
+      setError("Sign in to view notifications.");
+      return;
+    }
+    setError(null);
+    fetch(`${API_URL}/api/v1/notifications/inbox`, { headers })
+      .then(async (r) => {
+        if (!r.ok) throw new Error(`inbox ${r.status}`);
+        return r.json();
+      })
+      .then((payload) => {
+        const raw = Array.isArray(payload) ? payload : payload.data ?? payload.items ?? [];
+        const list = (Array.isArray(raw) ? raw : []).map((n: Notification) => ({
+          ...n,
+          read: n.read ?? n.status === "read",
+        }));
+        setItems(list);
+      })
+      .catch(() => {
+        setItems([]);
+        setError("Unable to load notifications.");
+      });
   }, [open]);
+
+  async function markRead(id: string) {
+    const headers = getPlatformAuthHeaders();
+    if (!headers) return;
+    await fetch(`${API_URL}/api/v1/notifications/inbox/${encodeURIComponent(id)}/read`, {
+      method: "PATCH",
+      headers,
+    }).catch(() => undefined);
+    setItems((prev) => prev.map((n) => (n.id === id ? { ...n, read: true, status: "read" } : n)));
+  }
 
   const unread = items.filter((n) => !n.read).length;
 
@@ -35,19 +61,30 @@ export function NotificationCenter() {
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
       >
-        🔔
+        <span aria-hidden="true">●</span>
         {unread > 0 ? <span className="mp-badge">{unread}</span> : null}
       </button>
       {open ? (
         <div className="mp-panel mp-animate-in" role="region" aria-label={t("shell.notifications")}>
-          <header>{t("shell.notifications")}</header>
+          <header className="mp-panel-header">
+            <span>{t("shell.notifications")}</span>
+            <a className="mp-link" href="/enterprise/notifications">
+              Open desk
+            </a>
+          </header>
+          {error ? <p className="mp-search-muted">{error}</p> : null}
           <ul>
             {items.map((n) => (
               <li key={n.id}>
-                <strong>{n.title}</strong>
-                {n.body ? <p>{n.body}</p> : null}
+                <button type="button" className="mp-search-hit" onClick={() => void markRead(n.id)}>
+                  <strong>{n.title}</strong>
+                  {n.body ? <span>{n.body}</span> : null}
+                </button>
               </li>
             ))}
+            {!error && items.length === 0 ? (
+              <li className="mp-search-muted">Inbox empty</li>
+            ) : null}
           </ul>
         </div>
       ) : null}
@@ -86,23 +123,10 @@ export function AIAssistantPanel() {
     setError(null);
     setReply(null);
     try {
-      const tenantId =
-        (typeof window !== "undefined" &&
-          (localStorage.getItem("marpich.tenantId") ||
-            localStorage.getItem("tenantId") ||
-            "demo")) ||
-        "demo";
-      const token =
-        typeof window !== "undefined"
-          ? localStorage.getItem("marpich.accessToken") ||
-            localStorage.getItem("access_token") ||
-            ""
-          : "";
-      const headers: Record<string, string> = {
-        "Content-Type": "application/json",
-        "X-Tenant-ID": tenantId,
-      };
-      if (token) headers.Authorization = `Bearer ${token}`;
+      const headers = getPlatformAuthHeaders();
+      if (!headers) {
+        throw new Error("Sign in required for AI Copilot.");
+      }
       const res = await fetch(`${API_URL}/api/v1/ai/assist`, {
         method: "POST",
         headers,
@@ -133,7 +157,7 @@ export function AIAssistantPanel() {
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
       >
-        ✨ {t("shell.ai")}
+        {t("shell.ai")}
       </button>
       {open ? (
         <aside className="mp-ai-panel mp-animate-in" aria-label={t("shell.ai")}>

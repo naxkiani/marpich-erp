@@ -7,9 +7,12 @@ from fastapi import APIRouter, Depends, HTTPException, status
 
 from contexts.authorization.container import get_authorization_service
 from contexts.authorization.presentation.schemas import (
+    AbacPolicyCreateRequest,
     AuthorizationBatchCheckRequest,
     AuthorizationCheckRequest,
     AuthorizationSimulateRequest,
+    RelationWriteRequest,
+    RuleCompileRequest,
 )
 from contexts.identity.presentation.dependencies import get_current_user, get_tenant_id, require_permissions
 
@@ -126,6 +129,99 @@ async def list_abac_policies(
     _user: Annotated[dict, Depends(require_permissions("authorization.read"))],
 ):
     return {"data": (await get_authorization_service().list_abac_policies(tenant_id)).unwrap()}
+
+
+@authorization_router.post("/policies/abac")
+async def create_abac_policy(
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    body: AbacPolicyCreateRequest,
+    _user: Annotated[dict, Depends(require_permissions("authorization.write"))],
+):
+    result = await get_authorization_service().create_abac_policy(
+        tenant_id,
+        name=body.name,
+        effect=body.effect,
+        permission_pattern=body.permission_pattern,
+        conditions=body.conditions,
+        priority=body.priority,
+    )
+    if not result.succeeded:
+        raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, result.error)
+    return {"data": result.unwrap()}
+
+
+@authorization_router.post("/rules/compile")
+async def compile_rules(
+    body: RuleCompileRequest,
+    _tenant_id: Annotated[str, Depends(get_tenant_id)],
+    _user: Annotated[dict, Depends(require_permissions("authorization.write"))],
+):
+    result = await get_authorization_service().compile_abac_rules(body.conditions)
+    if not result.succeeded:
+        raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, result.error)
+    return {"data": result.unwrap()}
+
+
+@authorization_router.post("/relations")
+async def write_relation(
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    body: RelationWriteRequest,
+    _user: Annotated[dict, Depends(require_permissions("authorization.write"))],
+):
+    result = await get_authorization_service().write_relation(
+        tenant_id,
+        object_type=body.object_type,
+        object_id=body.object_id,
+        relation=body.relation,
+        subject_type=body.subject_type,
+        subject_id=body.subject_id,
+    )
+    if not result.succeeded:
+        raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, result.error)
+    return {"data": result.unwrap()}
+
+
+@authorization_router.delete("/relations")
+async def revoke_relation(
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    body: RelationWriteRequest,
+    _user: Annotated[dict, Depends(require_permissions("authorization.write"))],
+):
+    result = await get_authorization_service().revoke_relation(
+        tenant_id,
+        object_type=body.object_type,
+        object_id=body.object_id,
+        relation=body.relation,
+        subject_type=body.subject_type,
+        subject_id=body.subject_id,
+    )
+    if not result.succeeded:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, result.error)
+    return {"data": result.unwrap()}
+
+
+@authorization_router.get("/relations/{object_type}/{object_id}")
+async def list_relations(
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    object_type: str,
+    object_id: str,
+    _user: Annotated[dict, Depends(require_permissions("authorization.read"))],
+):
+    return {
+        "data": (
+            await get_authorization_service().list_relations_for_object(
+                tenant_id, object_type, object_id
+            )
+        ).unwrap()
+    }
+
+
+@authorization_router.post("/cache/invalidate")
+async def invalidate_cache(
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    _user: Annotated[dict, Depends(require_permissions("authorization.write"))],
+):
+    return {"data": (await get_authorization_service().invalidate_decision_cache(tenant_id)).unwrap()}
 
 
 @authorization_router.get("/decisions")

@@ -1,0 +1,29 @@
+# BIOTECHNOLOGY_BIO_MANUFACTURING_MODELS.v1.yaml — P217-L
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioManufacturingModels
+metadata:
+  phase: P217-L
+  adr: "511"
+spec:
+  bio_pos_components:
+    - production_planning_intelligence
+    - bioprocess_management_system
+    - manufacturing_execution_intelligence
+    - quality_intelligence_system
+  biopharma_domains:
+    - biologics_manufacturing
+    - synthetic_biology_manufacturing
+    - cell_therapy_manufacturing
+    - precision_medicine_manufacturing
+  automation_domains:
+    - process_automation
+    - laboratory_automation
+    - factory_automation
+    - knowledge_automation
+  agents:
+    - production_planning_agent
+    - bioprocess_optimization_agent
+    - quality_intelligence_agent
+    - maintenance_intelligence_agent
+    - compliance_intelligence_agent
+    - factory_operations_agent

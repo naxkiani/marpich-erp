@@ -1,0 +1,33 @@
+# P210-C — Domain validation gates
+version: "1.0"
+prompt_id: P210-C
+adr: "363"
+sor: cyber_security
+api_prefix: /api/v1/cyber-security/domain
+
+required_artifacts:
+  - docs/adr/363-enterprise-cyber-security-domain.md
+  - docs/architecture/ENTERPRISE_CYBER_SECURITY_DOMAIN.md
+  - docs/architecture/cyber_security/CYBER_DOMAIN_CAPABILITIES.v1.yaml
+  - docs/architecture/cyber_security/CYBER_DOMAIN_DDD_CQRS.v1.yaml
+  - docs/architecture/cyber_security/CYBER_DOMAIN_SECURITY.v1.yaml
+  - docs/architecture/cyber_security/CYBER_DOMAIN_VALIDATION.v1.yaml
+  - backend/contexts/cyber_security/domain/services/cs_platform_domain.py
+  - backend/contexts/cyber_security/domain/aggregates/cs_domain_aggregates.py
+  - backend/contexts/cyber_security/infrastructure/acl/cs_domain_acl.py
+  - backend/contexts/cyber_security/application/cs_domain_foundation.py
+
+forbidden_siblings:
+  - backend/contexts/cyber_defense
+  - backend/contexts/soc_platform
+  - backend/contexts/siem_platform
+  - backend/contexts/soar_platform
+  - backend/contexts/xdr
+  - backend/contexts/threat_detection
+  - backend/contexts/security_ops
+
+verdict_target: ENTERPRISE_GRADE
+min_logical_contexts: 10
+min_aggregates: 10
+min_event_count: 12
+min_cursor_outputs: 20

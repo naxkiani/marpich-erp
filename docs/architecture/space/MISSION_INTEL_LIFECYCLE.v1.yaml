@@ -1,0 +1,8 @@
+apiVersion: marpich.io/v1
+kind: MissionIntelLifecycle
+metadata:
+  prompt: P218-J
+  adr: "536"
+stage_count: 15
+readiness_review_required: true
+launch_authorization_gated: true

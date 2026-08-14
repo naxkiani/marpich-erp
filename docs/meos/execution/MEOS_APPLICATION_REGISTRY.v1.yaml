@@ -1,0 +1,282 @@
+version: "1.0"
+generated: "2026-08-12"
+overall_status: NOT_READY
+wave: "01"
+applications:
+  - id: identity
+    name: Identity & Access
+    domain: platform
+    status: INTEGRATED
+    wave: 1
+    frontend: true
+    backend: true
+    routes: ["/login", "/account/security", "/account/mfa", "/account/passkeys", "/account/change-password"]
+    api_prefix: /api/v1/auth
+    score: 78
+  - id: authorization
+    name: Authorization
+    domain: platform
+    status: IMPLEMENTED
+    wave: 1
+    frontend: false
+    backend: true
+    api_prefix: /api/v1/authorization
+    score: 70
+  - id: core_platform
+    name: Core Platform / Tenants
+    domain: platform
+    status: INTEGRATED
+    wave: 1
+    frontend: true
+    backend: true
+    routes: ["/", "/modules"]
+    score: 75
+  - id: notifications
+    name: Notifications
+    domain: platform
+    status: INTEGRATED
+    wave: 1
+    frontend: true
+    backend: true
+    routes: ["/enterprise/notifications"]
+    api_prefix: /api/v1/notifications
+    score: 72
+  - id: search
+    name: Enterprise Search
+    domain: platform
+    status: INTEGRATED
+    wave: 1
+    frontend: true
+    backend: true
+    routes: []
+    api_prefix: /api/v1/search
+    score: 68
+  - id: audit
+    name: Audit
+    domain: platform
+    status: INTEGRATED
+    wave: 1
+    frontend: true
+    backend: true
+    routes: ["/enterprise/audit"]
+    api_prefix: /api/v1/audit
+    score: 70
+  - id: workflow
+    name: Workflow
+    domain: platform
+    status: INTEGRATED
+    wave: 1
+    frontend: true
+    backend: true
+    routes: ["/enterprise/workflows"]
+    api_prefix: /api/v1/workflow
+    score: 68
+  - id: ai
+    name: AI Platform
+    domain: platform
+    status: IMPLEMENTED
+    wave: 1
+    frontend: true
+    backend: true
+    api_prefix: /api/v1/ai
+    score: 65
+  - id: documents
+    name: Document Exchange
+    domain: platform
+    status: IMPLEMENTED
+    wave: 1
+    frontend: true
+    backend: true
+    routes: ["/enterprise/document-studio"]
+    api_prefix: /api/v1/documents
+    score: 66
+  - id: hospital
+    name: Hospital
+    domain: healthcare
+    status: TESTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/healthcare/hospital"]
+    score: 78
+  - id: clinic
+    name: Clinic
+    domain: healthcare
+    status: TESTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/healthcare/clinic"]
+    score: 74
+  - id: pharmacy
+    name: Pharmacy
+    domain: healthcare
+    status: TESTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/healthcare/pharmacy"]
+    score: 76
+  - id: laboratory
+    name: Laboratory
+    domain: healthcare
+    status: TESTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/healthcare/laboratory"]
+    score: 76
+  - id: university
+    name: University
+    domain: education
+    status: IMPLEMENTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/education/university"]
+    score: 58
+  - id: banking
+    name: Banking Analytics
+    domain: banking
+    status: IMPLEMENTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/banking/analytics"]
+    score: 55
+  - id: crm
+    name: CRM
+    domain: business
+    status: TESTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/crm"]
+    score: 72
+  - id: sales
+    name: Sales
+    domain: business
+    status: TESTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/sales"]
+    score: 70
+  - id: inventory
+    name: Inventory
+    domain: business
+    status: TESTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/inventory"]
+    score: 68
+  - id: accounting
+    name: Accounting AR
+    domain: finance
+    status: TESTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/accounting"]
+    score: 70
+  - id: procurement
+    name: Procurement
+    domain: business
+    status: TESTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/procurement"]
+    score: 68
+  - id: tax
+    name: Tax
+    domain: finance
+    status: TESTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/tax"]
+    score: 68
+  - id: human_resources
+    name: Human Resources
+    domain: business
+    status: TESTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/hr"]
+    score: 68
+  - id: payroll
+    name: Payroll
+    domain: business
+    status: TESTED
+    wave: 2
+    frontend: true
+    backend: true
+    routes: ["/payroll"]
+    score: 68
+nav_groups:
+  - id: home
+    label: Home
+    items: [core_platform]
+  - id: applications
+    label: Applications
+    items: [hospital, clinic, pharmacy, laboratory, university, banking, documents, messenger]
+  - id: platform
+    label: Platform
+    items: [notifications, audit, workflow, search, ai]
+  - id: security
+    label: Security
+    items: [identity, identity_federation]
+  - id: administration
+    label: Administration
+    items: [plugins, enterprise_observability, enterprise_scheduler, enterprise_connector_framework, enterprise_integration_studio]
+verification:
+  wave01_shell_auth: verified
+  wave01_workflow_ui: verified
+  wave01_router_honesty: verified
+  wave01_ci: verified
+  wave01_postgres_runbook: verified
+  wave01_authz_nav: verified
+  wave01_orphan_clients_gated: verified
+  wave01_postgres_port_5433: verified
+  wave01_identity_postgres_save_fix: verified
+  wave02_crm_functional: verified
+  wave02_sales_functional: verified
+  wave02_inventory_functional: verified
+  wave02_accounting_ar_functional: verified
+  wave02_procurement_functional: verified
+  ui_modules_desk_activation: verified
+  ui_enabled_modules_nav_gate: verified
+  ui_desk_chrome_wave02: verified
+  ui_pharmacy_lab_platform_auth: verified
+  ui_module_pack_launch_catalog: verified
+  wave02_q2c_loop_script: verified
+  wave02_hr_functional: verified
+  wave02_payroll_functional: verified
+  wave02_tax_functional: verified
+  healthcare_closed_loop: verified
+  healthcare_clinic_lab_pharmacy_acl: verified
+  money_path_migrations_038_045: verified
+  money_path_roundtrip_ci: verified
+  ui_activate_nav_gate_unit: verified
+  wave02_audit_proof_script: verified
+  notes: >
+    Shell widgets use marpich_auth_session headers; Workflow Task Center at
+    /enterprise/workflows; AuthZ filters nav/command/search; orphan FE clients gated;
+    Postgres host port 5433; identity Postgres tenant_id bug fixed; CRM CAP-ENT-001
+    contacts/opportunities Functional (API+UI+events+migration 046); Sales CAP-ENT-002
+    quotations/orders Functional (CRM win ACL + API+UI+events+migration 047);
+    Inventory CAP-ENT-042 stock reservations on sales.order.placed (API+UI+events+migration 048);
+    Accounting AR CAP-ENT-023 invoices from sales.order.placed (API+UI+events+migration 049/052 payment received);
+    Procurement CAP-ENT-040 requisitions from inventory.reorder.triggered (API+UI+events+migration 050/051);
+    HR CAP-ENT-010 employees hire/list/terminate (API+UI+events+migration 053);
+    Payroll CAP-ENT-015 hire ACL projection + pay runs (API+UI+events+migration 054);
+    Tax CAP-ENT-026 liabilities/returns from payroll (API+UI+events+migration 055);
+    Healthcare Hospital→Lab→Pharmacy care-events TESTED (scripts/meos-healthcare-loop.sh + CI);
+    Clinic encounter → lab/pharmacy REVIEW ACL + lab result notes; money-path migrations 038–045;
+    Tax CAP-ENT-026 payroll ACL liability + file return (API+UI+events+migration 055);
+    Wave 02 harden: scripts/meos-wave02-q2c-loop.sh + .github/workflows/meos-wave02-smoke.yml.
+    Overall NOT_READY.
+

@@ -1,0 +1,24 @@
+# ROBOTICS_CONSTRUCTION_BOUNDED_CONTEXTS.v1.yaml — P216-K
+apiVersion: marpich.io/v1
+kind: RoboticsConstructionBoundedContextCatalog
+metadata:
+  phase: P216-K
+  adr: "483"
+spec:
+  bounded_contexts:
+    - id: BC-01
+      name: Construction Management Context
+    - id: BC-02
+      name: BIM Management Context
+    - id: BC-03
+      name: Construction Robotics Context
+    - id: BC-04
+      name: Infrastructure Monitoring Context
+    - id: BC-05
+      name: Smart Building Operations Context
+    - id: BC-06
+      name: Asset Lifecycle Management Context
+    - id: BC-07
+      name: Construction Digital Twin Context
+    - id: BC-08
+      name: Safety & Compliance Context

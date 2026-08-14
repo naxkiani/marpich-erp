@@ -1,0 +1,15 @@
+# BIOTECHNOLOGY_BIO_INNOVATION_ARCHITECTURE.v1.yaml — P217-Q
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioInnovationArchitecture
+metadata:
+  phase: P217-Q
+  adr: "516"
+  fabric: meos_bio_innovation_intelligence_fabric
+spec:
+  layers:
+    - L01_scientific_identity
+    - L02_research_network
+    - L03_innovation_intelligence
+    - L04_knowledge_exchange
+    - L05_acceleration
+    - L06_governance

@@ -1,0 +1,30 @@
+# ROBOTICS_SUPREME_HOME.v1.yaml — P216-Z
+apiVersion: marpich.io/v1
+kind: RoboticsSupremeHomeCatalog
+metadata:
+  phase: P216-Z
+  adr: "498"
+  fabric: meos_robotics_supreme_intelligence_nexus
+spec:
+  supreme_control_plane:
+    platform: meos_robotics_supreme_control_plane
+    components:
+      - robotics_command_center
+      - autonomous_intelligence_router
+      - capability_registry
+      - robot_identity_authority
+      - policy_decision_engine
+      - robotics_workflow_engine
+      - global_event_backbone
+      - robotics_observability_layer
+  universal_robotics_network:
+    network: meos_universal_robotics_network
+  robotics_civilization:
+    framework: meos_autonomous_robotics_civilization_framework
+  collective_intelligence:
+    engine: meos_collective_intelligence_core
+    via_p214_z: true
+  universal_digital_twin:
+    platform: meos_robotics_universe_digital_twin
+  knowledge_graph_universe:
+    graph: meos_universal_robotics_knowledge_graph_universe

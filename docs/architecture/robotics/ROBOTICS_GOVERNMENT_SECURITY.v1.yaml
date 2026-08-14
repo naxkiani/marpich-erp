@@ -1,0 +1,33 @@
+# ROBOTICS_GOVERNMENT_SECURITY.v1.yaml — P216-T
+apiVersion: marpich.io/v1
+kind: RoboticsGovernmentSecurity
+metadata:
+  phase: P216-T
+  adr: "492"
+spec:
+  framework: meos_government_zero_trust_framework
+  domains:
+    - citizen_identity
+    - government_identity
+    - public_data_protection
+    - ai_governance
+    - national_security
+    - administrative_integrity
+    - audit_protection
+  controls:
+    - identity_governance
+    - encryption
+    - data_sovereignty
+    - access_control
+    - ai_explainability
+    - continuous_monitoring
+    - transparency_management
+  hard_locks:
+    - privacy_by_design
+    - human_governance_oversight
+    - explainable_ai
+    - never_duplicate_government_core_logic
+    - never_duplicate_municipality_core_logic
+    - never_replace_identity_platform
+    - no_module_local_llm
+    - physical_ai_via_p214z_acl_only

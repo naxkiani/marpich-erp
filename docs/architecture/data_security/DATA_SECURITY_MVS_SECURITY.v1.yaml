@@ -1,0 +1,18 @@
+# P211-B — Security & compliance
+version: "1.0"
+prompt_id: P211-B
+adr: "377"
+zero_trust_data: true
+privacy_by_design: true
+data_security_by_design: true
+least_privilege: true
+continuous_monitoring: true
+full_accountability: true
+compliance:
+  - iso_27001
+  - iso_27701
+  - nist_csf
+  - nist_privacy_framework
+  - gdpr
+  - soc_2
+  - cloud_security_alliance

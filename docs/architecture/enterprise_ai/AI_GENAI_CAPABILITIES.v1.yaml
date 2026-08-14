@@ -1,0 +1,53 @@
+# P214-E — CAPABILITIES
+version: "1.0"
+prompt_id: P214-E
+adr: "425"
+sor: ai
+capability: CAP-PLT-AI-001
+api_prefix: /api/v1/ai/genai
+fabric: meos_enterprise_cognitive_intelligence_layer
+principle: >-
+  Enterprise Generative AI SHALL provide the cognitive interface allowing
+  humans, applications and AI agents to communicate with enterprise
+  knowledge and intelligence.
+builds_on:
+  - P214-A
+  - P214-B
+  - P214-C
+  - P214-D
+  - ADR-424
+  - P212
+  - P213-L
+  - P213-O
+  - P207
+  - P208
+  - P209
+  - P210
+  - P211
+enterprise_generative_ai_platform_present_required: true
+llm_platform_present_required: true
+foundation_model_management_present_required: true
+prompt_intelligence_platform_present_required: true
+rag_platform_present_required: true
+vector_intelligence_present_required: true
+ai_assistant_platform_present_required: true
+multimodal_ai_foundation_present_required: true
+llmops_architecture_present_required: true
+ai_governance_present_required: true
+cqrs_architecture_present_required: true
+event_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_architecture_present_required: true
+zero_trust_security_present_required: true
+cloud_native_deployment_present_required: true
+sibling_ai_bc_forbidden: true
+module_local_llm_sdk_forbidden: true
+copilots:
+  - executive_copilot
+  - finance_copilot
+  - hr_copilot
+  - erp_copilot
+  - security_copilot
+  - developer_copilot
+  - data_analyst_copilot
+  - customer_service_copilot

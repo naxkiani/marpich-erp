@@ -1,0 +1,44 @@
+apiVersion: marpich.io/v1
+kind: SingularityDddCqrs
+metadata:
+  prompt: P218-X
+  adr: "550"
+bounded_contexts:
+  - Singularity Intelligence Management
+  - Human-AI Integration
+  - Civilization Transformation
+  - Cognitive Evolution
+  - Future Systems Management
+  - Intelligence Governance
+aggregates:
+  - SingularityAggregate
+  - EvolutionAggregate
+  - CivilizationTransformationAggregate
+  - HumanAIIntegrationAggregate
+  - FutureScenarioAggregate
+  - GovernanceAggregate
+commands:
+  - RegisterSingularityModelCommand
+  - CreateHumanAIIntegrationCommand
+  - StartCivilizationTransformationCommand
+  - GenerateFutureScenarioCommand
+  - ValidateIntelligenceAlignmentCommand
+  - UpdateGovernancePolicyCommand
+queries:
+  - GetSingularityModelQuery
+  - GetEvolutionStageQuery
+  - GetCivilizationModelQuery
+  - GetFutureScenarioQuery
+  - GetAlignmentScoreQuery
+  - GetGovernancePolicyQuery
+events:
+  - EvolutionStageReachedEvent
+  - HumanAIIntegrationCreatedEvent
+  - CivilizationTransformationStartedEvent
+  - FutureScenarioGeneratedEvent
+  - IntelligenceCapabilityExpandedEvent
+  - GovernancePolicyUpdatedEvent
+  - SingularityRiskDetectedEvent
+  - CivilizationModelOptimizedEvent
+  - IntelligenceAlignmentValidatedEvent
+  - HumanIdentityPreservedEvent

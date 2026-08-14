@@ -1,0 +1,20 @@
+# BIOTECHNOLOGY_DOMAIN_DDD_CQRS.v1.yaml — P217-C
+apiVersion: marpich.io/v1
+kind: BiotechnologyDomainDddCqrs
+metadata:
+  phase: P217-C
+  adr: "502"
+spec:
+  commands:
+    - CreateBioModelCommand
+    - AnalyzeBiologicalDataCommand
+    - GenerateHealthPredictionCommand
+    - CreateSyntheticDesignCommand
+    - RunBiologicalSimulationCommand
+    - ApproveBioInnovationCommand
+  queries:
+    - GetBioIntelligenceQuery
+    - GetGenomeProfileQuery
+    - GetHealthInsightQuery
+    - GetDigitalTwinStateQuery
+    - GetResearchDiscoveryQuery

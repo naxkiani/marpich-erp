@@ -1,9 +1,10 @@
-"""Accounting repository port."""
+"""Accounting repository ports."""
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
 from contexts.accounting.domain.aggregates.billing_encounter import BillingEncounter
+from contexts.accounting.domain.aggregates.invoice import Invoice
 from shared.domain.value_objects.unique_id import UniqueId
 
 
@@ -21,3 +22,19 @@ class IBillingRepository(ABC):
 
     @abstractmethod
     async def list_billings(self, tenant_id: str) -> list[BillingEncounter]: ...
+
+
+class IInvoiceRepository(ABC):
+    @abstractmethod
+    async def save(self, invoice: Invoice) -> None: ...
+
+    @abstractmethod
+    async def find_by_id(self, tenant_id: str, invoice_id: UniqueId) -> Invoice | None: ...
+
+    @abstractmethod
+    async def find_by_sales_order(
+        self, tenant_id: str, sales_order_id: UniqueId
+    ) -> Invoice | None: ...
+
+    @abstractmethod
+    async def list_invoices(self, tenant_id: str) -> list[Invoice]: ...

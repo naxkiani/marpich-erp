@@ -1,0 +1,48 @@
+# P214-A — VALIDATION
+version: "1.0"
+prompt_id: P214-A
+adr: "421"
+sor: ai
+capability: CAP-PLT-AI-001
+verdict_required: ENTERPRISE_GRADE
+reject_if:
+  - enterprise_ai_platform_foundation_is_missing
+  - machine_learning_platform_is_missing
+  - generative_ai_platform_is_missing
+  - llm_platform_is_missing
+  - ai_model_lifecycle_is_missing
+  - mlops_foundation_is_missing
+  - vector_intelligence_is_missing
+  - ai_governance_foundation_is_missing
+  - ai_agent_foundation_is_missing
+  - knowledge_graph_integration_is_missing
+  - digital_twin_integration_is_missing
+  - cqrs_architecture_is_missing
+  - event_architecture_is_missing
+  - microservices_architecture_is_missing
+  - api_first_architecture_is_missing
+  - zero_trust_security_is_missing
+  - cloud_native_deployment_is_missing
+  - sibling_ai_bc
+definition_of_done:
+  - enterprise_ai_platform
+  - machine_learning_platform
+  - generative_ai_platform
+  - llm_management
+  - model_registry
+  - feature_store
+  - vector_intelligence
+  - ai_runtime
+  - ai_governance_foundation
+  - ai_agent_foundation
+  - knowledge_integration
+  - cqrs_architecture
+  - event_architecture
+  - microservice_architecture
+  - api_platform
+  - security_architecture
+  - deployment_architecture
+  - testing_architecture
+tests:
+  - contexts/ai/tests/test_ai_platform_foundation.py
+  - contexts/ai/tests/unit/test_ai_platform_foundation.py

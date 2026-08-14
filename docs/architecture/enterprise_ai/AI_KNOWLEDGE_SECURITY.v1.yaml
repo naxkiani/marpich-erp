@@ -1,0 +1,26 @@
+# P214-G — SECURITY
+version: "1.0"
+prompt_id: P214-G
+adr: "427"
+sor: ai
+zero_trust: true
+integrates:
+  - P207
+  - P208
+  - P209
+  - P210
+  - P211
+controls:
+  - knowledge_access_control
+  - retrieval_authorization
+  - data_protection
+  - prompt_context_security
+  - knowledge_audit_trail
+  - ai_trust_scoring
+permissions:
+  - ai.assist.read
+  - ai.assist.infer
+forbidden:
+  - module_local_vector_sdk
+  - sibling_ai_bc
+  - file_blobs_in_ai_schema

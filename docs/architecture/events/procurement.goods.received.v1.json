@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "procurement.goods.received",
+  "type": "object",
+  "required": ["requisition_id", "sku", "quantity"],
+  "properties": {
+    "requisition_id": { "type": "string", "format": "uuid" },
+    "purchase_order_id": { "type": "string", "format": "uuid" },
+    "sku": { "type": "string" },
+    "quantity": { "type": "string" },
+    "lines": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["sku", "quantity"],
+        "properties": {
+          "sku": { "type": "string" },
+          "quantity": { "type": "number" }
+        }
+      }
+    }
+  }
+}

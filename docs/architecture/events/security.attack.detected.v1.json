@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://marpich.io/schemas/events/security.attack.detected.v1.json",
+  "title": "security.attack.detected.v1",
+  "description": "Canonical detection handoff from Cyber Security (P210) to Security Incident IR.",
+  "type": "object",
+  "required": [
+    "tenant_id",
+    "organization_id",
+    "correlation_id",
+    "occurred_at",
+    "event_id",
+    "event_name",
+    "event_version",
+    "source_context",
+    "payload"
+  ],
+  "properties": {
+    "tenant_id": { "type": "string", "minLength": 1 },
+    "organization_id": { "type": "string" },
+    "correlation_id": { "type": "string", "minLength": 1 },
+    "occurred_at": { "type": "string", "format": "date-time" },
+    "user_id": { "type": ["string", "null"] },
+    "security_context": { "type": "object" },
+    "event_id": { "type": "string", "minLength": 1 },
+    "event_name": { "const": "security.attack.detected" },
+    "event_version": { "const": "1" },
+    "source_context": { "const": "cyber_security" },
+    "payload": {
+      "type": "object",
+      "required": [
+        "detection_ref",
+        "severity",
+        "planes",
+        "classification"
+      ],
+      "properties": {
+        "detection_ref": { "type": "string" },
+        "campaign_ref": { "type": ["string", "null"] },
+        "severity": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "critical"]
+        },
+        "planes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["edr", "ndr", "cloud", "identity"]
+          },
+          "minItems": 1
+        },
+        "classification": { "type": "string" },
+        "endpoint_sensor_ref": { "type": ["string", "null"] },
+        "network_sensor_ref": { "type": ["string", "null"] },
+        "connector_ref": { "type": ["string", "null"] },
+        "summary": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

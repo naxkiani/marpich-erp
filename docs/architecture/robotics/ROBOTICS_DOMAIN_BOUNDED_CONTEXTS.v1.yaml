@@ -1,0 +1,55 @@
+# ROBOTICS_DOMAIN_BOUNDED_CONTEXTS.v1.yaml — P216-C
+apiVersion: marpich.io/v1
+kind: RoboticsDomainBoundedContextCatalog
+metadata:
+  phase: P216-C
+  adr: "475"
+  fabric: meos_robotics_domain_architecture_framework
+  capability: CAP-PLT-RB-001
+spec:
+  core_domain: enterprise_cyber_physical_intelligence
+  supporting_domains:
+    - robotics_lifecycle_management
+    - autonomous_machine_intelligence
+    - physical_ai_intelligence
+    - robot_fleet_intelligence
+    - robotics_digital_twin
+    - human_robot_collaboration
+    - robotics_safety_governance
+  generic_domains_reuse_core:
+    - identity
+    - authorization
+    - audit
+    - notifications
+    - workflow
+    - messaging
+    - observability
+    - configuration
+  bounded_contexts:
+    - id: BC-01
+      name: Robot Identity Context
+      aggregate: RobotIdentityAggregate
+    - id: BC-02
+      name: Robot Lifecycle Context
+      aggregate: RobotLifecycleAggregate
+    - id: BC-03
+      name: Autonomous Machine Intelligence Context
+      aggregate: AutonomousMachineAggregate
+    - id: BC-04
+      name: Physical AI Context
+      aggregate: PhysicalAIModelAggregate
+    - id: BC-05
+      name: Robot Mission Management Context
+      aggregate: RobotMissionAggregate
+    - id: BC-06
+      name: Robot Fleet Intelligence Context
+      aggregate: RobotFleetAggregate
+    - id: BC-07
+      name: Robotics Digital Twin Context
+      aggregate: RoboticsDigitalTwinAggregate
+    - id: BC-08
+      name: Human Robot Collaboration Context
+      aggregate: HumanRobotCollaborationAggregate
+    - id: BC-09
+      name: Robotics Safety Governance Context
+      aggregate: RoboticsSafetyAggregate

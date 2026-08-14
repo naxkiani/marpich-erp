@@ -1,0 +1,44 @@
+# EATMIP Master Series Roadmap (P239)
+
+series: P239
+title: Enterprise Autonomous Transportation & Mobility Intelligence Platform
+governance_standard: "11.0"
+capability: CAP-PLT-EATMIP-001
+sor: mobility_intelligence
+fabric: meos_enterprise_autonomous_transportation_mobility_intelligence_platform_framework
+api: /api/v1/mobility-intelligence*
+phases:
+  - id: P239
+    title: EATMIP Foundation
+    status: planned
+    adr: "599"
+    fabric: meos_enterprise_autonomous_transportation_mobility_intelligence_platform_framework
+    api: /api/v1/mobility-intelligence*
+  - id: P239-A
+    title: Mobility Domain Model, Transportation APIs, Event Contracts, CQRS Foundation, Core Mobility Services
+    status: planned
+    adr: pending
+  - id: P239-B
+    title: AI Mobility Agents, Transportation Digital Twin, Knowledge Graph Integration, Predictive Mobility Models
+    status: planned
+    adr: pending
+  - id: P239-C
+    title: Autonomous Transportation Operations Assist, Intelligent Fleet Networks, Smart Mobility Ecosystem, Real-Time Optimization
+    status: planned
+    adr: pending
+  - id: P239-D
+    title: Civilization-Scale Mobility Intelligence, Autonomous Global Transportation Network, Self-Evolving Mobility Ecosystem (Gated)
+    status: planned
+    adr: pending
+locks:
+  never_replace_p238_urban_or_p232_supply: true
+  never_replace_p216_robotics_missions: true
+  never_ungated_vehicle_or_traffic_ot_actuation: true
+  never_v2x_or_traffic_controller_sdk_in_domain: true
+  never_dual_write_shipment_or_city_control_tables: true
+  never_treat_simulation_as_execute: true
+  never_module_local_llm: true
+  never_bypass_transportation_safety_interlocks: true
+  never_opaque_mobility_recommendations: true
+  foundation_for_p239_a: true
+  peer_series_p240_eagdgip: true

@@ -1,0 +1,24 @@
+# P213-C — Security boundaries
+version: "1.0"
+prompt_id: P213-C
+adr: "396"
+sor: analytics
+capability: CAP-PLT-BI-001
+permission: analytics.read
+zero_trust: true
+tenant_isolation: true
+delegates:
+  identity: P207
+  authorization: P208
+  data_security: P211
+  data_governance: P212
+  data_mesh: P212-F
+  knowledge_graph: P212-J
+  digital_twin: P212-L
+  enterprise_ai: ai
+bi_access_governance: true
+metric_ownership_required: true
+report_security_required: true
+data_usage_policies_via_p212: true
+publishing_requires_validated_assets: true
+sibling_bc_forbidden: true

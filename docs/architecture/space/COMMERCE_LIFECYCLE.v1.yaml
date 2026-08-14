@@ -1,0 +1,23 @@
+apiVersion: marpich.io/v1
+kind: SpaceCommerceLifecycle
+metadata:
+  prompt: P218-R
+  adr: "544"
+stages:
+  - company_registration
+  - identity_verification
+  - service_listing
+  - customer_matching
+  - contract_negotiation
+  - compliance_validation
+  - transaction_authorization
+  - settlement
+  - performance_monitoring
+  - market_analytics
+stage_count: 10
+gates:
+  never_ungated_commercial_transaction: true
+  never_skip_marketplace_identity_verification: true
+  never_skip_contract_compliance_validation: true
+  never_duplicate_financial_kernel: true
+  human_override_required: true

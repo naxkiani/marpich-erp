@@ -1,0 +1,13 @@
+# BIOTECHNOLOGY_BIO_GI_MODELS.v1.yaml — P217-V
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioGiModels
+metadata:
+  phase: P217-V
+  adr: "521"
+spec:
+  reasoning_capabilities: 4
+  foundation_model_domains: 5
+  agents: 6
+  knowledge_graph: meos_general_biological_intelligence_graph
+  digital_twin: meos_bio_general_intelligence_digital_twin
+  cognitive_enterprise: meos_cognitive_biotechnology_enterprise_os

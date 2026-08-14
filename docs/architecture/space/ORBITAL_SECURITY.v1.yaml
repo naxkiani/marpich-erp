@@ -1,0 +1,14 @@
+apiVersion: marpich.io/v1
+kind: OrbitalSecurity
+metadata:
+  prompt: P218-G
+  adr: "533"
+zero_trust: true
+locks:
+  - no_module_local_llm
+  - no_module_local_telemetry_stack
+  - no_module_local_ssa_sensor_stack
+  - never_ungated_collision_avoidance_maneuver
+  - never_disable_human_override
+  - never_opaque_unexplainable_decisions
+  - never_ungated_autonomous_mission_strategy

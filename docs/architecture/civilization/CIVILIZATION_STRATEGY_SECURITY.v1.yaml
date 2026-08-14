@@ -1,0 +1,19 @@
+# CIVILIZATION_STRATEGY_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: SecurityControls
+metadata:
+  prompt_id: P219-B
+  adr: "555"
+  sor: civilization
+locks:
+  never_replace_p219_foundation: true
+  never_replace_p219_a_mission: true
+  never_replace_p218_z_intelligence_nexus: true
+  never_replace_space: true
+  never_merge_p218_t_space_civilization: true
+  never_opaque_unexplainable_civilization_architecture_decisions: true
+  never_ungated_civilization_decision_architecture: true
+  never_skip_human_authority_architecture: true
+  never_skip_ethical_civilization_governance_architecture: true
+  never_violate_human_sovereignty_architecture: true
+  no_module_local_llm: true

@@ -1,0 +1,32 @@
+# P213-N — SECURITY
+version: "1.0"
+prompt_id: P213-N
+adr: "418"
+sor: analytics
+capability: CAP-PLT-BI-001
+api_prefix: /api/v1/analytics/ops
+zero_trust: true
+via_p207: true
+via_p208: true
+via_p209: true
+via_p210: true
+via_p211: true
+via_p212: true
+oauth2: true
+oidc: true
+jwt: true
+mtls: true
+spiffe_spire: true
+api_keys: true
+fine_grained_authorization: true
+rate_limiting: true
+api_auditing: true
+via_api_gateway: true
+via_enterprise_event_fabric: true
+module_local_gateway_forbidden: true
+module_local_event_bus_forbidden: true
+permissions:
+  - analytics.ops.read
+  - analytics.dashboards.read
+tenant_isolation: true
+continuous_governance: true

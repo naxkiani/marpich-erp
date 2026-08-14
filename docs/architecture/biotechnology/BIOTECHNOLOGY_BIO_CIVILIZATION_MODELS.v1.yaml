@@ -1,0 +1,19 @@
+apiVersion: marpich.io/v1
+kind: BiotechnologyDomainModels
+metadata:
+  prompt_id: P217-W
+  adr: 524
+spec:
+  domain_count: 3
+  aggregates:
+    - BioCivilizationIntelligenceRoot
+    - CollectiveBiologicalNetworkRoot
+    - GlobalBioCognitiveEcosystemRoot
+    - HumanBioAiSymbiosisRoot
+    - KnowledgeCivilizationRoot
+    - MultiAgentBioSocietyRoot
+    - CollectiveBioDecisionRoot
+    - CivilizationKnowledgeGraphRoot
+    - BioCivilizationDigitalTwinRoot
+    - HumanCivilizationOversightRoot
+    - BioCivilizationSecurityRoot

@@ -1,0 +1,45 @@
+# ROBOTICS_HEALTHCARE_DDD_CQRS.v1.yaml — P216-I
+apiVersion: marpich.io/v1
+kind: RoboticsHealthcareDddCqrsCatalog
+metadata:
+  phase: P216-I
+  adr: "481"
+spec:
+  commands:
+    - RegisterPatientCommand
+    - CreateTreatmentPlanCommand
+    - AssignMedicalRobotCommand
+    - StartSurgicalProcedureCommand
+    - DispenseMedicationCommand
+    - GenerateDiagnosisCommand
+    - UpdatePatientDigitalTwinCommand
+  queries:
+    - GetPatientRecordQuery
+    - GetClinicalStatusQuery
+    - GetRobotStatusQuery
+    - GetProcedureStatusQuery
+    - GetMedicalImageQuery
+    - GetPatientDigitalTwinQuery
+  events:
+    - robotics.healthcare.patient.admitted.v1
+    - robotics.healthcare.diagnosis.generated.v1
+    - robotics.healthcare.treatment.plan.approved.v1
+    - robotics.healthcare.robot.assigned.v1
+    - robotics.healthcare.surgery.initiated.v1
+    - robotics.healthcare.procedure.completed.v1
+    - robotics.healthcare.medication.dispensed.v1
+    - robotics.healthcare.patient.transferred.v1
+    - robotics.healthcare.emergency.detected.v1
+    - robotics.healthcare.patient.discharged.v1
+  microservices:
+    - patient_service
+    - clinical_decision_service
+    - healthcare_robotics_service
+    - surgical_robotics_service
+    - medical_imaging_service
+    - laboratory_service
+    - pharmacy_service
+    - digital_twin_service
+    - medical_knowledge_graph_service
+    - hospital_operations_service
+    - clinical_analytics_service

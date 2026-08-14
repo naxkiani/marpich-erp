@@ -1,0 +1,13 @@
+apiVersion: marpich.io/v1
+kind: MissionIntelSecurity
+metadata:
+  prompt: P218-J
+  adr: "536"
+zero_trust: true
+locks:
+  - no_module_local_llm
+  - never_ungated_mission_launch_authorization
+  - never_skip_mission_readiness_review
+  - never_ungated_autonomous_mission_strategy
+  - never_opaque_unexplainable_decisions
+  - never_disable_human_override

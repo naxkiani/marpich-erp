@@ -1,0 +1,27 @@
+# P211-F — Validation gates
+version: "1.0"
+prompt_id: P211-F
+adr: "381"
+reject_if:
+  - data_assets_are_unknown
+  - security_posture_cannot_be_measured
+  - exposure_risks_are_invisible
+  - findings_have_no_ownership
+  - remediation_is_manual_only
+  - continuous_assessment_is_unavailable
+  - sibling_dspm_bc
+forbidden_siblings:
+  - backend/contexts/dspm
+  - backend/contexts/dspm_platform
+  - backend/contexts/posture_management
+required_artifacts:
+  - docs/adr/381-enterprise-data-security-dspm.md
+  - docs/architecture/ENTERPRISE_DATA_SECURITY_DSPM.md
+  - docs/architecture/data_security/DATA_SECURITY_DSPM_CAPABILITIES.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_DSPM_DDD_CQRS.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_DSPM_SECURITY.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_DSPM_VALIDATION.v1.yaml
+  - backend/contexts/data_security/domain/services/ds_platform_dspm.py
+  - backend/contexts/data_security/domain/aggregates/ds_dspm_aggregates.py
+  - backend/contexts/data_security/infrastructure/acl/ds_dspm_acl.py
+  - backend/contexts/data_security/application/ds_dspm_foundation.py

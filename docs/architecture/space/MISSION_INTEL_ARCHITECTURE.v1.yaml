@@ -1,0 +1,13 @@
+apiVersion: marpich.io/v1
+kind: MissionIntelArchitecture
+metadata:
+  prompt: P218-J
+  adr: "536"
+  fabric: meos_mission_intelligence_fabric
+layers:
+  - L01 Mission Definition Layer
+  - L02 Mission Planning Layer
+  - L03 Mission Execution Layer
+  - L04 Mission Intelligence Layer
+  - L05 Mission Governance Layer
+layer_count: 5

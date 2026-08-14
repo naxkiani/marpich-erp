@@ -1,0 +1,33 @@
+# BIOTECHNOLOGY_FOUNDATION_SECURITY.v1.yaml — P217
+apiVersion: marpich.io/v1
+kind: BiotechnologyFoundationSecurity
+metadata:
+  phase: P217
+  adr: "499"
+spec:
+  framework: meos_bio_trust_framework
+  domains:
+    - biological_data
+    - genomic_privacy
+    - research_assets
+    - synthetic_designs
+    - clinical_intelligence
+    - bio_ai_models
+  controls:
+    - encryption
+    - access_governance
+    - audit_intelligence
+    - ethical_review
+    - compliance_management
+    - data_sovereignty
+  hard_locks:
+    - genomic_privacy
+    - ethical_bioengineering
+    - scientific_reproducibility
+    - human_centered_health_intelligence
+    - never_replace_identity_platform
+    - never_replace_hospital_emr
+    - never_replace_laboratory_lims
+    - never_replace_pharmacy
+    - no_module_local_llm
+    - opaque_bio_safety_decisions_forbidden

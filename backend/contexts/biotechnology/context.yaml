@@ -1,0 +1,36 @@
+context: biotechnology
+architecture_version: "1.0"
+display_name: Enterprise Biotechnology, Synthetic Biology, Bio-AI Intelligence, Digital Health Evolution & MEOS Bio Intelligence Platform
+type: platform
+description: >-
+  MEOS Bio Intelligence Fabric — biotechnology research, synthetic biology,
+  bio-AI, digital health, precision medicine, biological digital twins, and
+  bio governance (P217). Healthcare/LIMS peers via ACL; clinical SoRs remain
+  hospital/laboratory/pharmacy. External research systems via Integration Platform.
+api: /api/v1/biotechnology
+series: P217
+foundation_prompt: P217
+adr: "499"
+capability: CAP-PLT-BIO-001
+permissions:
+  - biotechnology.read
+  - biotechnology.write
+  - biotechnology.ai.read
+  - biotechnology.ai.infer
+  - biotechnology.admin
+ai:
+  surfaces:
+    - insights
+    - predictions
+    - recommendations
+    - summaries
+    - search
+    - assistant
+    - automation
+    - document_intelligence
+    - voice_commands
+    - chat_interface
+    - report_explanation
+    - anomaly_detection
+    - forecasting
+    - optimization_suggestions

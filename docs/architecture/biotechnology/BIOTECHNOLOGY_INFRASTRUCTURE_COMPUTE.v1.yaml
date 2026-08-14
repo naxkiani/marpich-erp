@@ -1,0 +1,16 @@
+# BIOTECHNOLOGY_INFRASTRUCTURE_COMPUTE.v1.yaml — P217-D
+apiVersion: marpich.io/v1
+kind: BiotechnologyInfrastructureCompute
+metadata:
+  phase: P217-D
+  adr: "503"
+spec:
+  scientific_computing:
+    - hpc_cluster
+    - gpu_accelerated_biology
+    - scientific_workflow_engine
+  bio_cloud:
+    - bio_compute_cloud
+    - bio_data_cloud
+    - bio_application_cloud
+    - bio_governance_cloud

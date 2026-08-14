@@ -1,0 +1,14 @@
+apiVersion: marpich.io/v1
+kind: ResourcesDddCqrs
+metadata:
+  prompt: P218-N
+  adr: "540"
+bounded_contexts: 8
+aggregates:
+  - ResourceAssetAggregate
+  - MiningOperationAggregate
+  - ISRUFacilityAggregate
+  - ResourceInventoryAggregate
+  - ExtractionMissionAggregate
+microservices: 10
+core_events: 10

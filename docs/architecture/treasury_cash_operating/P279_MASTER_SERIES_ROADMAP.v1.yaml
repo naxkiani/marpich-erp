@@ -1,0 +1,61 @@
+# METRCIP Master Series Roadmap (P279)
+
+series: P279
+title: MEOS Enterprise Revenue Recognition, Treasury & Cash Intelligence Platform
+governance_standard: "11.0"
+capability: CAP-PLT-METRCIP-001
+sor: treasury_cash_operating
+fabric: meos_enterprise_revenue_recognition_treasury_cash_intelligence_platform_framework
+api: /api/v1/treasury-cash-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P279
+    title: METRCIP Foundation
+    status: planned
+    adr: "636"
+    fabric: meos_enterprise_revenue_recognition_treasury_cash_intelligence_platform_framework
+    api: /api/v1/treasury-cash-operating*
+  - id: P279-A
+    title: Treasury Foundation — Cash Position, Bank Connectivity, Recognition Context, Dashboard, Reconciliation, Basic Liquidity Forecast
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P279-B
+    title: Treasury Intelligence — AI Cash Forecasting, Liquidity, Working Capital, Treasury Risk, FX Exposure, Recognition Intelligence
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P279-C
+    title: Autonomous Treasury Operations — Liquidity-Aware Payment Scheduling, Reconciliation Assists, Funding Prediction, FX Risk Detection, Exception Automation
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P279-D
+    title: Autonomous Treasury OS — Continuous Liquidity Optimization, Autonomous Forecasting, Intelligent Funding, Dynamic WC, Self-Optimizing Treasury
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_p271_financial_control: true
+  never_replace_treasury_sor: true
+  never_replace_banking_sor: true
+  never_fork_treasury_api: true
+  never_fork_quote_to_cash_operating_api: true
+  never_fork_autonomous_finance_operating_api: true
+  never_merge_p278_q2c_and_p279_treasury: true
+  never_merge_p279_treasury_and_p271_finance: true
+  never_dual_write_treasury_or_bank_ledgers: true
+  never_local_gl_or_duplicate_financial_kernel: true
+  never_ungated_material_transfer_hedge_fund: true
+  never_opaque_treasury_auto_commit: true
+  dual_control_for_high_value_treasury_actions: true
+  idempotent_payment_processing: true
+  deterministic_financial_state_transitions: true
+  segregation_of_duties: true
+  human_governance_for_material_treasury_actions: true
+  never_module_local_llm: true
+  never_embed_bank_sdk_in_domain: true
+  never_treat_twin_simulation_as_commit: true
+  foundation_for_p279_a: true
+  unblocks_p280_fpa_budgeting_performance_os: true
+  # P280 delivered as CAP-PLT-MEFPAPM-001 / ADR 637

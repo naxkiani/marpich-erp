@@ -1,0 +1,16 @@
+apiVersion: marpich.io/v1
+kind: SatelliteDddCqrs
+metadata:
+  prompt: P218-F
+  adr: "532"
+bounded_contexts: 8
+aggregates:
+  - SatelliteAggregate
+  - ConstellationAggregate
+  - PayloadAggregate
+  - OrbitAggregate
+  - TelemetryAggregate
+  - MissionAssignmentAggregate
+  - HealthAggregate
+microservices: 10
+core_events: 11

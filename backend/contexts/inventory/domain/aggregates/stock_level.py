@@ -1,4 +1,4 @@
-"""Inventory stock level aggregate — tenant-scoped SKU balance."""
+"""Inventory stock level aggregate — tenant-scoped SKU balance + reservations."""
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -14,6 +14,7 @@ class StockLevel(AggregateRoot):
     tenant_id: str
     sku: str
     quantity_on_hand: Decimal
+    quantity_reserved: Decimal = Decimal("0")
     updated_at: datetime = field(default_factory=lambda: datetime.now(UTC))
 
     @classmethod
@@ -23,13 +24,16 @@ class StockLevel(AggregateRoot):
         return cls(
             id=UniqueId.generate(),
             tenant_id=tenant_id,
-            sku=sku,
+            sku=sku.strip().upper(),
             quantity_on_hand=quantity,
+            quantity_reserved=Decimal("0"),
         )
 
     def set_quantity(self, quantity: Decimal) -> None:
         if quantity < 0:
             raise ValueError("inventory.errors.negative_quantity")
+        if quantity < self.quantity_reserved:
+            raise ValueError("inventory.errors.quantity_below_reserved")
         self.quantity_on_hand = quantity
         self.updated_at = datetime.now(UTC)
 
@@ -38,8 +42,30 @@ class StockLevel(AggregateRoot):
             raise ValueError("inventory.errors.invalid_decrement")
         if self.quantity_on_hand < quantity:
             raise ValueError("inventory.errors.insufficient_stock")
+        available = self.quantity_on_hand - self.quantity_reserved
+        if available < quantity:
+            raise ValueError("inventory.errors.insufficient_available")
         self.quantity_on_hand -= quantity
         self.updated_at = datetime.now(UTC)
+
+    def reserve(self, quantity: Decimal) -> None:
+        if quantity <= 0:
+            raise ValueError("inventory.errors.invalid_reservation")
+        available = self.quantity_on_hand - self.quantity_reserved
+        if available < quantity:
+            raise ValueError("inventory.errors.insufficient_available")
+        self.quantity_reserved += quantity
+        self.updated_at = datetime.now(UTC)
+
+    def restock(self, quantity: Decimal) -> None:
+        if quantity <= 0:
+            raise ValueError("inventory.errors.invalid_restock")
+        self.quantity_on_hand += quantity
+        self.updated_at = datetime.now(UTC)
+
+    @property
+    def quantity_available(self) -> Decimal:
+        return self.quantity_on_hand - self.quantity_reserved
 
     def to_dict(self) -> dict:
         return {
@@ -47,5 +73,7 @@ class StockLevel(AggregateRoot):
             "tenant_id": self.tenant_id,
             "sku": self.sku,
             "quantity_on_hand": str(self.quantity_on_hand),
+            "quantity_reserved": str(self.quantity_reserved),
+            "quantity_available": str(self.quantity_available),
             "updated_at": self.updated_at.isoformat(),
         }

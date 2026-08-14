@@ -1,18 +1,44 @@
 context: human_resources
 display_name: Human Resources
 type: generic
-description: Employees, org structure, leave, recruitment
+description: Employees — CAP-ENT-010 Employee Management (Wave 02 Functional)
+# Peer productization: P235/P251 workforce intel overlays — never dual-write employment SoR
 aggregates:
-- Employee
-- Department
-- LeaveRequest
-- JobOpening
-- Candidate
+  - Employee
+  - Department
+  - LeaveRequest
+  - JobOpening
+  - Candidate
+permissions:
+  - human_resources.employees.read
+  - human_resources.employees.write
+  - human_resources.ai.read
+  - human_resources.ai.infer
 publishes:
-- human_resources.employee.hired
-- human_resources.employee.terminated
-- human_resources.attendance.closed
+  - human_resources.employee.hired
+  - human_resources.employee.terminated
+  - human_resources.leave.requested
+  - human_resources.attendance.closed
 subscribes:
-- identity.user.created
-- workflow.process.approved
-schema: hr
+  - identity.user.created
+  - workflow.process.approved
+schema: human_resources
+ai:
+  surfaces:
+    - insights
+    - predictions
+    - recommendations
+    - summaries
+    - search
+    - assistant
+    - automation
+    - document_intelligence
+    - voice_commands
+    - chat
+    - report_explanation
+    - anomaly_detection
+    - forecasting
+    - optimization
+  prompt_templates:
+    - human_resources.employee.summary
+    - human_resources.workforce.insights

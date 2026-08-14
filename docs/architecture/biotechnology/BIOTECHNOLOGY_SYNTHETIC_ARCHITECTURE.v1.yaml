@@ -1,0 +1,14 @@
+# BIOTECHNOLOGY_SYNTHETIC_ARCHITECTURE.v1.yaml — P217-F
+apiVersion: marpich.io/v1
+kind: BiotechnologySyntheticArchitecture
+metadata:
+  phase: P217-F
+  adr: "505"
+  fabric: meos_synthetic_biology_intelligence_fabric
+spec:
+  layers:
+    - L01_biological_knowledge
+    - L02_bio_design_intelligence
+    - L03_synthetic_engineering
+    - L04_synthetic_system_intelligence
+    - L05_governance_and_safety

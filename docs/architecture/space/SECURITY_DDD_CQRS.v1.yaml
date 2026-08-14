@@ -1,0 +1,15 @@
+apiVersion: marpich.io/v1
+kind: SpaceSecurityDddCqrs
+metadata:
+  prompt: P218-P
+  adr: "542"
+bounded_contexts: 8
+aggregates:
+  - SecurityOperationsAggregate
+  - ThreatIntelligenceAggregate
+  - SpaceAssetProtectionAggregate
+  - IncidentAggregate
+  - SecurityPolicyAggregate
+  - RecoveryAggregate
+microservices: 10
+core_events: 10

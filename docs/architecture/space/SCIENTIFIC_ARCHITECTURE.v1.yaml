@@ -1,0 +1,13 @@
+apiVersion: marpich.io/v1
+kind: ScientificArchitecture
+metadata:
+  prompt: P218-K
+  adr: "537"
+  fabric: meos_scientific_intelligence_fabric
+layers:
+  - L01 Scientific Data Layer
+  - L02 Research Platform Layer
+  - L03 Scientific Intelligence Layer
+  - L04 Laboratory Intelligence Layer
+  - L05 Knowledge & Collaboration Layer
+layer_count: 5

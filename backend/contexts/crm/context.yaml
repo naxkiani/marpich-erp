@@ -1,18 +1,41 @@
 context: crm
 display_name: CRM
 type: generic
-description: Contacts, leads, opportunities, customer 360
+description: Contacts, opportunities — CAP-ENT-001 Customer Management (Wave 02 Functional)
+# Peer productization: P273 MECXARP — never fork /api/v1/crm*; never dual-write crm_* from operating fabric
 aggregates:
-- Contact
-- Lead
-- Opportunity
-- Account
-- Activity
+  - Contact
+  - Opportunity
+permissions:
+  - crm.contacts.read
+  - crm.contacts.write
+  - crm.opportunities.read
+  - crm.opportunities.write
+  - crm.ai.read
+  - crm.ai.infer
 publishes:
-- crm.lead.converted
-- crm.opportunity.won
-- crm.contact.updated
+  - crm.contact.created
+  - crm.opportunity.won
+  - crm.opportunity.lost
 subscribes:
-- sales.order.placed
-- identity.user.created
+  - sales.quotation.sent
 schema: crm
+ai:
+  surfaces:
+    - insights
+    - predictions
+    - recommendations
+    - summaries
+    - search
+    - assistant
+    - automation
+    - document_intelligence
+    - voice_commands
+    - chat
+    - report_explanation
+    - anomaly_detection
+    - forecasting
+    - optimization
+  prompt_templates:
+    - crm.opportunity.summary
+    - crm.contact.insights

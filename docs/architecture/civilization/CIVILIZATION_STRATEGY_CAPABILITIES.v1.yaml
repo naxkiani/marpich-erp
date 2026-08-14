@@ -1,0 +1,28 @@
+# CIVILIZATION_STRATEGY_CAPABILITIES.v1.yaml
+apiVersion: marpich.io/v1
+kind: CapabilityCatalog
+metadata:
+  prompt_id: P219-B
+  adr: "555"
+  sor: civilization
+  capability: CAP-PLT-CIV-001
+  fabric: meos_civilization_os_strategic_architecture_framework
+  api_prefix: /api/v1/civilization/strategy
+architecture_layers: 5
+capability_domains: 8
+operating_model_layers: 4
+service_categories: 5
+present_required:
+  civilization_strategic_architecture_present_required: true
+  enterprise_capability_model_present_required: true
+  civilization_operating_model_present_required: true
+  civilization_service_framework_present_required: true
+  governance_framework_present_required: true
+  operating_framework_present_required: true
+  digital_twin_operating_model_present_required: true
+  meos_integration_architecture_present_required: true
+  evolution_model_present_required: true
+gates:
+  foundation_gate: P219
+  mission_gate: P219-A
+  foundation_for: P219-C

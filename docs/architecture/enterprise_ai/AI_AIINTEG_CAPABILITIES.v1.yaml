@@ -1,0 +1,48 @@
+# P214-M — CAPABILITIES
+version: "1.0"
+prompt_id: P214-M
+adr: "433"
+sor: ai
+capability: CAP-PLT-AI-001
+api_prefix: /api/v1/ai/aiinteg
+fabric: meos_intelligent_ai_integration_fabric
+principle: >-
+  Enterprise AI Integration Platform SHALL provide the secure, intelligent
+  and autonomous communication fabric that connects all AI capabilities across MEOS.
+builds_on:
+  - P214-A
+  - P214-B
+  - P214-C
+  - P214-D
+  - P214-E
+  - P214-F
+  - P214-G
+  - P214-H
+  - P214-I
+  - P214-J
+  - P214-K
+  - P214-L
+  - ADR-432
+  - API_GATEWAY_ARCHITECTURE
+  - ENTERPRISE_EVENT_BUS
+enterprise_ai_api_gateway_present_required: true
+intelligent_service_mesh_present_required: true
+ai_communication_fabric_present_required: true
+model_serving_gateway_present_required: true
+agent_communication_platform_present_required: true
+event_integration_platform_present_required: true
+workflow_orchestration_present_required: true
+integration_governance_present_required: true
+security_architecture_present_required: true
+knowledge_graph_integration_present_required: true
+digital_twin_integration_present_required: true
+cqrs_architecture_present_required: true
+event_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_architecture_present_required: true
+zero_trust_security_present_required: true
+cloud_native_deployment_present_required: true
+sibling_ai_bc_forbidden: true
+module_local_ai_gateway_forbidden: true
+platform_api_gateway_owns_edge: true
+platform_event_fabric_owns_bus: true

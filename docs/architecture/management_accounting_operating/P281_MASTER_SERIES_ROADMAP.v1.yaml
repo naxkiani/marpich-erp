@@ -1,0 +1,61 @@
+# MEMACPI Master Series Roadmap (P281)
+
+series: P281
+title: MEOS Enterprise Management Accounting, Cost & Profitability Intelligence Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEMACPI-001
+sor: management_accounting_operating
+fabric: meos_enterprise_management_accounting_cost_profitability_intelligence_platform_framework
+api: /api/v1/management-accounting-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P281
+    title: MEMACPI Foundation
+    status: planned
+    adr: "638"
+    fabric: meos_enterprise_management_accounting_cost_profitability_intelligence_platform_framework
+    api: /api/v1/management-accounting-operating*
+  - id: P281-A
+    title: Management Accounting Foundation — Cost Model, Pools, Drivers, Allocation Engine, Basic Profitability
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P281-B
+    title: Profitability Intelligence — ABC, Unit Economics, Customer/Product/Service Profitability, Cost-to-Serve, Margin
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P281-C
+    title: Predictive Cost Intelligence — AI Drivers, Anomalies, Predictive Forecast, Profitability Prediction, Optimization Scenarios
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P281-D
+    title: Autonomous Profitability OS — Continuous Cost Intelligence, Allocation Optimization Assists, Continuous Margin Optimization
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_p271_financial_control: true
+  never_replace_p279_treasury_cash: true
+  never_replace_p280_financial_planning: true
+  never_fork_autonomous_finance_operating_api: true
+  never_fork_treasury_cash_operating_api: true
+  never_fork_financial_planning_operating_api: true
+  never_merge_p271_p279_p280_p281: true
+  never_dual_write_cost_or_allocation_into_gl: true
+  never_local_gl_or_duplicate_financial_kernel: true
+  never_uncontrolled_ledger_mutation: true
+  never_ungated_material_cost_optimization: true
+  versioned_cost_models: true
+  versioned_allocation_rules: true
+  reproducible_allocation: true
+  deterministic_cost_calculations: true
+  transfer_pricing_context_only_not_tax_determination: true
+  segregation_of_duties: true
+  human_governance_for_material_cost_actions: true
+  never_module_local_llm: true
+  never_treat_twin_scenario_as_published_allocation: true
+  foundation_for_p281_a: true
+  unblocks_p282_pricing_intelligence_revenue_optimization_os: true
+  # P282 delivered as CAP-PLT-MEPRIAP-001 / ADR 639

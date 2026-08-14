@@ -1,0 +1,16 @@
+apiVersion: marpich.io/v1
+kind: ScientificDddCqrs
+metadata:
+  prompt: P218-K
+  adr: "537"
+bounded_contexts: 8
+aggregates:
+  - ResearchProjectAggregate
+  - ExperimentAggregate
+  - LaboratoryAggregate
+  - DiscoveryAggregate
+  - PublicationAggregate
+  - KnowledgeAggregate
+  - SampleAggregate
+microservices: 10
+core_events: 10

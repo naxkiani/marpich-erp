@@ -1,0 +1,27 @@
+# P211-C — Domain architecture capabilities
+version: "1.0"
+prompt_id: P211-C
+adr: "378"
+sor: data_security
+capability: CAP-PLT-DS-001
+api_prefix: /api/v1/data-security/domain
+builds_on:
+  - P211-A
+  - P211-B
+  - ADR-376
+  - ADR-377
+
+domains_loosely_coupled_required: true
+data_ownership_clear_required: true
+privacy_integrated_with_security_required: true
+events_present_required: true
+aggregates_defined_required: true
+integration_boundaries_clear_required: true
+sibling_data_security_bc_forbidden: true
+via_consent: true
+via_p207: true
+via_p208: true
+via_p209: true
+via_p210: true
+via_p210_m: true
+via_enterprise_ai: true

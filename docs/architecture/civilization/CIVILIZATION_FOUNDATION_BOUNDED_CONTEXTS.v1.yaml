@@ -1,0 +1,33 @@
+# CIVILIZATION_FOUNDATION_BOUNDED_CONTEXTS.v1.yaml
+apiVersion: marpich.io/v1
+kind: BoundedContextMap
+metadata:
+  prompt_id: P219
+  adr: "553"
+  sor: civilization
+contexts:
+  - id: BC-CIV-01
+    name: Civilization Core Management
+    responsibilities: [civilization_lifecycle, state_management, service_registry]
+  - id: BC-CIV-02
+    name: Planetary Intelligence
+    responsibilities: [earth_intelligence_model, environmental_intelligence, planetary_analytics]
+  - id: BC-CIV-03
+    name: Human Society Management
+    responsibilities: [population_intelligence, social_systems, cultural_intelligence]
+  - id: BC-CIV-04
+    name: Infrastructure Management
+    responsibilities: [energy, transport, communications, water, food, urban, industrial]
+  - id: BC-CIV-05
+    name: Governance Intelligence
+    responsibilities: [policy_intelligence, ethics, trust, regulatory_intelligence]
+  - id: BC-CIV-06
+    name: Resource Management
+    responsibilities: [resource_allocation, capacity, optimization]
+  - id: BC-CIV-07
+    name: Civilization Evolution
+    responsibilities: [scenario_modeling, evolution_milestones, future_planning]
+forbidden_sibling_bc:
+  - civilization_os_platform
+  - planetary_governance_bc
+  - human_civilization_bc

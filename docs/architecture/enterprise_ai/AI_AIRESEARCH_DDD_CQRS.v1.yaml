@@ -1,0 +1,37 @@
+# P214-S — DDD / CQRS
+version: "1.0"
+prompt_id: P214-S
+adr: "439"
+core_domain: enterprise_ai_evolution_intelligence_management
+aggregate: EnterpriseAIEvolutionResearchAggregate
+bounded_contexts:
+  - BC-01: AI Research Management
+  - BC-02: AI Innovation Lab
+  - BC-03: AI Discovery Intelligence
+  - BC-04: AI Experimentation
+  - BC-05: AI Prototype Factory
+  - BC-06: Future Intelligence Strategy
+  - BC-07: AI Evolution Governance
+commands:
+  - CreateResearchProjectCommand
+  - StartAIExperimentCommand
+  - CreatePrototypeCommand
+  - EvaluateInnovationCommand
+  - ApproveTechnologyAdoptionCommand
+  - UpdateEvolutionRoadmapCommand
+queries:
+  - GetResearchProjectQuery
+  - GetExperimentResultQuery
+  - GetInnovationScoreQuery
+  - GetTechnologyTrendQuery
+  - GetFutureRoadmapQuery
+events:
+  - ResearchStartedEvent
+  - ExperimentExecutedEvent
+  - PrototypeCreatedEvent
+  - InnovationValidatedEvent
+  - BreakthroughDiscoveredEvent
+  - TechnologyAdoptedEvent
+  - RoadmapUpdatedEvent
+  - ResearchPublicationIndexedEvent
+same_sor_ai: true

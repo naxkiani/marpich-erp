@@ -1,0 +1,35 @@
+# P211-M — Twin / privacy simulation security requirements
+version: "1.0"
+prompt_id: P211-M
+adr: "388"
+requirements:
+  - complete_digital_representation
+  - simulatable_privacy_scenarios
+  - available_risk_prediction
+  - measurable_compliance_impact
+  - visible_ai_privacy_risks
+  - explainable_simulation_results
+  - human_approval
+  - model_governance
+  - auditability
+  - privacy_preservation
+standards:
+  - gdpr_dpia
+  - privacy_by_design
+  - nist_privacy_framework
+  - nist_ai_rmf
+  - iso_iec_42001
+permissions:
+  read: data_security.read
+  write: data_security.write
+  admin: data_security.admin
+  simulate: data_security.twin.simulate
+audit:
+  via_integration_events: true
+  local_audit_tables_forbidden: true
+ai:
+  via_enterprise_ai: true
+  module_local_llm_sdk_forbidden: true
+consent:
+  ledger_owned_by: consent
+  dpia_automation_acl_only: true

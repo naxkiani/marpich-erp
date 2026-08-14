@@ -1,0 +1,32 @@
+# P210-D — SOC validation gates
+version: "1.0"
+prompt_id: P210-D
+adr: "364"
+sor: cyber_security
+api_prefix: /api/v1/cyber-security/soc
+
+required_artifacts:
+  - docs/adr/364-enterprise-cyber-security-soc.md
+  - docs/architecture/ENTERPRISE_CYBER_SECURITY_SOC.md
+  - docs/architecture/cyber_security/CYBER_SOC_CAPABILITIES.v1.yaml
+  - docs/architecture/cyber_security/CYBER_SOC_DDD_CQRS.v1.yaml
+  - docs/architecture/cyber_security/CYBER_SOC_SECURITY.v1.yaml
+  - docs/architecture/cyber_security/CYBER_SOC_VALIDATION.v1.yaml
+  - backend/contexts/cyber_security/domain/services/cs_platform_soc.py
+  - backend/contexts/cyber_security/domain/aggregates/cs_soc_aggregates.py
+  - backend/contexts/cyber_security/infrastructure/acl/cs_soc_acl.py
+  - backend/contexts/cyber_security/application/cs_soc_foundation.py
+
+forbidden_siblings:
+  - backend/contexts/soc_platform
+  - backend/contexts/cyber_defense
+  - backend/contexts/siem_platform
+  - backend/contexts/soar_platform
+  - backend/contexts/xdr
+  - backend/contexts/security_ops
+
+verdict_target: ENTERPRISE_GRADE
+min_layers: 10
+min_telemetry_sources: 20
+min_event_count: 12
+min_cursor_outputs: 20

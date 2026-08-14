@@ -1,0 +1,15 @@
+# BIOTECHNOLOGY_BIO_GI_ARCHITECTURE.v1.yaml — P217-V
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioGiArchitecture
+metadata:
+  phase: P217-V
+  adr: "521"
+  fabric: meos_bio_general_intelligence_fabric
+spec:
+  layers:
+    - L01_biological_knowledge_foundation
+    - L02_biological_foundation_model
+    - L03_advanced_biological_reasoning
+    - L04_cognitive_enterprise
+    - L05_bio_gi_evolution
+    - L06_governance

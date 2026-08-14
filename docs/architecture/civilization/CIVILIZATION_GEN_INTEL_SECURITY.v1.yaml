@@ -1,0 +1,39 @@
+# CIVILIZATION_GEN_INTEL_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationGenIntelSecurity
+metadata:
+  prompt_id: P219-V
+  adr: "575"
+permissions:
+  - civilization.read
+  - civilization.general_intelligence.read
+  - civilization.general_intelligence.write
+  - civilization.general_intelligence.coordinate
+  - civilization.admin
+locks:
+  never_replace_p214_z: true
+  never_replace_p218_z_intelligence_nexus: true
+  never_replace_p219_e_ai_os: true
+  never_replace_p219_i_knowledge: true
+  never_replace_p219_u_autonomous_operations: true
+  never_claim_autonomous_general_intelligence: true
+  never_opaque_unexplainable_coordination_reasoning: true
+  never_ungated_intelligence_coordination_decisions: true
+  never_skip_ethical_intelligence_coordination: true
+  never_skip_human_authority_intelligence_coordination: true
+  never_violate_human_sovereignty_intelligence_coordination: true
+  never_bypass_trusted_intelligence_validation: true
+  never_bypass_human_supervision_intelligence_coordination: true
+  never_bypass_human_centered_intelligence: true
+  never_module_local_llm: true
+  inference_via_p214_z_only: true
+  coordination_recommendations_workflow_gated: true
+controls:
+  - human_centered_intelligence
+  - intelligence_coordination_first
+  - knowledge_fusion
+  - explainable_reasoning
+  - policy_driven_intelligence
+  - modular_intelligence
+  - responsible_ai
+  - audit_on_coordination_mutations

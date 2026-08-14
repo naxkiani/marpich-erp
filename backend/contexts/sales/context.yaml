@@ -1,18 +1,40 @@
 context: sales
 display_name: Sales
 type: generic
-description: Quotes, orders, pricing, commissions
+description: Quotes and orders from CRM won opportunities — CAP-ENT-002 (Wave 02 Functional)
+# Peer productization: P277 MESIARO — never fork /api/v1/sales*; never dual-write sales_* from operating fabric
 aggregates:
-- Quote
-- SalesOrder
-- PriceList
-- Commission
+  - Quotation
+  - SalesOrder
+permissions:
+  - sales.quotations.read
+  - sales.quotations.write
+  - sales.orders.read
+  - sales.orders.write
+  - sales.ai.read
+  - sales.ai.infer
 publishes:
-- sales.order.placed
-- sales.order.fulfilled
-- sales.quote.accepted
+  - sales.quotation.sent
+  - sales.order.placed
 subscribes:
-- crm.opportunity.won
-- inventory.stock.reserved
-- warehouse.shipment.dispatched
+  - crm.opportunity.won
 schema: sales
+ai:
+  surfaces:
+    - insights
+    - predictions
+    - recommendations
+    - summaries
+    - search
+    - assistant
+    - automation
+    - document_intelligence
+    - voice_commands
+    - chat
+    - report_explanation
+    - anomaly_detection
+    - forecasting
+    - optimization
+  prompt_templates:
+    - sales.quotation.summary
+    - sales.pipeline.insights

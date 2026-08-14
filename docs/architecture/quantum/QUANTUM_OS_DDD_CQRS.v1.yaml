@@ -1,0 +1,59 @@
+prompt_id: P215-T
+adr: "465"
+sor: quantum
+core_domain: enterprise_quantum_operating_intelligence_management
+bounded_context_count: 6
+aggregate_count: 7
+trust_gate: P215-K
+security_gate: P215-H
+bounded_contexts:
+  - id: BC-01
+    name: Quantum Kernel Context
+    owns: QuantumKernelAggregate
+  - id: BC-02
+    name: Quantum Control Plane Context
+    owns: QuantumControlPlaneAggregate
+  - id: BC-03
+    name: Quantum Orchestration Context
+    owns: QuantumOrchestrationAggregate
+  - id: BC-04
+    name: Autonomous Governance Context
+    owns: AutonomousGovernanceAggregate
+  - id: BC-05
+    name: Quantum Intelligence Core Context
+    owns: QuantumIntelligenceAggregate
+  - id: BC-06
+    name: Quantum Evolution Context
+    owns: QuantumEvolutionAggregate
+commands:
+  - StartQuantumRuntimeCommand
+  - AllocateQuantumResourceCommand
+  - ExecutePolicyCommand
+  - OptimizeQuantumSystemCommand
+  - CreateAutonomousDecisionCommand
+  - TriggerEvolutionCommand
+queries:
+  - GetQuantumSystemStateQuery
+  - GetResourceStatusQuery
+  - GetGovernanceStatusQuery
+  - GetIntelligenceStateQuery
+  - GetEvolutionRoadmapQuery
+events:
+  - QuantumSystemStartedEvent
+  - ResourceAllocatedEvent
+  - PolicyExecutedEvent
+  - AutonomousDecisionCreatedEvent
+  - OptimizationCompletedEvent
+  - EvolutionTriggeredEvent
+event_versioning: event_version_field
+outbox_required: true
+via_p215_d: true
+via_policy_engine: true
+via_p213: true
+via_p214_z: true
+via_workflow: true
+via_audit: true
+never_replace_core_platform: true
+never_replace_p215_k: true
+never_replace_p215_h: true
+module_local_pdp_forbidden: true

@@ -1,0 +1,107 @@
+name: MEOS Wave 01 Smoke
+
+on:
+  push:
+    branches: [main, "feature/**"]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend-wave01:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install backend
+        run: |
+          python -m pip install -U pip
+          pip install -e ".[dev]" || pip install -e .
+          pip install pytest httpx
+      - name: Wave 01 pytest smoke
+        env:
+          PERSISTENCE_BACKEND: memory
+        run: |
+          pytest -q \
+            contexts/identity/tests \
+            contexts/search/tests \
+            contexts/notifications/tests \
+            contexts/workflow/tests/test_workflow_flow.py \
+            --maxfail=8 \
+            -k "not postgres and not federation"
+
+  backend-wave01-postgres:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: marpich
+          POSTGRES_PASSWORD: marpich
+          POSTGRES_DB: marpich_platform
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U marpich -d marpich_platform"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    defaults:
+      run:
+        working-directory: backend
+    env:
+      PERSISTENCE_BACKEND: postgres
+      DATABASE_URL: postgresql+asyncpg://marpich:marpich@127.0.0.1:5432/marpich_platform
+      PGHOST: 127.0.0.1
+      PGPORT: "5432"
+      PGUSER: marpich
+      PGPASSWORD: marpich
+      PGDATABASE: marpich_platform
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install backend + psql client
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client
+          python -m pip install -U pip
+          pip install -e ".[dev]" || pip install -e .
+          pip install pytest httpx asyncpg
+      - name: Apply Wave 01 migrations
+        working-directory: .
+        env:
+          MEOS_WAVE01_ONLY: "1"
+        run: |
+          ./scripts/run-migrations.sh
+      - name: Postgres identity smoke
+        run: |
+          pytest -q tests/integration/test_postgres_smoke.py --maxfail=3
+
+  frontend-typecheck:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: pnpm/action-setup@v4
+        with:
+          # Must match root package.json "packageManager" (pnpm/action-setup rejects major-only).
+          version: 9.15.0
+      - name: Install
+        run: pnpm install --frozen-lockfile || pnpm install
+      - name: Typecheck shared + core + auth-provider
+        run: |
+          pnpm --filter @marpich/shared exec tsc --noEmit
+          pnpm --filter @marpich/core exec tsc --noEmit
+          pnpm --filter @marpich/auth-provider exec tsc --noEmit
+      - name: AuthZ nav unit tests
+        run: pnpm --filter @marpich/shared run test:unit

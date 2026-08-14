@@ -1,0 +1,31 @@
+# ROBOTICS_DEFENSE_SECURITY.v1.yaml — P216-U
+apiVersion: marpich.io/v1
+kind: RoboticsDefenseSecurity
+metadata:
+  phase: P216-U
+  adr: "493"
+spec:
+  framework: meos_defense_zero_trust_framework
+  domains:
+    - identity_security
+    - system_integrity
+    - data_protection
+    - ai_model_security
+    - operational_security
+    - audit_governance
+    - human_oversight
+  controls:
+    - strong_authentication
+    - encryption
+    - policy_enforcement
+    - continuous_monitoring
+    - ai_transparency
+    - access_governance
+  hard_locks:
+    - human_authorization_control
+    - responsible_ai_governance
+    - explainable_ai
+    - never_duplicate_public_safety_core_logic
+    - no_module_local_llm
+    - physical_ai_via_p214z_acl_only
+    - ungated_physical_autonomy_forbidden

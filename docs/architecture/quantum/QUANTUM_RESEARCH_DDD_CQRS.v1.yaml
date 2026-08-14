@@ -1,0 +1,50 @@
+prompt_id: P215-Q
+adr: "462"
+sor: quantum
+core_domain: enterprise_quantum_research_intelligence_management
+bounded_context_count: 6
+aggregate_count: 7
+bounded_contexts:
+  - id: BC-01
+    name: Quantum Research Management Context
+    owns: QuantumResearchAggregate
+  - id: BC-02
+    name: Quantum Innovation Lab Context
+    owns: QuantumInnovationLabAggregate
+  - id: BC-03
+    name: Quantum Experimentation Context
+    owns: QuantumExperimentAggregate
+  - id: BC-04
+    name: Scientific Collaboration Context
+    owns: ScientificCollaborationAggregate
+  - id: BC-05
+    name: Quantum Discovery Intelligence Context
+    owns: QuantumDiscoveryAggregate
+  - id: BC-06
+    name: Future Intelligence Evolution Context
+    owns: FutureEvolutionAggregate
+commands:
+  - CreateResearchProjectCommand
+  - StartExperimentCommand
+  - SubmitDiscoveryCommand
+  - CreateInnovationProposalCommand
+  - PublishResearchResultCommand
+  - UpdateTechnologyRadarCommand
+queries:
+  - GetResearchProjectQuery
+  - GetExperimentResultQuery
+  - GetDiscoveryKnowledgeQuery
+  - GetInnovationPipelineQuery
+  - GetFutureTechnologyQuery
+events:
+  - ResearchStartedEvent
+  - ExperimentExecutedEvent
+  - DiscoveryCreatedEvent
+  - PublicationReleasedEvent
+  - InnovationValidatedEvent
+  - FutureTechnologyDetectedEvent
+event_versioning: event_version_field
+outbox_required: true
+via_document_exchange: true
+via_p215_k: true
+via_workflow: true

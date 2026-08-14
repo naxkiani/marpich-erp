@@ -1,0 +1,115 @@
+# MEPCVA Master Series Roadmap (P301)
+
+series: P301
+title: MEOS Enterprise Process Composer, Low-Code/No-Code Process Engineering & Visual Automation Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEPCVA-001
+sor: process_composer_operating
+fabric: meos_enterprise_process_composer_low_code_no_code_process_engineering_visual_automation_platform_framework
+api: /api/v1/process-composer-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P301
+    title: MEPCVA Foundation
+    status: planned
+    adr: "658"
+    fabric: meos_enterprise_process_composer_low_code_no_code_process_engineering_visual_automation_platform_framework
+    api: /api/v1/process-composer-operating*
+  - id: P301-A
+    title: Process Canvas Foundation — Canvas, Nodes, Connections, Zoom/Pan, Grouping, Properties
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P301-B
+    title: Process Modeling — Events, Tasks, Decisions, Human/Agent Tasks, Exceptions, Subprocess
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P301-C
+    title: Asset Composition — P300 Integration, Search, Selection, Config, Dependency Resolution
+    status: planned
+    adr: pending
+    window: 9-15_months
+  - id: P301-D
+    title: AI Process Engineering — NL Design, AI Generation, Suggestions, Explanation, Duplication Detection
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P301-E
+    title: Validation — Structural, Contract, Security, Policy, Dependency Validation
+    status: planned
+    adr: pending
+    window: 15-24_months
+  - id: P301-F
+    title: Simulation — P265 Integration, Scenario, What-If, Stress, Failure Testing
+    status: planned
+    adr: pending
+    window: 18-30_months
+  - id: P301-G
+    title: Intelligence — P299 Integration, Optimization, Cost, SLA, Risk, Automation Score
+    status: planned
+    adr: pending
+    window: 24-36_months
+  - id: P301-H
+    title: Governed Release — Review, Approval, Version, RC, Certification, Package
+    status: planned
+    adr: pending
+    window: 30-42_months
+  - id: P301-I
+    title: Enterprise Process Engineering — Multi-Team Collaboration, Standards, Reuse, Industry Templates, Library
+    status: planned
+    adr: pending
+    window: 36-48_months
+locks:
+  never_replace_p300_process_marketplace_operating: true
+  never_replace_p299_process_intelligence_operating: true
+  never_replace_p298_agentic_process_operating: true
+  never_replace_p260_workflow: true
+  never_replace_p266_ai_agent_orchestration: true
+  never_replace_p261_decision_intelligence: true
+  never_replace_p257_enterprise_runtime: true
+  never_replace_p259_application_lifecycle: true
+  never_replace_p270_governance: true
+  never_become_workflow_execution_engine: true
+  never_become_agent_execution_or_orchestrator: true
+  never_become_decision_execution_engine: true
+  never_become_application_runtime: true
+  never_become_governance_engine: true
+  never_become_process_intelligence_engine: true
+  never_become_marketplace_engine: true
+  never_become_transaction_engine: true
+  never_merge_p260_p266_p298_p299_p300_p301_p302: true
+  never_dual_write_workflow_agent_decision_or_runtime_tables: true
+  never_local_metrics_stores: true
+  never_local_approval_workflow_engines: true
+  never_module_local_llm: true
+  design_time_only: true
+  never_execute_workflow_agent_decision_or_transaction: true
+  never_modify_production_state_directly: true
+  never_promote_ai_draft_directly_to_production: true
+  never_bypass_governance_gate_before_production: true
+  ai_generated_processes_remain_draft_until_governed: true
+  ai_suggestions_require_explainability: true
+  prefer_reuse_via_p300_duplication_detection: true
+  packaging_via_p300_only: true
+  activation_via_p259_only: true
+  workflows_via_p260_only: true
+  agents_via_p266_only: true
+  decisions_via_p261_only: true
+  runtime_via_p257_only: true
+  escalation_delivery_via_p294_only: true
+  simulation_not_execute: true
+  released_process_versions_immutable: true
+  release_candidates_traceable: true
+  design_changes_auditable: true
+  foundation_for_p301_a: true
+  unblocks_p302_process_testing_simulation_quality_assurance_digital_process_validation_os: true
+  unblocks_p303_process_release_deployment_environment_lifecycle_os: true
+  unblocks_p304_process_observability_monitoring_sla_slo_continuous_operational_intelligence_os: true
+  unblocks_p305_incident_management_service_reliability_resilience_engineering_os: true
+  unblocks_p306_itsm_service_catalog_request_fulfillment_enterprise_service_operations_os: true
+  unblocks_p307_knowledge_centered_service_enterprise_knowledge_management_organizational_learning_os: true
+  unblocks_p308_document_intelligence_content_lifecycle_intelligent_information_management_os: true
+  unblocks_p309_records_retention_legal_hold_information_lifecycle_governance_os: true
+  unblocks_p310_information_governance_data_classification_sensitive_information_intelligence_os: true
+  unblocks_p311_data_loss_prevention_information_protection_adaptive_data_security_control_os: true

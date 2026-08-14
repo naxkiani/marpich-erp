@@ -1,0 +1,39 @@
+# CIVILIZATION_INTEL_GOV_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationIntelGovSecurity
+metadata:
+  prompt_id: P219-T
+  adr: "573"
+permissions:
+  - civilization.read
+  - civilization.intelligence_governance.read
+  - civilization.intelligence_governance.write
+  - civilization.intelligence_governance.assure
+  - civilization.admin
+locks:
+  never_replace_p219_e_ai_os: true
+  never_replace_p219_f_simulation: true
+  never_replace_p219_k_governance: true
+  never_replace_p219_s_futures: true
+  never_replace_policy_engine: true
+  never_opaque_unexplainable_governance_decisions: true
+  never_ungated_governance_decision_execution: true
+  never_skip_ethical_governance_assurance: true
+  never_skip_human_authority_governance: true
+  never_violate_human_sovereignty_governance: true
+  never_bypass_trusted_governance_validation: true
+  never_bypass_human_supervision_governance: true
+  never_bypass_human_accountability: true
+  never_module_local_llm: true
+  inference_via_p214_z_only: true
+  governance_decision_workflow_gated: true
+controls:
+  - governance_by_design
+  - constitutional_governance
+  - strategic_alignment_first
+  - trust_by_design
+  - explainable_ai
+  - human_accountability
+  - continuous_compliance
+  - zero_trust_governance
+  - audit_on_governance_mutations

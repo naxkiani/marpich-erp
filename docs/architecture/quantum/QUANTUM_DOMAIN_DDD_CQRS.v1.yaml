@@ -1,0 +1,5 @@
+prompt_id: P215-C
+adr: '449'
+core_domain: quantum_intelligence_computational_evolution_management
+bounded_context_count: 8
+aggregate_count: 8

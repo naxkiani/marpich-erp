@@ -1,0 +1,30 @@
+# BIOTECHNOLOGY_BIO_SUPPLY_CHAIN_SECURITY.v1.yaml — P217-M
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioSupplyChainSecurity
+metadata:
+  phase: P217-M
+  adr: "512"
+spec:
+  framework: meos_bio_supply_chain_governance
+  hard_locks:
+    - bio_ai_via_p214z_acl_only
+    - supply_twins_via_p217g_acl_only
+    - manufacturing_via_p217l_acl_only
+    - product_intelligence_via_p217k_acl_only
+    - robotics_via_p216z_acl_only
+    - quantum_optimization_via_p215z_acl_only
+    - no_module_local_llm
+    - never_opaque_unexplainable_decisions
+    - never_skip_cold_chain_integrity
+    - never_skip_human_logistics_oversight
+    - never_untraceable_biological_material_movement
+    - genomic_privacy_strategy
+    - ethical_bioengineering_strategy
+    - scientific_integrity_strategy
+    - opaque_bio_safety_strategy_forbidden
+    - never_replace_p217_l_bio_manufacturing
+    - never_replace_hospital_emr
+    - never_replace_laboratory_lims
+    - never_replace_pharmacy
+    - never_replace_inventory
+    - zero_trust_supply_security

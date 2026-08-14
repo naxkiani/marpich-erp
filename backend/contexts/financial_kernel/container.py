@@ -3,12 +3,6 @@ from __future__ import annotations
 
 from contexts.financial_kernel.application.financial_ai_service import FinancialAIApplicationService
 from contexts.financial_kernel.application.gl_ai_service import GLAIApplicationService
-from contexts.financial_kernel.application.financial_consolidation_service import (
-    FinancialConsolidationApplicationService,
-)
-from contexts.financial_kernel.application.financial_statements_service import (
-    FinancialStatementsPlatformApplicationService,
-)
 from contexts.financial_kernel.application.treasury_posting_bridge import TreasuryPostingBridge
 from contexts.financial_kernel.application.banking_posting_bridge import BankingPostingBridge
 from contexts.financial_kernel.application.exchange_posting_bridge import ExchangePostingBridge
@@ -18,11 +12,6 @@ from contexts.financial_kernel.application.financial_security_service import Fin
 from contexts.financial_kernel.application.financial_workflow_service import FinancialWorkflowApplicationService
 from contexts.financial_kernel.application.cost_center_service import CostCenterApplicationService
 from contexts.financial_kernel.application.financial_document_service import FinancialDocumentApplicationService
-from contexts.financial_kernel.application.payment_workflow_service import PaymentWorkflowApplicationService
-from contexts.financial_kernel.application.procurement_workflow_service import ProcurementWorkflowApplicationService
-from contexts.financial_kernel.application.budget_workflow_service import BudgetWorkflowApplicationService
-from contexts.financial_kernel.application.treasury_workflow_service import TreasuryWorkflowApplicationService
-from contexts.financial_kernel.application.tax_workflow_service import TaxWorkflowApplicationService
 from contexts.financial_kernel.application.payment_service import PaymentApplicationService
 from contexts.financial_kernel.application.service import FinancialKernelApplicationService
 from contexts.financial_kernel.infrastructure.adapters.exchange_rate_provider import (
@@ -72,43 +61,18 @@ from contexts.financial_kernel.infrastructure.persistence.memory_store import (
     InMemoryJournalRepository,
     InMemoryRecurringJournalRepository,
 )
+from contexts.financial_kernel.infrastructure.persistence.postgres_store import (
+    PostgresChartOfAccountRepository,
+    PostgresFiscalPeriodRepository,
+    PostgresFiscalYearRepository,
+    PostgresJournalRepository,
+)
 from contexts.financial_kernel.infrastructure.persistence.financial_ai_memory_store import (
     InMemoryFinancialAIChatRepository,
     InMemoryFinancialAIJobRepository,
 )
 from contexts.financial_kernel.infrastructure.persistence.gl_ai_memory_store import (
     InMemoryGLAIJobRepository,
-)
-from contexts.financial_kernel.infrastructure.persistence.payment_workflow_memory_store import (
-    InMemoryPaymentWorkflowConfigRepository,
-    InMemoryPaymentWorkflowRunRepository,
-)
-from contexts.financial_kernel.infrastructure.persistence.procurement_workflow_memory_store import (
-    InMemoryProcurementWorkflowConfigRepository,
-    InMemoryProcurementWorkflowRunRepository,
-)
-from contexts.financial_kernel.infrastructure.persistence.budget_workflow_memory_store import (
-    InMemoryBudgetWorkflowConfigRepository,
-    InMemoryBudgetWorkflowRunRepository,
-)
-from contexts.financial_kernel.infrastructure.persistence.treasury_workflow_memory_store import (
-    InMemoryTreasuryWorkflowConfigRepository,
-    InMemoryTreasuryWorkflowRunRepository,
-    InMemoryTreasuryWorkflowTemplateRepository,
-)
-from contexts.financial_kernel.infrastructure.persistence.tax_workflow_memory_store import (
-    InMemoryTaxWorkflowConfigRepository,
-    InMemoryTaxWorkflowRunRepository,
-)
-from contexts.financial_kernel.infrastructure.persistence.financial_consolidation_memory_store import (
-    InMemoryConsolidationAuditRepository,
-    InMemoryConsolidationGroupRepository,
-    InMemoryConsolidationRuleRepository,
-    InMemoryConsolidationRunRepository,
-)
-from contexts.financial_kernel.infrastructure.persistence.financial_statements_memory_store import (
-    InMemoryFinancialStatementRunRepository,
-    InMemoryFinancialStatementTemplateRepository,
 )
 from contexts.financial_kernel.infrastructure.persistence.financial_security_memory_store import (
     InMemoryMakerCheckerRepository,
@@ -139,6 +103,7 @@ from contexts.financial_kernel.infrastructure.persistence.posting_rule_memory_st
 )
 from shared.application.ports.financial_kernel import IFinancialKernel
 from shared.infrastructure.messaging.event_bus import InProcessEventBus
+from shared.infrastructure.settings import use_postgres
 
 _service: FinancialKernelApplicationService | None = None
 _payment_service: PaymentApplicationService | None = None
@@ -149,13 +114,13 @@ _financial_audit_service: FinancialAuditApplicationService | None = None
 _financial_security_service: FinancialSecurityApplicationService | None = None
 _financial_ai_service: FinancialAIApplicationService | None = None
 _gl_ai_service: GLAIApplicationService | None = None
-_financial_statements_service: FinancialStatementsPlatformApplicationService | None = None
-_financial_consolidation_service: FinancialConsolidationApplicationService | None = None
-_payment_workflow_service: PaymentWorkflowApplicationService | None = None
-_procurement_workflow_service: ProcurementWorkflowApplicationService | None = None
-_budget_workflow_service: BudgetWorkflowApplicationService | None = None
-_treasury_workflow_service: TreasuryWorkflowApplicationService | None = None
-_tax_workflow_service: TaxWorkflowApplicationService | None = None
+_financial_statements_service = None
+_financial_consolidation_service = None
+_payment_workflow_service = None
+_procurement_workflow_service = None
+_budget_workflow_service = None
+_treasury_workflow_service = None
+_tax_workflow_service = None
 _treasury_bridge: TreasuryPostingBridge | None = None
 _banking_bridge: BankingPostingBridge | None = None
 _exchange_bridge: ExchangePostingBridge | None = None
@@ -167,11 +132,21 @@ _registered = False
 def get_financial_kernel_service() -> FinancialKernelApplicationService:
     global _service, _kernel, _registered
     if _service is None:
+        if use_postgres():
+            accounts: object = PostgresChartOfAccountRepository()
+            journals: object = PostgresJournalRepository()
+            periods: object = PostgresFiscalPeriodRepository()
+            years: object = PostgresFiscalYearRepository()
+        else:
+            accounts = InMemoryChartOfAccountRepository()
+            journals = InMemoryJournalRepository()
+            periods = InMemoryFiscalPeriodRepository()
+            years = InMemoryFiscalYearRepository()
         _service = FinancialKernelApplicationService(
-            accounts=InMemoryChartOfAccountRepository(),
-            journals=InMemoryJournalRepository(),
-            periods=InMemoryFiscalPeriodRepository(),
-            years=InMemoryFiscalYearRepository(),
+            accounts=accounts,  # type: ignore[arg-type]
+            journals=journals,  # type: ignore[arg-type]
+            periods=periods,  # type: ignore[arg-type]
+            years=years,  # type: ignore[arg-type]
             dimensions=InMemoryDimensionRepository(),
             budgets=InMemoryBudgetRepository(),
             recurring=InMemoryRecurringJournalRepository(),
@@ -375,10 +350,17 @@ def get_gl_ai_service() -> GLAIApplicationService:
     return _gl_ai_service
 
 
-def get_financial_statements_platform_service() -> FinancialStatementsPlatformApplicationService:
+def get_financial_statements_platform_service():
     global _financial_statements_service
     if _financial_statements_service is None:
         from contexts.policy.container import get_policy_evaluator
+        from contexts.financial_kernel.application.financial_statements_service import (
+            FinancialStatementsPlatformApplicationService,
+        )
+        from contexts.financial_kernel.infrastructure.persistence.financial_statements_memory_store import (
+            InMemoryFinancialStatementRunRepository,
+            InMemoryFinancialStatementTemplateRepository,
+        )
 
         get_financial_kernel_service()
         _financial_statements_service = FinancialStatementsPlatformApplicationService(
@@ -389,10 +371,19 @@ def get_financial_statements_platform_service() -> FinancialStatementsPlatformAp
     return _financial_statements_service
 
 
-def get_financial_consolidation_service() -> FinancialConsolidationApplicationService:
+def get_financial_consolidation_service():
     global _financial_consolidation_service
     if _financial_consolidation_service is None:
         from contexts.policy.container import get_policy_evaluator
+        from contexts.financial_kernel.application.financial_consolidation_service import (
+            FinancialConsolidationApplicationService,
+        )
+        from contexts.financial_kernel.infrastructure.persistence.financial_consolidation_memory_store import (
+            InMemoryConsolidationAuditRepository,
+            InMemoryConsolidationGroupRepository,
+            InMemoryConsolidationRuleRepository,
+            InMemoryConsolidationRunRepository,
+        )
 
         get_financial_kernel_service()
         _financial_consolidation_service = FinancialConsolidationApplicationService(
@@ -405,10 +396,17 @@ def get_financial_consolidation_service() -> FinancialConsolidationApplicationSe
     return _financial_consolidation_service
 
 
-def get_payment_workflow_service() -> PaymentWorkflowApplicationService:
+def get_payment_workflow_service():
     global _payment_workflow_service
     if _payment_workflow_service is None:
         from contexts.policy.container import get_policy_evaluator
+        from contexts.financial_kernel.application.payment_workflow_service import (
+            PaymentWorkflowApplicationService,
+        )
+        from contexts.financial_kernel.infrastructure.persistence.payment_workflow_memory_store import (
+            InMemoryPaymentWorkflowConfigRepository,
+            InMemoryPaymentWorkflowRunRepository,
+        )
 
         _payment_workflow_service = PaymentWorkflowApplicationService(
             configs=InMemoryPaymentWorkflowConfigRepository(),
@@ -419,10 +417,17 @@ def get_payment_workflow_service() -> PaymentWorkflowApplicationService:
     return _payment_workflow_service
 
 
-def get_procurement_workflow_service() -> ProcurementWorkflowApplicationService:
+def get_procurement_workflow_service():
     global _procurement_workflow_service
     if _procurement_workflow_service is None:
         from contexts.policy.container import get_policy_evaluator
+        from contexts.financial_kernel.application.procurement_workflow_service import (
+            ProcurementWorkflowApplicationService,
+        )
+        from contexts.financial_kernel.infrastructure.persistence.procurement_workflow_memory_store import (
+            InMemoryProcurementWorkflowConfigRepository,
+            InMemoryProcurementWorkflowRunRepository,
+        )
 
         _procurement_workflow_service = ProcurementWorkflowApplicationService(
             configs=InMemoryProcurementWorkflowConfigRepository(),
@@ -433,10 +438,17 @@ def get_procurement_workflow_service() -> ProcurementWorkflowApplicationService:
     return _procurement_workflow_service
 
 
-def get_budget_workflow_service() -> BudgetWorkflowApplicationService:
+def get_budget_workflow_service():
     global _budget_workflow_service
     if _budget_workflow_service is None:
         from contexts.policy.container import get_policy_evaluator
+        from contexts.financial_kernel.application.budget_workflow_service import (
+            BudgetWorkflowApplicationService,
+        )
+        from contexts.financial_kernel.infrastructure.persistence.budget_workflow_memory_store import (
+            InMemoryBudgetWorkflowConfigRepository,
+            InMemoryBudgetWorkflowRunRepository,
+        )
 
         _budget_workflow_service = BudgetWorkflowApplicationService(
             configs=InMemoryBudgetWorkflowConfigRepository(),
@@ -446,10 +458,18 @@ def get_budget_workflow_service() -> BudgetWorkflowApplicationService:
     return _budget_workflow_service
 
 
-def get_treasury_workflow_service() -> TreasuryWorkflowApplicationService:
+def get_treasury_workflow_service():
     global _treasury_workflow_service
     if _treasury_workflow_service is None:
         from contexts.policy.container import get_policy_evaluator
+        from contexts.financial_kernel.application.treasury_workflow_service import (
+            TreasuryWorkflowApplicationService,
+        )
+        from contexts.financial_kernel.infrastructure.persistence.treasury_workflow_memory_store import (
+            InMemoryTreasuryWorkflowConfigRepository,
+            InMemoryTreasuryWorkflowRunRepository,
+            InMemoryTreasuryWorkflowTemplateRepository,
+        )
 
         _treasury_workflow_service = TreasuryWorkflowApplicationService(
             templates=InMemoryTreasuryWorkflowTemplateRepository(),
@@ -460,10 +480,17 @@ def get_treasury_workflow_service() -> TreasuryWorkflowApplicationService:
     return _treasury_workflow_service
 
 
-def get_tax_workflow_service() -> TaxWorkflowApplicationService:
+def get_tax_workflow_service():
     global _tax_workflow_service
     if _tax_workflow_service is None:
         from contexts.policy.container import get_policy_evaluator
+        from contexts.financial_kernel.application.tax_workflow_service import (
+            TaxWorkflowApplicationService,
+        )
+        from contexts.financial_kernel.infrastructure.persistence.tax_workflow_memory_store import (
+            InMemoryTaxWorkflowConfigRepository,
+            InMemoryTaxWorkflowRunRepository,
+        )
 
         _tax_workflow_service = TaxWorkflowApplicationService(
             configs=InMemoryTaxWorkflowConfigRepository(),
@@ -547,20 +574,3 @@ def reset_financial_kernel_service() -> None:
     InMemoryValidationRunRepository.reset()
     InMemoryValidationAuditRepository.reset()
     InMemoryFinancialAuditRepository.reset()
-    InMemoryFinancialStatementTemplateRepository.reset()
-    InMemoryFinancialStatementRunRepository.reset()
-    InMemoryConsolidationGroupRepository.reset()
-    InMemoryConsolidationRuleRepository.reset()
-    InMemoryConsolidationRunRepository.reset()
-    InMemoryConsolidationAuditRepository.reset()
-    InMemoryPaymentWorkflowConfigRepository.reset()
-    InMemoryPaymentWorkflowRunRepository.reset()
-    InMemoryProcurementWorkflowConfigRepository.reset()
-    InMemoryProcurementWorkflowRunRepository.reset()
-    InMemoryBudgetWorkflowConfigRepository.reset()
-    InMemoryBudgetWorkflowRunRepository.reset()
-    InMemoryTreasuryWorkflowTemplateRepository.reset()
-    InMemoryTreasuryWorkflowConfigRepository.reset()
-    InMemoryTreasuryWorkflowRunRepository.reset()
-    InMemoryTaxWorkflowConfigRepository.reset()
-    InMemoryTaxWorkflowRunRepository.reset()

@@ -1,0 +1,23 @@
+# P213-A — VALIDATION
+version: "1.0"
+prompt_id: P213-A
+adr: "394"
+sor: analytics
+capability: CAP-PLT-BI-001
+api_prefix: /api/v1/analytics/strategy
+reject_if:
+  - enterprise_bi_architecture_is_incomplete
+  - analytics_architecture_is_missing
+  - decision_intelligence_foundation_is_missing
+  - ddd_domain_model_is_missing
+  - cqrs_architecture_is_missing
+  - microservices_architecture_is_missing
+  - api_first_design_is_missing
+  - ai_native_bi_is_missing
+  - knowledge_graph_integration_is_missing
+  - digital_twin_integration_is_missing
+  - governance_alignment_is_missing
+  - data_mesh_alignment_is_missing
+  - event_driven_architecture_is_missing
+  - sibling_business_intelligence_bc
+verdict_required: ENTERPRISE_GRADE

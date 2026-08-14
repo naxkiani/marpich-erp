@@ -1,0 +1,14 @@
+# BIOTECHNOLOGY_BIO_INVESTMENT_MODELS.v1.yaml — P217-R
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioInvestmentModels
+metadata:
+  phase: P217-R
+  adr: "517"
+spec:
+  venture_capabilities: 4
+  funding_sources: 6
+  finance_engines: 4
+  valuation_dimensions: 4
+  agents: 6
+  knowledge_graph: meos_biotechnology_investment_knowledge_graph
+  digital_twin: meos_investment_ecosystem_digital_twin

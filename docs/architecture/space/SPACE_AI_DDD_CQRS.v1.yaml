@@ -1,0 +1,15 @@
+apiVersion: marpich.io/v1
+kind: SpaceAiDddCqrs
+metadata:
+  prompt: P218-E
+  adr: "531"
+bounded_contexts: 8
+aggregates:
+  - AIModelAggregate
+  - InferenceAggregate
+  - DecisionAggregate
+  - PredictionAggregate
+  - AgentAggregate
+  - LearningAggregate
+microservices: 10
+core_events: 10

@@ -1,0 +1,45 @@
+# EASIUIP Master Series Roadmap (P252)
+
+series: P252
+title: Enterprise Autonomous Smart Infrastructure & Urban Intelligence Platform
+governance_standard: "11.0"
+capability: CAP-PLT-EASIUIP-001
+sor: smart_infrastructure_intelligence
+fabric: meos_enterprise_autonomous_smart_infrastructure_urban_intelligence_platform_framework
+api: /api/v1/smart-infrastructure-intelligence*
+phases:
+  - id: P252
+    title: EASIUIP Foundation
+    status: planned
+    adr: "611"
+    fabric: meos_enterprise_autonomous_smart_infrastructure_urban_intelligence_platform_framework
+    api: /api/v1/smart-infrastructure-intelligence*
+  - id: P252-A
+    title: Urban Domain Model (Infrastructure), Infrastructure APIs, Event Architecture, CQRS Foundation, Smart Infrastructure Core
+    status: planned
+    adr: pending
+  - id: P252-B
+    title: AI Urban Agents, City Knowledge Graph, Urban Digital Twin, Simulation Intelligence
+    status: planned
+    adr: pending
+  - id: P252-C
+    title: Autonomous Urban Operations Assist, Intelligent Public Services, Adaptive Infrastructure Management, Sustainable City Optimization
+    status: planned
+    adr: pending
+  - id: P252-D
+    title: Civilization-Scale Smart Environment Network, Autonomous City Ecosystem, Self-Evolving Urban Intelligence Platform (Gated)
+    status: planned
+    adr: pending
+locks:
+  never_replace_p238_urban_intelligence: true
+  never_fork_urban_intelligence_api: true
+  never_dual_write_p238_tables: true
+  never_merge_municipality_and_government: true
+  never_ungated_city_ot_actuation: true
+  never_scada_or_traffic_sdk_in_domain: true
+  never_treat_simulation_as_execute: true
+  never_local_citizen_pii_vault: true
+  never_silent_consent_override: true
+  never_module_local_llm: true
+  foundation_for_p252_a: true
+  peer_series_p253_eahilsp: true

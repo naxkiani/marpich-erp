@@ -6,14 +6,21 @@ phase_dod:
   - adr_227_accepted
   - law_doc_published
   - catalogs_present
+  - arch_eilmp_catalog
+  - state_machine_catalog
+  - jml_workflows_catalog
   - no_contexts_eilmp
+  - jml_actions_in_workflow_engine
+  - state_aliases_mapped
   - registration_aggregate_runtime
   - duplicate_detection_engine
   - zt_policy_gates_on_register
   - events_published
   - rest_api_registration_surface
+  - rest_api_jml_and_state_machine
   - shared_IIdentityLifecycleStatus_port
   - registry_entry
   - foundation_tests_green
 
 series_dod_deferred: P201-A7
+foundation_for: P201-A2

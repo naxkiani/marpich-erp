@@ -1,0 +1,14 @@
+apiVersion: marpich.io/v1
+kind: SpaceStrategySecurity
+metadata:
+  prompt: P218-B
+  adr: "528"
+zero_trust: true
+locks:
+  - never_replace_p218_foundation
+  - never_replace_p218_a_mission
+  - never_skip_human_mission_oversight_strategy
+  - never_skip_space_cybersecurity_strategy
+  - never_skip_space_sustainability_strategy
+  - never_opaque_mission_critical_strategy
+  - never_ungated_autonomous_mission_strategy

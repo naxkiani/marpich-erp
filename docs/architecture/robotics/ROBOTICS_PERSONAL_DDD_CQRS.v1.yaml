@@ -1,0 +1,30 @@
+# ROBOTICS_PERSONAL_DDD_CQRS.v1.yaml — P216-W
+apiVersion: marpich.io/v1
+kind: RoboticsPersonalDddCqrs
+metadata:
+  phase: P216-W
+  adr: "495"
+spec:
+  core_domain: personal_intelligence_management
+  aggregate: PersonalIntelligenceAggregate
+  commands:
+    - CreatePersonalProfileCommand
+    - ActivatePersonalAssistantCommand
+    - ConnectRobotCommand
+    - CreateAutomationCommand
+    - UpdatePersonalTwinCommand
+    - LearnPreferenceCommand
+  queries:
+    - GetPersonalProfileQuery
+    - GetAssistantStateQuery
+    - GetRobotStatusQuery
+    - GetPersonalKnowledgeQuery
+    - GetTwinSimulationQuery
+  events:
+    - PersonalCreatedEvent
+    - AssistantActivatedEvent
+    - InteractionCompletedEvent
+    - PreferenceLearnedEvent
+    - AutomationExecutedEvent
+    - RobotConnectedEvent
+    - CapabilityImprovedEvent

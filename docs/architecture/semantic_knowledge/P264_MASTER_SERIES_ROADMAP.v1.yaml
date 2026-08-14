@@ -1,0 +1,50 @@
+# MEKGSI Master Series Roadmap (P264)
+
+series: P264
+title: MEOS Enterprise Knowledge Graph & Semantic Intelligence Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEKGSI-001
+sor: semantic_knowledge
+fabric: meos_enterprise_knowledge_graph_semantic_intelligence_operating_platform_framework
+api: /api/v1/semantic-knowledge*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P264
+    title: MEKGSI Foundation
+    status: planned
+    adr: "621"
+    fabric: meos_enterprise_knowledge_graph_semantic_intelligence_operating_platform_framework
+    api: /api/v1/semantic-knowledge*
+  - id: P264-A
+    title: Knowledge Graph Foundation — Operating Overlays, Entity Model Federation, Basic Ontology Campaigns, Semantic APIs ACL
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P264-B
+    title: Semantic Intelligence Platform — Reasoning Campaigns, Ontology Management UX, Semantic Search, Entity Resolution
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P264-C
+    title: AI Knowledge Platform — AI Reasoning Agents, Enterprise Memory, Knowledge Automation (Gated)
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P264-D
+    title: Autonomous Knowledge Operating System — Self-Evolving Ontology Assists, Autonomous Discovery, Cognitive Intelligence (Gated)
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_p228_knowledge_graph: true
+  never_fork_knowledge_graph_api: true
+  never_dual_write_knowledge_graph_tables: true
+  never_replace_enterprise_search: true
+  never_module_local_graph_db_or_search_engine: true
+  never_module_local_llm: true
+  never_opaque_unexplainable_reasoning_for_gated_decisions: true
+  never_treat_inference_as_execute: true
+  ontology_publish_requires_validate_and_workflow: true
+  foundation_for_p264_a: true
+  unblocks_p265_digital_twin_intelligence: true
+  peer_series_p265_medtip: true

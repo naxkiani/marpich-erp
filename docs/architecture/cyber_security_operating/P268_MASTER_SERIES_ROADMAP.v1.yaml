@@ -1,0 +1,50 @@
+# MECZTD Master Series Roadmap (P268)
+
+series: P268
+title: MEOS Enterprise Cybersecurity Intelligence & Zero Trust Defense Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MECZTD-001
+sor: cyber_security_operating
+fabric: meos_enterprise_cybersecurity_intelligence_zero_trust_defense_platform_framework
+api: /api/v1/cyber-security-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P268
+    title: MECZTD Foundation
+    status: planned
+    adr: "625"
+    fabric: meos_enterprise_cybersecurity_intelligence_zero_trust_defense_platform_framework
+    api: /api/v1/cyber-security-operating*
+  - id: P268-A
+    title: Zero Trust Foundation — Identity Security Federation, Access Control Overlays, Trust Evaluation, Security Policies
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P268-B
+    title: AI Security Intelligence — AI-SOC, Threat Intelligence Campaigns, Behavioral Analytics
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P268-C
+    title: Autonomous Cyber Defense — Automated Response (Gated), Threat Prediction, Security Optimization
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P268-D
+    title: Autonomous Security Operating System — Self-Adaptive Defense Assists, Autonomous Threat Response (Gated), Continuous Security Evolution
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_p226_or_p246: true
+  never_fork_cyber_defense_or_security_trust_apis: true
+  never_dual_write_peer_security_catalogs: true
+  never_replace_identity_authz_or_secrets: true
+  never_module_local_llm: true
+  never_vendor_security_sdk_in_domain: true
+  never_ungated_critical_contain_isolate_or_block: true
+  never_silent_security_actions_without_audit: true
+  never_treat_twin_simulation_as_production_containment: true
+  foundation_for_p268_a: true
+  unblocks_p269_privacy_compliance: true
+  peer_series_p269_mepcri: true

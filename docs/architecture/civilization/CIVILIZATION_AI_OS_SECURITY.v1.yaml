@@ -1,0 +1,26 @@
+# CIVILIZATION_AI_OS_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationAiOsSecurity
+metadata:
+  prompt_id: P219-E
+  adr: "558"
+permissions:
+  - civilization.read
+  - civilization.ai.read
+  - civilization.ai.infer
+  - civilization.ai-os.read
+  - civilization.ai-os.write
+locks:
+  never_module_local_llm: true
+  inference_via_p214_z_only: true
+  never_ungated_civilization_ai_autonomy: true
+  never_opaque_unexplainable_civilization_ai_decisions: true
+  never_skip_human_oversight_ai: true
+  never_skip_ethical_ai_validation: true
+  never_skip_ai_alignment_validation: true
+  never_bypass_ai_governance_kernel: true
+  never_violate_human_sovereignty_ai: true
+  zero_trust_ai_security: true
+audit:
+  required_on: [model_registration, agent_activation, reasoning_execution, decision_validation, policy_updates]
+tenant_isolation: required

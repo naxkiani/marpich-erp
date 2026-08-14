@@ -1,0 +1,28 @@
+# BIOTECHNOLOGY_CLINICAL_RESEARCH_DDD_CQRS.v1.yaml — P217-J
+apiVersion: marpich.io/v1
+kind: BiotechnologyClinicalResearchDddCqrs
+metadata:
+  phase: P217-J
+  adr: "509"
+spec:
+  commands:
+    - CreateClinicalTrialCommand
+    - GenerateResearchHypothesisCommand
+    - StartResearchWorkflowCommand
+    - ApproveEthicsReviewCommand
+    - RecordTrialOutcomeCommand
+  queries:
+    - GetClinicalResearchPlatformQuery
+    - GetClinicalTrialQuery
+    - GetDiscoveryProjectQuery
+    - GetResearchWorkflowQuery
+    - GetResearchGovernanceQuery
+  events:
+    - ClinicalResearchPlatformActivatedEvent
+    - TrialCreatedEvent
+    - TrialCompletedEvent
+    - TrialOutcomeGeneratedEvent
+    - HypothesisCreatedEvent
+    - DiscoveryValidatedEvent
+    - ResearchWorkflowStartedEvent
+    - ClinicalResearchGovernanceViolationEvent

@@ -1,0 +1,66 @@
+# CIVILIZATION_FOUNDATION_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: DomainModelCatalog
+metadata:
+  prompt_id: P219
+  adr: "553"
+  sor: civilization
+aggregates:
+  - CivilizationAggregate
+  - PlanetAggregate
+  - InfrastructureAggregate
+  - SocietyAggregate
+  - GovernanceAggregate
+  - ResourceAggregate
+entities:
+  - CivilizationProfile
+  - PlanetModel
+  - HumanCommunity
+  - InfrastructureSystem
+  - GovernancePolicy
+  - ResourceAsset
+  - TechnologySystem
+value_objects:
+  - CivilizationId
+  - PlanetId
+  - PopulationMetric
+  - ResourceCapacity
+  - GovernanceLevel
+  - SystemHealthScore
+  - EvolutionStage
+domain_services:
+  - CivilizationOptimizationService
+  - PlanetaryManagementService
+  - InfrastructureIntelligenceService
+  - GovernanceDecisionService
+  - FuturePlanningService
+commands:
+  - InitializeCivilizationCommand
+  - ConnectSystemCommand
+  - OptimizeInfrastructureCommand
+  - EvaluatePolicyCommand
+  - AllocateResourceCommand
+  - GenerateCivilizationScenarioCommand
+queries:
+  - GetCivilizationStateQuery
+  - GetPlanetaryHealthQuery
+  - GetInfrastructureStatusQuery
+  - GetSocietyMetricsQuery
+  - GetGovernanceDecisionQuery
+events:
+  - name: CivilizationInitializedEvent
+    schema: civilization.foundation.initialized.v1
+  - name: SystemConnectedEvent
+    schema: civilization.foundation.system.connected.v1
+  - name: InfrastructureOptimizedEvent
+    schema: civilization.foundation.infrastructure.optimized.v1
+  - name: PolicyEvaluatedEvent
+    schema: civilization.foundation.policy.evaluated.v1
+  - name: ResourceAllocatedEvent
+    schema: civilization.foundation.resource.allocated.v1
+  - name: SocialChangeDetectedEvent
+    schema: civilization.foundation.social.change.v1
+  - name: CivilizationScenarioGeneratedEvent
+    schema: civilization.foundation.scenario.generated.v1
+  - name: EvolutionMilestoneReachedEvent
+    schema: civilization.foundation.evolution.milestone.v1

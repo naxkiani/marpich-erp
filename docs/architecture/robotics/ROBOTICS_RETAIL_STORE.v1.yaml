@@ -1,0 +1,27 @@
+# ROBOTICS_RETAIL_STORE.v1.yaml — P216-O
+apiVersion: marpich.io/v1
+kind: RoboticsRetailStoreCatalog
+metadata:
+  phase: P216-O
+  adr: "487"
+  fabric: meos_autonomous_commerce_fabric
+  capability: CAP-PLT-RB-001
+spec:
+  mission: "Create an intelligent, AI-powered, robotics-enabled commerce ecosystem that automates retail operations, enhances customer experience and optimises enterprise commerce."
+  vision: "Every store, customer, product, robot, employee, inventory asset and commerce process shall become an intelligent participant inside the MEOS Commerce Intelligence Ecosystem."
+  core_domain: enterprise_commerce_intelligence
+  aggregate: RetailIntelligenceAggregate
+  retail_robotics_components:
+    - retail_robot_registry
+    - customer_service_robot_manager
+    - store_navigation_engine
+    - robot_mission_controller
+    - autonomous_store_assistant
+    - retail_operations_dashboard
+  supported_robotics:
+    - customer_assistance_robots
+    - inventory_scanning_robots
+    - shelf_monitoring_robots
+    - cleaning_robots
+    - delivery_robots
+    - warehouse_retail_robots

@@ -1,0 +1,34 @@
+# P213-K — SECURITY
+version: "1.0"
+prompt_id: P213-K
+adr: "415"
+sor: analytics
+capability: CAP-PLT-BI-001
+permission: analytics.prescriptive.read
+zero_trust: true
+tenant_isolation: true
+delegates:
+  identity: P207
+  authorization: P208
+  data_security: P211
+  data_governance: P212
+  metadata: P212-I
+  knowledge_graph: P212-J
+  digital_twin: P212-L
+  semantic: P213-G
+  advanced: P213-I
+  predictive: P213-J
+  enterprise_ai: ai
+  api_gateway: gateway
+policy_based_decision_authorization: true
+optimization_approval_workflow: true
+recommendation_classification: true
+segregation_of_duties: true
+fine_grained_authorization: true
+decision_audit_logging: true
+data_privacy_controls: true
+regulatory_compliance_validation: true
+attribute_based_access_control: true
+row_level_security: true
+certified_metrics_only: true
+sibling_bc_forbidden: true

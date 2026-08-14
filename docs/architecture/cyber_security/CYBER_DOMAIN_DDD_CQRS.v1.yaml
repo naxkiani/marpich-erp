@@ -1,0 +1,70 @@
+# P210-C — Domain DDD / CQRS catalog
+version: "1.0"
+prompt_id: P210-C
+adr: "363"
+sor: cyber_security
+
+logical_bounded_contexts:
+  - security_monitoring
+  - threat_detection
+  - threat_intelligence
+  - incident_response_handoff
+  - case_management
+  - threat_hunting
+  - security_automation
+  - exposure_management
+  - security_governance
+  - ai_security
+
+aggregates:
+  - SecurityAlert
+  - ThreatCampaign
+  - ThreatIndicator
+  - SecurityCase
+  - Investigation
+  - Playbook
+  - ResponseAction
+  - Exposure
+  - SecurityControl
+  - SecurityPolicy
+  - SecurityFinding
+  - DomainOwnershipMap
+
+commands:
+  - RegisterLogicalContext
+  - DefineAggregateBoundary
+  - PublishDomainEventCatalog
+  - BindContextMap
+  - RegisterAclContract
+  - DeclareKnowledgeGraphLink
+  - DeclareDigitalTwinLink
+
+queries:
+  - GetDomainModel
+  - ListBoundedContexts
+  - GetContextMap
+  - GetAggregates
+  - GetUbiquitousLanguage
+  - GetReadiness
+
+domain_events:
+  - LogicalContextRegistered
+  - AggregateBoundaryDefined
+  - DomainEventCatalogPublished
+  - ContextMapBound
+  - AclContractRegistered
+  - KnowledgeGraphLinkDeclared
+  - DigitalTwinLinkDeclared
+  - OverlappingContextRejected
+  - RuleLeakRejected
+  - UnclearOwnershipRejected
+  - NonDomainEventRejected
+  - MissingAclRejected
+
+integration_events:
+  - cyber_security.domain.published
+  - cyber_security.context.registered
+  - cyber_security.ownership.declared
+
+deployable_unit: cyber_security
+never_invent_sibling_bc: true

@@ -1,0 +1,47 @@
+prompt_id: P215-T
+adr: "465"
+sor: quantum
+capability: CAP-PLT-QC-001
+api_prefix: /api/v1/quantum/os
+fabric: meos_quantum_intelligence_operating_fabric
+trust_gate: P215-K
+security_gate: P215-H
+principle: >-
+  MEOS Quantum Operating System SHALL provide the autonomous intelligence
+  foundation that manages, coordinates and evolves all quantum enterprise
+  capabilities.
+quantum_operating_system_present_required: true
+quantum_control_plane_present_required: true
+autonomous_governance_present_required: true
+quantum_intelligence_core_present_required: true
+resource_orchestration_present_required: true
+policy_engine_present_required: true
+agent_management_present_required: true
+knowledge_graph_integration_present_required: true
+digital_twin_integration_present_required: true
+never_replace_core_platform: true
+never_replace_p215_k: true
+never_replace_p215_h: true
+module_local_pdp_forbidden: true
+via_p215_d: true
+via_p215_n: true
+via_p215_r: true
+via_p215_s: true
+via_p215_k: true
+via_p215_h: true
+via_policy_engine: true
+via_p213: true
+via_p214_z: true
+via_workflow: true
+via_audit: true
+builds_on_p215_a: true
+builds_on_p215_d: true
+builds_on_p215_r: true
+builds_on_p215_s: true
+governed_by_p215_k: true
+forbidden_siblings:
+  - quantum_os_platform
+  - quantum_control_plane_platform
+  - quantum_intelligence_core_platform
+  - quantum_orchestration_platform
+  - quantum_autonomous_governance_platform

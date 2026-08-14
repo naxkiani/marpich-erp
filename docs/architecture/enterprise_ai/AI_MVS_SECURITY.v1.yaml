@@ -1,0 +1,34 @@
+# P214-B — SECURITY
+version: "1.0"
+prompt_id: P214-B
+adr: "422"
+sor: ai
+capability: CAP-PLT-AI-001
+zero_trust: true
+privacy_by_design: true
+via_p207: true
+via_p208: true
+via_p210: true
+via_p211: true
+responsible_ai_risks:
+  - bias
+  - hallucination
+  - privacy
+  - security
+  - explainability
+  - transparency
+  - accountability
+  - human_oversight
+security_controls:
+  - ai_threat_management
+  - model_security
+  - prompt_security
+  - data_security
+  - agent_security
+  - ai_supply_chain_security
+forbidden:
+  - module_local_llm_sdk
+  - strategy_without_responsible_ai
+permissions:
+  - ai.assist.read
+  - ai.platform.read

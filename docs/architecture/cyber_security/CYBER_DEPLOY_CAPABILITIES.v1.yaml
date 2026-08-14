@@ -1,0 +1,41 @@
+# P210-N — Deployment / DevSecOps / K8s / Observability capabilities
+version: "1.0"
+prompt_id: P210-N
+adr: "374"
+sor: cyber_security
+api_prefix: /api/v1/cyber-security/deploy
+builds_on:
+  - P210-A
+  - P210-B
+  - P210-C
+  - P210-D
+  - P210-E
+  - P210-F
+  - P210-G
+  - P210-H
+  - P210-I
+  - P210-J
+  - P210-K
+  - P210-L
+  - P210-M
+  - ADR-373
+
+deployment_automated_required: true
+kubernetes_security_complete_required: true
+infrastructure_reproducible_required: true
+observability_required: true
+auto_scaling_required: true
+disaster_recovery_defined_required: true
+security_controls_integrated_required: true
+pipeline_validation_required: true
+sibling_deploy_bc_forbidden: true
+module_local_observability_stack_forbidden: true
+via_enterprise_observability: true
+via_workflow: true
+via_policy_engine: true
+via_p209_secrets: true
+via_p210_e_siem: true
+via_p210_f_soar: true
+via_p210_g_xdr: true
+via_p210_j_ai_ops: true
+via_p210_m_gov: true

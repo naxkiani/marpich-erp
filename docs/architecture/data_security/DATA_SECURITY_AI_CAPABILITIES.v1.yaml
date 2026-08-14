@@ -1,0 +1,41 @@
+# P211-L — AI autonomous security capabilities
+version: "1.0"
+prompt_id: P211-L
+adr: "387"
+sor: data_security
+capability: CAP-PLT-DS-001
+api_prefix: /api/v1/data-security/ai-data
+builds_on:
+  - P211-A
+  - P211-B
+  - P211-C
+  - P211-D
+  - P211-E
+  - P211-F
+  - P211-G
+  - P211-H
+  - P211-I
+  - P211-J
+  - P211-K
+  - ADR-386
+
+ai_decisions_explainable_required: true
+autonomous_actions_controlled_required: true
+data_risks_predictable_required: true
+learning_loop_present_required: true
+ai_security_governance_present_required: true
+human_oversight_possible_required: true
+sibling_ai_security_bc_forbidden: true
+via_enterprise_ai: true
+via_workflow: true
+via_policy_engine: true
+via_p211_d_discovery: true
+via_p211_e_classification: true
+via_p211_g_dlp: true
+via_p211_h_access: true
+via_p211_j_protection: true
+via_p211_k_intelligence: true
+via_p207: true
+via_p208: true
+via_p209: true
+via_p210: true

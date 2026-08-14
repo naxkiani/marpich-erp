@@ -1,0 +1,34 @@
+# P213-J — SECURITY
+version: "1.0"
+prompt_id: P213-J
+adr: "414"
+sor: analytics
+capability: CAP-PLT-BI-001
+permission: analytics.predictive.read
+zero_trust: true
+tenant_isolation: true
+delegates:
+  identity: P207
+  authorization: P208
+  data_security: P211
+  data_governance: P212
+  metadata: P212-I
+  knowledge_graph: P212-J
+  digital_twin: P212-L
+  warehouse: P213-E
+  lakehouse: P213-F
+  semantic: P213-G
+  advanced: P213-I
+  enterprise_ai: ai
+  api_gateway: gateway
+prediction_authorization: true
+forecast_classification: true
+model_governance: true
+explainability_policies: true
+audit_logging: true
+privacy_controls: true
+model_approval_workflow: true
+attribute_based_access_control: true
+row_level_security: true
+certified_metrics_only: true
+sibling_bc_forbidden: true

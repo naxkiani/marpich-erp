@@ -21,7 +21,7 @@ subscribes:
   - platform.tenant.provisioned
   - security.attack.detected
 delegates:
-  - security
+  - cyber_security
   - workflow
   - audit
   - grc

@@ -1,0 +1,29 @@
+# P215-H — Security catalog (meta-controls)
+prompt_id: P215-H
+adr: "454"
+zero_trust: true
+privacy_by_design: true
+via_p215_k: true
+pqc_remains_secrets: true
+pqc_sor: secrets
+no_local_pqc_store: true
+no_local_key_store: true
+permissions:
+  - quantum.read
+  - quantum.write
+controls:
+  - policy_authz
+  - trust_verification
+  - threat_response
+  - tenant_isolation
+  - cryptographic_agility_via_p209
+forbidden:
+  - local_pqc_store
+  - local_key_material
+  - sibling_quantum_security_bc
+  - module_local_siem
+integrations:
+  secrets_kms: P209
+  cyber: P210
+  identity: P207
+  authorization: P208

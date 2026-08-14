@@ -1,0 +1,52 @@
+prompt_id: P215-L
+adr: "457"
+sor: quantum
+capability: CAP-PLT-QC-001
+api_prefix: /api/v1/quantum/twin
+fabric: meos_quantum_reality_intelligence_fabric
+principle: >-
+  MEOS Quantum Digital Twin Platform SHALL create a living intelligent digital
+  representation of quantum systems, enabling simulation, prediction,
+  optimization and autonomous evolution.
+quantum_digital_twin_platform_present_required: true
+quantum_simulation_intelligence_present_required: true
+quantum_reality_modeling_present_required: true
+predictive_intelligence_present_required: true
+scenario_simulation_present_required: true
+evolution_intelligence_present_required: true
+knowledge_graph_integration_present_required: true
+governance_integration_present_required: true
+cqrs_architecture_present_required: true
+event_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_architecture_present_required: true
+cloud_native_deployment_present_required: true
+builds_on_p215_a: true
+builds_on_p215_d: true
+builds_on_p215_f: true
+builds_on_p215_g: true
+builds_on_p215_h: true
+builds_on_p215_i: true
+builds_on_p215_j: true
+governed_by_p215_k: true
+integrates_p214_j: true
+integrates_p214_z: true
+twin_managed_systems:
+  - quantum_computers
+  - quantum_networks
+  - quantum_algorithms
+  - quantum_ai_models
+  - quantum_data_systems
+  - quantum_security_systems
+  - quantum_governance_systems
+twin_capabilities:
+  - real_time_synchronization
+  - state_tracking
+  - simulation
+  - prediction
+  - optimization
+forbidden_siblings:
+  - quantum_digital_twin_platform
+  - quantum_simulation_intelligence_platform
+  - quantum_reality_modeling_platform
+  - quantum_scenario_platform

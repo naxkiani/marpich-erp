@@ -1,0 +1,10 @@
+apiVersion: marpich.io/v1
+kind: ResourcesLifecycle
+metadata:
+  prompt: P218-N
+  adr: "540"
+stage_count: 10
+extraction_authorization_gated: true
+environmental_assessment_required: true
+planetary_protection_for_extraction_required: true
+circular_resource_economy: true

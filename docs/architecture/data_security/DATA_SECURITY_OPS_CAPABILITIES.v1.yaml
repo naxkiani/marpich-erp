@@ -1,0 +1,39 @@
+# P211-N — CQRS / events / APIs / microservices capabilities
+version: "1.0"
+prompt_id: P211-N
+adr: "389"
+sor: data_security
+capability: CAP-PLT-DS-001
+api_prefix: /api/v1/data-security/ops
+builds_on:
+  - P211-A
+  - P211-B
+  - P211-C
+  - P211-D
+  - P211-E
+  - P211-F
+  - P211-G
+  - P211-H
+  - P211-I
+  - P211-J
+  - P211-K
+  - P211-L
+  - P211-M
+  - ADR-388
+
+services_loosely_coupled_required: true
+events_immutable_required: true
+apis_managed_required: true
+security_decisions_traceable_required: true
+scaling_possible_required: true
+audit_history_complete_required: true
+sibling_ops_bc_forbidden: true
+via_enterprise_event_bus: true
+via_api_gateway: true
+via_outbox: true
+via_p209_mesh_mtls: true
+via_p207: true
+via_p208: true
+via_p209: true
+via_p210: true
+via_p211_d_through_m: true

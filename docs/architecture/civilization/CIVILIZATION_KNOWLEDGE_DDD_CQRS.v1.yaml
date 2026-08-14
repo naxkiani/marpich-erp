@@ -1,0 +1,46 @@
+# CIVILIZATION_KNOWLEDGE_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationKnowledgeDddCqrs
+metadata:
+  prompt_id: P219-I
+  adr: "562"
+bounded_contexts:
+  - id: BC-KNW-01
+    name: Universal Knowledge Core Context
+    aggregate: KnowledgeUniverseAggregate
+  - id: BC-KNW-02
+    name: Scientific Intelligence Context
+    aggregate: ScientificDiscoveryAggregate
+  - id: BC-KNW-03
+    name: Collective Intelligence Context
+    aggregate: CollectiveIntelligenceAggregate
+  - id: BC-KNW-04
+    name: Learning Civilization Context
+    aggregate: LearningEcosystemAggregate
+commands:
+  - CreateKnowledgeNodeCommand
+  - ConnectKnowledgeEntityCommand
+  - ValidateKnowledgeCommand
+  - GenerateScientificInsightCommand
+  - CreateResearchNetworkCommand
+  - OptimizeLearningPathCommand
+queries:
+  - GetKnowledgeGraphQuery
+  - GetScientificDiscoveryQuery
+  - GetResearchNetworkQuery
+  - GetKnowledgeEvolutionQuery
+  - GetLearningIntelligenceQuery
+core_events:
+  - KnowledgeCreatedEvent
+  - KnowledgeUpdatedEvent
+  - KnowledgeConnectedEvent
+  - KnowledgeValidatedEvent
+  - KnowledgeDiscoveredEvent
+  - KnowledgeExpandedEvent
+  - ResearchStartedEvent
+  - ExperimentCompletedEvent
+  - DiscoveryGeneratedEvent
+  - BreakthroughDetectedEvent
+  - CollaborationCreatedEvent
+  - CollectiveInsightGeneratedEvent
+  - IntelligenceNetworkExpandedEvent

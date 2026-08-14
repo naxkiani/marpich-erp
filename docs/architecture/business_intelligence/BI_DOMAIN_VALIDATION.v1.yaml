@@ -1,0 +1,38 @@
+# P213-C — Validation
+version: "1.0"
+prompt_id: P213-C
+adr: "396"
+sor: analytics
+capability: CAP-PLT-BI-001
+principle: Raw enterprise data SHALL be transformed into governed business intelligence assets through DDD boundaries.
+fabric: meos_enterprise_bi_domain_fabric
+reject_if:
+  - complete_ddd_bi_architecture_is_missing
+  - strategic_domain_model_is_missing
+  - bounded_contexts_are_missing
+  - domains_are_tightly_coupled
+  - bi_ownership_is_unclear
+  - aggregates_are_undefined
+  - entities_are_undefined
+  - value_objects_are_undefined
+  - events_are_missing
+  - domain_services_are_missing
+  - integration_boundaries_are_unclear
+  - cqrs_alignment_is_missing
+  - microservice_boundaries_are_unclear
+  - data_mesh_alignment_is_missing
+  - knowledge_graph_alignment_is_missing
+  - digital_twin_alignment_is_missing
+  - enterprise_governance_alignment_is_missing
+  - sibling_business_intelligence_bc
+verdict_required: ENTERPRISE_GRADE
+definition_of_done:
+  - bi_domain_architecture
+  - ddd_model
+  - bounded_context_map
+  - aggregate_model
+  - event_model
+  - cqrs_mapping
+  - microservice_mapping
+  - api_boundaries
+  - governance_boundaries

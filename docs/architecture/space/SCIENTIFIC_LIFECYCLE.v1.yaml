@@ -1,0 +1,10 @@
+apiVersion: marpich.io/v1
+kind: ScientificLifecycle
+metadata:
+  prompt: P218-K
+  adr: "537"
+stage_count: 10
+ethics_review_required: true
+peer_review_gated: true
+reproducibility_validation_required: true
+fair_data_principles: true

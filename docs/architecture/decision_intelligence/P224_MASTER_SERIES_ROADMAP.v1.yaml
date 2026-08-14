@@ -1,0 +1,44 @@
+# EADIP Master Series Roadmap (P224)
+
+series: P224
+title: Enterprise Autonomous Decision Intelligence Platform
+governance_standard: "11.0"
+capability: CAP-PLT-EADIP-001
+sor: decision_intelligence
+fabric: meos_enterprise_autonomous_decision_intelligence_platform_framework
+api: /api/v1/decision-intelligence*
+phases:
+  - id: P224
+    title: EADIP Foundation
+    status: planned
+    adr: "584"
+    fabric: meos_enterprise_autonomous_decision_intelligence_platform_framework
+    api: /api/v1/decision-intelligence*
+  - id: P224-A
+    title: Decision Domain Model, API Contracts, Event Architecture, CQRS Foundation, Decision Services
+    status: planned
+    adr: pending
+  - id: P224-B
+    title: AI Reasoning Agents, Prediction Models, Simulation Engine, Knowledge Graph Integration
+    status: planned
+    adr: pending
+  - id: P224-C
+    title: Autonomous Decision Workflows (Gated), Human-AI Collaboration, Enterprise Optimization, Decision Governance Automation
+    status: planned
+    adr: pending
+  - id: P224-D
+    title: Civilization-Scale Decision Intelligence, Self-Learning Decision Systems Assist, Autonomous Strategic Optimization (Human-Gated)
+    status: planned
+    adr: pending
+locks:
+  never_replace_p213_decision_intelligence: true
+  never_replace_p219_z_unified_control: true
+  never_replace_p219_x_strategic_evolution: true
+  never_replace_policy_or_workflow: true
+  never_module_local_llm: true
+  never_ungated_decision_execution: true
+  never_opaque_unexplainable_decisions: true
+  never_silent_autonomous_enterprise_mutation: true
+  never_bypass_human_accountability_eadip: true
+  foundation_for_p224_a: true
+  peer_series_p225_eaoshp: true

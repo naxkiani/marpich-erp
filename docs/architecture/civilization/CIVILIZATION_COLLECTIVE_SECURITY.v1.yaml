@@ -1,0 +1,37 @@
+# CIVILIZATION_COLLECTIVE_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationCollectiveSecurity
+metadata:
+  prompt_id: P219-W
+  adr: "576"
+permissions:
+  - civilization.read
+  - civilization.collective_intelligence.read
+  - civilization.collective_intelligence.write
+  - civilization.collective_intelligence.coordinate
+  - civilization.admin
+locks:
+  never_replace_p219_p_collaboration: true
+  never_replace_p219_v_general_intelligence: true
+  never_replace_p219_i_knowledge: true
+  never_replace_institutional_governance: true
+  never_centralized_autonomous_control_of_collective_intelligence: true
+  never_opaque_unexplainable_collective_recommendations: true
+  never_ungated_collective_decision_execution: true
+  never_skip_ethical_collective_collaboration: true
+  never_skip_human_authority_collective_decisions: true
+  never_violate_human_sovereignty_collective_intelligence: true
+  never_bypass_trusted_collective_validation: true
+  never_bypass_human_supervision_collective_intelligence: true
+  never_bypass_human_accountability_collective_intelligence: true
+  never_module_local_llm: true
+  inference_via_p214_z_only: true
+  collective_recommendations_workflow_gated: true
+controls:
+  - human_centered_collaboration
+  - collective_knowledge_first
+  - federated_coordination
+  - explainable_decision_support
+  - policy_driven_collaboration
+  - responsible_ai
+  - audit_on_collective_mutations

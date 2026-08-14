@@ -1,0 +1,58 @@
+# ROBOTICS_FOUNDATION_DDD_CQRS.v1.yaml — P216
+apiVersion: marpich.io/v1
+kind: RoboticsFoundationDddCqrsCatalog
+metadata:
+  phase: P216
+  adr: "472"
+spec:
+  core_domain: Enterprise Cyber-Physical Intelligence Management
+  bounded_contexts:
+    - id: BC-01
+      name: Enterprise Robotics Core Context
+      aggregate: RobotSystemAggregate
+    - id: BC-02
+      name: Autonomous Machine Intelligence Context
+      aggregate: AutonomousMachineAggregate
+    - id: BC-03
+      name: Physical AI Intelligence Context
+      aggregate: PhysicalAIModelAggregate
+    - id: BC-04
+      name: Industrial Intelligence Context
+      aggregate: IndustrialIntelligenceAggregate
+    - id: BC-05
+      name: Robot Fleet Intelligence Context
+      aggregate: RobotFleetAggregate
+    - id: BC-06
+      name: Human-Robot Collaboration Context
+      aggregate: HumanRobotCollaborationAggregate
+  root_aggregate: EnterpriseCyberPhysicalIntelligenceAggregate
+  commands:
+    - RegisterRobotCommand
+    - StartMissionCommand
+    - UpdateMachineCapabilityCommand
+    - OptimizeFleetCommand
+    - ExecuteAutonomousActionCommand
+  queries:
+    - GetRobotStatusQuery
+    - GetFleetStateQuery
+    - GetMachineHealthQuery
+    - GetMissionHistoryQuery
+    - GetPhysicalAIStateQuery
+  integration_events:
+    - RobotCreatedEvent
+    - MissionStartedEvent
+    - MachineFailureDetectedEvent
+    - AutonomousActionCompletedEvent
+    - FleetOptimizationCompletedEvent
+    - SafetyViolationDetectedEvent
+  microservices:
+    - Robotics Core Service
+    - Robot Identity Service
+    - Autonomous Machine Service
+    - Physical AI Service
+    - Fleet Management Service
+    - Mission Management Service
+    - Safety Intelligence Service
+    - Robotics Digital Twin Service
+    - Edge Intelligence Service
+    - Industrial Intelligence Service

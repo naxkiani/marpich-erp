@@ -1,0 +1,18 @@
+apiVersion: marpich.io/v1
+kind: SatelliteValidation
+metadata:
+  prompt: P218-F
+  adr: "532"
+verdict: ENTERPRISE_GRADE
+foundation_for: P218-G
+gates:
+  - P218
+  - P218-A
+  - P218-B
+  - P218-C
+  - P218-D
+  - P218-E
+  - P217-Z
+  - P216-Z
+  - P215-Z
+  - P214-Z

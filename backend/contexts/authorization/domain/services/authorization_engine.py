@@ -2,9 +2,9 @@
 from __future__ import annotations
 
 import fnmatch
-import re
 
 from contexts.authorization.domain.aggregates.authorization_platform import AuthorizationCapability
+from contexts.authorization.domain.services import rebac_engine, rule_compiler
 from shared.domain.permissions import PermissionEvaluator
 
 POLICY_KEYS = [
@@ -17,6 +17,7 @@ POLICY_KEYS = [
 
 CAPABILITY_LABELS = {
     AuthorizationCapability.RBAC_EVALUATION.value: "RBAC Evaluation",
+    AuthorizationCapability.REBAC_EVALUATION.value: "ReBAC Evaluation",
     AuthorizationCapability.ABAC_EVALUATION.value: "ABAC Evaluation",
     AuthorizationCapability.PBAC_EVALUATION.value: "PBAC Evaluation",
     AuthorizationCapability.BATCH_CHECK.value: "Batch Check",
@@ -24,6 +25,7 @@ CAPABILITY_LABELS = {
     AuthorizationCapability.DECISION_AUDIT.value: "Decision Audit",
     AuthorizationCapability.POLICY_DRIVEN_PDP.value: "Policy-Driven PDP",
     AuthorizationCapability.AUTHORIZATION_DASHBOARD.value: "Authorization Dashboard",
+    AuthorizationCapability.DECISION_CACHE.value: "Decision Cache",
 }
 
 
@@ -49,7 +51,7 @@ def dependency_map() -> dict:
             {"from": "authorization", "to": "identity", "type": "principal_delegate"},
             {"from": "authorization", "to": "policy", "type": "pbac_delegate"},
         ],
-        "evaluation_order": ["deny_override", "rbac", "abac", "pbac", "default"],
+        "evaluation_order": ["deny_override", "rbac", "rebac", "abac", "pbac", "default"],
     }
 
 
@@ -82,33 +84,6 @@ def _match_pattern(pattern: str, permission_code: str) -> bool:
     return fnmatch.fnmatch(permission_code, pattern.lower())
 
 
-def _evaluate_condition(condition: dict, facts: dict) -> bool:
-    attribute = condition.get("attribute", "")
-    operator = condition.get("operator", "eq")
-    expected = condition.get("value")
-    actual = facts.get(attribute)
-
-    if operator == "eq":
-        return actual == expected
-    if operator == "ne":
-        return actual != expected
-    if operator == "in":
-        return actual in (expected or [])
-    if operator == "not_in":
-        return actual not in (expected or [])
-    if operator == "gte":
-        return actual is not None and expected is not None and actual >= expected
-    if operator == "lte":
-        return actual is not None and expected is not None and actual <= expected
-    if operator == "gt":
-        return actual is not None and expected is not None and actual > expected
-    if operator == "lt":
-        return actual is not None and expected is not None and actual < expected
-    if operator == "matches":
-        return bool(actual and re.match(str(expected), str(actual)))
-    return False
-
-
 def evaluate_abac(
     *,
     policies: list[dict],
@@ -126,7 +101,7 @@ def evaluate_abac(
     matched_refs: list[str] = []
     for policy in applicable:
         conditions = policy.get("conditions") or []
-        if conditions and not all(_evaluate_condition(c, facts) for c in conditions):
+        if conditions and not rule_compiler.evaluate_conditions(conditions, facts):
             continue
         effect = policy.get("effect", "deny")
         ref = policy.get("policy_ref", "unknown")
@@ -176,9 +151,12 @@ def evaluate_access(
     facts: dict,
     policy_decision: dict | None = None,
     policy_key: str | None = None,
+    relation_tuples: list[dict] | None = None,
+    principal_id: str | None = None,
     simulate: bool = False,
 ) -> dict:
     rbac_enabled = profile.get("rbac_enabled", True) if profile else True
+    rebac_enabled = profile.get("rebac_enabled", True) if profile else True
     abac_enabled = profile.get("abac_enabled", True) if profile else True
     pbac_enabled = profile.get("pbac_enabled", True) if profile else True
     default_decision = profile.get("default_decision", "deny") if profile else "deny"
@@ -189,14 +167,52 @@ def evaluate_access(
     models: list[str] = []
 
     rbac_allowed = True
+    parsed_resource = rebac_engine.parse_resource_uri(resource)
+    object_type = str(facts.get("object_type") or "")
+    object_id = str(facts.get("object_id") or "")
+    if parsed_resource and not object_type:
+        object_type, object_id = parsed_resource
+    required_relation = rebac_engine.resolve_required_relation(action=action, facts=facts)
+    has_rebac_context = bool(
+        rebac_enabled and principal_id and object_type and object_id and required_relation
+    )
+
     if rbac_enabled:
         rbac_allowed, rbac_reasons = evaluate_rbac(permissions=permissions, required=permission_code)
         reason_codes.extend(rbac_reasons)
         models.append("rbac")
-        if not rbac_allowed:
+        if not rbac_allowed and not has_rebac_context:
             return _decision_payload(
                 decision="deny",
                 model="rbac",
+                reason_codes=reason_codes,
+                policy_keys=policy_keys,
+                obligations=obligations,
+                permission_code=permission_code,
+                resource=resource,
+                action=action,
+                simulate=simulate,
+            )
+
+    rebac_allowed = False
+    if has_rebac_context:
+        effect, rebac_reasons = rebac_engine.evaluate_rebac(
+            tuples=relation_tuples or [],
+            subject_id=principal_id or "",
+            object_type=object_type,
+            object_id=object_id,
+            relation=required_relation or "",
+            subject_type=str(facts.get("subject_type") or "user"),
+        )
+        reason_codes.extend(rebac_reasons)
+        if effect == "allow":
+            rebac_allowed = True
+            models.append("rebac")
+            reason_codes.append("rebac.allow")
+        elif facts.get("rebac_required") is True or not rbac_allowed:
+            return _decision_payload(
+                decision="deny",
+                model="rebac",
                 reason_codes=reason_codes,
                 policy_keys=policy_keys,
                 obligations=obligations,
@@ -254,7 +270,7 @@ def evaluate_access(
         if "pbac.obligation.mfa" in pbac_reasons:
             obligations.append("mfa.step_up")
 
-    if rbac_allowed:
+    if rbac_allowed or rebac_allowed:
         return _decision_payload(
             decision="allow",
             model="+".join(models) if models else "rbac",

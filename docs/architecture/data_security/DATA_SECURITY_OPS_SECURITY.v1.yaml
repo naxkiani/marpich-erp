@@ -1,0 +1,39 @@
+# P211-N — Ops / distributed platform security requirements
+version: "1.0"
+prompt_id: P211-N
+adr: "389"
+requirements:
+  - loosely_coupled_services
+  - immutable_events
+  - managed_apis
+  - traceable_security_decisions
+  - scalable_platform
+  - complete_audit_history
+  - zero_trust_service_architecture
+  - encrypted_communication
+  - event_integrity
+  - secrets_protection
+standards:
+  - openapi
+  - asyncapi
+  - graphql_federation
+  - grpc_protobuf
+  - cloud_events
+permissions:
+  read: data_security.read
+  write: data_security.write
+  admin: data_security.admin
+  ops: data_security.ops.read
+audit:
+  via_integration_events: true
+  local_audit_tables_forbidden: true
+  immutable_append_only: true
+events:
+  via_enterprise_event_bus: true
+  outbox_required: true
+  mutate_envelope_forbidden: true
+api:
+  via_api_gateway: true
+  unmanaged_apis_forbidden: true
+mesh:
+  mtls_via_p209: true

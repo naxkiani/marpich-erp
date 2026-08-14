@@ -50,14 +50,6 @@ WORKFLOW_RULES: dict[str, tuple[frozenset[str], str]] = {
         frozenset({LifecycleState.ACTIVE.value}),
         LifecycleState.TEMPORARILY_DISABLED.value,
     ),
-    LifecycleAction.REACTIVATION.value: (
-        frozenset({
-            LifecycleState.SUSPENDED.value,
-            LifecycleState.TEMPORARILY_DISABLED.value,
-            LifecycleState.RECOVERY_PENDING.value,
-        }),
-        LifecycleState.ACTIVE.value,
-    ),
     LifecycleAction.MERGE_IDENTITIES.value: (
         frozenset({LifecycleState.ACTIVE.value, LifecycleState.VERIFIED.value}),
         LifecycleState.MERGED.value,
@@ -95,7 +87,66 @@ WORKFLOW_RULES: dict[str, tuple[frozenset[str], str]] = {
         }),
         LifecycleState.PENDING_VERIFICATION.value,
     ),
+    # Joiner-Mover-Leaver (P201-A1)
+    LifecycleAction.JOINER.value: (
+        frozenset({
+            LifecycleState.DRAFT.value,
+            LifecycleState.REGISTERED.value,
+            LifecycleState.VERIFIED.value,
+        }),
+        LifecycleState.ACTIVE.value,
+    ),
+    LifecycleAction.MOVER.value: (
+        frozenset({LifecycleState.ACTIVE.value}),
+        LifecycleState.ACTIVE.value,
+    ),
+    LifecycleAction.TRANSFER.value: (
+        frozenset({LifecycleState.ACTIVE.value}),
+        LifecycleState.ACTIVE.value,
+    ),
+    LifecycleAction.ROLE_CHANGE.value: (
+        frozenset({LifecycleState.ACTIVE.value}),
+        LifecycleState.ACTIVE.value,
+    ),
+    LifecycleAction.LEAVER.value: (
+        frozenset({
+            LifecycleState.ACTIVE.value,
+            LifecycleState.SUSPENDED.value,
+            LifecycleState.TEMPORARILY_DISABLED.value,
+            LifecycleState.UNDER_INVESTIGATION.value,
+        }),
+        LifecycleState.SOFT_DELETED.value,
+    ),
+    LifecycleAction.REHIRE.value: (
+        frozenset({
+            LifecycleState.SOFT_DELETED.value,
+            LifecycleState.ARCHIVED.value,
+            LifecycleState.RECOVERY_PENDING.value,
+        }),
+        LifecycleState.ACTIVE.value,
+    ),
+    LifecycleAction.PLACE_UNDER_INVESTIGATION.value: (
+        frozenset({LifecycleState.ACTIVE.value, LifecycleState.SUSPENDED.value}),
+        LifecycleState.UNDER_INVESTIGATION.value,
+    ),
+    LifecycleAction.REACTIVATION.value: (
+        frozenset({
+            LifecycleState.SUSPENDED.value,
+            LifecycleState.TEMPORARILY_DISABLED.value,
+            LifecycleState.RECOVERY_PENDING.value,
+            LifecycleState.UNDER_INVESTIGATION.value,
+        }),
+        LifecycleState.ACTIVE.value,
+    ),
 }
+
+
+def canonicalize_state(state: str) -> str:
+    from contexts.identity_lifecycle.domain.aggregates.identity_lifecycle_platform import (
+        STATE_ALIASES,
+    )
+
+    return STATE_ALIASES.get(state, state)
 
 
 def list_workflow_actions() -> list[dict]:
@@ -106,12 +157,38 @@ def list_lifecycle_states() -> list[dict]:
     return [{"state": s.value, "label": s.name.replace("_", " ").title()} for s in LifecycleState]
 
 
+def list_jml_actions() -> list[dict]:
+    jml = [
+        LifecycleAction.JOINER,
+        LifecycleAction.MOVER,
+        LifecycleAction.LEAVER,
+        LifecycleAction.TRANSFER,
+        LifecycleAction.ROLE_CHANGE,
+        LifecycleAction.REHIRE,
+        LifecycleAction.PLACE_UNDER_INVESTIGATION,
+    ]
+    return [{"action": a.value, "label": a.name.replace("_", " ").title()} for a in jml]
+
+
+def state_machine_surface() -> dict:
+    from contexts.identity_lifecycle.domain.aggregates.identity_lifecycle_platform import (
+        STATE_ALIASES,
+    )
+
+    return {
+        "canonical_states": list_lifecycle_states(),
+        "aliases": dict(STATE_ALIASES),
+        "jml_actions": list_jml_actions(),
+        "workflow_graph": build_workflow_graph(),
+    }
+
+
 def can_transition(current_state: str, action: str) -> bool:
     rule = WORKFLOW_RULES.get(action)
     if not rule:
         return False
     allowed_from, _ = rule
-    return current_state in allowed_from
+    return canonicalize_state(current_state) in allowed_from
 
 
 def resolve_transition(current_state: str, action: str) -> str | None:
@@ -119,19 +196,24 @@ def resolve_transition(current_state: str, action: str) -> str | None:
     if not rule:
         return None
     allowed_from, to_state = rule
-    if current_state not in allowed_from:
+    current = canonicalize_state(current_state)
+    if current not in allowed_from:
         return None
     return to_state
 
 
 def build_workflow_graph() -> dict:
+    from contexts.identity_lifecycle.domain.aggregates.identity_lifecycle_platform import (
+        STATE_ALIASES,
+    )
+
     nodes = [{"id": s.value, "label": s.name.replace("_", " ").title()} for s in LifecycleState]
     edges = []
     for action, (from_states, to_state) in WORKFLOW_RULES.items():
         for from_state in from_states:
             if from_state != to_state:
                 edges.append({"from": from_state, "to": to_state, "action": action})
-    return {"nodes": nodes, "edges": edges}
+    return {"nodes": nodes, "edges": edges, "aliases": dict(STATE_ALIASES)}
 
 
 def required_verifications_for_activation(kyc_required: bool, aml_required: bool) -> list[str]:

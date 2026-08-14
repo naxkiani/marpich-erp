@@ -1,0 +1,8 @@
+apiVersion: marpich.io/v1
+kind: OrbitalSsa
+metadata:
+  prompt: P218-G
+  adr: "533"
+capabilities: 8
+object_categories: 8
+outputs: 6

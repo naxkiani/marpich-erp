@@ -1,0 +1,44 @@
+# P210-H — Threat Intelligence capabilities
+version: "1.0"
+prompt_id: P210-H
+adr: "368"
+sor: cyber_security
+api_prefix: /api/v1/cyber-security/intel
+builds_on:
+  - P210-A
+  - P210-B
+  - P210-C
+  - P210-D
+  - P210-E
+  - P210-F
+  - P210-G
+  - ADR-361
+  - ADR-362
+  - ADR-363
+  - ADR-364
+  - ADR-365
+  - ADR-366
+  - ADR-367
+
+threat_intelligence_validated_required: true
+threat_hunting_proactive_required: true
+knowledge_graph_integration_required: true
+ai_recommendations_explainable_required: true
+detection_engineering_connected_required: true
+intelligence_sharing_standards_required: true
+threat_actor_attribution_supported_required: true
+sibling_threat_intel_bc_forbidden: true
+vendor_sdk_embed_forbidden: true
+reactive_only_hunting_forbidden: true
+
+via_security_incident: true
+via_integration_platform: true
+via_authorization: true
+via_audit_platform: true
+via_ai_platform: true
+via_knowledge_graph: true
+via_digital_twin: true
+via_p210_d_soc: true
+via_p210_e_siem: true
+via_p210_f_soar: true
+via_p210_g_xdr: true

@@ -1,0 +1,16 @@
+prompt_id: P215-A
+adr: '447'
+sor: quantum
+capability: CAP-PLT-QC-001
+api_prefix: /api/v1/quantum/foundation
+enterprise_quantum_computing_foundation_present_required: true
+quantum_ai_platform_present_required: true
+hybrid_computing_architecture_present_required: true
+quantum_algorithm_platform_present_required: true
+quantum_simulation_platform_present_required: true
+quantum_research_platform_present_required: true
+quantum_knowledge_graph_present_required: true
+quantum_digital_twin_present_required: true
+sibling_quantum_bc_forbidden: true
+builds_on_p214: true
+governed_by_p215_k: true

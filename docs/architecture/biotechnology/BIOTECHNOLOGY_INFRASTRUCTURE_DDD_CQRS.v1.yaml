@@ -1,0 +1,27 @@
+# BIOTECHNOLOGY_INFRASTRUCTURE_DDD_CQRS.v1.yaml — P217-D
+apiVersion: marpich.io/v1
+kind: BiotechnologyInfrastructureDddCqrs
+metadata:
+  phase: P217-D
+  adr: "503"
+spec:
+  commands:
+    - ProvisionBioComputeCommand
+    - RegisterLabDeviceCommand
+    - LaunchScientificWorkflowCommand
+    - ScaleGpuClusterCommand
+    - RecoverBioInfrastructureCommand
+  queries:
+    - GetInfraHealthQuery
+    - GetComputeCapacityQuery
+    - GetWorkflowStatusQuery
+    - GetLabDeviceStateQuery
+    - GetResilienceStatusQuery
+  events:
+    - BioInfraProvisionedEvent
+    - ScientificWorkflowStartedEvent
+    - GpuClusterScaledEvent
+    - LabDeviceConnectedEvent
+    - BioInfraFailureDetectedEvent
+    - BioInfraRecoveredEvent
+    - BioInfraSecurityViolationEvent

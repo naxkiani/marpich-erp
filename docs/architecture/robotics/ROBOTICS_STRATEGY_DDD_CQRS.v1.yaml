@@ -1,0 +1,32 @@
+# ROBOTICS_STRATEGY_DDD_CQRS.v1.yaml — P216-B
+apiVersion: marpich.io/v1
+kind: RoboticsStrategyDddCqrsCatalog
+metadata:
+  phase: P216-B
+  adr: "474"
+spec:
+  note: Deep DDD bounded contexts deferred to P216-C; strategy layer owns logical BCs and CQRS catalog only.
+  commands:
+    - RegisterRobotCommand
+    - DeployRobotCommand
+    - ExecuteMissionCommand
+    - OptimizeFleetCommand
+    - UpdateRobotCapabilityCommand
+  queries:
+    - GetRobotStateQuery
+    - GetFleetStatusQuery
+    - GetMissionPerformanceQuery
+    - GetMachineHealthQuery
+  events:
+    - name: RobotRegisteredEvent
+      schema: robotics.robot.registered.v1
+    - name: RobotActivatedEvent
+      schema: robotics.robot.activated.v1
+    - name: MissionCompletedEvent
+      schema: robotics.mission.completed.v1
+    - name: MachineOptimizationCompletedEvent
+      schema: robotics.machine.optimization.completed.v1
+    - name: SafetyAlertGeneratedEvent
+      schema: robotics.safety.alert.generated.v1
+    - name: FleetIntelligenceUpdatedEvent
+      schema: robotics.fleet.intelligence.updated.v1

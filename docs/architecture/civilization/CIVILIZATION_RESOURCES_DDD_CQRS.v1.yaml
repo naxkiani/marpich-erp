@@ -1,0 +1,47 @@
+# CIVILIZATION_RESOURCES_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationResourcesDddCqrs
+metadata:
+  prompt_id: P219-G
+  adr: "560"
+bounded_contexts:
+  - id: BC-RES-01
+    name: Resource Intelligence Core Context
+    aggregate: ResourceIntelligenceAggregate
+  - id: BC-RES-02
+    name: Energy Intelligence Context
+    aggregate: EnergySystemAggregate
+  - id: BC-RES-03
+    name: Water Intelligence Context
+    aggregate: WaterSystemAggregate
+  - id: BC-RES-04
+    name: Food Intelligence Context
+    aggregate: FoodSystemAggregate
+commands:
+  - RegisterResourceCommand
+  - MonitorResourceCommand
+  - OptimizeEnergySystemCommand
+  - OptimizeWaterSystemCommand
+  - OptimizeFoodSystemCommand
+  - GenerateResourceScenarioCommand
+queries:
+  - GetResourceStatusQuery
+  - GetEnergyAvailabilityQuery
+  - GetWaterConditionQuery
+  - GetFoodSecurityLevelQuery
+  - GetResourcePredictionQuery
+core_events:
+  - ResourceDiscoveredEvent
+  - ResourceMonitoredEvent
+  - ResourceRiskDetectedEvent
+  - ResourceAllocatedEvent
+  - ResourceOptimizedEvent
+  - EnergyDemandChangedEvent
+  - EnergyProductionOptimizedEvent
+  - WaterShortagePredictedEvent
+  - WaterDistributionOptimizedEvent
+  - FoodProductionChangedEvent
+  - FoodSecurityRiskDetectedEvent
+knowledge_graph:
+  nodes: [Resource, EnergySystem, WaterSystem, FoodSystem, Infrastructure, Region, Population, Industry, Technology, Environment]
+  edges: [PRODUCES, CONSUMES, DEPENDS_ON, LOCATED_IN, OPTIMIZES, IMPACTS, SUPPORTS]

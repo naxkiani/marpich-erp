@@ -1,0 +1,56 @@
+# CIVILIZATION_COLLECTIVE_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationCollectiveDddCqrs
+metadata:
+  prompt_id: P219-W
+  adr: "576"
+bounded_contexts:
+  - id: BC-COLL-01
+    name: Collective Coordination Core
+    type: CORE
+    aggregate: CoordinationAggregate
+  - id: BC-COLL-02
+    name: Knowledge Collaboration Context
+    type: CORE
+    aggregate: KnowledgeAggregate
+  - id: BC-COLL-03
+    name: Decision Support Context
+    type: CORE
+    aggregate: DecisionSupportAggregate
+  - id: BC-COLL-04
+    name: Learning Context
+    type: SUPPORTING
+    aggregate: LearningAggregate
+primary_aggregates:
+  - CoordinationAggregate
+  - CommunityAggregate
+  - KnowledgeAggregate
+  - DecisionSupportAggregate
+  - LearningAggregate
+commands:
+  - CreateCommunityCommand
+  - ShareKnowledgeCommand
+  - ValidateEvidenceCommand
+  - GenerateRecommendationCommand
+  - CoordinateMissionCommand
+  - CaptureInsightCommand
+queries:
+  - GetCoordinationDashboardQuery
+  - GetCommunityInsightsQuery
+  - GetKnowledgeRepositoryQuery
+  - GetRecommendationCatalogQuery
+  - GetParticipationMetricsQuery
+  - GetLearningReportQuery
+events:
+  - CommunityCreatedEvent
+  - KnowledgeSharedEvent
+  - EvidenceValidatedEvent
+  - RecommendationGeneratedEvent
+  - CoordinationStartedEvent
+  - CoordinationCompletedEvent
+  - DecisionSupportedEvent
+  - InsightCapturedEvent
+  - KnowledgeGraphUpdatedEvent
+  - LearningCompletedEvent
+  - AlternativeEvaluatedEvent
+  - ImprovementInitiatedEvent

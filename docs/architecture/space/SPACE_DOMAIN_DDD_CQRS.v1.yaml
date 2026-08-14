@@ -1,0 +1,17 @@
+apiVersion: marpich.io/v1
+kind: SpaceDomainDddCqrs
+metadata:
+  prompt: P218-C
+  adr: "529"
+domain_services: 12
+repositories: 9
+core_events: 10
+microservices: 8
+commands:
+  - CreateMissionCommand
+  - AdjustOrbitCommand
+  - ActivateSatelliteCommand
+queries:
+  - GetMissionQuery
+  - GetOrbitStateQuery
+  - GetSatelliteHealthQuery

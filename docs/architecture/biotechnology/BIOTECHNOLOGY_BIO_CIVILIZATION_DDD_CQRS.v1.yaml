@@ -1,0 +1,17 @@
+apiVersion: marpich.io/v1
+kind: BiotechnologyDddCqrs
+metadata:
+  prompt_id: P217-W
+  adr: 524
+spec:
+  cqrs: true
+  event_count: 8
+  commands:
+    - ActivateBioCivilizationCommand
+    - ConnectCollectiveNodeCommand
+    - RegisterSymbiosisSessionCommand
+    - CreateCollectiveBioDecisionCommand
+  queries:
+    - GetCivilizationStateQuery
+    - GetCollectiveNetworkQuery
+    - GetSymbiosisReadinessQuery

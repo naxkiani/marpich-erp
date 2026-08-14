@@ -1,0 +1,24 @@
+prompt_id: P215-J
+adr: "456"
+sor: quantum
+zero_trust_networking: true
+via_p215_h: true
+via_p215_k: true
+via_policy_engine: true
+via_workflow_for_sensitive_channels: true
+controls:
+  - node_authz
+  - channel_encryption
+  - policy_enforcement
+  - tenant_isolation
+  - trust_exchange
+  - threat_protection
+pqc_key_material_owner: secrets
+quantum_security_platform: P215-H
+forbidden:
+  - module_local_pqc_store
+  - unsigned_channel_without_trust_binding
+  - cross_tenant_network_join
+permissions:
+  read: quantum.read
+  write: quantum.write

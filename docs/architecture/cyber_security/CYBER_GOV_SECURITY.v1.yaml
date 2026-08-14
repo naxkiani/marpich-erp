@@ -1,0 +1,21 @@
+# P210-M — Security & compliance
+version: "1.0"
+prompt_id: P210-M
+adr: "373"
+zero_trust: true
+responsible_ai: true
+human_oversight: true
+explainability: true
+fairness: true
+prompt_security: true
+model_isolation: true
+immutable_audit: true
+policy_enforcement: true
+compliance:
+  - nist_ai_rmf
+  - iso_iec_42001
+  - iso_27001
+  - soc_2
+  - gdpr
+  - eu_ai_act
+  - nist_csf

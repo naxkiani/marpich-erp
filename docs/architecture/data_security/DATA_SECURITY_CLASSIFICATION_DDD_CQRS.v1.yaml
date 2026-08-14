@@ -1,0 +1,51 @@
+# P211-E — DDD / CQRS
+version: "1.0"
+prompt_id: P211-E
+adr: "380"
+sor: data_security
+bounded_context: data_security.classification
+logical_subdomains:
+  - taxonomy
+  - sensitive_detection
+  - ai_classification
+  - label_management
+  - classification_policy
+  - continuous_intelligence
+  - classification_graph
+  - classification_twin
+
+aggregates:
+  - DsClassifiableDataRoot
+  - DsSensitiveDetectionRoot
+  - DsManagedLabelsRoot
+  - DsExplainableAiRoot
+  - DsClassificationPoliciesRoot
+  - DsClassificationLifecycleRoot
+  - DsClassificationDecisionRoot
+  - DsLabelAppliedRoot
+
+commands:
+  - CreateClassificationRule
+  - ClassifyDataAsset
+  - ApplyDataLabel
+  - ApproveClassification
+  - UpdateClassificationPolicy
+  - ReviewClassification
+
+queries:
+  - GetClassificationStatus
+  - GetDataLabels
+  - GetSensitiveDataReport
+  - GetClassificationHistory
+  - GetClassificationCoverage
+  - GetClassificationReadiness
+
+events:
+  - DataClassified
+  - LabelApplied
+  - SensitiveInformationDetected
+  - ClassificationReviewed
+  - ClassificationPolicyChanged
+  - ClassificationChanged
+  - LabelUpdated
+  - PolicyViolationDetected

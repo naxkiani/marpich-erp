@@ -1,0 +1,51 @@
+# P213-N — VALIDATION
+version: "1.0"
+prompt_id: P213-N
+adr: "418"
+sor: analytics
+capability: CAP-PLT-BI-001
+api_prefix: /api/v1/analytics/ops
+verdict: ENTERPRISE_GRADE
+quality_gates_reject_if:
+  - cqrs_architecture_is_incomplete
+  - event_sourcing_platform_is_missing
+  - event_streaming_platform_is_missing
+  - api_management_platform_is_missing
+  - enterprise_integration_platform_is_missing
+  - microservices_platform_is_missing
+  - read_model_architecture_is_missing
+  - api_first_design_is_missing
+  - cloud_native_deployment_is_missing
+  - zero_trust_security_is_missing
+  - observability_is_missing
+  - high_availability_is_missing
+  - disaster_recovery_is_missing
+  - continuous_governance_is_missing
+  - bi_cqrs_architecture_is_incomplete
+  - sibling_business_intelligence_bc
+definition_of_done:
+  - cqrs_platform
+  - event_sourcing_platform
+  - event_streaming_platform
+  - api_management_platform
+  - enterprise_integration_platform
+  - microservices_platform
+  - read_models
+  - service_discovery
+  - api_security
+  - observability
+  - cloud_native_deployment
+  - cicd
+  - testing_architecture
+  - governance_architecture
+required_routes:
+  - GET /analytics/ops
+  - GET /analytics/ops/vision
+  - GET /analytics/ops/cqrs
+  - GET /analytics/ops/event-sourcing
+  - GET /analytics/ops/streaming
+  - GET /analytics/ops/apis
+  - GET /analytics/ops/microservices
+  - GET /analytics/ops/readiness
+foundation: backend/contexts/analytics/application/bi_ops_foundation.py
+catalog: backend/contexts/analytics/domain/services/bi_platform_ops.py

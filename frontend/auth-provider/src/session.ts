@@ -29,6 +29,10 @@ export function isSessionExpired(session: AuthSession): boolean {
   return Date.now() >= session.expiresAt - 30_000;
 }
 
+export function isAuthFailure(status: number): boolean {
+  return status === 401 || status === 403;
+}
+
 export function authHeaders(session: AuthSession): HeadersInit {
   return {
     "Content-Type": "application/json",

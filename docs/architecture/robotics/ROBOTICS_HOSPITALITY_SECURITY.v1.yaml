@@ -1,0 +1,34 @@
+# ROBOTICS_HOSPITALITY_SECURITY.v1.yaml — P216-P
+apiVersion: marpich.io/v1
+kind: RoboticsHospitalitySecurityCatalog
+metadata:
+  phase: P216-P
+  adr: "488"
+spec:
+  framework: meos_hospitality_zero_trust_framework
+  domains:
+    - guest_identity
+    - robot_identity
+    - hotel_identity
+    - reservation_security
+    - payment_protection
+    - personal_data_protection
+    - ai_governance
+    - audit_management
+  controls:
+    - encryption
+    - access_governance
+    - privacy_management
+    - fraud_detection
+    - continuous_monitoring
+  hard_laws:
+    - payment_via_integration_platform_only
+    - never_direct_payment_bypass
+    - never_duplicate_hotel_pms_core_logic
+    - physical_ai_via_p214z_acl_only
+    - no_module_local_llm
+    - never_replace_p216_o_retail
+    - privacy_by_design_required
+    - human_centered_hospitality_required
+    - ungated_physical_autonomy_forbidden
+    - opaque_safety_forbidden

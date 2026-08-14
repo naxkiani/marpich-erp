@@ -1,0 +1,23 @@
+prompt_id: P215-P
+adr: "461"
+sor: quantum
+trust_driven_commerce: true
+via_p215_h: true
+via_p215_k: true
+via_p215_o: true
+via_plugin_platform: true
+via_financial_kernel: true
+via_policy_engine: true
+module_local_payment_processor_forbidden: true
+module_local_plugin_marketplace_forbidden: true
+ungated_capability_publish_forbidden: true
+permissions:
+  read: quantum.read
+  write: quantum.write
+controls:
+  - listing_authz
+  - certification_gate
+  - trust_score
+  - tenant_isolation
+  - settlement_refs_only
+  - plugin_ref_only

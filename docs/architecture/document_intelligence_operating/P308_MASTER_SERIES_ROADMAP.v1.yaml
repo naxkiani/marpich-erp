@@ -1,0 +1,125 @@
+# MEDCIM Master Series Roadmap (P308)
+
+series: P308
+title: MEOS Enterprise Document Intelligence, Content Lifecycle & Intelligent Information Management Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEDCIM-001
+sor: document_intelligence_operating
+fabric: meos_enterprise_document_intelligence_content_lifecycle_intelligent_information_management_platform_framework
+api: /api/v1/document-intelligence-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P308
+    title: MEDCIM Foundation
+    status: planned
+    adr: "665"
+    fabric: meos_enterprise_document_intelligence_content_lifecycle_intelligent_information_management_platform_framework
+    api: /api/v1/document-intelligence-operating*
+  - id: P308-A
+    title: Content Foundation — Model, Metadata, Repository Abstraction, Versioning, Lifecycle, Ownership
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P308-B
+    title: Document Ingestion — Upload, API, Email, Scanner, Storage Adapters
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P308-C
+    title: Document Intelligence — OCR Adapter, Text/Structure, Classification, Metadata Extraction
+    status: planned
+    adr: pending
+    window: 9-15_months
+  - id: P308-D
+    title: Content Governance — Classification, Retention Foundation, Legal Hold Foundation, Approval, Audit
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P308-E
+    title: Document Experience — Viewer, Authoring, Collaboration, Version Comparison, Workspaces
+    status: planned
+    adr: pending
+    window: 15-24_months
+  - id: P308-F
+    title: Content Discovery — Search, Faceted, Semantic, Similar, Related
+    status: planned
+    adr: pending
+    window: 18-30_months
+  - id: P308-G
+    title: Records Foundation — Records, Retention, Disposition, Legal Hold, Archive (P309 specializes)
+    status: planned
+    adr: pending
+    window: 24-36_months
+  - id: P308-H
+    title: Advanced Intelligence — Entity, Obligation, Risk, Contradiction, Duplicate
+    status: planned
+    adr: pending
+    window: 30-42_months
+  - id: P308-I
+    title: P307 Knowledge Integration — Candidate Pipeline, Attribution, Knowledge Impact
+    status: planned
+    adr: pending
+    window: 36-48_months
+  - id: P308-J
+    title: P264 Semantic Integration — Entity Linking, Content Graph Refs, Concept Discovery
+    status: planned
+    adr: pending
+    window: 42-54_months
+  - id: P308-K
+    title: P266 AI Integration — Copilot, Q&A, Summarization, Grounding, Attribution
+    status: planned
+    adr: pending
+    window: 48-60_months
+  - id: P308-L
+    title: Autonomous Content Intelligence — Stale/Duplicate/Gap/Retention Candidates (Human-Gated)
+    status: planned
+    adr: pending
+    window: 54-66_months
+locks:
+  never_replace_documents_exchange: true
+  never_replace_p307_knowledge_operating: true
+  never_replace_p264_semantic_knowledge: true
+  never_replace_p228_knowledge_graph: true
+  never_replace_enterprise_search: true
+  never_replace_p266_ai_agent_orchestration: true
+  never_replace_p260_workflow: true
+  never_replace_p270_governance: true
+  never_replace_p306_service_operations_operating: true
+  never_replace_p305_incident_reliability_operating: true
+  never_become_knowledge_management_platform: true
+  never_become_knowledge_graph_platform: true
+  never_become_semantic_intelligence_engine: true
+  never_become_ai_agent_runtime: true
+  never_become_workflow_engine: true
+  never_become_governance_engine: true
+  never_become_process_intelligence_engine: true
+  never_become_incident_management_platform: true
+  never_become_service_management_platform: true
+  never_become_observability_platform: true
+  never_merge_documents_p307_p308_p309_p264: true
+  never_dual_write_documents_blob_tables_as_second_sor: true
+  never_vendor_lock_storage_in_domain: true
+  never_local_search_engine: true
+  never_local_graph_db: true
+  never_local_metrics_stores: true
+  never_local_approval_workflow_engines: true
+  never_module_local_llm: true
+  never_auto_publish_authoritative_knowledge: true
+  never_dispose_under_legal_hold_without_policy: true
+  content_vs_knowledge_boundary: true
+  storage_abstraction_mandatory: true
+  published_versions_immutable: true
+  ai_retrieval_requires_authz_classification_purpose: true
+  source_attribution_mandatory: true
+  blobs_via_documents_document_id_only: true
+  knowledge_candidates_via_p307_only: true
+  graph_via_p264_p228_only: true
+  search_via_enterprise_search_only: true
+  workflows_via_p260_only: true
+  agents_via_p266_only: true
+  communications_via_p294_only: true
+  tenant_isolation_mandatory: true
+  foundation_for_p308_a: true
+  unblocks_p309_records_retention_legal_hold_information_lifecycle_governance_os: true
+  unblocks_p310_information_governance_data_classification_sensitive_information_intelligence_os: true
+  unblocks_p311_data_loss_prevention_information_protection_adaptive_data_security_control_os: true

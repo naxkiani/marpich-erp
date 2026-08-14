@@ -1,0 +1,17 @@
+# BIOTECHNOLOGY_BIO_AUTONOMOUS_DDD_CQRS.v1.yaml — P217-U
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioAutonomousDddCqrs
+metadata:
+  phase: P217-U
+  adr: "520"
+spec:
+  bounded_contexts: 7
+  domain_models: 3
+  aggregates:
+    - AutonomousBioSystemAggregate
+    - AdaptiveIntelligenceAggregate
+    - AutonomyGovernanceAggregate
+  commands: 5
+  queries: 5
+  core_events: 8
+  microservices: 10

@@ -26,10 +26,10 @@ registration_router = APIRouter(
 
 
 @registration_router.get(
-    "/eilmp/surface",
+    "/registration/surface",
     dependencies=[Depends(require_permissions("identity_lifecycle.read"))],
 )
-async def eilmp_surface() -> dict:
+async def registration_surface() -> dict:
     return {"data": get_registration_onboarding_service().surface()}
 
 

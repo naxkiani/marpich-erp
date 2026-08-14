@@ -1,0 +1,53 @@
+# P210-I — DDD / CQRS
+version: "1.0"
+prompt_id: P210-I
+adr: "369"
+sor: cyber_security
+bounded_context: cyber_security.asm_ctem
+logical_subdomains:
+  - asset_discovery
+  - attack_surface
+  - exposure_management
+  - vulnerability_intelligence
+  - attack_path_analysis
+  - risk_prioritization
+  - remediation
+  - ctem_lifecycle
+
+aggregates:
+  - CsAsmAssetDiscoveryCompleteRoot
+  - CsAsmExternalSurfaceContinuousRoot
+  - CsAsmBusinessContextRiskRoot
+  - CsAsmAttackPathRoot
+  - CsAsmExplainableAiRoot
+  - CsAsmValidatedRemediationRoot
+  - CsAsmContinuousCtemRoot
+  - CsAsmExposureDetectedRoot
+
+commands:
+  - DiscoverAsset
+  - RegisterExposure
+  - ImportVulnerability
+  - CalculateRisk
+  - GenerateAttackPath
+  - CreateRemediationPlan
+  - ExecuteRemediation
+  - ValidateExposure
+
+queries:
+  - GetAssetInventory
+  - GetAttackSurface
+  - GetExposureDashboard
+  - GetAttackGraph
+  - GetRiskHeatmap
+  - GetRemediationStatus
+
+events:
+  - AssetDiscovered
+  - ExposureDetected
+  - VulnerabilityImported
+  - RiskCalculated
+  - AttackPathGenerated
+  - RemediationStarted
+  - RemediationCompleted
+  - ExposureResolved

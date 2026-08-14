@@ -1,0 +1,87 @@
+# P215-G — Optimization / Simulation / Scientific Intelligence capabilities
+prompt_id: P215-G
+adr: "453"
+sor: quantum
+capability: CAP-PLT-QC-001
+fabric: meos_quantum_scientific_intelligence_fabric
+api_prefix: /api/v1/quantum/optimization
+principle: >
+  MEOS Quantum Optimization Platform SHALL transform complex enterprise problems
+  into optimized solutions through quantum algorithms, AI intelligence and hybrid
+  computational architectures.
+
+quantum_optimization_platform_present_required: true
+simulation_intelligence_platform_present_required: true
+scientific_computing_platform_present_required: true
+discovery_intelligence_platform_present_required: true
+decision_optimization_engine_present_required: true
+knowledge_graph_integration_present_required: true
+digital_twin_integration_present_required: true
+cqrs_architecture_present_required: true
+event_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_architecture_present_required: true
+cloud_native_deployment_present_required: true
+
+builds_on_p215_a: true
+builds_on_p215_d: true
+builds_on_p215_e: true
+builds_on_p215_f: true
+governed_by_p215_k: true
+
+optimization_capabilities:
+  - problem_classification
+  - optimization_modeling
+  - algorithm_selection
+  - quantum_execution
+  - solution_evaluation
+  - continuous_optimization
+
+optimization_supports:
+  - combinatorial
+  - financial
+  - supply_chain
+  - scheduling
+  - resource
+  - engineering
+
+simulation_supports:
+  - molecular
+  - material
+  - physical
+  - engineering
+  - climate
+
+scientific_domains:
+  - healthcare
+  - materials_science
+  - energy
+  - climate
+  - finance
+  - manufacturing
+  - engineering
+  - biotechnology
+
+logical_bcs:
+  - BC-01_quantum_optimization_management
+  - BC-02_optimization_algorithm_intelligence
+  - BC-03_enterprise_decision_optimization
+  - BC-04_scientific_simulation
+  - BC-05_research_discovery
+
+forbidden_sibling_bc:
+  - quantum_optimization_platform
+  - quantum_simulation_platform
+  - scientific_intelligence_platform
+  - quantum_discovery_platform
+
+integrations:
+  - P215-D
+  - P215-E
+  - P215-F
+  - P214-Z
+  - P214-V
+  - P214-G
+  - P213
+  - P212
+  - P215-K

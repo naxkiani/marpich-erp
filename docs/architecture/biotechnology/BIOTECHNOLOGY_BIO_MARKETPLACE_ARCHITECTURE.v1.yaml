@@ -1,0 +1,15 @@
+# BIOTECHNOLOGY_BIO_MARKETPLACE_ARCHITECTURE.v1.yaml — P217-P
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioMarketplaceArchitecture
+metadata:
+  phase: P217-P
+  adr: "515"
+  fabric: meos_bio_marketplace_intelligence_fabric
+spec:
+  layers:
+    - L01_scientific_asset_foundation
+    - L02_marketplace_intelligence
+    - L03_exchange_platform
+    - L04_trust_verification
+    - L05_economic_intelligence
+    - L06_governance

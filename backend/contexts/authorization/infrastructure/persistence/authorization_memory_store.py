@@ -5,11 +5,13 @@ from contexts.authorization.domain.aggregates.authorization_platform import (
     AbacPolicy,
     AccessDecision,
     AuthorizationProfile,
+    RelationTuple,
 )
 from contexts.authorization.domain.ports.authorization_repositories import (
     IAbacPolicyRepository,
     IAccessDecisionRepository,
     IAuthorizationProfileRepository,
+    IRelationTupleRepository,
 )
 
 
@@ -81,3 +83,63 @@ class InMemoryAccessDecisionRepository(IAccessDecisionRepository):
 
     def next_decision_ref(self, tenant_id: str) -> str:
         return _RefCounter.next(tenant_id, "ERP-AUTH-DEC")
+
+
+class InMemoryRelationTupleRepository(IRelationTupleRepository):
+    _store: dict[str, RelationTuple] = {}
+
+    @classmethod
+    def reset(cls) -> None:
+        cls._store = {}
+
+    async def save(self, tuple_: RelationTuple) -> None:
+        self._store[str(tuple_.id)] = tuple_
+
+    async def list_by_object(
+        self, tenant_id: str, object_type: str, object_id: str
+    ) -> list[RelationTuple]:
+        return [
+            t
+            for t in self._store.values()
+            if t.tenant_id == tenant_id
+            and t.object_type == object_type.lower()
+            and t.object_id == object_id
+            and t.active
+        ]
+
+    async def list_by_subject(
+        self, tenant_id: str, subject_type: str, subject_id: str
+    ) -> list[RelationTuple]:
+        return [
+            t
+            for t in self._store.values()
+            if t.tenant_id == tenant_id
+            and t.subject_type == subject_type.lower()
+            and t.subject_id == subject_id
+            and t.active
+        ]
+
+    async def find_exact(
+        self,
+        tenant_id: str,
+        *,
+        object_type: str,
+        object_id: str,
+        relation: str,
+        subject_type: str,
+        subject_id: str,
+    ) -> RelationTuple | None:
+        for t in self._store.values():
+            if (
+                t.tenant_id == tenant_id
+                and t.object_type == object_type.lower()
+                and t.object_id == object_id
+                and t.relation == relation.lower()
+                and t.subject_type == subject_type.lower()
+                and t.subject_id == subject_id
+            ):
+                return t
+        return None
+
+    def next_relation_ref(self, tenant_id: str) -> str:
+        return _RefCounter.next(tenant_id, "ERP-AUTH-REL")

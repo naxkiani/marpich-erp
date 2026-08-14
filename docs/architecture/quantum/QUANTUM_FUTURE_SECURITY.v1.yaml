@@ -1,0 +1,24 @@
+# QUANTUM_FUTURE_SECURITY.v1.yaml — P215-X
+apiVersion: marpich.io/v1
+kind: QuantumFutureSecurityCatalog
+metadata:
+  phase: P215-X
+  adr: "469"
+spec:
+  authn: JWT via Identity / API Gateway
+  authz:
+    permissions:
+      - quantum.future.read
+      - quantum.future.write
+      - quantum.future.admin
+      - quantum.future.ai.read
+      - quantum.future.ai.infer
+  tenant_isolation: mandatory
+  singularity_acceleration: policy_and_workflow_gated
+  pqc_binding: P215-H / secrets (P209)
+  audit: Audit Platform via integration events
+  ai_inference: AI Platform / P214-Z ACL only
+  never:
+    - ungoverned_singularity_acceleration
+    - module_local_llm
+    - replace_p215_w_or_core

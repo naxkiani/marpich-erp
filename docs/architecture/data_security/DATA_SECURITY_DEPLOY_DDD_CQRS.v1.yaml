@@ -1,0 +1,38 @@
+# P211-O — Deploy platform DDD / CQRS
+version: "1.0"
+prompt_id: P211-O
+adr: "390"
+sor: data_security
+domain: Data Security Cloud Operations Domain
+bounded_contexts:
+  - kubernetes_platform
+  - container_supply_chain
+  - devsecops_pipeline
+  - gitops_delivery
+  - scalability_ha_dr
+  - observability_aiops
+  - platform_security_compliance
+commands:
+  - PromoteEnvironment
+  - ApproveKubernetesRelease
+  - ScaleWorkload
+  - TriggerFailover
+  - RunDisasterRecoveryDrill
+  - EnforceRuntimePolicy
+  - CollectComplianceEvidence
+queries:
+  - GetClusterTopology
+  - GetPipelineStatus
+  - GetScalingState
+  - GetObservabilityHealth
+  - GetDrPosture
+  - GetDeployReadiness
+events:
+  - EnvironmentPromoted
+  - ReleaseApproved
+  - WorkloadScaled
+  - FailoverTriggered
+  - DrDrillCompleted
+  - RuntimePolicyEnforced
+  - ComplianceEvidenceCollected
+  - AnomalyDetected

@@ -1,0 +1,19 @@
+# P211-A — Security & compliance
+version: "1.0"
+prompt_id: P211-A
+adr: "376"
+zero_trust_data: true
+privacy_by_design: true
+least_privilege_data_access: true
+continuous_authorization: true
+data_centric_security: true
+encryption_via_p209: true
+immutable_audit: true
+compliance:
+  - iso_27001
+  - iso_27701
+  - nist_csf
+  - nist_privacy_framework
+  - gdpr
+  - ccpa
+  - soc_2

@@ -1,0 +1,79 @@
+# CIVILIZATION_SECURITY_ARCHITECTURE.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationSecurityArchitecture
+metadata:
+  prompt_id: P219-M
+  adr: "566"
+  fabric: meos_civilization_os_civilization_security_intelligence_framework
+evolution:
+  - Reactive Security
+  - Preventive Security
+  - Predictive Security
+  - Adaptive Security
+  - Autonomous Security Intelligence
+  - Civilization Security Intelligence
+layers:
+  - {id: L01, name: Civilization Security Domain}
+  - {id: L02, name: Threat Observation Layer}
+  - {id: L03, name: Risk Intelligence Layer}
+  - {id: L04, name: Security Digital Twin Layer}
+  - {id: L05, name: Adaptive Security Intelligence Layer}
+  - {id: L06, name: Autonomous Security Operations}
+risk_domains:
+  - cyber
+  - infrastructure
+  - economic
+  - environmental
+  - geopolitical
+  - technology
+  - supply_chain
+  - health
+  - space
+  - ai
+threat_categories:
+  - cyber_threats
+  - infrastructure_threats
+  - natural_hazards
+  - supply_chain_disruptions
+  - space_threats
+  - biological_threats
+  - ai_threats
+  - information_threats
+resilience_domains:
+  - infrastructure
+  - economic
+  - social
+  - energy
+  - water
+  - food
+  - knowledge
+  - ai
+  - space
+resilience_lifecycle:
+  - Prepare
+  - Monitor
+  - Detect
+  - Respond
+  - Recover
+  - Adapt
+  - Improve
+agents:
+  - Threat Intelligence Agent
+  - Risk Intelligence Agent
+  - Response Intelligence Agent
+  - Resilience Intelligence Agent
+  - Governance Security Agent
+knowledge_graph:
+  entities: [Threat, Risk, Attack, Incident, Infrastructure, Asset, Policy, Vulnerability, Response, RecoveryPlan]
+  relationships: [TARGETS, AFFECTS, EXPLOITS, PROTECTS, DEPENDS_ON, MITIGATES, RECOVERS, ESCALATES]
+digital_twins:
+  - Security Operations Twin
+  - Critical Infrastructure Twin
+  - Threat Twin
+  - Incident Twin
+  - Recovery Twin
+roadmap:
+  - {id: P01, name: Security Intelligence Foundation}
+  - {id: P02, name: Adaptive Security Platform}
+  - {id: P03, name: Autonomous Security Operations}
+  - {id: P04, name: Civilization Security Intelligence}

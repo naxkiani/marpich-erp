@@ -1,0 +1,19 @@
+# P210-E — Security & compliance
+version: "1.0"
+prompt_id: P210-E
+adr: "367"
+zero_trust: true
+rbac: true
+abac: true
+mtls: true
+encryption_at_rest: true
+encryption_in_transit: true
+immutable_audit_logs: true
+data_integrity_validation: true
+immutable_event_storage: true
+compliance:
+  - iso_27001
+  - soc_2
+  - pci_dss
+  - gdpr
+  - nist_csf

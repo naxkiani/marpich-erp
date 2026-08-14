@@ -1,0 +1,7 @@
+apiVersion: marpich.io/v1
+kind: CommunicationsDsn
+metadata:
+  prompt: P218-H
+  adr: "534"
+capabilities: 8
+infrastructure_nodes: 7

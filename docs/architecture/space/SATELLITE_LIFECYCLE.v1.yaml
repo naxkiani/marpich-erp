@@ -1,0 +1,17 @@
+apiVersion: marpich.io/v1
+kind: SatelliteLifecycle
+metadata:
+  prompt: P218-F
+  adr: "532"
+phases:
+  - Mission Design
+  - Manufacturing
+  - Launch
+  - Commissioning
+  - Operational Service
+  - Maintenance
+  - Orbit Adjustment
+  - Extended Mission
+  - Decommissioning
+  - Disposal
+phase_count: 10

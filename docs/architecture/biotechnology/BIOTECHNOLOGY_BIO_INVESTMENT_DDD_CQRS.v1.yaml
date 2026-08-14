@@ -1,0 +1,17 @@
+# BIOTECHNOLOGY_BIO_INVESTMENT_DDD_CQRS.v1.yaml — P217-R
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioInvestmentDddCqrs
+metadata:
+  phase: P217-R
+  adr: "517"
+spec:
+  bounded_contexts: 7
+  domain_models: 3
+  aggregates:
+    - BioInvestmentAggregate
+    - FundingNetworkAggregate
+    - BioValuationAggregate
+  commands: 5
+  queries: 5
+  core_events: 8
+  microservices: 10

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "human_resources.employee.hired",
+  "type": "object",
+  "required": ["employee_id", "email", "full_name"],
+  "properties": {
+    "employee_id": { "type": "string", "format": "uuid" },
+    "email": { "type": "string" },
+    "full_name": { "type": "string" },
+    "job_title": { "type": "string" },
+    "department": { "type": "string" },
+    "employee_number": { "type": "string" }
+  }
+}

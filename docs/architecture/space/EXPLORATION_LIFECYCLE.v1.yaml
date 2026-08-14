@@ -1,0 +1,9 @@
+apiVersion: marpich.io/v1
+kind: ExplorationLifecycle
+metadata:
+  prompt: P218-L
+  adr: "538"
+stage_count: 10
+planetary_protection_required: true
+landing_authorization_gated: true
+crew_safety_validation_required: true

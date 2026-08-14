@@ -1,0 +1,43 @@
+prompt_id: P215-S
+adr: "464"
+sor: quantum
+capability: CAP-PLT-QC-001
+api_prefix: /api/v1/quantum/resilience
+fabric: meos_quantum_cyber_trust_fabric
+security_gate: P215-H
+principle: >-
+  MEOS Quantum Security Platform SHALL provide a continuous trust, protection
+  and resilience framework for quantum-enabled enterprise operations.
+quantum_security_platform_present_required: true
+post_quantum_cyber_defense_present_required: true
+quantum_identity_fabric_present_required: true
+quantum_zero_trust_present_required: true
+threat_intelligence_present_required: true
+security_operations_present_required: true
+resilience_intelligence_present_required: true
+knowledge_graph_integration_present_required: true
+digital_twin_integration_present_required: true
+never_replace_p215_h: true
+never_local_pqc_store: true
+pqc_remains_secrets: true
+via_p215_h: true
+via_p209_secrets: true
+via_identity: true
+via_p200_b: true
+via_policy_engine: true
+via_p214_j: true
+via_p215_n: true
+via_p215_k: true
+via_p215_r: true
+via_workflow: true
+via_audit: true
+builds_on_p215_a: true
+builds_on_p215_h: true
+builds_on_p215_r: true
+governed_by_p215_k: true
+forbidden_siblings:
+  - quantum_security_ops_platform
+  - quantum_cyber_defense_platform
+  - quantum_resilience_platform
+  - quantum_zero_trust_platform
+  - quantum_identity_security_platform

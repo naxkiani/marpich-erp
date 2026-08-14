@@ -1,0 +1,15 @@
+# BIOTECHNOLOGY_DOMAIN_AGGREGATES.v1.yaml — P217-C
+apiVersion: marpich.io/v1
+kind: BiotechnologyDomainAggregates
+metadata:
+  phase: P217-C
+  adr: "502"
+spec:
+  aggregates:
+    - BioIntelligenceAggregate
+    - SyntheticBiologyProjectAggregate
+    - ComputationalBiologyAnalysisAggregate
+    - HealthIntelligenceAggregate
+    - BioDigitalTwinAggregate
+    - ResearchIntelligenceAggregate
+    - BioGovernanceAggregate

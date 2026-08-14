@@ -1,0 +1,55 @@
+# CIVILIZATION_STRATEGIC_EVOLUTION_ARCHITECTURE.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationStrategicEvolutionArchitecture
+metadata:
+  prompt_id: P219-X
+  adr: "577"
+maturity:
+  - Reactive Change
+  - Planned Transformation
+  - Portfolio Evolution
+  - Adaptive Transformation
+  - Strategic Evolution Intelligence
+  - Civilization Adaptive Transformation
+layers:
+  - {id: L01, name: Strategic Intent}
+  - {id: L02, name: Capability Portfolio}
+  - {id: L03, name: Transformation Programs}
+  - {id: L04, name: Evolution Digital Twin}
+  - {id: L05, name: Adaptive Execution}
+  - {id: L06, name: Continuous Transformation Learning}
+portfolio_domains:
+  - mission
+  - capability
+  - product
+  - technology
+  - operating_model
+  - workforce
+  - finance
+  - risk
+  - sustainability
+  - partnership
+transformation_lifecycle:
+  - Intent Definition
+  - Portfolio Assessment
+  - Initiative Design
+  - Impact Simulation
+  - Recommendation
+  - Human Authorization
+  - Adaptive Execution
+  - Review
+agents:
+  - Strategic Evolution Agent
+  - Portfolio Agent
+  - Capability Evolution Agent
+  - Transformation Agent
+  - Learning Agent
+digital_twins:
+  - Strategy Twin
+  - Portfolio Twin
+  - Capability Twin
+  - Transformation Twin
+  - Organization Twin
+knowledge_graph:
+  entities: [Strategy, Portfolio, Capability, Initiative, Transformation, Evidence, Recommendation, Decision, Dependency, Outcome]
+  relationships: [EVOLVES, DEPENDS_ON, ENABLES, TRANSFORMS, SUPPORTS, VALIDATES, CONSTRAINS, MEASURES]

@@ -1,0 +1,75 @@
+# P213-M — DDD / CQRS
+version: "1.0"
+prompt_id: P213-M
+adr: "417"
+sor: analytics
+capability: CAP-PLT-BI-001
+principle: Every enterprise decision SHALL be supported by AI reasoning, enterprise knowledge, governance policies and continuous learning.
+fabric: meos_autonomous_decision_intelligence_fabric
+core_domain: enterprise_autonomous_decision_intelligence
+aggregate: AutonomousDecisionAggregate
+supporting_domains:
+  - ai_reasoning
+  - decision_agents
+  - executive_copilot
+  - recommendation_intelligence
+  - decision_automation
+  - ai_governance
+  - cognitive_learning
+  - human_approval
+logical_bounded_contexts:
+  - BC-01 enterprise_decision_intelligence
+  - BC-02 ai_reasoning
+  - BC-03 executive_ai_copilot
+  - BC-04 decision_automation
+  - BC-05 learning
+  - BC-06 ai_governance
+commands:
+  - CreateDecisionSessionCommand
+  - ExecuteReasoningCommand
+  - GenerateRecommendationCommand
+  - ApproveDecisionCommand
+  - ExecuteDecisionCommand
+  - RegisterLearningFeedbackCommand
+queries:
+  - GetDecisionSessionQuery
+  - GetRecommendationQuery
+  - GetReasoningQuery
+  - SearchDecisionHistoryQuery
+  - GetLearningInsightsQuery
+events:
+  - DecisionRequestedEvent
+  - ReasoningStartedEvent
+  - ReasoningCompletedEvent
+  - RecommendationGeneratedEvent
+  - DecisionApprovedEvent
+  - DecisionExecutedEvent
+  - LearningCapturedEvent
+  - AgentCollaboratedEvent
+  - PolicyValidationCompletedEvent
+microservices:
+  - decision-intelligence-service
+  - ai-reasoning-service
+  - executive-copilot-service
+  - agent-orchestrator-service
+  - decision-automation-service
+  - learning-service
+  - ai-governance-service
+  - prompt-registry-service
+  - model-registry-service
+  - decision-memory-service
+semantic_layer:
+  via_p213_g: true
+predictive_analytics:
+  via_p213_j: true
+prescriptive_analytics:
+  via_p213_k: true
+decision_knowledge_graph:
+  via_p213_l: true
+knowledge_graph_federation:
+  via_p212_j: true
+digital_twin:
+  via_p212_l: true
+enterprise_ai:
+  via_enterprise_ai: true
+  module_local_llm_sdk_forbidden: true

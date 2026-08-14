@@ -1,0 +1,14 @@
+apiVersion: marpich.io/v1
+kind: SpaceSecurityControls
+metadata:
+  prompt: P218-P
+  adr: "542"
+zero_trust: true
+locks:
+  - no_module_local_llm
+  - never_ungated_autonomous_security_response
+  - never_skip_command_authentication
+  - never_skip_satellite_identity_verification
+  - never_opaque_unexplainable_security_decisions
+  - never_disable_human_override
+  - quantum_ready_via_p215_z

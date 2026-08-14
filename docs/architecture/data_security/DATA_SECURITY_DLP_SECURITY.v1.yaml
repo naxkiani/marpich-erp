@@ -1,0 +1,18 @@
+# P211-G — DLP security requirements
+version: "1.0"
+prompt_id: P211-G
+adr: "382"
+requirements:
+  - zero_trust_data_movement
+  - classification_aware_enforcement
+  - immutable_audit_logs
+  - identity_based_controls
+  - ai_leakage_controls
+  - soar_integration
+permissions:
+  read: data_security.read
+  write: data_security.write
+  admin: data_security.admin
+audit:
+  via_integration_events: true
+  local_audit_tables_forbidden: true

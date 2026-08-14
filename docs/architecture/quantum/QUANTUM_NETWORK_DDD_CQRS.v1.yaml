@@ -1,0 +1,51 @@
+prompt_id: P215-J
+adr: "456"
+sor: quantum
+core_domain: enterprise_quantum_network_intelligence_management
+bounded_context_count: 7
+aggregate_count: 8
+bounded_contexts:
+  - id: BC-01
+    name: Quantum Network Management Context
+    owns: QuantumNetworkAggregate
+  - id: BC-02
+    name: Quantum Node Federation Context
+    owns: QuantumNodeAggregate
+  - id: BC-03
+    name: Quantum Communication Context
+    owns: QuantumCommunicationAggregate
+  - id: BC-04
+    name: Quantum Entanglement Management Context
+    owns: QuantumEntanglementAggregate
+  - id: BC-05
+    name: Quantum Routing Intelligence Context
+    owns: QuantumRoutingAggregate
+  - id: BC-06
+    name: Quantum Network Security Context
+    owns: QuantumNetworkSecurityAggregate
+  - id: BC-07
+    name: Quantum Network Operations Context
+    owns: QuantumNetworkOperationsAggregate
+commands:
+  - RegisterQuantumNodeCommand
+  - CreateQuantumChannelCommand
+  - EstablishQuantumCommunicationCommand
+  - CreateEntanglementResourceCommand
+  - OptimizeQuantumNetworkCommand
+  - ApplyNetworkPolicyCommand
+queries:
+  - GetQuantumNetworkTopologyQuery
+  - GetNodeStatusQuery
+  - GetCommunicationStatusQuery
+  - GetNetworkHealthQuery
+  - GetConnectivityScoreQuery
+events:
+  - QuantumNodeRegisteredEvent
+  - QuantumChannelCreatedEvent
+  - QuantumCommunicationStartedEvent
+  - EntanglementEstablishedEvent
+  - NetworkOptimizedEvent
+  - NetworkFailureDetectedEvent
+event_versioning: event_version_field
+event_retention: tenant_scoped_immutable_append
+outbox_required: true

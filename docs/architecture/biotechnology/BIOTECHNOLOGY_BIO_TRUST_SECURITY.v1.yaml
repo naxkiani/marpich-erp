@@ -1,0 +1,22 @@
+# BIOTECHNOLOGY_BIO_TRUST_SECURITY.v1.yaml — P217-Y
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioTrustSecurity
+metadata:
+  phase: P217-Y
+  adr: "523"
+spec:
+  zero_trust: true
+  protects:
+    - trust_policies
+    - alignment_scores
+    - ethics_frameworks
+    - trust_attestations
+    - transparency_records
+  hard_locks:
+    - never_skip_human_trust_oversight
+    - never_unvalidated_trust_policy_release
+    - never_skip_bio_intelligence_alignment_controls
+    - never_skip_bio_ethics_civilization_controls
+    - never_skip_trust_transparency_requirements
+    - no_module_local_llm
+    - never_opaque_unexplainable_decisions

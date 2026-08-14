@@ -1,0 +1,50 @@
+# P214-C — CAPABILITIES
+version: "1.0"
+prompt_id: P214-C
+adr: "423"
+sor: ai
+capability: CAP-PLT-AI-001
+api_prefix: /api/v1/ai/domain
+fabric: meos_enterprise_ai_domain_fabric
+principle: >-
+  AI strategy, capabilities, models, data, agents, applications, decisions,
+  and business outcomes SHALL be represented as governed enterprise domains
+  through DDD boundaries.
+builds_on:
+  - P214-A
+  - P214-B
+  - ADR-421
+  - ADR-422
+  - P212
+  - P213
+  - P213-L
+  - P207
+  - P208
+  - P209
+  - P210
+  - P211
+complete_ai_domain_model_present_required: true
+strategic_ddd_design_present_required: true
+core_domain_defined_required: true
+supporting_domains_defined_required: true
+bounded_contexts_present_required: true
+aggregates_defined_required: true
+entities_defined_required: true
+value_objects_defined_required: true
+domain_events_present_required: true
+microservice_mapping_present_required: true
+integration_boundaries_clear_required: true
+governance_model_present_required: true
+sibling_ai_bc_forbidden: true
+module_local_llm_sdk_forbidden: true
+via_p214_a: true
+via_p214_b: true
+via_p212: true
+via_p213_l: true
+via_p207: true
+via_p208: true
+via_p209: true
+via_p210: true
+via_p211: true
+via_enterprise_ai: true
+via_api_gateway: true

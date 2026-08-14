@@ -1,0 +1,15 @@
+apiVersion: marpich.io/v1
+kind: ScientificSecurity
+metadata:
+  prompt: P218-K
+  adr: "537"
+zero_trust: true
+locks:
+  - no_module_local_llm
+  - never_ungated_autonomous_experiment_execution
+  - never_skip_scientific_ethics_review
+  - never_skip_peer_review_gate
+  - never_skip_reproducibility_validation
+  - never_violate_fair_data_principles
+  - never_opaque_unexplainable_decisions
+  - never_disable_human_override

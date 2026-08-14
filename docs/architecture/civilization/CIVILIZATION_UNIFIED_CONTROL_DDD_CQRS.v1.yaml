@@ -1,0 +1,55 @@
+# CIVILIZATION_UNIFIED_CONTROL_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationUnifiedControlDddCqrs
+metadata:
+  prompt_id: P219-Z
+  adr: "579"
+bounded_contexts:
+  - id: BC-UEC-01
+    name: Unified Control Core
+    aggregates: [ControlPlaneAggregate]
+  - id: BC-UEC-02
+    name: Integrated Intelligence Context
+    aggregates: [IntegratedIntelligenceAggregate]
+  - id: BC-UEC-03
+    name: Cross-Domain Orchestration Context
+    aggregates: [OrchestrationAggregate]
+  - id: BC-UEC-04
+    name: Governance Fabric Context
+    aggregates: [GovernanceFabricAggregate]
+  - id: BC-UEC-05
+    name: Digital Twin Federation Context
+    aggregates: [TwinFederationAggregate]
+aggregates:
+  - ControlPlaneAggregate
+  - IntegratedIntelligenceAggregate
+  - OrchestrationAggregate
+  - GovernanceFabricAggregate
+  - TwinFederationAggregate
+commands:
+  - ActivateControlPlaneCommand
+  - FederateIntelligenceCommand
+  - OrchestrateCrossDomainCommand
+  - EnforceGovernanceFabricCommand
+  - FederateDigitalTwinsCommand
+  - PublishStrategicDecisionSupportCommand
+queries:
+  - GetControlPlaneDashboardQuery
+  - GetIntegratedIntelligenceStatusQuery
+  - GetOrchestrationCatalogQuery
+  - GetGovernanceFabricStatusQuery
+  - GetTwinFederationMapQuery
+  - GetStrategicDecisionSupportQuery
+events:
+  - ControlPlaneActivatedEvent
+  - IntelligenceFederatedEvent
+  - CrossDomainOrchestrationStartedEvent
+  - CrossDomainOrchestrationCompletedEvent
+  - GovernanceFabricEnforcedEvent
+  - DigitalTwinsFederatedEvent
+  - StrategicDecisionSupportPublishedEvent
+  - HumanAuthorizationGrantedEvent
+  - ControlPlaneSynchronizedEvent
+  - UnifiedKnowledgeGraphUpdatedEvent
+  - OrchestrationDependencyResolvedEvent
+  - AssuranceGatePassedEvent

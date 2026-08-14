@@ -1,0 +1,39 @@
+# ROBOTICS_HOSPITALITY_DDD_CQRS.v1.yaml — P216-P
+apiVersion: marpich.io/v1
+kind: RoboticsHospitalityDddCqrsCatalog
+metadata:
+  phase: P216-P
+  adr: "488"
+spec:
+  commands:
+    - RegisterGuestCommand
+    - AssignHospitalityRobotCommand
+    - CreateReservationCommand
+    - RequestServiceCommand
+    - OptimiseHotelOperationCommand
+    - UpdateHotelTwinCommand
+  queries:
+    - GetGuestProfileQuery
+    - GetRoomStatusQuery
+    - GetHotelStatusQuery
+    - GetRobotStatusQuery
+    - GetHospitalityTwinQuery
+  events:
+    - robotics.hospitality.guest.arrival.v1
+    - robotics.hospitality.reservation.confirmed.v1
+    - robotics.hospitality.service.requested.v1
+    - robotics.hospitality.robot.mission.completed.v1
+    - robotics.hospitality.room.prepared.v1
+    - robotics.hospitality.guest.experience.updated.v1
+    - robotics.hospitality.hotel.optimised.v1
+  microservices:
+    - guest_intelligence_service
+    - hospitality_robotics_service
+    - hotel_operations_service
+    - reservation_intelligence_service
+    - room_intelligence_service
+    - hospitality_ai_service
+    - tourism_intelligence_service
+    - digital_twin_service
+    - knowledge_graph_service
+    - analytics_service

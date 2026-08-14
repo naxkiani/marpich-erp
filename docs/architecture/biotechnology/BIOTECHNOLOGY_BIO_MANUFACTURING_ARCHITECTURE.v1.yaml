@@ -1,0 +1,15 @@
+# BIOTECHNOLOGY_BIO_MANUFACTURING_ARCHITECTURE.v1.yaml — P217-L
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioManufacturingArchitecture
+metadata:
+  phase: P217-L
+  adr: "511"
+  fabric: meos_bio_manufacturing_intelligence_fabric
+spec:
+  layers:
+    - L01_physical_bio_production
+    - L02_bio_process_intelligence
+    - L03_manufacturing_ai_intelligence
+    - L04_digital_manufacturing_twin
+    - L05_autonomous_operations
+    - L06_governance

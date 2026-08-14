@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "crm.contact.created",
+  "type": "object",
+  "required": ["contact_id", "email", "full_name"],
+  "properties": {
+    "contact_id": { "type": "string", "format": "uuid" },
+    "email": { "type": "string" },
+    "full_name": { "type": "string" }
+  }
+}

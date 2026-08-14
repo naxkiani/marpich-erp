@@ -1,0 +1,67 @@
+# P213-J — DDD / CQRS
+version: "1.0"
+prompt_id: P213-J
+adr: "414"
+sor: analytics
+capability: CAP-PLT-BI-001
+principle: Enterprise Predictive Analytics SHALL enable MEOS to anticipate future business conditions before they become operational realities.
+fabric: meos_enterprise_predictive_intelligence_fabric
+core_domain: enterprise_predictive_intelligence_management
+aggregate: PredictiveAnalyticsAggregate
+supporting_domains:
+  - forecast_management
+  - predictive_modeling
+  - scenario_prediction
+  - capacity_prediction
+  - trend_intelligence
+  - risk_forecasting
+  - recommendation_generation
+  - prediction_governance
+logical_bounded_contexts:
+  - BC-01 forecast_management
+  - BC-02 predictive_modeling
+  - BC-03 scenario_prediction
+  - BC-04 capacity_demand_forecast
+  - BC-05 risk_forecast
+  - BC-06 prediction_governance
+commands:
+  - CreateForecastCommand
+  - TrainPredictionModelCommand
+  - ExecuteForecastCommand
+  - ApproveForecastCommand
+  - PublishForecastCommand
+queries:
+  - GetForecastQuery
+  - GetPredictionQuery
+  - SearchForecastsQuery
+  - GetScenarioQuery
+  - GetForecastAccuracyQuery
+events:
+  - ForecastRequestedEvent
+  - ForecastGeneratedEvent
+  - PredictionCompletedEvent
+  - ScenarioSimulatedEvent
+  - ForecastApprovedEvent
+  - ForecastPublishedEvent
+  - AccuracyMeasuredEvent
+microservices:
+  - forecast-management-service
+  - prediction-engine-service
+  - model-management-service
+  - scenario-planning-service
+  - capacity-forecast-service
+  - forecast-governance-service
+  - forecast-ai-service
+  - prediction-explanation-service
+semantic_layer:
+  via_p213_g: true
+advanced_analytics:
+  via_p213_i: true
+knowledge_graph:
+  via_p212_j: true
+digital_twin:
+  via_p212_l: true
+warehouse:
+  via_p213_e: true
+lakehouse:
+  via_p213_f: true

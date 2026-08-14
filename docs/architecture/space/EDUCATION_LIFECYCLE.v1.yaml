@@ -1,0 +1,22 @@
+apiVersion: marpich.io/v1
+kind: SpaceEducationLifecycle
+metadata:
+  prompt: P218-S
+  adr: "545"
+stages:
+  - learner_registration
+  - identity_verification
+  - skill_assessment
+  - curriculum_assignment
+  - training_execution
+  - simulation_evaluation
+  - competency_validation
+  - certification_authorization
+  - workforce_matching
+  - knowledge_contribution
+stage_count: 10
+gates:
+  never_ungated_certification_issuance: true
+  never_skip_credential_verification: true
+  never_skip_research_ethics_review: true
+  human_override_required: true

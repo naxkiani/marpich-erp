@@ -1,17 +1,44 @@
 context: tax
 display_name: Tax
 type: generic
-description: Tax rules, filings, VAT/GST, withholding
+description: Tax processing — CAP-ENT-026 (Wave 02 Functional); payroll tax liability + returns
+# Peer productization: never dual-write payroll/accounting SoR; Financial Kernel posts later via events
 aggregates:
-- TaxRule
-- TaxReturn
-- TaxFiling
-- WithholdingRecord
+  - TaxLiability
+  - TaxReturn
+  - TaxRule
+  - TaxFiling
+  - WithholdingRecord
+permissions:
+  - tax.liabilities.read
+  - tax.returns.read
+  - tax.returns.write
+  - tax.ai.read
+  - tax.ai.infer
 publishes:
-- tax.return.filed
-- tax.liability.calculated
+  - tax.liability.calculated
+  - tax.return.filed
 subscribes:
-- accounting.journal.posted
-- payroll.run.completed
-- sales.invoice.issued
+  - payroll.run.completed
+  - accounting.journal.posted
+  - sales.invoice.issued
 schema: tax
+ai:
+  surfaces:
+    - insights
+    - predictions
+    - recommendations
+    - summaries
+    - search
+    - assistant
+    - automation
+    - document_intelligence
+    - voice_commands
+    - chat
+    - report_explanation
+    - anomaly_detection
+    - forecasting
+    - optimization
+  prompt_templates:
+    - tax.liability.summary
+    - tax.return.insights

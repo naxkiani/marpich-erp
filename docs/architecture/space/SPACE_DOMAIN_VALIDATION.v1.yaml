@@ -1,0 +1,15 @@
+apiVersion: marpich.io/v1
+kind: SpaceDomainValidation
+metadata:
+  prompt: P218-C
+  adr: "529"
+verdict: ENTERPRISE_GRADE
+foundation_for: P218-D
+gates:
+  - P218
+  - P218-A
+  - P218-B
+  - P217-Z
+  - P216-Z
+  - P215-Z
+  - P214-Z

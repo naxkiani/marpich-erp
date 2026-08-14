@@ -1,20 +1,52 @@
 context: accounting
 display_name: Accounting
 type: generic
-description: Journal entries, AP/AR, general ledger postings
+description: Hospital billing + AR invoices from sales orders — CAP-ENT-023 (Wave 02 Functional)
+# Peer productization: P278 MEQTCIP (quote_to_cash_operating) — never fork accounting AR/invoice truth; never dual-write accounting_* from Q2C fabric
+# Peer productization: P279 METRCIP (treasury_cash_operating) — RevRec/cash intelligence overlays; Accounting remains doc truth; P271 remains Financial Control
+# Peer productization: P280 MEFPAPM (financial_planning_operating) — FP&A overlays; never dual-write budget into GL
+# Peer productization: P281 MEMACPI (management_accounting_operating) — cost/profitability overlays; never dual-write cost into GL
+# Peer productization: P282 MEPRIAP (pricing_operating) — pricing/revenue optimization overlays; never ungated price commits; never dual-write price lists without ACL
+# Boundary: P277 = Sales/RevOps · P278 = Quote-to-Cash · P279 = Treasury/RevRec · P280 = FP&A · P281 = Mgmt Accounting · P282 = Pricing · P271 = Financial Intelligence · P283 = Contract (planned)
 aggregates:
-- JournalEntry
-- Account
-- Invoice
-- Payment
-- VendorBill
+  - BillingEncounter
+  - Invoice
+  - Payment
+  - VendorBill
 publishes:
-- accounting.journal.posted
-- accounting.invoice.issued
-- accounting.payment.received
+  - accounting.journal.posted
+  - accounting.invoice.issued
+  - accounting.payment.received
+  - accounting.billing.encounter_created
 subscribes:
-- sales.order.fulfilled
-- procurement.po.received
-- payroll.run.completed
-- hospital.encounter.completed
+  - sales.order.placed
+  - hospital.encounter.completed
+  - procurement.po.received
+  - payroll.run.completed
 schema: accounting
+permissions:
+  - accounting.billing.read
+  - accounting.billing.write
+  - accounting.invoice.read
+  - accounting.invoice.write
+  - accounting.ai.read
+  - accounting.ai.infer
+ai:
+  surfaces:
+    - insights
+    - predictions
+    - recommendations
+    - summaries
+    - search
+    - assistant
+    - automation
+    - document_intelligence
+    - voice_commands
+    - chat
+    - report_explanation
+    - anomaly_detection
+    - forecasting
+    - optimization
+  prompt_templates:
+    - accounting.ar.summary
+    - accounting.invoice.insights

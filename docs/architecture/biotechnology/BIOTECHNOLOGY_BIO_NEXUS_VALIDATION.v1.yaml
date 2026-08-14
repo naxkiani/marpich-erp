@@ -1,0 +1,11 @@
+apiVersion: marpich.io/v1
+kind: BiotechnologyValidationCatalog
+metadata:
+  prompt_id: P217-Z
+  adr: 525
+spec:
+  verdict: ENTERPRISE_GRADE
+  series_closure_for_p217: true
+  foundation_for_p218: true
+  tests:
+    - test_bio_platform_bio_nexus.py

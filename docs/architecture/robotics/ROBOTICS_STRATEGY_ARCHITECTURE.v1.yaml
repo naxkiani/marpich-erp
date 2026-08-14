@@ -1,0 +1,54 @@
+# ROBOTICS_STRATEGY_ARCHITECTURE.v1.yaml — P216-B
+apiVersion: marpich.io/v1
+kind: RoboticsStrategyArchitecture
+metadata:
+  id: meos_robotics_strategic_architecture_framework
+  version: "1.0"
+  capability: CAP-PLT-RB-001
+  adr: "474"
+  phase: P216-B
+layers:
+  - id: L01
+    name: Physical Intelligence Layer
+    components: [industrial_robots, mobile_robots, collaborative_robots, autonomous_vehicles, drones, smart_machines]
+  - id: L02
+    name: Edge Robotics Intelligence Layer
+    components: [edge_ai_runtime, robot_controllers, sensor_fusion_engine, real_time_decision_engine]
+  - id: L03
+    name: Robotics Platform Layer
+    components: [robot_management, fleet_management, mission_platform, robot_registry]
+  - id: L04
+    name: Enterprise Intelligence Layer
+    components: [ai_models_via_p214, digital_twins, knowledge_graphs, optimization_engines]
+  - id: L05
+    name: MEOS Intelligence Control Layer
+    components: [p215z_quantum_supreme, p214_ai_intelligence, enterprise_control_plane]
+operating_model_layers:
+  - strategy
+  - governance
+  - platform
+  - operations
+  - innovation
+maturity_levels:
+  - L01_manual_operations
+  - L02_connected_machines
+  - L03_intelligent_automation
+  - L04_autonomous_robotics
+  - L05_cyber_physical_autonomous_enterprise
+  - L06_self_optimizing_intelligence_ecosystem
+core_services:
+  - robot_identity
+  - robot_registry
+  - robot_lifecycle
+  - mission_management
+  - fleet_intelligence
+  - physical_ai
+  - robot_analytics
+  - digital_twin
+  - safety_management
+  - maintenance_intelligence
+hard_laws:
+  - never_replace_foundation_or_mission
+  - physical_ai_via_p214z_acl_only
+  - safety_gated_autonomy
+  - workflow_approvals_audit_platform

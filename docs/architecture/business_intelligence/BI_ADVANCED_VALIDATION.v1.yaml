@@ -1,0 +1,45 @@
+# P213-I — VALIDATION
+version: "1.0"
+prompt_id: P213-I
+adr: "413"
+sor: analytics
+capability: CAP-PLT-BI-001
+principle: Advanced Analytics SHALL transform enterprise data into scientific business intelligence that supports strategic decision making.
+fabric: meos_enterprise_advanced_analytics_fabric
+reject_if:
+  - enterprise_advanced_analytics_platform_is_missing
+  - statistical_intelligence_platform_is_missing
+  - enterprise_experimentation_platform_is_missing
+  - pattern_discovery_platform_is_missing
+  - root_cause_analytics_is_missing
+  - insight_management_is_missing
+  - ai_assisted_analytics_is_missing
+  - knowledge_graph_integration_is_missing
+  - digital_twin_integration_is_missing
+  - cqrs_architecture_is_missing
+  - event_sourcing_architecture_is_missing
+  - microservice_architecture_is_missing
+  - api_first_architecture_is_missing
+  - zero_trust_security_is_missing
+  - enterprise_governance_is_missing
+  - cloud_native_deployment_is_missing
+  - advanced_analytics_architecture_is_incomplete
+  - sibling_business_intelligence_bc
+verdict_required: ENTERPRISE_GRADE
+definition_of_done:
+  - enterprise_advanced_analytics_platform
+  - statistical_analytics_platform
+  - enterprise_experimentation_platform
+  - pattern_discovery_platform
+  - root_cause_analytics
+  - insight_management_platform
+  - ai_analytics_platform
+  - knowledge_graph_integration
+  - digital_twin_integration
+  - cqrs_architecture
+  - event_architecture
+  - microservice_architecture
+  - api_platform
+  - security_architecture
+  - deployment_architecture
+  - testing_architecture

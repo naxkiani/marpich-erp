@@ -1,0 +1,37 @@
+# P214-M — DDD / CQRS
+version: "1.0"
+prompt_id: P214-M
+adr: "433"
+sor: ai
+core_domain: enterprise_ai_integration_management
+aggregate: EnterpriseAIIntegrationAggregate
+bounded_contexts:
+  - BC-01_ai_api_gateway
+  - BC-02_ai_service_mesh
+  - BC-03_ai_event_fabric
+  - BC-04_ai_workflow_integration
+  - BC-05_ai_model_serving
+  - BC-06_ai_agent_communication
+  - BC-07_integration_governance
+commands:
+  - RegisterAIServiceCommand
+  - CreateAPICommand
+  - ConfigureRoutingCommand
+  - ConnectServiceCommand
+  - PublishEventChannelCommand
+  - UpdateIntegrationPolicyCommand
+queries:
+  - GetAPIQuery
+  - GetServiceStatusQuery
+  - GetRoutingStatusQuery
+  - GetCommunicationHistoryQuery
+  - GetIntegrationHealthQuery
+events:
+  - APIRegisteredEvent
+  - ServiceConnectedEvent
+  - RoutingChangedEvent
+  - MessageDeliveredEvent
+  - IntegrationFailedEvent
+  - PolicyViolationDetectedEvent
+  - TrafficOptimizedEvent
+  - CommunicationCompletedEvent

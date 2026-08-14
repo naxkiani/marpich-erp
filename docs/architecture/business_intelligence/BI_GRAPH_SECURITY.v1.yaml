@@ -1,0 +1,30 @@
+# P213-L — SECURITY
+version: "1.0"
+prompt_id: P213-L
+adr: "416"
+sor: analytics
+capability: CAP-PLT-BI-001
+permission: analytics.graph.read
+zero_trust: true
+tenant_isolation: true
+delegates:
+  identity: P207
+  authorization: P208
+  data_security: P211
+  data_governance: P212
+  knowledge_graph: P212-J
+  digital_twin: P212-L
+  semantic: P213-G
+  predictive: P213-J
+  prescriptive: P213-K
+  enterprise_ai: ai
+  api_gateway: gateway
+graph_authorization: true
+node_level_security: true
+relationship_security: true
+graph_auditing: true
+policy_driven_graph_governance: true
+attribute_based_access_control: true
+row_level_security: true
+certified_metrics_only: true
+sibling_bc_forbidden: true

@@ -1,0 +1,34 @@
+# CIVILIZATION_PROSPERITY_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationProsperitySecurity
+metadata:
+  prompt_id: P219-O
+  adr: "568"
+permissions:
+  - civilization.read
+  - civilization.prosperity.read
+  - civilization.prosperity.write
+  - civilization.prosperity.simulate
+  - civilization.admin
+locks:
+  never_replace_p219_h_economy: true
+  never_replace_p219_j_human: true
+  never_replace_p219_n_sustainability: true
+  never_opaque_unexplainable_prosperity_decisions: true
+  never_ungated_prosperity_optimization_execution: true
+  never_treat_prosperity_score_as_binding_policy: true
+  never_skip_ethical_prosperity_governance: true
+  never_skip_human_authority_prosperity: true
+  never_violate_human_sovereignty_prosperity: true
+  never_bypass_trusted_prosperity_validation: true
+  never_bypass_opportunity_equality_safeguards: true
+  never_module_local_llm: true
+  inference_via_p214_z_only: true
+  prosperity_optimization_workflow_gated: true
+controls:
+  - human_flourishing_first
+  - opportunity_equality_intelligence
+  - wellbeing_driven_architecture
+  - ethical_prosperity
+  - evidence_based_social_intelligence
+  - audit_on_prosperity_mutations

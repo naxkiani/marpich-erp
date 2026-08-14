@@ -1,0 +1,37 @@
+# P214-O — DDD / CQRS
+version: "1.0"
+prompt_id: P214-O
+adr: "435"
+sor: ai
+core_domain: enterprise_ai_quality_intelligence_management
+aggregate: EnterpriseAIQualityAssuranceAggregate
+bounded_contexts:
+  - BC-01_ai_testing
+  - BC-02_ai_evaluation
+  - BC-03_ai_validation
+  - BC-04_ai_benchmarking
+  - BC-05_ai_safety_testing
+  - BC-06_ai_reliability_testing
+  - BC-07_ai_certification
+commands:
+  - CreateAITestCommand
+  - ExecuteEvaluationCommand
+  - ValidateAIComponentCommand
+  - RunBenchmarkCommand
+  - GenerateQualityReportCommand
+  - ApproveCertificationCommand
+queries:
+  - GetTestResultQuery
+  - GetEvaluationQuery
+  - GetQualityScoreQuery
+  - GetValidationReportQuery
+  - GetCertificationStatusQuery
+events:
+  - TestCreatedEvent
+  - TestExecutedEvent
+  - EvaluationCompletedEvent
+  - QualityScoreChangedEvent
+  - FailureDetectedEvent
+  - CertificationGrantedEvent
+  - RegressionDetectedEvent
+  - SafetyViolationDetectedEvent

@@ -1,0 +1,6 @@
+apiVersion: marpich.io/v1
+kind: SpaceMissionDddCqrs
+metadata: {prompt_id: P218-A, adr: 527}
+spec:
+  cqrs: true
+  event_count: 5

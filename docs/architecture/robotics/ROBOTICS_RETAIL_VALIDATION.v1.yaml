@@ -1,0 +1,37 @@
+# ROBOTICS_RETAIL_VALIDATION.v1.yaml — P216-O
+apiVersion: marpich.io/v1
+kind: RoboticsRetailValidationCatalog
+metadata:
+  phase: P216-O
+  adr: "487"
+spec:
+  quality_gates:
+    - Retail Robotics Platform
+    - Customer Experience Automation
+    - Autonomous Commerce Platform
+    - Smart Store Platform
+    - Commerce AI Platform
+    - Retail Digital Twin
+    - Commerce Knowledge Graph
+    - CQRS Architecture
+    - Event Architecture
+    - Microservice Architecture
+    - Zero Trust Security
+    - Cloud-Edge Architecture
+    - Enterprise Integration
+  definition_of_done:
+    - Retail Robotics Platform exists
+    - Autonomous Commerce Platform exists
+    - Customer Intelligence Platform exists
+    - Smart Store Platform exists
+    - Commerce AI Platform exists
+    - Retail Digital Twin exists
+    - Retail Knowledge Graph exists
+    - Security Architecture exists
+    - CQRS Architecture exists
+    - Event Architecture exists
+    - Microservice Architecture exists
+    - Deployment Architecture exists
+    - Testing Architecture exists
+    - Foundation for P216-P exists
+  foundation_validator: validate_rb_retail_foundation

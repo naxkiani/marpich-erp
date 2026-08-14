@@ -1,0 +1,27 @@
+# P211-P — Validation gates
+version: "1.0"
+prompt_id: P211-P
+adr: "391"
+reject_if:
+  - testing_is_manual_only
+  - compliance_evidence_is_unavailable
+  - security_validation_is_missing
+  - governance_ownership_is_unclear
+  - risks_cannot_be_tracked
+  - production_readiness_is_undefined
+  - sibling_qa_bc
+forbidden_siblings:
+  - backend/contexts/data_security_qa
+  - backend/contexts/ds_assurance_platform
+  - backend/contexts/data_security_compliance_validation
+required_artifacts:
+  - docs/adr/391-enterprise-data-security-qa.md
+  - docs/architecture/ENTERPRISE_DATA_SECURITY_QA.md
+  - docs/architecture/data_security/DATA_SECURITY_QA_CAPABILITIES.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_QA_DDD_CQRS.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_QA_SECURITY.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_QA_VALIDATION.v1.yaml
+  - backend/contexts/data_security/domain/services/ds_platform_qa.py
+  - backend/contexts/data_security/domain/aggregates/ds_qa_aggregates.py
+  - backend/contexts/data_security/infrastructure/acl/ds_qa_acl.py
+  - backend/contexts/data_security/application/ds_qa_foundation.py

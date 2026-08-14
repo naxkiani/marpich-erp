@@ -1,0 +1,53 @@
+# P210-M — DDD / CQRS
+version: "1.0"
+prompt_id: P210-M
+adr: "373"
+sor: cyber_security
+bounded_context: cyber_security.ai_governance
+logical_subdomains:
+  - ai_asset_registry
+  - model_governance
+  - ai_security_controls
+  - responsible_ai
+  - ai_policy
+  - ai_risk
+  - agent_governance
+  - ai_compliance_audit
+
+aggregates:
+  - CsGovAiInventoryRoot
+  - CsGovAuditableDecisionRoot
+  - CsGovMeasurableRiskRoot
+  - CsGovAgentGovernanceRoot
+  - CsGovPolicyEnforcementRoot
+  - CsGovComplianceEvidenceRoot
+  - CsGovHumanOversightRoot
+  - CsGovModelRegisteredRoot
+
+commands:
+  - RegisterAIModel
+  - ApproveAIModel
+  - UpdateAIPolicy
+  - AssessAIRisk
+  - ApproveAgentAction
+  - GenerateComplianceReport
+  - AuditAIDecision
+  - ShutdownAIService
+
+queries:
+  - GetAIInventory
+  - GetModelRisk
+  - GetAgentActivity
+  - GetAIComplianceStatus
+  - GetAuditHistory
+  - GetGovernanceDashboard
+
+events:
+  - AIModelRegistered
+  - AIModelApproved
+  - AIRiskDetected
+  - AIPolicyUpdated
+  - AgentActionExecuted
+  - PolicyViolationDetected
+  - AuditCompleted
+  - ComplianceReportGenerated

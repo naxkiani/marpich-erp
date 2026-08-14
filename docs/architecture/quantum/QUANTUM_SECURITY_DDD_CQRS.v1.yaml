@@ -1,0 +1,46 @@
+# P215-H — DDD / CQRS catalog
+prompt_id: P215-H
+adr: "454"
+core_domain: enterprise_quantum_security_trust_management
+bounded_context_count: 6
+aggregate_count: 7
+
+aggregates:
+  - EnterpriseQuantumSecurityTrustAggregate
+  - QuantumCryptographyAggregate
+  - PostQuantumCryptoAggregate
+  - QuantumIdentityAggregate
+  - QuantumCommunicationAggregate
+  - QuantumThreatAggregate
+  - QuantumGovernanceAggregate
+
+commands:
+  - CreateQuantumSecurityPolicyCommand
+  - EstablishQuantumTrustCommand
+  - MigrateCryptographyCommand
+  - RotateQuantumKeyCommand
+  - ValidateSecurityControlCommand
+  - RespondToQuantumThreatCommand
+
+queries:
+  - GetQuantumSecurityPostureQuery
+  - GetTrustStatusQuery
+  - GetCryptographicStateQuery
+  - GetThreatAssessmentQuery
+  - GetRiskScoreQuery
+
+events:
+  - QuantumSecurityPolicyCreatedEvent
+  - QuantumTrustEstablishedEvent
+  - TrustEstablishedEvent
+  - CryptographicMigrationStartedEvent
+  - CryptographyMigratedEvent
+  - KeyRotatedEvent
+  - QuantumThreatDetectedEvent
+  - QuantumSecurityControlValidatedEvent
+  - SecurityValidationCompletedEvent
+  - QuantumTrustUpdatedEvent
+
+event_envelope: docs/architecture/events/_envelope.v1.json
+outbox_required: true
+pqc_sor: secrets

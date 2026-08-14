@@ -14,6 +14,7 @@ publishes:
 subscribes:
   - hospital.encounter.completed
   - hospital.encounter.started
+  - clinic.encounter.completed
 schema: laboratory
 permissions:
   - laboratory.orders.read

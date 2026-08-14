@@ -1,0 +1,29 @@
+# ROBOTICS_CONSTRUCTION_SITE.v1.yaml — P216-K
+apiVersion: marpich.io/v1
+kind: RoboticsConstructionSiteCatalog
+metadata:
+  phase: P216-K
+  adr: "483"
+  fabric: meos_construction_intelligence_fabric
+  capability: CAP-PLT-RB-001
+spec:
+  mission: "Build autonomous, AI-native, robotics-enabled construction ecosystems capable of planning, building, monitoring, operating and continuously improving physical infrastructure."
+  vision: "Every building, bridge, road, facility, construction robot and infrastructure asset shall become an intelligent, connected participant within MEOS."
+  core_domain: enterprise_construction_intelligence
+  aggregate: ConstructionAggregate
+  construction_robotics_components:
+    - construction_robot_registry
+    - heavy_equipment_controller
+    - mission_planner
+    - site_orchestrator
+    - robot_fleet_manager
+    - construction_workflow_engine
+  capabilities:
+    - autonomous_excavation
+    - autonomous_earthmoving
+    - bricklaying_robots
+    - concrete_printing
+    - steel_assembly
+    - structural_inspection
+    - construction_drones
+    - autonomous_surveying

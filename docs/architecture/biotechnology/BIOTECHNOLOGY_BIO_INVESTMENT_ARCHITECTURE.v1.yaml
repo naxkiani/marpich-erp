@@ -1,0 +1,15 @@
+# BIOTECHNOLOGY_BIO_INVESTMENT_ARCHITECTURE.v1.yaml — P217-R
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioInvestmentArchitecture
+metadata:
+  phase: P217-R
+  adr: "517"
+  fabric: meos_bio_investment_intelligence_fabric
+spec:
+  layers:
+    - L01_scientific_asset_intelligence
+    - L02_investment_intelligence
+    - L03_funding_network
+    - L04_valuation_intelligence
+    - L05_capital_optimization
+    - L06_governance

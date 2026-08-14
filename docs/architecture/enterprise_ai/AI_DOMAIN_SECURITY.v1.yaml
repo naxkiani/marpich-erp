@@ -1,0 +1,27 @@
+# P214-C — SECURITY
+version: "1.0"
+prompt_id: P214-C
+adr: "423"
+sor: ai
+capability: CAP-PLT-AI-001
+zero_trust: true
+privacy_by_design: true
+via_p207: true
+via_p208: true
+via_p209: true
+via_p210: true
+via_p211: true
+ai_security_context: BC-08
+entities:
+  - AIIdentity
+  - ModelPermission
+  - PromptPolicy
+  - AIThreat
+  - AIControl
+forbidden:
+  - module_local_llm_sdk
+  - cross_context_domain_imports
+  - unclear_data_ownership
+permissions:
+  - ai.assist.read
+  - ai.platform.read

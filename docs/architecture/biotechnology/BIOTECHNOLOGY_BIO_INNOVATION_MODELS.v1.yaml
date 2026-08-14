@@ -1,0 +1,13 @@
+# BIOTECHNOLOGY_BIO_INNOVATION_MODELS.v1.yaml — P217-Q
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioInnovationModels
+metadata:
+  phase: P217-Q
+  adr: "516"
+spec:
+  research_network_participants: 7
+  collaboration_engines: 4
+  acceleration_capabilities: 4
+  agents: 6
+  knowledge_graph: meos_biotechnology_innovation_knowledge_graph
+  digital_twin: meos_innovation_ecosystem_digital_twin

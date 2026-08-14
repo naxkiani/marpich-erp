@@ -1,0 +1,44 @@
+# P210-E — SIEM capabilities
+version: "1.0"
+prompt_id: P210-E
+adr: "367"
+sor: cyber_security
+api_prefix: /api/v1/cyber-security/siem
+builds_on:
+  - P210-A
+  - P210-B
+  - P210-C
+  - P210-D
+  - P210-F
+  - P210-G
+  - ADR-361
+  - ADR-362
+  - ADR-363
+  - ADR-364
+  - ADR-365
+  - ADR-366
+
+event_normalization_complete_required: true
+multi_domain_correlation_required: true
+detection_rules_extensible_required: true
+ai_intelligence_required: true
+telemetry_integrity_validation_required: true
+storage_immutable_required: true
+horizontal_scale_required: true
+sibling_siem_bc_forbidden: true
+ir_lifecycle_duplication_forbidden: true
+vendor_sdk_embed_forbidden: true
+siloed_correlation_forbidden: true
+
+via_security_incident: true
+via_workflow: true
+via_integration_platform: true
+via_authorization: true
+via_audit_platform: true
+via_ai_platform: true
+via_knowledge_graph: true
+via_digital_twin: true
+via_observability: true
+via_p210_d_soc: true
+via_p210_f_soar: true
+via_p210_g_xdr: true

@@ -1,0 +1,27 @@
+# P210-J — Security, AI governance & compliance
+version: "1.0"
+prompt_id: P210-J
+adr: "370"
+zero_trust: true
+rbac: true
+abac: true
+model_isolation: true
+secure_prompt_execution: true
+llm_sandboxing: true
+confidential_computing: true
+encryption_in_transit: true
+encryption_at_rest: true
+immutable_audit_logs: true
+responsible_ai: true
+human_oversight: true
+hallucination_detection: true
+bias_monitoring: true
+model_explainability: true
+compliance:
+  - iso_27001
+  - soc_2
+  - nist_ai_rmf
+  - eu_ai_act
+  - nist_csf
+  - mitre_attack
+  - mitre_d3fend

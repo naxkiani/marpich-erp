@@ -1,0 +1,31 @@
+# P211-F — DSPM capabilities
+version: "1.0"
+prompt_id: P211-F
+adr: "381"
+sor: data_security
+capability: CAP-PLT-DS-001
+api_prefix: /api/v1/data-security/dspm
+builds_on:
+  - P211-A
+  - P211-B
+  - P211-C
+  - P211-D
+  - P211-E
+  - ADR-380
+
+data_assets_known_required: true
+security_posture_measurable_required: true
+exposure_risks_visible_required: true
+findings_owned_required: true
+remediation_not_manual_only_required: true
+continuous_assessment_available_required: true
+sibling_dspm_bc_forbidden: true
+via_p211_d_discovery: true
+via_p211_e_classification: true
+via_enterprise_ai: true
+via_policy_engine: true
+via_workflow: true
+via_p207: true
+via_p208: true
+via_p209: true
+via_p210: true

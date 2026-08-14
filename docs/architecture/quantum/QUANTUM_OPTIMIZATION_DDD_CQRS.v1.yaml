@@ -1,0 +1,43 @@
+# P215-G — DDD / CQRS catalog
+prompt_id: P215-G
+adr: "453"
+core_domain: enterprise_quantum_optimization_scientific_intelligence_management
+bounded_context_count: 5
+aggregate_count: 6
+
+aggregates:
+  - EnterpriseQuantumScientificIntelligenceAggregate
+  - QuantumOptimizationAggregate
+  - OptimizationAlgorithmAggregate
+  - DecisionOptimizationAggregate
+  - ScientificSimulationAggregate
+  - ResearchDiscoveryAggregate
+
+commands:
+  - CreateOptimizationProblemCommand
+  - ExecuteQuantumOptimizationCommand
+  - StartScientificSimulationCommand
+  - ValidateSimulationCommand
+  - GenerateDiscoveryCommand
+  - OptimizeSolutionCommand
+
+queries:
+  - GetOptimizationResultQuery
+  - GetSimulationStateQuery
+  - GetScientificModelQuery
+  - GetDiscoveryResultQuery
+  - GetSolutionQualityQuery
+
+events:
+  - OptimizationProblemCreatedEvent
+  - QuantumOptimizationExecutedEvent
+  - OptimizationExecutedEvent
+  - SimulationStartedEvent
+  - SimulationCompletedEvent
+  - ScientificDiscoveryGeneratedEvent
+  - DiscoveryGeneratedEvent
+  - OptimizationSolutionValidatedEvent
+  - SolutionValidatedEvent
+
+event_envelope: docs/architecture/events/_envelope.v1.json
+outbox_required: true

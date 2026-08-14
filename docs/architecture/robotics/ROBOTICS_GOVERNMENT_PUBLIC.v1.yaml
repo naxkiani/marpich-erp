@@ -1,0 +1,33 @@
+# ROBOTICS_GOVERNMENT_PUBLIC.v1.yaml — P216-T
+apiVersion: marpich.io/v1
+kind: RoboticsGovernmentPublicCatalog
+metadata:
+  phase: P216-T
+  adr: "492"
+  fabric: meos_government_intelligence_fabric
+spec:
+  government_robotics:
+    platform: meos_government_robotics_platform
+    components:
+      - government_robot_registry
+      - public_service_agent_manager
+      - administrative_automation_engine
+      - citizen_assistance_agent
+      - government_workflow_controller
+      - governance_operations_dashboard
+    supported_ai_agents:
+      - citizen_service_agent
+      - policy_analysis_agent
+      - administrative_agent
+      - regulatory_monitoring_agent
+      - public_information_agent
+      - government_document_agent
+  autonomous_public_services:
+    engine: meos_public_service_intelligence_engine
+  digital_government:
+    engine: meos_government_ai_intelligence_engine
+    via_p214_z: true
+  government_digital_twin:
+    platform: meos_national_government_digital_twin_platform
+  public_knowledge_graph:
+    graph: meos_government_knowledge_graph

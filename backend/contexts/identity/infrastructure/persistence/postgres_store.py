@@ -44,7 +44,7 @@ class PostgresUserRepository(IUserRepository):
             return None
 
     async def save(self, user: User) -> None:
-        async with session_scope(tenant_id=tenant_id) as session:
+        async with session_scope(tenant_id=user.tenant_id) as session:
             row = await session.get(UserRow, _uuid(user.id))
             if row is None:
                 row = UserRow(id=_uuid(user.id), tenant_id=user.tenant_id, email=user.email)
@@ -102,7 +102,7 @@ class PostgresRoleRepository(IRoleRepository):
             return _role_from_row(row) if row else None
 
     async def save(self, role: Role) -> None:
-        async with session_scope(tenant_id=tenant_id) as session:
+        async with session_scope(tenant_id=role.tenant_id) as session:
             row = await session.get(RoleRow, _uuid(role.id))
             if row is None:
                 row = RoleRow(
@@ -151,7 +151,7 @@ class PostgresSessionRepository(ISessionRepository):
             )
 
     async def find_by_refresh_hash(self, refresh_hash: str) -> dict | None:
-        async with session_scope(tenant_id=tenant_id) as session:
+        async with session_scope() as session:
             row = await session.scalar(
                 select(SessionRow).where(
                     SessionRow.refresh_token_hash == refresh_hash,
@@ -172,7 +172,7 @@ class PostgresSessionRepository(ISessionRepository):
             }
 
     async def revoke(self, session_id: str) -> None:
-        async with session_scope(tenant_id=tenant_id) as session:
+        async with session_scope() as session:
             await session.execute(
                 update(SessionRow)
                 .where(SessionRow.id == UUID(session_id))

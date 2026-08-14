@@ -1,0 +1,17 @@
+# BIOTECHNOLOGY_BIO_INNOVATION_DDD_CQRS.v1.yaml — P217-Q
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioInnovationDddCqrs
+metadata:
+  phase: P217-Q
+  adr: "516"
+spec:
+  bounded_contexts: 7
+  domain_models: 3
+  aggregates:
+    - ResearchNetworkAggregate
+    - InnovationAggregate
+    - CollaborationAggregate
+  commands: 5
+  queries: 5
+  core_events: 8
+  microservices: 10

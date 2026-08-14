@@ -1,0 +1,28 @@
+# P211-G — Validation gates
+version: "1.0"
+prompt_id: P211-G
+adr: "382"
+reject_if:
+  - sensitive_data_cannot_be_identified
+  - data_movement_cannot_be_monitored
+  - policies_cannot_be_enforced
+  - ai_leakage_is_unmanaged
+  - insider_risk_is_invisible
+  - violations_cannot_be_investigated
+  - automated_response_is_unavailable
+  - sibling_dlp_bc
+forbidden_siblings:
+  - backend/contexts/dlp
+  - backend/contexts/data_loss_prevention
+  - backend/contexts/exfiltration_prevention
+required_artifacts:
+  - docs/adr/382-enterprise-data-security-dlp.md
+  - docs/architecture/ENTERPRISE_DATA_SECURITY_DLP.md
+  - docs/architecture/data_security/DATA_SECURITY_DLP_CAPABILITIES.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_DLP_DDD_CQRS.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_DLP_SECURITY.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_DLP_VALIDATION.v1.yaml
+  - backend/contexts/data_security/domain/services/ds_platform_dlp.py
+  - backend/contexts/data_security/domain/aggregates/ds_dlp_aggregates.py
+  - backend/contexts/data_security/infrastructure/acl/ds_dlp_acl.py
+  - backend/contexts/data_security/application/ds_dlp_foundation.py

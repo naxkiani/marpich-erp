@@ -1,0 +1,52 @@
+# MDMAL Master Series Roadmap (P259)
+
+series: P259
+title: MEOS Dynamic Module Activation & Application Lifecycle Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MDMAL-001
+sor: module_lifecycle
+fabric: meos_dynamic_module_activation_application_lifecycle_platform_framework
+api: /api/v1/module-lifecycle*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P259
+    title: MDMAL Foundation
+    status: planned
+    adr: "616"
+    fabric: meos_dynamic_module_activation_application_lifecycle_platform_framework
+    api: /api/v1/module-lifecycle*
+  - id: P259-A
+    title: Module Registry Foundation — Lifecycle Projections, Metadata Schema, Lifecycle Model, Registry API
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P259-B
+    title: Activation Runtime — Dynamic Loader Plans, Dependency Engine, Runtime Resolver ACL, Configuration Engine
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P259-C
+    title: Autonomous Lifecycle Management — AI Deployment Agent, Predictive Upgrade, Autonomous Recovery (Gated)
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P259-D
+    title: Self Evolution Platform — Autonomous Module Evolution, AI Extension Intents, Continuous Optimization
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_module_registry: true
+  never_replace_plugin_platform: true
+  never_replace_p257_or_p258: true
+  never_fork_enterprise_runtime_experience_or_plugins_apis: true
+  never_dual_write_registry_or_plugin_catalogs: true
+  never_unsigned_third_party_load: true
+  never_local_approval_engine: true
+  never_local_feature_flag_store: true
+  never_module_local_llm: true
+  never_ungated_production_deploy_or_activate: true
+  never_treat_plan_as_execute: true
+  foundation_for_p259_a: true
+  unblocks_p260_workflow_execution: true
+  peer_series_p260_meweop: true

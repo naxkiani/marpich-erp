@@ -1,0 +1,32 @@
+# ROBOTICS_LOGISTICS_WAREHOUSE.v1.yaml — P216-G
+apiVersion: marpich.io/v1
+kind: RoboticsLogisticsWarehouseCatalog
+metadata:
+  phase: P216-G
+  adr: "479"
+  fabric: meos_autonomous_logistics_fabric
+  capability: CAP-PLT-RB-001
+spec:
+  vision: "MEOS Autonomous Logistics Platform SHALL unify warehouse robotics, intelligent material flow, AI-driven logistics, enterprise planning and cyber-physical execution into one enterprise logistics operating ecosystem."
+  core_domain: enterprise_autonomous_logistics_intelligence
+  aggregate: EnterpriseAutonomousLogisticsAggregate
+  warehouse_components:
+    - warehouse_registry
+    - warehouse_control_centre
+    - robot_fleet_controller
+    - inventory_optimiser
+    - material_flow_engine
+    - fulfilment_engine
+    - dock_management_system
+    - warehouse_analytics
+  robot_types:
+    - AMR
+    - AGV
+    - picking_robots
+    - sorting_robots
+    - packing_robots
+    - palletising_robots
+    - depalletising_robots
+    - forklift_robots
+    - inventory_drones
+    - inspection_robots

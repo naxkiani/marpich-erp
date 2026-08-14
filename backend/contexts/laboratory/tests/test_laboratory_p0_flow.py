@@ -12,6 +12,7 @@ from contexts.laboratory.container import reset_laboratory_service
 from contexts.laboratory.infrastructure.persistence.memory_store import LaboratoryMemoryStore
 from core.presentation.api.app_factory import create_app
 from core.presentation.api.startup_registry import configure_application
+from shared.infrastructure.messaging.event_bus import InProcessEventBus
 from shared.infrastructure.messaging.event_fabric import EventFabric
 
 
@@ -21,6 +22,7 @@ def reset_all():
     InMemoryStore.reset()
     PlatformMemoryStore.reset()
     LaboratoryMemoryStore.reset()
+    InProcessEventBus.reset()
     EventFabric.reset_dev_state()
     reset_platform_service()
     reset_laboratory_service()

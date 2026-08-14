@@ -1,0 +1,24 @@
+# ROBOTICS_HEALTHCARE_BOUNDED_CONTEXTS.v1.yaml — P216-I
+apiVersion: marpich.io/v1
+kind: RoboticsHealthcareBoundedContextCatalog
+metadata:
+  phase: P216-I
+  adr: "481"
+spec:
+  bounded_contexts:
+    - id: BC-01
+      name: Patient Care Context
+    - id: BC-02
+      name: Medical AI Context
+    - id: BC-03
+      name: Healthcare Robotics Context
+    - id: BC-04
+      name: Surgical Robotics Context
+    - id: BC-05
+      name: Medical Imaging Context
+    - id: BC-06
+      name: Laboratory & Pharmacy Context
+    - id: BC-07
+      name: Healthcare Digital Twin Context
+    - id: BC-08
+      name: Clinical Governance Context

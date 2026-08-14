@@ -1,0 +1,27 @@
+# P211-I — Validation gates
+version: "1.0"
+prompt_id: P211-I
+adr: "384"
+reject_if:
+  - personal_data_cannot_be_discovered
+  - consent_cannot_be_tracked
+  - privacy_risks_cannot_be_measured
+  - data_processing_is_invisible
+  - regulatory_obligations_are_unmapped
+  - ai_privacy_risks_are_unmanaged
+  - sibling_privacy_bc
+forbidden_siblings:
+  - backend/contexts/privacy_intelligence
+  - backend/contexts/data_privacy_platform
+  - backend/contexts/personal_data_platform
+required_artifacts:
+  - docs/adr/384-enterprise-data-security-privacy.md
+  - docs/architecture/ENTERPRISE_DATA_SECURITY_PRIVACY.md
+  - docs/architecture/data_security/DATA_SECURITY_PRIVACY_CAPABILITIES.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_PRIVACY_DDD_CQRS.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_PRIVACY_SECURITY.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_PRIVACY_VALIDATION.v1.yaml
+  - backend/contexts/data_security/domain/services/ds_platform_privacy.py
+  - backend/contexts/data_security/domain/aggregates/ds_privacy_aggregates.py
+  - backend/contexts/data_security/infrastructure/acl/ds_privacy_acl.py
+  - backend/contexts/data_security/application/ds_privacy_foundation.py

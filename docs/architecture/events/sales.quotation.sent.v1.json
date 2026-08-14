@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "sales.quotation.sent",
+  "type": "object",
+  "required": ["quotation_id", "contact_id", "title", "amount", "currency"],
+  "properties": {
+    "quotation_id": { "type": "string", "format": "uuid" },
+    "contact_id": { "type": "string", "format": "uuid" },
+    "opportunity_id": { "type": ["string", "null"], "format": "uuid" },
+    "title": { "type": "string" },
+    "amount": { "type": "string" },
+    "currency": { "type": "string", "minLength": 3, "maxLength": 3 }
+  }
+}

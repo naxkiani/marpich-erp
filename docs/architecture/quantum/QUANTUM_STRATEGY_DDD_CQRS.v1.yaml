@@ -1,0 +1,53 @@
+prompt_id: P215-R
+adr: "463"
+sor: quantum
+core_domain: enterprise_quantum_governance_intelligence_management
+bounded_context_count: 6
+aggregate_count: 7
+trust_gate: P215-K
+bounded_contexts:
+  - id: BC-01
+    name: Quantum Strategy Management Context
+    owns: QuantumStrategyAggregate
+  - id: BC-02
+    name: Quantum Governance Management Context
+    owns: QuantumGovernanceAggregate
+  - id: BC-03
+    name: Quantum Compliance Intelligence Context
+    owns: QuantumComplianceAggregate
+  - id: BC-04
+    name: Quantum Risk Intelligence Context
+    owns: QuantumRiskAggregate
+  - id: BC-05
+    name: Quantum Executive Intelligence Context
+    owns: QuantumExecutiveIntelligenceAggregate
+  - id: BC-06
+    name: Quantum Trust Management Context
+    owns: QuantumTrustAggregate
+commands:
+  - CreateQuantumStrategyCommand
+  - UpdateGovernancePolicyCommand
+  - AssessQuantumRiskCommand
+  - ValidateComplianceCommand
+  - GenerateExecutiveInsightCommand
+  - ApproveQuantumDecisionCommand
+queries:
+  - GetQuantumStrategyQuery
+  - GetRiskProfileQuery
+  - GetComplianceStatusQuery
+  - GetExecutiveDashboardQuery
+  - GetGovernanceMaturityQuery
+events:
+  - QuantumStrategyCreatedEvent
+  - GovernancePolicyChangedEvent
+  - RiskAssessmentCompletedEvent
+  - ComplianceValidatedEvent
+  - RegulatoryChangeDetectedEvent
+  - ExecutiveDecisionGeneratedEvent
+event_versioning: event_version_field
+outbox_required: true
+via_p215_k: true
+via_policy_engine: true
+via_workflow: true
+via_audit: true
+never_replace_p215_k: true

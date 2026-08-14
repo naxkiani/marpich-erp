@@ -1,0 +1,17 @@
+# BIOTECHNOLOGY_DOMAIN_BOUNDED_CONTEXTS.v1.yaml — P217-C
+apiVersion: marpich.io/v1
+kind: BiotechnologyDomainBoundedContexts
+metadata:
+  phase: P217-C
+  adr: "502"
+  fabric: meos_biotechnology_domain_architecture_framework
+spec:
+  core_domain: enterprise_bio_intelligence_domain
+  contexts:
+    - BC-01_bio_intelligence
+    - BC-02_synthetic_biology
+    - BC-03_computational_biology
+    - BC-04_digital_health_intelligence
+    - BC-05_biological_digital_twin
+    - BC-06_bio_research_intelligence
+    - BC-07_bio_governance

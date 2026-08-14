@@ -1,0 +1,39 @@
+# P210-A — Cyber strategy security controls
+version: "1.0"
+prompt_id: P210-A
+adr: "361"
+sor: cyber_security
+
+principles:
+  - zero_trust
+  - assume_breach
+  - least_privilege
+  - continuous_verification
+  - identity_first_security
+  - policy_driven_security
+  - risk_adaptive_security
+  - cloud_native_security
+  - security_by_design
+  - privacy_by_design
+  - ai_assisted_security
+  - autonomous_operations
+
+permissions:
+  - cyber_security.read
+  - cyber_security.write
+  - cyber_security.strategy.read
+  - cyber_security.strategy.write
+  - cyber_security.ai.read
+  - cyber_security.ai.infer
+
+reject_if:
+  - security_architecture_not_zero_trust
+  - soc_not_enterprise_scale
+  - ai_security_omitted
+  - threat_intelligence_isolated
+  - incident_response_manual_only
+  - security_telemetry_incomplete
+  - security_controls_not_measurable
+  - architecture_not_cloud_native
+  - sibling_cyber_bc
+  - vendor_sdk_embedded

@@ -1,0 +1,45 @@
+apiVersion: marpich.io/v1
+kind: SpaceSustainabilityDddCqrs
+metadata:
+  prompt: P218-Q
+  adr: "543"
+bounded_contexts:
+  - Space Environment Management
+  - Debris Management
+  - Orbital Governance
+  - Sustainability Analytics
+  - Planetary Protection
+  - Policy Management
+  - Compliance Management
+aggregates:
+  - SpaceEnvironmentAggregate
+  - DebrisManagementAggregate
+  - OrbitGovernanceAggregate
+  - SustainabilityAssessmentAggregate
+  - PolicyAggregate
+  - ComplianceAggregate
+commands:
+  - RegisterSpaceObjectCommand
+  - DetectDebrisCommand
+  - AssessCollisionRiskCommand
+  - AuthorizeCleanupMissionCommand
+  - ValidatePlanetaryProtectionCommand
+  - ApproveSustainableOperationCommand
+queries:
+  - GetSpaceObjectQuery
+  - GetDebrisObjectQuery
+  - GetOrbitHealthQuery
+  - GetSustainabilityIndexQuery
+  - GetPolicyStatusQuery
+  - GetComplianceLevelQuery
+events:
+  - SpaceObjectDetectedEvent
+  - DebrisIdentifiedEvent
+  - CollisionRiskDetectedEvent
+  - SustainabilityAssessmentCompletedEvent
+  - PolicyUpdatedEvent
+  - ComplianceValidatedEvent
+  - CleanupMissionScheduledEvent
+  - EnvironmentalRiskReducedEvent
+  - SustainableOperationApprovedEvent
+  - PlanetaryProtectionValidatedEvent

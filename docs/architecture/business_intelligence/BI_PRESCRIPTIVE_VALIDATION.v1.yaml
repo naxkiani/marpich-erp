@@ -1,0 +1,45 @@
+# P213-K — VALIDATION
+version: "1.0"
+prompt_id: P213-K
+adr: "415"
+sor: analytics
+capability: CAP-PLT-BI-001
+principle: Enterprise Prescriptive Analytics SHALL recommend the optimal enterprise action based upon business objectives, enterprise policies, constraints, predictions, and strategic priorities.
+fabric: meos_enterprise_decision_optimization_fabric
+reject_if:
+  - enterprise_prescriptive_analytics_platform_is_missing
+  - enterprise_optimization_platform_is_missing
+  - recommendation_engine_is_missing
+  - constraint_management_platform_is_missing
+  - objective_function_platform_is_missing
+  - ai_decision_optimization_is_missing
+  - explainable_optimization_is_missing
+  - knowledge_graph_integration_is_missing
+  - digital_twin_integration_is_missing
+  - cqrs_architecture_is_missing
+  - event_sourcing_architecture_is_missing
+  - microservice_architecture_is_missing
+  - api_first_architecture_is_missing
+  - zero_trust_security_is_missing
+  - enterprise_governance_is_missing
+  - cloud_native_deployment_is_missing
+  - prescriptive_analytics_architecture_is_incomplete
+  - sibling_business_intelligence_bc
+verdict_required: ENTERPRISE_GRADE
+definition_of_done:
+  - enterprise_decision_optimization_platform
+  - recommendation_engine
+  - optimization_engine
+  - constraint_management_platform
+  - objective_function_platform
+  - ai_decision_optimization_platform
+  - explainability_platform
+  - knowledge_graph_integration
+  - digital_twin_integration
+  - cqrs_architecture
+  - event_architecture
+  - microservice_architecture
+  - api_platform
+  - security_architecture
+  - deployment_architecture
+  - testing_architecture

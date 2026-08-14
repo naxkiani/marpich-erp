@@ -1,0 +1,14 @@
+apiVersion: marpich.io/v1
+kind: SatelliteSecurity
+metadata:
+  prompt: P218-F
+  adr: "532"
+zero_trust: true
+locks:
+  - no_module_local_llm
+  - no_module_local_telemetry_stack
+  - space_ai_via_p214z_acl_only
+  - never_opaque_unexplainable_decisions
+  - never_ungated_autonomous_mission_strategy
+  - never_ungated_satellite_command_uplink
+  - never_skip_human_mission_oversight_strategy

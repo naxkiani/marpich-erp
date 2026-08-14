@@ -1,0 +1,78 @@
+# P213-C — DDD / CQRS
+version: "1.0"
+prompt_id: P213-C
+adr: "396"
+sor: analytics
+capability: CAP-PLT-BI-001
+principle: Raw enterprise data SHALL be transformed into governed business intelligence assets through DDD boundaries.
+fabric: meos_enterprise_bi_domain_fabric
+core_domain: enterprise_business_intelligence_management
+supporting_domains:
+  - analytics_processing
+  - business_metrics_governance
+  - reporting_visualization
+  - decision_intelligence
+logical_bounded_contexts:
+  - id: BC-01
+    name: bi_core
+    aggregate_root: BIAsset
+  - id: BC-02
+    name: business_metrics
+    aggregate_root: EnterpriseMetric
+  - id: BC-03
+    name: reporting_visualization
+  - id: BC-04
+    name: analytics_intelligence
+    aggregate_root: AnalyticsModel
+  - id: BC-05
+    name: decision_intelligence
+    aggregate_root: DecisionModel
+aggregates:
+  - EnterpriseBIAssetAggregate
+  - EnterpriseMetric
+  - AnalyticsModel
+  - DecisionModel
+domain_services:
+  - MetricCalculationService
+  - InsightGenerationService
+  - DashboardCompositionService
+  - AnalyticsExecutionService
+  - DecisionRecommendationService
+commands:
+  - PublishDomainMap
+  - CreateBIAssetCommand
+  - CreateMetricCommand
+  - GenerateReportCommand
+  - ExecuteAnalyticsCommand
+  - GenerateRecommendationCommand
+queries:
+  - GetDomainMap
+  - GetDashboardQuery
+  - GetReportQuery
+  - GetMetricQuery
+  - GetInsightQuery
+  - GetDecisionQuery
+events:
+  - BIAssetCreatedEvent
+  - MetricDefinedEvent
+  - ReportGeneratedEvent
+  - DashboardPublishedEvent
+  - AnalyticsExecutedEvent
+  - InsightGeneratedEvent
+  - RecommendationGeneratedEvent
+  - DecisionCompletedEvent
+microservices:
+  - bi-core-service
+  - metric-governance-service
+  - reporting-service
+  - visualization-service
+  - analytics-service
+  - decision-intelligence-service
+data_mesh_alignment:
+  via_p212_f: true
+  role: consumer_of_data_products
+knowledge_graph_alignment:
+  via_p212_j: true
+digital_twin_alignment:
+  via_p212_l: true
+domain_rule: Only validated intelligence assets can be published.

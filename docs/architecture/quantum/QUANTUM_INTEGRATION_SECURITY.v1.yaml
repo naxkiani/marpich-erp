@@ -1,0 +1,24 @@
+prompt_id: P215-M
+adr: "458"
+sor: quantum
+zero_trust: true
+via_p215_h: true
+via_p215_k: true
+via_platform_api_gateway: true
+via_integration_platform: true
+via_event_fabric: true
+via_policy_engine: true
+module_local_gateway_forbidden: true
+module_local_broker_forbidden: true
+module_local_connector_stack_forbidden: true
+permissions:
+  read: quantum.read
+  write: quantum.write
+controls:
+  - api_registration_authz
+  - mesh_mtls
+  - traffic_policy
+  - connector_trust
+  - event_envelope_security
+  - capability_governance
+  - tenant_isolation

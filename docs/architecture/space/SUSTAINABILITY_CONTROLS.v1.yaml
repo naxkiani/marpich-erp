@@ -1,0 +1,28 @@
+apiVersion: marpich.io/v1
+kind: SpaceSustainabilityControls
+metadata:
+  prompt: P218-Q
+  adr: "543"
+controls:
+  - data_provenance
+  - policy_validation
+  - secure_governance_workflows
+  - audit_trails
+  - transparent_decision_records
+  - planetary_protection_gates
+  - environmental_impact_assessment
+  - human_override
+domains:
+  - environmental_data_security
+  - governance_data_security
+  - policy_integrity
+  - operational_trust
+  - ai_governance
+laws:
+  never_ungated_debris_cleanup_mission: true
+  never_skip_planetary_protection_compliance: true
+  never_skip_environmental_impact_assessment: true
+  never_opaque_unexplainable_sustainability_decisions: true
+  never_replace_p218_p_security: true
+  space_ai_via_p214z_acl_only: true
+  no_module_local_llm: true

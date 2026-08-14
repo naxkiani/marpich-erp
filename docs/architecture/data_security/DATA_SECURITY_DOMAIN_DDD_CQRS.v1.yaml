@@ -1,0 +1,59 @@
+# P211-C — DDD / CQRS
+version: "1.0"
+prompt_id: P211-C
+adr: "378"
+sor: data_security
+bounded_context: data_security
+core_domain: enterprise_data_security_intelligence
+logical_subdomains:
+  - data_discovery
+  - data_classification
+  - data_protection
+  - data_privacy
+  - data_access_governance
+  - data_security_risk
+  - data_lineage_intelligence
+  - data_loss_prevention
+  - data_compliance
+  - ai_data_security
+  - data_intelligence_graph
+  - data_digital_twin
+
+aggregates:
+  - DsDomainsLooselyCoupledRoot
+  - DsOwnershipClearRoot
+  - DsPrivacyIntegratedRoot
+  - DsEventsPresentRoot
+  - DsAggregatesDefinedRoot
+  - DsIntegrationBoundariesClearRoot
+  - DsDomainMapRoot
+  - DsContextMapRoot
+
+commands:
+  - PublishDomainMap
+  - RegisterLogicalSubdomain
+  - BindAggregateOwnership
+  - IntegratePrivacyWithSecurity
+  - DeclareIntegrationBoundary
+  - PublishEventCatalogue
+
+queries:
+  - GetDomainMap
+  - GetBoundedContexts
+  - GetAggregates
+  - GetEntities
+  - GetEventCatalogue
+  - GetMicroserviceBoundaries
+  - GetDomainReadiness
+
+events:
+  - DomainMapPublished
+  - SubdomainRegistered
+  - AggregateOwnershipBound
+  - PrivacySecurityIntegrated
+  - IntegrationBoundaryDeclared
+  - EventCataloguePublished
+  - RelationshipCreated
+  - KnowledgeUpdated
+  - TwinUpdated
+  - SimulationCompleted

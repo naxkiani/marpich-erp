@@ -1,0 +1,31 @@
+# ROBOTICS_STRATEGY_VALIDATION.v1.yaml — P216-B
+apiVersion: marpich.io/v1
+kind: RoboticsStrategyValidationCatalog
+metadata:
+  phase: P216-B
+  adr: "474"
+spec:
+  quality_gates:
+    - Robotics strategic architecture defined
+    - Capability model defined
+    - Operating framework defined
+    - Service model defined
+    - Organizational model defined
+    - Governance model defined
+    - Security model defined
+    - Data architecture defined
+    - Integration architecture defined
+    - Scalability model defined
+    - Maturity model defined
+    - CQRS and events defined
+  definition_of_done:
+    - Enterprise Robotics Blueprint exists
+    - Scalable Robotics Operating Model exists
+    - Capability Driven Architecture exists
+    - MEOS Integration Model exists
+    - Autonomous Operations Foundation exists
+    - Security Foundation exists
+    - Governance Foundation exists
+    - Future Robotics Evolution Path exists
+    - Foundation for P216-C exists
+  foundation_validator: validate_rb_strategy_foundation

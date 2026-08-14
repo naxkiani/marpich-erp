@@ -1,0 +1,29 @@
+# P213-F — SECURITY
+version: "1.0"
+prompt_id: P213-F
+adr: "410"
+sor: analytics
+capability: CAP-PLT-BI-001
+permission: analytics.lakehouse.read
+zero_trust: true
+tenant_isolation: true
+delegates:
+  identity: P207
+  authorization: P208
+  cryptographic_trust: P209
+  data_security: P211
+  data_governance: P212
+  data_mesh: P212-F
+  marketplace: P212-G
+  knowledge_graph: P212-J
+  ai_readiness: P212-K
+  digital_twin: P212-L
+  warehouse: P213-E
+  enterprise_ai: ai
+  api_gateway: gateway
+data_access_control: true
+encryption: true
+tokenization: true
+audit_logging: true
+privacy_protection: true
+sibling_bc_forbidden: true

@@ -1,0 +1,17 @@
+apiVersion: marpich.io/v1
+kind: SpaceStrategyArchitecture
+metadata:
+  prompt: P218-B
+  adr: "528"
+  fabric: meos_space_intelligence_strategic_architecture_framework
+layers:
+  - id: L01
+    name: Business Strategy Layer
+  - id: L02
+    name: Business Capability Layer
+  - id: L03
+    name: Business Process Layer
+  - id: L04
+    name: Application Architecture Layer
+  - id: L05
+    name: Technology Layer

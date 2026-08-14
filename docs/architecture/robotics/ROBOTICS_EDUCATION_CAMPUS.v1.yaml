@@ -1,0 +1,33 @@
+# ROBOTICS_EDUCATION_CAMPUS.v1.yaml — P216-Q
+apiVersion: marpich.io/v1
+kind: RoboticsEducationCampusCatalog
+metadata:
+  phase: P216-Q
+  adr: "489"
+  fabric: meos_education_intelligence_fabric
+spec:
+  education_robotics:
+    platform: meos_education_robotics_platform
+    components:
+      - education_robot_registry
+      - teaching_assistant_robot_manager
+      - classroom_robot_controller
+      - learning_interaction_engine
+      - robot_knowledge_assistant
+      - campus_robot_operations_console
+    supported_robotics:
+      - teaching_assistant_robots
+      - laboratory_robots
+      - library_assistance_robots
+      - campus_service_robots
+      - accessibility_support_robots
+      - research_robots
+  ai_learning:
+    engine: meos_learning_intelligence_engine
+    via_p214_z: true
+  smart_campus:
+    platform: meos_autonomous_campus_intelligence_platform
+  education_digital_twin:
+    platform: meos_education_digital_twin_platform
+  learning_knowledge_graph:
+    graph: meos_learning_knowledge_graph

@@ -1,0 +1,51 @@
+prompt_id: P215-M
+adr: "458"
+sor: quantum
+capability: CAP-PLT-QC-001
+api_prefix: /api/v1/quantum/integration
+fabric: meos_quantum_integration_intelligence_fabric
+principle: >-
+  MEOS Quantum Integration Platform SHALL provide the intelligent
+  interoperability layer connecting quantum, classical and autonomous
+  enterprise capabilities.
+quantum_integration_platform_present_required: true
+quantum_api_gateway_present_required: true
+quantum_service_mesh_present_required: true
+hybrid_intelligence_bridge_present_required: true
+event_integration_backbone_present_required: true
+capability_federation_present_required: true
+knowledge_graph_integration_present_required: true
+digital_twin_integration_present_required: true
+cqrs_architecture_present_required: true
+event_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_architecture_present_required: true
+cloud_native_deployment_present_required: true
+via_platform_api_gateway: true
+via_integration_platform: true
+via_event_fabric: true
+module_local_gateway_forbidden: true
+module_local_broker_forbidden: true
+module_local_connector_stack_forbidden: true
+builds_on_p215_a: true
+builds_on_p215_d: true
+builds_on_p215_e: true
+builds_on_p215_f: true
+builds_on_p215_g: true
+builds_on_p215_h: true
+builds_on_p215_i: true
+builds_on_p215_j: true
+builds_on_p215_l: true
+governed_by_p215_k: true
+integrates_p214_z: true
+api_styles:
+  - REST
+  - GraphQL
+  - gRPC
+  - quantum_runtime
+  - ai_service
+forbidden_siblings:
+  - quantum_api_gateway_platform
+  - quantum_service_mesh_platform
+  - quantum_hybrid_integration_platform
+  - quantum_capability_federation_platform

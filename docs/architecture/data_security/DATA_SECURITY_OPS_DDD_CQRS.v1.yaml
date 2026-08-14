@@ -1,0 +1,39 @@
+# P211-N — CQRS / events DDD
+version: "1.0"
+prompt_id: P211-N
+adr: "389"
+sor: data_security
+domain: Data Security Distributed Platform Domain
+bounded_contexts:
+  - command_processing
+  - query_projections
+  - event_sourcing
+  - api_governance
+  - microservice_runtime
+  - service_mesh_integration
+  - stream_intelligence
+command_families:
+  - discovery
+  - classification
+  - dlp
+  - access
+  - protection
+  - ai_security
+query_families:
+  - asset_profile
+  - classification_status
+  - lineage
+  - access_graph
+  - protection_status
+  - risk_score
+  - compliance_state
+  - privacy_impact
+  - security_intelligence
+event_families:
+  - discovery
+  - classification
+  - dlp
+  - access
+  - protection
+  - ai_security
+  - digital_twin

@@ -1,0 +1,27 @@
+# ROBOTICS_INDUSTRIAL_SECURITY.v1.yaml — P216-F
+apiVersion: marpich.io/v1
+kind: RoboticsIndustrialSecurityCatalog
+metadata:
+  phase: P216-F
+  adr: "478"
+spec:
+  framework: meos_industrial_zero_trust_security_framework
+  domains:
+    - ot_identity
+    - industrial_pki
+    - machine_authentication
+    - plc_security
+    - scada_security
+    - industrial_api_security
+    - edge_security
+    - factory_segmentation
+    - threat_detection
+    - safety_protection
+  align_with: [IEC-62443, NIST-CSF, Zero-Trust]
+  hard_laws:
+    - ot_via_integration_platform_only
+    - never_direct_ot_protocol_bypass
+    - physical_ai_via_p214z_acl_only
+    - no_module_local_llm
+    - never_replace_p216_e_physical_ai
+    - ungated_physical_autonomy_forbidden

@@ -1,0 +1,38 @@
+# P214-P — DDD / CQRS
+version: "1.0"
+prompt_id: P214-P
+adr: "436"
+sor: ai
+core_domain: enterprise_ai_trust_governance_management
+aggregate: EnterpriseAITrustGovernanceAggregate
+bounded_contexts:
+  - BC-01_ai_policy_governance
+  - BC-02_ai_compliance_intelligence
+  - BC-03_ai_audit
+  - BC-04_ai_risk_management
+  - BC-05_ai_trust_management
+  - BC-06_ai_transparency
+  - BC-07_ai_certification
+commands:
+  - CreateAIPolicyCommand
+  - ValidateComplianceCommand
+  - ExecuteAIAuditCommand
+  - AssessAIRiskCommand
+  - GenerateTrustScoreCommand
+  - ApproveAICertificationCommand
+queries:
+  - GetPolicyQuery
+  - GetComplianceStatusQuery
+  - GetAuditReportQuery
+  - GetRiskAssessmentQuery
+  - GetTrustScoreQuery
+  - GetCertificationQuery
+events:
+  - AIPolicyCreatedEvent
+  - ComplianceValidatedEvent
+  - AuditCompletedEvent
+  - RiskDetectedEvent
+  - TrustScoreCalculatedEvent
+  - ViolationDetectedEvent
+  - CertificationApprovedEvent
+  - GovernanceViolationDetectedEvent

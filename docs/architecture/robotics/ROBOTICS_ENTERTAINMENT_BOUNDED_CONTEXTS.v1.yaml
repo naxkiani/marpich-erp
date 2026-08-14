@@ -1,0 +1,24 @@
+# ROBOTICS_ENTERTAINMENT_BOUNDED_CONTEXTS.v1.yaml — P216-X
+apiVersion: marpich.io/v1
+kind: RoboticsEntertainmentBoundedContexts
+metadata:
+  phase: P216-X
+  adr: "496"
+spec:
+  contexts:
+    - id: BC-01
+      name: Creative Intelligence Context
+    - id: BC-02
+      name: Entertainment Robotics Context
+    - id: BC-03
+      name: Autonomous Media Production Context
+    - id: BC-04
+      name: AI Creator Context
+    - id: BC-05
+      name: Digital Experience Context
+    - id: BC-06
+      name: Immersive Reality Context
+    - id: BC-07
+      name: Creative Digital Twin Context
+    - id: BC-08
+      name: Creative Governance Context

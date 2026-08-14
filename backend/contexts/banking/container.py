@@ -38,6 +38,22 @@ from contexts.banking.infrastructure.persistence.customer_account_memory_store i
     InMemoryCustomerRepository,
     InMemoryKycRepository,
 )
+from contexts.banking.infrastructure.persistence.postgres_store import (
+    PostgresAccountProductRepository,
+    PostgresAccountRepository,
+    PostgresCustomerRepository,
+    PostgresDepositAccrualRepository,
+    PostgresDepositProfileRepository,
+    PostgresDepositTransactionRepository,
+    PostgresLoanCollateralRepository,
+    PostgresLoanCreditRiskRepository,
+    PostgresLoanGuarantorRepository,
+    PostgresLoanInstallmentRepository,
+    PostgresLoanProfileRepository,
+    PostgresLoanTransactionRepository,
+    PostgresPaymentTransferRepository,
+    PostgresProfitRuleRepository,
+)
 from contexts.banking.infrastructure.persistence.deposit_management_memory_store import (
     InMemoryDepositAccrualRepository,
     InMemoryDepositAuditRepository,
@@ -119,9 +135,22 @@ from contexts.banking.infrastructure.persistence.loan_management_memory_store im
 from contexts.financial_kernel.container import get_financial_kernel
 from contexts.policy.container import get_policy_evaluator
 from shared.infrastructure.messaging.event_bus import InProcessEventBus
+from shared.infrastructure.settings import use_postgres
 
-_customer_repo = InMemoryCustomerRepository()
-_account_repo = InMemoryAccountRepository()
+_customer_repo = None
+_account_repo = None
+_product_repo = None
+_transfer_repo = None
+_deposit_repo = None
+_deposit_tx_repo = None
+_deposit_accrual_repo = None
+_profit_rule_repo = None
+_loan_repo = None
+_loan_tx_repo = None
+_loan_installment_repo = None
+_loan_collateral_repo = None
+_loan_guarantor_repo = None
+_loan_credit_risk_repo = None
 
 _service: BankingCustomerAccountApplicationService | None = None
 _kyc_service: BankingKycPlatformApplicationService | None = None
@@ -143,16 +172,62 @@ _settlement_registered = False
 _branch_registered = False
 _security_registered = False
 _analytics_registered = False
-_transfer_repo = InMemoryPaymentTransferRepository()
+
+
+def _ensure_money_path_repos() -> None:
+    global _customer_repo, _account_repo, _product_repo, _transfer_repo
+    if _customer_repo is not None:
+        return
+    if use_postgres():
+        _customer_repo = PostgresCustomerRepository()
+        _account_repo = PostgresAccountRepository()
+        _product_repo = PostgresAccountProductRepository()
+        _transfer_repo = PostgresPaymentTransferRepository()
+    else:
+        _customer_repo = InMemoryCustomerRepository()
+        _account_repo = InMemoryAccountRepository()
+        _product_repo = InMemoryAccountProductRepository()
+        _transfer_repo = InMemoryPaymentTransferRepository()
+
+
+def _ensure_deposit_loan_repos() -> None:
+    global _deposit_repo, _deposit_tx_repo, _deposit_accrual_repo, _profit_rule_repo
+    global _loan_repo, _loan_tx_repo, _loan_installment_repo
+    global _loan_collateral_repo, _loan_guarantor_repo, _loan_credit_risk_repo
+    if _deposit_repo is not None:
+        return
+    if use_postgres():
+        _deposit_repo = PostgresDepositProfileRepository()
+        _deposit_tx_repo = PostgresDepositTransactionRepository()
+        _deposit_accrual_repo = PostgresDepositAccrualRepository()
+        _profit_rule_repo = PostgresProfitRuleRepository()
+        _loan_repo = PostgresLoanProfileRepository()
+        _loan_tx_repo = PostgresLoanTransactionRepository()
+        _loan_installment_repo = PostgresLoanInstallmentRepository()
+        _loan_collateral_repo = PostgresLoanCollateralRepository()
+        _loan_guarantor_repo = PostgresLoanGuarantorRepository()
+        _loan_credit_risk_repo = PostgresLoanCreditRiskRepository()
+    else:
+        _deposit_repo = InMemoryDepositProfileRepository()
+        _deposit_tx_repo = InMemoryDepositTransactionRepository()
+        _deposit_accrual_repo = InMemoryDepositAccrualRepository()
+        _profit_rule_repo = InMemoryProfitRuleRepository()
+        _loan_repo = InMemoryLoanProfileRepository()
+        _loan_tx_repo = InMemoryLoanTransactionRepository()
+        _loan_installment_repo = InMemoryLoanInstallmentRepository()
+        _loan_collateral_repo = InMemoryLoanCollateralRepository()
+        _loan_guarantor_repo = InMemoryLoanGuarantorRepository()
+        _loan_credit_risk_repo = InMemoryLoanCreditRiskRepository()
 
 
 def get_banking_customer_account_service() -> BankingCustomerAccountApplicationService:
     global _service, _registered
+    _ensure_money_path_repos()
     if _service is None:
         _service = BankingCustomerAccountApplicationService(
             customers=_customer_repo,
             kyc_records=InMemoryKycRepository(),
-            products=InMemoryAccountProductRepository(),
+            products=_product_repo,
             accounts=_account_repo,
             audits=InMemoryAccountAuditRepository(),
             kernel=get_financial_kernel(),
@@ -196,15 +271,16 @@ def get_banking_deposit_management_service() -> BankingDepositManagementApplicat
     global _deposit_service, _deposit_registered
     if _deposit_service is None:
         get_banking_customer_account_service()
+        _ensure_deposit_loan_repos()
         _deposit_service = BankingDepositManagementApplicationService(
-            deposits=InMemoryDepositProfileRepository(),
-            transactions=InMemoryDepositTransactionRepository(),
-            accruals=InMemoryDepositAccrualRepository(),
+            deposits=_deposit_repo,
+            transactions=_deposit_tx_repo,
+            accruals=_deposit_accrual_repo,
             certificates=InMemoryDepositCertificateRepository(),
             statements=InMemoryDepositStatementRepository(),
             workflows=InMemoryDepositWorkflowRepository(),
             audits=InMemoryDepositAuditRepository(),
-            profit_rules=InMemoryProfitRuleRepository(),
+            profit_rules=_profit_rule_repo,
             accounts=_account_repo,
             kernel=get_financial_kernel(),
             policy=get_policy_evaluator(),
@@ -222,13 +298,14 @@ def get_banking_loan_management_service() -> BankingLoanManagementApplicationSer
     global _loan_service, _loan_registered
     if _loan_service is None:
         get_banking_customer_account_service()
+        _ensure_deposit_loan_repos()
         _loan_service = BankingLoanManagementApplicationService(
-            loans=InMemoryLoanProfileRepository(),
-            collaterals=InMemoryLoanCollateralRepository(),
-            guarantors=InMemoryLoanGuarantorRepository(),
-            installments=InMemoryLoanInstallmentRepository(),
-            transactions=InMemoryLoanTransactionRepository(),
-            risk_analyses=InMemoryLoanCreditRiskRepository(),
+            loans=_loan_repo,
+            collaterals=_loan_collateral_repo,
+            guarantors=_loan_guarantor_repo,
+            installments=_loan_installment_repo,
+            transactions=_loan_tx_repo,
+            risk_analyses=_loan_credit_risk_repo,
             workflows=InMemoryLoanWorkflowRepository(),
             audits=InMemoryLoanAuditRepository(),
             accounts=_account_repo,
@@ -364,17 +441,19 @@ def get_banking_security_platform_service() -> BankingSecurityPlatformApplicatio
 def get_banking_analytics_platform_service() -> BankingAnalyticsPlatformApplicationService:
     global _analytics_service, _analytics_registered
     if _analytics_service is None:
+        get_banking_customer_account_service()
+        _ensure_deposit_loan_repos()
         _analytics_service = BankingAnalyticsPlatformApplicationService(
             jobs=InMemoryBankingAnalyticsJobRepository(),
             customers=_customer_repo,
             accounts=_account_repo,
-            deposits=InMemoryDepositProfileRepository(),
-            deposit_transactions=InMemoryDepositTransactionRepository(),
-            interest_accruals=InMemoryDepositAccrualRepository(),
-            loans=InMemoryLoanProfileRepository(),
-            installments=InMemoryLoanInstallmentRepository(),
-            loan_transactions=InMemoryLoanTransactionRepository(),
-            credit_risks=InMemoryLoanCreditRiskRepository(),
+            deposits=_deposit_repo,
+            deposit_transactions=_deposit_tx_repo,
+            interest_accruals=_deposit_accrual_repo,
+            loans=_loan_repo,
+            installments=_loan_installment_repo,
+            loan_transactions=_loan_tx_repo,
+            credit_risks=_loan_credit_risk_repo,
             transfers=_transfer_repo,
             fraud_checks=InMemoryPaymentFraudRepository(),
             branch_offices=InMemoryBranchOfficeRepository(),
@@ -394,6 +473,10 @@ def get_banking_analytics_platform_service() -> BankingAnalyticsPlatformApplicat
 def reset_banking_customer_account_service() -> None:
     global _service, _kyc_service, _deposit_service, _loan_service, _interest_service, _payment_service, _settlement_service, _branch_service, _security_service, _analytics_service
     global _registered, _kyc_registered, _deposit_registered, _loan_registered, _interest_registered, _payment_registered, _settlement_registered, _branch_registered, _security_registered, _analytics_registered
+    global _customer_repo, _account_repo, _product_repo, _transfer_repo
+    global _deposit_repo, _deposit_tx_repo, _deposit_accrual_repo, _profit_rule_repo
+    global _loan_repo, _loan_tx_repo, _loan_installment_repo
+    global _loan_collateral_repo, _loan_guarantor_repo, _loan_credit_risk_repo
     _service = None
     _kyc_service = None
     _deposit_service = None
@@ -414,11 +497,32 @@ def reset_banking_customer_account_service() -> None:
     _branch_registered = False
     _security_registered = False
     _analytics_registered = False
+    _customer_repo = None
+    _account_repo = None
+    _product_repo = None
+    _transfer_repo = None
+    _deposit_repo = None
+    _deposit_tx_repo = None
+    _deposit_accrual_repo = None
+    _profit_rule_repo = None
+    _loan_repo = None
+    _loan_tx_repo = None
+    _loan_installment_repo = None
+    _loan_collateral_repo = None
+    _loan_guarantor_repo = None
+    _loan_credit_risk_repo = None
     InMemoryCustomerRepository.reset()
     InMemoryKycRepository.reset()
     InMemoryAccountProductRepository.reset()
     InMemoryAccountRepository.reset()
     InMemoryAccountAuditRepository.reset()
+    PostgresAccountRepository.reset_counters()
+    PostgresPaymentTransferRepository.reset_counters()
+    PostgresDepositTransactionRepository.reset_counters()
+    PostgresDepositAccrualRepository.reset_counters()
+    PostgresLoanProfileRepository.reset_counters()
+    PostgresLoanTransactionRepository.reset_counters()
+    InMemoryPaymentTransferRepository.reset()
     InMemoryKycCaseRepository.reset()
     InMemoryKycDocumentRepository.reset()
     InMemoryKycAddressRepository.reset()

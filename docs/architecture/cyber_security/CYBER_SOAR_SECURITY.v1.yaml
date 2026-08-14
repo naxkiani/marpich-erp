@@ -1,0 +1,23 @@
+# P210-F — SOAR security controls
+version: "1.0"
+prompt_id: P210-F
+adr: "365"
+sor: cyber_security
+
+permissions:
+  - cyber_security.read
+  - cyber_security.write
+  - cyber_security.soar.read
+  - cyber_security.soar.write
+  - cyber_security.ai.read
+  - cyber_security.ai.infer
+
+reject_if:
+  - playbooks_cannot_be_versioned
+  - automation_not_auditable
+  - human_approval_unavailable
+  - ai_recommendations_not_explainable
+  - rollback_capability_absent
+  - connectors_tightly_coupled
+  - incident_evidence_cannot_be_preserved
+  - sibling_soar_bc

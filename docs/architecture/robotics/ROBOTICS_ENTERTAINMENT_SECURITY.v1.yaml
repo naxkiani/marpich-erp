@@ -1,0 +1,31 @@
+# ROBOTICS_ENTERTAINMENT_SECURITY.v1.yaml — P216-X
+apiVersion: marpich.io/v1
+kind: RoboticsEntertainmentSecurity
+metadata:
+  phase: P216-X
+  adr: "496"
+spec:
+  framework: meos_creative_trust_framework
+  domains:
+    - creator_identity
+    - creative_assets
+    - intellectual_property
+    - ai_models
+    - digital_rights
+    - audience_privacy
+  controls:
+    - encryption
+    - rights_management
+    - content_verification
+    - ai_transparency
+    - ownership_tracking
+    - audit_trails
+  hard_locks:
+    - creative_rights_governance
+    - human_ai_creative_collaboration
+    - explainable_ai
+    - audience_privacy
+    - never_replace_identity_platform
+    - no_module_local_llm
+    - physical_ai_via_p214z_acl_only
+    - ungated_physical_autonomy_forbidden

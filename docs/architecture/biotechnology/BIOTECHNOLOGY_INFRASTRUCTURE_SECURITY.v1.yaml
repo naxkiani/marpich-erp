@@ -1,0 +1,18 @@
+# BIOTECHNOLOGY_INFRASTRUCTURE_SECURITY.v1.yaml — P217-D
+apiVersion: marpich.io/v1
+kind: BiotechnologyInfrastructureSecurity
+metadata:
+  phase: P217-D
+  adr: "503"
+spec:
+  framework: meos_bio_infrastructure_zero_trust_security
+  hard_locks:
+    - genomic_privacy_strategy
+    - ethical_bioengineering_strategy
+    - scientific_integrity_strategy
+    - opaque_bio_safety_strategy_forbidden
+    - module_local_observability_store_forbidden
+    - never_direct_lab_hardware_bypass_of_integration_platform
+    - never_replace_p217_c_domain
+    - never_replace_hospital_emr
+    - never_replace_laboratory_lims

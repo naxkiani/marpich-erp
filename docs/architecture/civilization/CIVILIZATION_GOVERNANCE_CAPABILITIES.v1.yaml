@@ -1,0 +1,42 @@
+# CIVILIZATION_GOVERNANCE_CAPABILITIES.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationGovernanceCapabilities
+metadata:
+  prompt_id: P219-K
+  adr: "564"
+  sor: civilization
+  capability: CAP-PLT-CIV-001
+  fabric: meos_civilization_os_civilization_governance_intelligence_framework
+primary_capability: >
+  Create a civilization-scale governance intelligence platform capable of
+  designing, validating, simulating and continuously improving policies,
+  strategic decisions and governance processes across planetary civilization
+  while maintaining transparency, accountability and trust.
+strategic_objectives:
+  - universal_governance_platform
+  - intelligent_policy_management
+  - explainable_decision_intelligence
+  - strategic_governance_improvement
+  - adaptive_regulation
+  - ethical_ai_governance
+  - institutional_trust
+  - autonomous_governance_assistance
+gates:
+  foundation: P219
+  mission: P219-A
+  strategy: P219-B
+  domain: P219-C
+  planetary: P219-D
+  ai_os: P219-E
+  simulation: P219-F
+  resources: P219-G
+  economy: P219-H
+  knowledge: P219-I
+  human: P219-J
+  intelligence_nexus: P218-Z
+  space: P218
+  bio: P217-Z
+  robotics: P216-Z
+  quantum: P215-Z
+  ai: P214-Z
+foundation_for: P219-L

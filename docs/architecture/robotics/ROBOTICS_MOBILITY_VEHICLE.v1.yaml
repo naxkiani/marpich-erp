@@ -1,0 +1,29 @@
+# ROBOTICS_MOBILITY_VEHICLE.v1.yaml — P216-H
+apiVersion: marpich.io/v1
+kind: RoboticsMobilityVehicleCatalog
+metadata:
+  phase: P216-H
+  adr: "480"
+  fabric: meos_autonomous_mobility_fabric
+  capability: CAP-PLT-RB-001
+spec:
+  mission: "Provide a secure, AI-native, autonomous, connected mobility ecosystem that coordinates vehicles, robots, drones, operators and enterprise transportation."
+  vision: "Every enterprise mobility asset shall become an intelligent, autonomous, self-learning participant within the MEOS cyber-physical ecosystem."
+  core_domain: enterprise_autonomous_mobility_intelligence
+  aggregate: MobilityAggregate
+  connected_vehicle_components:
+    - vehicle_registry
+    - vehicle_identity_manager
+    - telematics_gateway
+    - v2x_gateway
+    - ota_update_platform
+    - vehicle_edge_runtime
+    - remote_diagnostics
+    - fleet_connectivity_manager
+  drone_types:
+    - inspection_drones
+    - delivery_drones
+    - survey_drones
+    - security_drones
+    - industrial_drones
+    - emergency_response_drones

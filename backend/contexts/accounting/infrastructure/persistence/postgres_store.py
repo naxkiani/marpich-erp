@@ -1,15 +1,17 @@
-"""PostgreSQL billing repository — Accounting."""
+"""PostgreSQL repositories — Accounting (hospital billing + AR invoices)."""
 from __future__ import annotations
 
+from decimal import Decimal
 from uuid import UUID
 
 from sqlalchemy import select
 
 from contexts.accounting.domain.aggregates.billing_encounter import BillingEncounter, BillingStatus
-from contexts.accounting.domain.ports.repositories import IBillingRepository
+from contexts.accounting.domain.aggregates.invoice import Invoice, InvoiceStatus
+from contexts.accounting.domain.ports.repositories import IBillingRepository, IInvoiceRepository
 from shared.domain.value_objects.unique_id import UniqueId
 from shared.infrastructure.database.engine import session_scope
-from shared.infrastructure.database.orm import BillingEncounterRow
+from shared.infrastructure.database.orm import AccountingInvoiceRow, BillingEncounterRow
 
 
 class PostgresBillingRepository(IBillingRepository):
@@ -65,6 +67,65 @@ class PostgresBillingRepository(IBillingRepository):
         return [_billing_from_row(r) for r in rows]
 
 
+class PostgresInvoiceRepository(IInvoiceRepository):
+    async def save(self, invoice: Invoice) -> None:
+        async with session_scope(tenant_id=invoice.tenant_id) as session:
+            row = await session.get(AccountingInvoiceRow, UUID(str(invoice.id)))
+            if row is None:
+                session.add(
+                    AccountingInvoiceRow(
+                        id=UUID(str(invoice.id)),
+                        tenant_id=invoice.tenant_id,
+                        sales_order_id=UUID(str(invoice.sales_order_id)),
+                        contact_id=UUID(str(invoice.contact_id)),
+                        title=invoice.title,
+                        amount=invoice.amount,
+                        currency=invoice.currency,
+                        status=invoice.status.value,
+                        line_items=list(invoice.line_items),
+                        correlation_id=invoice.correlation_id,
+                        created_at=invoice.created_at,
+                        updated_at=invoice.updated_at,
+                        issued_at=invoice.issued_at,
+                        paid_at=invoice.paid_at,
+                    )
+                )
+            else:
+                row.status = invoice.status.value
+                row.line_items = list(invoice.line_items)
+                row.amount = invoice.amount
+                row.updated_at = invoice.updated_at
+                row.issued_at = invoice.issued_at
+                row.paid_at = invoice.paid_at
+                row.correlation_id = invoice.correlation_id
+
+    async def find_by_id(self, tenant_id: str, invoice_id: UniqueId) -> Invoice | None:
+        async with session_scope(tenant_id=tenant_id) as session:
+            row = await session.get(AccountingInvoiceRow, UUID(str(invoice_id)))
+            return _invoice_from_row(row) if row and row.tenant_id == tenant_id else None
+
+    async def find_by_sales_order(
+        self, tenant_id: str, sales_order_id: UniqueId
+    ) -> Invoice | None:
+        async with session_scope(tenant_id=tenant_id) as session:
+            row = await session.scalar(
+                select(AccountingInvoiceRow).where(
+                    AccountingInvoiceRow.tenant_id == tenant_id,
+                    AccountingInvoiceRow.sales_order_id == UUID(str(sales_order_id)),
+                )
+            )
+            return _invoice_from_row(row) if row else None
+
+    async def list_invoices(self, tenant_id: str) -> list[Invoice]:
+        async with session_scope(tenant_id=tenant_id) as session:
+            rows = (
+                await session.scalars(
+                    select(AccountingInvoiceRow).where(AccountingInvoiceRow.tenant_id == tenant_id)
+                )
+            ).all()
+        return [_invoice_from_row(r) for r in rows]
+
+
 def _billing_from_row(row: BillingEncounterRow) -> BillingEncounter:
     return BillingEncounter(
         id=UniqueId.from_string(str(row.id)),
@@ -78,4 +139,23 @@ def _billing_from_row(row: BillingEncounterRow) -> BillingEncounter:
         status=BillingStatus(row.status),
         correlation_id=row.correlation_id,
         created_at=row.created_at,
+    )
+
+
+def _invoice_from_row(row: AccountingInvoiceRow) -> Invoice:
+    return Invoice(
+        id=UniqueId.from_string(str(row.id)),
+        tenant_id=row.tenant_id,
+        sales_order_id=UniqueId.from_string(str(row.sales_order_id)),
+        contact_id=UniqueId.from_string(str(row.contact_id)),
+        title=row.title,
+        amount=Decimal(str(row.amount)),
+        currency=row.currency,
+        status=InvoiceStatus(row.status),
+        line_items=list(row.line_items or []),
+        correlation_id=row.correlation_id or "",
+        created_at=row.created_at,
+        updated_at=row.updated_at,
+        issued_at=row.issued_at,
+        paid_at=row.paid_at,
     )

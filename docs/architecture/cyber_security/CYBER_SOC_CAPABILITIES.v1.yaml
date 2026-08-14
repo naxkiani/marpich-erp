@@ -1,0 +1,32 @@
+# P210-D — SOC capabilities
+version: "1.0"
+prompt_id: P210-D
+adr: "364"
+sor: cyber_security
+api_prefix: /api/v1/cyber-security/soc
+builds_on:
+  - P210-A
+  - P210-B
+  - P210-C
+  - ADR-361
+  - ADR-362
+  - ADR-363
+
+soc_24x7_required: true
+alert_correlation_required: true
+ai_assistance_required: true
+incident_response_manual_only_forbidden: true
+threat_hunting_required: true
+metrics_incomplete_forbidden: true
+knowledge_graph_integration_required: true
+sibling_soc_bc_forbidden: true
+ir_lifecycle_duplication_forbidden: true
+
+via_security_incident: true
+via_integration_platform: true
+via_workflow: true
+via_authorization: true
+via_audit_platform: true
+via_ai_platform: true
+via_knowledge_graph: true
+via_digital_twin: true

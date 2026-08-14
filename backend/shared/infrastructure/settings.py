@@ -1,12 +1,32 @@
 """Application settings."""
-from pydantic import AliasChoices, Field
+from __future__ import annotations
+
+import logging
+import warnings
+
+from pydantic import AliasChoices, Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+logger = logging.getLogger(__name__)
+
+_DEFAULT_JWT_SECRET = "change-me-in-production-use-256-bit-key"
 
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore", populate_by_name=True)
 
-    jwt_secret: str = "change-me-in-production-use-256-bit-key"
+    # development | staging | production — drives P0 production hard gates
+    marpich_environment: str = Field(
+        default="development",
+        validation_alias=AliasChoices(
+            "marpich_environment",
+            "MARPICH_ENVIRONMENT",
+            "APP_ENV",
+            "ENVIRONMENT",
+        ),
+    )
+
+    jwt_secret: str = _DEFAULT_JWT_SECRET
     jwt_access_ttl: int = 900
     jwt_refresh_ttl: int = 604800
     jwt_issuer: str = "marpich-identity"
@@ -129,6 +149,40 @@ class Settings(BaseSettings):
         ),
     )
 
+    @model_validator(mode="after")
+    def _enforce_production_hard_gates(self) -> Settings:
+        env = (self.marpich_environment or "development").strip().lower()
+        if env != "production":
+            return self
+
+        if self.jwt_secret == _DEFAULT_JWT_SECRET or len(self.jwt_secret) < 32:
+            raise ValueError(
+                "P0: JWT_SECRET must be set to a strong secret when MARPICH_ENVIRONMENT=production"
+            )
+        if self.persistence_backend.lower() != "postgres":
+            raise ValueError(
+                "P0: PERSISTENCE_BACKEND=postgres is required when MARPICH_ENVIRONMENT=production"
+            )
+        if self.event_bus_mode.lower() == "direct":
+            # Force durable outbox for production — never silent direct bus
+            object.__setattr__(self, "event_bus_mode", "outbox")
+            logger.warning(
+                "P0: event_bus_mode forced to 'outbox' for production (was 'direct')"
+            )
+        if not self.otel_enabled:
+            warnings.warn(
+                "P0: OTEL_ENABLED=false in production — enable OpenTelemetry for observability",
+                UserWarning,
+                stacklevel=2,
+            )
+        if not self.document_signing_secret:
+            warnings.warn(
+                "P0: DOCUMENT_SIGNING_SECRET empty in production — Document Exchange QR MAC weak",
+                UserWarning,
+                stacklevel=2,
+            )
+        return self
+
 
 settings = Settings()
 
@@ -139,3 +193,7 @@ def use_postgres() -> bool:
 
 def use_rls() -> bool:
     return use_postgres() and settings.marpich_rls_enabled
+
+
+def is_production() -> bool:
+    return (settings.marpich_environment or "").strip().lower() == "production"

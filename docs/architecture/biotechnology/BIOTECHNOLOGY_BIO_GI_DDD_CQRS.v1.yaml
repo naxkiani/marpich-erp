@@ -1,0 +1,17 @@
+# BIOTECHNOLOGY_BIO_GI_DDD_CQRS.v1.yaml — P217-V
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioGiDddCqrs
+metadata:
+  phase: P217-V
+  adr: "521"
+spec:
+  bounded_contexts: 7
+  domain_models: 3
+  aggregates:
+    - BioIntelligenceAggregate
+    - CognitiveEnterpriseAggregate
+    - BioGiGovernanceAggregate
+  commands: 5
+  queries: 5
+  core_events: 8
+  microservices: 10

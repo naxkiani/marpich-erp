@@ -1,0 +1,12 @@
+apiVersion: marpich.io/v1
+kind: SpaceAiSecurity
+metadata:
+  prompt: P218-E
+  adr: "531"
+zero_trust: true
+locks:
+  - no_module_local_llm
+  - space_ai_via_p214z_acl_only
+  - never_opaque_unexplainable_decisions
+  - never_ungated_autonomous_mission_strategy
+  - never_skip_human_mission_oversight_strategy

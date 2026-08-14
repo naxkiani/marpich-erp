@@ -1,0 +1,30 @@
+# P211-A — Data Security strategy capabilities
+version: "1.0"
+prompt_id: P211-A
+adr: "376"
+sor: data_security
+capability: CAP-PLT-DS-001
+api_prefix: /api/v1/data-security/strategy
+builds_on:
+  - ADR-159
+  - ADR-345
+  - ADR-361
+  - ADR-373
+  - ADR-374
+  - ADR-375
+
+data_assets_discoverable_required: true
+sensitive_data_classifiable_required: true
+privacy_risks_measurable_required: true
+data_access_governed_required: true
+ai_data_protected_required: true
+data_lineage_available_required: true
+compliance_evidence_generatable_required: true
+sibling_data_security_bc_forbidden: true
+via_consent: true
+via_secrets_p209: true
+via_authorization_p208: true
+via_cyber_security_p210: true
+via_compliance_framework: true
+via_enterprise_ai: true
+via_audit_platform: true

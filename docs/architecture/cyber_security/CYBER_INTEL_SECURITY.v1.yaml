@@ -1,0 +1,19 @@
+# P210-H — Security & governance
+version: "1.0"
+prompt_id: P210-H
+adr: "368"
+zero_trust: true
+rbac: true
+abac: true
+data_classification: true
+threat_intelligence_validation: true
+source_trust_scoring: true
+evidence_integrity: true
+immutable_audit_logs: true
+compliance:
+  - iso_27001
+  - nist_csf
+  - mitre_attack
+  - mitre_d3fend
+  - stix_taxii
+  - soc_2

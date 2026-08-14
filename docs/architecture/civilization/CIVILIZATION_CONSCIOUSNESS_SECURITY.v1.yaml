@@ -1,0 +1,36 @@
+# CIVILIZATION_CONSCIOUSNESS_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationConsciousnessSecurity
+metadata:
+  prompt_id: P219-Q
+  adr: "570"
+permissions:
+  - civilization.read
+  - civilization.consciousness.read
+  - civilization.consciousness.write
+  - civilization.consciousness.reflect
+  - civilization.admin
+locks:
+  never_replace_p219_e_ai_os: true
+  never_replace_p219_i_knowledge: true
+  never_replace_p219_k_governance: true
+  never_replace_p219_p_collaboration: true
+  never_opaque_unexplainable_consciousness_decisions: true
+  never_ungated_consciousness_recommendation_execution: true
+  never_treat_wisdom_score_as_binding_policy: true
+  never_skip_ethical_consciousness_governance: true
+  never_skip_human_authority_consciousness: true
+  never_violate_human_sovereignty_consciousness: true
+  never_bypass_trusted_consciousness_validation: true
+  never_bypass_constitutional_ai_safeguards: true
+  never_module_local_llm: true
+  inference_via_p214_z_only: true
+  consciousness_recommendation_workflow_gated: true
+controls:
+  - human_centered_intelligence
+  - wisdom_over_information
+  - explainable_collective_reasoning
+  - constitutional_ai
+  - privacy_by_design
+  - trust_by_design
+  - audit_on_consciousness_mutations

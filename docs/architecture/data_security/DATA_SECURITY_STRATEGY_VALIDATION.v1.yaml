@@ -1,0 +1,33 @@
+# P211-A — Validation gates
+version: "1.0"
+prompt_id: P211-A
+adr: "376"
+reject_if:
+  - data_assets_cannot_be_discovered
+  - sensitive_data_cannot_be_classified
+  - privacy_risks_cannot_be_measured
+  - data_access_cannot_be_governed
+  - ai_data_cannot_be_protected
+  - data_lineage_is_unavailable
+  - compliance_evidence_cannot_be_generated
+  - sibling_data_security_bc
+forbidden_siblings:
+  - backend/contexts/dspm
+  - backend/contexts/dspm_platform
+  - backend/contexts/privacy_intelligence
+  - backend/contexts/data_classification
+  - backend/contexts/data_protection_platform
+  - backend/contexts/data_lineage_platform
+  - backend/contexts/data_privacy_platform
+required_artifacts:
+  - docs/adr/376-enterprise-data-security-strategy.md
+  - docs/architecture/ENTERPRISE_DATA_SECURITY_STRATEGY.md
+  - docs/architecture/data_security/DATA_SECURITY_STRATEGY_CAPABILITIES.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_STRATEGY_DDD_CQRS.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_STRATEGY_SECURITY.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_STRATEGY_VALIDATION.v1.yaml
+  - docs/architecture/data_security/P211_MASTER_SERIES_ROADMAP.v1.yaml
+  - backend/contexts/data_security/domain/services/ds_platform_strategy.py
+  - backend/contexts/data_security/domain/aggregates/ds_strategy_aggregates.py
+  - backend/contexts/data_security/infrastructure/acl/ds_strategy_acl.py
+  - backend/contexts/data_security/application/ds_strategy_foundation.py

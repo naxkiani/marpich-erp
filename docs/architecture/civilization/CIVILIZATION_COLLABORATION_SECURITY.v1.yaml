@@ -1,0 +1,35 @@
+# CIVILIZATION_COLLABORATION_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationCollaborationSecurity
+metadata:
+  prompt_id: P219-P
+  adr: "569"
+permissions:
+  - civilization.read
+  - civilization.collaboration.read
+  - civilization.collaboration.write
+  - civilization.collaboration.coordinate
+  - civilization.admin
+locks:
+  never_replace_p219_i_knowledge: true
+  never_replace_p219_j_human: true
+  never_replace_p219_k_governance: true
+  never_replace_p219_o_prosperity: true
+  never_opaque_unexplainable_collaboration_decisions: true
+  never_ungated_collaborative_decision_execution: true
+  never_treat_consensus_score_as_binding_policy: true
+  never_skip_ethical_collaboration_governance: true
+  never_skip_human_authority_collaboration: true
+  never_violate_human_sovereignty_collaboration: true
+  never_bypass_trusted_collaboration_validation: true
+  never_bypass_collective_consent_safeguards: true
+  never_module_local_llm: true
+  inference_via_p214_z_only: true
+  collaborative_decision_workflow_gated: true
+controls:
+  - collaboration_by_design
+  - collective_intelligence_first
+  - human_ai_partnership
+  - explainable_coordination
+  - event_driven_collaboration
+  - audit_on_collaboration_mutations

@@ -53,7 +53,7 @@ def validate_registration_onboarding_foundation(*, repo_root: Path | None = None
     router = (
         root / "backend/contexts/identity_lifecycle/presentation/registration_router.py"
     ).read_text(encoding="utf-8")
-    router_ok = "/registration/register" in router and "/eilmp/surface" in router
+    router_ok = "/registration/register" in router and "/registration/surface" in router
     port = (
         root / "backend/shared/application/ports/identity_lifecycle.py"
     ).read_text(encoding="utf-8")

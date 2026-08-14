@@ -1,0 +1,20 @@
+# ROBOTICS_MISSION_SECURITY.v1.yaml — P216-A
+apiVersion: marpich.io/v1
+kind: RoboticsMissionSecurityCatalog
+metadata:
+  phase: P216-A
+  adr: "473"
+spec:
+  authn: JWT via Identity / API Gateway
+  authz:
+    permissions:
+      - robotics.read
+      - robotics.write
+      - robotics.admin
+  tenant_isolation: mandatory
+  strategy_changes: workflow_gated
+  physical_autonomy_strategy: safety_and_policy_gated
+  never:
+    - ungated_physical_autonomy_strategy
+    - opaque_safety_strategy
+    - replace_p216_foundation

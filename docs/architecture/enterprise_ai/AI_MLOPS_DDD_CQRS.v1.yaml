@@ -1,0 +1,34 @@
+# P214-D — DDD / CQRS
+version: "1.0"
+prompt_id: P214-D
+adr: "424"
+sor: ai
+capability: CAP-PLT-AI-001
+core_domain: enterprise_machine_learning_lifecycle_management
+aggregate: MLLifecycleAggregate
+bounded_contexts:
+  - BC-01 ml_experiment
+  - BC-02 feature_engineering
+  - BC-03 training_pipeline
+  - BC-04 model_registry
+  - BC-05 model_deployment
+  - BC-06 model_monitoring
+  - BC-07 ml_governance
+lifecycle_stages: 13
+commands:
+  - CreateExperimentCommand
+  - StartTrainingCommand
+  - RegisterModelCommand
+  - ApproveModelCommand
+  - DeployModelCommand
+  - TriggerRetrainingCommand
+events:
+  - ExperimentCreatedEvent
+  - TrainingStartedEvent
+  - TrainingCompletedEvent
+  - ModelRegisteredEvent
+  - ModelApprovedEvent
+  - ModelDeployedEvent
+  - ModelDriftDetectedEvent
+  - RetrainingStartedEvent
+microservice_count: 10

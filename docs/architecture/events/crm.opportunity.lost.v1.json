@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "crm.opportunity.lost",
+  "type": "object",
+  "required": ["opportunity_id", "contact_id", "title", "reason"],
+  "properties": {
+    "opportunity_id": { "type": "string", "format": "uuid" },
+    "contact_id": { "type": "string", "format": "uuid" },
+    "title": { "type": "string" },
+    "reason": { "type": "string" }
+  }
+}

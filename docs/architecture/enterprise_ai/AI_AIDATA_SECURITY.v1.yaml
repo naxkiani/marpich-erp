@@ -1,0 +1,24 @@
+# P214-K — SECURITY
+version: "1.0"
+prompt_id: P214-K
+adr: "431"
+sor: ai
+zero_trust: true
+integrates:
+  - P207
+  - P208
+  - P209
+  - P210
+  - P211
+  - P212
+controls:
+  - dataset_access_control
+  - feature_access_control
+  - training_data_protection
+  - synthetic_privacy_enforcement
+  - audit_security
+forbidden:
+  - module_local_feature_store
+  - unversioned_production_features
+  - synthetic_without_p214_h_review
+  - cross_schema_ai_data_joins

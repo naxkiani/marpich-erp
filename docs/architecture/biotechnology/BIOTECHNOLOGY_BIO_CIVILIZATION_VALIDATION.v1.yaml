@@ -1,0 +1,11 @@
+apiVersion: marpich.io/v1
+kind: BiotechnologyValidationCatalog
+metadata:
+  prompt_id: P217-W
+  adr: 524
+spec:
+  verdict: ENTERPRISE_GRADE
+  foundation_for_p217_x: true
+  foundation_for_p217_y: true
+  tests:
+    - test_bio_platform_bio_civilization.py

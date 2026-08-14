@@ -1,0 +1,31 @@
+# BIOTECHNOLOGY_SIMULATION_MODELS.v1.yaml — P217-G
+apiVersion: marpich.io/v1
+kind: BiotechnologySimulationModels
+metadata:
+  phase: P217-G
+  adr: "506"
+spec:
+  twin_domains:
+    - molecular_digital_twin
+    - cellular_digital_twin
+    - organ_digital_twin
+    - organism_digital_twin
+    - synthetic_biology_digital_twin
+  engine_components:
+    - molecular_simulation
+    - systems_biology_simulation
+    - cell_simulation
+    - population_simulation
+    - clinical_simulation
+  life_modeling_levels:
+    - molecular
+    - cellular
+    - organ
+    - organism
+    - ecosystem
+  intelligence_capabilities:
+    - predictive_simulation
+    - scenario_simulation
+    - optimization_simulation
+    - experiment_simulation
+    - adaptive_simulation

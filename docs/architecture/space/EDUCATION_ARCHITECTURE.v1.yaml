@@ -1,0 +1,13 @@
+apiVersion: marpich.io/v1
+kind: SpaceEducationArchitecture
+metadata:
+  prompt: P218-S
+  adr: "545"
+  fabric: meos_space_education_intelligence_fabric
+layers:
+  - L01 Knowledge Foundation Layer
+  - L02 Learning Intelligence Layer
+  - L03 Training Operations Layer
+  - L04 Workforce Intelligence Layer
+  - L05 Space Knowledge Economy Layer
+layer_count: 5

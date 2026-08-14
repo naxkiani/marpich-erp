@@ -1,0 +1,21 @@
+# BIOTECHNOLOGY_SIMULATION_SECURITY.v1.yaml — P217-G
+apiVersion: marpich.io/v1
+kind: BiotechnologySimulationSecurity
+metadata:
+  phase: P217-G
+  adr: "506"
+spec:
+  framework: meos_biological_simulation_governance
+  hard_locks:
+    - bio_ai_via_p214z_acl_only
+    - quantum_simulation_via_p215z_acl_only
+    - physical_validation_via_p216z_acl_only
+    - no_module_local_llm
+    - never_opaque_unexplainable_decisions
+    - never_unvalidated_simulation_claims
+    - genomic_privacy_strategy
+    - ethical_bioengineering_strategy
+    - scientific_integrity_strategy
+    - opaque_bio_safety_strategy_forbidden
+    - never_replace_p217_f_synthetic
+    - never_replace_hospital_emr

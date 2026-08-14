@@ -1,0 +1,24 @@
+# ROBOTICS_GOVERNMENT_BOUNDED_CONTEXTS.v1.yaml — P216-T
+apiVersion: marpich.io/v1
+kind: RoboticsGovernmentBoundedContexts
+metadata:
+  phase: P216-T
+  adr: "492"
+spec:
+  contexts:
+    - id: BC-01
+      name: Citizen Experience Context
+    - id: BC-02
+      name: Government Robotics Context
+    - id: BC-03
+      name: Public Service Automation Context
+    - id: BC-04
+      name: Digital Identity Context
+    - id: BC-05
+      name: Policy Intelligence Context
+    - id: BC-06
+      name: Government Data Intelligence Context
+    - id: BC-07
+      name: Government Digital Twin Context
+    - id: BC-08
+      name: Governance & Compliance Context

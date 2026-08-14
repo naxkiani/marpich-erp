@@ -1,0 +1,50 @@
+prompt_id: P215-W
+adr: "468"
+sor: quantum
+capability: CAP-PLT-QC-001
+api_prefix: /api/v1/quantum/civilization
+fabric: meos_quantum_civilization_intelligence_fabric
+qgi_gate: P215-V
+evolution_gate: P215-U
+os_gate: P215-T
+trust_gate: P215-K
+principle: >-
+  MEOS Quantum Civilization Intelligence Platform SHALL provide the collective
+  cognitive infrastructure enabling shared knowledge, collaborative intelligence
+  and continuous evolution across enterprise ecosystems.
+quantum_civilization_intelligence_layer_present_required: true
+collective_intelligence_network_present_required: true
+global_cognitive_ecosystem_present_required: true
+knowledge_civilization_platform_present_required: true
+multi_agent_intelligence_society_present_required: true
+collective_decision_intelligence_present_required: true
+future_intelligence_evolution_present_required: true
+knowledge_graph_integration_present_required: true
+digital_twin_integration_present_required: true
+never_replace_p215_v: true
+never_replace_p215_u: true
+never_replace_p215_t: true
+never_replace_core_platform: true
+never_replace_p215_k: true
+module_local_llm_forbidden: true
+ungoverned_cross_tenant_intelligence_federation_forbidden: true
+opaque_collective_decisions_forbidden: true
+via_p215_v: true
+via_p215_u: true
+via_p215_t: true
+via_p213: true
+via_p214_g: true
+via_p215_k: true
+via_policy_engine: true
+via_workflow: true
+via_audit: true
+builds_on_p215_a: true
+builds_on_p215_v: true
+builds_on_p215_u: true
+governed_by_p215_k: true
+forbidden_siblings:
+  - quantum_civilization_platform
+  - quantum_collective_intelligence_platform
+  - quantum_cognitive_ecosystem_platform
+  - quantum_knowledge_civilization_platform
+  - quantum_agent_society_platform

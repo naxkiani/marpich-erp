@@ -1,0 +1,12 @@
+apiVersion: marpich.io/v1
+kind: SpaceDddCqrs
+metadata:
+  prompt_id: P218
+  adr: 526
+spec:
+  cqrs: true
+  event_count: 7
+  entity_count: 10
+  domains:
+    - space_intelligence
+    - orbital_operations

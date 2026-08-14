@@ -1,0 +1,43 @@
+# P213-M — VALIDATION
+version: "1.0"
+prompt_id: P213-M
+adr: "417"
+sor: analytics
+capability: CAP-PLT-BI-001
+principle: Every enterprise decision SHALL be supported by AI reasoning, enterprise knowledge, governance policies and continuous learning.
+fabric: meos_autonomous_decision_intelligence_fabric
+reject_if:
+  - ai_native_analytics_platform_is_missing
+  - autonomous_decision_intelligence_is_missing
+  - enterprise_ai_agent_platform_is_missing
+  - multi_agent_collaboration_is_missing
+  - executive_ai_copilot_is_missing
+  - ai_governance_platform_is_missing
+  - knowledge_graph_integration_is_missing
+  - digital_twin_integration_is_missing
+  - cqrs_architecture_is_missing
+  - event_sourcing_architecture_is_missing
+  - microservice_architecture_is_missing
+  - api_first_architecture_is_missing
+  - zero_trust_security_is_missing
+  - cloud_native_deployment_is_missing
+  - ai_native_decision_architecture_is_incomplete
+  - sibling_business_intelligence_bc
+verdict_required: ENTERPRISE_GRADE
+definition_of_done:
+  - enterprise_ai_analytics_platform
+  - autonomous_decision_platform
+  - enterprise_ai_agent_platform
+  - executive_ai_copilot
+  - multi_agent_collaboration
+  - enterprise_reasoning_engine
+  - ai_governance_platform
+  - knowledge_graph_integration
+  - digital_twin_integration
+  - cqrs_architecture
+  - event_architecture
+  - microservice_architecture
+  - api_platform
+  - security_architecture
+  - deployment_architecture
+  - testing_architecture

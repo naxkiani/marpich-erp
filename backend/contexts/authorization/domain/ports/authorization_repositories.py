@@ -7,6 +7,7 @@ from contexts.authorization.domain.aggregates.authorization_platform import (
     AbacPolicy,
     AccessDecision,
     AuthorizationProfile,
+    RelationTuple,
 )
 
 
@@ -26,6 +27,27 @@ class IAccessDecisionRepository(Protocol):
     async def save(self, decision: AccessDecision) -> None: ...
     async def list_by_tenant(self, tenant_id: str, *, limit: int = 50) -> list[AccessDecision]: ...
     def next_decision_ref(self, tenant_id: str) -> str: ...
+
+
+class IRelationTupleRepository(Protocol):
+    async def save(self, tuple_: RelationTuple) -> None: ...
+    async def list_by_object(
+        self, tenant_id: str, object_type: str, object_id: str
+    ) -> list[RelationTuple]: ...
+    async def list_by_subject(
+        self, tenant_id: str, subject_type: str, subject_id: str
+    ) -> list[RelationTuple]: ...
+    async def find_exact(
+        self,
+        tenant_id: str,
+        *,
+        object_type: str,
+        object_id: str,
+        relation: str,
+        subject_type: str,
+        subject_id: str,
+    ) -> RelationTuple | None: ...
+    def next_relation_ref(self, tenant_id: str) -> str: ...
 
 
 class IPrincipalAccessPort(Protocol):

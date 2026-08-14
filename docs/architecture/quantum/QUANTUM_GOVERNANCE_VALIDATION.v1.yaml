@@ -1,0 +1,72 @@
+# P215-K — VALIDATION
+version: "1.0"
+prompt_id: P215-K
+adr: "403"
+sor: quantum
+capability: CAP-PLT-QC-001
+api_prefix: /api/v1/quantum/governance
+fabric: meos_quantum_responsible_intelligence_fabric
+builds_on:
+  - P215-A
+  - P215-B
+  - P215-C
+  - P215-D
+  - P215-E
+  - P215-F
+  - P215-G
+  - P215-H
+  - P215-I
+  - P215-J
+  - P209
+  - P210
+  - P212
+  - P214-H
+  - P214-Y
+  - ADR-345
+  - ADR-403
+reject_if:
+  - quantum_governance_platform_is_incomplete
+  - quantum_regulatory_intelligence_is_missing
+  - responsible_quantum_computing_is_missing
+  - quantum_ethics_framework_is_missing
+  - quantum_risk_management_is_missing
+  - quantum_compliance_automation_is_missing
+  - quantum_audit_intelligence_is_missing
+  - accountability_framework_is_missing
+  - knowledge_graph_integration_is_missing
+  - digital_twin_integration_is_missing
+  - cqrs_architecture_is_missing
+  - event_architecture_is_missing
+  - microservices_architecture_is_missing
+  - api_first_architecture_is_missing
+  - cloud_native_governance_is_missing
+  - sibling_quantum_governance_bc
+verdict: ENTERPRISE_GRADE
+verdict_required: ENTERPRISE_GRADE
+definition_of_done:
+  - Quantum Governance Platform exists
+  - Regulatory Intelligence exists
+  - Ethics Platform exists
+  - Risk Management exists
+  - Compliance Automation exists
+  - Audit Intelligence exists
+  - Accountability Framework exists
+  - Knowledge Graph exists
+  - Digital Twin exists
+  - CQRS Architecture exists
+  - Event Architecture exists
+  - Microservice Architecture exists
+  - API Platform exists
+  - Security Architecture exists
+  - Deployment Architecture exists
+  - Testing Architecture exists
+testing_suites:
+  - policy_testing
+  - compliance_testing
+  - regulatory_validation_testing
+  - ethics_evaluation_testing
+  - risk_simulation_testing
+  - audit_testing
+  - governance_performance_testing
+  - trust_validation_testing
+next_prompt: P215-M

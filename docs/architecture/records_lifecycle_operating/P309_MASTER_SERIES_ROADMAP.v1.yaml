@@ -1,0 +1,103 @@
+# MERILG Master Series Roadmap (P309)
+
+series: P309
+title: MEOS Enterprise Records, Retention, Legal Hold & Information Lifecycle Governance Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MERILG-001
+sor: records_lifecycle_operating
+fabric: meos_enterprise_records_retention_legal_hold_information_lifecycle_governance_platform_framework
+api: /api/v1/records-lifecycle-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P309
+    title: MERILG Foundation
+    status: planned
+    adr: "666"
+    fabric: meos_enterprise_records_retention_legal_hold_information_lifecycle_governance_platform_framework
+    api: /api/v1/records-lifecycle-operating*
+  - id: P309-A
+    title: Record Foundation — Model, Classification, Ownership, Series, Lifecycle
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P309-B
+    title: Retention — Schedule, Trigger, Calculation, Exceptions, Expiration
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P309-C
+    title: Legal Hold — Management, Scope, Custodians, Preservation, Release
+    status: planned
+    adr: pending
+    window: 9-15_months
+  - id: P309-D
+    title: Disposition — Eligibility, Review, Approval, Execution, Certificate
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P309-E
+    title: Evidence — Chain of Custody, Integrity, Packages, Controlled Export
+    status: planned
+    adr: pending
+    window: 15-24_months
+  - id: P309-F
+    title: Archive — Transfer, Archive Metadata, Integrity Verification
+    status: planned
+    adr: pending
+    window: 18-30_months
+  - id: P309-G
+    title: Intelligence — Risk, Hold Impact, Conflict, Forecasting, Simulation
+    status: planned
+    adr: pending
+    window: 24-36_months
+  - id: P309-H
+    title: AI — Copilot, Classification/Retention/Hold/Disposition Agents (Human-Gated)
+    status: planned
+    adr: pending
+    window: 30-42_months
+  - id: P309-I
+    title: Autonomous Governance Assistance — Continuous Risk/Gap Detection (No Auto-Destruction)
+    status: planned
+    adr: pending
+    window: 36-48_months
+locks:
+  never_replace_p308_document_intelligence_operating: true
+  never_replace_documents_exchange: true
+  never_replace_p307_knowledge_operating: true
+  never_replace_p264_semantic_knowledge: true
+  never_replace_p228_knowledge_graph: true
+  never_replace_p266_ai_agent_orchestration: true
+  never_replace_p260_workflow: true
+  never_replace_p270_governance: true
+  never_become_document_management_platform: true
+  never_become_content_management_platform: true
+  never_become_knowledge_management_platform: true
+  never_become_knowledge_graph_platform: true
+  never_become_workflow_engine: true
+  never_become_governance_policy_engine: true
+  never_become_ai_agent_runtime: true
+  never_become_legal_case_management_system: true
+  never_merge_p308_p309_p310_p270: true
+  never_dual_write_p308_or_documents_tables_as_second_sor: true
+  never_local_policy_engine: true
+  never_local_approval_workflow_engines: true
+  never_module_local_llm: true
+  never_autonomous_hold_release: true
+  never_autonomous_disposition_approval: true
+  never_autonomous_record_deletion: true
+  never_dispose_under_legal_hold: true
+  never_alter_chain_of_custody_without_audit: true
+  never_alter_evidence_without_audit: true
+  content_vs_record_boundary: true
+  retention_calculation_deterministic_auditable: true
+  conflict_priority_legal_hold_first: true
+  defensible_disposition_certificate_mandatory: true
+  source_content_via_p308_documents_refs_only: true
+  policy_via_p270_only: true
+  workflows_via_p260_only: true
+  agents_via_p266_only: true
+  communications_via_p294_only: true
+  tenant_isolation_mandatory: true
+  foundation_for_p309_a: true
+  unblocks_p310_information_governance_data_classification_sensitive_information_intelligence_os: true
+  unblocks_p311_data_loss_prevention_information_protection_adaptive_data_security_control_os: true

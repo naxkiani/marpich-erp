@@ -1,0 +1,43 @@
+# EAFIEEP Master Series Roadmap (P244)
+
+series: P244
+title: Enterprise Autonomous Financial Intelligence & Economic Evolution Platform
+governance_standard: "11.0"
+capability: CAP-PLT-EAFIEEP-001
+sor: economic_evolution
+fabric: meos_enterprise_autonomous_financial_intelligence_economic_evolution_platform_framework
+api: /api/v1/economic-evolution*
+phases:
+  - id: P244
+    title: EAFIEEP Foundation
+    status: planned
+    adr: "604"
+    fabric: meos_enterprise_autonomous_financial_intelligence_economic_evolution_platform_framework
+    api: /api/v1/economic-evolution*
+  - id: P244-A
+    title: Financial Domain Model (Evolution), Economic Data Architecture, Event Contracts, CQRS Foundation, Financial Intelligence APIs
+    status: planned
+    adr: pending
+  - id: P244-B
+    title: AI Financial Agents, Economic Knowledge Graph, Financial Digital Twin, Predictive Economic Models
+    status: planned
+    adr: pending
+  - id: P244-C
+    title: Autonomous Financial Operations Assist, Investment Intelligence Automation, Economic Scenario Optimization, Enterprise Capital Intelligence
+    status: planned
+    adr: pending
+  - id: P244-D
+    title: Civilization-Scale Economic Intelligence, Global Economic Simulation Network, Self-Evolving Financial Ecosystem (Gated)
+    status: planned
+    adr: pending
+locks:
+  never_replace_p231_financial_intelligence: true
+  never_fork_financial_intelligence_api: true
+  never_dual_write_p231_tables: true
+  never_local_gl_journal_or_coa: true
+  never_ungated_capital_posting: true
+  never_treat_simulation_as_allocate: true
+  never_module_local_llm: true
+  never_opaque_capital_recommendations: true
+  foundation_for_p244_a: true
+  peer_series_p246_easc_dtip: true

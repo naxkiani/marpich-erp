@@ -1,0 +1,38 @@
+# P214-J — VALIDATION
+version: "1.0"
+prompt_id: P214-J
+adr: "430"
+sor: ai
+capability: CAP-PLT-AI-001
+verdict_target: ENTERPRISE_GRADE
+foundation_validator: contexts.ai.application.ai_aiops_foundation.validate_ai_aiops_foundation
+quality_gates_reject_if:
+  - enterprise_aiops_platform_is_missing
+  - ai_operations_center_is_missing
+  - ai_observability_is_missing
+  - ai_monitoring_is_missing
+  - incident_intelligence_is_missing
+  - root_cause_analysis_is_missing
+  - autonomous_remediation_is_missing
+  - ai_reliability_engineering_is_missing
+  - performance_intelligence_is_missing
+  - capacity_intelligence_is_missing
+  - cost_optimization_is_missing
+  - operational_digital_twin_is_missing
+  - cqrs_architecture_is_missing
+  - event_architecture_is_missing
+  - microservices_architecture_is_missing
+  - api_first_architecture_is_missing
+  - zero_trust_security_is_missing
+  - cloud_native_deployment_is_missing
+  - sibling_ai_bc
+testing:
+  - ai_operations_testing
+  - monitoring_testing
+  - incident_simulation
+  - chaos_engineering
+  - auto_remediation_testing
+  - performance_testing
+  - scalability_testing
+  - security_testing
+  - recovery_testing

@@ -1,0 +1,48 @@
+# P214-D — VALIDATION
+version: "1.0"
+prompt_id: P214-D
+adr: "424"
+sor: ai
+capability: CAP-PLT-AI-001
+verdict_required: ENTERPRISE_GRADE
+reject_if:
+  - enterprise_mlops_platform_is_missing
+  - ml_lifecycle_management_is_missing
+  - experiment_platform_is_missing
+  - feature_store_is_missing
+  - training_platform_is_missing
+  - model_registry_is_missing
+  - validation_platform_is_missing
+  - deployment_platform_is_missing
+  - monitoring_platform_is_missing
+  - continuous_training_is_missing
+  - ml_governance_is_missing
+  - cqrs_architecture_is_missing
+  - event_architecture_is_missing
+  - microservices_architecture_is_missing
+  - api_first_architecture_is_missing
+  - zero_trust_security_is_missing
+  - cloud_native_deployment_is_missing
+  - sibling_ai_bc
+definition_of_done:
+  - enterprise_mlops_platform
+  - ml_lifecycle
+  - experiment_management
+  - feature_store
+  - training_platform
+  - model_registry
+  - model_validation
+  - model_deployment
+  - model_monitoring
+  - continuous_training
+  - ml_governance
+  - cqrs_architecture
+  - event_architecture
+  - microservice_architecture
+  - api_platform
+  - security_architecture
+  - deployment_architecture
+  - testing_architecture
+tests:
+  - contexts/ai/tests/test_ai_platform_mlops.py
+  - contexts/ai/tests/unit/test_ai_platform_mlops.py

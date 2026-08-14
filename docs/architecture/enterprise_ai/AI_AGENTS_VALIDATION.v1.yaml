@@ -1,0 +1,35 @@
+# P214-F — VALIDATION
+version: "1.0"
+prompt_id: P214-F
+adr: "426"
+sor: ai
+capability: CAP-PLT-AI-001
+verdict_target: ENTERPRISE_GRADE
+foundation_validator: contexts.ai.application.ai_agents_foundation.validate_ai_agents_foundation
+quality_gates_reject_if:
+  - enterprise_ai_agent_platform_is_missing
+  - autonomous_intelligence_platform_is_missing
+  - agent_identity_is_missing
+  - agent_memory_is_missing
+  - agent_reasoning_is_missing
+  - agent_tool_ecosystem_is_missing
+  - multi_agent_architecture_is_missing
+  - workflow_automation_is_missing
+  - agent_governance_is_missing
+  - agent_security_is_missing
+  - cqrs_architecture_is_missing
+  - event_architecture_is_missing
+  - microservices_architecture_is_missing
+  - api_first_architecture_is_missing
+  - cloud_native_deployment_is_missing
+  - sibling_ai_bc
+testing:
+  - agent_behavior_testing
+  - reasoning_testing
+  - tool_testing
+  - workflow_testing
+  - safety_testing
+  - security_testing
+  - performance_testing
+  - human_evaluation_testing
+  - simulation_testing

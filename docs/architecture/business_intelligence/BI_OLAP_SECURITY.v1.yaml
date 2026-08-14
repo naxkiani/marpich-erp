@@ -1,0 +1,31 @@
+# P213-G — SECURITY
+version: "1.0"
+prompt_id: P213-G
+adr: "411"
+sor: analytics
+capability: CAP-PLT-BI-001
+permission: analytics.olap.read
+zero_trust: true
+tenant_isolation: true
+delegates:
+  identity: P207
+  authorization: P208
+  data_security: P211
+  data_governance: P212
+  knowledge_graph: P212-J
+  digital_twin: P212-L
+  reporting: P213-D
+  warehouse: P213-E
+  lakehouse: P213-F
+  enterprise_ai: ai
+  enterprise_search: search
+  api_gateway: gateway
+metric_level_authorization: true
+semantic_object_security: true
+fine_grained_access_control: true
+attribute_based_access_control: true
+policy_based_calculations: true
+audit_logging: true
+data_masking: true
+classification_awareness: true
+sibling_bc_forbidden: true

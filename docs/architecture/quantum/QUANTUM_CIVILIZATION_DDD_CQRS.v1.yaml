@@ -1,0 +1,57 @@
+prompt_id: P215-W
+adr: "468"
+sor: quantum
+core_domain: enterprise_collective_quantum_intelligence_management
+bounded_context_count: 6
+aggregate_count: 7
+qgi_gate: P215-V
+trust_gate: P215-K
+bounded_contexts:
+  - id: BC-01
+    name: Quantum Civilization Intelligence Core Context
+    owns: QuantumCivilizationIntelligenceAggregate
+  - id: BC-02
+    name: Collective Intelligence Network Context
+    owns: CollectiveNetworkAggregate
+  - id: BC-03
+    name: Global Cognitive Ecosystem Context
+    owns: CognitiveEcosystemAggregate
+  - id: BC-04
+    name: Knowledge Civilization Context
+    owns: KnowledgeCivilizationAggregate
+  - id: BC-05
+    name: Collective Decision Intelligence Context
+    owns: CollectiveDecisionAggregate
+  - id: BC-06
+    name: Future Intelligence Evolution Context
+    owns: FutureEvolutionAggregate
+commands:
+  - CreateIntelligenceNetworkCommand
+  - RegisterKnowledgeContributionCommand
+  - CreateCollectiveDecisionCommand
+  - ConnectCognitiveNodeCommand
+  - TriggerCivilizationEvolutionCommand
+queries:
+  - GetCollectiveIntelligenceStateQuery
+  - GetKnowledgeNetworkQuery
+  - GetAgentCommunityQuery
+  - GetCivilizationCapabilityQuery
+  - GetEvolutionForecastQuery
+events:
+  - IntelligenceNodeConnectedEvent
+  - KnowledgeSharedEvent
+  - CollectiveDecisionCreatedEvent
+  - CognitiveNetworkExpandedEvent
+  - CivilizationCapabilityEvolvedEvent
+  - FutureMilestoneReachedEvent
+event_versioning: event_version_field
+outbox_required: true
+via_p215_v: true
+via_p215_u: true
+via_p213: true
+via_workflow: true
+via_audit: true
+never_replace_p215_v: true
+module_local_llm_forbidden: true
+ungoverned_cross_tenant_intelligence_federation_forbidden: true
+opaque_collective_decisions_forbidden: true

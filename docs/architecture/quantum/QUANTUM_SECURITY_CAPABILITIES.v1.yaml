@@ -1,0 +1,77 @@
+# P215-H — Quantum Security / PQC / Trust capabilities
+prompt_id: P215-H
+adr: "454"
+sor: quantum
+capability: CAP-PLT-QC-001
+fabric: meos_quantum_trust_fabric
+api_prefix: /api/v1/quantum/security
+principle: >
+  MEOS Quantum Security Platform SHALL provide a future-ready security architecture
+  protecting enterprise quantum systems, digital identities and cryptographic trust
+  relationships.
+
+quantum_security_platform_present_required: true
+post_quantum_cryptography_platform_present_required: true
+quantum_trust_architecture_present_required: true
+quantum_identity_security_present_required: true
+quantum_key_management_present_required: true
+threat_intelligence_platform_present_required: true
+security_knowledge_graph_present_required: true
+security_digital_twin_present_required: true
+zero_trust_architecture_present_required: true
+cqrs_architecture_present_required: true
+event_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_architecture_present_required: true
+cloud_native_security_present_required: true
+
+pqc_remains_secrets: true
+pqc_sor: secrets
+no_local_pqc_store: true
+no_local_key_store: true
+
+builds_on_p215_a: true
+builds_on_p215_d: true
+builds_on_p215_f: true
+builds_on_p215_g: true
+governed_by_p215_k: true
+
+pqc_capabilities:
+  - cryptographic_migration
+  - quantum_resistant_algorithms
+  - encryption_management
+  - digital_signature_protection
+  - certificate_evolution
+  - cryptographic_agility
+
+trust_manages:
+  - trust_identity
+  - trust_relationships
+  - trust_policies
+  - trust_verification
+  - trust_scoring
+
+logical_bcs:
+  - BC-01_quantum_cryptography
+  - BC-02_post_quantum_cryptography
+  - BC-03_quantum_identity_trust
+  - BC-04_quantum_secure_communication
+  - BC-05_quantum_threat_intelligence
+  - BC-06_quantum_security_governance
+
+forbidden_sibling_bc:
+  - quantum_security_platform
+  - quantum_pqc_platform
+  - quantum_trust_platform
+  - post_quantum_platform
+
+integrations:
+  - P209
+  - P210
+  - P207
+  - P208
+  - P215-D
+  - P215-F
+  - P215-G
+  - P214-Z
+  - P215-K

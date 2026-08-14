@@ -1,0 +1,51 @@
+# MEAIAMP Master Series Roadmap (P275)
+
+series: P275
+title: MEOS Enterprise Asset Intelligence & Autonomous Asset Management Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEAIAMP-001
+sor: enterprise_asset_operating
+fabric: meos_enterprise_asset_intelligence_autonomous_asset_management_platform_framework
+api: /api/v1/enterprise-asset-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P275
+    title: MEAIAMP Foundation
+    status: planned
+    adr: "632"
+    fabric: meos_enterprise_asset_intelligence_autonomous_asset_management_platform_framework
+    api: /api/v1/enterprise-asset-operating*
+  - id: P275-A
+    title: Asset Management Foundation — Enterprise Asset Registry, Asset 360, Lifecycle, Maintenance, Work Orders, Dashboard
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P275-B
+    title: Connected Asset Intelligence — IoT Integration, Condition Monitoring, Performance Analytics, Predictive Maintenance, Asset Risk
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P275-C
+    title: Autonomous Asset Operations — Automated Maintenance Triggers (Gated), Predictive Work Orders, Intelligent Dispatch, Asset Optimization, Automated Failure Response (Gated)
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P275-D
+    title: Autonomous Asset Operating System — Self-Optimizing Asset Assists, Twin-Driven Ops, Autonomous Maintenance Assists, Predictive Lifecycle, Continuous Performance Optimization (Gated)
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_p236_manufacturing_intelligence: true
+  never_fork_manufacturing_intelligence_api: true
+  never_fork_digital_twin_or_twin_intelligence_apis: true
+  never_dual_write_stock_or_asset_ledgers: true
+  never_ungated_physical_or_ot_actuation: true
+  never_treat_twin_simulation_as_actuate: true
+  never_module_local_llm: true
+  never_vendor_iot_sdk_in_domain: true
+  never_opaque_critical_maintenance_auto_execute: true
+  cyber_physical_via_p268: true
+  foundation_for_p275_a: true
+  unblocks_p276_procurement_intelligence_os: true
+  peer_series_p276_mepiasp: true

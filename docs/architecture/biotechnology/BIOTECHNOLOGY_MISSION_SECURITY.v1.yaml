@@ -1,0 +1,17 @@
+# BIOTECHNOLOGY_MISSION_SECURITY.v1.yaml — P217-A
+apiVersion: marpich.io/v1
+kind: BiotechnologyMissionSecurity
+metadata:
+  phase: P217-A
+  adr: "500"
+spec:
+  framework: meos_bio_strategy_trust_framework
+  hard_locks:
+    - genomic_privacy_strategy
+    - ethical_bioengineering_strategy
+    - scientific_integrity_strategy
+    - opaque_bio_safety_strategy_forbidden
+    - never_replace_p217_foundation
+    - never_replace_hospital_emr
+    - never_replace_laboratory_lims
+    - never_replace_pharmacy

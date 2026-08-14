@@ -1,0 +1,64 @@
+# P215-I — Quantum Data Intelligence capabilities
+prompt_id: P215-I
+adr: "455"
+sor: quantum
+capability: CAP-PLT-QC-001
+fabric: meos_quantum_data_intelligence_fabric
+api_prefix: /api/v1/quantum/data
+principle: >
+  MEOS Quantum Data Intelligence Platform SHALL provide a trusted, intelligent
+  and governed data foundation enabling quantum computing, quantum AI and future
+  enterprise intelligence systems.
+
+quantum_data_intelligence_platform_present_required: true
+quantum_knowledge_graph_platform_present_required: true
+quantum_data_governance_platform_present_required: true
+quantum_data_mesh_architecture_present_required: true
+quantum_data_product_platform_present_required: true
+metadata_intelligence_present_required: true
+data_quality_intelligence_present_required: true
+data_lineage_intelligence_present_required: true
+digital_twin_integration_present_required: true
+cqrs_architecture_present_required: true
+event_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_architecture_present_required: true
+cloud_native_deployment_present_required: true
+
+via_p212: true
+enterprise_data_governance_sor: P212
+
+builds_on_p215_a: true
+builds_on_p215_h: true
+governed_by_p215_k: true
+
+data_mesh:
+  - domain_owned_data_products
+  - federated_governance
+  - self_serve_platform
+  - quantum_data_contracts
+
+logical_bcs:
+  - BC-01_quantum_data_governance
+  - BC-02_quantum_metadata_intelligence
+  - BC-03_quantum_knowledge_graph
+  - BC-04_quantum_data_product
+  - BC-05_quantum_data_quality
+  - BC-06_quantum_data_lineage
+  - BC-07_quantum_data_marketplace
+
+forbidden_sibling_bc:
+  - quantum_data_platform
+  - quantum_knowledge_graph_platform
+  - quantum_data_governance_platform
+  - quantum_metadata_platform
+
+integrations:
+  - P212
+  - P214-Z
+  - P214-G
+  - P215-D
+  - P215-F
+  - P215-G
+  - P215-H
+  - P215-K

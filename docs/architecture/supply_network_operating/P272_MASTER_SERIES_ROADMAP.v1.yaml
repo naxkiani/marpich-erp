@@ -1,0 +1,50 @@
+# MESCIAL Master Series Roadmap (P272)
+
+series: P272
+title: MEOS Enterprise Supply Chain Intelligence & Autonomous Logistics Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MESCIAL-001
+sor: supply_network_operating
+fabric: meos_enterprise_supply_chain_intelligence_autonomous_logistics_platform_framework
+api: /api/v1/supply-network-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P272
+    title: MESCIAL Foundation
+    status: planned
+    adr: "629"
+    fabric: meos_enterprise_supply_chain_intelligence_autonomous_logistics_platform_framework
+    api: /api/v1/supply-network-operating*
+  - id: P272-A
+    title: Supply Chain Foundation — Supplier Overlays, Procurement, Inventory, Shipment Tracking, Supply Dashboard
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P272-B
+    title: Supply Chain Intelligence — Demand Forecasting, Supplier Risk, Inventory Optimization, Logistics Analytics
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P272-C
+    title: Autonomous Supply Operations — Procurement Recommendations, Automated Replenishment (Gated), Dynamic Logistics, Predictive Disruption
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P272-D
+    title: Autonomous Supply Network OS — Self-Optimizing Network Assists, Autonomous Planning (Gated), Autonomous Logistics (Gated), Continuous Resilience
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_p232_supply_chain_intelligence: true
+  never_fork_supply_chain_intelligence_api: true
+  never_dual_write_stock_shipment_or_po_ledgers: true
+  never_merge_inventory_warehouse_procurement_logistics_lifecycles: true
+  never_module_local_llm: true
+  never_vendor_wms_tms_sdk_in_domain: true
+  never_opaque_auto_dispatch: true
+  never_ungated_material_procure_replenish_or_ship: true
+  never_treat_twin_simulation_as_execute: true
+  foundation_for_p272_a: true
+  unblocks_p273_crm_customer_experience_os: true
+  peer_series_p273_mecxarp: true

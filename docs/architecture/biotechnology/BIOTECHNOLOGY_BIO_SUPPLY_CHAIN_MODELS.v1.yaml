@@ -1,0 +1,29 @@
+# BIOTECHNOLOGY_BIO_SUPPLY_CHAIN_MODELS.v1.yaml — P217-M
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioSupplyChainModels
+metadata:
+  phase: P217-M
+  adr: "512"
+spec:
+  bio_logistics_capabilities:
+    - transportation_intelligence
+    - shipment_intelligence
+    - global_distribution_intelligence
+    - emergency_logistics_intelligence
+  cold_chain_domains:
+    - temperature_intelligence
+    - environmental_intelligence
+    - cold_chain_digital_twin
+    - cold_chain_optimization_engine
+  inventory_categories:
+    - research_inventory
+    - manufacturing_inventory
+    - clinical_inventory
+    - hospital_inventory
+  agents:
+    - supply_planning_agent
+    - cold_chain_guardian_agent
+    - inventory_intelligence_agent
+    - logistics_optimization_agent
+    - risk_management_agent
+    - compliance_agent

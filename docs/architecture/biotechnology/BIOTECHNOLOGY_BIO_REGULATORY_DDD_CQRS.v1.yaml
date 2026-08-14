@@ -1,0 +1,28 @@
+# BIOTECHNOLOGY_BIO_REGULATORY_DDD_CQRS.v1.yaml — P217-N
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioRegulatoryDddCqrs
+metadata:
+  phase: P217-N
+  adr: "513"
+spec:
+  commands:
+    - IngestRegulationCommand
+    - EvaluateComplianceCommand
+    - ApproveComplianceRecordCommand
+    - DetectRegulatoryRiskCommand
+    - ResolveRegulatoryRiskCommand
+  queries:
+    - GetBioRegulatoryPlatformQuery
+    - GetRegulationQuery
+    - GetComplianceRecordQuery
+    - GetRegulatoryRiskQuery
+    - GetGovernanceQuery
+  events:
+    - BioRegulatoryPlatformActivatedEvent
+    - RegulationUpdatedEvent
+    - RequirementDetectedEvent
+    - ComplianceApprovedEvent
+    - ComplianceViolationDetectedEvent
+    - RegulatoryRiskDetectedEvent
+    - RiskResolvedEvent
+    - BioRegulatoryGovernanceViolationEvent

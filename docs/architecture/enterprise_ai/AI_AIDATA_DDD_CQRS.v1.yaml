@@ -1,0 +1,38 @@
+# P214-K — DDD / CQRS
+version: "1.0"
+prompt_id: P214-K
+adr: "431"
+sor: ai
+core_domain: enterprise_ai_data_intelligence_management
+aggregate: EnterpriseAIDataIntelligenceAggregate
+bounded_contexts:
+  - BC-01_ai_dataset_management
+  - BC-02_feature_engineering
+  - BC-03_feature_store
+  - BC-04_training_data
+  - BC-05_ai_data_pipeline
+  - BC-06_synthetic_data
+  - BC-07_ai_data_quality
+  - BC-08_ai_data_governance
+commands:
+  - CreateDatasetCommand
+  - RegisterFeatureCommand
+  - PublishFeatureCommand
+  - ValidateDatasetCommand
+  - GenerateSyntheticDataCommand
+  - MonitorDataQualityCommand
+queries:
+  - GetDatasetQuery
+  - GetFeatureQuery
+  - GetLineageQuery
+  - GetDataQualityQuery
+  - GetFeatureUsageQuery
+events:
+  - DatasetCreatedEvent
+  - FeatureCreatedEvent
+  - FeaturePublishedEvent
+  - PipelineCompletedEvent
+  - DataQualityChangedEvent
+  - DatasetApprovedEvent
+  - SyntheticDataGeneratedEvent
+  - FeatureDeprecatedEvent

@@ -1,0 +1,20 @@
+# BIOTECHNOLOGY_SYNTHETIC_SECURITY.v1.yaml — P217-F
+apiVersion: marpich.io/v1
+kind: BiotechnologySyntheticSecurity
+metadata:
+  phase: P217-F
+  adr: "505"
+spec:
+  framework: meos_responsible_synthetic_biology_framework
+  hard_locks:
+    - bio_ai_via_p214z_acl_only
+    - lab_robotics_via_p216z_acl_only
+    - no_module_local_llm
+    - never_opaque_unexplainable_decisions
+    - never_unsupervised_synthetic_release
+    - genomic_privacy_strategy
+    - ethical_bioengineering_strategy
+    - scientific_integrity_strategy
+    - opaque_bio_safety_strategy_forbidden
+    - never_replace_p217_e_bio_ai
+    - never_replace_hospital_emr

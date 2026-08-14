@@ -1,0 +1,53 @@
+# P213-C — Domain architecture capabilities
+version: "1.0"
+prompt_id: P213-C
+adr: "396"
+sor: analytics
+capability: CAP-PLT-BI-001
+api_prefix: /api/v1/analytics/domain
+principle: Raw enterprise data SHALL be transformed into governed business intelligence assets through DDD boundaries.
+fabric: meos_enterprise_bi_domain_fabric
+builds_on:
+  - P213-A
+  - P213-B
+  - ADR-394
+  - ADR-395
+  - P212
+  - P212-E
+  - P212-F
+  - P212-I
+  - P212-J
+  - P212-K
+  - P212-L
+  - P212-M
+complete_ddd_bi_architecture_present_required: true
+strategic_domain_model_present_required: true
+bounded_contexts_present_required: true
+domains_loosely_coupled_required: true
+bi_ownership_clear_required: true
+aggregates_defined_required: true
+entities_defined_required: true
+value_objects_defined_required: true
+domain_services_present_required: true
+events_present_required: true
+integration_boundaries_clear_required: true
+cqrs_alignment_present_required: true
+microservice_boundaries_clear_required: true
+data_mesh_alignment_present_required: true
+knowledge_graph_alignment_present_required: true
+digital_twin_alignment_present_required: true
+enterprise_governance_alignment_present_required: true
+sibling_business_intelligence_bc_forbidden: true
+core_domain: enterprise_business_intelligence_management
+bounded_context_count: 5
+domain_service_count: 5
+core_event_count: 8
+microservice_count: 6
+via_p207: true
+via_p208: true
+via_p211: true
+via_p212: true
+via_p212_f: true
+via_p212_j: true
+via_p212_l: true
+via_enterprise_ai: true

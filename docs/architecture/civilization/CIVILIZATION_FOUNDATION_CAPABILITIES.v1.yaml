@@ -1,0 +1,38 @@
+# CIVILIZATION_FOUNDATION_CAPABILITIES.v1.yaml
+apiVersion: marpich.io/v1
+kind: CapabilityCatalog
+metadata:
+  prompt_id: P219
+  adr: "553"
+  sor: civilization
+  capability: CAP-PLT-CIV-001
+  fabric: meos_civilization_operating_system_fabric
+  api_prefix: /api/v1/civilization
+capabilities:
+  - civilization_operating_system
+  - civilization_os_kernel
+  - planetary_intelligence_governance
+  - global_infrastructure_intelligence
+  - human_civilization_management
+  - civilization_digital_twin
+  - civilization_knowledge_graph
+  - civilization_governance
+  - meos_civilization_os_core
+present_required:
+  civilization_operating_system_present_required: true
+  civilization_os_kernel_present_required: true
+  planetary_intelligence_governance_present_required: true
+  global_infrastructure_intelligence_present_required: true
+  human_civilization_management_present_required: true
+  civilization_digital_twin_present_required: true
+  civilization_knowledge_graph_present_required: true
+  civilization_governance_present_required: true
+  meos_civilization_os_core_present_required: true
+gates:
+  ai_gate: P214-Z
+  quantum_gate: P215-Z
+  robotics_gate: P216-Z
+  bio_gate: P217-Z
+  space_gate: P218
+  intelligence_nexus_gate: P218-Z
+  foundation_for: P219-A

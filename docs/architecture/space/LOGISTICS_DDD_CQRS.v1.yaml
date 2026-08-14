@@ -1,0 +1,16 @@
+apiVersion: marpich.io/v1
+kind: LogisticsDddCqrs
+metadata:
+  prompt: P218-O
+  adr: "541"
+bounded_contexts: 8
+aggregates:
+  - LogisticsNetworkAggregate
+  - CargoAggregate
+  - TransportMissionAggregate
+  - SupplyChainAggregate
+  - FleetAggregate
+  - WarehouseAggregate
+  - LogisticsContractAggregate
+microservices: 10
+core_events: 10

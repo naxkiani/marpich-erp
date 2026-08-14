@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "crm.opportunity.won",
+  "type": "object",
+  "required": ["opportunity_id", "contact_id", "title", "amount", "currency"],
+  "properties": {
+    "opportunity_id": { "type": "string", "format": "uuid" },
+    "contact_id": { "type": "string", "format": "uuid" },
+    "title": { "type": "string" },
+    "amount": { "type": "string" },
+    "currency": { "type": "string", "minLength": 3, "maxLength": 3 }
+  }
+}

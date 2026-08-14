@@ -1,0 +1,48 @@
+# P213-G — VALIDATION
+version: "1.0"
+prompt_id: P213-G
+adr: "411"
+sor: analytics
+capability: CAP-PLT-BI-001
+principle: Every enterprise decision SHALL be based upon a governed semantic definition instead of isolated calculations.
+fabric: meos_enterprise_semantic_intelligence_fabric
+reject_if:
+  - enterprise_semantic_layer_is_missing
+  - enterprise_metric_platform_is_missing
+  - kpi_governance_is_missing
+  - olap_platform_is_missing
+  - business_glossary_is_missing
+  - business_vocabulary_is_missing
+  - semantic_query_layer_is_missing
+  - knowledge_graph_integration_is_missing
+  - ai_native_semantic_platform_is_missing
+  - digital_twin_integration_is_missing
+  - cqrs_architecture_is_missing
+  - event_sourcing_architecture_is_missing
+  - microservice_architecture_is_missing
+  - api_first_architecture_is_missing
+  - zero_trust_security_is_missing
+  - cloud_native_deployment_is_missing
+  - olap_semantic_architecture_is_incomplete
+  - dimension_platform_is_missing
+  - calculation_engine_is_missing
+  - sibling_business_intelligence_bc
+verdict_required: ENTERPRISE_GRADE
+definition_of_done:
+  - enterprise_semantic_layer
+  - enterprise_metric_catalog
+  - kpi_governance
+  - olap_platform
+  - dimension_platform
+  - calculation_engine
+  - semantic_query_platform
+  - knowledge_graph_integration
+  - ai_semantic_platform
+  - digital_twin_integration
+  - cqrs_architecture
+  - event_architecture
+  - microservice_architecture
+  - api_platform
+  - security_architecture
+  - deployment_architecture
+  - testing_architecture

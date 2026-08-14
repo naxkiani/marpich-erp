@@ -1,0 +1,13 @@
+apiVersion: marpich.io/v1
+kind: SatelliteArchitecture
+metadata:
+  prompt: P218-F
+  adr: "532"
+  fabric: meos_satellite_intelligence_fabric
+layers:
+  - L01 Satellite Asset Layer
+  - L02 Telemetry & Command Layer
+  - L03 Satellite Intelligence Layer
+  - L04 Constellation Management Layer
+  - L05 Business Intelligence Layer
+layer_count: 5

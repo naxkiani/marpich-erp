@@ -1,0 +1,41 @@
+# P211-M — Digital twin DDD / CQRS
+version: "1.0"
+prompt_id: P211-M
+adr: "388"
+sor: data_security
+domain: Enterprise Data Digital Twin Domain
+bounded_contexts:
+  - data_twin_management
+  - privacy_simulation
+  - risk_forecasting
+  - compliance_simulation
+  - security_control_simulation
+  - ai_governance_simulation
+  - scenario_intelligence
+entities:
+  - DataDigitalTwin
+  - DataStateSnapshot
+  - PrivacyScenario
+  - SimulationResult
+  - PrivacyRiskModel
+commands:
+  - CreateDataTwin
+  - SynchronizeTwin
+  - CreateScenario
+  - RunSimulation
+  - AnalyzePrivacyRisk
+  - EvaluateControlImpact
+  - OptimizeProtection
+queries:
+  - GetTwinState
+  - GetPrivacyRisk
+  - GetSimulationResult
+  - GetComplianceImpact
+  - GetScenarioHistory
+events:
+  - TwinCreated
+  - TwinUpdated
+  - ScenarioStarted
+  - SimulationCompleted
+  - RiskPredicted
+  - ControlOptimized

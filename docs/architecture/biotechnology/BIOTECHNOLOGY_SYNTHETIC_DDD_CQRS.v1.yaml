@@ -1,0 +1,28 @@
+# BIOTECHNOLOGY_SYNTHETIC_DDD_CQRS.v1.yaml — P217-F
+apiVersion: marpich.io/v1
+kind: BiotechnologySyntheticDddCqrs
+metadata:
+  phase: P217-F
+  adr: "505"
+spec:
+  commands:
+    - CreateSyntheticDesignCommand
+    - OptimizeDesignCommand
+    - StartEngineeringProjectCommand
+    - ValidateAssemblyCommand
+    - ApproveSyntheticReleaseCommand
+  queries:
+    - GetSyntheticPlatformQuery
+    - GetDesignQuery
+    - GetEngineeringProjectQuery
+    - GetSyntheticSystemQuery
+    - GetSafetyGovernanceQuery
+  events:
+    - SyntheticBiologyPlatformActivatedEvent
+    - SyntheticDesignCreatedEvent
+    - DesignOptimizedEvent
+    - EngineeringStartedEvent
+    - ValidationCompletedEvent
+    - SyntheticSystemCreatedEvent
+    - SystemImprovedEvent
+    - SyntheticSafetyViolationEvent

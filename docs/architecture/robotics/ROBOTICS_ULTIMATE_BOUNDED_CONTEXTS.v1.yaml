@@ -1,0 +1,24 @@
+# ROBOTICS_ULTIMATE_BOUNDED_CONTEXTS.v1.yaml — P216-Y
+apiVersion: marpich.io/v1
+kind: RoboticsUltimateBoundedContexts
+metadata:
+  phase: P216-Y
+  adr: "497"
+spec:
+  contexts:
+    - id: BC-01
+      name: Future Robotics Intelligence Context
+    - id: BC-02
+      name: Human-Machine Symbiosis Context
+    - id: BC-03
+      name: Autonomous Evolution Context
+    - id: BC-04
+      name: Cognitive Robotics Context
+    - id: BC-05
+      name: Robotics Knowledge Intelligence Context
+    - id: BC-06
+      name: Robotics Digital Twin Universe Context
+    - id: BC-07
+      name: Robotics Economy Context
+    - id: BC-08
+      name: Robotics Governance Context

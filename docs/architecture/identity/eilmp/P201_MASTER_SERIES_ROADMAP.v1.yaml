@@ -6,6 +6,22 @@ sor_context: identity_lifecycle
 forbidden_sibling_bc: eilmp
 
 phases:
+  - id: P201-A1
+    title: Series Foundation + SoR Alignment
+    status: done
+    adr: "227"
+    law: ENTERPRISE_IDENTITY_LIFECYCLE_MANAGEMENT_PLATFORM.md
+    catalogs:
+      - ARCH_EILMP.v1.yaml
+      - STATE_MACHINE.v1.yaml
+      - JML_WORKFLOWS.v1.yaml
+      - IDENTITY_TYPES.v1.yaml
+      - BOUNDARIES.v1.yaml
+    api:
+      - /api/v1/identity-lifecycle/eilmp/surface
+      - /api/v1/identity-lifecycle/state-machine
+      - /api/v1/identity-lifecycle/jml/*
+    note: SoR identity_lifecycle; forbid contexts/eilmp; JML + state aliases
   - id: P201-A
     title: Registration & Onboarding
     status: done
@@ -15,10 +31,11 @@ phases:
     note: Authoritative identity entry; approvals/rules delegated to Workflow/Policy
   - id: P201-A2
     title: Provisioning ACL + Workflow approvals
-    status: next
+    status: done
   - id: P201-A3
     title: Credential lifecycle orchestration
-    status: pending
+    status: done
+    note: Orchestrates via Identity + Authentication peers; never hashes in EILMP
   - id: P201-A4
     title: Directory sync + conflict resolution
     status: pending

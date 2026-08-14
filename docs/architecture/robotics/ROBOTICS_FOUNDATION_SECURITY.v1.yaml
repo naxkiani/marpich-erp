@@ -1,0 +1,27 @@
+# ROBOTICS_FOUNDATION_SECURITY.v1.yaml — P216
+apiVersion: marpich.io/v1
+kind: RoboticsFoundationSecurityCatalog
+metadata:
+  phase: P216
+  adr: "472"
+spec:
+  authn: JWT via Identity / API Gateway; machine identity for robots
+  authz:
+    permissions:
+      - robotics.read
+      - robotics.write
+      - robotics.admin
+      - robotics.ai.read
+      - robotics.ai.infer
+  tenant_isolation: mandatory
+  physical_autonomy: policy_workflow_and_safety_gated
+  zero_trust_robotics: true
+  ai_inference: AI Platform / P214-Z ACL only
+  quantum_coordination: P215-Z ACL only
+  external_connectors: Integration Platform only
+  audit: Audit Platform via integration events
+  never:
+    - ungated_physical_autonomy
+    - opaque_safety_decisions
+    - module_local_llm
+    - replace_core_or_ai_or_quantum

@@ -1,0 +1,23 @@
+# BIOTECHNOLOGY_BIO_AI_MODELS.v1.yaml — P217-E
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioAiModels
+metadata:
+  phase: P217-E
+  adr: "504"
+spec:
+  foundation_models:
+    - genome_intelligence
+    - protein_intelligence
+    - molecular_intelligence
+    - cell_intelligence
+    - biomedical_knowledge
+  engine_components:
+    - biological_reasoning
+    - biological_prediction
+    - scientific_discovery
+    - biological_recommendation
+  clic_components:
+    - life_intelligence_knowledge
+    - life_prediction
+    - life_optimization
+    - life_decision_intelligence

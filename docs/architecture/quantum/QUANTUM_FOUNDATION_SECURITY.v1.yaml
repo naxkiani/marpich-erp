@@ -1,0 +1,5 @@
+prompt_id: P215-A
+adr: '447'
+zero_trust: true
+pqc_remains_secrets: true
+via_p215_k: true

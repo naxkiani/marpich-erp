@@ -1,0 +1,15 @@
+# BIOTECHNOLOGY_BIO_SUSTAINABILITY_ARCHITECTURE.v1.yaml — P217-O
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioSustainabilityArchitecture
+metadata:
+  phase: P217-O
+  adr: "514"
+  fabric: meos_bio_sustainability_intelligence_fabric
+spec:
+  layers:
+    - L01_environmental_bio_data
+    - L02_environmental_biotechnology_intelligence
+    - L03_climate_biotechnology_intelligence
+    - L04_green_bio_economy
+    - L05_planetary_intelligence
+    - L06_governance

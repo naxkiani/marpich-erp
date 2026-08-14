@@ -1,0 +1,38 @@
+# P210-A — Cyber strategy validation gates
+version: "1.0"
+prompt_id: P210-A
+adr: "361"
+sor: cyber_security
+api_prefix: /api/v1/cyber-security/strategy
+
+required_artifacts:
+  - docs/adr/361-enterprise-cyber-security-strategy.md
+  - docs/architecture/ENTERPRISE_CYBER_SECURITY_STRATEGY.md
+  - docs/architecture/cyber_security/CYBER_STRATEGY_CAPABILITIES.v1.yaml
+  - docs/architecture/cyber_security/CYBER_STRATEGY_DDD_CQRS.v1.yaml
+  - docs/architecture/cyber_security/CYBER_STRATEGY_SECURITY.v1.yaml
+  - docs/architecture/cyber_security/CYBER_STRATEGY_VALIDATION.v1.yaml
+  - docs/architecture/cyber_security/P210_MASTER_SERIES_ROADMAP.v1.yaml
+  - backend/contexts/cyber_security/domain/services/cs_platform_strategy.py
+  - backend/contexts/cyber_security/domain/aggregates/cs_strategy_aggregates.py
+  - backend/contexts/cyber_security/infrastructure/acl/cs_strategy_acl.py
+  - backend/contexts/cyber_security/application/cs_strategy_foundation.py
+
+forbidden_siblings:
+  - backend/contexts/cyber_defense
+  - backend/contexts/threat_defense
+  - backend/contexts/soc_platform
+  - backend/contexts/siem_platform
+  - backend/contexts/soar_platform
+  - backend/contexts/xdr
+  - backend/contexts/edr
+  - backend/contexts/ndr
+  - backend/contexts/security_ops
+  - backend/contexts/security_operations
+  - backend/contexts/mdr_platform
+  - backend/contexts/cyber_fabric
+
+verdict_target: ENTERPRISE_GRADE
+min_capability_domains: 20
+min_event_count: 12
+min_cursor_outputs: 16

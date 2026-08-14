@@ -1,0 +1,22 @@
+# P214-N — SECURITY
+version: "1.0"
+prompt_id: P214-N
+adr: "434"
+sor: ai
+zero_trust: true
+integrates:
+  - P209
+  - P210
+  - P211
+  - P214-I
+implements:
+  - infrastructure_zero_trust
+  - workload_identity
+  - runtime_protection
+  - network_security
+  - encryption
+  - compliance_controls
+forbidden:
+  - module_local_gpu_scheduler
+  - hardcoded_cloud_credentials
+  - unisolated_ai_workloads

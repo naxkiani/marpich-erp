@@ -1,0 +1,53 @@
+# MERAF Master Series Roadmap (P257)
+
+series: P257
+title: MEOS Enterprise Runtime & Application Framework Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MERAF-001
+sor: enterprise_runtime
+fabric: meos_enterprise_runtime_application_framework_platform_framework
+api: /api/v1/enterprise-runtime*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P257
+    title: MERAF Foundation
+    status: planned
+    adr: "614"
+    fabric: meos_enterprise_runtime_application_framework_platform_framework
+    api: /api/v1/enterprise-runtime*
+  - id: P257-A
+    title: Runtime Foundation — Enterprise Shell Contracts, Module Registry ACL, Runtime API, Application Loader
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P257-B
+    title: Experience Platform — Command Center, Dynamic Navigation, Workspace Engine, Dashboard Framework
+    status: planned
+    adr: pending
+    window: 6-12_months
+    peer: P258
+  - id: P257-C
+    title: AI Native Runtime — AI Application Builder, Autonomous Configuration, Intelligent Optimization
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P257-D
+    title: Enterprise Operating System — Dynamic Applications, Autonomous Runtime Governance, Self-Optimizing ERP Ecosystem
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_module_registry: true
+  never_replace_plugin_platform: true
+  never_fork_plugins_api: true
+  never_dual_write_registry_or_plugin_catalogs: true
+  never_unsigned_third_party_load: true
+  never_local_feature_flag_store: true
+  never_replace_workflow_or_appshell: true
+  never_business_aggregates_in_runtime_sor: true
+  never_module_local_llm: true
+  never_bypass_zero_trust_policy_audit_on_activation: true
+  never_treat_generated_app_as_production_without_gates: true
+  foundation_for_p257_a: true
+  unblocks_p258_shell_command_center: true
+  peer_series_p258_mescc: true

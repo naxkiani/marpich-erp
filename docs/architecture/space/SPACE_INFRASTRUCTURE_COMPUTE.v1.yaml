@@ -1,0 +1,12 @@
+apiVersion: marpich.io/v1
+kind: SpaceInfrastructureCompute
+metadata:
+  prompt: P218-D
+  adr: "530"
+platforms:
+  ground_segment: true
+  mission_control: true
+  space_cloud: true
+  scientific_compute_cluster: true
+  gpu_cluster: true
+  quantum_integration_gateway: true

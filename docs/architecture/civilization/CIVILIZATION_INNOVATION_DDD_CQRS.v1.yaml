@@ -1,0 +1,58 @@
+# CIVILIZATION_INNOVATION_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationInnovationDddCqrs
+metadata:
+  prompt_id: P219-L
+  adr: "565"
+bounded_contexts:
+  - id: BC-INN-01
+    name: Innovation Intelligence Core
+    type: CORE
+    aggregate: InnovationAggregate
+  - id: BC-INN-02
+    name: Research Intelligence Context
+    type: CORE
+    aggregate: ResearchAggregate
+  - id: BC-INN-03
+    name: Technology Evolution Context
+    type: CORE
+    aggregate: TechnologyAggregate
+  - id: BC-INN-04
+    name: Innovation Network Context
+    type: SUPPORTING
+    aggregate: InnovationNetworkAggregate
+primary_aggregates:
+  - InnovationAggregate
+  - InnovationPortfolioAggregate
+  - ResearchAggregate
+  - TechnologyAggregate
+  - InnovationNetworkAggregate
+commands:
+  - CreateInnovationCommand
+  - RegisterResearchProjectCommand
+  - GenerateTechnologyRoadmapCommand
+  - OptimizeInnovationPortfolioCommand
+  - CreateCollaborationNetworkCommand
+  - RunInnovationSimulationCommand
+queries:
+  - GetInnovationStatusQuery
+  - GetResearchProgressQuery
+  - GetTechnologyForecastQuery
+  - GetInnovationPortfolioQuery
+  - GetCollaborationNetworkQuery
+  - GetInnovationImpactQuery
+events:
+  - InnovationCreatedEvent
+  - InnovationValidatedEvent
+  - InnovationScaledEvent
+  - InnovationCommercializedEvent
+  - ResearchInitiatedEvent
+  - ResearchCompletedEvent
+  - DiscoveryGeneratedEvent
+  - BreakthroughDetectedEvent
+  - TechnologyForecastUpdatedEvent
+  - TechnologyLifecycleChangedEvent
+  - DisruptionDetectedEvent
+  - CollaborationCreatedEvent
+  - KnowledgeSharedEvent
+  - InnovationClusterExpandedEvent

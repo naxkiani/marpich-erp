@@ -1,0 +1,407 @@
+# MEOS Application Registry — v1
+# Machine-readable catalog of REAL vs ASPIRATIONAL applications.
+# Status legend:
+#   live        — wired API + usable UI path
+#   api_only    — backend present; no dedicated UI (or shell-only)
+#   scaffold    — empty context package / promised only
+#   docs_only   — architecture/ADR series without context package
+#   missing_wire — listed in ROUTER_SPECS but package missing (skipped)
+# Verification: update `verified_at` + `evidence` when a task is proven.
+
+version: "1.0"
+platform: MEOS
+updated: "2026-08-11"
+one_platform_laws:
+  - ONE_IDENTITY
+  - ONE_NAVIGATION
+  - ONE_SEARCH
+  - ONE_AI
+  - ONE_NOTIFICATION_CENTER
+  - ONE_WORKFLOW_EXPERIENCE
+  - ONE_AUDIT_EXPERIENCE
+  - ONE_GOVERNANCE_MODEL
+  - MANY_DOMAIN_APPLICATIONS
+
+core_shell:
+  app: admin_portal
+  path: frontend/apps/admin_portal
+  status: live
+  gaps:
+    - shell_search_auth_wired_p0
+    - shell_notifications_auth_wired_p0
+    - registry_driven_nav_p0
+    - workflow_desk_p0
+    - mobile_nav_drawer_p0
+
+applications:
+  # --- Platform Core (ONE platform surfaces) ---
+  - id: identity
+    name: Identity & Access
+    tier: core
+    backend: contexts/identity
+    api_prefix: /api/v1/auth
+    ui_routes: [/login, /account/security, /account/mfa, /account/passkeys, /account/change-password]
+    status: live
+    persistence: memory_default_pg_available
+    verified_at: "2026-08-11"
+    evidence: JWT login + admin portal AuthProvider
+
+  - id: authorization
+    name: Authorization
+    tier: core
+    backend: contexts/authorization
+    api_prefix: /api/v1/authorization
+    ui_routes: []
+    status: api_only
+    notes: Shell must call check; no dedicated AuthZ UX
+
+  - id: core_platform
+    name: Core Platform / Tenants & Packs
+    tier: core
+    backend: contexts/core_platform
+    api_prefix: /api/v1/platform
+    ui_routes: [/]
+    status: live
+
+  - id: search
+    name: Enterprise Search
+    tier: core
+    backend: contexts/search
+    api_prefix: /api/v1/search
+    ui_routes: [shell:GlobalSearch]
+    status: live
+    notes: Shell must send JWT + X-Tenant-ID
+
+  - id: notifications
+    name: Notification Center
+    tier: core
+    backend: contexts/notifications
+    api_prefix: /api/v1/notifications
+    ui_routes: [/enterprise/notifications, shell:NotificationCenter]
+    status: live
+
+  - id: ai
+    name: AI Platform Assist
+    tier: core
+    backend: contexts/ai
+    api_prefix: /api/v1/ai
+    ui_routes: [shell:AIAssistantPanel]
+    status: live
+    notes: Assist surface; no durable AI ops desk
+
+  - id: workflow
+    name: Workflow Engine
+    tier: core
+    backend: contexts/workflow
+    api_prefix: /api/v1/workflow
+    ui_routes: [/enterprise/workflow]
+    status: live
+    notes: P0 desk added; designer still thin
+
+  - id: audit
+    name: Audit
+    tier: core
+    backend: contexts/audit
+    api_prefix: /api/v1/audit
+    ui_routes: [/enterprise/audit]
+    status: live
+
+  - id: documents
+    name: Document Exchange
+    tier: core
+    backend: contexts/documents
+    api_prefix: /api/v1/documents
+    ui_routes: [/enterprise/document-studio]
+    status: live
+
+  - id: policy
+    name: Policy Engine
+    tier: core
+    backend: contexts/policy
+    api_prefix: /api/v1/policies
+    ui_routes: []
+    status: api_only
+
+  - id: organization
+    name: Organization
+    tier: core
+    backend: contexts/organization
+    status: api_only
+
+  - id: settings
+    name: Settings
+    tier: core
+    backend: contexts/settings
+    status: api_only
+
+  - id: localization
+    name: Localization
+    tier: core
+    backend: contexts/localization
+    status: api_only
+
+  - id: integration
+    name: Integration Platform
+    tier: core
+    backend: contexts/integration
+    ui_routes: [/enterprise/integration-studio]
+    status: live
+
+  - id: analytics
+    name: Analytics
+    tier: core
+    backend: contexts/analytics
+    status: api_only
+
+  - id: messenger
+    name: Messenger
+    tier: supporting
+    backend: contexts/messenger
+    ui_routes: [/enterprise/messenger]
+    status: live
+
+  - id: plugins
+    name: Plugin Marketplace
+    tier: supporting
+    backend: contexts/plugins
+    ui_routes: [/enterprise/plugins]
+    status: live
+
+  - id: feature_flags
+    name: Feature Flags
+    tier: supporting
+    backend: contexts/feature_flags
+    status: api_only
+
+  # --- Healthcare (demo slice) ---
+  - id: hospital
+    name: Hospital
+    tier: domain
+    backend: contexts/hospital
+    ui_routes: [/healthcare/hospital]
+    status: live
+
+  - id: clinic
+    name: Clinic
+    tier: domain
+    backend: contexts/clinic
+    ui_routes: [/healthcare/clinic]
+    status: live
+
+  - id: pharmacy
+    name: Pharmacy
+    tier: domain
+    backend: contexts/pharmacy
+    ui_routes: [/healthcare/pharmacy]
+    status: live
+
+  - id: laboratory
+    name: Laboratory
+    tier: domain
+    backend: contexts/laboratory
+    ui_routes: [/healthcare/laboratory]
+    status: live
+
+  - id: university
+    name: University
+    tier: domain
+    backend: contexts/university
+    ui_routes: [/education/university]
+    status: live
+
+  - id: banking
+    name: Banking
+    tier: domain
+    backend: contexts/banking
+    ui_routes: [/banking/analytics]
+    status: live
+
+  - id: financial_kernel
+    name: Financial Kernel
+    tier: generic
+    backend: contexts/financial_kernel
+    status: api_only
+
+  - id: finance
+    name: Finance
+    tier: generic
+    backend: contexts/finance
+    status: api_only
+
+  - id: accounting
+    name: Accounting
+    tier: generic
+    backend: contexts/accounting
+    status: tested
+
+  - id: treasury
+    name: Treasury
+    tier: generic
+    backend: contexts/treasury
+    status: api_only
+
+  - id: inventory
+    name: Inventory
+    tier: generic
+    backend: contexts/inventory
+    status: tested
+
+  - id: pos
+    name: POS
+    tier: domain
+    backend: contexts/pos
+    status: api_only
+
+  - id: municipality
+    name: Municipality
+    tier: domain
+    backend: contexts/municipality
+    status: api_only
+
+  # --- Scaffolds (promised, empty) ---
+  - id: tax
+    name: Tax
+    tier: generic
+    backend: contexts/tax
+    status: scaffold
+  - id: sales
+    name: Sales
+    tier: generic
+    backend: contexts/sales
+    status: tested
+  - id: crm
+    name: CRM
+    tier: generic
+    backend: contexts/crm
+    status: tested
+  - id: human_resources
+    name: Human Resources
+    tier: generic
+    backend: contexts/human_resources
+    status: scaffold
+  - id: payroll
+    name: Payroll
+    tier: generic
+    backend: contexts/payroll
+    status: scaffold
+  - id: procurement
+    name: Procurement
+    tier: generic
+    backend: contexts/procurement
+    status: tested
+  - id: warehouse
+    name: Warehouse
+    tier: generic
+    backend: contexts/warehouse
+    status: scaffold
+  - id: manufacturing
+    name: Manufacturing
+    tier: domain
+    backend: contexts/manufacturing
+    status: scaffold
+  - id: construction
+    name: Construction
+    tier: domain
+    backend: contexts/construction
+    status: scaffold
+  - id: real_estate
+    name: Real Estate
+    tier: domain
+    backend: contexts/real_estate
+    status: scaffold
+  - id: hotel
+    name: Hotel
+    tier: domain
+    backend: contexts/hotel
+    status: scaffold
+  - id: restaurant
+    name: Restaurant
+    tier: domain
+    backend: contexts/restaurant
+    status: scaffold
+  - id: school
+    name: School
+    tier: domain
+    backend: contexts/school
+    status: scaffold
+  - id: government
+    name: Government
+    tier: domain
+    backend: contexts/government
+    status: scaffold
+  - id: ngo
+    name: NGO
+    tier: domain
+    backend: contexts/ngo
+    status: scaffold
+  - id: islamic_banking
+    name: Islamic Banking
+    tier: domain
+    backend: contexts/islamic_banking
+    status: scaffold
+  - id: currency_exchange
+    name: Currency Exchange
+    tier: domain
+    backend: contexts/currency_exchange
+    status: scaffold
+  - id: projects
+    name: Projects
+    tier: generic
+    backend: contexts/projects
+    status: scaffold
+
+  # --- Productization series (docs/ADR; no SoR context yet) ---
+  - id: p308_medcim
+    name: Document Intelligence (MEDCIM)
+    tier: productization
+    status: docs_only
+    adr: "665"
+  - id: p309_merilg
+    name: Records Lifecycle (MERILG)
+    tier: productization
+    status: docs_only
+    adr: "666"
+  - id: p310_meigsi
+    name: Information Classification (MEIGSI)
+    tier: productization
+    status: docs_only
+    adr: "667"
+  - id: p311_dlp
+    name: DLP / Information Protection
+    tier: productization
+    status: docs_only
+    stub: ENTERPRISE_MEOS_DATA_LOSS_PREVENTION_INFORMATION_PROTECTION_ADAPTIVE_DATA_SECURITY_CONTROL_PLATFORM.md
+
+execution_backlog:
+  p0:
+    - id: P0-SHELL-AUTH-SEARCH
+      title: Authenticate GlobalSearch (JWT + tenant)
+      status: in_progress
+    - id: P0-SHELL-AUTH-NOTIF
+      title: Authenticate NotificationCenter + mark-read
+      status: in_progress
+    - id: P0-SHELL-REGISTRY-NAV
+      title: Registry-driven navigation + command palette
+      status: in_progress
+    - id: P0-WORKFLOW-DESK
+      title: Workflow desk (definitions + tasks)
+      status: in_progress
+    - id: P0-MOBILE-NAV
+      title: Mobile nav drawer
+      status: pending
+    - id: P0-ROUTE-GUARD
+      title: Protect / and /modules; unify session
+      status: pending
+  p1:
+    - id: P1-PERSISTENCE-DEFAULT
+      title: Document + enable Postgres path for local/prod
+      status: pending
+    - id: P1-ROUTER-CLEANUP
+      title: Remove or stub missing ROUTER_SPECS packages honestly
+      status: pending
+    - id: P1-CI-SMOKE
+      title: Platform smoke CI (identity + shell APIs + one domain)
+      status: pending
+    - id: P1-DATATABLE-PAGINATION
+      title: Server-side pagination on DataTable
+      status: pending

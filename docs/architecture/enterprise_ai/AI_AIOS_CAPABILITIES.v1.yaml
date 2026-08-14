@@ -1,0 +1,42 @@
+# P214-T — CAPABILITIES
+version: "1.0"
+prompt_id: P214-T
+adr: "440"
+sor: ai
+capability: CAP-PLT-AI-001
+api_prefix: /api/v1/ai/aios
+fabric: meos_ai_operating_system_layer
+principle: >-
+  Enterprise AI Operating System SHALL become the intelligent control plane
+  that manages, coordinates, governs and evolves all AI capabilities across
+  MEOS.
+builds_on:
+  - P214-G
+  - P214-P
+  - P214-Q
+  - P214-R
+  - P214-S
+  - ADR-436
+  - ADR-437
+  - ADR-438
+  - ADR-439
+enterprise_ai_operating_system_present_required: true
+ai_control_plane_present_required: true
+autonomous_orchestration_present_required: true
+ai_command_center_present_required: true
+ai_capability_management_present_required: true
+ai_policy_control_present_required: true
+ai_decision_governance_present_required: true
+ai_lifecycle_management_present_required: true
+ai_knowledge_graph_present_required: true
+ai_digital_twin_present_required: true
+cqrs_architecture_present_required: true
+event_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_architecture_present_required: true
+zero_trust_ai_security_present_required: true
+cloud_native_deployment_present_required: true
+sibling_ai_bc_forbidden: true
+module_local_aios_forbidden: true
+deepens_p214_s_control_plane: true
+governed_by_p214_p: true

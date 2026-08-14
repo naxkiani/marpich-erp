@@ -1,0 +1,28 @@
+# P214-D — SECURITY
+version: "1.0"
+prompt_id: P214-D
+adr: "424"
+sor: ai
+capability: CAP-PLT-AI-001
+zero_trust: true
+privacy_by_design: true
+via_p207: true
+via_p208: true
+via_p209: true
+via_p210: true
+via_p211: true
+controls:
+  - model_access_control
+  - dataset_protection
+  - training_security
+  - artifact_security
+  - model_signing
+  - audit_logging
+  - ai_risk_controls
+forbidden:
+  - unsigned_model_artifacts
+  - module_local_training_sdk
+  - feature_store_without_p212
+permissions:
+  - ai.assist.read
+  - ai.platform.read

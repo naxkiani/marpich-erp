@@ -1,0 +1,26 @@
+# CIVILIZATION_PLANETARY_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationPlanetarySecurity
+metadata:
+  prompt_id: P219-D
+  adr: "557"
+permissions:
+  - civilization.read
+  - civilization.planetary.read
+  - civilization.planetary.write
+  - civilization.ai.read
+  - civilization.ai.infer
+locks:
+  never_module_local_llm: true
+  never_ungated_planetary_decision_autonomy: true
+  never_direct_physical_control_without_workflow_gate: true
+  never_opaque_unexplainable_planetary_decisions: true
+  never_skip_human_authority_planetary: true
+  never_violate_human_sovereignty_planetary: true
+  never_skip_ethical_planetary_governance: true
+  satellite_iot_ingress_via_integration_platform: true
+  inference_via_p214_z_only: true
+  actuation_via_p216_z_acl: true
+audit:
+  required_on: [mutations, simulations, optimization_recommendations, risk_predictions]
+tenant_isolation: required

@@ -1,0 +1,28 @@
+# P214-E — SECURITY
+version: "1.0"
+prompt_id: P214-E
+adr: "425"
+sor: ai
+zero_trust: true
+integrates:
+  - P207
+  - P208
+  - P209
+  - P210
+  - P211
+controls:
+  - prompt_security
+  - model_security
+  - data_protection
+  - ai_access_control
+  - content_safety
+  - hallucination_management
+  - explainability
+  - auditability
+permissions:
+  - ai.assist.read
+  - ai.assist.infer
+forbidden:
+  - module_local_llm_sdk
+  - unsigned_models_in_production
+  - sibling_ai_bc

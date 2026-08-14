@@ -1,0 +1,30 @@
+# BIOTECHNOLOGY_CLINICAL_RESEARCH_MODELS.v1.yaml — P217-J
+apiVersion: marpich.io/v1
+kind: BiotechnologyClinicalResearchModels
+metadata:
+  phase: P217-J
+  adr: "509"
+spec:
+  ai_clinical_trial_components:
+    - clinical_trial_design_intelligence
+    - patient_recruitment_intelligence
+    - trial_simulation_engine
+    - trial_monitoring_intelligence
+    - clinical_outcome_prediction_engine
+  discovery_capabilities:
+    - scientific_literature_intelligence
+    - hypothesis_generation_engine
+    - research_planning_intelligence
+    - innovation_discovery_engine
+  automation_domains:
+    - research_workflow_automation
+    - laboratory_intelligence_integration
+    - data_analysis_automation
+    - scientific_reporting_automation
+  agents:
+    - clinical_trial_architect_agent
+    - research_discovery_agent
+    - literature_intelligence_agent
+    - patient_recruitment_agent
+    - regulatory_research_agent
+    - innovation_strategy_agent

@@ -9,6 +9,13 @@ class RegisterLifecycleRequest(BaseModel):
     display_name: str
     identity_ref: str | None = None
     user_id: str | None = None
+    identity_type: str = "employee"
+
+
+class JmlApplyRequest(BaseModel):
+    action: str
+    reason: str = ""
+    metadata: dict = {}
 
 
 class RegisterIdentityRequest(BaseModel):

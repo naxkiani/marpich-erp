@@ -1,0 +1,40 @@
+# P213-D — VALIDATION
+version: "1.0"
+prompt_id: P213-D
+adr: "408"
+sor: analytics
+capability: CAP-PLT-BI-001
+principle: Enterprise reporting SHALL not only describe what happened, it SHALL explain why it happened and what should happen next.
+fabric: meos_enterprise_intelligence_experience_fabric
+reject_if:
+  - enterprise_reporting_platform_is_missing
+  - dashboard_architecture_is_missing
+  - visualization_platform_is_missing
+  - self_service_bi_capability_is_missing
+  - ai_reporting_intelligence_is_missing
+  - real_time_analytics_experience_is_missing
+  - cqrs_architecture_is_missing
+  - event_driven_design_is_missing
+  - microservice_architecture_is_missing
+  - api_first_architecture_is_missing
+  - security_governance_is_missing
+  - enterprise_scalability_is_missing
+  - reporting_architecture_is_incomplete
+  - knowledge_graph_visualization_is_missing
+  - digital_twin_visualization_is_missing
+  - sibling_business_intelligence_bc
+verdict_required: ENTERPRISE_GRADE
+definition_of_done:
+  - reporting_platform
+  - dashboard_platform
+  - visualization_platform
+  - self_service_bi
+  - ai_reporting
+  - knowledge_graph_visualization
+  - digital_twin_visualization
+  - cqrs_architecture
+  - event_architecture
+  - microservice_architecture
+  - api_architecture
+  - security_architecture
+  - deployment_architecture

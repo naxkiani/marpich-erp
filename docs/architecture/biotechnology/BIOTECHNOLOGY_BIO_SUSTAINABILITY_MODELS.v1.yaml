@@ -1,0 +1,28 @@
+# BIOTECHNOLOGY_BIO_SUSTAINABILITY_MODELS.v1.yaml — P217-O
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioSustainabilityModels
+metadata:
+  phase: P217-O
+  adr: "514"
+spec:
+  environmental_domains:
+    - bioremediation_intelligence
+    - waste_biotechnology_intelligence
+    - water_biotechnology_intelligence
+    - biodiversity_intelligence
+  climate_capabilities:
+    - carbon_intelligence_engine
+    - climate_adaptation_intelligence
+    - climate_simulation_engine
+  green_economy_domains:
+    - bio_based_manufacturing
+    - circular_bio_economy
+    - sustainable_agriculture_biotechnology
+    - green_innovation_ecosystem
+  agents:
+    - environmental_monitoring_agent
+    - climate_intelligence_agent
+    - carbon_optimization_agent
+    - circular_economy_agent
+    - biodiversity_guardian_agent
+    - sustainability_strategy_agent

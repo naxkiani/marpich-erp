@@ -1,0 +1,21 @@
+# P214-S — SECURITY
+version: "1.0"
+prompt_id: P214-S
+adr: "439"
+zero_trust: true
+controls:
+  - research_access_control
+  - sandbox_isolation
+  - prototype_release_gates
+  - scientific_asset_protection
+  - adoption_governance
+integrations:
+  - P207
+  - P208
+  - P209
+  - P210
+  - P214-P
+forbidden:
+  - uncontrolled_research_to_production_promotion
+  - module_local_shadow_labs
+  - bypassing_trust_and_quality_gates

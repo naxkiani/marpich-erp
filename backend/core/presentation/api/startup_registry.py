@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import importlib
+import importlib.util
 import logging
 from typing import TYPE_CHECKING
 
@@ -10,9 +11,96 @@ from core.presentation.api.app_profiles import filter_specs_by_profile
 if TYPE_CHECKING:
     from fastapi import FastAPI
 
-logger = logging.getLogger("marpich.startup")
+logger = logging.getLogger(__name__)
 
 API_PREFIX = "/api/v1"
+
+# Modules omitted because the package/module is not present (Wave 01 honesty).
+OMITTED_ROUTER_MODULES: list[str] = []
+OMITTED_SERVICE_MODULES: list[str] = []
+
+# Packages without installable routers/services — keep out of live registration (P0 honesty).
+# Empty scaffolds + missing packages. Re-add only when code + migrations exist.
+DEFERRED_CONTEXT_IDS: frozenset[str] = frozenset(
+    {
+        # Empty industry scaffolds (placeholder trees only)
+        "currency_exchange",
+        "construction",
+        "government",
+        "hotel",
+        "islamic_banking",
+        "manufacturing",
+        "ngo",
+        "projects",
+        "real_estate",
+        "restaurant",
+        "school",
+        "warehouse",
+        # Missing packages referenced by historical ROUTER/SERVICE_SPECS
+        "adaptive_authentication",
+        "ai_cfo_assistant",
+        "ai_governance",
+        "ai_security",
+        "data_protection",
+        "enterprise_api_gateway",
+        "enterprise_automation_platform",
+        "enterprise_decision_support",
+        "enterprise_event_bus",
+        "enterprise_executive_dashboard",
+        "enterprise_forecasting",
+        "enterprise_integration_security",
+        "enterprise_message_orchestration",
+        "enterprise_reliability_platform",
+        "enterprise_saga_orchestration",
+        "enterprise_webhook_platform",
+        "financial_ai_analytics",
+        "financial_anomaly_detection",
+        "financial_data_science",
+        "financial_kpi",
+        "fraud_detection",
+        "grc",
+        "mfa",
+        "natural_language_analytics",
+        "reporting",
+        "security",
+    }
+)
+
+
+def _context_id_from_module(module_path: str) -> str | None:
+    parts = module_path.split(".")
+    if len(parts) >= 2 and parts[0] == "contexts":
+        return parts[1]
+    return None
+
+
+def _module_available(module_path: str) -> bool:
+    """Return False when importlib cannot find the module (no silent OpenAPI ghosts)."""
+    ctx = _context_id_from_module(module_path)
+    if ctx and ctx in DEFERRED_CONTEXT_IDS:
+        return False
+    try:
+        return importlib.util.find_spec(module_path) is not None
+    except (ModuleNotFoundError, ValueError, AttributeError):
+        return False
+
+
+def filter_available_specs(
+    specs: list[tuple[str, str]],
+    *,
+    kind: str,
+) -> list[tuple[str, str]]:
+    available: list[tuple[str, str]] = []
+    omitted = OMITTED_ROUTER_MODULES if kind == "router" else OMITTED_SERVICE_MODULES
+    for module_path, attr in specs:
+        if not _module_available(module_path):
+            if module_path not in omitted:
+                omitted.append(module_path)
+                logger.info("Omitting unavailable %s module %s", kind, module_path)
+            continue
+        available.append((module_path, attr))
+    return available
+
 
 # Eager-loaded at startup in lazy mode (auth, policy, platform shell).
 CORE_SERVICE_SPECS: list[tuple[str, str]] = [
@@ -27,7 +115,6 @@ CORE_SERVICE_SPECS: list[tuple[str, str]] = [
     ("contexts.identity_federation.container", "get_identity_federation_service"),
     ("contexts.identity_digital_twin.container", "get_identity_digital_twin_service"),
     ("contexts.identity_intelligence.container", "get_identity_intelligence_service"),
-    ("contexts.consent.container", "get_consent_service"),
     ("contexts.identity_federation.container", "get_fabric_security_service"),
     ("contexts.identity_federation.container", "get_fabric_intelligence_service"),
     ("contexts.identity_federation.container", "get_identity_federation_ai_service"),
@@ -66,12 +153,18 @@ ALL_SERVICE_SPECS: list[tuple[str, str]] = [
     ("contexts.messenger.container", "get_messenger_service"),
     ("contexts.ai.container", "get_ai_service"),
     ("contexts.clinic.container", "get_clinic_service"),
+    ("contexts.crm.container", "get_crm_service"),
+    ("contexts.human_resources.container", "get_human_resources_service"),
+    ("contexts.payroll.container", "get_payroll_service"),
+    ("contexts.tax.container", "get_tax_service"),
+    ("contexts.sales.container", "get_sales_service"),
     ("contexts.pharmacy.container", "get_pharmacy_service"),
     ("contexts.laboratory.container", "get_laboratory_service"),
     ("contexts.university.container", "get_university_service"),
     ("contexts.municipality.container", "get_municipality_service"),
     ("contexts.pos.container", "get_pos_service"),
     ("contexts.inventory.container", "get_inventory_service"),
+    ("contexts.procurement.container", "get_procurement_service"),
     ("contexts.localization.container", "get_localization_service"),
     ("contexts.policy.container", "get_policy_service"),
     ("contexts.policy.container", "get_enterprise_policy_service"),
@@ -85,7 +178,14 @@ ALL_SERVICE_SPECS: list[tuple[str, str]] = [
     ("contexts.regulatory_reporting.container", "get_enterprise_regulatory_reporting_service"),
     ("contexts.identity_governance.container", "get_identity_governance_service"),
     ("contexts.secrets.container", "get_secrets_service"),
+    ("contexts.cyber_security.container", "get_cyber_security_service"),
+    ("contexts.data_security.container", "get_data_security_service"),
     ("contexts.data_governance.container", "get_data_governance_service"),
+    ("contexts.quantum.container", "get_quantum_service"),
+    ("contexts.robotics.container", "get_robotics_service"),
+    ("contexts.biotechnology.container", "get_biotechnology_service"),
+    ("contexts.space.container", "get_space_service"),
+    ("contexts.civilization.container", "get_civilization_service"),
     ("contexts.enterprise_executive_dashboard.container", "get_enterprise_executive_dashboard_service"),
     ("contexts.enterprise_decision_support.container", "get_enterprise_decision_support_service"),
     ("contexts.financial_data_science.container", "get_financial_data_science_service"),
@@ -135,7 +235,6 @@ ALL_SERVICE_SPECS: list[tuple[str, str]] = [
     ("contexts.currency_exchange.container", "get_fx_workflow_engine_service"),
     ("contexts.currency_exchange.container", "get_fx_security_platform_service"),
     ("contexts.currency_exchange.container", "get_fx_analytics_platform_service"),
-    ("contexts.digital_exchange.container", "get_digital_exchange_layer_service"),
     ("contexts.tax.container", "get_tax_engine_service"),
     ("contexts.tax.container", "get_tax_rule_engine_service"),
     ("contexts.tax.container", "get_tax_calculation_service"),
@@ -191,7 +290,6 @@ ROUTER_SPECS: list[tuple[str, str]] = [
     ("contexts.identity_federation.presentation.router", "identity_federation_router"),
     ("contexts.identity_digital_twin.presentation.router", "identity_digital_twin_router"),
     ("contexts.identity_intelligence.presentation.router", "identity_intelligence_router"),
-    ("contexts.consent.presentation.router", "consent_router"),
     ("contexts.identity_federation.presentation.gateway_router", "federation_gateway_router"),
     ("contexts.identity_federation.presentation.gateway_router", "identity_gateway_router"),
     ("contexts.identity_federation.presentation.fabric_router", "fabric_security_router"),
@@ -220,6 +318,8 @@ ROUTER_SPECS: list[tuple[str, str]] = [
     ("contexts.audit.presentation.enterprise_audit_router", "enterprise_audit_router"),
     ("contexts.documents.presentation.router", "router"),
     ("contexts.human_resources.presentation.router", "router"),
+    ("contexts.payroll.presentation.router", "router"),
+    ("contexts.tax.presentation.router", "router"),
     ("contexts.workflow.presentation.router", "router"),
     ("contexts.workflow.presentation.workflow_designer_router", "workflow_designer_router"),
     ("contexts.workflow.presentation.exception_management_router", "exception_management_router"),
@@ -237,12 +337,15 @@ ROUTER_SPECS: list[tuple[str, str]] = [
     ("contexts.messenger.presentation.router", "router"),
     ("contexts.ai.presentation.router", "router"),
     ("contexts.clinic.presentation.router", "router"),
+    ("contexts.crm.presentation.router", "router"),
+    ("contexts.sales.presentation.router", "router"),
     ("contexts.pharmacy.presentation.router", "router"),
     ("contexts.laboratory.presentation.router", "router"),
     ("contexts.university.presentation.router", "router"),
     ("contexts.municipality.presentation.router", "router"),
     ("contexts.pos.presentation.router", "router"),
     ("contexts.inventory.presentation.router", "router"),
+    ("contexts.procurement.presentation.router", "router"),
     ("contexts.localization.presentation.router", "router"),
     ("contexts.policy.presentation.router", "router"),
     ("contexts.policy.presentation.enterprise_policy_router", "enterprise_policy_router"),
@@ -256,7 +359,14 @@ ROUTER_SPECS: list[tuple[str, str]] = [
     ("contexts.regulatory_reporting.presentation.router", "enterprise_regulatory_reporting_router"),
     ("contexts.identity_governance.presentation.router", "identity_governance_router"),
     ("contexts.secrets.presentation.router", "secrets_router"),
+    ("contexts.cyber_security.presentation.router", "cyber_security_router"),
+    ("contexts.data_security.presentation.router", "data_security_router"),
     ("contexts.data_governance.presentation.router", "data_governance_router"),
+    ("contexts.quantum.presentation.router", "quantum_router"),
+    ("contexts.robotics.presentation.router", "robotics_router"),
+    ("contexts.biotechnology.presentation.router", "biotechnology_router"),
+    ("contexts.space.presentation.router", "space_router"),
+    ("contexts.civilization.presentation.router", "civilization_router"),
     ("contexts.enterprise_executive_dashboard.presentation.router", "enterprise_executive_dashboard_router"),
     ("contexts.enterprise_decision_support.presentation.router", "enterprise_decision_support_router"),
     ("contexts.financial_data_science.presentation.router", "financial_data_science_router"),
@@ -346,7 +456,6 @@ ROUTER_SPECS: list[tuple[str, str]] = [
     ("contexts.currency_exchange.presentation.fx_workflow_router", "fx_workflow_router"),
     ("contexts.currency_exchange.presentation.fx_security_router", "fx_security_router"),
     ("contexts.currency_exchange.presentation.fx_analytics_router", "fx_analytics_router"),
-    ("contexts.digital_exchange.presentation.digital_exchange_router", "digital_exchange_router"),
     ("contexts.tax.presentation.tax_router", "tax_router"),
     ("contexts.tax.presentation.tax_rule_router", "tax_rule_router"),
     ("contexts.tax.presentation.tax_calculation_router", "tax_calculation_router"),
@@ -412,23 +521,24 @@ def service_specs_for_profile(profile: str, startup_mode: str) -> list[tuple[str
 def register_routers(app: "FastAPI", *, profile: str = "full") -> int:
     app_id = id(app)
     if _registered_profiles.get(app_id) == profile:
-        return len(router_specs_for_profile(profile))
-    specs = router_specs_for_profile(profile)
-    mounted = 0
+        return len(filter_available_specs(router_specs_for_profile(profile), kind="router"))
+    specs = filter_available_specs(router_specs_for_profile(profile), kind="router")
+    registered = 0
     for module_path, attr in specs:
         try:
             app.include_router(resolve_router(module_path, attr), prefix=API_PREFIX)
-            mounted += 1
+            registered += 1
         except (ModuleNotFoundError, ImportError, AttributeError) as exc:
             logger.warning("Skipping router %s.%s — %s", module_path, attr, exc)
     _registered_profiles[app_id] = profile
-    return mounted
+    return registered
 
 
 def warmup_services(app: "FastAPI", specs: list[tuple[str, str]]) -> int:
     app_id = id(app)
     warmed = 0
-    for module_path, getter in specs:
+    available = filter_available_specs(specs, kind="service")
+    for module_path, getter in available:
         try:
             resolve_service(module_path, getter)
             warmed += 1
@@ -456,7 +566,10 @@ def configure_application(
         "startup_mode": mode,
         "routes": routes,
         "services": services,
+        "omitted_routers": list(OMITTED_ROUTER_MODULES),
+        "omitted_services": list(OMITTED_SERVICE_MODULES),
     }
+
 
 
 def reset_startup_state() -> None:

@@ -1,0 +1,33 @@
+# ROBOTICS_SCIENCE_LAB.v1.yaml — P216-V
+apiVersion: marpich.io/v1
+kind: RoboticsScienceLabCatalog
+metadata:
+  phase: P216-V
+  adr: "494"
+  fabric: meos_scientific_intelligence_fabric
+spec:
+  science_robotics:
+    platform: meos_science_robotics_platform
+    components:
+      - scientific_robot_registry
+      - laboratory_robot_controller
+      - experiment_automation_engine
+      - research_instrument_manager
+      - scientific_mission_planner
+      - robotic_laboratory_dashboard
+    supported_robotics:
+      - laboratory_manipulation_robots
+      - microscopy_robots
+      - chemical_experiment_robots
+      - biological_research_robots
+      - material_science_robots
+      - scientific_inspection_robots
+  autonomous_laboratory:
+    platform: meos_autonomous_laboratory_intelligence_platform
+  ai_scientist:
+    engine: meos_ai_scientist_engine
+    via_p214_z: true
+  scientific_digital_twin:
+    platform: meos_scientific_digital_twin_platform
+  scientific_knowledge_graph:
+    graph: meos_scientific_knowledge_graph

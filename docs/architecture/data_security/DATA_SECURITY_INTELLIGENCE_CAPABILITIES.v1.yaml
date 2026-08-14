@@ -1,0 +1,39 @@
+# P211-K — Intelligence graph capabilities
+version: "1.0"
+prompt_id: P211-K
+adr: "386"
+sor: data_security
+capability: CAP-PLT-DS-001
+api_prefix: /api/v1/data-security/intelligence
+builds_on:
+  - P211-A
+  - P211-B
+  - P211-C
+  - P211-D
+  - P211-E
+  - P211-F
+  - P211-G
+  - P211-H
+  - P211-I
+  - P211-J
+  - ADR-385
+
+data_origin_known_required: true
+data_movement_visible_required: true
+metadata_complete_required: true
+relationships_queryable_required: true
+impact_analysis_available_required: true
+ai_reasoning_over_context_required: true
+sibling_intelligence_bc_forbidden: true
+via_p211_d_discovery: true
+via_p211_e_classification: true
+via_p211_g_dlp: true
+via_p211_h_access: true
+via_p211_j_protection: true
+via_p207: true
+via_p208: true
+via_p209: true
+via_p210: true
+via_enterprise_ai: true
+via_enterprise_search: true
+via_integration_platform: true

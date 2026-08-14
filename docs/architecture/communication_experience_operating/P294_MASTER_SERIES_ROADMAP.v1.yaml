@@ -1,0 +1,85 @@
+# MENCOE Master Series Roadmap (P294)
+
+series: P294
+title: MEOS Enterprise Notification, Communication & Omnichannel Event Experience Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MENCOE-001
+sor: communication_experience_operating
+fabric: meos_enterprise_notification_communication_omnichannel_event_experience_platform_framework
+api: /api/v1/communication-experience-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P294
+    title: MENCOE Foundation
+    status: planned
+    adr: "651"
+    fabric: meos_enterprise_notification_communication_omnichannel_event_experience_platform_framework
+    api: /api/v1/communication-experience-operating*
+  - id: P294-A
+    title: Communication Foundation — Notification/Message/Template/Channel/Recipient Registries, Basic Delivery, Basic Tracking
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P294-B
+    title: Orchestration — Rules, Audience, Consent, Preferences, Channel Selection, Priority, Scheduling, Retry, Escalation
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P294-C
+    title: Omnichannel Experience — Email, SMS, Push, In-App, Web, Voice, Collaboration, Webhook, Provider Abstraction
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P294-D
+    title: Intelligence — Delivery/Engagement/Risk, Personalization, Localization, Analytics, AI Copilot
+    status: planned
+    adr: pending
+    window: 12-24_months
+  - id: P294-E
+    title: Autonomous Communication — Predictive Channels, AI Journey Optimization, Gated Autonomous Escalation, Self-Healing Delivery
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_notifications_platform: true
+  never_replace_p291_integration_architecture_operating: true
+  never_replace_p292_api_management_operating: true
+  never_replace_p293_event_streaming_operating: true
+  never_replace_p260_workflow: true
+  never_own_event_transport: true
+  never_merge_p291_p292_p293_p294_p295: true
+  never_fork_notifications_api: true
+  never_dual_write_notifications_tables: true
+  never_dual_write_financial_ledgers: true
+  never_embed_provider_sdks_in_domain: true
+  never_local_metrics_stores: true
+  never_local_approval_or_workflow_engines: true
+  never_ungated_omnichannel_sends: true
+  never_communication_without_policy: true
+  never_consent_required_send_without_consent: true
+  never_sensitive_send_without_security_validation: true
+  never_ai_sensitive_send_without_validation_policy_audit: true
+  versioned_templates_and_communication_definitions: true
+  cost_metering_only_billing_via_financial_peers: true
+  ai_recommendation_requires_evidence_confidence_policy_human_approval: true
+  simulation_not_execute: true
+  autonomous_requires_policy_consent_authorization_audit_human_governance: true
+  never_module_local_llm: true
+  foundation_for_p294_a: true
+  unblocks_p295_experience_personalization_customer_journey_context_aware_interaction_os: true
+  unblocks_p296_experience_intelligence_voice_conversational_multimodal_interaction_os: true
+  unblocks_p297_ai_interaction_agentic_workspace_human_ai_collaboration_os: true
+  unblocks_p298_agentic_process_automation_autonomous_enterprise_execution_os: true
+  unblocks_p299_process_mining_process_intelligence_continuous_optimization_os: true
+  unblocks_p300_process_automation_marketplace_reusable_process_intelligence_os: true
+  unblocks_p301_process_composer_low_code_no_code_visual_automation_os: true
+  unblocks_p302_process_testing_simulation_quality_assurance_digital_process_validation_os: true
+  unblocks_p303_process_release_deployment_environment_lifecycle_os: true
+  unblocks_p304_process_observability_monitoring_sla_slo_continuous_operational_intelligence_os: true
+  unblocks_p305_incident_management_service_reliability_resilience_engineering_os: true
+  unblocks_p306_itsm_service_catalog_request_fulfillment_enterprise_service_operations_os: true
+  unblocks_p307_knowledge_centered_service_enterprise_knowledge_management_organizational_learning_os: true
+  unblocks_p308_document_intelligence_content_lifecycle_intelligent_information_management_os: true
+  unblocks_p309_records_retention_legal_hold_information_lifecycle_governance_os: true
+  unblocks_p310_information_governance_data_classification_sensitive_information_intelligence_os: true
+  unblocks_p311_data_loss_prevention_information_protection_adaptive_data_security_control_os: true

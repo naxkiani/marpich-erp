@@ -15,7 +15,7 @@ from contexts.security_incident.domain.aggregates.incident_platform import (
 PLATFORM_CATALOG: dict[str, dict] = {
     IncidentCapability.INCIDENT_DETECTION.value: {
         "label": "Incident Detection",
-        "delegates_to": "security",
+        "delegates_to": "cyber_security",
         "no_duplication": True,
     },
     IncidentCapability.INCIDENT_CLASSIFICATION.value: {"label": "Incident Classification"},
@@ -49,13 +49,13 @@ POLICY_KEYS = [
 ]
 
 CLASSIFICATION_DELEGATION: dict[str, str | None] = {
-    IncidentClassification.CYBER.value: "security",
+    IncidentClassification.CYBER.value: "cyber_security",
     IncidentClassification.DATA_BREACH.value: "data_protection",
-    IncidentClassification.UNAUTHORIZED_ACCESS.value: "security",
-    IncidentClassification.MALWARE.value: "security",
-    IncidentClassification.PHISHING.value: "security",
-    IncidentClassification.INSIDER_THREAT.value: "security",
-    IncidentClassification.DDOS.value: "security",
+    IncidentClassification.UNAUTHORIZED_ACCESS.value: "cyber_security",
+    IncidentClassification.MALWARE.value: "cyber_security",
+    IncidentClassification.PHISHING.value: "cyber_security",
+    IncidentClassification.INSIDER_THREAT.value: "cyber_security",
+    IncidentClassification.DDOS.value: "cyber_security",
     IncidentClassification.COMPLIANCE_VIOLATION.value: "grc",
     IncidentClassification.PHYSICAL_SECURITY.value: None,
 }
@@ -67,7 +67,7 @@ DEFAULT_SEED_INCIDENTS: list[dict] = [
         "classification": IncidentClassification.UNAUTHORIZED_ACCESS.value,
         "severity": IncidentSeverity.HIGH.value,
         "status": IncidentStatus.INVESTIGATING.value,
-        "delegated_to": "security",
+        "delegated_to": "cyber_security",
     },
     {
         "title": "Suspicious outbound data transfer",
@@ -83,7 +83,7 @@ DEFAULT_SEED_INCIDENTS: list[dict] = [
         "classification": IncidentClassification.PHISHING.value,
         "severity": IncidentSeverity.MEDIUM.value,
         "status": IncidentStatus.CLASSIFIED.value,
-        "delegated_to": "security",
+        "delegated_to": "cyber_security",
     },
     {
         "title": "Ransomware signature on endpoint",
@@ -91,7 +91,7 @@ DEFAULT_SEED_INCIDENTS: list[dict] = [
         "classification": IncidentClassification.MALWARE.value,
         "severity": IncidentSeverity.CRITICAL.value,
         "status": IncidentStatus.RECOVERING.value,
-        "delegated_to": "security",
+        "delegated_to": "cyber_security",
     },
     {
         "title": "DDoS attack on public API gateway",
@@ -99,7 +99,7 @@ DEFAULT_SEED_INCIDENTS: list[dict] = [
         "classification": IncidentClassification.DDOS.value,
         "severity": IncidentSeverity.HIGH.value,
         "status": IncidentStatus.RESOLVED.value,
-        "delegated_to": "security",
+        "delegated_to": "cyber_security",
     },
     {
         "title": "Insider access to restricted financial records",
@@ -107,7 +107,7 @@ DEFAULT_SEED_INCIDENTS: list[dict] = [
         "classification": IncidentClassification.INSIDER_THREAT.value,
         "severity": IncidentSeverity.HIGH.value,
         "status": IncidentStatus.DETECTED.value,
-        "delegated_to": "security",
+        "delegated_to": "cyber_security",
     },
 ]
 
@@ -134,7 +134,7 @@ def list_classifications() -> list[dict]:
 def dependency_map() -> dict:
     nodes = [{"id": "security_incident", "type": "platform", "label": "Security Incident Platform"}]
     edges = []
-    for mod in ("security", "workflow", "audit", "grc", "data_protection", "fraud_detection"):
+    for mod in ("cyber_security", "workflow", "audit", "grc", "data_protection", "fraud_detection"):
         nodes.append({"id": mod, "type": "module", "label": mod})
         edges.append({"from": mod, "to": "security_incident", "type": "feeds_incident"})
     for svc in ("policy",):

@@ -1,0 +1,44 @@
+# EAJLIREP Master Series Roadmap (P241)
+
+series: P241
+title: Enterprise Autonomous Justice, Legal Intelligence & Regulatory Evolution Platform
+governance_standard: "11.0"
+capability: CAP-PLT-EAJLIREP-001
+sor: legal_intelligence
+fabric: meos_enterprise_autonomous_justice_legal_intelligence_regulatory_evolution_platform_framework
+api: /api/v1/legal-intelligence*
+phases:
+  - id: P241
+    title: EAJLIREP Foundation
+    status: planned
+    adr: "601"
+    fabric: meos_enterprise_autonomous_justice_legal_intelligence_regulatory_evolution_platform_framework
+    api: /api/v1/legal-intelligence*
+  - id: P241-A
+    title: Legal Domain Model, Regulatory Data Architecture, Event Contracts, CQRS Foundation, Legal Intelligence APIs
+    status: planned
+    adr: pending
+  - id: P241-B
+    title: AI Legal Agents, Legal Knowledge Graph, Contract Intelligence, Legal Digital Twin
+    status: planned
+    adr: pending
+  - id: P241-C
+    title: Autonomous Compliance Operations Assist, Regulatory Intelligence Automation, Legal Risk Prediction, Governance Optimization
+    status: planned
+    adr: pending
+  - id: P241-D
+    title: Civilization-Scale Legal Intelligence Network, Self-Evolving Regulatory Intelligence, Global Legal Knowledge Ecosystem (Human-Gated)
+    status: planned
+    adr: pending
+locks:
+  never_replace_p240_governance_or_compliance_or_policy_engine: true
+  never_issue_binding_legal_judgments_without_human_authority: true
+  never_treat_simulation_as_legal_decision: true
+  never_local_compliance_violation_stores: true
+  never_fork_policy_engine_evaluate: true
+  never_pdf_or_binary_blobs_in_domain_tables: true
+  never_module_local_llm: true
+  never_opaque_unexplainable_legal_advice: true
+  never_bypass_privilege_or_privacy_gates: true
+  foundation_for_p241_a: true
+  peer_series_p242_easrdip: true

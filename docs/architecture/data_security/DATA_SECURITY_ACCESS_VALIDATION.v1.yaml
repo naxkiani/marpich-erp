@@ -1,0 +1,28 @@
+# P211-H — Validation gates
+version: "1.0"
+prompt_id: P211-H
+adr: "383"
+reject_if:
+  - data_permissions_are_invisible
+  - ownership_is_undefined
+  - access_reviews_are_manual_only
+  - risk_evaluation_is_missing
+  - ai_access_is_unmanaged
+  - least_privilege_cannot_be_enforced
+  - authorization_decisions_are_not_auditable
+  - sibling_access_bc
+forbidden_siblings:
+  - backend/contexts/data_access_governance
+  - backend/contexts/entitlement_management
+  - backend/contexts/access_certification
+required_artifacts:
+  - docs/adr/383-enterprise-data-security-access-governance.md
+  - docs/architecture/ENTERPRISE_DATA_SECURITY_ACCESS_GOVERNANCE.md
+  - docs/architecture/data_security/DATA_SECURITY_ACCESS_CAPABILITIES.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_ACCESS_DDD_CQRS.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_ACCESS_SECURITY.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_ACCESS_VALIDATION.v1.yaml
+  - backend/contexts/data_security/domain/services/ds_platform_access.py
+  - backend/contexts/data_security/domain/aggregates/ds_access_aggregates.py
+  - backend/contexts/data_security/infrastructure/acl/ds_access_acl.py
+  - backend/contexts/data_security/application/ds_access_foundation.py

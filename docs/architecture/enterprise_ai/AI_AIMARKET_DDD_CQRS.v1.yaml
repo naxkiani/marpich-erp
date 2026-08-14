@@ -1,0 +1,37 @@
+# P214-R — DDD / CQRS
+version: "1.0"
+prompt_id: P214-R
+adr: "438"
+core_domain: enterprise_ai_capability_exchange_management
+aggregate: EnterpriseAIEcosystemMarketplaceAggregate
+bounded_contexts:
+  - BC-01: AI Asset Marketplace
+  - BC-02: AI Capability Registry
+  - BC-03: AI Product Management
+  - BC-04: AI Provider Management
+  - BC-05: AI Consumer Management
+  - BC-06: AI Monetization
+  - BC-07: AI Governance Marketplace
+commands:
+  - PublishAICapabilityCommand
+  - RegisterAIAssetCommand
+  - CreateMarketplaceListingCommand
+  - SubscribeAIServiceCommand
+  - DeployAIAssetCommand
+  - RateAIProductCommand
+queries:
+  - SearchAICapabilityQuery
+  - GetAIAssetQuery
+  - GetMarketplaceRankingQuery
+  - GetSubscriptionQuery
+  - GetUsageAnalyticsQuery
+events:
+  - CapabilityPublishedEvent
+  - AssetRegisteredEvent
+  - ListingCreatedEvent
+  - SubscriptionActivatedEvent
+  - AssetConsumedEvent
+  - RatingUpdatedEvent
+  - ContractCompletedEvent
+  - PluginValidatedEvent
+same_sor_ai: true

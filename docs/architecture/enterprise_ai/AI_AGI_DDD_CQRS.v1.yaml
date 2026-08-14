@@ -1,0 +1,36 @@
+# P214-V — DDD / CQRS
+version: "1.0"
+prompt_id: P214-V
+adr: "442"
+core_domain: enterprise_cognitive_intelligence_management
+aggregate: EnterpriseAGICognitiveIntelligenceAggregate
+bounded_contexts:
+  - BC-01: AGI Intelligence Core
+  - BC-02: Cognitive Reasoning
+  - BC-03: Enterprise Memory
+  - BC-04: Knowledge Understanding
+  - BC-05: Strategic Planning
+  - BC-06: Learning Intelligence
+  - BC-07: Human Intelligence Collaboration
+commands:
+  - ActivateAGICoreCommand
+  - ExecuteReasoningCommand
+  - IntegrateKnowledgeCommand
+  - StartLearningCycleCommand
+  - GenerateStrategicPlanCommand
+  - ImproveIntelligenceCommand
+queries:
+  - GetIntelligenceStateQuery
+  - GetReasoningResultQuery
+  - GetKnowledgeStateQuery
+  - GetLearningProgressQuery
+  - GetStrategicInsightQuery
+events:
+  - AGICoreActivatedEvent
+  - ReasoningCompletedEvent
+  - KnowledgeIntegratedEvent
+  - LearningCompletedEvent
+  - StrategicInsightGeneratedEvent
+  - CapabilityImprovedEvent
+  - MemoryStateUpdatedEvent
+same_sor_ai: true

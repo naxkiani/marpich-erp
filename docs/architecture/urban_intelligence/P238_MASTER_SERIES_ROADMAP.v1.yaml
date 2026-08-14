@@ -1,0 +1,44 @@
+# EASCUI Master Series Roadmap (P238)
+
+series: P238
+title: Enterprise Autonomous Smart City & Urban Intelligence Platform
+governance_standard: "11.0"
+capability: CAP-PLT-EASCUI-001
+sor: urban_intelligence
+fabric: meos_enterprise_autonomous_smart_city_urban_intelligence_platform_framework
+api: /api/v1/urban-intelligence*
+phases:
+  - id: P238
+    title: EASCUI Foundation
+    status: planned
+    adr: "598"
+    fabric: meos_enterprise_autonomous_smart_city_urban_intelligence_platform_framework
+    api: /api/v1/urban-intelligence*
+  - id: P238-A
+    title: Urban Domain Model, City APIs, Event Architecture, CQRS Foundation, Core Urban Services
+    status: planned
+    adr: pending
+  - id: P238-B
+    title: City Digital Twin, AI Urban Agents, Knowledge Graph Integration, Real-Time Urban Intelligence
+    status: planned
+    adr: pending
+  - id: P238-C
+    title: Autonomous City Operations Assist, Smart Infrastructure Optimization, Predictive Urban Governance, Citizen Intelligence Ecosystem
+    status: planned
+    adr: pending
+  - id: P238-D
+    title: Civilization-Scale Smart City Network, Autonomous Urban Evolution, Global City Intelligence Federation (Gated)
+    status: planned
+    adr: pending
+locks:
+  never_replace_municipality_or_government: true
+  never_merge_municipality_and_government: true
+  never_ungated_city_ot_actuation: true
+  never_traffic_or_scada_sdk_in_domain: true
+  never_local_citizen_pii_vault: true
+  never_silent_consent_override: true
+  never_dual_write_permit_utility_case_tables: true
+  never_module_local_llm: true
+  never_opaque_urban_recommendations: true
+  foundation_for_p238_a: true
+  peer_series_p239_eatmip: true

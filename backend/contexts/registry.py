@@ -104,29 +104,52 @@ NOTIFICATIONS = BoundedContext(
 
 ANALYTICS = BoundedContext(
     id="analytics",
-    display_name="Analytics",
+    display_name=(
+        "Enterprise Business Intelligence, Analytics & "
+        "Decision Intelligence Platform"
+    ),
     context_type=BoundedContextType.SUPPORTING,
     schema_name="analytics",
-    description="OLAP, dashboards, KPIs, data warehouse projections",
-    publishes=("analytics.report.generated", "analytics.alert.triggered"),
+    description=(
+        "Enterprise BI Fabric (P213 / CAP-PLT-BI-001) — BI assets, metrics "
+        "governance, reporting, analytics intelligence, decision intelligence; "
+        "also OLAP projections and operational dashboards/alerts"
+    ),
+    publishes=(
+        "analytics.report.generated",
+        "analytics.alert.triggered",
+        "analytics.bi_asset.published",
+        "analytics.metric.defined",
+        "analytics.insight.generated",
+        "analytics.decision.completed",
+    ),
     subscribes=("*", "platform.tenant.provisioned"),
 )
 
 AI = BoundedContext(
     id="ai",
-    display_name="AI",
+    display_name="Enterprise AI / ML / Generative AI Platform",
     context_type=BoundedContextType.SUPPORTING,
     schema_name="ai",
-    description="LLM orchestration, embeddings, domain AI agents",
+    description=(
+        "MEOS Enterprise AI Intelligence Fabric (P214 / CAP-PLT-AI-001) — "
+        "AI-PaaS, MLOps, generative AI, LLM management, vector intelligence, "
+        "agents, and AI governance; modules never embed LLM SDKs"
+    ),
     publishes=(
         "ai.insight.generated",
         "ai.fraud.alert.raised",
         "ai.document.parsed",
+        "ai.model.registered",
+        "ai.model.deployed",
+        "ai.inference.executed",
+        "ai.governance.validated",
     ),
     subscribes=(
         "documents.document.uploaded",
         "banking.transaction.posted",
         "hospital.encounter.completed",
+        "platform.tenant.provisioned",
     ),
 )
 
@@ -323,7 +346,7 @@ CONSENT = BoundedContext(
     display_name="Enterprise Consent & Privacy Platform",
     context_type=BoundedContextType.PLATFORM,
     schema_name="consent",
-    description="Consent ledger, preferences, DSAR, privacy notices, retention metadata, DPIA hooks",
+    description="Planned (not yet scaffolded): consent ledger, preferences, DSAR, privacy notices, retention metadata, DPIA hooks",
     publishes=(
         "consent.granted",
         "consent.revoked",
@@ -365,6 +388,44 @@ SECRETS = BoundedContext(
     subscribes=("platform.tenant.provisioned",),
 )
 
+CYBER_SECURITY = BoundedContext(
+    id="cyber_security",
+    display_name="Enterprise Cyber Security & Threat Defense Platform",
+    context_type=BoundedContextType.PLATFORM,
+    schema_name="cyber_security",
+    description=(
+        "Cyber Security Fabric — SOC, SIEM, SOAR, XDR/EDR/NDR, threat intel, "
+        "ASM/CTEM, AI-native SecOps — SoR for P210; IR remains security_incident"
+    ),
+    publishes=(
+        "cyber_security.strategy.published",
+        "cyber_security.capability.registered",
+        "cyber_security.control.registered",
+        "security.attack.detected",
+    ),
+    subscribes=("platform.tenant.provisioned",),
+)
+
+
+DATA_SECURITY = BoundedContext(
+    id="data_security",
+    display_name="Enterprise Data Security & Privacy Intelligence Platform",
+    context_type=BoundedContextType.PLATFORM,
+    schema_name="data_security",
+    description=(
+        "Data Security Intelligence Fabric — discovery, classification, DSPM, "
+        "privacy intelligence, access governance, AI data security — SoR for P211; "
+        "consent ledger remains consent; crypto remains secrets; cyber remains cyber_security"
+    ),
+    publishes=(
+        "data_security.strategy.published",
+        "data_security.asset.registered",
+        "data_security.data.classified",
+        "data_security.risk.detected",
+        "data_security.policy.applied",
+    ),
+    subscribes=("platform.tenant.provisioned",),
+)
 
 DATA_GOVERNANCE = BoundedContext(
     id="data_governance",
@@ -382,6 +443,133 @@ DATA_GOVERNANCE = BoundedContext(
         "data_governance.steward.created",
         "data_governance.product.registered",
         "data_governance.policy.approved",
+    ),
+    subscribes=("platform.tenant.provisioned",),
+)
+
+QUANTUM = BoundedContext(
+    id="quantum",
+    display_name=(
+        "Enterprise Quantum Computing, Quantum AI & "
+        "Post-Classical Intelligence Platform"
+    ),
+    context_type=BoundedContextType.PLATFORM,
+    schema_name="quantum",
+    description=(
+        "Quantum Intelligence Fabric — infrastructure, algorithms, Quantum AI/ML, "
+        "optimization/simulation, security bindings, data intelligence, networking, "
+        "governance/ethics/compliance — SoR for P215; PQC remains secrets (P209)"
+    ),
+    publishes=(
+        "quantum.governance.policy.created",
+        "quantum.governance.risk.detected",
+        "quantum.governance.compliance.validated",
+        "quantum.governance.audit.completed",
+        "quantum.governance.trust.established",
+    ),
+    subscribes=("platform.tenant.provisioned",),
+)
+
+ROBOTICS = BoundedContext(
+    id="robotics",
+    display_name=(
+        "Enterprise Robotics, Autonomous Machines, Physical AI & "
+        "Cyber-Physical Intelligence Platform"
+    ),
+    context_type=BoundedContextType.PLATFORM,
+    schema_name="robotics",
+    description=(
+        "MEOS Cyber-Physical Intelligence Fabric — robotics OS, autonomous machines, "
+        "physical AI, industrial intelligence, fleet, HRI, edge — SoR for P216; "
+        "IIoT connectors via Integration Platform"
+    ),
+    publishes=(
+        "robotics.foundation.robot.created",
+        "robotics.foundation.mission.started",
+        "robotics.foundation.machine.failure.detected",
+        "robotics.foundation.autonomous.action.completed",
+        "robotics.foundation.fleet.optimization.completed",
+        "robotics.foundation.safety.violation.detected",
+    ),
+    subscribes=("platform.tenant.provisioned",),
+)
+
+BIOTECHNOLOGY = BoundedContext(
+    id="biotechnology",
+    display_name=(
+        "Enterprise Biotechnology, Synthetic Biology, Bio-AI Intelligence, "
+        "Digital Health Evolution & MEOS Bio Intelligence Platform"
+    ),
+    context_type=BoundedContextType.PLATFORM,
+    schema_name="biotechnology",
+    description=(
+        "MEOS Bio Intelligence Fabric — biotechnology research, synthetic biology, "
+        "bio-AI, digital health, precision medicine, biological digital twins — "
+        "SoR for P217; clinical EMR/LIMS/pharmacy remain peer SoRs; research "
+        "connectors via Integration Platform"
+    ),
+    publishes=(
+        "biotechnology.foundation.project.created",
+        "biotechnology.foundation.genome.processed",
+        "biotechnology.foundation.synthetic.completed",
+        "biotechnology.foundation.health.insight.created",
+        "biotechnology.foundation.treatment.validated",
+        "biotechnology.foundation.discovery.generated",
+        "biotechnology.foundation.twin.updated",
+    ),
+    subscribes=("platform.tenant.provisioned",),
+)
+
+SPACE = BoundedContext(
+    id="space",
+    display_name=(
+        "Enterprise Space Intelligence, Space AI, Orbital Civilization Systems, "
+        "Autonomous Space Operations & MEOS Space Intelligence Platform"
+    ),
+    context_type=BoundedContextType.PLATFORM,
+    schema_name="space",
+    description=(
+        "MEOS Space Intelligence Fabric — space AI, orbital civilization, "
+        "autonomous space operations, space digital twins, and space trust — "
+        "SoR for P218; quantum/robotics/bio remain peer SoRs; ground/space "
+        "telemetry connectors via Integration Platform"
+    ),
+    publishes=(
+        "space.foundation.insight.generated",
+        "space.foundation.mission.optimized",
+        "space.foundation.orbital.change",
+        "space.foundation.asset.recovered",
+        "space.foundation.mission.started",
+        "space.foundation.twin.updated",
+        "space.foundation.governance.violation",
+    ),
+    subscribes=("platform.tenant.provisioned",),
+)
+
+CIVILIZATION = BoundedContext(
+    id="civilization",
+    display_name=(
+        "Enterprise Civilization Operating System, Planetary Intelligence Governance, "
+        "Global Infrastructure Intelligence, Human Civilization Management & "
+        "MEOS Civilization Operating System Platform"
+    ),
+    context_type=BoundedContextType.PLATFORM,
+    schema_name="civilization",
+    description=(
+        "MEOS Civilization Operating System Fabric — civilization kernel, planetary "
+        "intelligence, infrastructure intelligence, human civilization management, "
+        "digital twin and governance — SoR for P219; AI/quantum/robotics/bio/space/"
+        "intelligence-nexus remain peer SoRs; external planetary systems via Integration Platform"
+    ),
+    publishes=(
+        "civilization.foundation.initialized",
+        "civilization.foundation.system.connected",
+        "civilization.foundation.infrastructure.optimized",
+        "civilization.foundation.policy.evaluated",
+        "civilization.foundation.resource.allocated",
+        "civilization.foundation.social.change",
+        "civilization.foundation.scenario.generated",
+        "civilization.foundation.evolution.milestone",
     ),
     subscribes=("platform.tenant.provisioned",),
 )
@@ -506,11 +694,12 @@ ACCOUNTING = BoundedContext(
     publishes=(
         "accounting.journal.posted",
         "accounting.invoice.issued",
-        "accounting.payment.recorded",
+        "accounting.payment.received",
     ),
     subscribes=(
-        "sales.order.invoiced",
-        "procurement.invoice.received",
+        "sales.order.placed",
+        "hospital.encounter.completed",
+        "procurement.po.received",
         "payroll.run.completed",
     ),
 )
@@ -570,7 +759,7 @@ DIGITAL_EXCHANGE = BoundedContext(
     display_name="Digital Exchange Layer",
     context_type=BoundedContextType.FINANCE,
     schema_name="digital_exchange",
-    description="Modular digital wallets, CBDC, stablecoins, ISO 20022 — flag and policy gated",
+    description="Planned (not yet scaffolded): modular digital wallets, CBDC, stablecoins, ISO 20022 — flag and policy gated",
     publishes=(
         "digital_exchange.extension.registered",
         "digital_exchange.extension.enabled",
@@ -975,7 +1164,14 @@ ALL_CONTEXTS: tuple[BoundedContext, ...] = (
     IDENTITY_INTELLIGENCE,
     CONSENT,
     SECRETS,
+    CYBER_SECURITY,
+    DATA_SECURITY,
     DATA_GOVERNANCE,
+    QUANTUM,
+    ROBOTICS,
+    BIOTECHNOLOGY,
+    SPACE,
+    CIVILIZATION,
     AUTHORIZATION,
     PERMISSION_REGISTRY,
     COMPLIANCE,
@@ -1014,6 +1210,9 @@ ALL_CONTEXTS: tuple[BoundedContext, ...] = (
     MUNICIPALITY,
     NGO,
 )
+
+# Catalog-only contexts intentionally have no package until their implementation is scaffolded.
+PLANNED_CONTEXT_IDS = frozenset({"consent", "digital_exchange"})
 
 CONTEXT_BY_ID: dict[str, BoundedContext] = {c.id: c for c in ALL_CONTEXTS}
 

@@ -1,0 +1,17 @@
+# BIOTECHNOLOGY_DOMAIN_SECURITY.v1.yaml — P217-C
+apiVersion: marpich.io/v1
+kind: BiotechnologyDomainSecurity
+metadata:
+  phase: P217-C
+  adr: "502"
+spec:
+  hard_locks:
+    - never_cross_context_aggregate_mutation
+    - never_peer_domain_imports
+    - genomic_privacy_strategy
+    - ethical_bioengineering_strategy
+    - scientific_integrity_strategy
+    - opaque_bio_safety_strategy_forbidden
+    - never_replace_hospital_emr
+    - never_replace_laboratory_lims
+    - never_replace_pharmacy

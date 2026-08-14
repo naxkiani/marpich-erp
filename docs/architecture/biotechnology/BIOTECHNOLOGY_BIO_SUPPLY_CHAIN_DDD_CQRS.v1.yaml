@@ -1,0 +1,28 @@
+# BIOTECHNOLOGY_BIO_SUPPLY_CHAIN_DDD_CQRS.v1.yaml — P217-M
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioSupplyChainDddCqrs
+metadata:
+  phase: P217-M
+  adr: "512"
+spec:
+  commands:
+    - CreateBioInventoryCommand
+    - StartBioShipmentCommand
+    - RecordColdChainAlertCommand
+    - ApproveTraceabilityCheckpointCommand
+    - RecoverColdChainCommand
+  queries:
+    - GetBioSupplyChainPlatformQuery
+    - GetBioInventoryQuery
+    - GetShipmentQuery
+    - GetColdChainStatusQuery
+    - GetSupplyGovernanceQuery
+  events:
+    - BioSupplyChainPlatformActivatedEvent
+    - InventoryCreatedEvent
+    - MaterialMovedEvent
+    - QualityUpdatedEvent
+    - ShipmentStartedEvent
+    - ShipmentDeliveredEvent
+    - TemperatureAlertEvent
+    - ColdChainRecoveredEvent

@@ -1,0 +1,49 @@
+# P211-A — DDD / CQRS
+version: "1.0"
+prompt_id: P211-A
+adr: "376"
+sor: data_security
+bounded_context: data_security
+logical_subdomains:
+  - data_discovery
+  - data_classification
+  - data_protection
+  - privacy_intelligence
+  - data_access_governance
+  - data_intelligence
+
+aggregates:
+  - DsDiscoverableAssetRoot
+  - DsClassifiableDataRoot
+  - DsMeasurablePrivacyRiskRoot
+  - DsGovernedAccessRoot
+  - DsProtectedAiDataRoot
+  - DsAvailableLineageRoot
+  - DsComplianceEvidenceRoot
+  - DsStrategyProfileRoot
+
+commands:
+  - RegisterDataAsset
+  - ClassifyData
+  - AssessDataRisk
+  - ApplyProtectionPolicy
+  - CreatePrivacyAssessment
+  - UpdateDataOwnership
+  - ApproveDataAccess
+
+queries:
+  - GetDataInventory
+  - GetDataRisk
+  - GetDataLineage
+  - GetPrivacyStatus
+  - GetDataExposure
+  - GetStrategyReadiness
+
+events:
+  - DataAssetRegistered
+  - DataClassified
+  - DataRiskDetected
+  - DataPolicyApplied
+  - PrivacyViolationDetected
+  - AccessReviewed
+  - ComplianceEvidenceGenerated

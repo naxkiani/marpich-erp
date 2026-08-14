@@ -1,0 +1,46 @@
+# EAHCDWIP Master Series Roadmap (P251)
+
+series: P251
+title: Enterprise Autonomous Human Capability & Digital Workforce Intelligence Platform
+governance_standard: "11.0"
+capability: CAP-PLT-EAHCDWIP-001
+sor: human_capability_intelligence
+fabric: meos_enterprise_autonomous_human_capability_digital_workforce_intelligence_platform_framework
+api: /api/v1/human-capability-intelligence*
+phases:
+  - id: P251
+    title: EAHCDWIP Foundation
+    status: planned
+    adr: "610"
+    fabric: meos_enterprise_autonomous_human_capability_digital_workforce_intelligence_platform_framework
+    api: /api/v1/human-capability-intelligence*
+  - id: P251-A
+    title: Human Capability Domain Model, Workforce APIs, Event Architecture, CQRS Foundation, Talent Intelligence Core
+    status: planned
+    adr: pending
+  - id: P251-B
+    title: AI Workforce Agents, Skills Knowledge Graph, Workforce Digital Twin, Learning Intelligence Engine
+    status: planned
+    adr: pending
+  - id: P251-C
+    title: Autonomous Workforce Operations Assist, Human-AI Collaboration Ecosystem, Enterprise Capability Optimization, Adaptive Workforce Transformation
+    status: planned
+    adr: pending
+  - id: P251-D
+    title: Civilization-Scale Human Intelligence Network, Autonomous Digital Workforce Ecosystem, Self-Evolving Human Capability Platform (Gated)
+    status: planned
+    adr: pending
+locks:
+  never_replace_p235_workforce_intelligence: true
+  never_fork_workforce_intelligence_api: true
+  never_dual_write_p235_hr_or_payroll_tables: true
+  never_duplicate_lms_p234: true
+  never_shadow_employee_master_in_digital_worker: true
+  never_ungated_hire_terminate_or_pay: true
+  never_treat_simulation_as_deploy: true
+  never_local_employee_pii_vault: true
+  never_silent_consent_override: true
+  never_opaque_unfair_ranking: true
+  never_module_local_llm: true
+  foundation_for_p251_a: true
+  peer_series_p252_easiuip: true

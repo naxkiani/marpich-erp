@@ -1,0 +1,54 @@
+# CIVILIZATION_HUMAN_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationHumanDddCqrs
+metadata:
+  prompt_id: P219-J
+  adr: "563"
+bounded_contexts:
+  - id: BC-HUM-01
+    name: Human Intelligence Core
+    type: CORE
+    aggregate: HumanAggregate
+  - id: BC-HUM-02
+    name: Human Digital Twin Context
+    type: CORE
+    aggregate: HumanTwinAggregate
+  - id: BC-HUM-03
+    name: Learning Intelligence Context
+    type: SUPPORTING
+    aggregate: LearningAggregate
+  - id: BC-HUM-04
+    name: Workforce Intelligence Context
+    type: SUPPORTING
+    aggregate: WorkforceAggregate
+primary_aggregates:
+  - HumanAggregate
+  - HumanCapabilityAggregate
+  - HumanTwinAggregate
+  - LearningAggregate
+  - WorkforceAggregate
+commands:
+  - CreateHumanTwinCommand
+  - UpdateCapabilityCommand
+  - GenerateDevelopmentPlanCommand
+  - RunCareerSimulationCommand
+  - OptimizeLearningPathCommand
+  - EvaluateWellbeingCommand
+queries:
+  - GetHumanProfileQuery
+  - GetCapabilityStatusQuery
+  - GetLearningProgressQuery
+  - GetCareerPredictionQuery
+  - GetHumanTwinStateQuery
+events:
+  - HumanCreatedEvent
+  - HumanUpdatedEvent
+  - CapabilityImprovedEvent
+  - CareerChangedEvent
+  - AchievementRecordedEvent
+  - LearningStartedEvent
+  - LearningCompletedEvent
+  - RecommendationGeneratedEvent
+  - TwinSynchronizedEvent
+  - SimulationExecutedEvent
+  - PredictionGeneratedEvent

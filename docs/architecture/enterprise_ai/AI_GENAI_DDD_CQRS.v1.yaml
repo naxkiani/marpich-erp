@@ -1,0 +1,37 @@
+# P214-E — DDD / CQRS
+version: "1.0"
+prompt_id: P214-E
+adr: "425"
+sor: ai
+core_domain: enterprise_generative_intelligence_management
+aggregate: GenerativeAIPlatformAggregate
+bounded_contexts:
+  - BC-01 Foundation Model Management
+  - BC-02 LLM Runtime
+  - BC-03 Prompt Intelligence
+  - BC-04 RAG Intelligence
+  - BC-05 AI Assistant
+  - BC-06 Multimodal AI
+  - BC-07 AI Safety & Governance
+commands:
+  - RegisterLLMCommand
+  - CreatePromptCommand
+  - DeployModelCommand
+  - CreateAssistantCommand
+  - ExecuteGenerationCommand
+  - ApprovePromptCommand
+queries:
+  - GetModelQuery
+  - GetPromptQuery
+  - GetAssistantQuery
+  - GetConversationQuery
+  - GetGenerationHistoryQuery
+events:
+  - LLMRegisteredEvent
+  - ModelDeployedEvent
+  - PromptCreatedEvent
+  - PromptApprovedEvent
+  - GenerationStartedEvent
+  - GenerationCompletedEvent
+  - SafetyViolationDetectedEvent
+  - ModelPerformanceChangedEvent

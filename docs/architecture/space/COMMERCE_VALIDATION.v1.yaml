@@ -1,0 +1,20 @@
+apiVersion: marpich.io/v1
+kind: SpaceCommerceValidation
+metadata:
+  prompt: P218-R
+  adr: "544"
+fabric: meos_space_commerce_intelligence_fabric
+api_prefix: /api/v1/space/commerce
+required:
+  space_commerce_platform: true
+  space_economy_intelligence: true
+  commercial_operations: true
+  space_marketplace: true
+  investment_intelligence: true
+  contract_intelligence: true
+  commerce_ai: true
+  economic_digital_twin: true
+  governance: true
+  meos_integration: true
+foundation_for: P218-S
+verdict: ENTERPRISE_GRADE

@@ -1,0 +1,22 @@
+# P210-N — Security & compliance
+version: "1.0"
+prompt_id: P210-N
+adr: "374"
+zero_trust: true
+pod_security_standards: true
+admission_controllers: true
+image_verification: true
+sbom_required: true
+slsa_provenance: true
+sigstore_cosign: true
+mtls_service_mesh: true
+secrets_via_p209: true
+immutable_audit: true
+policy_as_code: true
+compliance:
+  - iso_27001
+  - nist_csf
+  - soc_2
+  - cis_kubernetes_benchmark
+  - pci_dss
+  - nist_sp_800_190

@@ -1,0 +1,22 @@
+# P214-R — SECURITY
+version: "1.0"
+prompt_id: P214-R
+adr: "438"
+zero_trust: true
+controls:
+  - listing_authorization
+  - asset_signature_validation
+  - plugin_security_validation
+  - subscription_entitlement_checks
+  - trust_gated_consumption
+integrations:
+  - P207
+  - P208
+  - P209
+  - P210
+  - P214-P
+  - ENTERPRISE_PLUGIN_PLATFORM
+forbidden:
+  - module_local_ai_marketplace_runtime
+  - bypassing_plugin_platform_for_extensions
+  - consuming_uncertified_ai_assets

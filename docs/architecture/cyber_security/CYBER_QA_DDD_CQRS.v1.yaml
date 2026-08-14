@@ -1,0 +1,51 @@
+# P210-O — DDD / CQRS
+version: "1.0"
+prompt_id: P210-O
+adr: "375"
+sor: cyber_security
+bounded_context: cyber_security.qa
+logical_subdomains:
+  - security_testing
+  - penetration_testing
+  - red_blue_purple
+  - ai_security_testing
+  - chaos_resilience
+  - performance_scale
+  - compliance_validation
+  - production_readiness
+
+aggregates:
+  - CsQaAutomatedTestingRoot
+  - CsQaAdversarialValidationRoot
+  - CsQaAiSystemsTestedRoot
+  - CsQaComplianceVerificationRoot
+  - CsQaProductionReadinessRoot
+  - CsQaMeasurableControlsRoot
+  - CsQaAuditableEvidenceRoot
+  - CsQaReleaseApprovalRoot
+
+commands:
+  - CreateTestPlan
+  - ExecuteSecurityTest
+  - LaunchPenetrationTest
+  - StartRedTeamExercise
+  - ValidateControl
+  - GenerateComplianceEvidence
+  - ApproveRelease
+
+queries:
+  - GetTestCoverage
+  - GetSecurityScore
+  - GetVulnerabilityStatus
+  - GetComplianceStatus
+  - GetProductionReadiness
+  - GetSecurityValidationReport
+
+events:
+  - TestStarted
+  - TestCompleted
+  - VulnerabilityDiscovered
+  - ControlValidated
+  - SecurityFailureDetected
+  - ComplianceEvidenceGenerated
+  - ReleaseApproved

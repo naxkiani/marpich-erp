@@ -1,0 +1,57 @@
+# P213-D — DDD / CQRS
+version: "1.0"
+prompt_id: P213-D
+adr: "408"
+sor: analytics
+capability: CAP-PLT-BI-001
+principle: Enterprise reporting SHALL not only describe what happened, it SHALL explain why it happened and what should happen next.
+fabric: meos_enterprise_intelligence_experience_fabric
+core_domain: enterprise_intelligence_experience_management
+aggregate: EnterpriseVisualizationExperienceAggregate
+supporting_domains:
+  - report_management
+  - dashboard_management
+  - visualization_management
+  - user_experience_management
+  - distribution_management
+  - intelligence_consumption_governance
+logical_bounded_contexts:
+  - BC-01 enterprise_reporting
+  - BC-02 executive_dashboard
+  - BC-03 operational_dashboard
+  - BC-04 visualization_management
+  - BC-05 distribution_consumption
+layers:
+  - data_source_layer
+  - semantic_intelligence_layer
+  - reporting_engine_layer
+  - visualization_layer
+  - consumption_experience_layer
+commands:
+  - CreateReportCommand
+  - PublishReportCommand
+  - CreateDashboardCommand
+  - UpdateVisualizationCommand
+  - SubscribeReportCommand
+queries:
+  - GetReportQuery
+  - GetDashboardQuery
+  - GetVisualizationQuery
+  - GetKPIQuery
+events:
+  - ReportCreatedEvent
+  - ReportGeneratedEvent
+  - DashboardPublishedEvent
+  - VisualizationUpdatedEvent
+  - ReportConsumedEvent
+microservices:
+  - reporting-service
+  - dashboard-service
+  - visualization-service
+  - subscription-service
+  - distribution-service
+  - bi-experience-ai-service
+knowledge_graph_visualization:
+  via_p212_j: true
+digital_twin_visualization:
+  via_p212_l: true

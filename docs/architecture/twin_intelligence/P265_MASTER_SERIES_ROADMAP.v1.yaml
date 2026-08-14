@@ -1,0 +1,49 @@
+# MEDTIP Master Series Roadmap (P265)
+
+series: P265
+title: MEOS Enterprise Digital Twin Intelligence Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEDTIP-001
+sor: twin_intelligence
+fabric: meos_enterprise_digital_twin_intelligence_operating_platform_framework
+api: /api/v1/twin-intelligence*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P265
+    title: MEDTIP Foundation
+    status: planned
+    adr: "622"
+    fabric: meos_enterprise_digital_twin_intelligence_operating_platform_framework
+    api: /api/v1/twin-intelligence*
+  - id: P265-A
+    title: Digital Twin Foundation — Operating Overlays, Entity Representation Federation, State Monitors, Basic Sync Campaigns
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P265-B
+    title: Simulation Intelligence — Scenario Campaigns, Impact Analysis, Simulation Workspace Contracts
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P265-C
+    title: Predictive Enterprise Twin — AI Prediction, Optimization Assists, Autonomous Recommendations (Gated)
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P265-D
+    title: Autonomous Enterprise Reality Model — Self-Updating Twin Assists, Autonomous Optimization (Gated), Simulation OS
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_p227_digital_twin: true
+  never_fork_digital_twin_api: true
+  never_dual_write_digital_twin_tables: true
+  never_iot_or_scada_sdk_in_domain: true
+  never_treat_simulation_as_execute: true
+  never_module_local_llm: true
+  never_opaque_predictions_for_gated_actions: true
+  never_ungated_real_world_actuation_from_twin_optimization: true
+  foundation_for_p265_a: true
+  unblocks_p266_ai_agent_orchestration: true
+  peer_series_p266_meaaoi: true

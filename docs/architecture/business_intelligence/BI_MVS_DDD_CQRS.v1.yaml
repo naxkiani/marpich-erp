@@ -1,0 +1,23 @@
+# P213-B — DDD_CQRS
+version: "1.0"
+prompt_id: P213-B
+adr: "395"
+sor: analytics
+capability: CAP-PLT-BI-001
+api_prefix: /api/v1/analytics/mission
+aggregate: BiMissionDefinedRoot
+commands:
+  - PublishMissionCommand
+  - PublishVisionCommand
+  - RegisterStrategicObjectiveCommand
+queries:
+  - GetMissionQuery
+  - GetVisionQuery
+  - GetCapabilityMapQuery
+  - GetMaturityQuery
+events:
+  - InsightGeneratedEvent
+  - DecisionCreatedEvent
+  - RecommendationGeneratedEvent
+  - BusinessOutcomeMeasuredEvent
+sibling_business_intelligence_bc_forbidden: true

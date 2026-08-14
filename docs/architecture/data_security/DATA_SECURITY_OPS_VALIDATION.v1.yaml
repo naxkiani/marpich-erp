@@ -1,0 +1,27 @@
+# P211-N — Validation gates
+version: "1.0"
+prompt_id: P211-N
+adr: "389"
+reject_if:
+  - services_are_tightly_coupled
+  - events_are_not_immutable
+  - apis_are_unmanaged
+  - security_decisions_cannot_be_traced
+  - scaling_is_impossible
+  - audit_history_is_incomplete
+  - sibling_ops_bc
+forbidden_siblings:
+  - backend/contexts/data_security_ops
+  - backend/contexts/ds_event_platform
+  - backend/contexts/data_security_microservices
+required_artifacts:
+  - docs/adr/389-enterprise-data-security-ops.md
+  - docs/architecture/ENTERPRISE_DATA_SECURITY_OPS.md
+  - docs/architecture/data_security/DATA_SECURITY_OPS_CAPABILITIES.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_OPS_DDD_CQRS.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_OPS_SECURITY.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_OPS_VALIDATION.v1.yaml
+  - backend/contexts/data_security/domain/services/ds_platform_ops.py
+  - backend/contexts/data_security/domain/aggregates/ds_ops_aggregates.py
+  - backend/contexts/data_security/infrastructure/acl/ds_ops_acl.py
+  - backend/contexts/data_security/application/ds_ops_foundation.py

@@ -1,0 +1,44 @@
+# P211-M — Digital twin & privacy simulation capabilities
+version: "1.0"
+prompt_id: P211-M
+adr: "388"
+sor: data_security
+capability: CAP-PLT-DS-001
+api_prefix: /api/v1/data-security/twin
+builds_on:
+  - P211-A
+  - P211-B
+  - P211-C
+  - P211-D
+  - P211-E
+  - P211-F
+  - P211-G
+  - P211-H
+  - P211-I
+  - P211-J
+  - P211-K
+  - P211-L
+  - ADR-387
+
+digital_representation_complete_required: true
+privacy_scenarios_simulatable_required: true
+risk_prediction_available_required: true
+compliance_impact_measurable_required: true
+ai_privacy_risks_visible_required: true
+simulation_results_explainable_required: true
+sibling_twin_bc_forbidden: true
+via_enterprise_ai: true
+via_workflow: true
+via_policy_engine: true
+via_consent_acl_only: true
+via_p211_d_discovery: true
+via_p211_e_classification: true
+via_p211_g_dlp: true
+via_p211_h_access: true
+via_p211_j_protection: true
+via_p211_k_intelligence: true
+via_p211_l_ai: true
+via_p207: true
+via_p208: true
+via_p209: true
+via_p210: true

@@ -1,0 +1,53 @@
+# P210-E — DDD / CQRS
+version: "1.0"
+prompt_id: P210-E
+adr: "367"
+sor: cyber_security
+bounded_context: cyber_security.siem
+logical_subdomains:
+  - telemetry_collection
+  - ingestion_normalization
+  - correlation
+  - detection
+  - analytics
+  - alert_management
+  - retention_storage
+  - siem_ai
+
+aggregates:
+  - CsSiemNormalizationCompleteRoot
+  - CsSiemMultiDomainCorrelationRoot
+  - CsSiemExtensibleDetectionRoot
+  - CsSiemAiIntelligenceRoot
+  - CsSiemTelemetryIntegrityRoot
+  - CsSiemImmutableStorageRoot
+  - CsSiemHorizontalScaleRoot
+  - CsSiemAlertGeneratedRoot
+
+commands:
+  - IngestEvent
+  - NormalizeEvent
+  - EnrichEvent
+  - CorrelateEvent
+  - GenerateAlert
+  - SuppressAlert
+  - UpdateDetectionRule
+  - ExecuteRetentionPolicy
+
+queries:
+  - GetEvents
+  - GetAlerts
+  - GetThreatTimeline
+  - GetRiskDashboard
+  - GetDetectionMetrics
+  - GetComplianceEvidence
+
+events:
+  - TelemetryReceived
+  - EventNormalized
+  - ThreatCorrelated
+  - AlertGenerated
+  - AlertEscalated
+  - RuleTriggered
+  - ThreatDetected
+  - InvestigationStarted

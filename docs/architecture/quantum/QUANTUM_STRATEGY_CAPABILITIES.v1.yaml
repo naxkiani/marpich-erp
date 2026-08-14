@@ -1,0 +1,40 @@
+prompt_id: P215-R
+adr: "463"
+sor: quantum
+capability: CAP-PLT-QC-001
+api_prefix: /api/v1/quantum/strategy
+fabric: meos_quantum_executive_intelligence_fabric
+trust_gate: P215-K
+principle: >-
+  MEOS Quantum Governance Platform SHALL provide the strategic intelligence
+  and governance foundation that ensures quantum adoption remains secure,
+  compliant, valuable and aligned with enterprise objectives.
+quantum_governance_platform_present_required: true
+quantum_strategy_platform_present_required: true
+quantum_compliance_intelligence_present_required: true
+quantum_risk_intelligence_present_required: true
+quantum_executive_intelligence_present_required: true
+quantum_policy_management_present_required: true
+quantum_trust_framework_present_required: true
+knowledge_graph_integration_present_required: true
+digital_twin_integration_present_required: true
+never_replace_p215_k: true
+via_p215_k: true
+via_policy_engine: true
+via_p213: true
+via_p215_o: true
+via_p215_n: true
+via_p215_h: true
+via_workflow: true
+via_audit: true
+builds_on_p215_a: true
+builds_on_p215_k: true
+builds_on_p215_q: true
+builds_on_p215_p: true
+governed_by_p215_k: true
+forbidden_siblings:
+  - quantum_strategy_platform
+  - quantum_executive_platform
+  - quantum_compliance_executive_platform
+  - quantum_risk_executive_platform
+  - quantum_governance

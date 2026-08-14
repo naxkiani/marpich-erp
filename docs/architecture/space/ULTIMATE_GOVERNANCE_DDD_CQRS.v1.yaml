@@ -1,0 +1,44 @@
+apiVersion: marpich.io/v1
+kind: UltimateGovernanceDddCqrs
+metadata:
+  prompt: P218-Y
+  adr: "551"
+bounded_contexts:
+  - Intelligence Governance Management
+  - Alignment Management
+  - Trust Management
+  - Ethics Management
+  - Safety Management
+  - Civilization Policy Management
+aggregates:
+  - GovernanceAggregate
+  - AlignmentAggregate
+  - TrustAggregate
+  - EthicsAggregate
+  - SafetyAggregate
+  - PolicyAggregate
+commands:
+  - CreateGovernancePolicyCommand
+  - ValidateAlignmentCommand
+  - EstablishTrustProfileCommand
+  - CompleteEthicalValidationCommand
+  - CompleteSafetyAssessmentCommand
+  - AuthorizeGovernanceDecisionCommand
+queries:
+  - GetGovernancePolicyQuery
+  - GetAlignmentScoreQuery
+  - GetTrustProfileQuery
+  - GetEthicalStatusQuery
+  - GetSafetyLevelQuery
+  - GetCivilizationGoalQuery
+events:
+  - GovernancePolicyCreatedEvent
+  - AlignmentValidatedEvent
+  - TrustEstablishedEvent
+  - EthicalRiskDetectedEvent
+  - SafetyAssessmentCompletedEvent
+  - AIBehaviorApprovedEvent
+  - GovernanceDecisionRecordedEvent
+  - CivilizationTrustImprovedEvent
+  - HumanAuthorityConfirmedEvent
+  - IntelligenceMisusePreventedEvent

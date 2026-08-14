@@ -1,0 +1,97 @@
+# MECVII Master Series Roadmap (P296)
+
+series: P296
+title: MEOS Enterprise Conversational, Voice & Multimodal Interaction Intelligence Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MECVII-001
+sor: conversational_interaction_operating
+fabric: meos_enterprise_conversational_voice_multimodal_interaction_intelligence_platform_framework
+api: /api/v1/conversational-interaction-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P296
+    title: MECVII Foundation
+    status: planned
+    adr: "653"
+    fabric: meos_enterprise_conversational_voice_multimodal_interaction_intelligence_platform_framework
+    api: /api/v1/conversational-interaction-operating*
+  - id: P296-A
+    title: Conversation Foundation — Registry, State, Intent, Entity, Basic Text Assistant, Timeline
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P296-B
+    title: Enterprise Knowledge — RAG, Semantic Search, KG, Evidence, Grounded Answers, Source Traceability
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P296-C
+    title: Voice — STT/TTS, Sessions, Commands, Workspace, Confirmation
+    status: planned
+    adr: pending
+    window: 9-15_months
+  - id: P296-D
+    title: Multimodal — Image/Document Understanding, Vision+Text, Voice+Text, Fusion
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P296-E
+    title: Enterprise Action — Tool Calling, Navigation, Workflow, Forms, Confirmation, Tracking
+    status: planned
+    adr: pending
+    window: 15-24_months
+  - id: P296-F
+    title: AI Conversational Intelligence — Copilot, Dialogue Optimization, Predictive Intent, Analytics, Risk
+    status: planned
+    adr: pending
+    window: 18-30_months
+  - id: P296-G
+    title: Autonomous Multimodal Experience — Adaptive Conversation, Context-Aware Voice, Gated Autonomous Interaction
+    status: planned
+    adr: pending
+    window: 24-36_months
+locks:
+  never_replace_p294_communication_experience_operating: true
+  never_replace_notifications_platform: true
+  never_replace_p295_experience_personalization_operating: true
+  never_replace_p260_workflow: true
+  never_replace_p266_ai_agent_orchestration: true
+  never_replace_p258_application_shell: true
+  never_replace_p292_api_management_operating: true
+  never_become_workflow_engine: true
+  never_become_agent_orchestrator: true
+  never_implement_channel_delivery: true
+  never_merge_p294_p295_p296_p297: true
+  never_dual_write_workflow_agent_notification_tables: true
+  never_local_metrics_stores: true
+  never_local_approval_workflow_or_agent_engines: true
+  never_module_local_llm: true
+  never_present_inference_as_verified_fact: true
+  never_ungated_tool_invocation: true
+  never_high_impact_action_without_confirmation_when_policy_requires: true
+  document_media_refs_only: true
+  memory_governed_by_privacy_retention_consent_tenant_isolation: true
+  grounded_answers_require_source_traceability_evidence_confidence_model_version: true
+  communication_intent_via_p294_only: true
+  agent_execution_via_p266_only: true
+  workflows_via_p260_only: true
+  navigation_via_p258_contracts_only: true
+  ai_recommendation_requires_evidence_confidence_policy_human_approval: true
+  simulation_not_execute: true
+  autonomous_requires_policy_authorization_confirmation_audit_human_governance: true
+  foundation_for_p296_a: true
+  unblocks_p297_ai_interaction_agentic_workspace_human_ai_collaboration_os: true
+  unblocks_p298_agentic_process_automation_autonomous_enterprise_execution_os: true
+  unblocks_p299_process_mining_process_intelligence_continuous_optimization_os: true
+  unblocks_p300_process_automation_marketplace_reusable_process_intelligence_os: true
+  unblocks_p301_process_composer_low_code_no_code_visual_automation_os: true
+  unblocks_p302_process_testing_simulation_quality_assurance_digital_process_validation_os: true
+  unblocks_p303_process_release_deployment_environment_lifecycle_os: true
+  unblocks_p304_process_observability_monitoring_sla_slo_continuous_operational_intelligence_os: true
+  unblocks_p305_incident_management_service_reliability_resilience_engineering_os: true
+  unblocks_p306_itsm_service_catalog_request_fulfillment_enterprise_service_operations_os: true
+  unblocks_p307_knowledge_centered_service_enterprise_knowledge_management_organizational_learning_os: true
+  unblocks_p308_document_intelligence_content_lifecycle_intelligent_information_management_os: true
+  unblocks_p309_records_retention_legal_hold_information_lifecycle_governance_os: true
+  unblocks_p310_information_governance_data_classification_sensitive_information_intelligence_os: true
+  unblocks_p311_data_loss_prevention_information_protection_adaptive_data_security_control_os: true

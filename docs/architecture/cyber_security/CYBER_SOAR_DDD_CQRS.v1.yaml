@@ -1,0 +1,62 @@
+# P210-F — SOAR DDD / CQRS
+version: "1.0"
+prompt_id: P210-F
+adr: "365"
+sor: cyber_security
+
+aggregates:
+  - SoarPlaybook
+  - PlaybookVersion
+  - AutomationRun
+  - OrchestrationSession
+  - ApprovalGate
+  - ConnectorBinding
+  - EvidencePackage
+  - RollbackPlan
+
+commands:
+  - CreatePlaybook
+  - PublishPlaybookVersion
+  - ExecutePlaybook
+  - PauseExecution
+  - ResumeExecution
+  - RequestApproval
+  - ApproveResponse
+  - RejectResponse
+  - ExecuteAutomation
+  - RollbackAutomation
+  - PreserveEvidence
+
+queries:
+  - GetPlaybook
+  - GetExecutionStatus
+  - GetIncidentWorkflow
+  - GetAutomationHistory
+  - GetApprovalStatus
+  - GetReadiness
+
+domain_events:
+  - PlaybookCreated
+  - PlaybookVersionPublished
+  - PlaybookExecuted
+  - AutomationStarted
+  - AutomationCompleted
+  - AutomationFailed
+  - IncidentEscalated
+  - ResponseApproved
+  - ResponseRejected
+  - RollbackCompleted
+  - EvidencePreserved
+  - UnversionedPlaybookRejected
+  - UnauditedAutomationRejected
+  - TightCouplingRejected
+  - UnexplainableAiRejected
+
+integration_events:
+  - cyber_security.soar.playbook.executed
+  - cyber_security.soar.automation.completed
+  - cyber_security.soar.approval.requested
+  - security.attack.detected
+
+deployable_unit: cyber_security
+never_invent_sibling_bc: true

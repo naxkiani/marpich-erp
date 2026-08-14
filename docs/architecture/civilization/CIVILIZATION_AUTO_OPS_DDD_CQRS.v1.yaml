@@ -1,0 +1,56 @@
+# CIVILIZATION_AUTO_OPS_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationAutoOpsDddCqrs
+metadata:
+  prompt_id: P219-U
+  adr: "574"
+bounded_contexts:
+  - id: BC-AOPS-01
+    name: Operations Core
+    type: CORE
+    aggregate: OperationsAggregate
+  - id: BC-AOPS-02
+    name: Workflow Context
+    type: CORE
+    aggregate: WorkflowAggregate
+  - id: BC-AOPS-03
+    name: Resource Context
+    type: CORE
+    aggregate: ResourceAllocationAggregate
+  - id: BC-AOPS-04
+    name: Operations Monitoring Context
+    type: SUPPORTING
+    aggregate: MonitoringAggregate
+primary_aggregates:
+  - OperationsAggregate
+  - MissionAggregate
+  - WorkflowAggregate
+  - ResourceAllocationAggregate
+  - MonitoringAggregate
+commands:
+  - CreateMissionCommand
+  - StartWorkflowCommand
+  - AllocateResourcesCommand
+  - RunSimulationCommand
+  - OptimizeOperationsCommand
+  - InitiateRecoveryCommand
+queries:
+  - GetOperationsDashboardQuery
+  - GetMissionStatusQuery
+  - GetWorkflowHealthQuery
+  - GetResourceCapacityQuery
+  - GetOperationalPerformanceQuery
+  - GetMissionTimelineQuery
+events:
+  - MissionCreatedEvent
+  - MissionAssignedEvent
+  - MissionExecutedEvent
+  - MissionCompletedEvent
+  - WorkflowStartedEvent
+  - WorkflowCompletedEvent
+  - WorkflowOptimizedEvent
+  - ResourceAllocatedEvent
+  - CapacityExceededEvent
+  - AlertGeneratedEvent
+  - PerformanceMeasuredEvent
+  - RecoveryInitiatedEvent

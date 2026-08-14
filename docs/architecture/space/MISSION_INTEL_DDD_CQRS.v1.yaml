@@ -1,0 +1,16 @@
+apiVersion: marpich.io/v1
+kind: MissionIntelDddCqrs
+metadata:
+  prompt: P218-J
+  adr: "536"
+bounded_contexts: 8
+aggregates:
+  - MissionAggregate
+  - MissionPlanAggregate
+  - MissionExecutionAggregate
+  - MissionTimelineAggregate
+  - MissionTaskAggregate
+  - MissionRiskAggregate
+  - MissionResourceAggregate
+microservices: 10
+core_events: 13

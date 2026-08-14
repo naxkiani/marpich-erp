@@ -3,9 +3,9 @@ import type { NextRequest } from "next/server";
 import { SESSION_COOKIE_NAME, SESSION_COOKIE_VALUE } from "@marpich/auth-provider";
 
 const PROTECTED_PREFIXES = [
+  "/",
+  "/modules",
   "/enterprise",
-  "/tax",
-  "/currency-exchange",
   "/banking",
   "/education",
   "/healthcare",
@@ -19,13 +19,20 @@ function isPublicPath(pathname: string): boolean {
   return pathname.startsWith("/login/");
 }
 
+function isProtected(pathname: string): boolean {
+  if (isPublicPath(pathname)) return false;
+  if (pathname === "/" || pathname === "/modules") return true;
+  return PROTECTED_PREFIXES.some(
+    (prefix) => prefix !== "/" && pathname.startsWith(prefix),
+  );
+}
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const hasSession = request.cookies.get(SESSION_COOKIE_NAME)?.value === SESSION_COOKIE_VALUE;
-  const isProtected = PROTECTED_PREFIXES.some((prefix) => pathname.startsWith(prefix));
-  const isPublic = isPublicPath(pathname);
+  const protectedPath = isProtected(pathname);
 
-  if (isProtected && !hasSession && !isPublic) {
+  if (protectedPath && !hasSession) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     url.searchParams.set("returnTo", pathname);
@@ -43,9 +50,10 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
+    "/",
+    "/modules",
+    "/modules/:path*",
     "/enterprise/:path*",
-    "/tax/:path*",
-    "/currency-exchange/:path*",
     "/banking/:path*",
     "/education/:path*",
     "/healthcare/:path*",

@@ -1,0 +1,63 @@
+context: cyber_security
+architecture_version: "1.0"
+display_name: Enterprise Cyber Security & Threat Defense Platform
+type: platform
+description: >-
+  Centralized cyber security control plane — SOC, SIEM, SOAR, XDR/EDR/NDR,
+  threat intelligence, hunting, ASM/CTEM, AI-native security operations (P210).
+  Not IR SoR (security_incident). Not Observability SoR. Not crypto SoR (secrets).
+api: /api/v1/cyber-security
+series: P210
+foundation_prompt: P210-A
+adr: "361"
+schema: cyber_security
+aggregates:
+  - CyberSecurityStrategyProfile
+  - ZeroTrustControlPlane
+  - SocOperatingModel
+  - DetectionCapabilityMap
+  - ThreatIntelligenceBinding
+  - ResponseAutomationPolicy
+  - TelemetryCoverageModel
+  - MeasurableControlRegister
+publishes:
+  - cyber_security.strategy.published
+  - cyber_security.capability.registered
+  - cyber_security.control.registered
+  - security.attack.detected
+subscribes:
+  - platform.tenant.provisioned
+delegates:
+  - security_incident
+  - integration
+  - authorization
+  - workflow
+  - audit
+  - ai
+  - policy
+  - enterprise_observability
+  - secrets
+forbidden_sibling_bc:
+  - cyber_defense
+  - soc_platform
+  - siem_platform
+  - soar_platform
+  - xdr
+  - edr
+  - ndr
+  - security_ops
+ai:
+  insights: true
+  predictions: true
+  recommendations: true
+  summaries: true
+  search: true
+  assistant: true
+  automation: true
+  document_intelligence: true
+  voice_commands: true
+  chat_interface: true
+  report_explanation: true
+  anomaly_detection: true
+  forecasting: true
+  optimization_suggestions: true

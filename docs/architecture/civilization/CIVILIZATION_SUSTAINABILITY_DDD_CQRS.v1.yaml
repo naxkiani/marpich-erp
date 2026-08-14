@@ -1,0 +1,54 @@
+# CIVILIZATION_SUSTAINABILITY_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationSustainabilityDddCqrs
+metadata:
+  prompt_id: P219-N
+  adr: "567"
+bounded_contexts:
+  - id: BC-SUS-01
+    name: Sustainability Intelligence Core
+    type: CORE
+    aggregate: SustainabilityAggregate
+  - id: BC-SUS-02
+    name: Climate Intelligence Context
+    type: CORE
+    aggregate: ClimateAggregate
+  - id: BC-SUS-03
+    name: Circular Economy Context
+    type: CORE
+    aggregate: CircularEconomyAggregate
+  - id: BC-SUS-04
+    name: Carbon Intelligence Context
+    type: SUPPORTING
+    aggregate: CarbonAggregate
+primary_aggregates:
+  - SustainabilityAggregate
+  - PlanetaryHealthAggregate
+  - ClimateAggregate
+  - CircularEconomyAggregate
+  - CarbonAggregate
+commands:
+  - RegisterEmissionCommand
+  - CreateClimateScenarioCommand
+  - OptimizeCircularProcessCommand
+  - RunPlanetarySimulationCommand
+  - ReduceCarbonImpactCommand
+  - EvaluateSustainabilityCommand
+queries:
+  - GetClimateStatusQuery
+  - GetPlanetaryHealthQuery
+  - GetCarbonInventoryQuery
+  - GetCircularEconomyDashboardQuery
+  - GetEnvironmentalForecastQuery
+events:
+  - ClimateUpdatedEvent
+  - CarbonMeasuredEvent
+  - EmissionDetectedEvent
+  - PollutionDetectedEvent
+  - EnvironmentalRiskDetectedEvent
+  - MaterialRecoveredEvent
+  - WasteReducedEvent
+  - CircularLoopCompletedEvent
+  - PlanetaryHealthImprovedEvent
+  - BiodiversityRecoveredEvent
+  - ClimateScenarioChangedEvent

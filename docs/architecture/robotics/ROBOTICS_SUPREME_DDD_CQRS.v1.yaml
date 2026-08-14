@@ -1,0 +1,30 @@
+# ROBOTICS_SUPREME_DDD_CQRS.v1.yaml — P216-Z
+apiVersion: marpich.io/v1
+kind: RoboticsSupremeDddCqrs
+metadata:
+  phase: P216-Z
+  adr: "498"
+spec:
+  core_domain: universal_robotics_intelligence_management
+  aggregate: UniversalRoboticsIntelligenceAggregate
+  commands:
+    - CreateRoboticsNetworkCommand
+    - RegisterRobotPlatformCommand
+    - ActivateIntelligenceCoreCommand
+    - ApproveCapabilityEvolutionCommand
+    - ExecuteGlobalOptimizationCommand
+    - UpdateRoboticsUniverseTwinCommand
+  queries:
+    - GetGlobalRoboticsStateQuery
+    - GetRobotIntelligenceQuery
+    - GetCapabilityNetworkQuery
+    - GetGovernanceStatusQuery
+    - GetDigitalTwinUniverseQuery
+  events:
+    - RobotRegisteredEvent
+    - IntelligenceEvolutionEvent
+    - CapabilityExchangeEvent
+    - RoboticsNetworkUpdatedEvent
+    - GovernanceDecisionEvent
+    - SafetyValidationEvent
+    - CivilizationLayerUpdatedEvent

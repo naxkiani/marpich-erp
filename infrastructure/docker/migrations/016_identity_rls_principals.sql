@@ -1,7 +1,8 @@
 -- Phase P5 — PostgreSQL RLS + principal HASH partitioning
 -- Applies tenant isolation policies and principals registry for MEIAAP
+-- Note: "authorization" is a reserved keyword — always quote the schema name.
 
-CREATE SCHEMA IF NOT EXISTS authorization;
+CREATE SCHEMA IF NOT EXISTS "authorization";
 
 -- Unified principals registry (users + service principals), HASH partitioned by tenant_id
 CREATE TABLE IF NOT EXISTS identity.principals (
@@ -38,7 +39,7 @@ CREATE INDEX IF NOT EXISTS idx_principals_tenant_ref ON identity.principals(tena
 CREATE INDEX IF NOT EXISTS idx_principals_email ON identity.principals(tenant_id, email);
 
 -- Access decisions (authorization PDP) — RANGE partitioned by decided_at (monthly parent)
-CREATE TABLE IF NOT EXISTS authorization.access_decisions (
+CREATE TABLE IF NOT EXISTS "authorization".access_decisions (
     tenant_id VARCHAR(63) NOT NULL,
     id UUID NOT NULL,
     decision_ref VARCHAR(64) NOT NULL,
@@ -53,11 +54,11 @@ CREATE TABLE IF NOT EXISTS authorization.access_decisions (
     PRIMARY KEY (tenant_id, id, decided_at)
 ) PARTITION BY RANGE (decided_at);
 
-CREATE TABLE IF NOT EXISTS authorization.access_decisions_default
-    PARTITION OF authorization.access_decisions DEFAULT;
+CREATE TABLE IF NOT EXISTS "authorization".access_decisions_default
+    PARTITION OF "authorization".access_decisions DEFAULT;
 
 CREATE INDEX IF NOT EXISTS idx_access_decisions_tenant_principal
-    ON authorization.access_decisions(tenant_id, principal_id, decided_at DESC);
+    ON "authorization".access_decisions(tenant_id, principal_id, decided_at DESC);
 
 -- RLS helper
 CREATE OR REPLACE FUNCTION identity.current_tenant_id() RETURNS TEXT AS $$
@@ -69,13 +70,13 @@ ALTER TABLE IF EXISTS identity.users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE IF EXISTS identity.roles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE IF EXISTS identity.sessions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE IF EXISTS identity.principals ENABLE ROW LEVEL SECURITY;
-ALTER TABLE IF EXISTS authorization.access_decisions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE IF EXISTS "authorization".access_decisions ENABLE ROW LEVEL SECURITY;
 
 ALTER TABLE IF EXISTS identity.users FORCE ROW LEVEL SECURITY;
 ALTER TABLE IF EXISTS identity.roles FORCE ROW LEVEL SECURITY;
 ALTER TABLE IF EXISTS identity.sessions FORCE ROW LEVEL SECURITY;
 ALTER TABLE IF EXISTS identity.principals FORCE ROW LEVEL SECURITY;
-ALTER TABLE IF EXISTS authorization.access_decisions FORCE ROW LEVEL SECURITY;
+ALTER TABLE IF EXISTS "authorization".access_decisions FORCE ROW LEVEL SECURITY;
 
 DO $$ BEGIN
     IF NOT EXISTS (
@@ -121,7 +122,7 @@ DO $$ BEGIN
     IF NOT EXISTS (
         SELECT 1 FROM pg_policies WHERE schemaname = 'authorization' AND tablename = 'access_decisions' AND policyname = 'tenant_isolation_access_decisions'
     ) THEN
-        CREATE POLICY tenant_isolation_access_decisions ON authorization.access_decisions
+        CREATE POLICY tenant_isolation_access_decisions ON "authorization".access_decisions
             USING (tenant_id = identity.current_tenant_id())
             WITH CHECK (tenant_id = identity.current_tenant_id());
     END IF;

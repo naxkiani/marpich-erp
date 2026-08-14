@@ -1,0 +1,13 @@
+apiVersion: marpich.io/v1
+kind: SpaceInfrastructureArchitecture
+metadata:
+  prompt: P218-D
+  adr: "530"
+  fabric: meos_space_intelligence_infrastructure_fabric
+layers:
+  - L01 Space Physical Infrastructure
+  - L02 Connectivity Layer
+  - L03 Space Cloud Platform
+  - L04 Platform Services
+  - L05 Mission Services
+layer_count: 5

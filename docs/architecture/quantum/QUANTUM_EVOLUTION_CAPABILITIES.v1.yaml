@@ -1,0 +1,48 @@
+prompt_id: P215-U
+adr: "466"
+sor: quantum
+capability: CAP-PLT-QC-001
+api_prefix: /api/v1/quantum/evolution
+fabric: meos_quantum_autonomous_evolution_fabric
+os_gate: P215-T
+trust_gate: P215-K
+security_gate: P215-H
+principle: >-
+  MEOS Quantum Autonomous Intelligence Platform SHALL provide the evolutionary
+  intelligence layer that enables continuous adaptation, optimization, healing
+  and growth of the quantum enterprise ecosystem.
+quantum_autonomous_intelligence_platform_present_required: true
+self_healing_ecosystem_present_required: true
+autonomous_agents_present_required: true
+evolution_intelligence_present_required: true
+singularity_readiness_framework_present_required: true
+self_optimization_present_required: true
+knowledge_graph_integration_present_required: true
+digital_twin_integration_present_required: true
+never_replace_p215_t: true
+never_replace_core_platform: true
+never_replace_p215_k: true
+ungated_autonomous_actions_forbidden: true
+module_local_llm_forbidden: true
+via_p215_t: true
+via_p215_r: true
+via_p215_s: true
+via_p215_n: true
+via_p215_q: true
+via_p214_z: true
+via_p213: true
+via_p215_k: true
+via_policy_engine: true
+via_workflow: true
+via_audit: true
+builds_on_p215_a: true
+builds_on_p215_t: true
+builds_on_p215_n: true
+builds_on_p215_s: true
+governed_by_p215_k: true
+forbidden_siblings:
+  - quantum_evolution_platform
+  - quantum_autonomous_intelligence_platform
+  - quantum_self_healing_platform
+  - quantum_singularity_platform
+  - quantum_agent_evolution_platform

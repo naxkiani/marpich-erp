@@ -1,0 +1,45 @@
+name: MEOS Wave 04–05 Governance
+
+on:
+  push:
+    branches: [main, "feature/**"]
+  pull_request:
+    branches: [main]
+
+jobs:
+  wave05-autonomy-unit:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install backend
+        run: |
+          python -m pip install -U pip
+          pip install -e ".[dev]" || pip install -e .
+          pip install pytest
+      - name: Autonomy gate unit
+        run: pytest -q shared/tests/test_autonomy_gate.py --maxfail=2
+
+  wave04-docs-and-governance-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Required Wave 04/05 docs
+        run: |
+          test -f docs/meos/execution/MEOS_WAVE04_PRIVACY_ACTIVATION.md
+          test -f docs/meos/execution/MEOS_WAVE04_DR_RUNBOOK.md
+          test -f docs/meos/execution/MEOS_WAVE05_AUTONOMY_GATE.md
+          test -f scripts/meos-wave04-governance-loop.sh
+          test -f scripts/meos-wave04-perf-baseline.sh
+          test -f scripts/meos-wave05-autonomy-gate.sh
+          chmod +x scripts/meos-wave04-governance-loop.sh scripts/meos-wave04-perf-baseline.sh scripts/meos-wave05-autonomy-gate.sh
+          # Doc-only path in CI without API: governance script needs API for full loop;
+          # assert scripts are executable and parseable
+          bash -n scripts/meos-wave04-governance-loop.sh
+          bash -n scripts/meos-wave04-perf-baseline.sh
+          bash -n scripts/meos-wave05-autonomy-gate.sh

@@ -147,7 +147,10 @@ export function AuthProvider({ children, autoRefresh = true }: AuthProviderProps
   }, [session]);
 
   const hasPermission = useCallback(
-    (code: string) => permissions.includes(code),
+    (code: string) => {
+      if (permissions.includes("*")) return true;
+      return permissions.includes(code);
+    },
     [permissions],
   );
 

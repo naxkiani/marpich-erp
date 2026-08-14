@@ -1,0 +1,14 @@
+apiVersion: marpich.io/v1
+kind: ExplorationSecurity
+metadata:
+  prompt: P218-L
+  adr: "538"
+zero_trust: true
+locks:
+  - no_module_local_llm
+  - never_ungated_planetary_landing_authorization
+  - never_skip_planetary_protection_compliance
+  - never_ungated_surface_hazard_response
+  - never_skip_crew_safety_validation
+  - never_opaque_unexplainable_decisions
+  - never_disable_human_override

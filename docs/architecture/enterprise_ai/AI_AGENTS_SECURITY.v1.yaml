@@ -1,0 +1,28 @@
+# P214-F — SECURITY
+version: "1.0"
+prompt_id: P214-F
+adr: "426"
+sor: ai
+zero_trust: true
+integrates:
+  - P207
+  - P208
+  - P209
+  - P210
+  - P211
+controls:
+  - agent_zero_trust
+  - least_privilege
+  - tool_authorization
+  - action_approval
+  - agent_audit_trail
+  - prompt_protection
+  - memory_security
+  - execution_governance
+permissions:
+  - ai.assist.read
+  - ai.assist.infer
+forbidden:
+  - module_local_agent_runtime
+  - unsigned_agent_releases
+  - sibling_ai_bc

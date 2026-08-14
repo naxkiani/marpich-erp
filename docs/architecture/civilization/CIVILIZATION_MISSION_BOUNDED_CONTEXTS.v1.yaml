@@ -1,0 +1,26 @@
+# CIVILIZATION_MISSION_BOUNDED_CONTEXTS.v1.yaml
+apiVersion: marpich.io/v1
+kind: BoundedContextMap
+metadata:
+  prompt_id: P219-A
+  adr: "554"
+  sor: civilization
+contexts:
+  - id: BC-MSN-01
+    name: Civilization Mission and Vision Context
+  - id: BC-MSN-02
+    name: Strategic Scope and Domains Context
+  - id: BC-MSN-03
+    name: Capability Framework Context
+  - id: BC-MSN-04
+    name: Strategic Pillars and Values Context
+  - id: BC-MSN-05
+    name: Maturity Model Context
+  - id: BC-MSN-06
+    name: Governance Strategy Context
+  - id: BC-MSN-07
+    name: Integration and Evolution Roadmap Context
+forbidden_sibling_bc:
+  - civilization_mission_platform
+  - civilization_vision_platform
+  - civilization_strategy_platform

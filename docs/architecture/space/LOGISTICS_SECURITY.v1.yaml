@@ -1,0 +1,14 @@
+apiVersion: marpich.io/v1
+kind: LogisticsSecurity
+metadata:
+  prompt: P218-O
+  adr: "541"
+zero_trust: true
+locks:
+  - no_module_local_llm
+  - never_ungated_cargo_launch_authorization
+  - never_skip_cargo_authentication
+  - never_skip_supply_chain_security_controls
+  - never_ungated_emergency_route_activation
+  - never_opaque_unexplainable_decisions
+  - never_disable_human_override

@@ -1,0 +1,29 @@
+apiVersion: marpich.io/v1
+kind: SpaceCommerceControls
+metadata:
+  prompt: P218-R
+  adr: "544"
+controls:
+  - zero_trust_commerce
+  - identity_verification
+  - transaction_security
+  - data_protection
+  - audit_logging
+  - policy_enforcement
+  - financial_kernel_settlement
+  - human_override
+domains:
+  - commercial_data_security
+  - financial_security
+  - contract_security
+  - business_identity
+  - marketplace_trust
+laws:
+  never_ungated_commercial_transaction: true
+  never_skip_marketplace_identity_verification: true
+  never_skip_contract_compliance_validation: true
+  never_opaque_unexplainable_commerce_decisions: true
+  never_duplicate_financial_kernel: true
+  never_replace_p218_q_sustainability: true
+  space_ai_via_p214z_acl_only: true
+  no_module_local_llm: true

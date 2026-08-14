@@ -1,0 +1,21 @@
+# BIOTECHNOLOGY_BIO_GI_SECURITY.v1.yaml — P217-V
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioGiSecurity
+metadata:
+  phase: P217-V
+  adr: "521"
+spec:
+  zero_trust: true
+  protects:
+    - foundation_models
+    - reasoning_contexts
+    - cognitive_decisions
+    - enterprise_brain_state
+    - bio_gi_knowledge
+  hard_locks:
+    - never_skip_explainable_bio_gi_reasoning
+    - never_skip_human_cognitive_oversight
+    - never_skip_responsible_bio_gi_governance
+    - never_unvalidated_cognitive_decision_release
+    - no_module_local_llm
+    - never_opaque_unexplainable_decisions

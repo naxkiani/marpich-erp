@@ -1,0 +1,56 @@
+prompt_id: P215-S
+adr: "464"
+sor: quantum
+core_domain: enterprise_quantum_security_intelligence_management
+bounded_context_count: 6
+aggregate_count: 7
+security_gate: P215-H
+bounded_contexts:
+  - id: BC-01
+    name: Quantum Cyber Defense Context
+    owns: QuantumDefenseAggregate
+  - id: BC-02
+    name: Post-Quantum Cryptography Context
+    owns: QuantumCryptoAggregate
+  - id: BC-03
+    name: Quantum Identity Context
+    owns: QuantumIdentityAggregate
+  - id: BC-04
+    name: Quantum Zero Trust Context
+    owns: QuantumZeroTrustAggregate
+  - id: BC-05
+    name: Quantum Threat Intelligence Context
+    owns: QuantumThreatIntelligenceAggregate
+  - id: BC-06
+    name: Quantum Resilience Context
+    owns: QuantumResilienceAggregate
+commands:
+  - CreateQuantumIdentityCommand
+  - EvaluateTrustCommand
+  - DetectQuantumThreatCommand
+  - ExecuteDefenseActionCommand
+  - RotateCryptographicKeyCommand
+  - ActivateResiliencePlanCommand
+queries:
+  - GetSecurityPostureQuery
+  - GetThreatLandscapeQuery
+  - GetIdentityTrustQuery
+  - GetCryptographicStatusQuery
+  - GetResilienceScoreQuery
+events:
+  - IdentityAuthenticatedEvent
+  - TrustEvaluationCompletedEvent
+  - ThreatDetectedEvent
+  - DefenseExecutedEvent
+  - CryptographicMigrationCompletedEvent
+  - ResilienceActivatedEvent
+event_versioning: event_version_field
+outbox_required: true
+via_p215_h: true
+via_p209_secrets: true
+via_policy_engine: true
+via_identity: true
+via_workflow: true
+via_audit: true
+never_replace_p215_h: true
+never_local_pqc_store: true

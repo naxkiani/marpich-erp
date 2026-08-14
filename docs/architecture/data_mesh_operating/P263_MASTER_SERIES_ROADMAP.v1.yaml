@@ -1,0 +1,50 @@
+# MEDIMOP Master Series Roadmap (P263)
+
+series: P263
+title: MEOS Enterprise Data Intelligence & Data Mesh Operating Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEDIMOP-001
+sor: data_mesh_operating
+fabric: meos_enterprise_data_intelligence_data_mesh_operating_platform_framework
+api: /api/v1/data-mesh-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P263
+    title: MEDIMOP Foundation
+    status: planned
+    adr: "620"
+    fabric: meos_enterprise_data_intelligence_data_mesh_operating_platform_framework
+    api: /api/v1/data-mesh-operating*
+  - id: P263-A
+    title: Data Mesh Foundation — Catalog Operating UX, Metadata Overlays, Ownership Model, Basic Governance Campaigns
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P263-B
+    title: Data Product Platform — Marketplace Experience, Contracts ACL, Quality Framework, Data APIs Federation
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P263-C
+    title: AI Native Data Intelligence — Semantic Intelligence, Automated Classification, AI Data Preparation (Gated)
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P263-D
+    title: Autonomous Data Operating System — Self-Governing Assists, Autonomous Quality, Intelligent Data Evolution (Gated)
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_p229_data_mesh: true
+  never_fork_data_mesh_api: true
+  never_dual_write_data_mesh_tables: true
+  never_replace_p212_or_p230: true
+  never_cross_schema_discovery_sql: true
+  never_module_local_feature_store_sor: true
+  never_module_local_llm: true
+  never_treat_recommendation_as_access_grant: true
+  never_access_without_policy_privacy_gates: true
+  foundation_for_p263_a: true
+  unblocks_p264_knowledge_graph_semantic: true
+  peer_series_p264_mekgsi: true

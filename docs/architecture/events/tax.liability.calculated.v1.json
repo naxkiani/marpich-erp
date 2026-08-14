@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "tax.liability.calculated",
+  "type": "object",
+  "required": ["liability_id", "payroll_run_id", "period_label", "taxable_base", "tax_amount", "currency"],
+  "properties": {
+    "liability_id": { "type": "string", "format": "uuid" },
+    "payroll_run_id": { "type": "string", "format": "uuid" },
+    "period_label": { "type": "string" },
+    "taxable_base": { "type": "string" },
+    "tax_amount": { "type": "string" },
+    "currency": { "type": "string", "minLength": 3, "maxLength": 3 }
+  }
+}

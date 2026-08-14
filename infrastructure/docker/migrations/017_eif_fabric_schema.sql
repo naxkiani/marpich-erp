@@ -2,6 +2,8 @@
 -- Extends MEIAAP (migrations 002, 003, 016)
 -- All tenant-scoped tables use RLS via app.tenant_id session variable
 
+CREATE EXTENSION IF NOT EXISTS ltree;
+
 CREATE SCHEMA IF NOT EXISTS federation;
 CREATE SCHEMA IF NOT EXISTS credential;
 CREATE SCHEMA IF NOT EXISTS trust;
@@ -153,7 +155,7 @@ CREATE TABLE IF NOT EXISTS session_mgmt.sessions (
     expires_at TIMESTAMPTZ NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     last_activity_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    PRIMARY KEY (tenant_id, id)
+    PRIMARY KEY (tenant_id, id, created_at)
 ) PARTITION BY RANGE (created_at);
 
 CREATE TABLE IF NOT EXISTS session_mgmt.sessions_default

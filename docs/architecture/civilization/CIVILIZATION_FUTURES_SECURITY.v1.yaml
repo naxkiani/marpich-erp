@@ -1,0 +1,37 @@
+# CIVILIZATION_FUTURES_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationFuturesSecurity
+metadata:
+  prompt_id: P219-S
+  adr: "572"
+permissions:
+  - civilization.read
+  - civilization.futures.read
+  - civilization.futures.write
+  - civilization.futures.simulate
+  - civilization.admin
+locks:
+  never_replace_p219_e_ai_os: true
+  never_replace_p219_f_simulation: true
+  never_replace_p219_k_governance: true
+  never_replace_p219_r_evolution: true
+  never_opaque_unexplainable_futures_decisions: true
+  never_ungated_futures_strategy_execution: true
+  never_treat_scenario_as_binding_policy: true
+  never_skip_ethical_futures_governance: true
+  never_skip_human_authority_futures: true
+  never_violate_human_sovereignty_futures: true
+  never_bypass_trusted_futures_validation: true
+  never_bypass_human_supervision_futures: true
+  never_module_local_llm: true
+  inference_via_p214_z_only: true
+  futures_strategy_workflow_gated: true
+controls:
+  - strategic_foresight_by_design
+  - futures_thinking_first
+  - evidence_based_scenario_planning
+  - human_centered_decision_support
+  - adaptive_resilience
+  - explainable_ai
+  - human_supervision
+  - audit_on_futures_mutations

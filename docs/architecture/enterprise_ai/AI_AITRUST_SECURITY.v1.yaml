@@ -1,0 +1,23 @@
+# P214-P — SECURITY
+version: "1.0"
+prompt_id: P214-P
+adr: "436"
+sor: ai
+zero_trust: true
+integrates:
+  - P207
+  - P208
+  - P209
+  - P210
+  - P211
+  - P214-I
+controls:
+  - governance_access_control
+  - audit_evidence_protection
+  - certification_authorization
+  - policy_enforcement
+  - human_oversight_gates
+forbidden:
+  - module_local_ai_governance
+  - bypass_audit_platform
+  - bypass_policy_engine

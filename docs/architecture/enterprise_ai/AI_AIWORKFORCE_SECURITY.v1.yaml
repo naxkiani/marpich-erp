@@ -1,0 +1,22 @@
+# P214-Q — SECURITY
+version: "1.0"
+prompt_id: P214-Q
+adr: "437"
+zero_trust: true
+controls:
+  - autonomy_policy_enforcement
+  - human_approval_gates
+  - decision_authorization
+  - memory_protection
+  - workforce_identity_boundaries
+integrations:
+  - P207
+  - P208
+  - P209
+  - P210
+  - P214-I
+  - P214-P
+forbidden:
+  - module_local_ai_workforce_runtime
+  - ungoverned_autonomous_decisioning
+  - bypassing_human_oversight_when_required

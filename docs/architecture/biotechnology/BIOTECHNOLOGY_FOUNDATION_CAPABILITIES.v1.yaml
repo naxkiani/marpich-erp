@@ -1,0 +1,22 @@
+# BIOTECHNOLOGY_FOUNDATION_CAPABILITIES.v1.yaml — P217
+apiVersion: marpich.io/v1
+kind: BiotechnologyFoundationCapabilities
+metadata:
+  phase: P217
+  adr: "499"
+  fabric: meos_bio_intelligence_fabric
+  capability: CAP-PLT-BIO-001
+spec:
+  synthetic_biology:
+    platform: meos_synthetic_biology_intelligence_platform
+  bio_ai:
+    engine: meos_bio_ai_intelligence_core
+    via_p214_z: true
+  digital_health:
+    platform: meos_digital_health_intelligence_platform
+  precision_medicine:
+    platform: meos_precision_intelligence_platform
+  biological_digital_twin:
+    platform: meos_biological_digital_twin_universe
+  life_science_knowledge_graph:
+    graph: meos_life_science_knowledge_graph

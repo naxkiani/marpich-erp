@@ -1,0 +1,32 @@
+apiVersion: marpich.io/v1
+kind: HumanGiControls
+metadata:
+  prompt: P218-V
+  adr: "548"
+controls:
+  - human_oversight
+  - ethical_review
+  - trust_framework
+  - consent_management
+  - reasoning_transparency
+  - cognitive_privacy
+  - human_authority_preservation
+  - audit_trails
+domains:
+  - human_cognitive_rights
+  - knowledge_ownership
+  - ai_collaboration_ethics
+  - identity_protection
+  - cognitive_privacy
+  - decision_transparency
+laws:
+  never_ungated_collective_decision: true
+  never_skip_cognitive_privacy: true
+  never_violate_cognitive_sovereignty: true
+  never_skip_ethical_intelligence_review: true
+  never_opaque_unexplainable_intelligence_decisions: true
+  never_skip_human_authority_preservation: true
+  never_replace_p218_u_human_evolution: true
+  never_replace_p218_t_civilization: true
+  space_ai_via_p214z_acl_only: true
+  no_module_local_llm: true

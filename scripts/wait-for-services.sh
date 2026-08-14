@@ -3,11 +3,14 @@
 set -euo pipefail
 
 PGHOST="${PGHOST:-127.0.0.1}"
-PGPORT="${PGPORT:-5432}"
+PGPORT="${PGPORT:-5433}"
 PGUSER="${PGUSER:-marpich}"
 PGDATABASE="${PGDATABASE:-marpich_platform}"
 REDIS_URL="${REDIS_URL:-redis://127.0.0.1:6379}"
 KAFKA_BOOTSTRAP_SERVERS="${KAFKA_BOOTSTRAP_SERVERS:-${KAFKA_BROKERS:-127.0.0.1:9092}}"
+
+# Kafka is optional for Wave 01 memory/direct event bus demos.
+SKIP_KAFKA="${SKIP_KAFKA:-1}"
 
 wait_postgres() {
   echo "Waiting for Postgres at ${PGHOST}:${PGPORT}..."
@@ -62,4 +65,8 @@ wait_kafka() {
 
 wait_postgres
 wait_redis
-wait_kafka
+if [[ "${SKIP_KAFKA}" != "1" ]]; then
+  wait_kafka
+else
+  echo "Skipping Kafka wait (SKIP_KAFKA=1)."
+fi

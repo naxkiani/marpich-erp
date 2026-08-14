@@ -1,0 +1,42 @@
+# P214-S — CAPABILITIES
+version: "1.0"
+prompt_id: P214-S
+adr: "439"
+sor: ai
+capability: CAP-PLT-AI-001
+api_prefix: /api/v1/ai/airesearch
+fabric: meos_future_intelligence_evolution_fabric
+principle: >-
+  Enterprise AI Research Platform SHALL transform MEOS into a continuously
+  evolving intelligent enterprise capable of discovering and creating future
+  AI capabilities.
+builds_on:
+  - P214-G
+  - P214-L
+  - P214-N
+  - P214-O
+  - P214-P
+  - P214-R
+  - ADR-432
+  - ADR-436
+  - ADR-438
+enterprise_ai_research_platform_present_required: true
+ai_innovation_lab_present_required: true
+experimentation_platform_present_required: true
+prototype_factory_present_required: true
+future_intelligence_observatory_present_required: true
+scientific_knowledge_platform_present_required: true
+breakthrough_management_present_required: true
+ai_evolution_roadmap_present_required: true
+knowledge_graph_integration_present_required: true
+digital_twin_integration_present_required: true
+cqrs_architecture_present_required: true
+event_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_architecture_present_required: true
+zero_trust_security_present_required: true
+cloud_native_deployment_present_required: true
+sibling_ai_bc_forbidden: true
+module_local_ai_research_forbidden: true
+deepens_p214_r_future_evolution: true
+governed_by_p214_p: true

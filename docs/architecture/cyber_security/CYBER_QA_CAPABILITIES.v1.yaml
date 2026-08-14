@@ -1,0 +1,41 @@
+# P210-O — Testing / Security Validation / DoD capabilities
+version: "1.0"
+prompt_id: P210-O
+adr: "375"
+sor: cyber_security
+api_prefix: /api/v1/cyber-security/qa
+builds_on:
+  - P210-A
+  - P210-B
+  - P210-C
+  - P210-D
+  - P210-E
+  - P210-F
+  - P210-G
+  - P210-H
+  - P210-I
+  - P210-J
+  - P210-K
+  - P210-L
+  - P210-M
+  - P210-N
+  - ADR-374
+
+security_testing_automated_required: true
+adversarial_validation_required: true
+ai_systems_tested_required: true
+compliance_verifiable_required: true
+production_readiness_defined_required: true
+security_controls_measurable_required: true
+test_evidence_auditable_required: true
+sibling_qa_bc_forbidden: true
+live_destructive_without_workflow_forbidden: true
+via_workflow: true
+via_compliance_framework: true
+via_audit_platform: true
+via_p210_m_gov: true
+via_p210_n_deploy: true
+via_p210_e_siem: true
+via_p210_f_soar: true
+via_p210_g_xdr: true
+via_p210_k_graph: true

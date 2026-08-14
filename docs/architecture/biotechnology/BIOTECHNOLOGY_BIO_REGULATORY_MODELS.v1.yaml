@@ -1,0 +1,24 @@
+# BIOTECHNOLOGY_BIO_REGULATORY_MODELS.v1.yaml — P217-N
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioRegulatoryModels
+metadata:
+  phase: P217-N
+  adr: "513"
+spec:
+  regulatory_ai_components:
+    - regulatory_language_intelligence
+    - compliance_reasoning_engine
+    - regulatory_change_intelligence
+    - regulatory_forecasting_engine
+  compliance_domains:
+    - research_compliance
+    - drug_development_compliance
+    - manufacturing_compliance
+    - distribution_compliance
+  agents:
+    - regulatory_analyst_agent
+    - compliance_guardian_agent
+    - audit_preparation_agent
+    - risk_prediction_agent
+    - policy_intelligence_agent
+    - governance_strategy_agent

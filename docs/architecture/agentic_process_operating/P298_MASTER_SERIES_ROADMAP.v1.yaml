@@ -1,0 +1,106 @@
+# MEAPAE Master Series Roadmap (P298)
+
+series: P298
+title: MEOS Enterprise Agentic Process Automation & Autonomous Enterprise Execution Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEAPAE-001
+sor: agentic_process_operating
+fabric: meos_enterprise_agentic_process_automation_autonomous_enterprise_execution_platform_framework
+api: /api/v1/agentic-process-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P298
+    title: MEAPAE Foundation
+    status: planned
+    adr: "655"
+    fabric: meos_enterprise_agentic_process_automation_autonomous_enterprise_execution_platform_framework
+    api: /api/v1/agentic-process-operating*
+  - id: P298-A
+    title: Process Intelligence Foundation — Registry, Definition, Instance, State, Metrics, Monitoring
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P298-B
+    title: Process Discovery & Mining — Discovery, Mining, Variants, Conformance, Bottlenecks, Drift
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P298-C
+    title: Agentic Process Planning — Goal-to-Process, Decomposition, Agent/Human Assignment, Dynamic Planning
+    status: planned
+    adr: pending
+    window: 9-15_months
+  - id: P298-D
+    title: Exception Intelligence — Detection, Root Cause, Prediction, Recovery, Compensation, Escalation
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P298-E
+    title: Process Simulation — Twin Integration, Scenario Builder, What-If, Impact, Comparison
+    status: planned
+    adr: pending
+    window: 15-24_months
+  - id: P298-F
+    title: Process Optimization — Optimization Intelligence, AI Recommendations, Cost/SLA Optimization
+    status: planned
+    adr: pending
+    window: 18-30_months
+  - id: P298-G
+    title: Governed Autonomous Process — Policy/Risk Autonomy, Adaptive Process, Autonomous Allocation/Recovery
+    status: planned
+    adr: pending
+    window: 24-36_months
+  - id: P298-H
+    title: Continuous Enterprise Optimization — Execute Measure Learn Simulate Optimize Govern Adapt Loop
+    status: planned
+    adr: pending
+    window: 30-42_months
+locks:
+  never_replace_p260_workflow: true
+  never_replace_p266_ai_agent_orchestration: true
+  never_replace_p297_agentic_workspace_operating: true
+  never_replace_p257_enterprise_runtime: true
+  never_replace_p261_decision_intelligence: true
+  never_replace_p264_knowledge_graph: true
+  never_replace_p265_digital_twin: true
+  never_replace_p294_communication_experience_operating: true
+  never_become_workflow_engine: true
+  never_become_agent_orchestrator: true
+  never_become_application_runtime: true
+  never_become_decision_rules_engine: true
+  never_become_kg_or_twin_engine: true
+  never_become_communication_engine: true
+  never_become_erp_module: true
+  never_merge_p260_p266_p297_p298_p299: true
+  never_dual_write_workflow_orchestration_or_runtime_tables: true
+  never_local_metrics_stores: true
+  never_local_approval_workflow_or_orchestration_engines: true
+  never_module_local_llm: true
+  never_ungated_autonomous_process_execution: true
+  never_high_risk_adaptation_without_human_approval_when_policy_requires: true
+  autonomy_levels_policy_configurable: true
+  autonomous_adaptation_requires_reversibility_and_audit: true
+  process_adaptations_require_identity_policy_trace_evidence_audit: true
+  workflows_via_p260_only: true
+  agent_execution_via_p266_only: true
+  human_exceptions_via_p297_only: true
+  runtime_via_p257_only: true
+  escalation_delivery_via_p294_only: true
+  simulation_not_execute: true
+  optimize_outcome_not_activity_alone: true
+  ai_recommendation_requires_evidence_confidence_policy_human_approval: true
+  autonomous_requires_policy_authorization_autonomy_level_approval_audit_human_governance: true
+  foundation_for_p298_a: true
+  unblocks_p299_process_mining_process_intelligence_continuous_optimization_os: true
+  unblocks_p300_process_automation_marketplace_reusable_process_intelligence_os: true
+  unblocks_p301_process_composer_low_code_no_code_visual_automation_os: true
+  unblocks_p302_process_testing_simulation_quality_assurance_digital_process_validation_os: true
+  unblocks_p303_process_release_deployment_environment_lifecycle_os: true
+  unblocks_p304_process_observability_monitoring_sla_slo_continuous_operational_intelligence_os: true
+  unblocks_p305_incident_management_service_reliability_resilience_engineering_os: true
+  unblocks_p306_itsm_service_catalog_request_fulfillment_enterprise_service_operations_os: true
+  unblocks_p307_knowledge_centered_service_enterprise_knowledge_management_organizational_learning_os: true
+  unblocks_p308_document_intelligence_content_lifecycle_intelligent_information_management_os: true
+  unblocks_p309_records_retention_legal_hold_information_lifecycle_governance_os: true
+  unblocks_p310_information_governance_data_classification_sensitive_information_intelligence_os: true
+  unblocks_p311_data_loss_prevention_information_protection_adaptive_data_security_control_os: true

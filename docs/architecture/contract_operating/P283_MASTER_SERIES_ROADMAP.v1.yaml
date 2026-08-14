@@ -1,0 +1,68 @@
+# MECIAP Master Series Roadmap (P283)
+
+series: P283
+title: MEOS Enterprise Contract Intelligence, Commercial Agreement & Autonomous Contract Management Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MECIAP-001
+sor: contract_operating
+fabric: meos_enterprise_contract_intelligence_commercial_agreement_autonomous_contract_platform_framework
+api: /api/v1/contract-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P283
+    title: MECIAP Foundation
+    status: planned
+    adr: "640"
+    fabric: meos_enterprise_contract_intelligence_commercial_agreement_autonomous_contract_platform_framework
+    api: /api/v1/contract-operating*
+  - id: P283-A
+    title: Contract Foundation — Models, Parties, Templates, Clause Library, Terms, Lifecycle, Basic Workspace
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P283-B
+    title: Contract Intelligence — Term Extraction, Obligations, SLA, Risk, Compliance, Analytics, KG
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P283-C
+    title: Commercial Contract Intelligence — Profitability, Renewal, Amendment, Negotiation, Pricing Integration, Simulation
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P283-D
+    title: Autonomous Contract OS — Continuous Monitoring, Governed Autonomous Obligation/Renewal/Amendment Assists
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_p277_sales_revenue_operating: true
+  never_replace_p278_quote_to_cash_operating: true
+  never_replace_p279_treasury_cash: true
+  never_replace_p280_financial_planning: true
+  never_replace_p281_management_accounting: true
+  never_replace_p282_pricing_operating: true
+  never_replace_p271_financial_control: true
+  never_replace_document_exchange: true
+  never_fork_sales_revenue_operating_api: true
+  never_fork_quote_to_cash_operating_api: true
+  never_fork_pricing_operating_api: true
+  never_merge_p277_through_p283: true
+  never_store_pdf_or_binary_in_contract_tables: true
+  document_id_refs_only: true
+  never_dual_write_peer_ledgers: true
+  never_local_gl: true
+  never_ungated_binding_create_amend_terminate: true
+  never_bypass_contract_policy: true
+  versioned_contracts: true
+  versioned_templates_and_clauses: true
+  versioned_contract_policies: true
+  reproducible_contract_decisions: true
+  autonomy_thresholds_mandatory: true
+  segregation_of_duties: true
+  human_governance_for_material_contract_commits: true
+  never_module_local_llm: true
+  never_treat_twin_scenario_as_executed_contract: true
+  foundation_for_p283_a: true
+  unblocks_p284_commercial_compliance_obligation_performance_os: true
+  # P284 delivered as CAP-PLT-MECCPI-001 / ADR 641

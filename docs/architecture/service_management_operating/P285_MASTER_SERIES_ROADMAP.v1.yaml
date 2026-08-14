@@ -1,0 +1,61 @@
+# MESMIP Master Series Roadmap (P285)
+
+series: P285
+title: MEOS Enterprise Service Management, SLA Operations & Intelligent Service Delivery Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MESMIP-001
+sor: service_management_operating
+fabric: meos_enterprise_service_management_sla_operations_intelligent_service_delivery_platform_framework
+api: /api/v1/service-management-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P285
+    title: MESMIP Foundation
+    status: planned
+    adr: "642"
+    fabric: meos_enterprise_service_management_sla_operations_intelligent_service_delivery_platform_framework
+    api: /api/v1/service-management-operating*
+  - id: P285-A
+    title: Service Management Foundation — Catalog, Requests, Incident, SLA, Portal, Command Center
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P285-B
+    title: Service Operations Intelligence — Problem, Change, Dependencies, Availability, Capacity, Knowledge
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P285-C
+    title: Intelligent Service Delivery — AI Service Desk, Predictive SLA/Capacity, Change Risk, CX Intelligence
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P285-D
+    title: Autonomous Service OS — Continuous Monitoring, Governed Auto-Remediation, Predictive Prevention, Continuous Learning
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_p283_contract_operating: true
+  never_replace_p284_commercial_performance_operating: true
+  never_merge_p283_p284_p285: true
+  never_fork_contract_operating_api: true
+  never_fork_commercial_performance_operating_api: true
+  never_local_approval_engines: true
+  never_local_metrics_or_alerting_stores: true
+  never_store_pdf_or_binary_in_service_tables: true
+  document_id_knowledge_refs_only: true
+  never_ungated_production_changes: true
+  never_bypass_service_policy: true
+  versioned_service_definitions: true
+  versioned_sla_and_service_policies: true
+  reproducible_service_decisions: true
+  autonomy_thresholds_mandatory: true
+  safe_rollback_for_auto_remediation: true
+  segregation_of_duties: true
+  human_governance_for_material_production_actions: true
+  never_module_local_llm: true
+  never_treat_twin_scenario_as_production_change: true
+  foundation_for_p285_a: true
+  unblocks_p286_it_ops_infrastructure_observability_os: true
+  # P286 delivered as CAP-PLT-MEITOI-001 / ADR 643

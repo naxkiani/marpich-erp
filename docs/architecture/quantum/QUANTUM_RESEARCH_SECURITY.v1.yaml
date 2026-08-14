@@ -1,0 +1,22 @@
+prompt_id: P215-Q
+adr: "462"
+sor: quantum
+zero_trust_research: true
+via_p215_h: true
+via_p215_k: true
+via_p215_o: true
+via_workflow: true
+via_document_exchange: true
+via_p214_g: true
+module_local_llm_forbidden: true
+module_local_publication_blob_forbidden: true
+ungated_dual_use_research_forbidden: true
+permissions:
+  read: quantum.read
+  write: quantum.write
+controls:
+  - research_authz
+  - dual_use_policy_gate
+  - experiment_tenant_isolation
+  - document_id_refs_only
+  - reproducibility_audit

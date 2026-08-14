@@ -1,0 +1,13 @@
+apiVersion: marpich.io/v1
+kind: SpaceAiModels
+metadata:
+  prompt: P218-E
+  adr: "531"
+foundation_models:
+  - Mission Foundation Model
+  - Orbital Intelligence Model
+  - Scientific Discovery Model
+  - Space Operations Model
+  - Space Cognitive Model
+model_count: 5
+inference: via_p214_z_acl_only

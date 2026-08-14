@@ -1,0 +1,22 @@
+prompt_id: P215-O
+adr: "460"
+sor: quantum
+zero_trust_quality_governance: true
+via_p215_h: true
+via_p215_k: true
+via_p214_o: true
+via_workflow: true
+via_audit: true
+via_policy_engine: true
+module_local_certification_authority_forbidden: true
+ungated_production_promotion_forbidden: true
+permissions:
+  read: quantum.read
+  write: quantum.write
+controls:
+  - test_authz
+  - validation_integrity
+  - benchmark_tamper_resistance
+  - certification_workflow_gate
+  - evidence_refs_only
+  - tenant_isolation

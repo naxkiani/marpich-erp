@@ -1,0 +1,51 @@
+# MEBRDI Master Series Roadmap (P261)
+
+series: P261
+title: MEOS Enterprise Business Rules & Decision Intelligence Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEBRDI-001
+sor: business_decision
+fabric: meos_enterprise_business_rules_decision_intelligence_platform_framework
+api: /api/v1/business-decision*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P261
+    title: MEBRDI Foundation
+    status: planned
+    adr: "618"
+    fabric: meos_enterprise_business_rules_decision_intelligence_platform_framework
+    api: /api/v1/business-decision*
+  - id: P261-A
+    title: Business Rules Foundation — Rule Repository Overlays, Lifecycle, Basic Decision Execution ACL
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P261-B
+    title: Decision Intelligence Platform — Decision Models, Policy Engine ACL, Dashboard, Explainability
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P261-C
+    title: AI Decision Automation — AI Decision Agents, Predictive Decisions, Autonomous Recommendations (Gated)
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P261-D
+    title: Autonomous Enterprise Decision System — Self-Optimizing Decisions, Continuous Learning, Autonomous Governance (Gated)
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_policy_engine: true
+  never_replace_p224_decision_intelligence: true
+  never_fork_policies_or_decision_intelligence_apis: true
+  never_dual_write_policy_catalogs: true
+  never_hardcoded_business_rules_in_modules: true
+  never_local_policy_tables: true
+  never_module_local_llm: true
+  never_opaque_unexplainable_decisions: true
+  never_treat_recommendation_or_simulation_as_enforce: true
+  never_ungated_critical_autonomous_decisions: true
+  foundation_for_p261_a: true
+  unblocks_p262_analytics_insight: true
+  peer_series_p262_meiaoi: true

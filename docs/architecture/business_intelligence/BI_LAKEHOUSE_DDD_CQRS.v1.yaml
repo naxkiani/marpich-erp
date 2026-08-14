@@ -1,0 +1,64 @@
+# P213-F — DDD / CQRS
+version: "1.0"
+prompt_id: P213-F
+adr: "410"
+sor: analytics
+capability: CAP-PLT-BI-001
+principle: Enterprise Lakehouse becomes the intelligent data foundation where analytics, AI, and decision intelligence converge.
+fabric: meos_enterprise_lakehouse_intelligence_fabric
+core_domain: enterprise_lakehouse_intelligence_management
+aggregate: LakehousePlatformAggregate
+supporting_domains:
+  - data_storage_management
+  - data_processing_management
+  - data_engineering_management
+  - analytical_data_management
+  - ai_data_management
+  - streaming_intelligence_management
+  - data_governance_management
+logical_bounded_contexts:
+  - BC-01 lakehouse_core
+  - BC-02 data_engineering
+  - BC-03 analytical_processing
+  - BC-04 ai_data_foundation
+  - BC-05 streaming_intelligence
+medallion_layers:
+  - bronze
+  - silver
+  - gold
+  - ai
+commands:
+  - CreateLakehouseCommand
+  - RegisterDatasetCommand
+  - ExecutePipelineCommand
+  - PublishDataProductCommand
+  - CreateFeatureDatasetCommand
+queries:
+  - GetDatasetQuery
+  - GetPipelineQuery
+  - GetDataProductQuery
+  - GetFeatureDatasetQuery
+events:
+  - LakehouseCreatedEvent
+  - DatasetRegisteredEvent
+  - PipelineCompletedEvent
+  - DataProductPublishedEvent
+  - FeatureDatasetCreatedEvent
+microservices:
+  - lakehouse-management-service
+  - storage-management-service
+  - data-engineering-service
+  - pipeline-orchestration-service
+  - analytical-processing-service
+  - ai-data-foundation-service
+  - streaming-intelligence-service
+data_mesh:
+  via_p212_f: true
+knowledge_graph:
+  via_p212_j: true
+ai_foundation:
+  via_p212_k: true
+digital_twin:
+  via_p212_l: true
+warehouse_integration:
+  via_p213_e: true

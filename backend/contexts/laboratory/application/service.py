@@ -1,6 +1,11 @@
 """Laboratory application service — CAP-HLT-007."""
 from __future__ import annotations
 
+import logging
+
+from contexts.laboratory.application.commands.link_hospital_encounter import (
+    LinkHospitalEncounterCommand,
+)
 from contexts.laboratory.domain.aggregates.sample import Sample
 from contexts.laboratory.domain.aggregates.test_order import TestOrder
 from contexts.laboratory.domain.events.integration_events import (
@@ -13,6 +18,8 @@ from shared.domain.value_objects.tenant_id import TenantId
 from shared.domain.value_objects.unique_id import UniqueId
 from shared.infrastructure.messaging.event_bus import publish_integration_event
 
+logger = logging.getLogger(__name__)
+
 
 class LaboratoryApplicationService:
     def __init__(
@@ -22,6 +29,40 @@ class LaboratoryApplicationService:
     ) -> None:
         self._orders = orders
         self._samples = samples
+
+    async def link_hospital_encounter(self, command: LinkHospitalEncounterCommand) -> Result[dict]:
+        """Idempotent encounter-linked review order — peer IDs only (ACL entry)."""
+        return await self._link_care_encounter(command, order_prefix="HOSP")
+
+    async def link_clinic_encounter(self, command: LinkHospitalEncounterCommand) -> Result[dict]:
+        """Idempotent clinic encounter → REVIEW order (peer IDs only)."""
+        return await self._link_care_encounter(command, order_prefix="CLN")
+
+    async def _link_care_encounter(
+        self, command: LinkHospitalEncounterCommand, *, order_prefix: str
+    ) -> Result[dict]:
+        if not command.tenant_id or not command.encounter_ref or not command.patient_ref:
+            return Result.fail("laboratory.errors.invalid_encounter_link")
+        short = command.encounter_ref.replace("-", "")[:12].upper()
+        order_number = f"{order_prefix}-{short}"
+        existing = await self._orders.find_by_number(command.tenant_id, order_number)
+        if existing:
+            return Result.ok(existing.to_dict())
+        if command.phase == "started":
+            logger.info(
+                "laboratory encounter started noted tenant=%s encounter=%s",
+                command.tenant_id,
+                command.encounter_ref,
+            )
+            return Result.ok({"noted": True, "phase": "started", "encounter_ref": command.encounter_ref})
+        return await self.place_order(
+            tenant_id=command.tenant_id,
+            order_number=order_number,
+            patient_ref=command.patient_ref,
+            test_code="REVIEW",
+            correlation_id=command.correlation_id,
+            source_encounter_ref=command.encounter_ref,
+        )
 
     async def place_order(
         self,

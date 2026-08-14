@@ -1,0 +1,14 @@
+# BIOTECHNOLOGY_PRECISION_MEDICINE_ARCHITECTURE.v1.yaml — P217-I
+apiVersion: marpich.io/v1
+kind: BiotechnologyPrecisionMedicineArchitecture
+metadata:
+  phase: P217-I
+  adr: "508"
+  fabric: meos_precision_health_intelligence_fabric
+spec:
+  layers:
+    - L01_personal_biological_data
+    - L02_genomics_intelligence
+    - L03_molecular_intelligence
+    - L04_therapeutic_intelligence
+    - L05_precision_health_governance

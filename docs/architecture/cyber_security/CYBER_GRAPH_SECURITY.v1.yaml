@@ -1,0 +1,18 @@
+# P210-K — Security & governance
+version: "1.0"
+prompt_id: P210-K
+adr: "371"
+zero_trust: true
+graph_access_control: true
+data_classification: true
+encryption: true
+immutable_audit_trail: true
+model_governance: true
+ai_governance: true
+knowledge_integrity_validation: true
+compliance:
+  - iso_27001
+  - nist_csf
+  - nist_ai_rmf
+  - mitre_attack
+  - soc_2

@@ -1,0 +1,35 @@
+apiVersion: marpich.io/v1
+kind: SingularityControls
+metadata:
+  prompt: P218-X
+  adr: "550"
+controls:
+  - transparent_intelligence
+  - human_oversight
+  - ethical_review
+  - safety_validation
+  - governance_simulation
+  - trust_verification
+  - human_identity_preservation
+  - audit_trails
+domains:
+  - human_sovereignty
+  - ai_alignment
+  - ethical_evolution
+  - civilization_safety
+  - knowledge_rights
+  - intelligence_responsibility
+laws:
+  never_ungated_singularity_transformation: true
+  never_skip_intelligence_alignment: true
+  never_violate_human_sovereignty: true
+  never_skip_human_identity_preservation: true
+  never_skip_ethical_evolution_review: true
+  never_opaque_unexplainable_intelligence_decisions: true
+  never_skip_human_authority_preservation: true
+  never_replace_p218_w_collective_si: true
+  never_replace_p218_v_human_gi: true
+  never_replace_p218_u_human_evolution: true
+  never_replace_p218_t_civilization: true
+  space_ai_via_p214z_acl_only: true
+  no_module_local_llm: true

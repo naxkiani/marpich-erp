@@ -27,12 +27,23 @@ publishes:
   - identity_lifecycle.profile.initialized
   - identity_lifecycle.onboarding.started
   - identity_lifecycle.provisioning.requested
+  - identity_lifecycle.provisioning.completed
+  - identity_lifecycle.provisioning.failed
   - identity_lifecycle.welcome.generated
   - identity_lifecycle.activation.requested
+  - identity_lifecycle.credential.issued
+  - identity_lifecycle.credential.rotation_requested
+  - identity_lifecycle.credential.mfa_enrollment_requested
+  - identity_lifecycle.credential.revoked
+  - identity_lifecycle.credential.failed
 subscribes:
   - platform.tenant.provisioned
+  - workflow.process.completed
+  - identity_lifecycle.provisioning.requested
+  - identity_lifecycle.activation.requested
 delegates:
   - identity
+  - authentication
   - policy
   - directory
   - workflow
@@ -44,4 +55,6 @@ ai:
     - duplicate_prediction
     - risk_prediction
     - onboarding_recommendation
+    - jml_recommendation
+    - lifecycle_anomaly
   note: Infer via AI Platform ACL — no embedded LLM

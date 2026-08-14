@@ -1,0 +1,45 @@
+apiVersion: marpich.io/v1
+kind: HumanGiDddCqrs
+metadata:
+  prompt: P218-V
+  adr: "548"
+bounded_contexts:
+  - Human Intelligence Management
+  - Reasoning Management
+  - Knowledge Civilization
+  - Collective Intelligence
+  - Cognitive Development
+  - Ethical Intelligence
+  - Future Intelligence Planning
+aggregates:
+  - HumanIntelligenceAggregate
+  - KnowledgeNetworkAggregate
+  - CollectiveIntelligenceAggregate
+  - ReasoningAggregate
+  - CivilizationKnowledgeAggregate
+  - EvolutionPlanningAggregate
+commands:
+  - CreateIntelligenceProfileCommand
+  - IntegrateKnowledgeAssetCommand
+  - AssessReasoningCapabilityCommand
+  - JoinCollectiveNetworkCommand
+  - AuthorizeCollectiveDecisionCommand
+  - CompleteEthicalIntelligenceReviewCommand
+queries:
+  - GetIntelligenceProfileQuery
+  - GetKnowledgeDomainQuery
+  - GetReasoningCapabilityQuery
+  - GetCollectiveNetworkQuery
+  - GetCivilizationChallengeQuery
+  - GetIntelligenceScenarioQuery
+events:
+  - HumanKnowledgeExpandedEvent
+  - ReasoningCapabilityImprovedEvent
+  - CollectiveNetworkCreatedEvent
+  - DiscoveryGeneratedEvent
+  - CivilizationProblemSolvedEvent
+  - IntelligenceScenarioUpdatedEvent
+  - CognitiveEvolutionDetectedEvent
+  - EthicalIntelligenceReviewCompletedEvent
+  - CognitiveSovereigntyValidatedEvent
+  - HumanAiCollaborationSessionStartedEvent

@@ -1,0 +1,11 @@
+# BIOTECHNOLOGY_BIO_AUTONOMOUS_VALIDATION.v1.yaml — P217-U
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioAutonomousValidation
+metadata:
+  phase: P217-U
+  adr: "520"
+spec:
+  verdict_required: ENTERPRISE_GRADE
+  foundation: validate_bio_autonomous_foundation
+  dual_tests_required: true
+  expected_pytest_passed: 8

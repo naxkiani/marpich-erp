@@ -1,0 +1,28 @@
+# P211-E — Validation gates
+version: "1.0"
+prompt_id: P211-E
+adr: "380"
+reject_if:
+  - data_cannot_be_classified
+  - sensitive_data_detection_is_unavailable
+  - labels_are_unmanaged
+  - ai_decisions_are_unexplained
+  - classification_policies_are_missing
+  - classification_lifecycle_is_undefined
+  - sibling_classification_bc
+forbidden_siblings:
+  - backend/contexts/data_classification
+  - backend/contexts/label_management
+  - backend/contexts/sensitive_data_detection
+  - backend/contexts/dspm
+required_artifacts:
+  - docs/adr/380-enterprise-data-security-classification.md
+  - docs/architecture/ENTERPRISE_DATA_SECURITY_CLASSIFICATION.md
+  - docs/architecture/data_security/DATA_SECURITY_CLASSIFICATION_CAPABILITIES.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_CLASSIFICATION_DDD_CQRS.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_CLASSIFICATION_SECURITY.v1.yaml
+  - docs/architecture/data_security/DATA_SECURITY_CLASSIFICATION_VALIDATION.v1.yaml
+  - backend/contexts/data_security/domain/services/ds_platform_classification.py
+  - backend/contexts/data_security/domain/aggregates/ds_classification_aggregates.py
+  - backend/contexts/data_security/infrastructure/acl/ds_classification_acl.py
+  - backend/contexts/data_security/application/ds_classification_foundation.py

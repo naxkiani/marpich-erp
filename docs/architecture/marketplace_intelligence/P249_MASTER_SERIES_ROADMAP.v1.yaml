@@ -1,0 +1,45 @@
+# EADEIMP Master Series Roadmap (P249)
+
+series: P249
+title: Enterprise Autonomous Digital Economy & Intelligent Marketplace Platform
+governance_standard: "11.0"
+capability: CAP-PLT-EADEIMP-001
+sor: marketplace_intelligence
+fabric: meos_enterprise_autonomous_digital_economy_intelligent_marketplace_platform_framework
+api: /api/v1/marketplace-intelligence*
+phases:
+  - id: P249
+    title: EADEIMP Foundation
+    status: planned
+    adr: "608"
+    fabric: meos_enterprise_autonomous_digital_economy_intelligent_marketplace_platform_framework
+    api: /api/v1/marketplace-intelligence*
+  - id: P249-A
+    title: Marketplace Domain Model, Commerce APIs, Event Architecture, CQRS Foundation, Core Marketplace Services
+    status: planned
+    adr: pending
+  - id: P249-B
+    title: AI Commerce Agents, Economic Knowledge Graph, Marketplace Digital Twin, Intelligent Matching Engine
+    status: planned
+    adr: pending
+  - id: P249-C
+    title: Autonomous Marketplace Operations Assist, Digital Economy Networks, AI Commerce Ecosystem, Adaptive Economic Optimization
+    status: planned
+    adr: pending
+  - id: P249-D
+    title: Civilization-Scale Digital Economy, Autonomous Global Marketplace Network, Self-Evolving Commerce Intelligence (Gated)
+    status: planned
+    adr: pending
+locks:
+  never_replace_sales_pos_or_crm: true
+  never_merge_pos_and_sales: true
+  never_conflate_plugin_marketplace_with_commerce_marketplace: true
+  never_local_gl_or_journal_entry: true
+  never_ungated_payment_capture: true
+  never_treat_simulation_as_execute_transaction: true
+  never_local_buyer_seller_pii_vault: true
+  never_silent_consent_override: true
+  never_module_local_llm: true
+  never_opaque_pricing_or_match_recommendations: true
+  foundation_for_p249_a: true
+  peer_series_p250_eakeginp: true

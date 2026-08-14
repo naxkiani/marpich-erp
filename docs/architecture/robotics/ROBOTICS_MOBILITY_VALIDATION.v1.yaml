@@ -1,0 +1,38 @@
+# ROBOTICS_MOBILITY_VALIDATION.v1.yaml — P216-H
+apiVersion: marpich.io/v1
+kind: RoboticsMobilityValidationCatalog
+metadata:
+  phase: P216-H
+  adr: "480"
+spec:
+  quality_gates:
+    - Connected Vehicle Platform
+    - Autonomous Mobility Platform
+    - Drone Intelligence Platform
+    - Smart Transportation Platform
+    - Fleet Intelligence Platform
+    - Mobility Digital Twin
+    - Transportation Knowledge Graph
+    - CQRS Architecture
+    - Event Architecture
+    - Microservice Architecture
+    - Zero Trust Security
+    - Cloud-Edge Deployment
+    - Enterprise Mobility Integration
+  definition_of_done:
+    - Connected Vehicle Platform exists
+    - Autonomous Navigation Platform exists
+    - Drone Intelligence Platform exists
+    - Fleet Mobility Platform exists
+    - Smart Transportation Platform exists
+    - Mobility Digital Twin exists
+    - Transportation Knowledge Graph exists
+    - Observability Platform exists
+    - Security Architecture exists
+    - CQRS Architecture exists
+    - Event Architecture exists
+    - Microservice Architecture exists
+    - Deployment Architecture exists
+    - Testing Architecture exists
+    - Foundation for P216-I exists
+  foundation_validator: validate_rb_mobility_foundation

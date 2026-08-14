@@ -1,0 +1,27 @@
+# ROBOTICS_MOBILITY_SECURITY.v1.yaml — P216-H
+apiVersion: marpich.io/v1
+kind: RoboticsMobilitySecurityCatalog
+metadata:
+  phase: P216-H
+  adr: "480"
+spec:
+  framework: meos_mobility_zero_trust_framework
+  includes:
+    - vehicle_identity
+    - drone_identity
+    - mission_authorization
+    - secure_telemetry
+    - encrypted_v2x
+    - ota_security
+    - edge_security
+    - operational_safety
+    - threat_detection
+    - fleet_isolation
+  hard_laws:
+    - v2x_via_integration_platform_only
+    - never_direct_v2x_bypass
+    - physical_ai_via_p214z_acl_only
+    - no_module_local_llm
+    - never_replace_p216_g_logistics
+    - ungated_physical_autonomy_forbidden
+    - opaque_safety_forbidden

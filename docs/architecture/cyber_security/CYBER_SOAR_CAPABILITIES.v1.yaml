@@ -1,0 +1,37 @@
+# P210-F — SOAR capabilities
+version: "1.0"
+prompt_id: P210-F
+adr: "365"
+sor: cyber_security
+api_prefix: /api/v1/cyber-security/soar
+builds_on:
+  - P210-A
+  - P210-B
+  - P210-C
+  - P210-D
+  - ADR-361
+  - ADR-362
+  - ADR-363
+  - ADR-364
+
+playbooks_versioned_required: true
+automation_auditable_required: true
+human_approval_required: true
+ai_recommendations_explainable_required: true
+rollback_capability_required: true
+connectors_tightly_coupled_forbidden: true
+incident_evidence_preservation_required: true
+sibling_soar_bc_forbidden: true
+ir_lifecycle_duplication_forbidden: true
+local_approval_engine_forbidden: true
+vendor_sdk_embed_forbidden: true
+
+via_security_incident: true
+via_workflow: true
+via_integration_platform: true
+via_authorization: true
+via_audit_platform: true
+via_ai_platform: true
+via_knowledge_graph: true
+via_digital_twin: true
+via_p210_d_soc: true

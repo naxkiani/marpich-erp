@@ -1,0 +1,42 @@
+# P213-F — VALIDATION
+version: "1.0"
+prompt_id: P213-F
+adr: "410"
+sor: analytics
+capability: CAP-PLT-BI-001
+principle: Enterprise Lakehouse becomes the intelligent data foundation where analytics, AI, and decision intelligence converge.
+fabric: meos_enterprise_lakehouse_intelligence_fabric
+reject_if:
+  - enterprise_lakehouse_architecture_is_missing
+  - unified_data_platform_is_missing
+  - data_warehouse_integration_is_missing
+  - data_lake_capability_is_missing
+  - ai_data_foundation_is_missing
+  - data_mesh_alignment_is_missing
+  - data_governance_alignment_is_missing
+  - knowledge_graph_integration_is_missing
+  - digital_twin_integration_is_missing
+  - cqrs_architecture_is_missing
+  - event_driven_architecture_is_missing
+  - microservice_architecture_is_missing
+  - api_first_architecture_is_missing
+  - cloud_native_deployment_is_missing
+  - lakehouse_architecture_is_incomplete
+  - storage_architecture_is_missing
+  - data_processing_architecture_is_missing
+  - semantic_layer_is_missing
+  - sibling_business_intelligence_bc
+verdict_required: ENTERPRISE_GRADE
+definition_of_done:
+  - enterprise_lakehouse
+  - storage_architecture
+  - data_processing_architecture
+  - ai_data_foundation
+  - data_product_integration
+  - governance_integration
+  - semantic_layer
+  - cqrs_architecture
+  - event_architecture
+  - microservice_architecture
+  - api_architecture
+  - deployment_architecture

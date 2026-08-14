@@ -1,0 +1,21 @@
+# P214-T — SECURITY
+version: "1.0"
+prompt_id: P214-T
+adr: "440"
+zero_trust: true
+controls:
+  - control_plane_authorization
+  - policy_enforced_coordination
+  - decision_approval_guards
+  - command_center_access_control
+  - autonomy_boundary_enforcement
+integrations:
+  - P207
+  - P208
+  - P209
+  - P210
+  - P214-P
+forbidden:
+  - module_local_shadow_control_planes
+  - bypassing_trust_policy_authority
+  - uncontrolled_autonomous_coordination

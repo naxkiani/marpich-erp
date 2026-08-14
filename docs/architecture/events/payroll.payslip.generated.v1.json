@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "payroll.payslip.generated",
+  "type": "object",
+  "required": ["run_id", "payroll_employee_id", "hr_employee_id", "gross", "net", "currency"],
+  "properties": {
+    "run_id": { "type": "string", "format": "uuid" },
+    "payroll_employee_id": { "type": "string", "format": "uuid" },
+    "hr_employee_id": { "type": "string", "format": "uuid" },
+    "gross": { "type": "string" },
+    "net": { "type": "string" },
+    "currency": { "type": "string", "minLength": 3, "maxLength": 3 }
+  }
+}

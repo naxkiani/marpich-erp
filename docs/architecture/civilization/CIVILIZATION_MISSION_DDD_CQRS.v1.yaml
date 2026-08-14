@@ -1,0 +1,28 @@
+# CIVILIZATION_MISSION_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: DomainModelCatalog
+metadata:
+  prompt_id: P219-A
+  adr: "554"
+  sor: civilization
+commands:
+  - CreateCivilizationStrategyCommand
+  - DefineCivilizationVisionCommand
+  - AssessCivilizationReadinessCommand
+  - LaunchCivilizationInitiativeCommand
+  - UpdateCivilizationRoadmapCommand
+queries:
+  - GetCivilizationMissionQuery
+  - GetCivilizationVisionQuery
+  - GetStrategicScopeQuery
+  - GetCapabilityFrameworkQuery
+  - GetMaturityStatusQuery
+events:
+  - CivilizationStrategyCreatedEvent
+  - CivilizationVisionDefinedEvent
+  - StrategicScopePublishedEvent
+  - CivilizationRoadmapUpdatedEvent
+  - CivilizationReadinessImprovedEvent
+  - CapabilityFrameworkPublishedEvent
+  - PillarsFrameworkPublishedEvent
+  - IntegrationStrategyAlignedEvent

@@ -1,0 +1,63 @@
+# P213-E — DDD / CQRS
+version: "1.0"
+prompt_id: P213-E
+adr: "409"
+sor: analytics
+capability: CAP-PLT-BI-001
+principle: Enterprise Data Warehouse SHALL become the historical intelligence memory of MEOS.
+fabric: meos_enterprise_analytical_intelligence_data_fabric
+core_domain: enterprise_analytical_data_management
+aggregate: AnalyticalDataAssetAggregate
+supporting_domains:
+  - data_warehouse_management
+  - analytical_data_modeling
+  - historical_data_management
+  - data_integration
+  - analytical_processing
+  - semantic_analytics
+logical_bounded_contexts:
+  - BC-01 warehouse_core
+  - BC-02 analytical_modeling
+  - BC-03 data_integration
+  - BC-04 historical_intelligence
+  - BC-05 analytical_data_mart
+layers:
+  - source_data_layer
+  - data_integration_layer
+  - data_storage_layer
+  - analytical_modeling_layer
+  - semantic_intelligence_layer
+  - consumption_layer
+commands:
+  - CreateWarehouseCommand
+  - RegisterDatasetCommand
+  - LoadAnalyticalDataCommand
+  - CreateDataMartCommand
+  - UpdateAnalyticalModelCommand
+queries:
+  - GetDatasetQuery
+  - GetAnalyticalModelQuery
+  - GetHistoricalDataQuery
+  - GetBusinessMetricQuery
+events:
+  - WarehouseCreatedEvent
+  - DatasetLoadedEvent
+  - ModelCreatedEvent
+  - SnapshotGeneratedEvent
+  - AnalyticsReadyEvent
+microservices:
+  - data-warehouse-core-service
+  - analytical-modeling-service
+  - data-ingestion-service
+  - transformation-service
+  - data-mart-service
+  - semantic-layer-service
+  - analytical-governance-service
+knowledge_graph:
+  via_p212_j: true
+ai_foundation:
+  via_p212_k: true
+digital_twin:
+  via_p212_l: true
+semantic_layer:
+  via_p213_d: true

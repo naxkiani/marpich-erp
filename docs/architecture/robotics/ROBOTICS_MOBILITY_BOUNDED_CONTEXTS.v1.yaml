@@ -1,0 +1,24 @@
+# ROBOTICS_MOBILITY_BOUNDED_CONTEXTS.v1.yaml — P216-H
+apiVersion: marpich.io/v1
+kind: RoboticsMobilityBoundedContextCatalog
+metadata:
+  phase: P216-H
+  adr: "480"
+spec:
+  bounded_contexts:
+    - id: BC-01
+      name: Connected Vehicle Context
+    - id: BC-02
+      name: Autonomous Navigation Context
+    - id: BC-03
+      name: Drone Operations Context
+    - id: BC-04
+      name: Fleet Mobility Context
+    - id: BC-05
+      name: Traffic Intelligence Context
+    - id: BC-06
+      name: Mobility Safety Context
+    - id: BC-07
+      name: Mobility Digital Twin Context
+    - id: BC-08
+      name: Vehicle Maintenance Context

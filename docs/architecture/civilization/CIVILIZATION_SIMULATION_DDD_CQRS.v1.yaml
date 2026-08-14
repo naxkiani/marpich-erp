@@ -1,0 +1,41 @@
+# CIVILIZATION_SIMULATION_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationSimulationDddCqrs
+metadata:
+  prompt_id: P219-F
+  adr: "559"
+bounded_contexts:
+  - id: BC-SIM-01
+    name: Earth Twin Core Context
+    aggregate: EarthTwinAggregate
+  - id: BC-SIM-02
+    name: Simulation Intelligence Context
+    aggregate: SimulationAggregate
+  - id: BC-SIM-03
+    name: Future Scenario Intelligence Context
+    aggregate: ScenarioAggregate
+commands:
+  - CreateEarthTwinCommand
+  - UpdateEarthModelCommand
+  - RunSimulationCommand
+  - GenerateFutureScenarioCommand
+  - AnalyzePlanetaryImpactCommand
+queries:
+  - GetEarthStateQuery
+  - GetSimulationResultQuery
+  - GetScenarioPredictionQuery
+  - GetRiskAssessmentQuery
+  - GetFutureModelQuery
+core_events:
+  - EarthStateChangedEvent
+  - EnvironmentalPatternDetectedEvent
+  - ClimateRiskDetectedEvent
+  - SimulationStartedEvent
+  - SimulationCompletedEvent
+  - SimulationOptimizedEvent
+  - CivilizationScenarioGeneratedEvent
+  - FutureImpactDetectedEvent
+  - StrategicRecommendationCreatedEvent
+knowledge_graph:
+  nodes: [Earth, Region, City, Infrastructure, Resource, ClimateSystem, Population, Technology, Organization, Policy, Scenario]
+  edges: [LOCATED_IN, DEPENDS_ON, IMPACTS, INFLUENCES, EVOLVES, PREDICTS, SIMULATES]

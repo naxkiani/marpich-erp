@@ -1,0 +1,24 @@
+# ROBOTICS_RETAIL_BOUNDED_CONTEXTS.v1.yaml — P216-O
+apiVersion: marpich.io/v1
+kind: RoboticsRetailBoundedContextCatalog
+metadata:
+  phase: P216-O
+  adr: "487"
+spec:
+  bounded_contexts:
+    - id: BC-01
+      name: Customer Experience Context
+    - id: BC-02
+      name: Retail Robotics Context
+    - id: BC-03
+      name: Smart Store Operations Context
+    - id: BC-04
+      name: Inventory Intelligence Context
+    - id: BC-05
+      name: Commerce AI Context
+    - id: BC-06
+      name: Omnichannel Commerce Context
+    - id: BC-07
+      name: Retail Digital Twin Context
+    - id: BC-08
+      name: Retail Governance Context

@@ -1,0 +1,13 @@
+apiVersion: marpich.io/v1
+kind: OrbitalArchitecture
+metadata:
+  prompt: P218-G
+  adr: "533"
+  fabric: meos_orbital_intelligence_fabric
+layers:
+  - L01 Orbital Observation Layer
+  - L02 Orbital Intelligence Layer
+  - L03 Safety Decision Layer
+  - L04 Coordination Layer
+  - L05 Governance Layer
+layer_count: 5

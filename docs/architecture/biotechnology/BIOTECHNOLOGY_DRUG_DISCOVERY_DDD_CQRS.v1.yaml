@@ -1,0 +1,28 @@
+# BIOTECHNOLOGY_DRUG_DISCOVERY_DDD_CQRS.v1.yaml — P217-K
+apiVersion: marpich.io/v1
+kind: BiotechnologyDrugDiscoveryDddCqrs
+metadata:
+  phase: P217-K
+  adr: "510"
+spec:
+  commands:
+    - DiscoverMoleculeCommand
+    - DesignDrugCandidateCommand
+    - OptimizeDrugCandidateCommand
+    - ValidateTherapeuticCandidateCommand
+    - ApproveScientificReviewCommand
+  queries:
+    - GetDrugDiscoveryPlatformQuery
+    - GetMoleculeQuery
+    - GetDrugCandidateQuery
+    - GetTherapeuticPredictionQuery
+    - GetDrugGovernanceQuery
+  events:
+    - DrugDiscoveryPlatformActivatedEvent
+    - MoleculeDiscoveredEvent
+    - InteractionPredictedEvent
+    - DrugDesignedEvent
+    - DrugOptimizedEvent
+    - CandidateValidatedEvent
+    - TherapeuticPredictionGeneratedEvent
+    - DrugDiscoveryGovernanceViolationEvent

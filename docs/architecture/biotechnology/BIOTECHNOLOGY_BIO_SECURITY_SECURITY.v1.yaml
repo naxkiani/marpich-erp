@@ -1,0 +1,23 @@
+# BIOTECHNOLOGY_BIO_SECURITY_SECURITY.v1.yaml — P217-S
+apiVersion: marpich.io/v1
+kind: BiotechnologyBioSecuritySecurity
+metadata:
+  phase: P217-S
+  adr: "518"
+spec:
+  zero_trust: true
+  protects:
+    - research_data
+    - biological_models
+    - scientific_knowledge
+    - clinical_information
+    - manufacturing_systems
+    - intellectual_property
+  hard_locks:
+    - never_autonomous_defense_without_approval
+    - never_skip_zero_trust_controls
+    - never_skip_human_security_oversight
+    - never_replace_identity_platform
+    - never_replace_audit_platform
+    - no_module_local_llm
+    - never_opaque_unexplainable_decisions

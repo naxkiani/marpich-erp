@@ -1,0 +1,74 @@
+# P215-K — DDD_CQRS
+version: "1.0"
+prompt_id: P215-K
+adr: "403"
+sor: quantum
+capability: CAP-PLT-QC-001
+api_prefix: /api/v1/quantum/governance
+builds_on:
+  - P215-A
+  - P215-B
+  - P215-C
+  - P215-D
+  - P215-E
+  - P215-F
+  - P215-G
+  - P215-H
+  - P215-I
+  - P215-J
+  - P209
+  - P210
+  - P212
+  - P214-H
+  - P214-Y
+  - ADR-345
+  - ADR-403
+core_domain: enterprise_quantum_governance_intelligence_management
+aggregate: EnterpriseQuantumGovernanceAggregate
+bounded_context_count: 7
+bounded_contexts:
+  - id: BC-01
+    name: Quantum Policy Governance Context
+    owns: QuantumPolicyAggregate
+  - id: BC-02
+    name: Quantum Regulatory Intelligence Context
+    owns: QuantumRegulationAggregate
+  - id: BC-03
+    name: Responsible Quantum Computing Context
+    owns: ResponsibleQuantumAggregate
+  - id: BC-04
+    name: Quantum Risk Governance Context
+    owns: QuantumRiskAggregate
+  - id: BC-05
+    name: Quantum Compliance Context
+    owns: QuantumComplianceAggregate
+  - id: BC-06
+    name: Quantum Audit Intelligence Context
+    owns: QuantumAuditAggregate
+  - id: BC-07
+    name: Quantum Accountability Context
+    owns: QuantumAccountabilityAggregate
+commands:
+  - CreateQuantumPolicyCommand
+  - UpdateQuantumRegulationCommand
+  - AssessQuantumRiskCommand
+  - ValidateComplianceCommand
+  - ExecuteQuantumAuditCommand
+  - ApproveQuantumUsageCommand
+queries:
+  - GetQuantumGovernanceScoreQuery
+  - GetComplianceStatusQuery
+  - GetRiskAssessmentQuery
+  - GetAuditHistoryQuery
+  - GetEthicalImpactQuery
+events:
+  - QuantumPolicyCreatedEvent
+  - RegulationChangedEvent
+  - RiskAssessmentCompletedEvent
+  - ComplianceValidatedEvent
+  - AuditExecutedEvent
+  - EthicalReviewCompletedEvent
+event_versioning: event_version_field
+event_retention: tenant_scoped_immutable_append
+outbox_required: true
+module_local_audit_ledger_forbidden: true

@@ -1,0 +1,26 @@
+# CIVILIZATION_SIMULATION_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationSimulationSecurity
+metadata:
+  prompt_id: P219-F
+  adr: "559"
+permissions:
+  - civilization.read
+  - civilization.simulation.read
+  - civilization.simulation.write
+  - civilization.ai.read
+  - civilization.ai.infer
+locks:
+  never_module_local_llm: true
+  inference_via_p214_z_only: true
+  advanced_modeling_via_p215_z: true
+  never_ungated_simulation_decision_execution: true
+  never_opaque_unexplainable_simulation_decisions: true
+  never_skip_human_authority_simulation: true
+  never_skip_ethical_simulation_governance: true
+  never_violate_human_sovereignty_simulation: true
+  never_treat_scenario_recommendation_as_binding_policy: true
+  observation_ingress_via_integration_platform: true
+audit:
+  required_on: [twin_create, model_update, simulation_run, scenario_generate, impact_analyze]
+tenant_isolation: required

@@ -1,0 +1,58 @@
+# MEQTCIP Master Series Roadmap (P278)
+
+series: P278
+title: MEOS Enterprise Revenue, Billing & Quote-to-Cash Intelligence Platform
+governance_standard: "11.0"
+capability: CAP-PLT-MEQTCIP-001
+sor: quote_to_cash_operating
+fabric: meos_enterprise_revenue_billing_quote_to_cash_intelligence_platform_framework
+api: /api/v1/quote-to-cash-operating*
+phase_theme: productization_and_experience_evolution
+phases:
+  - id: P278
+    title: MEQTCIP Foundation
+    status: planned
+    adr: "635"
+    fabric: meos_enterprise_revenue_billing_quote_to_cash_intelligence_platform_framework
+    api: /api/v1/quote-to-cash-operating*
+  - id: P278-A
+    title: Quote-to-Cash Foundation — Order, Billing, Invoice, Receivables, Payment Integration, Revenue Command Center
+    status: planned
+    adr: pending
+    window: 3-6_months
+  - id: P278-B
+    title: Revenue Intelligence — Billing, Receivables, Collections, Assurance, Dispute, Cash Forecasting
+    status: planned
+    adr: pending
+    window: 6-12_months
+  - id: P278-C
+    title: Autonomous Revenue Operations — Automated Billing, Payment Retry, Collection Prioritization, Leakage Detection, Reconciliation Assists, Predictive Cash Forecast
+    status: planned
+    adr: pending
+    window: 12-18_months
+  - id: P278-D
+    title: Autonomous Quote-to-Cash OS — Continuous Assurance, Autonomous Billing Assists, Predictive Collections, Intelligent Payment Orchestration, Self-Optimizing Revenue Cycle
+    status: planned
+    adr: pending
+    window: 18-36_months
+locks:
+  never_replace_sales_sor: true
+  never_replace_accounting_sor: true
+  never_fork_sales_api: true
+  never_fork_sales_revenue_operating_api: true
+  never_fork_autonomous_finance_operating_api: true
+  never_merge_p277_sales_and_p278_q2c: true
+  never_merge_p278_q2c_and_p271_finance: true
+  never_dual_write_sales_or_accounting_ledgers: true
+  never_local_gl_or_duplicate_financial_kernel: true
+  never_ungated_material_credit_refund_writeoff: true
+  never_opaque_financial_auto_commit: true
+  idempotent_payment_processing: true
+  deterministic_financial_state_transitions: true
+  human_governance_for_material_financial_actions: true
+  never_module_local_llm: true
+  never_embed_payment_provider_sdk_in_domain: true
+  never_treat_twin_simulation_as_commit: true
+  foundation_for_p278_a: true
+  unblocks_p279_revenue_recognition_treasury_cash_os: true
+  # P279 delivered as CAP-PLT-METRCIP-001 / ADR 636

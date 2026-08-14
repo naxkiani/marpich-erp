@@ -1,0 +1,29 @@
+# BIOTECHNOLOGY_DRUG_DISCOVERY_MODELS.v1.yaml — P217-K
+apiVersion: marpich.io/v1
+kind: BiotechnologyDrugDiscoveryModels
+metadata:
+  phase: P217-K
+  adr: "510"
+spec:
+  ai_drug_design_components:
+    - generative_molecular_intelligence
+    - molecular_optimization_engine
+    - drug_candidate_intelligence
+    - ai_scientific_reasoning_engine
+  molecular_discovery_capabilities:
+    - molecular_structure_intelligence
+    - protein_interaction_intelligence
+    - chemical_intelligence
+    - target_discovery_intelligence
+  computational_engines:
+    - molecular_simulation_engine
+    - pharmacology_intelligence_engine
+    - safety_prediction_engine
+    - drug_performance_prediction_engine
+  agents:
+    - drug_discovery_agent
+    - molecular_design_agent
+    - simulation_agent
+    - safety_intelligence_agent
+    - clinical_translation_agent
+    - innovation_strategy_agent

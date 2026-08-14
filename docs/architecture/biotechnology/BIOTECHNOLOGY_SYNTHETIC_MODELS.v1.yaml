@@ -1,0 +1,29 @@
+# BIOTECHNOLOGY_SYNTHETIC_MODELS.v1.yaml — P217-F
+apiVersion: marpich.io/v1
+kind: BiotechnologySyntheticModels
+metadata:
+  phase: P217-F
+  adr: "505"
+spec:
+  design_capabilities:
+    - biological_design_generation
+    - genetic_design_intelligence
+    - synthetic_system_optimization
+    - ai_engineering_assistant
+  automation_domains:
+    - design_automation
+    - research_automation
+    - laboratory_automation_integration
+    - optimization_automation
+  lifecycle_phases:
+    - concept_definition
+    - digital_design
+    - engineering
+    - monitoring
+    - evolution
+  agents:
+    - bio_design_agent
+    - engineering_agent
+    - simulation_agent
+    - safety_agent
+    - innovation_agent

@@ -1,0 +1,30 @@
+# ROBOTICS_ULTIMATE_DDD_CQRS.v1.yaml — P216-Y
+apiVersion: marpich.io/v1
+kind: RoboticsUltimateDddCqrs
+metadata:
+  phase: P216-Y
+  adr: "497"
+spec:
+  core_domain: enterprise_robotic_evolution_intelligence
+  aggregate: UltimateRoboticsIntelligenceAggregate
+  commands:
+    - CreateRobotCapabilityCommand
+    - StartEvolutionCycleCommand
+    - ConnectHumanRobotCommand
+    - UpgradeIntelligenceCommand
+    - ValidateAutonomousCapabilityCommand
+    - UpdateRoboticsTwinCommand
+  queries:
+    - GetRobotIntelligenceQuery
+    - GetEvolutionStatusQuery
+    - GetCapabilityProfileQuery
+    - GetCollaborationHistoryQuery
+    - GetRoboticsTwinQuery
+  events:
+    - RobotCreatedEvent
+    - CapabilityLearnedEvent
+    - EvolutionCompletedEvent
+    - HumanRobotInteractionEvent
+    - IntelligenceUpdatedEvent
+    - SafetyVerifiedEvent
+    - KnowledgeTransferredEvent

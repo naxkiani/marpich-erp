@@ -1,0 +1,28 @@
+# ROBOTICS_HEALTHCARE_CLINICAL.v1.yaml — P216-I
+apiVersion: marpich.io/v1
+kind: RoboticsHealthcareClinicalCatalog
+metadata:
+  phase: P216-I
+  adr: "481"
+  fabric: meos_healthcare_robotics_fabric
+  capability: CAP-PLT-RB-001
+spec:
+  mission: "Create a safe, AI-native, patient-centric, autonomous healthcare ecosystem that augments clinicians, improves outcomes and automates healthcare operations."
+  vision: "Every healthcare robot, clinical AI system, medical device and healthcare workflow shall operate as an intelligent participant inside the MEOS Healthcare Intelligence Ecosystem."
+  core_domain: enterprise_healthcare_intelligence
+  aggregate: HealthcareRoboticsAggregate
+  healthcare_robotics_components:
+    - hospital_robot_registry
+    - clinical_robot_controller
+    - patient_assistance_manager
+    - medication_delivery_robots
+    - disinfection_robot_manager
+    - laboratory_robot_manager
+    - clinical_workflow_engine
+    - hospital_operations_dashboard
+  medical_ai_models:
+    - medical_foundation_models
+    - vision_models
+    - clinical_language_models
+    - predictive_models
+    - knowledge_reasoning_models

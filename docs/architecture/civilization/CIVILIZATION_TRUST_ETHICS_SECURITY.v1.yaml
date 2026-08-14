@@ -1,0 +1,26 @@
+# CIVILIZATION_TRUST_ETHICS_SECURITY.v1.yaml
+apiVersion: marpich.io/v1
+kind: CivilizationTrustEthicsSecurity
+metadata:
+  prompt_id: P219-Y
+  adr: "578"
+permissions:
+  - civilization.read
+  - civilization.trust_ethics.read
+  - civilization.trust_ethics.write
+  - civilization.ai.read
+  - civilization.ai.infer
+locks:
+  never_opaque_unexplainable_trust_recommendations: true
+  never_ungated_ethical_exception_execution: true
+  never_bypass_human_oversight_trust_ethics: true
+  never_bypass_human_accountability_trust_ethics: true
+  never_skip_ethical_review_gates: true
+  never_violate_institutional_governance_ownership: true
+  never_autonomous_policy_override: true
+  never_module_local_llm: true
+  inference_via_p214_z_only: true
+  approvals_via_workflow: true
+  policy_via_policy_engine: true
+  audit_via_audit: true
+  compliance_via_compliance_platform: true

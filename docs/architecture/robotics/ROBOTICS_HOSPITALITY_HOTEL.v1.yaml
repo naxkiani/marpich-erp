@@ -1,0 +1,27 @@
+# ROBOTICS_HOSPITALITY_HOTEL.v1.yaml — P216-P
+apiVersion: marpich.io/v1
+kind: RoboticsHospitalityHotelCatalog
+metadata:
+  phase: P216-P
+  adr: "488"
+  fabric: meos_hospitality_intelligence_fabric
+  capability: CAP-PLT-RB-001
+spec:
+  mission: "Create an AI-native, robotics-enabled, guest-centric hospitality ecosystem that automates hotel operations, enhances guest satisfaction and delivers personalised experiences."
+  vision: "Every hotel, guest, room, service, robot, employee, facility asset and hospitality workflow shall become an intelligent participant inside the MEOS Hospitality Intelligence Ecosystem."
+  core_domain: enterprise_hospitality_intelligence
+  aggregate: HospitalityIntelligenceAggregate
+  hospitality_robotics_components:
+    - hotel_robot_registry
+    - guest_service_robot_manager
+    - robot_mission_controller
+    - hotel_navigation_engine
+    - room_service_automation_engine
+    - hospitality_operations_dashboard
+  supported_robotics:
+    - concierge_robots
+    - room_service_robots
+    - cleaning_robots
+    - luggage_assistance_robots
+    - delivery_robots
+    - information_robots

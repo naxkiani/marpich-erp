@@ -1,0 +1,31 @@
+# ROBOTICS_SCIENCE_SECURITY.v1.yaml — P216-V
+apiVersion: marpich.io/v1
+kind: RoboticsScienceSecurity
+metadata:
+  phase: P216-V
+  adr: "494"
+spec:
+  framework: meos_scientific_zero_trust_framework
+  domains:
+    - research_identity
+    - laboratory_security
+    - scientific_data_protection
+    - ai_model_protection
+    - intellectual_property_protection
+    - research_ethics
+    - audit_governance
+  controls:
+    - encryption
+    - access_governance
+    - data_integrity
+    - experiment_traceability
+    - ai_explainability
+    - research_compliance
+  hard_locks:
+    - human_scientific_oversight
+    - reproducibility_by_design
+    - research_ethics_governance
+    - explainable_ai
+    - no_module_local_llm
+    - physical_ai_via_p214z_acl_only
+    - ungated_physical_autonomy_forbidden

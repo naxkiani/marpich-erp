@@ -1,0 +1,33 @@
+# P214-U — CAPABILITIES
+version: "1.0"
+prompt_id: P214-U
+adr: "441"
+sor: ai
+capability: CAP-PLT-AI-002
+api_prefix: /api/v1/ai/aigov
+fabric: meos_autonomous_intelligence_guardian_layer
+principle: >-
+  Enterprise Autonomous AI Governance Platform SHALL enable MEOS to safely
+  manage, govern and evolve increasingly autonomous intelligence systems.
+builds_on:
+  - P214-P
+  - P214-T
+  - ADR-440
+autonomous_ai_governance_present_required: true
+self_healing_intelligence_present_required: true
+ai_alignment_platform_present_required: true
+ai_safety_framework_present_required: true
+evolution_control_present_required: true
+agi_readiness_model_present_required: true
+human_compatibility_layer_present_required: true
+knowledge_graph_integration_present_required: true
+digital_twin_integration_present_required: true
+cqrs_architecture_present_required: true
+event_architecture_present_required: true
+microservices_architecture_present_required: true
+api_first_architecture_present_required: true
+zero_trust_ai_security_present_required: true
+cloud_native_deployment_present_required: true
+sibling_ai_bc_forbidden: true
+deepens_p214_t_guardian_layer: true
+governed_by_p214_p: true

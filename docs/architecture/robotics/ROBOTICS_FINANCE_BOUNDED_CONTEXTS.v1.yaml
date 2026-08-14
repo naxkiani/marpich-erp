@@ -1,0 +1,24 @@
+# ROBOTICS_FINANCE_BOUNDED_CONTEXTS.v1.yaml — P216-R
+apiVersion: marpich.io/v1
+kind: RoboticsFinanceBoundedContexts
+metadata:
+  phase: P216-R
+  adr: "490"
+spec:
+  contexts:
+    - id: BC-01
+      name: Financial Transaction Context
+    - id: BC-02
+      name: Banking Robotics Context
+    - id: BC-03
+      name: Finance Automation Context
+    - id: BC-04
+      name: Risk Intelligence Context
+    - id: BC-05
+      name: Compliance Intelligence Context
+    - id: BC-06
+      name: Investment Intelligence Context
+    - id: BC-07
+      name: Financial Digital Twin Context
+    - id: BC-08
+      name: Financial Governance Context

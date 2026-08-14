@@ -1,0 +1,15 @@
+apiVersion: marpich.io/v1
+kind: SpaceInfrastructureDddCqrs
+metadata:
+  prompt: P218-D
+  adr: "530"
+bounded_contexts: 8
+aggregates:
+  - GroundStationAggregate
+  - MissionControlAggregate
+  - CloudClusterAggregate
+  - NetworkAggregate
+  - InfrastructureHealthAggregate
+  - TelemetryGatewayAggregate
+microservices: 10
+core_events: 10

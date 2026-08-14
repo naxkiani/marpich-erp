@@ -1,0 +1,46 @@
+# EASC-DTIP Master Series Roadmap (P246)
+
+series: P246
+title: Enterprise Autonomous Security, Cyber Defense & Digital Trust Intelligence Platform
+governance_standard: "11.0"
+capability: CAP-PLT-EASCDTIP-001
+sor: security_trust_intelligence
+fabric: meos_enterprise_autonomous_security_cyber_defense_digital_trust_intelligence_platform_framework
+api: /api/v1/security-trust-intelligence*
+phases:
+  - id: P246
+    title: EASC-DTIP Foundation
+    status: planned
+    adr: "605"
+    fabric: meos_enterprise_autonomous_security_cyber_defense_digital_trust_intelligence_platform_framework
+    api: /api/v1/security-trust-intelligence*
+  - id: P246-A
+    title: Cyber Domain Model, Security Data Architecture, Event Foundation, CQRS Services, Security API Layer
+    status: planned
+    adr: pending
+  - id: P246-B
+    title: AI Security Agents, Cyber Knowledge Graph, Security Digital Twin, Threat Intelligence Engine
+    status: planned
+    adr: pending
+  - id: P246-C
+    title: Autonomous Cyber Defense Assist, Predictive Security Operations, Zero Trust Automation, Digital Trust Ecosystem
+    status: planned
+    adr: pending
+  - id: P246-D
+    title: Civilization-Scale Cyber Intelligence, Autonomous Global Defense Network, Self-Evolving Security Ecosystem (Gated)
+    status: planned
+    adr: pending
+locks:
+  never_replace_p226_cyber_defense_or_p230_privacy_trust: true
+  never_replace_p210_soc_xdr_soar: true
+  never_fork_cyber_defense_or_privacy_trust_apis: true
+  never_dual_write_p226_p230_p210_tables: true
+  never_ungated_soar_or_containment_actuation: true
+  never_direct_edr_or_firewall_sdk_in_domain: true
+  never_treat_simulation_as_respond: true
+  never_local_consent_vault: true
+  never_silent_consent_override: true
+  never_module_local_llm: true
+  never_opaque_security_actions: true
+  foundation_for_p246_a: true
+  peer_series_p247_easiep: true

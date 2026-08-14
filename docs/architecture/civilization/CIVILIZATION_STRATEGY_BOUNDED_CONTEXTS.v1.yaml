@@ -1,0 +1,24 @@
+# CIVILIZATION_STRATEGY_BOUNDED_CONTEXTS.v1.yaml
+apiVersion: marpich.io/v1
+kind: BoundedContextMap
+metadata:
+  prompt_id: P219-B
+  adr: "555"
+  sor: civilization
+contexts:
+  - id: BC-STR-01
+    name: Civilization Strategy Management
+  - id: BC-STR-02
+    name: Capability Management
+  - id: BC-STR-03
+    name: Operating Model Management
+  - id: BC-STR-04
+    name: Civilization Service Management
+  - id: BC-STR-05
+    name: Governance Management
+  - id: BC-STR-06
+    name: Transformation Management
+forbidden_sibling_bc:
+  - civilization_strategy_architecture_platform
+  - civilization_operating_model_bc
+  - civilization_capability_model_bc

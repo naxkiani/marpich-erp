@@ -1,0 +1,23 @@
+# BIOTECHNOLOGY_DIGITAL_HEALTH_SECURITY.v1.yaml — P217-H
+apiVersion: marpich.io/v1
+kind: BiotechnologyDigitalHealthSecurity
+metadata:
+  phase: P217-H
+  adr: "507"
+spec:
+  framework: meos_responsible_health_ai_governance
+  hard_locks:
+    - bio_ai_via_p214z_acl_only
+    - health_twins_via_p217g_acl_only
+    - no_module_local_llm
+    - never_opaque_unexplainable_decisions
+    - never_autonomous_clinical_action_without_physician
+    - genomic_privacy_strategy
+    - ethical_bioengineering_strategy
+    - scientific_integrity_strategy
+    - opaque_bio_safety_strategy_forbidden
+    - never_replace_p217_g_simulation
+    - never_replace_hospital_emr
+    - never_replace_laboratory_lims
+    - never_replace_pharmacy
+    - consent_management_required

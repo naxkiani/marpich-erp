@@ -1,0 +1,22 @@
+apiVersion: marpich.io/v1
+kind: SpaceCivilizationLifecycle
+metadata:
+  prompt: P218-T
+  adr: "546"
+stages:
+  - civilization_registration
+  - settlement_planning
+  - community_formation
+  - society_modeling
+  - governance_design
+  - ethics_review
+  - policy_authorization
+  - scenario_simulation
+  - interplanetary_coordination
+  - civilization_forecasting
+stage_count: 10
+gates:
+  never_ungated_governance_decision: true
+  never_skip_ethical_ai_review: true
+  never_skip_human_rights_protection: true
+  human_override_required: true

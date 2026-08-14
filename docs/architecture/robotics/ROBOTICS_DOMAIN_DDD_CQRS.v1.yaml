@@ -1,0 +1,46 @@
+# ROBOTICS_DOMAIN_DDD_CQRS.v1.yaml — P216-C
+apiVersion: marpich.io/v1
+kind: RoboticsDomainDddCqrsCatalog
+metadata:
+  phase: P216-C
+  adr: "475"
+spec:
+  commands:
+    - RegisterRobotCommand
+    - DeployRobotCommand
+    - CreateMissionCommand
+    - ExecuteAutonomousTaskCommand
+    - OptimizeFleetCommand
+    - SynchronizeDigitalTwinCommand
+  queries:
+    - GetRobotStatusQuery
+    - GetMissionStateQuery
+    - GetFleetPerformanceQuery
+    - GetPhysicalAIModelQuery
+    - GetSafetyStatusQuery
+  events:
+    - robotics.robot.registered.v1
+    - robotics.robot.activated.v1
+    - robotics.mission.created.v1
+    - robotics.mission.completed.v1
+    - robotics.autonomous.decision.executed.v1
+    - robotics.fleet.optimized.v1
+    - robotics.physical_ai.updated.v1
+    - robotics.digital_twin.synchronized.v1
+    - robotics.safety.violation.detected.v1
+    - robotics.robot.capability.improved.v1
+  domain_services:
+    - RobotCapabilityEvaluationService
+    - MissionPlanningService
+    - FleetOptimizationService
+    - PhysicalAIInferenceService
+    - SafetyValidationService
+    - DigitalTwinSynchronizationService
+    - AutonomousDecisionService
+  repositories:
+    - RobotRepository
+    - MissionRepository
+    - FleetRepository
+    - PhysicalAIRepository
+    - DigitalTwinRepository
+    - SafetyPolicyRepository

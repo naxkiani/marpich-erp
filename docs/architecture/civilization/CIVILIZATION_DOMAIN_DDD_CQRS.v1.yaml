@@ -1,0 +1,30 @@
+# CIVILIZATION_DOMAIN_DDD_CQRS.v1.yaml
+apiVersion: marpich.io/v1
+kind: DomainModelCatalog
+metadata:
+  prompt_id: P219-C
+  adr: "556"
+  sor: civilization
+aggregates:
+  - CivilizationAggregate
+  - PlanetAggregate
+  - HumanCivilizationAggregate
+  - InfrastructureAggregate
+  - ResourceAggregate
+  - GovernanceAggregate
+  - KnowledgeUniverseAggregate
+  - EconomicSystemAggregate
+commands:
+  - CreateCivilizationModelCommand
+  - UpdateCivilizationStateCommand
+  - OptimizePlanetarySystemCommand
+  - AllocateResourceCommand
+  - EvaluatePolicyCommand
+  - GenerateFutureScenarioCommand
+queries:
+  - GetCivilizationStateQuery
+  - GetPlanetStatusQuery
+  - GetInfrastructureHealthQuery
+  - GetResourceAvailabilityQuery
+  - GetGovernanceStatusQuery
+  - GetFuturePredictionQuery

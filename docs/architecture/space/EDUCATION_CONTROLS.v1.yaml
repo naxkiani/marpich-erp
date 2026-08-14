@@ -1,0 +1,28 @@
+apiVersion: marpich.io/v1
+kind: SpaceEducationControls
+metadata:
+  prompt: P218-S
+  adr: "545"
+controls:
+  - zero_trust_education
+  - secure_learning_identity
+  - credential_verification
+  - data_governance
+  - audit_trails
+  - research_ethics_gates
+  - certification_integrity
+  - human_override
+domains:
+  - educational_data_security
+  - research_data_protection
+  - identity_management
+  - certification_integrity
+  - knowledge_protection
+laws:
+  never_ungated_certification_issuance: true
+  never_skip_credential_verification: true
+  never_skip_research_ethics_review: true
+  never_opaque_unexplainable_education_decisions: true
+  never_replace_p218_r_commerce: true
+  space_ai_via_p214z_acl_only: true
+  no_module_local_llm: true
