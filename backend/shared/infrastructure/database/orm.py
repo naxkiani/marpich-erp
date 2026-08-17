@@ -97,6 +97,59 @@ class AccessDecisionRow(Base):
     decision: Mapped[str] = mapped_column(String(16), nullable=False)
     reason: Mapped[str | None] = mapped_column(Text)
     context: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+    model: Mapped[str] = mapped_column(String(32), nullable=False, default="rbac")
+    reason_codes: Mapped[list] = mapped_column(JSONB, nullable=False, default=list)
+    policy_keys: Mapped[list] = mapped_column(JSONB, nullable=False, default=list)
+    obligations: Mapped[list] = mapped_column(JSONB, nullable=False, default=list)
+    facts: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+
+
+class AuthorizationProfileRow(Base):
+    __tablename__ = "profiles"
+    __table_args__ = {"schema": "authorization"}
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    profile_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    rbac_enabled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    rebac_enabled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    abac_enabled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    pbac_enabled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    default_decision: Mapped[str] = mapped_column(String(16), nullable=False, default="deny")
+    decision_cache_ttl_seconds: Mapped[int] = mapped_column(Integer, nullable=False, default=30)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class AuthorizationAbacPolicyRow(Base):
+    __tablename__ = "abac_policies"
+    __table_args__ = {"schema": "authorization"}
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    policy_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    name: Mapped[str] = mapped_column(String(256), nullable=False)
+    effect: Mapped[str] = mapped_column(String(8), nullable=False)
+    permission_pattern: Mapped[str] = mapped_column(String(256), nullable=False)
+    conditions: Mapped[list] = mapped_column(JSONB, nullable=False, default=list)
+    priority: Mapped[int] = mapped_column(Integer, nullable=False, default=100)
+    active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class AuthorizationRelationTupleRow(Base):
+    __tablename__ = "relation_tuples"
+    __table_args__ = {"schema": "authorization"}
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    relation_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    object_type: Mapped[str] = mapped_column(String(64), nullable=False)
+    object_id: Mapped[str] = mapped_column(String(128), nullable=False)
+    relation: Mapped[str] = mapped_column(String(64), nullable=False)
+    subject_type: Mapped[str] = mapped_column(String(64), nullable=False)
+    subject_id: Mapped[str] = mapped_column(String(128), nullable=False)
+    active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
 class TenantRow(Base):
@@ -2204,3 +2257,199 @@ class ProcurementRequisitionRow(Base):
     submitted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     approved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     received_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+# --- Directory (018) ---
+
+
+class DirectoryProfileRow(Base):
+    __tablename__ = "profiles"
+    __table_args__ = {"schema": "directory"}
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    profile_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    saml_enabled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    ldap_enabled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    scim_enabled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    auto_provision: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class DirectorySamlProviderRow(Base):
+    __tablename__ = "saml_providers"
+    __table_args__ = {"schema": "directory"}
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    provider_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    name: Mapped[str] = mapped_column(String(256), nullable=False)
+    entity_id: Mapped[str] = mapped_column(String(512), nullable=False)
+    sso_url: Mapped[str] = mapped_column(String(1024), nullable=False)
+    x509_cert: Mapped[str] = mapped_column(Text, nullable=False, default="")
+    enabled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class DirectoryLdapConnectorRow(Base):
+    __tablename__ = "ldap_connectors"
+    __table_args__ = {"schema": "directory"}
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    connector_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    name: Mapped[str] = mapped_column(String(256), nullable=False)
+    host: Mapped[str] = mapped_column(String(256), nullable=False)
+    port: Mapped[int] = mapped_column(Integer, nullable=False, default=389)
+    bind_dn: Mapped[str] = mapped_column(String(512), nullable=False, default="")
+    bind_password: Mapped[str] = mapped_column(Text, nullable=False, default="")
+    base_dn: Mapped[str] = mapped_column(String(512), nullable=False, default="")
+    user_filter: Mapped[str] = mapped_column(String(256), nullable=False, default="(objectClass=person)")
+    enabled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class DirectoryScimProviderRow(Base):
+    __tablename__ = "scim_providers"
+    __table_args__ = {"schema": "directory"}
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    provider_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    name: Mapped[str] = mapped_column(String(256), nullable=False)
+    bearer_token: Mapped[str] = mapped_column(Text, nullable=False, default="")
+    enabled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class DirectorySyncJobRow(Base):
+    __tablename__ = "sync_jobs"
+    __table_args__ = {"schema": "directory"}
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    job_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    source_type: Mapped[str] = mapped_column(String(32), nullable=False)
+    source_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="pending")
+    users_synced: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    users_created: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    error_message: Mapped[str | None] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+# --- Authentication (022 / 025) ---
+
+
+class AuthenticationProfileRow(Base):
+    __tablename__ = "profiles"
+    __table_args__ = {"schema": "authentication"}
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    profile_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    webauthn_enabled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    passkeys_required: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    oidc_enabled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    password_enabled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class AuthenticationWebAuthnCredentialRow(Base):
+    __tablename__ = "webauthn_credentials"
+    __table_args__ = {"schema": "authentication"}
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    credential_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    user_id: Mapped[str] = mapped_column(String(128), nullable=False)
+    credential_id: Mapped[str] = mapped_column(String(512), nullable=False)
+    public_key: Mapped[str] = mapped_column(Text, nullable=False)
+    sign_count: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    nickname: Mapped[str] = mapped_column(String(128), nullable=False, default="")
+    transports: Mapped[list] = mapped_column(JSONB, nullable=False, default=list)
+    aaguid: Mapped[str | None] = mapped_column(String(64))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    last_used_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class AuthenticationOidcProviderRow(Base):
+    __tablename__ = "oidc_providers"
+    __table_args__ = {"schema": "authentication"}
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    provider_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    name: Mapped[str] = mapped_column(String(256), nullable=False)
+    issuer_url: Mapped[str] = mapped_column(String(1024), nullable=False)
+    client_id: Mapped[str] = mapped_column(String(256), nullable=False)
+    client_secret: Mapped[str] = mapped_column(Text, nullable=False, default="")
+    redirect_uri: Mapped[str] = mapped_column(String(1024), nullable=False, default="")
+    scopes: Mapped[str] = mapped_column(String(512), nullable=False, default="openid profile email")
+    enabled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+# --- Identity Risk (027) ---
+
+
+class IdentityRiskProfileRow(Base):
+    __tablename__ = "profiles"
+    __table_args__ = {"schema": "identity_risk"}
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    profile_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    scoring_enabled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    score_threshold: Mapped[int] = mapped_column(Integer, nullable=False, default=50)
+    step_up_threshold: Mapped[int] = mapped_column(Integer, nullable=False, default=75)
+    bulk_create_threshold: Mapped[int] = mapped_column(Integer, nullable=False, default=10)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class IdentityRiskSignalRow(Base):
+    __tablename__ = "signals"
+    __table_args__ = {"schema": "identity_risk"}
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    signal_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    source: Mapped[str] = mapped_column(String(32), nullable=False)
+    event_name: Mapped[str] = mapped_column(String(128), nullable=False)
+    user_id: Mapped[str | None] = mapped_column(String(128))
+    factors: Mapped[list] = mapped_column(JSONB, nullable=False, default=list)
+    raw_payload: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class IdentityRiskScoreRow(Base):
+    __tablename__ = "scores"
+    __table_args__ = {"schema": "identity_risk"}
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    score_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    signal_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    score: Mapped[int] = mapped_column(Integer, nullable=False)
+    risk_level: Mapped[str] = mapped_column(String(16), nullable=False)
+    explanation: Mapped[str] = mapped_column(Text, nullable=False, default="")
+    factors: Mapped[list] = mapped_column(JSONB, nullable=False, default=list)
+    step_up_recommended: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    user_id: Mapped[str | None] = mapped_column(String(128))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class IdentityRiskAlertRow(Base):
+    __tablename__ = "alerts"
+    __table_args__ = {"schema": "identity_risk"}
+
+    tenant_id: Mapped[str] = mapped_column(String(63), primary_key=True)
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True)
+    alert_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    score_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    title: Mapped[str] = mapped_column(String(256), nullable=False)
+    severity: Mapped[str] = mapped_column(String(16), nullable=False)
+    description: Mapped[str] = mapped_column(Text, nullable=False, default="")
+    acknowledged: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())

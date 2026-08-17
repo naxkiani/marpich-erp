@@ -11,7 +11,7 @@
 | UI/UX | PARTIAL (AuthZ nav + shell) |
 | Frontend | PARTIAL (orphan clients gated) |
 | Backend | PARTIAL |
-| Database | PARTIAL (Postgres :5433 path + migrations; deferred SQL documented) |
+| Database | PARTIAL (Postgres :5433 path + migrations; identity/authz 018–027/030/037 SQL landed P1) |
 | API | PARTIAL (ROUTER honesty + `DEFERRED_CONTEXT_IDS`) |
 | Authentication | PASS (core JWT; production rejects default secret) |
 | Authorization | PARTIAL → UI nav/command/search filtered |
@@ -37,7 +37,7 @@
 
 | Item | Mitigation |
 |------|------------|
-| Missing migrations 018–027, 030, 037 | Pruned from `POST_WAVE01_MIGRATIONS`; `apply_migration` skips missing files with WARNING; catalogued in `infrastructure/docker/migrations/DEFERRED_MIGRATIONS.md` |
+| Missing migrations 018–027, 030, 037 | **P1:** SQL files on disk and listed in `POST_WAVE01_MIGRATIONS` (see `DEFERRED_MIGRATIONS.md`). `apply_migration` still skips a file if absent (safety net). |
 | Empty scaffolds / missing packages as live routers | `DEFERRED_CONTEXT_IDS` + `_module_available` / `filter_available_specs` in `startup_registry.py` — deferred contexts never register |
 | Production JWT / outbox / OTel | `MARPICH_ENVIRONMENT=production` hard gates in `shared/infrastructure/settings.py`: reject default/short JWT, require Postgres, force outbox, warn if OTel or document signing secret off |
 | DR checklist | Wave 04 runbook: [MEOS_WAVE04_DR_RUNBOOK.md](./MEOS_WAVE04_DR_RUNBOOK.md) (RPO/RTO, backup, restore drill, failover notes) |
@@ -78,7 +78,7 @@
 | Money-path migrations 038–045 + CI | verified |
 | Activate→nav FE unit tests | verified |
 | Wave 02 audit proof script | verified |
-| Deferred migrations 018–027/030/037 skip + docs | verified |
+| Identity/authz SQL 018–027/030/037 on disk (P1) | verified |
 | `DEFERRED_CONTEXT_IDS` router/service honesty | verified |
 | Production settings gates (JWT/Postgres/outbox/OTel) | verified |
 | DR runbook link (`MEOS_WAVE04_DR_RUNBOOK.md`) | verified |
@@ -90,6 +90,6 @@
 
 Overall remains **`NOT_READY`** for full production. Platform Core + Wave 02 Q2C + Healthcare care loop are **CONDITIONALLY_READY** for demos with Postgres. Wave 03 Intelligence smoke activated; Wave 04 Privacy/DR/Policy desk + perf baseline shipped; Wave 05 Autonomy is **deny-by-default gated**. Empty industry scaffolds remain `coming_soon` and are excluded via `DEFERRED_CONTEXT_IDS`. Speculative fabrics (`quantum` / `robotics` / `biotechnology` / `space` / `civilization`) are **`BLUEPRINT`** — APIs off unless `MARPICH_ENABLE_BLUEPRINT_APIS` or `MARPICH_APP_PROFILE=blueprint` (see `docs/adr/p2-blueprint-scaffold-honesty.md`). P3 freezes missing ROUTER/SERVICE modules in `missing_router_packages_baseline.json` and fails CI on growth (`.github/workflows/meos-p3-router-contracts.yml`).
 
-**Dashboard (in progress on `feature/dashboard-home-complete`):** home `/` Live Pulse syncs Notifications + Workflow + Audit + Analytics via fail-soft parallel fetch; `GET /api/v1/analytics/home-pulse`; platform tenant list pagination (`limit`≤100); `GET /tenants/{slug}` AuthZ-gated; shared `KpiStrip`.
+**Dashboard (`feature/dashboard-home-complete` → `main`):** home `/` Live Pulse syncs Notifications + Workflow + Audit + Analytics via fail-soft parallel fetch; `GET /api/v1/analytics/home-pulse`; platform tenant list pagination (`limit`≤100); `GET /tenants/{slug}` AuthZ-gated; shared `KpiStrip`.
 
-**Remaining production risks:** automated offsite backup + monitored restore SLO (see DR runbook); deferred identity/authz SQL (018–027, 030, 037) still memory-path until P1 lands; industry scaffolds not live; grandfathered missing router modules still need real packages over time.
+**Remaining production risks:** automated offsite backup + monitored restore SLO (see DR runbook); industry scaffolds not live (`DEFERRED_CONTEXT_IDS`); grandfathered missing router modules still need real packages over time. Identity/authz SQL 018–027/030/037 landed (P1) with postgres adapters when `use_postgres()` — not a `PRODUCTION_READY` claim.

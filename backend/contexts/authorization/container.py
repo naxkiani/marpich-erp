@@ -14,9 +14,16 @@ from contexts.authorization.infrastructure.persistence.authorization_memory_stor
     InMemoryRelationTupleRepository,
     _RefCounter,
 )
+from contexts.authorization.infrastructure.persistence.authorization_postgres_store import (
+    PostgresAbacPolicyRepository,
+    PostgresAccessDecisionRepository,
+    PostgresAuthorizationProfileRepository,
+    PostgresRelationTupleRepository,
+    _RefCounterMixin as _AuthzPgRefCounter,
+)
 from contexts.policy.container import get_policy_evaluator
 from shared.infrastructure.messaging.event_bus import InProcessEventBus
-from shared.infrastructure.settings import settings
+from shared.infrastructure.settings import settings, use_postgres
 
 _service: AuthorizationApplicationService | None = None
 _registered = False
@@ -30,13 +37,23 @@ def get_authorization_service() -> AuthorizationApplicationService:
             backend=settings.authz_decision_cache_backend,
             redis_url=settings.redis_url,
         )
+        if use_postgres():
+            profiles: object = PostgresAuthorizationProfileRepository()
+            abac_policies: object = PostgresAbacPolicyRepository()
+            decisions: object = PostgresAccessDecisionRepository()
+            relations: object = PostgresRelationTupleRepository()
+        else:
+            profiles = InMemoryAuthorizationProfileRepository()
+            abac_policies = InMemoryAbacPolicyRepository()
+            decisions = InMemoryAccessDecisionRepository()
+            relations = InMemoryRelationTupleRepository()
         _service = AuthorizationApplicationService(
-            profiles=InMemoryAuthorizationProfileRepository(),
-            abac_policies=InMemoryAbacPolicyRepository(),
-            decisions=InMemoryAccessDecisionRepository(),
+            profiles=profiles,
+            abac_policies=abac_policies,
+            decisions=decisions,
             principals=IdentityPrincipalAccessAdapter(),
             policy_evaluator=get_policy_evaluator(),
-            relations=InMemoryRelationTupleRepository(),
+            relations=relations,
             decision_cache=_cache,
         )
     if not _registered:
@@ -61,3 +78,4 @@ def reset_authorization_service() -> None:
     InMemoryRelationTupleRepository.reset()
     InMemoryDecisionCache.reset()
     _RefCounter.reset()
+    _AuthzPgRefCounter.reset_counters()

@@ -25,7 +25,10 @@ from shared.infrastructure.messaging.event_bus import InProcessEventBus
 
 
 @pytest.fixture(autouse=True)
-def reset_all():
+def reset_all(monkeypatch):
+    monkeypatch.setattr("contexts.identity_governance.container.use_postgres", lambda: False)
+    monkeypatch.setattr("contexts.identity.container.use_postgres", lambda: False)
+    monkeypatch.setattr("contexts.policy.container.use_postgres", lambda: False)
     identity_container._container = None
     InMemoryStore.reset()
     InMemoryIdentityGovernanceProfileRepository.reset()
