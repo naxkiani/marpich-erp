@@ -1,7 +1,15 @@
 "use client";
 
 import { PageLayout } from "@marpich/core";
-import { DataTable, EmptyState, ProgressBar, SkeletonTable, useToast } from "@marpich/shared";
+import {
+  DataTable,
+  EmptyState,
+  KpiStrip,
+  ProgressBar,
+  SkeletonTable,
+  mapDeskStatsToKpiItems,
+  useToast,
+} from "@marpich/shared";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   createEobIncident,
@@ -387,17 +395,11 @@ export function EnterpriseObservabilityDashboardPage() {
             {serviceGraph ? ` · ${serviceGraph.total_services} services` : ""}
           </p>
 
-          <div className="eob-stats">
-            {stats.map((stat) => (
-              <article
-                key={stat.label}
-                className={`eob-stat${stat.tone === "warn" ? " eob-stat-warn" : ""}${stat.tone === "bad" ? " eob-stat-bad" : ""}`}
-              >
-                <span className="eob-stat-value">{stat.value}</span>
-                <span className="eob-stat-label">{stat.label}</span>
-              </article>
-            ))}
-          </div>
+          <KpiStrip
+            label="Observability KPIs"
+            loading={loading}
+            items={mapDeskStatsToKpiItems(stats, 6)}
+          />
 
           <div className="eob-context">
             {apiMonitoring ? (
@@ -607,12 +609,6 @@ export function EnterpriseObservabilityDashboardPage() {
         label { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.85rem; }
         .eob-muted { color: var(--mp-text-muted, #64748b); margin: 0.5rem 0; }
         .eob-error { color: #b91c1c; margin: 0.75rem 0; }
-        .eob-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 0.75rem; margin: 1rem 0; }
-        .eob-stat { padding: 1rem; border-radius: 8px; background: var(--mp-surface-2, #f8fafc); border: 1px solid var(--mp-border, #e2e8f0); }
-        .eob-stat-warn { border-color: #f59e0b; background: #fffbeb; }
-        .eob-stat-bad { border-color: #ef4444; background: #fef2f2; }
-        .eob-stat-value { display: block; font-size: 1.2rem; font-weight: 700; text-transform: capitalize; }
-        .eob-stat-label { font-size: 0.75rem; color: var(--mp-text-muted, #64748b); }
         .eob-context { display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.85rem; color: var(--mp-text-muted, #64748b); margin-bottom: 1rem; }
         .eob-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.25rem; margin-bottom: 1.5rem; }
         h2 { margin: 0 0 0.75rem; font-size: 1.1rem; }

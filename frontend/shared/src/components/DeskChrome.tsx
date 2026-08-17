@@ -83,19 +83,38 @@ export function DeskMetrics({
   );
 }
 
+export type KpiStripItem = {
+  id: string;
+  label: string;
+  value: string | number;
+  href?: string;
+  tone?: "default" | "ok" | "warn" | "danger";
+};
+
+/** Map desk/dashboard summary stats into shared KpiStrip items (bad → danger). */
+export function mapDeskStatsToKpiItems(
+  stats: Array<{ label: string; value: string | number; tone?: string }>,
+  limit = 6,
+): KpiStripItem[] {
+  return stats.slice(0, limit).map((s) => {
+    const raw = s.tone;
+    const tone: KpiStripItem["tone"] =
+      raw === "bad" || raw === "danger"
+        ? "danger"
+        : raw === "ok" || raw === "warn"
+          ? raw
+          : "default";
+    return { id: s.label, label: s.label, value: s.value, tone };
+  });
+}
+
 /** Compact KPI strip for home / executive surfaces (shared, RTL-safe). */
 export function KpiStrip({
   items,
   loading = false,
   label,
 }: {
-  items: Array<{
-    id: string;
-    label: string;
-    value: string | number;
-    href?: string;
-    tone?: "default" | "ok" | "warn" | "danger";
-  }>;
+  items: KpiStripItem[];
   loading?: boolean;
   label?: string;
 }) {

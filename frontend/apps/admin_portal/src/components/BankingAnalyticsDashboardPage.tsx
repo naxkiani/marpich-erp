@@ -8,10 +8,12 @@ import {
   DataTable,
   EmptyState,
   ExportButton,
+  KpiStrip,
   PrintButton,
   ProgressBar,
   SkeletonTable,
   StepProgress,
+  mapDeskStatsToKpiItems,
   useAutosave,
   useLocale,
   useToast,
@@ -55,7 +57,6 @@ type TabId =
   | "policies"
   | (typeof BANKING_ANALYTICS_SURFACES)[number]["id"];
 
-const METRIC_JEWELS = ["forest", "royal", "emerald", "gold", "orange", "purple"] as const;
 const DRAFT_KEY = "marpich.banking.analytics.draft";
 
 function StatusChip({ status }: { status: string }) {
@@ -752,17 +753,11 @@ export function BankingAnalyticsDashboardPage() {
           </aside>
 
           <div className="ba-main">
-            <section className="ba-metrics" aria-label={t("banking.metrics")}>
-              {stats.map((s, i) => {
-                const jewel = METRIC_JEWELS[i % METRIC_JEWELS.length]!;
-                return (
-                  <div key={s.label} className={`ba-metric ba-metric--${jewel}`}>
-                    <span className="ba-metric-label">{s.label}</span>
-                    <strong>{s.value}</strong>
-                  </div>
-                );
-              })}
-            </section>
+            <KpiStrip
+              label={t("banking.metrics")}
+              loading={loading}
+              items={mapDeskStatsToKpiItems(stats, 6)}
+            />
 
             <div className="ba-filters">
               <AdvancedFilterBar
@@ -1289,49 +1284,6 @@ export function BankingAnalyticsDashboardPage() {
           resize: vertical;
           margin-block: 0.35rem 0.65rem;
         }
-        .ba-metrics {
-          display: grid;
-          grid-template-columns: repeat(6, minmax(0, 1fr));
-          gap: 0.65rem;
-        }
-        .ba-metric {
-          padding: 0.8rem 0.85rem;
-          border-radius: var(--mp-radius);
-          background: var(--mp-bg-elevated);
-          border: 1px solid var(--mp-border);
-          border-block-start: 3px solid var(--mp-silver);
-          box-shadow: var(--mp-shadow);
-        }
-        .ba-metric--forest {
-          border-block-start-color: var(--mp-forest);
-        }
-        .ba-metric--royal {
-          border-block-start-color: var(--mp-royal);
-        }
-        .ba-metric--emerald {
-          border-block-start-color: var(--mp-emerald);
-        }
-        .ba-metric--gold {
-          border-block-start-color: var(--mp-gold);
-        }
-        .ba-metric--orange {
-          border-block-start-color: var(--mp-orange);
-        }
-        .ba-metric--purple {
-          border-block-start-color: var(--mp-purple);
-        }
-        .ba-metric strong {
-          display: block;
-          font-size: 1.2rem;
-        }
-        .ba-metric-label {
-          display: block;
-          font-size: 0.7rem;
-          text-transform: uppercase;
-          letter-spacing: 0.04em;
-          color: var(--mp-fg-muted);
-          margin-block-end: 0.2rem;
-        }
         .ba-tabs {
           display: flex;
           flex-wrap: wrap;
@@ -1462,11 +1414,6 @@ export function BankingAnalyticsDashboardPage() {
         :global(.ba-chip--muted) {
           background: color-mix(in srgb, var(--mp-silver) 28%, transparent);
         }
-        @media (max-width: 1100px) {
-          .ba-metrics {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-          }
-        }
         @media (max-width: 960px) {
           .ba-layout {
             grid-template-columns: 1fr;
@@ -1477,9 +1424,6 @@ export function BankingAnalyticsDashboardPage() {
           }
           .ba-form-grid {
             grid-template-columns: 1fr;
-          }
-          .ba-metrics {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
           }
         }
       `}</style>

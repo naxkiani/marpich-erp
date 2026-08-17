@@ -26,7 +26,7 @@
 ## Remaining (backlog)
 
 - 12 empty industry scaffolds (warehouse, manufacturing, …) still `coming_soon` — intentional (P2 frozen)
-**Next (product):** executive home pulse on `/` syncs Notifications + Workflow + Audit + Analytics (`feature/dashboard-home-complete`).
+**Next (product):** executive home Live Pulse on `/` (PR #16); shared `KpiStrip` also on Banking / Observability / Scheduler / Integration Studio / Connector Framework desks.
 - Education / banking desks still demo-depth (not full Functional loops)
 - Physical margin leftovers in legacy `globals.css` saga styles
 - Production hardening: automated offsite backup + monitored restore SLO

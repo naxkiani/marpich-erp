@@ -2,7 +2,15 @@
 
 import { LoginGate, useAuth, type AuthSession } from "@marpich/auth-provider";
 import { PageLayout } from "@marpich/core";
-import { DataTable, EmptyState, ProgressBar, SkeletonTable, useToast } from "@marpich/shared";
+import {
+  DataTable,
+  EmptyState,
+  KpiStrip,
+  ProgressBar,
+  SkeletonTable,
+  mapDeskStatsToKpiItems,
+  useToast,
+} from "@marpich/shared";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   createSchJob,
@@ -235,14 +243,11 @@ export function EnterpriseSchedulerDashboardPage() {
             {monitoring ? ` · ${monitoring.success_rate_pct}% success` : ""}
           </p>
 
-          <div className="sch-stats">
-            {stats.map((stat) => (
-              <article key={stat.label} className={`sch-stat${stat.tone === "warn" ? " sch-stat-warn" : ""}`}>
-                <span className="sch-stat-value">{stat.value}</span>
-                <span className="sch-stat-label">{stat.label}</span>
-              </article>
-            ))}
-          </div>
+          <KpiStrip
+            label="Scheduler KPIs"
+            loading={loading}
+            items={mapDeskStatsToKpiItems(stats, 6)}
+          />
 
           {monitoring ? (
             <div className="sch-context">
@@ -357,11 +362,6 @@ export function EnterpriseSchedulerDashboardPage() {
         label { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.85rem; }
         .sch-muted { color: var(--mp-text-muted, #64748b); margin: 0.5rem 0; }
         .sch-error { color: #b91c1c; margin: 0.75rem 0; }
-        .sch-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 0.75rem; margin: 1rem 0; }
-        .sch-stat { padding: 1rem; border-radius: 8px; background: var(--mp-surface-2, #f8fafc); border: 1px solid var(--mp-border, #e2e8f0); }
-        .sch-stat-warn { border-color: #f59e0b; background: #fffbeb; }
-        .sch-stat-value { display: block; font-size: 1.2rem; font-weight: 700; }
-        .sch-stat-label { font-size: 0.75rem; color: var(--mp-text-muted, #64748b); }
         .sch-context { display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.85rem; color: var(--mp-text-muted, #64748b); margin-bottom: 1rem; }
         .sch-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.25rem; margin-bottom: 1.5rem; }
         .sch-actions-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }

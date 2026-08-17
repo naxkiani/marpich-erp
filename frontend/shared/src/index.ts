@@ -57,6 +57,8 @@ export {
   DeskStack,
   DeskToolbar,
   KpiStrip,
+  mapDeskStatsToKpiItems,
+  type KpiStripItem,
 } from "./components/DeskChrome";
 
 export { CommandPalette, type CommandItem } from "./components/CommandPalette";
