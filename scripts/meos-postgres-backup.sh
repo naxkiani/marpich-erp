@@ -50,10 +50,35 @@ if [[ -n "${MEOS_BACKUP_S3_URI:-}" ]]; then
   if command -v aws >/dev/null 2>&1; then
     aws s3 cp "$OUT" "${MEOS_BACKUP_S3_URI%/}/$(basename "$OUT")"
     aws s3 cp "$MANIFEST" "${MEOS_BACKUP_S3_URI%/}/$(basename "$MANIFEST")"
+    OFFSITE_STATUS="copied"
   else
-    echo "WARN: aws CLI not found; dump remains only under ${BACKUP_ROOT}" >&2
+    echo "FAIL: MEOS_BACKUP_S3_URI set but aws CLI not found" >&2
+    exit 1
   fi
+elif [[ "${MEOS_REQUIRE_OFFSITE:-0}" == "1" ]] || [[ "${MARPICH_ENVIRONMENT:-}" == "production" ]]; then
+  echo "FAIL: offsite backup required (set MEOS_BACKUP_S3_URI). Local-only is not production-ready." >&2
+  exit 1
+else
+  OFFSITE_STATUS="skipped_local_ok"
+  echo "NOTE: offsite skipped (dev). Set MEOS_REQUIRE_OFFSITE=1 or MEOS_BACKUP_S3_URI for production."
 fi
+
+# Integrity: gzip must be readable
+gzip -t "$OUT"
+
+python3 -c "
+import json
+from datetime import datetime, timezone
+path = '${MANIFEST}'
+with open(path, encoding='utf-8') as f:
+    payload = json.load(f)
+payload['offsite'] = '${OFFSITE_STATUS:-unknown}'
+payload['gzip_ok'] = True
+payload['verified_at'] = datetime.now(timezone.utc).isoformat()
+with open(path, 'w', encoding='utf-8') as f:
+    json.dump(payload, f, indent=2)
+    f.write('\n')
+"
 
 if [[ "$KEEP_LOCAL" =~ ^[0-9]+$ ]] && [[ "$KEEP_LOCAL" -gt 0 ]]; then
   mapfile -t OLD < <(ls -1t "${BACKUP_ROOT}"/marpich_"${PGDATABASE}"_*.sql.gz 2>/dev/null | tail -n +"$((KEEP_LOCAL + 1))" || true)

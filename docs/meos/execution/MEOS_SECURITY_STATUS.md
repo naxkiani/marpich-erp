@@ -1,28 +1,35 @@
 # MEOS Security Status
 
-**Date:** 2026-08-12 · **Principle:** DENY BY DEFAULT
+**Date:** 2026-08-17 · **Principle:** DENY BY DEFAULT
 
 ## Strengths
 
-- JWT login / refresh / logout in Identity  
-- `require_permissions` on many routes  
-- Tenant header `X-Tenant-ID` expected by APIs  
-- Authorization check API exists  
+- Backend JWT HS256 sign/verify (`JwtTokenService`) + `require_permissions`
+- Production rejects default/short JWT secret and memory persistence
+- Production rejects default `marpich:marpich` DATABASE_URL credentials
+- Production forces `event_bus_mode=outbox`
+- Admin middleware protects `/`, `/modules`, enterprise/banking/education/healthcare/account
+- Session cookie stores access JWT; middleware validates claims + **HS256** when `JWT_SECRET` / `MARPICH_JWT_SECRET` is set (required in `NODE_ENV=production`)
 
-## Gaps (P0)
+## Gaps (remaining)
 
-| Issue | Risk |
-|-------|------|
-| Shell search/notify without Bearer | Unauth calls / silent failure → false UX |
-| `/` and `/modules` public | Unauthenticated platform surface |
-| Default memory persistence | Session/data loss; weak multi-tenant durability |
-| Missing MFA package still referenced | Incomplete auth surface |
-| Cookie session is presence-only | Middleware does not validate JWT |
+| Issue | Risk | Status |
+|-------|------|--------|
+| Cookie not HttpOnly (SPA `document.cookie`) | XSS can steal token | **OPEN** — needs BFF Set-Cookie |
+| Edge verify requires env secret on FE host | Misconfig → fail-closed in prod | Documented |
+| MFA package deferred | Incomplete auth surface | Deferred / gated |
 
-## Wave 01 mitigations
+## Mitigated
 
-1. Platform session headers from `marpich_auth_session`  
-2. Protect home/modules  
-3. Postgres runbook for durable Wave 01 cores  
-4. Gate missing MFA/security routers until packages exist  
-5. Keep server-side permission checks; never AuthZ-only-in-UI
+| Issue | Mitigation |
+|-------|------------|
+| Shell search/notify without Bearer | Wave 01 session headers |
+| `/` and `/modules` public | Middleware → `/login` |
+| Cookie presence-only `=1` | JWT cookie + signature verify |
+| Production memory SoR | Hard gate |
+
+## Rules
+
+1. API AuthZ remains source of truth  
+2. Middleware is defense-in-depth  
+3. Never AuthZ-only-in-UI

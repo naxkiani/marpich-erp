@@ -92,8 +92,10 @@ Overall remains **`NOT_READY`** for full production. Platform Core + Wave 02 Q2C
 
 **Dashboard (PR #16 / `feature/dashboard-home-complete`):** home `/` Live Pulse syncs Notifications + Workflow + Audit + Analytics via fail-soft parallel fetch; `GET /api/v1/analytics/home-pulse`; platform tenant list pagination (`limit`≤100); `GET /tenants/{slug}` AuthZ-gated; shared `KpiStrip` on home pulse and on Banking / Observability / Scheduler / Integration Studio / Connector Framework desks (`mapDeskStatsToKpiItems`).
 
-**P0 session cookie (2026-08-17):** admin middleware validates JWT shape + `exp` (rejects legacy `marpich_auth=1`). Signature verify in Edge still pending shared secret.
+**P0 session cookie (2026-08-17):** admin middleware validates JWT claims + **HS256** via Web Crypto when `JWT_SECRET` / `MARPICH_JWT_SECRET` is set (required in `NODE_ENV=production`). Legacy `marpich_auth=1` rejected. HttpOnly BFF cookie still open.
 
-**P0 DR automation (2026-08-17):** backup + restore-drill scripts landed; offsite (`MEOS_BACKUP_S3_URI`) + scheduled monitored SLO still required for Backup/DR gate PASS.
+**P0 production DB (2026-08-17):** rejects default `marpich:marpich` DATABASE_URL credentials in production (in addition to postgres persistence gate).
+
+**P0 DR automation (2026-08-17):** backup + restore-drill scripts landed; production/`MEOS_REQUIRE_OFFSITE=1` fails without `MEOS_BACKUP_S3_URI`; scheduled monitored SLO still required for Backup/DR gate PASS.
 
 **Remaining production risks:** automated offsite backup schedule + monitored restore SLO (see DR runbook); industry scaffolds not live (`DEFERRED_CONTEXT_IDS`); grandfathered missing router modules still need real packages over time. Identity/authz SQL 018–027/030/037 landed (P1) with postgres adapters when `use_postgres()` — not a `PRODUCTION_READY` claim.

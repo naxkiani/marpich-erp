@@ -15,7 +15,7 @@ export function loadSession(): AuthSession | null {
 export function saveSession(session: AuthSession): void {
   if (typeof window === "undefined") return;
   window.sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(session));
-  setSessionCookie();
+  setSessionCookie(session.accessToken);
 }
 
 export function clearSession(): void {

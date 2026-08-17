@@ -171,6 +171,12 @@ class Settings(BaseSettings):
             raise ValueError(
                 "P0: PERSISTENCE_BACKEND=postgres is required when MARPICH_ENVIRONMENT=production"
             )
+        db_url = (self.database_url or "").strip().lower()
+        if not db_url or "marpich:marpich@" in db_url:
+            raise ValueError(
+                "P0: DATABASE_URL must be set to a non-default Postgres URL when "
+                "MARPICH_ENVIRONMENT=production (reject empty / default marpich:marpich credentials)"
+            )
         if self.event_bus_mode.lower() == "direct":
             # Force durable outbox for production — never silent direct bus
             object.__setattr__(self, "event_bus_mode", "outbox")

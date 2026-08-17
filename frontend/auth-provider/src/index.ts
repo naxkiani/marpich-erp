@@ -37,10 +37,13 @@ export { checkAuthorization, fetchPrincipalPermissions } from "./authorization-s
 export {
   API_URL,
   SESSION_COOKIE_NAME,
+  /** @deprecated Legacy presence flag; middleware rejects this value. */
   SESSION_COOKIE_VALUE,
   SESSION_STORAGE_KEY,
 } from "./config";
 export { clearSessionCookie, setSessionCookie } from "./cookie";
+export { decodeJwtPayload, isJwtSessionCookieValid, verifyHs256Jwt } from "./jwtCookie";
+export type { JwtCookieCheckOptions } from "./jwtCookie";
 export {
   authHeaders,
   clearSession,

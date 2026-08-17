@@ -66,6 +66,8 @@ Also recommended after restore:
 |------|--------|
 | Backup script `meos-postgres-backup.sh` | **LANDED** |
 | Restore drill script `meos-postgres-restore-drill.sh` | **LANDED** |
-| Offsite object storage configured in every env (`MEOS_BACKUP_S3_URI`) | **PENDING ops** |
+| Offsite object storage configured in every env (`MEOS_BACKUP_S3_URI`) | **PENDING ops** — script **fails closed** when `MARPICH_ENVIRONMENT=production` or `MEOS_REQUIRE_OFFSITE=1` without URI |
+| gzip integrity check (`gzip -t`) | **LANDED** |
+| JWT cookie HS256 selftest | `scripts/meos-jwt-cookie-selftest.mjs` |
 | Scheduled job + alert on backup failure | **PENDING ops** |
 | Quarterly monitored restore SLO recorded | **PENDING ops** |
