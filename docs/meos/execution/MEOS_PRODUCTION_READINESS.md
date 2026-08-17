@@ -1,7 +1,8 @@
 # MEOS Production Readiness
 
 **Overall status:** `NOT_READY`  
-**Date:** 2026-08-17 · **P311:** post-hardening verification — DR/outbox Postgres **BLOCKED** on this host (no listener). Not Release Candidate. See [MEOS_POST_HARDENING_VERIFICATION.md](./MEOS_POST_HARDENING_VERIFICATION.md).
+**P312 (2026-08-17):** Gap matrix + CRM tenant isolation test. RC **not** declared — Docker/Postgres still unavailable. See [MEOS_P312_RELEASE_CANDIDATE_GAP_MATRIX.md](./MEOS_P312_RELEASE_CANDIDATE_GAP_MATRIX.md).
+
 
 ## Launch gates
 

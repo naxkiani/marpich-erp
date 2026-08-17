@@ -96,3 +96,24 @@ async def test_crm_contact_opportunity_win_flow(client):
         headers=headers,
     )
     assert again.status_code == 400
+
+
+@pytest.mark.asyncio
+async def test_crm_tenant_b_cannot_list_tenant_a_contacts(client):
+    headers_a = await _auth_headers(client, "crm-tenant-a")
+    created = await client.post(
+        "/api/v1/crm/contacts",
+        json={"email": "secret@a.example", "full_name": "Tenant A Only", "company": "A"},
+        headers=headers_a,
+    )
+    assert created.status_code == 201, created.text
+    contact_id = created.json()["data"]["id"]
+
+    headers_b = await _auth_headers(client, "crm-tenant-b")
+    listed = await client.get("/api/v1/crm/contacts", headers=headers_b)
+    assert listed.status_code == 200
+    ids = [row.get("id") for row in listed.json()["data"].get("items", [])]
+    assert contact_id not in ids
+
+    leaked = await client.get(f"/api/v1/crm/contacts/{contact_id}", headers=headers_b)
+    assert leaked.status_code in (403, 404)
