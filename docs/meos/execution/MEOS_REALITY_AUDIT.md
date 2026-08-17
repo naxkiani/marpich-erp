@@ -21,7 +21,8 @@ Legend: **PASS** · **PARTIAL** · **FAIL** · **MISSING** · **DUPLICATE** · *
 | Restore drill evidence file | **PARTIAL** | Writes `.last_restore_drill.json` (gitignored); SLO not PASS until real drill |
 | Wave smoke scripts 01–05 + healthcare | **PASS** | `scripts/meos-*.sh` present |
 | MEOS CI workflows | **PASS** | wave01–05, healthcare, money-path, p3 contracts |
-| Application registry YAML | **PARTIAL** | Drift vs nav IDs / empty scaffolds |
+| Application registry YAML | **PASS** (2026-08-17) | nav IDs + 12 scaffolds + 5 blueprints; contract `test_application_registry_yaml.py` |
+| Postgres outbox E2E | **PARTIAL** | Test exists (`test_postgres_outbox_e2e.py`); skips without `PERSISTENCE_BACKEND=postgres` |
 | Empty scaffolds honesty | **PASS** | `DEFERRED_CONTEXT_IDS` / `coming_soon` in startup |
 | Blueprint API gate | **PASS** | `BLUEPRINT_CONTEXT_IDS` + profile flag |
 | Memory persistence in production | **PASS** (blocked) | Hard fail |

@@ -60,6 +60,17 @@ Also recommended after restore:
 - Bind services to `0.0.0.0:$PORT`.
 - Document last successful drill date in `MEOS_PRODUCTION_READINESS.md`.
 
+## Last execution (P311, 2026-08-17)
+
+| Step | Result |
+|------|--------|
+| `pg_isready` 127.0.0.1:5433 | no response |
+| `pg_isready` 127.0.0.1:5432 | no response |
+| `./scripts/meos-postgres-backup.sh` | **FAIL** exit 2 |
+| `./scripts/meos-postgres-restore-drill.sh` | **FAIL** exit 1 (no dump) |
+
+Status remains **BLOCKED** until Postgres is up and a drill is recorded. Do not mark PASS.
+
 ## Current gap to PASS
 
 | Item | Status |

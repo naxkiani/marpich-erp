@@ -1,7 +1,7 @@
 # MEOS Production Readiness
 
 **Overall status:** `NOT_READY`  
-**Date:** 2026-08-14 · **P0 slice:** mitigated for Platform Core (migrations / router honesty / settings gates)
+**Date:** 2026-08-17 · **P311:** post-hardening verification — DR/outbox Postgres **BLOCKED** on this host (no listener). Not Release Candidate. See [MEOS_POST_HARDENING_VERIFICATION.md](./MEOS_POST_HARDENING_VERIFICATION.md).
 
 ## Launch gates
 
