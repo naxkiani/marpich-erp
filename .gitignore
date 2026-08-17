@@ -10,3 +10,7 @@ coverage/
 .DS_Store
 *.tsbuildinfo
 .cursor/
+
+# MEOS local Postgres dumps (never commit)
+.meos-backups/
+docs/meos/execution/.last_restore_drill.json

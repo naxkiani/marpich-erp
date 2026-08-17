@@ -45,16 +45,28 @@ Never implement P5 while P0/P1 is broken.
 
 ## Current first slice (this execution)
 
-1. Audit pack (this directory)  
-2. Auth-wired ONE SEARCH / ONE NOTIFICATION / ONE AI  
-3. Registry-driven ONE NAV + Command Palette  
-4. Workflow Task Center UI  
-5. ROUTER_SPECS honesty + Postgres Wave 01 runbook  
-6. Design tokens + Wave 01 CI smoke  
+1. Audit pack (this directory) — **exists; refresh continuously**  
+2. Auth-wired ONE SEARCH / ONE NOTIFICATION / ONE AI — **done**  
+3. Registry-driven ONE NAV + Command Palette — **done**  
+4. Workflow Task Center UI — **done**  
+5. ROUTER_SPECS honesty + Postgres Wave 01 runbook — **done**  
+6. Design tokens + Wave 01 CI smoke — **done**  
 7. **Phase A complete:** Healthcare loop + money-path 038–045 + activate→nav tests  
 8. **Wave 03 activated:** intelligence smoke (search/analytics/AI)  
 9. **Wave 04 activated:** privacy/DR runbooks + policy desk + perf baseline  
 10. **Wave 05 gated:** AutonomyGate deny-by-default + flag/policy/workflow requirements  
+11. **P1 identity/authz SQL + Postgres adapters** — merged (`main`)  
+12. **Executive home Live Pulse + shared KpiStrip desks** — PR #16 (`feature/dashboard-home-complete`)  
+13. **P0 DR scripts** — `meos-postgres-backup.sh` + `meos-postgres-restore-drill.sh`  
+14. **P0 session cookie** — JWT in cookie + middleware exp/shape validation  
+
+## Next dependency-ordered work
+
+1. Land / merge dashboard PR #16 onto `main`  
+2. Ops: schedule backups + `MEOS_BACKUP_S3_URI` + record restore drills  
+3. Edge: HS256 verify session cookie when `JWT_SECRET` available to Next  
+4. Registry YAML sync (nav IDs without app entries)  
+5. Deepen Wave 02 Functional loops (education/banking beyond demo) — only after 1–3
 
 ## Definition of Functional
 

@@ -28,10 +28,10 @@
 | Testing | PARTIAL (Wave 01/02 + healthcare + money-path + Wave03/05 CI) |
 | Performance | PARTIAL (baseline script `meos-wave04-perf-baseline.sh`) |
 | Observability | PARTIAL (OTel warn-if-off in production) |
-| Backup / DR | PARTIAL — see [MEOS_WAVE04_DR_RUNBOOK.md](./MEOS_WAVE04_DR_RUNBOOK.md) |
+| Backup / DR | PARTIAL — scripts `meos-postgres-backup.sh` + `meos-postgres-restore-drill.sh` landed; offsite schedule + monitored SLO still pending ([runbook](./MEOS_WAVE04_DR_RUNBOOK.md)) |
 | CI/CD | PARTIAL (wave01–05 smoke/governance workflows) |
-| Documentation | PARTIAL (this pack + Wave 03–05 status) |
-| Production hardening | PARTIAL (P0 settings gates shipped; offsite backup automation still pending) |
+| Documentation | PARTIAL (this pack + Wave 03–05 status; refreshed 2026-08-17) |
+| Production hardening | PARTIAL (P0 settings gates + JWT cookie guard; offsite backup automation still pending) |
 
 ## P0 mitigations (2026-08-14)
 
@@ -90,6 +90,10 @@
 
 Overall remains **`NOT_READY`** for full production. Platform Core + Wave 02 Q2C + Healthcare care loop are **CONDITIONALLY_READY** for demos with Postgres. Wave 03 Intelligence smoke activated; Wave 04 Privacy/DR/Policy desk + perf baseline shipped; Wave 05 Autonomy is **deny-by-default gated**. Empty industry scaffolds remain `coming_soon` and are excluded via `DEFERRED_CONTEXT_IDS`. Speculative fabrics (`quantum` / `robotics` / `biotechnology` / `space` / `civilization`) are **`BLUEPRINT`** — APIs off unless `MARPICH_ENABLE_BLUEPRINT_APIS` or `MARPICH_APP_PROFILE=blueprint` (see `docs/adr/p2-blueprint-scaffold-honesty.md`). P3 freezes missing ROUTER/SERVICE modules in `missing_router_packages_baseline.json` and fails CI on growth (`.github/workflows/meos-p3-router-contracts.yml`).
 
-**Dashboard (`feature/dashboard-home-complete` → PR #16):** home `/` Live Pulse syncs Notifications + Workflow + Audit + Analytics via fail-soft parallel fetch; `GET /api/v1/analytics/home-pulse`; platform tenant list pagination (`limit`≤100); `GET /tenants/{slug}` AuthZ-gated; shared `KpiStrip` on home pulse and on Banking / Observability / Scheduler / Integration Studio / Connector Framework desks (`mapDeskStatsToKpiItems`).
+**Dashboard (PR #16 / `feature/dashboard-home-complete`):** home `/` Live Pulse syncs Notifications + Workflow + Audit + Analytics via fail-soft parallel fetch; `GET /api/v1/analytics/home-pulse`; platform tenant list pagination (`limit`≤100); `GET /tenants/{slug}` AuthZ-gated; shared `KpiStrip` on home pulse and on Banking / Observability / Scheduler / Integration Studio / Connector Framework desks (`mapDeskStatsToKpiItems`).
 
-**Remaining production risks:** automated offsite backup + monitored restore SLO (see DR runbook); industry scaffolds not live (`DEFERRED_CONTEXT_IDS`); grandfathered missing router modules still need real packages over time. Identity/authz SQL 018–027/030/037 landed (P1) with postgres adapters when `use_postgres()` — not a `PRODUCTION_READY` claim.
+**P0 session cookie (2026-08-17):** admin middleware validates JWT shape + `exp` (rejects legacy `marpich_auth=1`). Signature verify in Edge still pending shared secret.
+
+**P0 DR automation (2026-08-17):** backup + restore-drill scripts landed; offsite (`MEOS_BACKUP_S3_URI`) + scheduled monitored SLO still required for Backup/DR gate PASS.
+
+**Remaining production risks:** automated offsite backup schedule + monitored restore SLO (see DR runbook); industry scaffolds not live (`DEFERRED_CONTEXT_IDS`); grandfathered missing router modules still need real packages over time. Identity/authz SQL 018–027/030/037 landed (P1) with postgres adapters when `use_postgres()` — not a `PRODUCTION_READY` claim.
