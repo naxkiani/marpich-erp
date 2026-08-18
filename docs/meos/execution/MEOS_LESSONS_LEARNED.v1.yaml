@@ -1,0 +1,71 @@
+# MEOS Lessons Learned (machine)
+# Law: launch-program captures are DRAFT. Never VALIDATED/APPLIED without review+outcome.
+schema_version: "1.0"
+generated: "2026-08-18T14:05:00Z"
+source: docs/meos/execution/MEOS_LESSONS_LEARNED.md
+validated_count: 0
+applied_count: 0
+reused_count: 0
+production_pir_count: 0
+
+lessons:
+  - id: LSN-G26
+    source: P314 / R-01
+    context: Go-live gate
+    problem: Workstation Postgres/MinIO/API treated as if production
+    cause: No real production cluster (G26)
+    lesson: Demo loops and local drills are not production evidence
+    recommendation: Provision public-CA TLS cluster then recertify P313 with P0=0
+    owner: NOT_AVAILABLE
+    validation: NOT_COMPLETE
+    status: DRAFT
+    authority: PROGRAM_DOCUMENT
+
+  - id: LSN-P322
+    source: P322
+    context: Plugin install
+    problem: Install implied activate
+    cause: enabled defaulted true-equivalent behavior
+    lesson: Install ≠ activate for extensions
+    recommendation: Keep PluginInstallation.enabled default False
+    owner: NOT_AVAILABLE
+    validation: NOT_COMPLETE
+    status: DRAFT
+    authority: PROGRAM_DOCUMENT
+    note: Code fix exists; not a measured production learning outcome
+
+  - id: LSN-P323
+    source: P323
+    context: Plugin CLI
+    problem: pack/sign/publish printed fake success
+    cause: Stub reported success
+    lesson: Unimplemented CLI must fail-closed (exit 2)
+    recommendation: Keep NOT_IMPLEMENTED exit 2
+    owner: NOT_AVAILABLE
+    validation: NOT_COMPLETE
+    status: DRAFT
+    authority: PROGRAM_DOCUMENT
+
+  - id: LSN-P329
+    source: P316 / P329
+    context: Crisis classification
+    problem: Launch P0 confused with live-site crisis
+    cause: Quality label CRITICAL vs incident CRITICAL
+    lesson: G26 is a launch blocker, not a declared production crisis
+    recommendation: Keep declared_count 0 until GO_LIVE APPROVED and IR active
+    owner: NOT_AVAILABLE
+    validation: NOT_COMPLETE
+    status: DRAFT
+    authority: PROGRAM_DOCUMENT
+
+  - id: LSN-P331
+    source: P331
+    context: Performance baselines
+    problem: Historical local p95 reused as current production SLO
+    cause: P313 G22 workstation samples
+    lesson: Historical local p95 is STALE_FOR_P331 until re-measured on a real cluster
+    recommendation: Reject OPT-LOCAL-P95 as production candidate
+    owner: NOT_AVAILABLE
+    validation: NOT_COMPLETE
+    status: DRAFT
+    authority: PROGRAM_DOCUMENT

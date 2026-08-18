@@ -9,7 +9,8 @@
 2. **Never duplicate capabilities** — one capability → one bounded context owner.
 3. Each capability eventually becomes: Application Service · Domain Service · Events · Reports · Permissions · UI Components · API Contracts.
 
-**Machine-readable catalog:** `backend/shared/contracts/business_capabilities.json`
+**Machine-readable catalog:** `backend/shared/contracts/business_capabilities.json`  
+**P333 execution overlay (status/gaps only — do not fork this taxonomy):** [MEOS_CAPABILITY_MODEL.md](../meos/execution/MEOS_CAPABILITY_MODEL.md)
 
 ---
 

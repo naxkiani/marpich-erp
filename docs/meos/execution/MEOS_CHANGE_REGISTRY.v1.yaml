@@ -1,0 +1,194 @@
+# MEOS Change Registry (machine)
+# Law: overlay on initiative portfolio + release registry + change procedure.
+# Never COMPLETED / ADOPTED / IN_PROGRESS without production evidence.
+# Never invent adoption, readiness, training completion, value, or sentiment.
+schema_version: "1.0"
+generated: "2026-08-18T17:15:00Z"
+source: docs/meos/execution/MEOS_P334_CHANGE_INTELLIGENCE.md
+initiative_sor: docs/meos/execution/MEOS_INITIATIVE_PORTFOLIO.v1.yaml
+release_sor: docs/meos/execution/MEOS_RELEASE_REGISTRY.v1.yaml
+change_procedure_sor: docs/meos/execution/MEOS_CHANGE_MANAGEMENT.md
+adoption_sor: docs/meos/execution/MEOS_ADOPTION_STATUS.md
+overall_status: INVENTORIED
+maturity: INVENTORIED
+production_active: false
+production_change_count: 0
+approved_count: 0
+in_progress_count: 0
+completed_count: 0
+rolled_back_count: 0
+adopted: false
+adoption_metrics: NOT_MEASURED
+readiness: NOT_MEASURED
+training_completed_count: 0
+owners: NOT_AVAILABLE
+projects_context: SCAFFOLDED
+autonomous_change: BLOCKED
+max_autonomy_level: L0
+
+# Procedure taxonomy SoR (do not fork): STANDARD | NORMAL | EMERGENCY
+# Initiative category SoR: OPERATIONAL_RESILIENCE | RISK_REDUCTION | COMPLIANCE
+# P334 class is a tag on those rows, not a second taxonomy.
+
+forbidden_without_production:
+  - APPROVED
+  - IN_PROGRESS
+  - VALIDATION
+  - COMPLETED
+  - ROLLED_BACK
+
+changes:
+  - id: CHG-G26
+    name: Provision real production cluster
+    initiative_id: INIT-G26
+    debt_id: TD-G26-PROD-CLUSTER
+    objective_id: OBJ-GATE-P314
+    procedure_category: NORMAL
+    class: TECHNOLOGY
+    owner: NOT_AVAILABLE
+    sponsor: NOT_AVAILABLE
+    status: ASSESSED
+    start: NOT_SET
+    target_date: NOT_SET
+    affected_tenants: NOT_AVAILABLE
+    affected_applications: [platform]
+    affected_processes: [go-live]
+    affected_roles: NOT_AVAILABLE
+    release_id: NONE
+    readiness: BLOCKED
+    adoption: NOT_MEASURED
+    risk: R-01
+    evidence: P313 G26
+
+  - id: CHG-G25
+    name: Immutable production SHA
+    initiative_id: INIT-G25
+    debt_id: TD-G25-DIRTY-SHA
+    objective_id: OBJ-GATE-P314
+    procedure_category: NORMAL
+    class: TECHNOLOGY
+    owner: NOT_AVAILABLE
+    sponsor: NOT_AVAILABLE
+    status: ASSESSED
+    start: NOT_SET
+    target_date: NOT_SET
+    affected_tenants: NOT_AVAILABLE
+    affected_applications: [platform]
+    affected_processes: [release]
+    affected_roles: NOT_AVAILABLE
+    release_id: REL-P324-GOVERNANCE
+    readiness: BLOCKED
+    adoption: NOT_MEASURED
+    risk: R-06
+    depends_on: [CHG-G26]
+    evidence: e941141-dirty
+
+  - id: CHG-G27
+    name: Exercise production rollback
+    initiative_id: INIT-G27
+    debt_id: TD-G27-ROLLBACK
+    objective_id: OBJ-GATE-P314
+    procedure_category: NORMAL
+    class: OPERATIONAL
+    owner: NOT_AVAILABLE
+    sponsor: NOT_AVAILABLE
+    status: ASSESSED
+    start: NOT_SET
+    target_date: NOT_SET
+    affected_tenants: NOT_AVAILABLE
+    affected_applications: [platform]
+    affected_processes: [rollback]
+    affected_roles: NOT_AVAILABLE
+    release_id: NONE
+    readiness: BLOCKED
+    adoption: NOT_MEASURED
+    risk: R-02
+    depends_on: [CHG-G26]
+    evidence: P313 G27
+
+  - id: CHG-G23
+    name: Production alerting
+    initiative_id: INIT-G23
+    debt_id: TD-G23-ALERTING
+    objective_id: OBJ-GATE-P317
+    procedure_category: NORMAL
+    class: OPERATIONAL
+    owner: NOT_AVAILABLE
+    sponsor: NOT_AVAILABLE
+    status: PROPOSED
+    start: NOT_SET
+    target_date: NOT_SET
+    affected_tenants: NOT_AVAILABLE
+    affected_applications: [observability]
+    affected_processes: [alerting]
+    affected_roles: NOT_AVAILABLE
+    release_id: NONE
+    readiness: BLOCKED
+    adoption: NOT_MEASURED
+    risk: R-03
+    depends_on: [CHG-G26]
+    evidence: P313 G23
+
+  - id: CHG-G18
+    name: Governed AI model (replace stub)
+    initiative_id: INIT-G18
+    debt_id: TD-G18-AI-STUB
+    objective_id: OBJ-GATE-P317
+    procedure_category: NORMAL
+    class: SECURITY
+    owner: NOT_AVAILABLE
+    sponsor: NOT_AVAILABLE
+    status: PROPOSED
+    start: NOT_SET
+    target_date: NOT_SET
+    affected_tenants: NOT_AVAILABLE
+    affected_applications: [ai]
+    affected_processes: [assist]
+    affected_roles: NOT_AVAILABLE
+    release_id: NONE
+    readiness: BLOCKED
+    adoption: NOT_MEASURED
+    risk: R-04
+    depends_on: [CHG-G26]
+    evidence: P313 G18
+
+  - id: CHG-G19
+    name: Runtime DSAR / erasure path
+    initiative_id: INIT-G19
+    debt_id: TD-G19-DSAR
+    objective_id: OBJ-GATE-P317
+    procedure_category: NORMAL
+    class: POLICY
+    owner: NOT_AVAILABLE
+    sponsor: NOT_AVAILABLE
+    status: PROPOSED
+    start: NOT_SET
+    target_date: NOT_SET
+    affected_tenants: NOT_AVAILABLE
+    affected_applications: [privacy, identity]
+    affected_processes: [dsar]
+    affected_roles: NOT_AVAILABLE
+    release_id: NONE
+    readiness: BLOCKED
+    adoption: NOT_MEASURED
+    risk: R-05
+    depends_on: [CHG-G26]
+    evidence: P313 G19
+
+blockers:
+  - id: BLK-G26
+    blocks: ALL_PRODUCTION_CHANGES
+    reason: No production cluster
+    status: BLOCKED
+  - id: BLK-G25
+    blocks: [CHG-G25, immutable_release]
+    reason: Dirty working tree
+    status: BLOCKED
+  - id: BLK-G27
+    blocks: [CHG-G27, live_rollback]
+    reason: No production deploy to roll back
+    status: BLOCKED
+  - id: BLK-P333-READINESS
+    blocks: CHANGE_GATES_READINESS
+    reason: Capability/skill/training readiness NOT_MEASURED
+    status: BLOCKED

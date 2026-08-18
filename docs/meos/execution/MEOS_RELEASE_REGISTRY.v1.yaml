@@ -1,0 +1,70 @@
+# MEOS Release Registry (machine)
+# Law: never PRODUCTION_RELEASE / RELEASE_CANDIDATE / DEPLOYED without evidence.
+schema_version: "1.0"
+generated: "2026-08-18T11:50:00Z"
+source: docs/meos/execution/MEOS_RELEASE_REGISTRY.md
+overall_status: NOT_RELEASE_CANDIDATE
+production_release_count: 0
+release_candidate_count: 0
+immutable_sha: false
+git_sha_at_gate: e941141e4f07bce6ba5e7214c72fad440af0d7d0
+git_describe: e941141-dirty
+branch: feature/dashboard-home-complete
+notes: Working tree dirty (G25). Production cluster BLOCKED (G26). Rollback of a live release BLOCKED (G27).
+
+environments:
+  - id: LOCAL
+    evidence: infrastructure/docker/compose/docker-compose.dev.yml
+    status: AVAILABLE_ON_WORKSTATION
+  - id: DEVELOPMENT
+    status: NOT_SEPARATE_FROM_LOCAL
+  - id: TEST
+    evidence: GitHub Actions ubuntu-latest + postgres service
+    status: CI_JOBS_EXIST
+  - id: STAGING
+    status: NOT_IMPLEMENTED
+  - id: CERTIFICATION
+    status: NOT_IMPLEMENTED
+  - id: PRODUCTION
+    status: BLOCKED
+
+releases:
+  - id: REL-P313-CERT-ATTEMPT
+    version: NOT_TAGGED
+    commit: e941141e4f07bce6ba5e7214c72fad440af0d7d0
+    build: NOT_AVAILABLE
+    artifact: NOT_AVAILABLE
+    components: [platform, identity, wave02]
+    environment: LOCAL
+    author: NOT_INVENTED
+    created_at: "2026-08-18"
+    test_status: PARTIAL
+    security_status: TRUST_CRITICAL
+    certification_status: NOT_CERTIFIED
+    deployment_status: NOT_DEPLOYED
+    rollback_status: NOT_EXERCISED
+    production_release: false
+    notes: P313 NOT_CERTIFIED. P314 GO_LIVE not approved.
+
+  - id: REL-P324-GOVERNANCE
+    version: NOT_TAGGED
+    commit: e941141e4f07bce6ba5e7214c72fad440af0d7d0
+    build: NOT_AVAILABLE
+    artifact: git working tree (dirty)
+    components: [docs, plugin-sdk, contracts]
+    environment: LOCAL
+    author: NOT_INVENTED
+    created_at: "2026-08-18T11:50:00Z"
+    test_status: NOT_DECLARED_GREEN_ON_IMMUTABLE_SHA
+    security_status: TRUST_CRITICAL
+    certification_status: NOT_CERTIFIED
+    deployment_status: NOT_DEPLOYED
+    rollback_status: NOT_EXERCISED
+    production_release: false
+    lifecycle_state: DEVELOPMENT
+    notes: Release engineering documentation + evidence script. Not a candidate.
+
+versions:
+  meos_api: v1
+  plugin_sdk: "0.1.0"
+  event_envelope: v1

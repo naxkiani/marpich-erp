@@ -1,0 +1,256 @@
+# MEOS Capability & Organizational Readiness (machine)
+# Law: overlay on BUSINESS_CAPABILITIES_REGISTRY + application registry.
+# Never OPERATIONAL/MATURE without production evidence.
+# Never invent skills, expertise, capacity, performance, training completion, or readiness scores.
+schema_version: "1.0"
+generated: "2026-08-18T17:00:00Z"
+source: docs/meos/execution/MEOS_P333_CAPABILITY_READINESS.md
+capability_taxonomy_sor: docs/architecture/BUSINESS_CAPABILITIES_REGISTRY.md
+capability_catalog_json: backend/shared/contracts/business_capabilities.json
+application_registry: docs/meos/execution/MEOS_APPLICATION_REGISTRY.v1.yaml
+overall_status: MAPPED
+maturity: MAPPED
+production_active: false
+operational_count: 0
+mature_count: 0
+skill_record_count: 0
+validated_capability_count: 0
+training_assigned_count: 0
+readiness: NOT_MEASURED
+workforce_capacity: NOT_MEASURED
+expertise_discovery: NOT_IMPLEMENTED
+owners: NOT_AVAILABLE
+
+# Status vocabulary (P333): DEFINED | PARTIAL | OPERATIONAL | MATURE | AT_RISK | DEPRECATED
+# CMMI overlay: DEFINED | IMPLEMENTED | MEASURED | OPTIMIZED — MEASURED/OPTIMIZED require evidence.
+forbidden_without_production:
+  - OPERATIONAL
+  - MATURE
+  - MEASURED
+  - OPTIMIZED
+
+strategic_mappings:
+  - objective_id: OBJ-GATE-P314
+    objective_status: DRAFT
+    required_capabilities:
+      - identity
+      - secrets
+      - observability
+      - production_cluster
+    current:
+      identity: PARTIAL
+      secrets: PARTIAL
+      observability: AT_RISK
+      production_cluster: MISSING
+    gap_ids: [GAP-PROD-CLUSTER, GAP-OBSERVE]
+    readiness: BLOCKED
+    action: Provision public-CA TLS cluster then recertify P313 with P0=0
+
+  - objective_id: OBJ-GATE-P317
+    objective_status: DRAFT
+    required_capabilities:
+      - identity
+      - audit
+      - privacy_dsar
+    current:
+      identity: PARTIAL
+      audit: PARTIAL
+      privacy_dsar: AT_RISK
+    gap_ids: [GAP-PRIVACY-DSAR]
+    readiness: BLOCKED
+    action: Runtime DSAR/erasure before production PII
+
+  - objective_id: OBJ-GATE-P326
+    objective_status: DRAFT
+    required_capabilities:
+      - analytics
+      - outcome_measurement
+    current:
+      analytics: PARTIAL
+      outcome_measurement: MISSING
+    gap_ids: [GAP-VALUE-MEASURE]
+    readiness: BLOCKED
+    action: Production telemetry then measure P326 outcomes
+
+# Overlay rows only — IDs from existing catalogs / platform owners. Not a second taxonomy.
+capabilities:
+  - id: identity
+    name: Identity & Access (RBAC)
+    source: platform CORE_PLATFORM_DESIGN / application identity INTEGRATED
+    domain: platform
+    owner: NOT_AVAILABLE
+    status: PARTIAL
+    cmmi: IMPLEMENTED
+    validation: IMPLEMENTED_UNVERIFIED
+    note: Authorization roles are not job architecture. Not production OPERATIONAL.
+
+  - id: organization
+    name: Organization hierarchy
+    source: contexts/organization (Organization, OrgUnit, Membership)
+    domain: platform
+    owner: NOT_AVAILABLE
+    status: PARTIAL
+    cmmi: IMPLEMENTED
+    validation: IMPLEMENTED_UNVERIFIED
+    note: Not listed as ACTIVE in application registry. Not an expertise graph.
+
+  - id: CAP-ENT-010
+    name: Employee Management
+    source: business_capabilities.json / human_resources TESTED
+    domain: enterprise
+    owner: NOT_AVAILABLE
+    status: PARTIAL
+    cmmi: IMPLEMENTED
+    validation: IMPLEMENTED_UNVERIFIED
+    note: Hire/list/terminate only. job_title is a string, not a skill.
+
+  - id: CAP-ENT-011
+    name: Recruitment Management
+    source: business_capabilities.json; context.yaml lists JobOpening/Candidate
+    domain: enterprise
+    owner: NOT_AVAILABLE
+    status: DEFINED
+    cmmi: DEFINED
+    validation: NOT_MEASURED
+    note: No JobOpening aggregate in domain/. Do not treat YAML intent as OPERATIONAL.
+
+  - id: CAP-ENT-014
+    name: Performance Management
+    source: business_capabilities.json
+    domain: enterprise
+    owner: NOT_AVAILABLE
+    status: DEFINED
+    cmmi: DEFINED
+    validation: NOT_MEASURED
+    note: Catalog only. Do not build a second performance engine.
+
+  - id: CAP-ENT-015
+    name: Payroll Lifecycle
+    source: payroll TESTED
+    domain: enterprise
+    owner: NOT_AVAILABLE
+    status: PARTIAL
+    cmmi: IMPLEMENTED
+    validation: IMPLEMENTED_UNVERIFIED
+    note: Not performance management. Production value NOT_MEASURED.
+
+  - id: CAP-EDU-001
+    name: Student Lifecycle
+    source: university module
+    domain: industry
+    owner: NOT_AVAILABLE
+    status: PARTIAL
+    cmmi: IMPLEMENTED
+    validation: IMPLEMENTED_UNVERIFIED
+    note: Education vertical. NOT an operator LMS.
+
+  - id: analytics
+    name: Analytics / outcome measurement
+    source: P318 FOUNDATION / P326 IDENTIFIED
+    domain: platform
+    owner: NOT_AVAILABLE
+    status: PARTIAL
+    cmmi: DEFINED
+    validation: NOT_MEASURED
+    note: measured_count 0. Catalog counts are not KPIs.
+
+  - id: search
+    name: Enterprise Search
+    source: application search INTEGRATED
+    domain: platform
+    owner: NOT_AVAILABLE
+    status: PARTIAL
+    cmmi: IMPLEMENTED
+    validation: IMPLEMENTED_UNVERIFIED
+    note: No expertise/authority facet in production. Prod search NOT_AVAILABLE.
+
+  - id: workflow
+    name: Workflow / Task Center
+    source: application workflow
+    domain: platform
+    owner: NOT_AVAILABLE
+    status: PARTIAL
+    cmmi: IMPLEMENTED
+    validation: IMPLEMENTED_UNVERIFIED
+    note: Production task loop NOT_AVAILABLE. Workload NOT_MEASURED.
+
+gaps:
+  - id: GAP-PROD-CLUSTER
+    type: MISSING_CAPABILITY
+    name: Production cluster operations
+    impact: Blocks OBJ-GATE-P314 / GO_LIVE
+    priority: P0
+    owner: NOT_AVAILABLE
+    action: Provision real production (public-CA TLS, secret manager, CI SHA)
+    risk: R-01
+    evidence: P313 G26
+
+  - id: GAP-OBSERVE
+    type: WEAK_CAPABILITY
+    name: Production observability / alerting
+    impact: L0 observe BLOCKED; optimization cannot MEASURE
+    priority: P0
+    owner: NOT_AVAILABLE
+    action: Alerting on real cluster (G23)
+    risk: R-03
+    evidence: P313 G23 / P330 observe_operational false
+
+  - id: GAP-PRIVACY-DSAR
+    type: WEAK_CAPABILITY
+    name: Runtime DSAR / erasure
+    impact: Blocks trusted production PII / OBJ-GATE-P317
+    priority: P0
+    owner: NOT_AVAILABLE
+    action: Runtime privacy path before production PII
+    risk: R-05
+    evidence: P313 G19 FAIL
+
+  - id: GAP-VALUE-MEASURE
+    type: DEPENDENCY_GAP
+    name: Outcome measurement
+    impact: Business value NOT_REALIZED
+    priority: P1
+    owner: NOT_AVAILABLE
+    action: Production telemetry then P326 measurement
+    risk: NOT_SCORED
+    evidence: P326 measured_count 0
+
+  - id: GAP-SKILL-MODEL
+    type: SKILL_GAP
+    name: Evidence-backed skill inventory
+    impact: Cannot map ROLE→SKILL→CAPABILITY with evidence
+    priority: P2
+    owner: NOT_AVAILABLE
+    action: Do not invent skills. Extend HR only after production + policy.
+    risk: NOT_SCORED
+    evidence: No skill aggregate in human_resources
+
+  - id: GAP-KNOWLEDGE-VALIDATED
+    type: KNOWLEDGE_GAP
+    name: Validated organizational knowledge
+    impact: Knowledge cannot update capability requirements
+    priority: P2
+    owner: NOT_AVAILABLE
+    action: Validate P332 lessons after production PIR
+    risk: NOT_SCORED
+    evidence: P332 validated_count 0
+
+  - id: GAP-CAPACITY
+    type: CAPACITY_GAP
+    name: Workforce / workload capacity
+    impact: Cannot assess utilization, bottleneck, or overload
+    priority: P2
+    owner: NOT_AVAILABLE
+    action: Do not infer from demo employees or local p95
+    risk: NOT_SCORED
+    evidence: P330/P331 NOT_MEASURED
+
+  - id: GAP-CRISIS-ROLES
+    type: CRITICAL_ROLE_GAP
+    name: Continuity command roles unstaffed
+    impact: No backup capability for IR/DR command
+    priority: P1
+    owner: NOT_AVAILABLE
+    action: Staff command roles after GO_LIVE; do not name persons here
+    risk: R-01
+    evidence: P329 command_staffed false; all roles NOT_AVAILABLE

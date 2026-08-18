@@ -1,6 +1,24 @@
 # MEOS Application Registry
 
 **Generated:** 2026-08-12 · **Source of truth (machine):** [MEOS_APPLICATION_REGISTRY.v1.yaml](MEOS_APPLICATION_REGISTRY.v1.yaml)  
+**P313 (2026-08-18):** Live API Q2C + healthcare **PASS** on Postgres. **No app promoted to ACTIVE.** Overall still `NOT_READY`.  
+**P318 (2026-08-18):** Intelligence gate **FOUNDATION** only — no registry promotions.  
+**P319 (2026-08-18):** Automation **BLOCK_AUTOMATION** — no ACTIVE automations.  
+**P320 (2026-08-18):** Experience **FUNCTIONAL** only — no registry promotions to ACTIVE.  
+**P321 (2026-08-18):** Integration fabric **IMPLEMENTED** (code) — **0 ACTIVE** external integrations.  
+**P322 (2026-08-18):** Extension ecosystem **GOVERNED** (Plugin Platform + install≠activate). Marketplace seeds are DEMO, **not CERTIFIED**. **No app promoted to ACTIVE.**  
+**P323 (2026-08-18):** Developer platform **DOCUMENTED/DEVELOPABLE** (manifest SDK). **Not PUBLISHABLE.** No app promoted to ACTIVE.  
+**P324 (2026-08-18):** Release engineering **NOT_RELEASE_CANDIDATE**. **No production deploy.** No app promoted to ACTIVE.  
+**P325 (2026-08-18):** Continuous evolution **BLOCKED** (no production). No app promoted to ACTIVE.  
+**P326 (2026-08-18):** Business value **NOT_MEASURED** (outcomes IDENTIFIED only). No app promoted to ACTIVE.  
+**P327 (2026-08-18):** Strategy **NOT_DECLARED** (PLATFORM_GATE drafts only). No app promoted to ACTIVE. `projects` remains SCAFFOLDED.  
+**P328 (2026-08-18):** Risk **RISK_AWARE** (R-01…R-07). Production resilience **NOT_VERIFIED**. No app promoted to ACTIVE.  
+**P329 (2026-08-18):** Continuity **DOCUMENTED**. Production IR **not active**. No app promoted to ACTIVE.  
+**P330 (2026-08-18):** Closed-loop ops **GATED** at L0. `BLOCK_AUTOMATION` held. No app promoted to ACTIVE.  
+**P331 (2026-08-18):** Optimization **BLOCKED** (cannot MEASURE). Local p95 not reused as prod SLO. No app promoted to ACTIVE.  
+**P332 (2026-08-18):** Knowledge **INVENTORIED**. Lessons DRAFT (`validated_count: 0`). No app promoted to ACTIVE.  
+**P333 (2026-08-18):** Capability overlay **MAPPED**. `operational_count: 0` · skills **0** · readiness **NOT_MEASURED**. No app promoted to ACTIVE. HR remains employment SoR — not HCM/LMS/talent.  
+**P334 (2026-08-18):** Change overlay **INVENTORIED**. `production_change_count: 0` · **ADOPTED = false**. No app promoted to ACTIVE. `projects` remains SCAFFOLDED.  
 **Rule:** `ACTIVE` only when login-scoped create/read/update/search works end-to-end. Docs-only / empty scaffolds are never ACTIVE.
 
 ## Status legend
