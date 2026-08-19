@@ -19,6 +19,20 @@
 **P332 (2026-08-18):** Knowledge **INVENTORIED**. Lessons DRAFT (`validated_count: 0`). No app promoted to ACTIVE.  
 **P333 (2026-08-18):** Capability overlay **MAPPED**. `operational_count: 0` · skills **0** · readiness **NOT_MEASURED**. No app promoted to ACTIVE. HR remains employment SoR — not HCM/LMS/talent.  
 **P334 (2026-08-18):** Change overlay **INVENTORIED**. `production_change_count: 0` · **ADOPTED = false**. No app promoted to ACTIVE. `projects` remains SCAFFOLDED.  
+**P335 (2026-08-19):** Portfolio overlay **INVENTORIED**. No budget/ROI. No app promoted to ACTIVE. `projects` remains SCAFFOLDED.  
+**P336 (2026-08-19):** Architecture overlay **INVENTORIED**. Registry remains SoR (47 apps, 0 ACTIVE). No CMDB/ITSM. See [MEOS_P336_ARCHITECTURE_RATIONALIZATION.md](./MEOS_P336_ARCHITECTURE_RATIONALIZATION.md).  
+**P337 (2026-08-19):** Data overlay **INVENTORIED**. **0** published data products. No warehouse/mesh/catalog/MDM product. See [MEOS_P337_DATA_ARCHITECTURE.md](./MEOS_P337_DATA_ARCHITECTURE.md).  
+**P338 (2026-08-19):** Decision overlay **FOUNDATION**. **0** executed decisions. KPI trust **NOT_MEASURED**. No BI/KPI/AI product. See [MEOS_P338_DECISION_INTELLIGENCE.md](./MEOS_P338_DECISION_INTELLIGENCE.md).  
+**P339 (2026-08-19):** Execution overlay **INVENTORIED**. **0** authorized actions. **0** realized benefits. `projects` remains SCAFFOLDED. See [MEOS_P339_DECISION_EXECUTION.md](./MEOS_P339_DECISION_EXECUTION.md).  
+**P340 (2026-08-19):** G26 enablement **OUTCOME_B**. G26 **BLOCKED**. No production execution. See [MEOS_P340_G26_EXECUTION_ENABLEMENT.md](./MEOS_P340_G26_EXECUTION_ENABLEMENT.md).  
+**P341 (2026-08-19):** Infrastructure **OUTCOME_B**. PRODUCTION_CERTIFIED **NO**. P0 = **1**. See [MEOS_P341_PRODUCTION_INFRASTRUCTURE_READINESS.md](./MEOS_P341_PRODUCTION_INFRASTRUCTURE_READINESS.md).  
+**P342 (2026-08-19):** Recert **OUTCOME_B**. **P313_RE_CERTIFICATION_READY = false**. No ACTIVE promotions. See [MEOS_P342_PRODUCTION_GATE_CLOSURE.md](./MEOS_P342_PRODUCTION_GATE_CLOSURE.md).  
+**P343 (2026-08-19):** Final gate **OUTCOME_B**. **PRODUCTION_CERTIFIED = NO**. **GO_LIVE_READY = NO**. No ACTIVE promotions. See [MEOS_P343_FINAL_PRODUCTION_CERTIFICATION.md](./MEOS_P343_FINAL_PRODUCTION_CERTIFICATION.md).  
+**P344 (2026-08-19):** Launch **STOPPED**. No ACTIVE promotions. See [MEOS_P344_GO_LIVE_EXECUTION.md](./MEOS_P344_GO_LIVE_EXECUTION.md).  
+**P345 (2026-08-19):** G26 provisioning **BLOCKED**. No ACTIVE promotions. See [MEOS_P345_G26_PROVISIONING.md](./MEOS_P345_G26_PROVISIONING.md).  
+**P346 (2026-08-19):** G26 evidence **STOPPED**. No ACTIVE promotions. See [MEOS_P346_G26_BLOCKER_CLOSURE.md](./MEOS_P346_G26_BLOCKER_CLOSURE.md).  
+**P347 (2026-08-19):** **EXT-G26 UNRESOLVED**. No ACTIVE promotions. See [MEOS_P347_EXTERNAL_HANDOFF.md](./MEOS_P347_EXTERNAL_HANDOFF.md).  
+**P348 (2026-08-19):** **G26_READY = FALSE**. No ACTIVE promotions. See [MEOS_EXT_G26_INFRASTRUCTURE_HANDOFF.md](./MEOS_EXT_G26_INFRASTRUCTURE_HANDOFF.md).  
 **Rule:** `ACTIVE` only when login-scoped create/read/update/search works end-to-end. Docs-only / empty scaffolds are never ACTIVE.
 
 ## Status legend

@@ -40,6 +40,8 @@ class Settings(BaseSettings):
     outbox_poll_interval_ms: int = 500
     outbox_batch_size: int = 100
     outbox_dispatch_immediate: bool = True
+    # Unpublished rows at or above this retry_count are not re-dispatched (DLQ).
+    outbox_max_retries: int = 8
 
     # Kafka fan-out (optional — external consumers)
     kafka_enabled: bool = False

@@ -647,6 +647,8 @@ PLUGINS = BoundedContext(
         "plugin.installed",
         "plugin.upgraded",
         "plugin.uninstalled",
+        "plugin.enabled",
+        "plugin.disabled",
         "plugin.sandbox.violation",
     ),
     subscribes=(),

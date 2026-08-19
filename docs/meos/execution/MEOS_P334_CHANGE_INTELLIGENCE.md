@@ -3,7 +3,8 @@
 **Date:** 2026-08-18T17:15:00Z  
 **Decision:** MEOS has a **change procedure**, a **release registry**, and a **backlog of launch initiatives**. It does **not** have a production change or adoption-intelligence product. `PRODUCTION_ACTIVE` is **false**. **0** production changes. **ADOPTED = false**. **Not** a new PM, HR, LMS, CRM, workflow, AI, or change-management product.  
 **Maturity:** `INVENTORIED` — **not** ADOPTING / TRANSFORMING / VALUE_REALIZING.  
-**Machine:** [MEOS_CHANGE_REGISTRY.v1.yaml](./MEOS_CHANGE_REGISTRY.v1.yaml)
+**Machine:** [MEOS_CHANGE_REGISTRY.v1.yaml](./MEOS_CHANGE_REGISTRY.v1.yaml)  
+**P335:** change rows remain the execution overlay of INIT-*; portfolio wrap is **INVENTORIED**, not IN_PROGRESS. See [MEOS_P335_PORTFOLIO_INTELLIGENCE.md](./MEOS_P335_PORTFOLIO_INTELLIGENCE.md).
 
 ## 1. Actual P333 status (precondition)
 

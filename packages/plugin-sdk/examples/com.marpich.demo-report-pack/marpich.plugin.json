@@ -1,0 +1,23 @@
+{
+  "pluginId": "com.marpich.demo-report-pack",
+  "pluginVersion": "2.1.0",
+  "pluginType": "report",
+  "displayName": "Demo Financial Reports",
+  "description": "Sample P&L and balance sheet templates — DEMO seed, not CERTIFIED",
+  "publisher": {
+    "id": "com.marpich",
+    "name": "Marpich Labs"
+  },
+  "permissions": ["finance.reports.read"],
+  "extensionPoints": ["analytics.report.template"],
+  "sandbox": {
+    "network": "deny",
+    "filesystem": "read_only",
+    "maxMemoryMb": 256
+  },
+  "signature": {
+    "algorithm": "ed25519",
+    "publicKeyFingerprint": "sha256:demo-publisher-key-002",
+    "packageChecksum": "sha256:demo-report-checksum-002"
+  }
+}

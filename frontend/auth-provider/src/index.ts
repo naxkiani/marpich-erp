@@ -52,6 +52,7 @@ export {
   loadSession,
   saveSession,
   tenantHeaders,
+  toPublicSession,
 } from "./session";
 
 export type {

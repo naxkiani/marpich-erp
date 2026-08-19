@@ -1,6 +1,7 @@
 # MEOS Security Status
 
-**Date:** 2026-08-17 · **Principle:** DENY BY DEFAULT
+**Date:** 2026-08-18T05:56:36Z · **Principle:** DENY BY DEFAULT  
+**P317:** Continuous production assurance **not started** (`TRUST_CRITICAL`). Candidate controls: [MEOS_SECURITY_CONTROL_MATRIX.md](./MEOS_SECURITY_CONTROL_MATRIX.md).
 
 ## Strengths
 
@@ -9,13 +10,14 @@
 - Production rejects default `marpich:marpich` DATABASE_URL credentials
 - Production forces `event_bus_mode=outbox`
 - Admin middleware protects `/`, `/modules`, enterprise/banking/education/healthcare/account
-- Session cookie stores access JWT; middleware validates claims + **HS256** when `JWT_SECRET` / `MARPICH_JWT_SECRET` is set (required in `NODE_ENV=production`)
+- Session cookie stores access JWT HttpOnly via BFF; SPA `sessionStorage` holds tenant metadata only
 
 ## Gaps (remaining)
 
 | Issue | Risk | Status |
 |-------|------|--------|
-| Cookie not HttpOnly (SPA `document.cookie`) | XSS can steal token | **OPEN** — needs BFF Set-Cookie |
+| Cookie not HttpOnly (SPA `document.cookie`) | XSS can steal middleware cookie | **CLOSED** — BFF Set-Cookie HttpOnly |
+| Access JWT in `sessionStorage` | XSS can steal Bearer token | **CLOSED** — metadata-only storage + `/api/backend` proxy (`meos-session-storage-selftest.mjs`) |
 | Edge verify requires env secret on FE host | Misconfig → fail-closed in prod | Documented |
 | MFA package deferred | Incomplete auth surface | Deferred / gated |
 

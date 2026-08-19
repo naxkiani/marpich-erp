@@ -1,0 +1,124 @@
+# MEOS P349 — EXT-G26 production infrastructure discovery (machine)
+# Law: discovery + readiness plan only. Do not provision, simulate, or force G26_READY.
+schema_version: "1.0"
+generated: "2026-08-19T11:40:00Z"
+phase: P349
+p349_status: REQUIREMENTS_IDENTIFIED
+success_meaning: INFRASTRUCTURE_REQUIREMENTS_IDENTIFIED
+success_does_not_mean: G26_PASS
+ext_g26_status: UNRESOLVED
+g26_status: BLOCKED
+g26_ready: false
+p0_count: 1
+p313: NOT_CERTIFIED
+p313_auto_start: false
+p313_reentry: NOT_STARTED
+production: false
+production_identity: LOCAL
+production_certified: false
+go_live_ready: false
+go_live_authorization: NOT_APPROVED
+dec_p314_001: NOT APPROVED
+registry_active_count: 0
+production_traffic: NOT_ENABLED
+g23: FAIL
+g23_configured: true
+g23_production_verified: false
+forbidden_sha: 47258dfd-dirty
+git_status_short_empty: false
+forbidden_dirty: true
+current_provider: NOT_AVAILABLE
+provider_selection: BLOCKED
+recommended_provider_class: MANAGED_KUBERNETES_PLUS_MANAGED_POSTGRESQL
+alternative_provider_classes:
+  - CLOUD_KUBERNETES_PLUS_MANAGED_POSTGRESQL
+  - VPS_PLUS_K3S_PLUS_MANAGED_OR_EXTERNAL_POSTGRESQL
+  - BARE_METAL_KUBERNETES
+cost: NOT_AVAILABLE
+external_research_required_for_pricing: true
+external_dependency_count: 22
+blocker_count: 21
+owner_default: NOT_AVAILABLE
+p349_does_not_start_p313: true
+p349_does_not_execute_golive: true
+p349_does_not_provision: true
+p349_does_not_modify_g26_validator: true
+
+deployment_path_verified: CI_GHCR_HELM_OPTIONAL_FLUX_KUBERNETES
+authoritative_path: |
+  CLEAN SHA → GitHub Actions (.github/workflows/identity-federation-enterprise.yml)
+  → GHCR ghcr.io/marpich/marpich-backend (:sha-${{ github.sha }} and mutable :7.0.0)
+  → Helm infrastructure/kubernetes/helm/marpich-iam/
+  → optional Flux infrastructure/fluxcd/marpich-iam-helmrelease.yaml
+  → Kubernetes (no live cluster evidenced)
+compose_is_production: false
+localhost_health_is_production: false
+
+designed_hostname: auth.marpich.io
+live_production_hostname: NOT_DEFINED
+helm_dev_hostname: auth.dev.marpich.io
+
+g26_gates:
+  G26-01: BLOCKED
+  G26-02: BLOCKED
+  G26-03: BLOCKED
+  G26-04: BLOCKED
+  G26-05: FAIL
+  G26-06: BLOCKED
+  G26-07: NOT_AVAILABLE
+  G26-08: BLOCKED
+  G26-09: NOT_AVAILABLE
+  G26-10: BLOCKED
+
+reuse:
+  helm: infrastructure/kubernetes/helm/marpich-iam/
+  flux: infrastructure/fluxcd/marpich-iam-helmrelease.yaml
+  ci: .github/workflows/identity-federation-enterprise.yml
+  registry: ghcr.io/marpich/marpich-backend
+  dockerfile: infrastructure/docker/images/backend.Dockerfile
+  compose_non_production: infrastructure/docker/compose/docker-compose.meos-prod.yml
+  terraform: STUB
+  ansible: MISSING
+  new_deployment_engine: FORBIDDEN
+  new_ci_platform: FORBIDDEN
+  new_workflow_engine: FORBIDDEN
+
+artifacts:
+  compatibility: docs/meos/execution/MEOS_EXT_G26_PROVIDER_COMPATIBILITY.md
+  dependencies: docs/meos/execution/MEOS_EXT_G26_EXTERNAL_DEPENDENCIES.v1.yaml
+  bom: docs/meos/execution/MEOS_EXT_G26_PRODUCTION_BOM.md
+  plan: docs/meos/execution/MEOS_EXT_G26_INFRASTRUCTURE_IMPLEMENTATION_PLAN.md
+  validator: scripts/meos-ext-g26-readiness.py
+
+minimum_production_profile:
+  source: Helm values-production.yaml DESIGNED (marpich-iam chart only)
+  cpu_request_designed: 4500m
+  memory_request_designed: 4608Mi
+  replica_api_min_designed: 6
+  replica_twin_min_designed: 6
+  database_size: NOT_MEASURED
+  backup_storage: NOT_MEASURED
+  sla: NOT_MEASURED
+  full_meos_sizing: NOT_MEASURED
+
+clean_release:
+  status: FORBIDDEN
+  describe: 47258dfd-dirty
+  untracked: 909
+  modified: 73
+  deleted: 2
+  pycache_untracked: 730
+  docs_untracked: 139
+  auto_reset: FORBIDDEN
+  auto_commit: FORBIDDEN
+
+reentry: |
+  REAL INFRASTRUCTURE PROVISIONED
+  → python3 scripts/meos-ext-g26-readiness.py
+  → G26_READY = TRUE
+  → EXPLICIT P313 RE-ENTRY
+  → P313 RECERTIFICATION
+  → P0 = 0 ONLY IF CERTIFIED
+  → GO_LIVE_READY
+  → SEPARATE HUMAN APPROVAL
+  → GO-LIVE

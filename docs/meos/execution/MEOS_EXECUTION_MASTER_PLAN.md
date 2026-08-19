@@ -3,7 +3,17 @@
 **Status:** ACTIVE · Productization + Execution phase  
 **Governance:** Enterprise Architecture Governance Standard **11.0**  
 **Checkpoint:** P310 complete (architecture) → execution begins here  
-**Overall readiness:** `NOT_READY` (see [MEOS_PRODUCTION_READINESS.md](MEOS_PRODUCTION_READINESS.md))
+**Overall readiness:** `NOT_READY` (see [MEOS_PRODUCTION_READINESS.md](MEOS_PRODUCTION_READINESS.md))  
+**P344 (2026-08-19):** Launch **STOPPED**. Do not deploy. Runtime **NOT_LAUNCHED**. See [MEOS_P344_GO_LIVE_EXECUTION.md](./MEOS_P344_GO_LIVE_EXECUTION.md).  
+**P345 (2026-08-19):** G26 provisioning **BLOCKED**. Credentials required. See [MEOS_P345_G26_PROVISIONING.md](./MEOS_P345_G26_PROVISIONING.md).  
+**P346 (2026-08-19):** G26 evidence **STOPPED**. Do not start P313 recert. See [MEOS_P346_G26_BLOCKER_CLOSURE.md](./MEOS_P346_G26_BLOCKER_CLOSURE.md).  
+**P347 (2026-08-19):** **WAIT** for **EXT-G26**. Do not generate P348+ without new evidence. See [MEOS_P347_EXTERNAL_HANDOFF.md](./MEOS_P347_EXTERNAL_HANDOFF.md).  
+**P348 (2026-08-19):** Validator pack. **G26_READY = FALSE**. Run `python3 scripts/meos-ext-g26-readiness.py`. See [MEOS_EXT_G26_INFRASTRUCTURE_HANDOFF.md](./MEOS_EXT_G26_INFRASTRUCTURE_HANDOFF.md).  
+**P349 (2026-08-19):** Infrastructure discovery. **REQUIREMENTS_IDENTIFIED**. **G26_READY = FALSE**. **PROVIDER_SELECTION = BLOCKED**. Do not start P313. See [MEOS_EXT_G26_PROVIDER_COMPATIBILITY.md](./MEOS_EXT_G26_PROVIDER_COMPATIBILITY.md) · [MEOS_EXT_G26_PRODUCTION_BOM.md](./MEOS_EXT_G26_PRODUCTION_BOM.md) · [MEOS_EXT_G26_INFRASTRUCTURE_IMPLEMENTATION_PLAN.md](./MEOS_EXT_G26_INFRASTRUCTURE_IMPLEMENTATION_PLAN.md).  
+**P350 (2026-08-19):** Provisioning **BLOCKED**. Provider not selected. Credentials missing. **P313_REENTRY_READY = FALSE**. Do not create P351. See [MEOS_P350_PROVISIONING_REPORT.md](./MEOS_P350_PROVISIONING_REPORT.md).  
+**P351 (2026-08-19):** Product-side launch packages. **G26 still BLOCKED**. Do not start P313. See [MEOS_PRODUCT_INFRASTRUCTURE_BLUEPRINT.md](./MEOS_PRODUCT_INFRASTRUCTURE_BLUEPRINT.md).  
+**P352 (2026-08-19):** Product hardening. **G26_READY = FALSE**. Do not start P313. See [MEOS_P352_PRODUCT_INFRASTRUCTURE_HARDENING.md](./MEOS_P352_PRODUCT_INFRASTRUCTURE_HARDENING.md).  
+**P353 (2026-08-19):** Clean release engineering. Local clean SHA ≠ G26. Do not start P313. See [MEOS_P353_RELEASE_ENGINEERING_REPORT.md](./MEOS_P353_RELEASE_ENGINEERING_REPORT.md).
 
 ## Principle
 

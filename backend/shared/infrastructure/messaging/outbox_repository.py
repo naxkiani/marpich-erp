@@ -12,6 +12,12 @@ from shared.infrastructure.database.engine import session_scope
 from shared.infrastructure.settings import use_postgres
 
 
+def _outbox_max_retries() -> int:
+    from shared.infrastructure.settings import settings
+
+    return max(1, int(settings.outbox_max_retries))
+
+
 @dataclass
 class OutboxMessage:
     id: str
@@ -51,11 +57,13 @@ class InMemoryOutboxRepository(IOutboxRepository):
         return msg_id
 
     async def fetch_pending(self, limit: int) -> list[OutboxMessage]:
+        max_retries = _outbox_max_retries()
         pending: list[OutboxMessage] = []
         for msg_id in OutboxMemoryStore._order:
             msg = OutboxMemoryStore._messages.get(msg_id)
-            if msg is not None:
-                pending.append(msg)
+            if msg is None or msg.retry_count >= max_retries:
+                continue
+            pending.append(msg)
             if len(pending) >= limit:
                 break
         return pending
@@ -104,7 +112,10 @@ class PostgresOutboxRepository(IOutboxRepository):
         async with session_scope() as session:
             result = await session.execute(
                 select(OutboxRow)
-                .where(OutboxRow.published.is_(False))
+                .where(
+                    OutboxRow.published.is_(False),
+                    OutboxRow.retry_count < _outbox_max_retries(),
+                )
                 .order_by(OutboxRow.created_at)
                 .limit(limit)
             )

@@ -1,0 +1,10 @@
+{
+  "restore_test": "PASS",
+  "class": "LOCAL_NON_PRODUCTION",
+  "target_database": "marpich_platform_p352_restore",
+  "host": "127.0.0.1",
+  "port": "5433",
+  "production_restore": "NOT_VERIFIED",
+  "source": "scripts/meos-postgres-restore-drill.sh",
+  "note": "Workstation Postgres :5433 is NON_PRODUCTION."
+}

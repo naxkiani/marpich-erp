@@ -30,7 +30,8 @@
 
 ## Release Candidate gate
 
-P312 **cannot** declare `RELEASE_CANDIDATE`: P0 ≠ 0 (infra BLOCKED + HttpOnly cookie).
+P312 **cannot** declare `RELEASE_CANDIDATE`: P0 ≠ 0 (infra BLOCKED + HttpOnly cookie).  
+**P324 (2026-08-18):** Same prohibition. Registry overall `NOT_RELEASE_CANDIDATE`. See [MEOS_P324_RELEASE_ENGINEERING.md](./MEOS_P324_RELEASE_ENGINEERING.md).
 
 Stay: **`NOT_READY` / hardening in progress** (P311 language). Not HARDENED-complete.
 

@@ -1,7 +1,23 @@
 # MEOS Production Readiness
 
 **Overall status:** `NOT_READY`  
-**P312 (2026-08-17):** Gap matrix + CRM tenant isolation test. RC **not** declared — Docker/Postgres still unavailable. See [MEOS_P312_RELEASE_CANDIDATE_GAP_MATRIX.md](./MEOS_P312_RELEASE_CANDIDATE_GAP_MATRIX.md).
+**P313 (2026-08-18 recertification):** **`NOT_CERTIFIED`** / not `GO_LIVE_READY`. 20 PASS / 6 FAIL / 2 BLOCKED. G26 production cluster remains P0. See [MEOS_P313_CERTIFICATION_REPORT.md](./MEOS_P313_CERTIFICATION_REPORT.md).  
+**P342 (2026-08-19):** Recert **OUTCOME_B**. **P313_RE_CERTIFICATION_READY = false**. PRODUCTION_CERTIFIED **NO**. See [MEOS_P342_PRODUCTION_GATE_CLOSURE.md](./MEOS_P342_PRODUCTION_GATE_CLOSURE.md).  
+**P343 (2026-08-19):** Final gate **OUTCOME_B**. **PRODUCTION_CERTIFIED = NO**. **GO_LIVE_READY = NO**. P0 = **1**. See [MEOS_P343_FINAL_PRODUCTION_CERTIFICATION.md](./MEOS_P343_FINAL_PRODUCTION_CERTIFICATION.md).  
+**P344 (2026-08-19):** Launch **STOPPED**. **NOT_LAUNCHED**. No deploy. See [MEOS_P344_GO_LIVE_EXECUTION.md](./MEOS_P344_GO_LIVE_EXECUTION.md).  
+**P345 (2026-08-19):** G26 provisioning **OUTCOME_B**. Production target **MISSING**. P0 = **1**. See [MEOS_P345_G26_PROVISIONING.md](./MEOS_P345_G26_PROVISIONING.md).  
+**P346 (2026-08-19):** G26 **BLOCKED**. P313 re-entry not started. See [MEOS_P346_G26_BLOCKER_CLOSURE.md](./MEOS_P346_G26_BLOCKER_CLOSURE.md).  
+**P347 (2026-08-19):** **EXT-G26 UNRESOLVED**. **WAIT**. See [MEOS_P347_EXTERNAL_HANDOFF.md](./MEOS_P347_EXTERNAL_HANDOFF.md).  
+**P348 (2026-08-19):** **G26_READY = FALSE**. See [MEOS_EXT_G26_INFRASTRUCTURE_HANDOFF.md](./MEOS_EXT_G26_INFRASTRUCTURE_HANDOFF.md).  
+**P349 (2026-08-19):** Discovery **REQUIREMENTS_IDENTIFIED**. **G26_READY = FALSE**. Provider not selected. See [MEOS_EXT_G26_PROVIDER_COMPATIBILITY.md](./MEOS_EXT_G26_PROVIDER_COMPATIBILITY.md).  
+**P350 (2026-08-19):** Provisioning **BLOCKED**. **G26_READY = FALSE**. See [MEOS_P350_PROVISIONING_REPORT.md](./MEOS_P350_PROVISIONING_REPORT.md).  
+**P351 (2026-08-19):** Product infrastructure **FOUNDATION**. Local/demo/VPS adapters ≠ production. See [MEOS_PRODUCT_INFRASTRUCTURE_BLUEPRINT.md](./MEOS_PRODUCT_INFRASTRUCTURE_BLUEPRINT.md).  
+**P352 (2026-08-19):** Product hardening. Local Docker/restore ≠ G26. See [MEOS_P352_PRODUCT_INFRASTRUCTURE_HARDENING.md](./MEOS_P352_PRODUCT_INFRASTRUCTURE_HARDENING.md).  
+**P353 (2026-08-19):** Clean release engineering. **LOCAL_RELEASE_READY ≠ PRODUCTION_CERTIFIED**. **G26_READY = FALSE**. See [MEOS_P353_RELEASE_ENGINEERING_REPORT.md](./MEOS_P353_RELEASE_ENGINEERING_REPORT.md).  
+**P314:** Go-live **not approved**. Demo loops ≠ deploy.  
+**P340:** G26 **BLOCKED** (Outcome B). Workstation health ≠ production cluster. See [MEOS_P340_G26_EXECUTION_ENABLEMENT.md](./MEOS_P340_G26_EXECUTION_ENABLEMENT.md).  
+**P341:** Infrastructure **OUTCOME_B**. P0 remains **1**. See [MEOS_P341_PRODUCTION_INFRASTRUCTURE_READINESS.md](./MEOS_P341_PRODUCTION_INFRASTRUCTURE_READINESS.md).  
+**P312 (2026-08-17):** Gap matrix + CRM tenant isolation test. RC **not** declared at that time.
 
 
 ## Launch gates
@@ -29,7 +45,7 @@
 | Testing | PARTIAL (Wave 01/02 + healthcare + money-path + Wave03/05 CI) |
 | Performance | PARTIAL (baseline script `meos-wave04-perf-baseline.sh`) |
 | Observability | PARTIAL (OTel warn-if-off in production) |
-| Backup / DR | PARTIAL — scripts `meos-postgres-backup.sh` + `meos-postgres-restore-drill.sh` landed; offsite schedule + monitored SLO still pending ([runbook](./MEOS_WAVE04_DR_RUNBOOK.md)) |
+| Backup / DR | **P313 recert 2026-08-18:** object-store backup+restore PASS (`copied_listed`, `RTO_MS=22762`); destination is same-host MinIO volume, not AWS multi-region ([runbook](./MEOS_WAVE04_DR_RUNBOOK.md)) |
 | CI/CD | PARTIAL (wave01–05 smoke/governance workflows) |
 | Documentation | PARTIAL (this pack + Wave 03–05 status; refreshed 2026-08-17) |
 | Production hardening | PARTIAL (P0 settings gates + JWT cookie guard; offsite backup automation still pending) |
@@ -93,10 +109,10 @@ Overall remains **`NOT_READY`** for full production. Platform Core + Wave 02 Q2C
 
 **Dashboard (PR #16 / `feature/dashboard-home-complete`):** home `/` Live Pulse syncs Notifications + Workflow + Audit + Analytics via fail-soft parallel fetch; `GET /api/v1/analytics/home-pulse`; platform tenant list pagination (`limit`≤100); `GET /tenants/{slug}` AuthZ-gated; shared `KpiStrip` on home pulse and on Banking / Observability / Scheduler / Integration Studio / Connector Framework desks (`mapDeskStatsToKpiItems`).
 
-**P0 session cookie (2026-08-17):** admin middleware validates JWT claims + **HS256** via Web Crypto when `JWT_SECRET` / `MARPICH_JWT_SECRET` is set (required in `NODE_ENV=production`). Legacy `marpich_auth=1` rejected. HttpOnly BFF cookie still open.
+**P0 session cookie (2026-08-17 / P313 recert):** HttpOnly BFF; `sessionStorage` holds tenant metadata only (`meos-session-storage-selftest.mjs` PASS).
 
-**P0 production DB (2026-08-17):** rejects default `marpich:marpich` DATABASE_URL credentials in production (in addition to postgres persistence gate).
+**P0 production DB (2026-08-17):** rejects default `marpich:marpich` DATABASE_URL credentials in production. Production-profile Postgres `:5444` uses generated secrets.
 
-**P0 DR automation (2026-08-17):** backup + restore-drill scripts landed; production/`MEOS_REQUIRE_OFFSITE=1` fails without `MEOS_BACKUP_S3_URI`; scheduled monitored SLO still required for Backup/DR gate PASS.
+**P0 DR automation (2026-08-17 recert):** object-store backup `copied_listed` + restore-from-S3 `RTO_MS=33299`. Scheduled monitored SLO still required. Same-host MinIO is not AWS multi-region.
 
-**Remaining production risks:** automated offsite backup schedule + monitored restore SLO (see DR runbook); industry scaffolds not live (`DEFERRED_CONTEXT_IDS`); grandfathered missing router modules still need real packages over time. Identity/authz SQL 018–027/030/037 landed (P1) with postgres adapters when `use_postgres()` — not a `PRODUCTION_READY` claim.
+**Remaining production risks:** G26 production cluster; alerting SLO; industry scaffolds not live (`DEFERRED_CONTEXT_IDS`). Not a `PRODUCTION_READY` claim.

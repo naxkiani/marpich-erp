@@ -1,6 +1,7 @@
 # MEOS Wave 04 — Backup & Disaster Recovery Runbook
 
-**Status:** PARTIAL (scripts landed; offsite + monitored SLO still required for PASS) · **Date:** 2026-08-17
+**Status:** PARTIAL (P313 recert 2026-08-18: object-store backup+restore PASS `RTO_MS=22762`; geographic AWS + monitored SLO still required for a production cluster) · **Date:** 2026-08-18  
+**P328:** Production RTO/RPO **NOT_VERIFIED**. Local `RTO_MS` is **LOCAL_ONLY**. See [MEOS_RESILIENCE_STANDARD.md](./MEOS_RESILIENCE_STANDARD.md).
 
 ## Scope
 
@@ -69,7 +70,25 @@ Also recommended after restore:
 | `./scripts/meos-postgres-backup.sh` | **FAIL** exit 2 |
 | `./scripts/meos-postgres-restore-drill.sh` | **FAIL** exit 1 (no dump) |
 
-Status remains **BLOCKED** until Postgres is up and a drill is recorded. Do not mark PASS.
+P311 local DR was **BLOCKED** (no Postgres).
+
+## Last execution (P313 recertification, 2026-08-17)
+
+| Step | Result |
+|------|--------|
+| `MEOS_REQUIRE_OFFSITE=1` + `MEOS_BACKUP_S3_URI` | **PASS** dump 373320 bytes + WAL tar listed (`offsite=copied_listed`) |
+| Offsite restore | **PASS** `RTO_MS=33299` → `marpich_platform_offsite_restore` |
+| WAL | `archive_mode=on`, `wal_level=replica`, `archive_timeout=60` |
+
+Object store is MinIO on a separate Docker volume (not AWS multi-region). Scheduled alerting SLO remains **PENDING**.
+
+## Last execution (P313 recertification, 2026-08-18)
+
+| Step | Result |
+|------|--------|
+| `MEOS_REQUIRE_OFFSITE=1` + MinIO `:9000` | **PASS** dump 373323 bytes + WAL tar 5772011 listed (`offsite=copied_listed`) |
+| Offsite restore | **PASS** `RTO_MS=22762` → `marpich_platform_p313_restore` |
+| WAL | `archive_mode=on`, `wal_level=replica`, `archive_timeout=60` (reconfirmed on running `marpich-postgres`) |
 
 ## Current gap to PASS
 
@@ -77,7 +96,9 @@ Status remains **BLOCKED** until Postgres is up and a drill is recorded. Do not 
 |------|--------|
 | Backup script `meos-postgres-backup.sh` | **LANDED** |
 | Restore drill script `meos-postgres-restore-drill.sh` | **LANDED** |
-| Offsite object storage configured in every env (`MEOS_BACKUP_S3_URI`) | **PENDING ops** — script **fails closed** when `MARPICH_ENVIRONMENT=production` or `MEOS_REQUIRE_OFFSITE=1` without URI |
+| Local restore drill into `marpich_platform_restore` | **P313 PASS** 2026-08-17T07:26:09Z — `platform.outbox` + `clinic.encounters` + `tenant.tenants` |
+| Offsite restore 2026-08-18 | **P313 PASS** `RTO_MS=22762` → `marpich_platform_p313_restore` (dump 373323 bytes listed) |
+| Offsite object storage configured in every env (`MEOS_BACKUP_S3_URI`) | **PENDING ops** — this-host MinIO evidenced; production AWS multi-region **not** configured |
 | gzip integrity check (`gzip -t`) | **LANDED** |
 | JWT cookie HS256 selftest | `scripts/meos-jwt-cookie-selftest.mjs` |
 | Scheduled job + alert on backup failure | **PENDING ops** |

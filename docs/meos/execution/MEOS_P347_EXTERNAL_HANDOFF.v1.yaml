@@ -1,0 +1,85 @@
+# MEOS P347 EXT-G26 handoff and G26 re-entry contract (machine)
+# Law: freeze external blocker. Do not deploy, certify, GO_LIVE, or invent infrastructure.
+# Do not generate P348+ while EXT-G26 is UNRESOLVED.
+schema_version: "1.0"
+generated: "2026-08-19T09:50:00Z"
+source: docs/meos/execution/MEOS_P347_EXTERNAL_HANDOFF.md
+p346_sor: docs/meos/execution/MEOS_P346_G26_BLOCKER_CLOSURE.v1.yaml
+p345_sor: docs/meos/execution/MEOS_P345_G26_PROVISIONING.v1.yaml
+p344_sor: docs/meos/execution/MEOS_P344_GO_LIVE_EXECUTION.v1.yaml
+p313_report: docs/meos/execution/MEOS_P313_CERTIFICATION_REPORT.md
+reentry_checklist: docs/meos/execution/MEOS_GO_LIVE_CHECKLIST.md
+ext_g26_contract: docs/meos/execution/MEOS_EXT_G26_INFRASTRUCTURE.v1.yaml
+p346_outcome: STOPPED
+p345_outcome: OUTCOME_B
+outcome: HANDOFF
+status: EXTERNAL_DEPENDENCY_BLOCKED
+ext_g26_status: UNRESOLVED
+g26_status: BLOCKED
+p0_count: 1
+p313: NOT_CERTIFIED
+p313_reentry: NOT_STARTED
+go_live_ready: false
+go_live: NOT APPROVED
+go_live_authorization: NOT APPROVED
+dec_p314_001: NOT APPROVED
+runtime_status: NOT_LAUNCHED
+production_traffic: NOT_ENABLED
+registry_active_count: 0
+g23: FAIL
+g27: BLOCKED
+git_describe_forbidden: 47258dfd-dirty
+no_prompt_loop: true
+next_architecture_prompt: FORBIDDEN
+
+reuse_path:
+  helm: infrastructure/kubernetes/helm/marpich-iam/
+  flux: infrastructure/fluxcd/marpich-iam-helmrelease.yaml
+  ci: .github/workflows/identity-federation-enterprise.yml
+  registry: ghcr.io/marpich/marpich-backend
+  compose_not_production: infrastructure/docker/compose/docker-compose.meos-prod.yml
+  new_deployment_engine: FORBIDDEN
+  new_ci_platform: FORBIDDEN
+
+required_external_resources:
+  - AUTHORIZED_PRODUCTION_HOSTING_ACCOUNT
+  - PRODUCTION_CLUSTER_OR_SERVER
+  - MANAGED_POSTGRESQL
+  - PUBLIC_DNS
+  - PUBLIC_CA_TLS
+  - PRODUCTION_SECRET_MANAGER
+  - CI_DEPLOY_CREDENTIALS
+  - CONTAINER_REGISTRY_ACCESS
+  - CLEAN_GIT_RELEASE_STATE
+  - PRODUCTION_DEPLOYMENT_IDENTITY
+
+responsible_party: NOT_AVAILABLE
+
+g26_reentry_minimum:
+  G26-01: PASS
+  G26-02: PASS
+  G26-03: PASS
+  G26-04: PASS
+  G26-05: PASS
+  G26-06: PASS
+  G26-07: PASS
+  G26-08: PASS
+  G26-09: PASS
+  G26-10: VERIFIED
+  averaging: FORBIDDEN
+
+reentry_sequence:
+  - G26_REVALIDATION
+  - P313_RECERTIFICATION
+  - P0_RECALCULATE
+  - PRODUCTION_CERTIFIED
+  - HUMAN_GO_LIVE_AUTHORIZATION
+  - P344_FINAL_GO_LIVE
+p347_does_not_start_p313: true
+p347_does_not_execute_p344: true
+
+next_legitimate_execution_step: WAIT for EXT-G26 resources. Then G26 re-validation using existing Helm/Flux/CI. Then P313 recertification. Then human GO_LIVE authorization. Then P344. Do not generate P348 while EXT-G26 is UNRESOLVED.
+go_live_declaration: FORBIDDEN
+application_activation: FORBIDDEN
+bind_hold_decisions: FORBIDDEN
+simulate_infrastructure: FORBIDDEN

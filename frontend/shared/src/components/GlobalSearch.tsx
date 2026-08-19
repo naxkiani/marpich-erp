@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useLocale } from "../i18n/LocaleProvider";
-import { API_URL, getPlatformAuthHeaders, loadPlatformSession } from "../platform/session";
+import { getPlatformAuthHeaders, loadPlatformSession, platformApiUrl } from "../platform/session";
 import { searchApplicationNav } from "../platform/applicationRegistry";
 import { matchesPermission } from "../platform/permissions";
 
@@ -12,9 +12,9 @@ async function loadSessionPermissions(): Promise<string[]> {
   const session = loadPlatformSession();
   if (!session) return [];
   try {
-    const res = await fetch(`${API_URL}/api/v1/auth/me`, {
+    const res = await fetch(platformApiUrl("/api/v1/auth/me"), {
+      credentials: "same-origin",
       headers: {
-        Authorization: `Bearer ${session.accessToken}`,
         "X-Tenant-ID": session.tenantId,
       },
     });
@@ -50,24 +50,24 @@ export function GlobalSearch() {
     const navHits: SearchHit[] = searchApplicationNav(q, can).map((app) => ({
       id: `nav:${app.id}`,
       title: app.label,
-      subtitle: "Application",
+      subtitle: t("shell.search.application"),
       href: app.href,
     }));
     const headers = getPlatformAuthHeaders();
     if (!headers) {
       setHits(navHits);
-      setError("Sign in to search platform records.");
+      setError(t("shell.search.signIn"));
       setLoading(false);
       return;
     }
     try {
       const res = await fetch(
-        `${API_URL}/api/v1/search/query?q=${encodeURIComponent(q)}&limit=8`,
-        { headers },
+        platformApiUrl(`/api/v1/search/query?q=${encodeURIComponent(q)}&limit=8`),
+        { headers, credentials: "same-origin" },
       );
       if (!res.ok) {
         setHits(navHits);
-        setError(`Search unavailable (${res.status}). Showing applications.`);
+        setError(t("shell.search.unavailable"));
         return;
       }
       const json = (await res.json()) as {
@@ -85,11 +85,11 @@ export function GlobalSearch() {
       setHits(merged.length ? merged : navHits);
     } catch {
       setHits(navHits);
-      setError("Search API offline. Showing applications.");
+      setError(t("shell.search.offline"));
     } finally {
       setLoading(false);
     }
-  }, [permissions]);
+  }, [permissions, t]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => void search(query), 300);

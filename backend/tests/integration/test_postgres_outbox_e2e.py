@@ -20,12 +20,15 @@ def _postgres_configured() -> bool:
 
 
 @pytest.fixture
-def require_postgres():
+async def require_postgres():
     if not _postgres_configured():
         pytest.skip("Postgres outbox E2E requires PERSISTENCE_BACKEND=postgres")
     reset_outbox_repository()
     yield
     reset_outbox_repository()
+    from shared.infrastructure.database.engine import dispose_engine
+
+    await dispose_engine()
 
 
 async def test_postgres_outbox_enqueue_fetch_mark_published(require_postgres):

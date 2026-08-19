@@ -1,0 +1,136 @@
+# MEOS P341 Production Infrastructure Readiness (machine)
+# Law: inspect real production target. Never classify localhost/compose as G26.
+# Never declare GO_LIVE or PRODUCTION_CERTIFIED without P313 recert evidence.
+schema_version: "1.0"
+generated: "2026-08-19T07:55:00Z"
+source: docs/meos/execution/MEOS_P341_PRODUCTION_INFRASTRUCTURE_READINESS.md
+p342_overlay: docs/meos/execution/MEOS_P313_RECERTIFICATION.v1.yaml
+p343_overlay: docs/meos/execution/MEOS_P343_FINAL_CERTIFICATION.v1.yaml
+p345_overlay: docs/meos/execution/MEOS_P345_G26_PROVISIONING.v1.yaml
+p340_sor: docs/meos/execution/MEOS_G26_EXECUTION_ENABLEMENT.v1.yaml
+p313_sor: docs/meos/execution/MEOS_P313_PRODUCTION_CERTIFICATION.md
+p313_report: docs/meos/execution/MEOS_P313_CERTIFICATION_REPORT.md
+go_live_checklist: docs/meos/execution/MEOS_GO_LIVE_CHECKLIST.md
+overall_status: BLOCKED
+maturity: INVENTORIED
+outcome: OUTCOME_B
+production_certified: false
+go_live: NOT APPROVED
+go_live_ready: false
+p0_count: 1
+production_smoke: NOT_EXECUTED
+
+production_target:
+  status: NOT_AVAILABLE
+  workstation_demo: PARTIAL
+  meosprod_compose_profile: EXISTS
+  meosprod_runtime: STOPPED
+  cloud_cluster: MISSING
+  helm_chart: DESIGNED
+  fluxcd_manifest: DESIGNED
+  note: Helm/Flux/CI jobs are not a live cluster.
+
+runtime_status: BLOCKED
+deployment_status: BLOCKED
+immutable_sha: BLOCKED
+git_describe: 47258dfd-dirty
+ci_cd: FAIL
+tls: MISSING
+secrets: BLOCKED
+database: IMPLEMENTED_UNVERIFIED
+authentication: IMPLEMENTED_UNVERIFIED
+authorization: IMPLEMENTED_UNVERIFIED
+tenant_isolation: IMPLEMENTED_UNVERIFIED
+backup: IMPLEMENTED_UNVERIFIED
+restore: IMPLEMENTED_UNVERIFIED
+observability: FAIL
+alerting: FAIL
+rollback: BLOCKED
+privacy_g19: FAIL
+ai_g18: FAIL
+workflow_binding: NOT_AVAILABLE
+runtime_events: BLOCKED
+
+gates_reevaluated:
+  G01: UNCHANGED_PASS_P313
+  G02: UNCHANGED_PASS_P313
+  G03: UNCHANGED_PASS_P313
+  G04: UNCHANGED_PASS_P313
+  G05: UNCHANGED_PASS_P313
+  G07: UNCHANGED_PASS_P313
+  G08: UNCHANGED_PASS_P313
+  G09: UNCHANGED_PASS_P313
+  G10: UNCHANGED_PASS_P313
+  G11: UNCHANGED_PASS_P313
+  G17: UNCHANGED_PASS_P313
+  G18: FAIL
+  G19: FAIL
+  G23: FAIL
+  G25: FAIL
+  G26: BLOCKED
+  G27: BLOCKED
+
+production_settings_gates_pytest: PASS
+note: Settings gates are code evidence, not a production cluster.
+
+new_application: FORBIDDEN
+new_cloud_abstraction: FORBIDDEN
+new_observability_platform: FORBIDDEN
+new_secrets_platform: FORBIDDEN
+new_deployment_engine: FORBIDDEN
+go_live_declaration: FORBIDDEN
+bind_hold_decisions: FORBIDDEN
+
+blockers:
+  - id: BLK-G26
+    status: BLOCKED
+    missing:
+      - cloud_production_cluster
+      - public_ca_tls
+      - secret_manager
+      - ci_immutable_sha_deploy
+    dependency: Real production environment (not this workstation)
+    owner: NOT_AVAILABLE
+    required_action: Provision managed Postgres + public-CA TLS + secret store + CI deploy of immutable SHA; recertify P313
+  - id: BLK-G25
+    status: BLOCKED
+    missing:
+      - non_dirty_commit
+      - ci_green_on_immutable_sha
+    dependency: BLK-G26 for production deploy; dirty tree blocks G25 now
+    owner: NOT_AVAILABLE
+    required_action: Commit/clean tree; CI green on tagged SHA — does not close G26
+  - id: BLK-G27
+    status: BLOCKED
+    missing:
+      - production_release_to_roll_back
+    dependency: BLK-G26
+    owner: NOT_AVAILABLE
+    required_action: Exercise helm/app rollback only after a production deploy exists
+  - id: G23
+    status: FAIL
+    missing:
+      - production_alerting
+      - on_call_slo
+    dependency: BLK-G26
+    owner: NOT_AVAILABLE
+    required_action: Alerting on production telemetry; local /health is not G23 PASS
+  - id: G19
+    status: FAIL
+    missing:
+      - dsar_erasure_runtime
+    dependency: Wave 04 pack ≠ runtime certification
+    owner: NOT_AVAILABLE
+    required_action: INIT-G19 after G26
+  - id: G18
+    status: FAIL
+    missing:
+      - governed_model
+    dependency: Stub assist
+    owner: NOT_AVAILABLE
+    required_action: INIT-G18; P341 must not add AI infra
+
+next_operational_action: Provision a real production cluster (INIT-G26 / CHG-G26). Do not start meos-prod and call it G26. Do not declare GO_LIVE.
+p345_reaudit: "2026-08-19T09:20:00Z"
+p345_outcome: OUTCOME_B
+credentials_required: true

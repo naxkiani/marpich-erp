@@ -2,6 +2,8 @@
 
 **Date:** 2026-08-12
 
+**P321 (2026-08-18):** Integration fabric gate — **no production-active integrations**. Authoritative docs: [MEOS_P321_INTEGRATION_FABRIC.md](./MEOS_P321_INTEGRATION_FABRIC.md), [MEOS_INTEGRATION_REGISTRY.md](./MEOS_INTEGRATION_REGISTRY.md). This file remains Wave 01 channel notes — **not** CERTIFIED/ACTIVE.
+
 ## Channels in use
 
 | Channel | Status |

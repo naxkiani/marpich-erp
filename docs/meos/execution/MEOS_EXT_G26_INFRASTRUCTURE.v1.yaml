@@ -1,0 +1,115 @@
+# MEOS EXT-G26 infrastructure dependency contract (machine)
+# Law: inspect actual evidence. Never PASS from localhost, compose, or dirty SHA.
+# P0 remains 1 until P313 recertification after G26_READY.
+schema_version: "1.0"
+generated: "2026-08-19T10:05:00Z"
+source: docs/meos/execution/MEOS_EXT_G26_INFRASTRUCTURE_HANDOFF.md
+p347_sor: docs/meos/execution/MEOS_P347_EXTERNAL_HANDOFF.v1.yaml
+validator: scripts/meos-ext-g26-readiness.py
+ext_g26_status: UNRESOLVED
+g26_status: BLOCKED
+g26_ready: false
+p0_count: 1
+p313: NOT_CERTIFIED
+production_certified: false
+go_live_ready: false
+go_live_authorization: NOT APPROVED
+registry_active_count: 0
+production_traffic: NOT_ENABLED
+g23_configured: true
+g23_production_verified: false
+g23: FAIL
+forbidden_sha: 47258dfd-dirty
+p313_auto_start: false
+owner_default: NOT_AVAILABLE
+
+reuse:
+  helm: infrastructure/kubernetes/helm/marpich-iam/
+  flux: infrastructure/fluxcd/marpich-iam-helmrelease.yaml
+  ci: .github/workflows/identity-federation-enterprise.yml
+  registry: ghcr.io/marpich/marpich-backend
+  compose_non_production: infrastructure/docker/compose/docker-compose.meos-prod.yml
+
+dependencies:
+  - id: G26-01
+    name: AUTHORIZED_PRODUCTION_CLUSTER
+    status: BLOCKED
+    required: true
+    evidence: KUBECONFIG missing; ~/.kube/config absent
+    validation: test -n "$KUBECONFIG" -o -f "$HOME/.kube/config"
+    blocker: Authorized production hosting account and cluster
+    owner: NOT_AVAILABLE
+  - id: G26-02
+    name: MANAGED_POSTGRESQL
+    status: BLOCKED
+    required: true
+    evidence: Only workstation :5433 / compose :5444
+    validation: production PGHOST not 127.0.0.1/localhost and not ports 5433/5444
+    blocker: Managed PostgreSQL
+    owner: NOT_AVAILABLE
+  - id: G26-03
+    name: PUBLIC_CA_TLS
+    status: BLOCKED
+    required: true
+    evidence: Public CA missing; compose self-signed is FAIL if used as production
+    validation: MEOS_PUBLIC_CA_TLS=1 plus public DNS hostname evidence
+    blocker: Public DNS and public-CA certificate
+    owner: NOT_AVAILABLE
+  - id: G26-04
+    name: PRODUCTION_SECRET_MANAGER
+    status: BLOCKED
+    required: true
+    evidence: Secret manager availability unset; do not read secret values
+    validation: MEOS_SECRET_MANAGER_AVAILABLE=1 without printing secrets
+    blocker: Production secret manager
+    owner: NOT_AVAILABLE
+  - id: G26-05
+    name: CLEAN_IMMUTABLE_RELEASE
+    status: FAIL
+    required: true
+    evidence: git status --short not empty; 47258dfd-dirty FORBIDDEN
+    validation: git status --short empty; then CI image digest
+    blocker: Clean commit then immutable digest
+    owner: NOT_AVAILABLE
+  - id: G26-06
+    name: CI_DEPLOY_CREDENTIALS
+    status: BLOCKED
+    required: true
+    evidence: CI workflow DESIGNED; no production digest/deploy credentials evidenced
+    validation: existing identity-federation-enterprise.yml plus MEOS_IMAGE_DIGEST
+    blocker: CI deploy credentials and digest
+    owner: NOT_AVAILABLE
+  - id: G26-07
+    name: PRODUCTION_DNS_NETWORK
+    status: NOT_AVAILABLE
+    required: true
+    evidence: No production DNS/ingress observed
+    validation: MEOS_PRODUCTION_DNS set to a non-localhost hostname
+    blocker: Production DNS and network
+    owner: NOT_AVAILABLE
+  - id: G26-08
+    name: PRODUCTION_RUNTIME
+    status: BLOCKED
+    required: true
+    evidence: NOT_LAUNCHED; local /health is LOCAL not PRODUCTION
+    validation: MEOS_DEPLOYED_COMMIT and MEOS_DEPLOYED_DIGEST set; host not localhost
+    blocker: Production runtime
+    owner: NOT_AVAILABLE
+  - id: G26-09
+    name: DEPLOYMENT_IDENTITY
+    status: NOT_AVAILABLE
+    required: true
+    evidence: No deployed commit/image identity
+    validation: deployed commit equals clean SHA; digest equals CI artifact
+    blocker: Immutable deployment identity
+    owner: NOT_AVAILABLE
+  - id: G26-10
+    name: ROLLBACK_CAPABILITY
+    status: BLOCKED
+    required: true
+    evidence: Helm rollback CONFIGURED in CI; not PRODUCTION_VERIFIED
+    validation: MEOS_ROLLBACK_EXERCISED=1 after real N→N+1→N
+    blocker: First production release then exercised rollback
+    owner: NOT_AVAILABLE
+
+p313_reentry: IF G26_READY THEN STOP P348. START P313 RE-CERTIFICATION only by explicit re-entry. Recalculate P0 independently. Do not auto-start P313.

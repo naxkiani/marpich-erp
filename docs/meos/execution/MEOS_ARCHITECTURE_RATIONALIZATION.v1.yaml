@@ -1,0 +1,202 @@
+# MEOS Architecture Rationalization (machine)
+# Law: overlay on APPLICATION_REGISTRY + startup_registry + debt + P335.
+# Never invent ACTIVE apps, usage, cost, or retirement of production components.
+schema_version: "1.0"
+generated: "2026-08-19T06:15:00Z"
+source: docs/meos/execution/MEOS_P336_ARCHITECTURE_RATIONALIZATION.md
+application_sor: docs/meos/execution/MEOS_APPLICATION_REGISTRY.v1.yaml
+startup_sor: backend/core/presentation/api/startup_registry.py
+debt_sor: docs/meos/execution/MEOS_TECHNICAL_DEBT_REGISTRY.v1.yaml
+portfolio_sor: docs/meos/execution/MEOS_PORTFOLIO_INTELLIGENCE.v1.yaml
+data_architecture_sor: docs/meos/execution/MEOS_DATA_ARCHITECTURE.v1.yaml
+decision_sor: docs/meos/execution/MEOS_DECISION_INTELLIGENCE.v1.yaml
+overall_status: INVENTORIED
+maturity: INVENTORIED
+production_active: false
+active_application_count: 0
+registry_application_count: 47
+backend_context_count: 79
+empty_scaffold_count: 12
+blueprint_count: 5
+missing_router_packages: BASELINED
+frontend_deployable_apps: 1
+frontend_modules_dir: ABSENT
+legacy_typescript_services: MIGRATION_PATH
+cmdb: NOT_IMPLEMENTED
+itsm_product: NOT_IMPLEMENTED
+autonomous_architecture: BLOCKED
+max_autonomy_level: L0
+utilization: NOT_MEASURED
+cost: NOT_MEASURED
+realized_value: NOT_MEASURED
+graphql_runtime: NOT_AVAILABLE
+
+status_counts:
+  INTEGRATED: 6
+  IMPLEMENTED: 12
+  TESTED: 12
+  BLUEPRINT: 5
+  SCAFFOLDED: 12
+  ACTIVE: 0
+
+forbidden_without_production:
+  - ACTIVE
+  - RETIRED
+  - PRODUCTION_READY
+
+# Lifecycle recommendations are class-level. Not per-app scores.
+lifecycle_classes:
+  - class_id: FUNCTIONAL_SLICE
+    statuses: [INTEGRATED, IMPLEMENTED, TESTED]
+    count: 30
+    recommendation: RETAIN
+    rationale: Code, routes, and Wave 01/02 tests exist. None are production ACTIVE.
+    evidence: MEOS_APPLICATION_REGISTRY.v1.yaml
+    risk: R-01
+    expected_value: NOT_MEASURED
+    dependencies: [INIT-G26]
+  - class_id: EMPTY_SCAFFOLD
+    statuses: [SCAFFOLDED]
+    count: 12
+    recommendation: FREEZE
+    rationale: Empty trees in EMPTY_INDUSTRY_SCAFFOLD_IDS. Never deployed. Do not expand. Do not RETIRE as if production existed.
+    evidence: startup_registry.EMPTY_INDUSTRY_SCAFFOLD_IDS
+    risk: catalog_honesty
+    expected_value: NOT_MEASURED
+    dependencies: []
+  - class_id: BLUEPRINT_FABRIC
+    statuses: [BLUEPRINT]
+    count: 5
+    recommendation: MONITOR
+    rationale: Docs/catalogs only. APIs gated unless MARPICH_ENABLE_BLUEPRINT_APIS.
+    evidence: startup_registry.BLUEPRINT_CONTEXT_IDS
+    risk: catalog_inflation
+    expected_value: NOT_MEASURED
+    dependencies: [OBJ-GATE-P314]
+  - class_id: DESIGNED_MISSING_PACKAGE
+    statuses: [DESIGNED]
+    count: NOT_IN_APPLICATION_REGISTRY
+    recommendation: DO_NOT_PROMOTE
+    rationale: ROUTER_SPECS names without packages; P3 baseline. Not applications.
+    evidence: missing_router_packages_baseline.json
+    risk: false_catalog
+    expected_value: NOT_MEASURED
+    dependencies: []
+  - class_id: LEGACY_TYPESCRIPT_SERVICES
+    statuses: [MIGRATION_PATH]
+    count: 4
+    recommendation: CONSOLIDATE
+    rationale: README services/ is legacy TS (gateway/identity/tenant/module-registry). Current local run is FastAPI+Next. Usage of TS processes NOT_MEASURED. Do not delete without consumer evidence.
+    evidence: README.md repository structure
+    risk: duplicate_identity_surface
+    expected_value: NOT_MEASURED
+    dependencies: [INIT-G26]
+
+redundancy:
+  - id: RD-INV-WH
+    items: [inventory, warehouse]
+    class: PARTIAL_OVERLAP
+    evidence: inventory TESTED; warehouse SCAFFOLDED empty
+    action: NONE_NOW
+  - id: RD-EDU
+    items: [university, school]
+    class: COMPLEMENTARY
+    evidence: university IMPLEMENTED; school SCAFFOLDED; different industry packs
+    action: NONE_NOW
+  - id: RD-IDENTITY-FABRIC
+    items: [identity, authentication, directory]
+    class: COMPLEMENTARY
+    evidence: Separate bounded contexts on identity platform; not name-collision retirement
+    action: NONE_NOW
+  - id: RD-FINANCE-SURFACE
+    items: [accounting, finance, financial_kernel, treasury]
+    class: UNKNOWN
+    evidence: accounting TESTED in registry; finance/financial_kernel/treasury are contexts not in application YAML
+    action: DO_NOT_ELIMINATE
+  - id: RD-TS-PYTHON-IDENTITY
+    items: [services/identity-service, backend/contexts/identity]
+    class: FULL_DUPLICATION
+    evidence: README migration path vs FastAPI identity SoR for current loops
+    action: CONSOLIDATE_TO_FASTAPI
+    retire_production: FORBIDDEN
+
+drift:
+  - id: DRIFT-ARCH-STATUS-SCAFFOLDS
+    intended: MEOS_ARCHITECTURE_STATUS.md 2026-08-12 listed crm/sales/HR as empty
+    actual: Registry Wave 02 TESTED for crm/sales/inventory/accounting/procurement/hr/payroll/tax
+    class: DOCUMENTATION_DRIFT
+    evidence: MEOS_APPLICATION_REGISTRY.v1.yaml verification keys
+  - id: DRIFT-CTX-VS-APP-YAML
+    intended: One application row per bounded context
+    actual: 79 contexts vs 47 registry applications
+    class: COVERAGE_GAP
+    evidence: filesystem backend/contexts vs YAML
+    note: Supporting platform contexts are not all product applications. Do not invent 32 apps.
+  - id: DRIFT-FE-MODULES
+    intended: frontend/modules mirroring backend
+    actual: frontend/modules ABSENT; admin_portal monolith
+    class: STRUCTURAL_DRIFT
+    evidence: filesystem
+  - id: DRIFT-PERSISTENCE-DEFAULT
+    intended: production postgres
+    actual: settings.persistence_backend default memory; local .env postgres
+    class: CONFIG_DRIFT
+    evidence: backend/shared/infrastructure/settings.py
+  - id: DRIFT-MISSING-ROUTERS
+    intended: ROUTER_SPECS all importable
+    actual: P3 grandfathered missing modules; skipped at startup
+    class: BOUNDARY_HONESTY
+    evidence: filter_available_specs / missing_router_packages_baseline.json
+  - id: DRIFT-GRAPHQL
+    intended: README API First REST+GraphQL
+    actual: analytics graphql path NOT_AVAILABLE (P321)
+    class: DOC_VS_RUNTIME
+    evidence: MEOS_P321_INTEGRATION_FABRIC.md
+
+spof:
+  - id: SPOF-API-MONOLITH
+    kind: SINGLE_SERVICE
+    evidence: One FastAPI process core.presentation.api.main
+    production: NOT_DEPLOYED
+  - id: SPOF-ADMIN-PORTAL
+    kind: SINGLE_APPLICATION
+    evidence: Only frontend/apps/admin_portal
+  - id: SPOF-POSTGRES
+    kind: SINGLE_DATABASE
+    evidence: compose postgres:16 marpich_platform
+    production: NOT_DEPLOYED
+  - id: SPOF-REGION
+    kind: SINGLE_REGION
+    evidence: No production topology
+  - id: SPOF-OWNER
+    kind: SINGLE_OWNER
+    evidence: All overlay owners NOT_AVAILABLE
+
+technology:
+  languages: [Python_3.12, TypeScript_5, JavaScript]
+  frameworks: [FastAPI, Next.js_15, React_19]
+  databases: [PostgreSQL_16]
+  cache: [Redis_7]
+  messaging: [apache_kafka_native_3.9.1, EVENT_BUS_MODE_direct]
+  storage: [MinIO_S3]
+  observability: [otel_prometheus_grafana_profile]
+  ci: [GitHub_Actions]
+  default_persistence: memory
+  kafka_image: apache/kafka-native:3.9.1
+  bitnami_kafka: REMOVED_FROM_HUB
+
+modernization_into_p335:
+  - initiative_id: INIT-G26
+    architecture_need: Production topology so inventory can become operational
+  - initiative_id: INIT-G23
+    architecture_need: Observability gap (no production alerting)
+  - debt_id: TD-EVENT-PAYLOAD-SCHEMA
+    architecture_need: Event envelope honesty
+  - class_id: LEGACY_TYPESCRIPT_SERVICES
+    architecture_need: Consolidate duplicate identity/gateway TS after production exists
+    new_initiative: FORBIDDEN
+
+retirement_candidates: []
+consolidation_candidates:
+  - RD-TS-PYTHON-IDENTITY
+decommission_forbidden_reason: No production component is ACTIVE. Static inventory is not retirement evidence.

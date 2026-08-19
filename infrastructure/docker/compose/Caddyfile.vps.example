@@ -1,0 +1,11 @@
+# VPS / single-server reverse proxy (FOUNDATION).
+# Copy to /etc/caddy/Caddyfile or mount over Caddyfile.meos-prod.
+# Self-signed localhost TLS remains DEVELOPMENT ONLY.
+# Replace MEOS_DOMAIN with a public hostname before public-CA TLS.
+#
+#   {$MEOS_DOMAIN:localhost}
+
+{$MEOS_DOMAIN:localhost} {
+	encode gzip
+	reverse_proxy backend:8000
+}

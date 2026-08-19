@@ -1,0 +1,143 @@
+# MEOS Decision Execution & Benefits Realization (machine)
+# Law: overlay on DECISION_REGISTRY + OUTCOME_REGISTRY + workflow + P338/P326.
+# Never invent actions, execution status, benefits, realized value, or variance.
+schema_version: "1.0"
+generated: "2026-08-19T07:25:00Z"
+source: docs/meos/execution/MEOS_P339_DECISION_EXECUTION.md
+decision_sor: docs/meos/execution/MEOS_DECISION_REGISTRY.v1.yaml
+intelligence_sor: docs/meos/execution/MEOS_DECISION_INTELLIGENCE.v1.yaml
+outcome_sor: docs/meos/execution/MEOS_OUTCOME_REGISTRY.v1.yaml
+value_sor: docs/meos/execution/MEOS_VALUE_REALIZATION.md
+portfolio_sor: docs/meos/execution/MEOS_PORTFOLIO_INTELLIGENCE.v1.yaml
+change_sor: docs/meos/execution/MEOS_CHANGE_REGISTRY.v1.yaml
+overall_status: DOCUMENTED
+maturity: INVENTORIED
+production_active: false
+closed_loop: BLOCKED
+decision_count: 4
+executed_decision_count: 0
+authorized_action_count: 0
+in_progress_action_count: 0
+completed_action_count: 0
+failed_action_count: 0
+execution_readiness: NOT_READY
+workflow_task_binding: NOT_AVAILABLE
+projects_context: SCAFFOLDED
+benefit_count: 0
+realized_benefit_count: 0
+realized_value: NOT_MEASURED
+expected_value: NOT_MEASURED
+value_variance: NOT_MEASURED
+outcome_measured_count: 0
+kpi_trust: NOT_MEASURED
+corrective_action_count: 0
+escalation_runtime: NOT_IMPLEMENTED
+autonomous_execution: BLOCKED
+max_autonomy_level: L0
+ai_execution_support: STUB
+ai_confidence: NOT_AVAILABLE
+ai_high_impact_approval: FORBIDDEN
+action_latency_production: NOT_MEASURED
+new_project_platform: FORBIDDEN
+new_workflow_engine: FORBIDDEN
+new_bpm_platform: FORBIDDEN
+new_kpi_engine: FORBIDDEN
+new_bi_platform: FORBIDDEN
+new_ai_platform: FORBIDDEN
+new_pmo: FORBIDDEN
+
+forbidden_without_evidence:
+  - IN_PROGRESS
+  - COMPLETED
+  - REALIZED
+  - PARTIALLY_REALIZED
+  - AT_RISK
+  - VALUE_GAP_WITH_CAUSE
+  - ROI
+  - FAKE_PROGRESS
+
+decision_to_action:
+  - decision_id: DEC-P314-001
+    selected_option: NOT APPROVED
+    authorized_action: NONE
+    status: BLOCKED
+    owner: NOT_AVAILABLE
+    workflow_task_id: NOT_AVAILABLE
+    note: Gate holds GO_LIVE. Not an executable production action.
+  - decision_id: DEC-P319-001
+    selected_option: BLOCK_AUTOMATION
+    authorized_action: NONE
+    status: BLOCKED
+    owner: NOT_AVAILABLE
+    workflow_task_id: NOT_AVAILABLE
+    note: Holds automation. Not an executable enablement action.
+  - decision_id: DEC-P324-001
+    selected_option: NOT_RELEASE_CANDIDATE
+    authorized_action: NONE
+    status: BLOCKED
+    owner: NOT_AVAILABLE
+    workflow_task_id: NOT_AVAILABLE
+    note: Holds production deploy.
+  - decision_id: DEC-P326-001
+    selected_option: NOT_REALIZED
+    authorized_action: NONE
+    status: BLOCKED
+    owner: NOT_AVAILABLE
+    workflow_task_id: NOT_AVAILABLE
+    note: Value not realized. No benefit-tracking action authorized.
+
+actions: []
+benefits: []
+corrective_actions: []
+
+dependencies:
+  people: NOT_AVAILABLE
+  process: WORKFLOW_IMPLEMENTED_UNVERIFIED
+  data: P337_NOT_MEASURED
+  technology: BLK-G26
+  authorization: IMPLEMENTED_UNVERIFIED
+  external: NOT_MEASURED
+  blocked_visible: true
+
+p338_feed:
+  maturity: FOUNDATION
+  executed_decision_count: 0
+  workflow_task_binding: NOT_AVAILABLE
+  kpi_trust: NOT_MEASURED
+
+p336_feed:
+  initiative_ids:
+    - INIT-G26
+    - INIT-G23
+    - INIT-G18
+  debt_ids:
+    - TD-EVENT-PAYLOAD-SCHEMA
+  new_execution_platform: FORBIDDEN
+  new_initiative: FORBIDDEN
+
+integrations:
+  p326: NOT_REALIZED
+  p327: NOT_DECLARED
+  p328: RISK_AWARE
+  p329: DOCUMENTED
+  p330: GATED_L0
+  p331: BLOCKED
+  p332: INVENTORIED
+  p333: NOT_MEASURED
+  p334: INVENTORIED
+  p335: INVENTORIED
+  p336: INVENTORIED
+  p337: INVENTORIED
+  p338: FOUNDATION
+  p339: INVENTORIED
+  p340: BLOCKED
+
+blockers:
+  - BLK-G26
+  - DECISION-WORKFLOW-NOT-BOUND
+  - NO-AUTHORIZED-ACTIONS
+  - NO-PRODUCTION-KPI-TELEMETRY
+  - G23-ALERTING
+  - G18-AI-STUB
+  - G19-DSAR
+  - PROJECTS-SCAFFOLDED

@@ -34,6 +34,7 @@ import {
 } from "@/lib/platformClient";
 import {
   fetchHomePulse,
+  homePulseHasDataQualityWarning,
   homePulseHasPartialErrors,
   type HomePulseResult,
 } from "@/lib/homePulseClient";
@@ -348,7 +349,6 @@ export function DashboardPage() {
         id: "analytics",
         label: t("dashboard.pulse.dashboards"),
         value: dashboards,
-        href: "/banking/analytics",
         tone: "default" as const,
       },
     ];
@@ -927,6 +927,11 @@ export function DashboardPage() {
                   {homePulseHasPartialErrors(pulse) ? (
                     <p className="mp-field-help" role="status">
                       {t("dashboard.pulse.partial")}
+                    </p>
+                  ) : null}
+                  {homePulseHasDataQualityWarning(pulse) ? (
+                    <p className="mp-field-help" role="status">
+                      {t("dashboard.pulse.dataQuality")}
                     </p>
                   ) : null}
                   {pulse && pulse.recentAudit.length > 0 ? (

@@ -1,0 +1,9 @@
+{
+	auto_https off
+}
+
+https://:8443 {
+	tls /certs/tls.crt /certs/tls.key
+	# Host-network / extra_hosts: API on the operator host (production-profile).
+	reverse_proxy host.docker.internal:8080
+}

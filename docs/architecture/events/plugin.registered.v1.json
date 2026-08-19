@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "marpich.plugin.registered.v1",
+  "title": "plugin.registered",
+  "allOf": [
+    { "$ref": "_envelope.v1.json" },
+    {
+      "properties": {
+        "event_name": { "const": "plugin.registered" },
+        "event_version": { "const": 1 },
+        "source_context": { "const": "plugins" },
+        "payload": {
+          "type": "object",
+          "required": ["plugin_id", "plugin_type", "version"],
+          "properties": {
+            "plugin_id": { "type": "string", "minLength": 1 },
+            "plugin_type": { "type": "string", "minLength": 1 },
+            "version": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    }
+  ]
+}

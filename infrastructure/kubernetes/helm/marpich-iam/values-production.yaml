@@ -4,6 +4,20 @@ global:
 
 replicaCount: 6
 
+image:
+  # MUST be set from CI `steps.image.outputs.digest` (repository@digest).
+  # Empty means NOT_AVAILABLE. Never use :latest as certification identity.
+  digest: ""
+
+secrets:
+  vault:
+    enabled: true
+  externalSecrets:
+    enabled: true
+    refreshInterval: 1h
+    secretStoreName: marpich-cluster-secret-store
+    secretStoreKind: ClusterSecretStore
+
 ingress:
   className: nginx
   hosts:

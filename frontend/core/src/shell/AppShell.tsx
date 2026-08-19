@@ -91,13 +91,13 @@ export function AppShell({
   return (
     <div className={`mp-shell${navOpen ? " mp-nav-open" : ""}`}>
       <a href="#main-content" className="sr-only">
-        Skip to content
+        {t("shell.skipToContent")}
       </a>
       {navOpen ? (
         <button
           type="button"
           className="mp-nav-backdrop"
-          aria-label="Close navigation"
+          aria-label={t("shell.closeNav")}
           onClick={() => setNavOpen(false)}
         />
       ) : null}
@@ -105,11 +105,11 @@ export function AppShell({
         <button
           type="button"
           className="mp-btn mp-nav-toggle"
-          aria-label="Open navigation"
+          aria-label={t("shell.openNav")}
           aria-expanded={navOpen}
           onClick={() => setNavOpen((v) => !v)}
         >
-          Menu
+          {t("shell.menu")}
         </button>
         <div className="mp-shell-brand">
           <strong>{t("app.name")}</strong>

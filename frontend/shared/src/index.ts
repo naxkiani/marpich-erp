@@ -9,8 +9,10 @@ export {
 
 export {
   API_URL,
+  BFF_API_PREFIX,
   getPlatformAuthHeaders,
   loadPlatformSession,
+  platformApiUrl,
   PLATFORM_SESSION_KEY,
   type PlatformSession,
 } from "./platform/session";

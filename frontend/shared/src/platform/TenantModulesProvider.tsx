@@ -9,7 +9,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { API_URL, loadPlatformSession } from "./session";
+import { loadPlatformSession } from "./session";
 
 export type TenantModulesSnapshot = {
   slug: string;
@@ -29,13 +29,10 @@ type TenantModulesContextValue = {
 
 const TenantModulesContext = createContext<TenantModulesContextValue | null>(null);
 
-async function fetchTenantBySlug(
-  slug: string,
-  accessToken: string,
-): Promise<TenantModulesSnapshot | null> {
-  const res = await fetch(`${API_URL}/api/v1/platform/tenants/${encodeURIComponent(slug)}`, {
+async function fetchTenantBySlug(slug: string): Promise<TenantModulesSnapshot | null> {
+  const res = await fetch(`/api/backend/api/v1/platform/tenants/${encodeURIComponent(slug)}`, {
+    credentials: "same-origin",
     headers: {
-      Authorization: `Bearer ${accessToken}`,
       "X-Tenant-ID": slug,
       "Content-Type": "application/json",
     },
@@ -62,12 +59,10 @@ async function fetchTenantBySlug(
 export function TenantModulesProvider({
   children,
   tenantId,
-  accessToken,
   isAuthenticated,
 }: {
   children: ReactNode;
   tenantId?: string | null;
-  accessToken?: string | null;
   isAuthenticated: boolean;
 }) {
   const [snapshot, setSnapshot] = useState<TenantModulesSnapshot | null>(null);
@@ -77,15 +72,14 @@ export function TenantModulesProvider({
   const refresh = useCallback(async () => {
     const session = loadPlatformSession();
     const slug = tenantId || session?.tenantId;
-    const token = accessToken || session?.accessToken;
-    if (!isAuthenticated || !slug || !token) {
+    if (!isAuthenticated || !slug) {
       setSnapshot(null);
       return null;
     }
     setLoading(true);
     setError(null);
     try {
-      const next = await fetchTenantBySlug(slug, token);
+      const next = await fetchTenantBySlug(slug);
       setSnapshot(next);
       if (!next) setError("Unable to load tenant modules");
       return next;
@@ -95,7 +89,7 @@ export function TenantModulesProvider({
     } finally {
       setLoading(false);
     }
-  }, [accessToken, isAuthenticated, tenantId]);
+  }, [isAuthenticated, tenantId]);
 
   useEffect(() => {
     void refresh();

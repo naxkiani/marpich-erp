@@ -4,7 +4,8 @@
 **Decision:** MEOS has a **capability catalog** and **people systems** (identity, organization, HR employment, payroll). It does **not** have an evidence-backed organizational readiness or workforce-intelligence product. No production cluster. No skill inventory. No validated lessons to convert into capability. **Not** a new HRM, HCM, LMS, recruitment, payroll, talent, or organizational-graph platform.  
 **Maturity:** `MAPPED` — **not** READY / SKILLED / CAPABLE as an operating claim.  
 **Machine:** [MEOS_CAPABILITY_READINESS.v1.yaml](./MEOS_CAPABILITY_READINESS.v1.yaml)  
-**P334:** change/adoption overlay **INVENTORIED**; readiness still **NOT_MEASURED**. See [MEOS_P334_CHANGE_INTELLIGENCE.md](./MEOS_P334_CHANGE_INTELLIGENCE.md).
+**P334:** change/adoption overlay **INVENTORIED**; readiness still **NOT_MEASURED**. See [MEOS_P334_CHANGE_INTELLIGENCE.md](./MEOS_P334_CHANGE_INTELLIGENCE.md).  
+**P335:** capability gate on portfolio items remains **BLOCKED**. See [MEOS_P335_PORTFOLIO_INTELLIGENCE.md](./MEOS_P335_PORTFOLIO_INTELLIGENCE.md).
 
 ## 1. Actual P332 status (precondition)
 

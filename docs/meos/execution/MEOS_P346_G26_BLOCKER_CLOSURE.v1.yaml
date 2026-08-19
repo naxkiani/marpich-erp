@@ -1,0 +1,104 @@
+# MEOS P346 G26 blocker-closure evidence (machine)
+# Law: P345 was OUTCOME_B. Do not invent cluster/TLS/secrets/digest/GO_LIVE.
+# Do not average G26-01..10. Overall BLOCKED if any critical dependency remains.
+schema_version: "1.0"
+generated: "2026-08-19T09:35:00Z"
+source: docs/meos/execution/MEOS_P346_G26_BLOCKER_CLOSURE.md
+p347_overlay: docs/meos/execution/MEOS_P347_EXTERNAL_HANDOFF.v1.yaml
+p345_sor: docs/meos/execution/MEOS_P345_G26_PROVISIONING.v1.yaml
+p344_sor: docs/meos/execution/MEOS_P344_GO_LIVE_EXECUTION.v1.yaml
+p343_sor: docs/meos/execution/MEOS_P343_FINAL_CERTIFICATION.v1.yaml
+p313_report: docs/meos/execution/MEOS_P313_CERTIFICATION_REPORT.md
+p345_outcome: OUTCOME_B
+p344_outcome: STOPPED
+p343_outcome: B_BLOCKED
+outcome: STOPPED
+g26_status: BLOCKED
+p313_reentry: NOT_STARTED
+credentials: EXTERNAL_DEPENDENCY_REQUIRED
+p0_count: 1
+production_certified: false
+go_live_ready: false
+go_live: NOT APPROVED
+go_live_authorization: NOT APPROVED
+registry_active_count: 0
+production_traffic: NOT_ENABLED
+runtime_status: NOT_LAUNCHED
+git_describe: 47258dfd-dirty
+git_status_short_count: 973
+g23: FAIL
+g27: BLOCKED
+production_g08: BLOCKED
+
+gates:
+  G26-01:
+    name: PRODUCTION_CLUSTER
+    status: BLOCKED
+    evidence: No provider/project/region/cluster. KUBECONFIG missing. ~/.kube/config absent.
+    blocker: Authorized cloud/K8s account
+  G26-02:
+    name: MANAGED_POSTGRES
+    status: BLOCKED
+    evidence: Only workstation Postgres (:5433) / compose :5444. Not managed production.
+    blocker: Managed PostgreSQL host
+  G26-03:
+    name: PUBLIC_CA_TLS
+    status: BLOCKED
+    evidence: Public CA missing. Compose self-signed is not production TLS.
+    blocker: Public DNS + public-CA certificate
+  G26-04:
+    name: SECRET_MANAGER
+    status: BLOCKED
+    evidence: contexts/secrets catalog only. .env.meos-prod is gitignored workstation file.
+    blocker: Production secret manager
+  G26-05:
+    name: CLEAN_IMMUTABLE_RELEASE
+    status: FAIL
+    evidence: git status --short not empty (973 paths). 47258dfd-dirty. Digest NOT_AVAILABLE.
+    blocker: Clean commit then CI image digest
+  G26-06:
+    name: CI_DEPLOY
+    status: BLOCKED
+    evidence: Helm/GHCR workflow DESIGNED. No cluster to deploy. No traceable production digest.
+    blocker: G26-01 plus CI deploy credentials
+  G26-07:
+    name: PRODUCTION_NETWORK
+    status: NOT_AVAILABLE
+    evidence: No production DNS/ingress/HTTPS/firewall observed.
+    blocker: Production network after G26-01
+  G26-08:
+    name: PRODUCTION_RUNTIME
+    status: BLOCKED
+    evidence: NOT_LAUNCHED. Local /health is not production.
+    blocker: G26-01 runtime
+  G26-09:
+    name: DEPLOYMENT_IDENTITY
+    status: NOT_AVAILABLE
+    evidence: No deployed commit/image/environment identity.
+    blocker: Immutable deploy
+  G26-10:
+    name: ROLLBACK_CAPABILITY
+    status: BLOCKED
+    evidence: Helm rollback template only. Not exercised. G27 BLOCKED.
+    blocker: First production release
+
+external_infrastructure_blocker:
+  id: EXT-G26
+  dependency: Authorized production hosting account
+  required_resource:
+    - cloud_or_k8s_credentials
+    - kubeconfig
+    - managed_postgresql
+    - public_dns_and_ca_tls
+    - secret_manager
+    - ci_deploy_credentials
+    - clean_git_working_tree
+  responsible_party: NOT_AVAILABLE
+  action_required: Provision those external resources; then use existing Helm/Flux/CI. Recertify P313. Do not GO-LIVE.
+  project_impact: P0 remains 1; PRODUCTION_CERTIFIED remains NO; GO_LIVE remains NOT APPROVED
+
+next_operational_action: Obtain authorized production credentials and cluster. Clean the git tree. Then Helm/Flux/CI on an immutable SHA. Do not deploy 47258dfd-dirty. Do not start P313 recert until G26 PASS. Do not execute P344 GO-LIVE.
+new_platform: FORBIDDEN
+go_live_declaration: FORBIDDEN
+application_activation: FORBIDDEN
+bind_hold_decisions: FORBIDDEN

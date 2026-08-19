@@ -2,6 +2,8 @@
 
 **Date:** 2026-08-13 · **Verdict:** App Desk activation + unified desk chrome shipped (Wave UI activation phase)
 
+**P320 (2026-08-18):** Experience gate — maturity **FUNCTIONAL** (partial). Production UX **not certified** (G20/G21). Authoritative P320 docs: [MEOS_P320_ENTERPRISE_EXPERIENCE.md](./MEOS_P320_ENTERPRISE_EXPERIENCE.md), [MEOS_UX_QUALITY_REPORT.md](./MEOS_UX_QUALITY_REPORT.md). This file remains Wave UI activation history — **not** an ADOPTED claim.
+
 ## What exists
 
 - AppShell: brand (forest + gold), GlobalSearch, NotificationCenter, AI panel, theme, locale (RTL/LTR), command palette, breadcrumbs

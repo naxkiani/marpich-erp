@@ -7,6 +7,8 @@ from contexts.plugins.application.constants.seed_listings import SEED_LISTINGS
 from contexts.plugins.domain.aggregates.plugin import Plugin
 from contexts.plugins.domain.aggregates.plugin import PluginInstallation
 from contexts.plugins.domain.events.integration_events import (
+    PluginDisabledIntegration,
+    PluginEnabledIntegration,
     PluginInstalledIntegration,
     PluginPublishedIntegration,
     PluginRegisteredIntegration,
@@ -288,6 +290,39 @@ class PluginApplicationService:
         )
         return Result.ok({"plugin_id": plugin_id, "uninstalled": True})
 
+    async def set_installation_enabled(
+        self,
+        *,
+        tenant_id: str,
+        plugin_id: str,
+        enabled: bool,
+        correlation_id: str,
+    ) -> Result[dict]:
+        installation = await self._installations.find(tenant_id, plugin_id)
+        if not installation:
+            return Result.fail("plugins.errors.not_installed")
+        if enabled:
+            installation.enable()
+        else:
+            installation.disable()
+        await self._installations.save(installation)
+        event = (
+            PluginEnabledIntegration(
+                tenant_id=TenantId.create(tenant_id),
+                correlation_id=correlation_id,
+                plugin_id=plugin_id,
+                version=installation.installed_version,
+            )
+            if enabled
+            else PluginDisabledIntegration(
+                tenant_id=TenantId.create(tenant_id),
+                correlation_id=correlation_id,
+                plugin_id=plugin_id,
+            )
+        )
+        await publish_integration_event(event)
+        return Result.ok(installation.to_dict())
+
     async def verify_plugin(self, plugin_id: str) -> Result[dict]:
         plugin = await self._plugins.find_by_id(plugin_id)
         if not plugin:
@@ -308,8 +343,10 @@ class PluginApplicationService:
         payload: dict,
     ) -> Result[dict]:
         installation = await self._installations.find(tenant_id, plugin_id)
-        if not installation or not installation.enabled:
+        if not installation:
             return Result.fail("plugins.errors.not_installed")
+        if not installation.enabled:
+            return Result.fail("plugins.errors.not_enabled")
         plugin = await self._plugins.find_by_id(plugin_id)
         if not plugin:
             return Result.fail("plugins.errors.not_found")

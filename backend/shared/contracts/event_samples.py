@@ -29,6 +29,7 @@ INTEGRATION_EVENT_MODULES = (
     "contexts.media.domain.events.integration_events",
     "contexts.analytics.domain.events.integration_events",
     "contexts.search.domain.events.integration_events",
+    "contexts.plugins.domain.events.integration_events",
 )
 
 

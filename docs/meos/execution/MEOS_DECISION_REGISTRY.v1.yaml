@@ -1,0 +1,84 @@
+# MEOS Decision Registry (machine)
+# Law: only phase decisions already recorded in execution docs. Never invent executives or ROI.
+schema_version: "1.0"
+generated: "2026-08-19T07:10:00Z"
+source: docs/meos/execution/MEOS_P338_DECISION_INTELLIGENCE.md
+fabric_sor: docs/meos/execution/MEOS_DECISION_FABRIC.md
+p338_overlay: docs/meos/execution/MEOS_DECISION_INTELLIGENCE.v1.yaml
+p339_overlay: docs/meos/execution/MEOS_DECISION_EXECUTION.v1.yaml
+overall_status: DOCUMENTED
+executed_count: 0
+measured_followup_count: 0
+
+decisions:
+  - id: DEC-P314-001
+    decision: GO_LIVE not approved
+    owner: NOT_AVAILABLE
+    date: "2026-08-18"
+    context: P314 go-live gate
+    options:
+      - APPROVED
+      - NOT APPROVED
+    selected_option: NOT APPROVED
+    rationale: P0 G26 — no real production cluster
+    evidence: docs/meos/execution/MEOS_P314_GO_LIVE_REPORT.md
+    risk: R-01
+    expected_outcome: No production traffic
+    actual_outcome: NOT_MEASURED
+    review_date: NOT_SET
+    lifecycle: DECIDE
+    workflow_task_id: NOT_AVAILABLE
+
+  - id: DEC-P319-001
+    decision: Block production automation
+    owner: NOT_AVAILABLE
+    date: "2026-08-18"
+    context: P319 automation fabric
+    options:
+      - ENABLE
+      - BLOCK_AUTOMATION
+    selected_option: BLOCK_AUTOMATION
+    rationale: 0 ACTIVE automations; HITL required; no production
+    evidence: docs/meos/execution/MEOS_P319_AUTOMATION_FABRIC.md
+    risk: R-04
+    expected_outcome: No autonomous high-impact actions
+    actual_outcome: NOT_MEASURED
+    review_date: NOT_SET
+    lifecycle: DECIDE
+    workflow_task_id: NOT_AVAILABLE
+
+  - id: DEC-P324-001
+    decision: Not a release candidate
+    owner: NOT_AVAILABLE
+    date: "2026-08-18"
+    context: P324 release engineering
+    options:
+      - RELEASE_CANDIDATE
+      - NOT_RELEASE_CANDIDATE
+    selected_option: NOT_RELEASE_CANDIDATE
+    rationale: Dirty SHA; 0 production releases
+    evidence: docs/meos/execution/MEOS_P324_RELEASE_ENGINEERING.md
+    risk: R-06
+    expected_outcome: No production deploy
+    actual_outcome: production_release_count = 0
+    review_date: NOT_SET
+    lifecycle: DECIDE
+    workflow_task_id: NOT_AVAILABLE
+
+  - id: DEC-P326-001
+    decision: Business value not realized
+    owner: NOT_AVAILABLE
+    date: "2026-08-18"
+    context: P326 value realization
+    options:
+      - REALIZED
+      - NOT_REALIZED
+    selected_option: NOT_REALIZED
+    rationale: Outcomes IDENTIFIED only; no production telemetry
+    evidence: docs/meos/execution/MEOS_P326_BUSINESS_VALUE.md
+    risk: R-01
+    expected_outcome: No authoritative business KPIs
+    actual_outcome: measured_count = 0
+    review_date: NOT_SET
+    lifecycle: DECIDE
+    workflow_task_id: NOT_AVAILABLE

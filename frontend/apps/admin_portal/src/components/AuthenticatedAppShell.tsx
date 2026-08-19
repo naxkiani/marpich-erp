@@ -63,7 +63,6 @@ export function AuthenticatedAppShell({ children }: { children: ReactNode }) {
     <TenantModulesProvider
       isAuthenticated={isAuthenticated}
       tenantId={session?.tenantId}
-      accessToken={session?.accessToken}
     >
       <ShellWithCommands>{children}</ShellWithCommands>
     </TenantModulesProvider>

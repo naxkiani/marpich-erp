@@ -4,7 +4,8 @@
 **Machine:** [MEOS_INITIATIVE_PORTFOLIO.v1.yaml](./MEOS_INITIATIVE_PORTFOLIO.v1.yaml)  
 **SoR (backlog):** [MEOS_TECHNICAL_DEBT_REGISTRY.md](./MEOS_TECHNICAL_DEBT_REGISTRY.md) — **do not fork a second project/PMO product.**  
 **Overall:** `BACKLOG_ONLY` · `in_progress_count: 0` · `cost_measured_count: 0`  
-**P334:** each initiative maps 1:1 to `CHG-*` in [MEOS_CHANGE_REGISTRY.v1.yaml](./MEOS_CHANGE_REGISTRY.v1.yaml). Mapping ≠ IN_PROGRESS. Do not expand `projects`.
+**P334:** each initiative maps 1:1 to `CHG-*` in [MEOS_CHANGE_REGISTRY.v1.yaml](./MEOS_CHANGE_REGISTRY.v1.yaml). Mapping ≠ IN_PROGRESS. Do not expand `projects`.  
+**P335:** wrapped as `PF-LAUNCH-GOVERNANCE` in [MEOS_PORTFOLIO_INTELLIGENCE.v1.yaml](./MEOS_PORTFOLIO_INTELLIGENCE.v1.yaml). Still `BACKLOG_ONLY`. No budget/ROI. See [MEOS_P335_PORTFOLIO_INTELLIGENCE.md](./MEOS_P335_PORTFOLIO_INTELLIGENCE.md).
 
 `projects` is **SCAFFOLDED** (empty). Finance registry claims `finance.budget.approved` but the finance context implements **accounts / fiscal periods / journals** — **no budget aggregate**. Resource alignment: **NOT_MEASURED**.
 

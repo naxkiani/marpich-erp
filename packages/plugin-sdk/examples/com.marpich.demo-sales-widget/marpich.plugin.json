@@ -1,0 +1,23 @@
+{
+  "pluginId": "com.marpich.demo-sales-widget",
+  "pluginVersion": "1.0.0",
+  "pluginType": "widget",
+  "displayName": "Demo Sales KPI Widget",
+  "description": "Sample dashboard widget for sales metrics — DEMO seed, not CERTIFIED",
+  "publisher": {
+    "id": "com.marpich",
+    "name": "Marpich Labs"
+  },
+  "permissions": ["analytics.read", "sales.orders.read"],
+  "extensionPoints": ["ui.dashboard.widget"],
+  "sandbox": {
+    "network": "deny",
+    "filesystem": "read_only",
+    "maxMemoryMb": 64
+  },
+  "signature": {
+    "algorithm": "ed25519",
+    "publicKeyFingerprint": "sha256:demo-publisher-key-001",
+    "packageChecksum": "sha256:demo-widget-checksum-001"
+  }
+}

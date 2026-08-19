@@ -12,7 +12,22 @@ export type AnalyticsHomePulse = {
   dashboards_count: number;
   alerts_count: number;
   tenant_id?: string;
+  signal_class?: string;
+  production_kpis?: string;
+  data_quality?: {
+    status?: string;
+    reason?: string;
+    freshness?: string;
+    confidence?: string;
+  };
 };
+
+export function homePulseHasDataQualityWarning(
+  pulse: { analytics: AnalyticsHomePulse | null } | null,
+): boolean {
+  if (!pulse?.analytics) return false;
+  return pulse.analytics.data_quality?.status === "DATA_QUALITY_WARNING";
+}
 
 export type WorkflowTaskSummary = {
   id: string;

@@ -486,6 +486,15 @@ verification:
   registry_nav_ids_reconciled: verified
   empty_scaffolds_in_yaml: verified
   postgres_outbox_e2e_test: verified
+  p313_postgres_5433_live: verified
+  p313_migrations_000_055: verified
+  p313_local_backup: verified
+  p313_local_restore_drill: verified
+  p313_postgres_outbox_e2e_executed: verified
+  p313_wave01_user_loop_live: verified
+  p313_q2c_loop_live: verified
+  p313_healthcare_loop_live: verified
+  p313_offsite_backup: blocked
   notes: >
     Shell widgets use marpich_auth_session headers; Workflow Task Center at
     /enterprise/workflows; AuthZ filters nav/command/search; orphan FE clients gated;
@@ -506,5 +515,8 @@ verification:
     12 empty industry scaffolds remain coming_soon / deferred — no catalog inflation.
     P3: missing ROUTER/SERVICE module baseline + CI fail on growth
     (missing_router_packages_baseline.json / meos-p3-router-contracts.yml).
+    P313 (2026-08-17): live Postgres :5433 migrations 000–055, local backup+restore,
+    outbox E2E executed, Wave01/Q2C/healthcare loops PASS — still NOT_READY /
+    NOT_CERTIFIED (offsite backup BLOCKED; no ACTIVE promotions).
     Overall NOT_READY.
 

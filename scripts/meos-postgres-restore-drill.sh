@@ -37,7 +37,16 @@ psql -v ON_ERROR_STOP=1 -d postgres -c "DROP DATABASE IF EXISTS ${TARGET_DB};"
 psql -v ON_ERROR_STOP=1 -d postgres -c "CREATE DATABASE ${TARGET_DB} OWNER ${PGUSER};"
 
 echo "== gunzip | psql =="
-gunzip -c "$DUMP" | psql -v ON_ERROR_STOP=1 -d "$TARGET_DB" >/dev/null
+# Strip PG 18+ dump tokens that PostgreSQL 16 rejects.
+sanitize_pg_dump() {
+  grep -vE '^(SET transaction_timeout|[[:space:]]*\\restrict|[[:space:]]*\\unrestrict)'
+}
+if command -v docker >/dev/null 2>&1 && docker ps --format '{{.Names}}' | grep -qx marpich-postgres; then
+  gunzip -c "$DUMP" | sanitize_pg_dump | docker exec -i -e PGPASSWORD="$PGPASSWORD" marpich-postgres \
+    psql -v ON_ERROR_STOP=1 -U "$PGUSER" -d "$TARGET_DB" >/dev/null
+else
+  gunzip -c "$DUMP" | sanitize_pg_dump | psql -v ON_ERROR_STOP=1 -d "$TARGET_DB" >/dev/null
+fi
 
 echo "== migrations on restore target =="
 export PGDATABASE="$TARGET_DB"

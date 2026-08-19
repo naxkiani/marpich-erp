@@ -1,0 +1,261 @@
+# MEOS EXT-G26 external dependency register (P349)
+# Discovery only. Never invent ownership. Never print secret values.
+schema_version: "1.0"
+generated: "2026-08-19T11:40:00Z"
+source: docs/meos/execution/MEOS_EXT_G26_PROVIDER_COMPATIBILITY.md
+overlay: docs/meos/execution/MEOS_P349_INFRASTRUCTURE_DISCOVERY.v1.yaml
+validator: scripts/meos-ext-g26-readiness.py
+ext_g26_status: UNRESOLVED
+g26_status: BLOCKED
+g26_ready: false
+p0_count: 1
+p313: NOT_CERTIFIED
+provider_selection: BLOCKED
+current_provider: NOT_AVAILABLE
+owner_default: NOT_AVAILABLE
+external_dependency_count: 22
+# Required dependencies whose current_status is not PASS (D22 Flux is optional).
+blocker_count: 21
+
+dependencies:
+  - id: EXT-G26-D01
+    name: AUTHORIZED_PRODUCTION_HOSTING_ACCOUNT
+    category: COMPUTE
+    required: true
+    current_status: BLOCKED
+    required_evidence: Named hosting account with permission to create a production cluster
+    owner: NOT_AVAILABLE
+    provider_dependency: true
+    validation: Account identity evidenced without printing credentials
+    blocking_gate: G26-01
+
+  - id: EXT-G26-D02
+    name: AUTHORIZED_PRODUCTION_CLUSTER
+    category: COMPUTE
+    required: true
+    current_status: BLOCKED
+    required_evidence: KUBECONFIG or ~/.kube/config for a production Kubernetes-compatible cluster
+    owner: NOT_AVAILABLE
+    provider_dependency: true
+    validation: test -n "$KUBECONFIG" -o -f "$HOME/.kube/config"
+    blocking_gate: G26-01
+
+  - id: EXT-G26-D03
+    name: MANAGED_PRODUCTION_POSTGRESQL
+    category: DATABASE
+    required: true
+    current_status: BLOCKED
+    required_evidence: Non-localhost PostgreSQL; ports 5433 and 5444 are NON_PRODUCTION
+    owner: NOT_AVAILABLE
+    provider_dependency: true
+    validation: MEOS_PRODUCTION_PGHOST/PGHOST not localhost; port not 5433/5444
+    blocking_gate: G26-02
+
+  - id: EXT-G26-D04
+    name: PUBLIC_DNS_ZONE_AND_HOSTNAME
+    category: DNS
+    required: true
+    current_status: NOT_AVAILABLE
+    required_evidence: Live public hostname. Helm DESIGNED host auth.marpich.io is not live evidence. LIVE_PRODUCTION_HOSTNAME=NOT_DEFINED
+    owner: NOT_AVAILABLE
+    provider_dependency: true
+    validation: MEOS_PRODUCTION_DNS set to a non-localhost hostname that resolves
+    blocking_gate: G26-07
+
+  - id: EXT-G26-D05
+    name: PUBLIC_CA_TLS
+    category: TLS
+    required: true
+    current_status: BLOCKED
+    required_evidence: Public CA certificate for the production hostname; compose self-signed is invalid
+    owner: NOT_AVAILABLE
+    provider_dependency: true
+    validation: MEOS_PUBLIC_CA_TLS=1 only after real public-CA issuance
+    blocking_gate: G26-03
+
+  - id: EXT-G26-D06
+    name: PRODUCTION_SECRET_MANAGER
+    category: SECRETS
+    required: true
+    current_status: BLOCKED
+    required_evidence: Secret manager available to materialize Kubernetes Secrets; values never in git
+    owner: NOT_AVAILABLE
+    provider_dependency: true
+    validation: MEOS_SECRET_MANAGER_AVAILABLE=1 without printing secret names or values
+    blocking_gate: G26-04
+
+  - id: EXT-G26-D07
+    name: KUBERNETES_SECRET_OBJECTS
+    category: SECRETS
+    required: true
+    current_status: NOT_AVAILABLE
+    required_evidence: "{fullname}-secrets and marpich-db-credentials exist in namespace marpich; Helm does not template them"
+    owner: NOT_AVAILABLE
+    provider_dependency: true
+    validation: kubectl get secret in production namespace (no value dump)
+    blocking_gate: G26-04
+
+  - id: EXT-G26-D08
+    name: GHCR_REGISTRY
+    category: REGISTRY
+    required: true
+    current_status: BLOCKED
+    required_evidence: Authenticated push/pull of ghcr.io/marpich/marpich-backend with digest
+    owner: NOT_AVAILABLE
+    provider_dependency: false
+    validation: Existing workflow packages:write plus recorded digest
+    blocking_gate: G26-06
+
+  - id: EXT-G26-D09
+    name: CI_DEPLOY_CREDENTIALS
+    category: CI/CD
+    required: true
+    current_status: BLOCKED
+    required_evidence: GitHub environment staging/production kube credentials for identity-federation-enterprise.yml
+    owner: NOT_AVAILABLE
+    provider_dependency: true
+    validation: Existing workflow deploy-staging/deploy-production succeed
+    blocking_gate: G26-06
+
+  - id: EXT-G26-D10
+    name: CLEAN_GIT_RELEASE
+    category: CI/CD
+    required: true
+    current_status: FAIL
+    required_evidence: git status --short empty; describe without -dirty; 47258dfd-dirty FORBIDDEN
+    owner: NOT_AVAILABLE
+    provider_dependency: false
+    validation: git status --short; git describe --always --dirty
+    blocking_gate: G26-05
+
+  - id: EXT-G26-D11
+    name: IMMUTABLE_IMAGE_DIGEST
+    category: REGISTRY
+    required: true
+    current_status: NOT_AVAILABLE
+    required_evidence: CI artifact digest; mutable :7.0.0 is insufficient; :sha-<commit> is the existing tag contract
+    owner: NOT_AVAILABLE
+    provider_dependency: false
+    validation: MEOS_IMAGE_DIGEST equals registry digest
+    blocking_gate: G26-06
+
+  - id: EXT-G26-D12
+    name: INGRESS_NGINX
+    category: NETWORK
+    required: true
+    current_status: BLOCKED
+    required_evidence: Ingress class nginx as in Helm values
+    owner: NOT_AVAILABLE
+    provider_dependency: true
+    validation: kubectl get ingressclass nginx
+    blocking_gate: G26-07
+
+  - id: EXT-G26-D13
+    name: CERT_MANAGER_LETSENCRYPT_PROD
+    category: TLS
+    required: true
+    current_status: BLOCKED
+    required_evidence: ClusterIssuer letsencrypt-prod as annotated on Ingress
+    owner: NOT_AVAILABLE
+    provider_dependency: true
+    validation: kubectl get clusterissuer letsencrypt-prod
+    blocking_gate: G26-03
+
+  - id: EXT-G26-D14
+    name: PRODUCTION_RUNTIME
+    category: COMPUTE
+    required: true
+    current_status: BLOCKED
+    required_evidence: Deployed production pods; local /health is NOT production
+    owner: NOT_AVAILABLE
+    provider_dependency: true
+    validation: MEOS_DEPLOYED_COMMIT and non-local health URL
+    blocking_gate: G26-08
+
+  - id: EXT-G26-D15
+    name: DEPLOYMENT_IDENTITY
+    category: IDENTITY
+    required: true
+    current_status: NOT_AVAILABLE
+    required_evidence: DEPLOYED_COMMIT equals CLEAN_COMMIT; DEPLOYED_IMAGE_DIGEST equals CI_ARTIFACT_DIGEST
+    owner: NOT_AVAILABLE
+    provider_dependency: false
+    validation: kubectl get deploy image vs git rev-parse HEAD vs CI digest
+    blocking_gate: G26-09
+
+  - id: EXT-G26-D16
+    name: HELM_ROLLBACK_EXERCISED
+    category: ROLLBACK
+    required: true
+    current_status: BLOCKED
+    required_evidence: Real N to N+1 to N on production; CONFIGURED is not PASS
+    owner: NOT_AVAILABLE
+    provider_dependency: false
+    validation: MEOS_ROLLBACK_EXERCISED=1 only after real helm rollback
+    blocking_gate: G26-10
+
+  - id: EXT-G26-D17
+    name: EXTERNAL_REDIS
+    category: STORAGE
+    required: true
+    current_status: NOT_AVAILABLE
+    required_evidence: Helm externalRedis.host redis.marpich.svc.cluster.local; redis.enabled false
+    owner: NOT_AVAILABLE
+    provider_dependency: true
+    validation: Reachable Redis from the production namespace
+    blocking_gate: G26-08
+
+  - id: EXT-G26-D18
+    name: EXTERNAL_KAFKA
+    category: STORAGE
+    required: true
+    current_status: NOT_AVAILABLE
+    required_evidence: Helm kafka.bootstrapServers kafka.marpich.svc.cluster.local:9092; env KAFKA_ENABLED=true
+    owner: NOT_AVAILABLE
+    provider_dependency: true
+    validation: Reachable Kafka from the production namespace
+    blocking_gate: G26-08
+
+  - id: EXT-G26-D19
+    name: PRODUCTION_OBSERVABILITY
+    category: OBSERVABILITY
+    required: true
+    current_status: FAIL
+    required_evidence: Production logs metrics alerts; G23 CONFIGURED not PRODUCTION_VERIFIED
+    owner: NOT_AVAILABLE
+    provider_dependency: true
+    validation: Production alert test (do not mark G23 PASS in P349)
+    blocking_gate: G23
+
+  - id: EXT-G26-D20
+    name: PRODUCTION_BACKUP
+    category: BACKUP
+    required: true
+    current_status: NOT_AVAILABLE
+    required_evidence: Backup of production PostgreSQL; workstation MinIO is NON_PRODUCTION
+    owner: NOT_AVAILABLE
+    provider_dependency: true
+    validation: Backup artifact identity for the production instance
+    blocking_gate: G26-02
+
+  - id: EXT-G26-D21
+    name: PRODUCTION_RESTORE
+    category: RESTORE
+    required: true
+    current_status: NOT_AVAILABLE
+    required_evidence: Restore drill of production backup; RTO/RPO NOT_VERIFIED
+    owner: NOT_AVAILABLE
+    provider_dependency: true
+    validation: Restore report against production backup
+    blocking_gate: G26-02
+
+  - id: EXT-G26-D22
+    name: FLUX_GITREPOSITORY_REMOTE
+    category: CI/CD
+    required: false
+    current_status: NOT_AVAILABLE
+    required_evidence: Flux URL https://github.com/marpich/marpich-erp.git match to the deploying remote; optional if CI Helm is SoR
+    owner: NOT_AVAILABLE
+    provider_dependency: false
+    validation: flux get sources git
+    blocking_gate: G26-06

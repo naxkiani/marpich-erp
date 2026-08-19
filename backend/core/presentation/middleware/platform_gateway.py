@@ -17,7 +17,11 @@ logger = logging.getLogger("marpich.gateway")
 # Platform meta, health, and OpenAPI remain exempt (cross-tenant / public).
 _TENANT_EXEMPT_PREFIXES = (
     "/health",
+    "/ready",
+    "/live",
     "/api/v1/health",
+    "/api/v1/ready",
+    "/api/v1/live",
     "/docs",
     "/redoc",
     "/openapi.json",

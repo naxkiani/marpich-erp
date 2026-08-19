@@ -1,0 +1,275 @@
+# MEOS Portfolio Intelligence (machine)
+# Law: overlay on initiative + change + objective + outcome + debt registries.
+# Never invent budget, ROI, forecast, health scores, or ACTIVE portfolios.
+schema_version: "1.0"
+generated: "2026-08-19T06:06:00Z"
+source: docs/meos/execution/MEOS_P335_PORTFOLIO_INTELLIGENCE.md
+initiative_sor: docs/meos/execution/MEOS_INITIATIVE_PORTFOLIO.v1.yaml
+change_sor: docs/meos/execution/MEOS_CHANGE_REGISTRY.v1.yaml
+objective_sor: docs/meos/execution/MEOS_STRATEGIC_OBJECTIVES.v1.yaml
+outcome_sor: docs/meos/execution/MEOS_OUTCOME_REGISTRY.v1.yaml
+debt_sor: docs/meos/execution/MEOS_TECHNICAL_DEBT_REGISTRY.v1.yaml
+readiness_sor: docs/meos/execution/MEOS_CAPABILITY_READINESS.v1.yaml
+risk_sor: docs/meos/execution/MEOS_RISK_REGISTER.md
+overall_status: INVENTORIED
+maturity: INVENTORIED
+production_active: false
+in_progress_count: 0
+approved_count: 0
+completed_count: 0
+investment_measured_count: 0
+realized_value_count: 0
+forecast_count: 0
+scenario_count: 0
+budget_aggregate: NOT_IMPLEMENTED
+projects_context: SCAFFOLDED
+finance_budget: NOT_IMPLEMENTED
+autonomous_portfolio: BLOCKED
+max_autonomy_level: L0
+portfolio_health: NOT_MEASURED
+strategic_alignment: PLATFORM_GATE
+value_state: NOT_MEASURED
+
+forbidden_without_production:
+  - ACTIVE
+  - APPROVED
+  - AT_RISK
+  - PAUSED
+  - COMPLETED
+  - CANCELLED
+  - RETIRED
+
+# One launch portfolio. Not a PMO. Items = existing INIT-* rows only.
+portfolios:
+  - id: PF-LAUNCH-GOVERNANCE
+    name: MEOS launch governance
+    owner: NOT_AVAILABLE
+    sponsor: NOT_AVAILABLE
+    objective_ids:
+      - OBJ-GATE-P314
+      - OBJ-GATE-P317
+    scope: INIT-G26, INIT-G25, INIT-G27, INIT-G23, INIT-G18, INIT-G19
+    status: ASSESSED
+    priority: P0
+    strategic_alignment: PLATFORM_GATE
+    risk: R-01
+    expected_value: NOT_MEASURED
+    actual_value: NOT_MEASURED
+    investment: NOT_MEASURED
+    budget: NOT_MEASURED
+    actual_cost: NOT_MEASURED
+    forecast_cost: NOT_MEASURED
+    initiative_ids:
+      - INIT-G26
+      - INIT-G25
+      - INIT-G27
+      - INIT-G23
+      - INIT-G18
+      - INIT-G19
+    evidence: docs/meos/execution/MEOS_INITIATIVE_PORTFOLIO.v1.yaml
+
+items:
+  - initiative_id: INIT-G26
+    portfolio_id: PF-LAUNCH-GOVERNANCE
+    change_id: CHG-G26
+    objective_id: OBJ-GATE-P314
+    debt_id: TD-G26-PROD-CLUSTER
+    status: ASSESSED
+    sequence: 1
+    continue_pause_reassess: CONTINUE
+    method: P325_P313_P0_CHAIN
+    inputs: [TD-G26-PROD-CLUSTER, P313-G26, BLK-G26]
+    assumptions: Production cluster is a precondition for every measured outcome
+    result: First operational action; blocks all other production work
+    confidence: HIGH_FOR_SEQUENCE_ONLY
+    owner: NOT_AVAILABLE
+    investment: NOT_MEASURED
+    expected_value: NOT_MEASURED
+    realized_value: NOT_MEASURED
+    capability_readiness: NOT_MEASURED
+    change_readiness: BLOCKED
+    risk: R-01
+    continuity: NOT_VERIFIED
+    depends_on: []
+    blockers: [BLK-G26]
+    evidence: P313 G26
+
+  - initiative_id: INIT-G25
+    portfolio_id: PF-LAUNCH-GOVERNANCE
+    change_id: CHG-G25
+    objective_id: OBJ-GATE-P314
+    debt_id: TD-G25-DIRTY-SHA
+    status: ASSESSED
+    sequence: 2
+    continue_pause_reassess: DEFER
+    method: P325_P313_P0_CHAIN
+    inputs: [TD-G25-DIRTY-SHA, CHG-G26]
+    assumptions: Immutable SHA is meaningless without a production deploy target
+    result: After G26; not cancellable (launch P0)
+    confidence: HIGH_FOR_SEQUENCE_ONLY
+    owner: NOT_AVAILABLE
+    investment: NOT_MEASURED
+    expected_value: NOT_MEASURED
+    realized_value: NOT_MEASURED
+    capability_readiness: NOT_MEASURED
+    change_readiness: BLOCKED
+    risk: R-06
+    continuity: NOT_VERIFIED
+    depends_on: [INIT-G26]
+    blockers: [BLK-G25, BLK-G26]
+    evidence: dirty working tree
+
+  - initiative_id: INIT-G27
+    portfolio_id: PF-LAUNCH-GOVERNANCE
+    change_id: CHG-G27
+    objective_id: OBJ-GATE-P314
+    debt_id: TD-G27-ROLLBACK
+    status: ASSESSED
+    sequence: 3
+    continue_pause_reassess: DEFER
+    method: P325_P313_P0_CHAIN
+    inputs: [TD-G27-ROLLBACK, CHG-G26]
+    assumptions: Rollback cannot be exercised without a production deploy
+    result: After first prod deploy; not cancellable (launch P0)
+    confidence: HIGH_FOR_SEQUENCE_ONLY
+    owner: NOT_AVAILABLE
+    investment: NOT_MEASURED
+    expected_value: NOT_MEASURED
+    realized_value: NOT_MEASURED
+    capability_readiness: NOT_MEASURED
+    change_readiness: BLOCKED
+    risk: R-02
+    continuity: NOT_VERIFIED
+    depends_on: [INIT-G26]
+    blockers: [BLK-G27, BLK-G26]
+    evidence: P313 G27
+
+  - initiative_id: INIT-G23
+    portfolio_id: PF-LAUNCH-GOVERNANCE
+    change_id: CHG-G23
+    objective_id: OBJ-GATE-P317
+    debt_id: TD-G23-ALERTING
+    status: IDENTIFIED
+    sequence: 4
+    continue_pause_reassess: DEFER
+    method: P325_P1_TRUST_AFTER_P0
+    inputs: [TD-G23-ALERTING, OBJ-GATE-P317]
+    assumptions: Alerting on a non-existent cluster is not production assurance
+    result: P1 after G26; observe remains BLOCKED (P330/P331)
+    confidence: HIGH_FOR_SEQUENCE_ONLY
+    owner: NOT_AVAILABLE
+    investment: NOT_MEASURED
+    expected_value: NOT_MEASURED
+    realized_value: NOT_MEASURED
+    capability_readiness: NOT_MEASURED
+    change_readiness: BLOCKED
+    risk: R-03
+    continuity: NOT_VERIFIED
+    depends_on: [INIT-G26]
+    blockers: [BLK-G26]
+    evidence: P313 G23
+
+  - initiative_id: INIT-G18
+    portfolio_id: PF-LAUNCH-GOVERNANCE
+    change_id: CHG-G18
+    objective_id: OBJ-GATE-P317
+    debt_id: TD-G18-AI-STUB
+    status: IDENTIFIED
+    sequence: 5
+    continue_pause_reassess: DEFER
+    method: P325_P1_TRUST_AFTER_P0
+    inputs: [TD-G18-AI-STUB, OBJ-GATE-P317]
+    assumptions: Stub assist volume is not portfolio value
+    result: P1 after G26; AI must not approve investments
+    confidence: HIGH_FOR_SEQUENCE_ONLY
+    owner: NOT_AVAILABLE
+    investment: NOT_MEASURED
+    expected_value: NOT_MEASURED
+    realized_value: NOT_MEASURED
+    capability_readiness: NOT_MEASURED
+    change_readiness: BLOCKED
+    risk: R-04
+    continuity: NOT_APPLICABLE
+    depends_on: [INIT-G26]
+    blockers: [BLK-G26]
+    evidence: P313 G18
+
+  - initiative_id: INIT-G19
+    portfolio_id: PF-LAUNCH-GOVERNANCE
+    change_id: CHG-G19
+    objective_id: OBJ-GATE-P317
+    debt_id: TD-G19-DSAR
+    status: IDENTIFIED
+    sequence: 6
+    continue_pause_reassess: DEFER
+    method: P325_P1_TRUST_AFTER_P0
+    inputs: [TD-G19-DSAR, OBJ-GATE-P317]
+    assumptions: DSAR required before production PII; not a growth investment
+    result: P1 after G26; privacy gate
+    confidence: HIGH_FOR_SEQUENCE_ONLY
+    owner: NOT_AVAILABLE
+    investment: NOT_MEASURED
+    expected_value: NOT_MEASURED
+    realized_value: NOT_MEASURED
+    capability_readiness: NOT_MEASURED
+    change_readiness: BLOCKED
+    risk: R-05
+    continuity: NOT_APPLICABLE
+    depends_on: [INIT-G26]
+    blockers: [BLK-G26]
+    evidence: P313 G19
+
+concentration:
+  OPERATIONAL_RESILIENCE: 3
+  RISK_REDUCTION: 2
+  COMPLIANCE: 1
+  GROWTH: 0
+  CUSTOMER_VALUE: 0
+  INNOVATION: 0
+  EFFICIENCY: 0
+  note: Pre-production concentration is expected. Do not invent growth items to rebalance.
+
+resource_conflicts:
+  budget: NOT_MEASURED
+  people: NOT_MEASURED
+  capability: NOT_MEASURED
+  technology: BLOCKED
+  capacity: NOT_MEASURED
+  evidence: P325 capacity NOT_MEASURED; finance has no budget aggregate; P333 readiness NOT_MEASURED
+
+gates:
+  STRATEGIC_GATE: BLOCKED
+  BUSINESS_CASE_GATE: NOT_IMPLEMENTED
+  RISK_GATE: RISK_AWARE
+  CAPABILITY_GATE: BLOCKED
+  CHANGE_GATE: BLOCKED
+  FINANCIAL_GATE: NOT_IMPLEMENTED
+  SECURITY_GATE: TRUST_CRITICAL
+  READINESS_GATE: BLOCKED
+  release_gates: P324_G01_G14
+
+blockers:
+  - id: BLK-G26
+    blocks: ALL_PRODUCTION_INVESTMENT
+    reason: No production cluster
+    status: BLOCKED
+  - id: BLK-FINANCE-BUDGET
+    blocks: INVESTMENT_MODEL
+    reason: finance context has accounts/journals; no budget aggregate
+    status: BLOCKED
+  - id: BLK-PROJECTS-EMPTY
+    blocks: PROJECT_SoR
+    reason: projects context SCAFFOLDED empty; do not expand
+    status: BLOCKED
+  - id: BLK-VALUE
+    blocks: REALIZED_VALUE
+    reason: P326 measured_count = 0; OUT-ADOPT-001 IDENTIFIED
+    status: BLOCKED
+  - id: BLK-P333-READINESS
+    blocks: CAPABILITY_GATE
+    reason: readiness NOT_MEASURED
+    status: BLOCKED
+  - id: BLK-P330-AUTONOMY
+    blocks: AUTONOMOUS_PORTFOLIO
+    reason: L0 BLOCK_AUTOMATION
+    status: BLOCKED

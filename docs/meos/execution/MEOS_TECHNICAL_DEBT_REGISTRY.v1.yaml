@@ -1,0 +1,132 @@
+# MEOS Technical Debt Registry (machine)
+# Law: never mark RESOLVED without evidence. Never invent owners.
+schema_version: "1.0"
+generated: "2026-08-18T12:05:00Z"
+source: docs/meos/execution/MEOS_TECHNICAL_DEBT_REGISTRY.md
+overall_status: OPEN
+resolved_count: 1
+open_critical_count: 3
+
+items:
+  - id: TD-G26-PROD-CLUSTER
+    area: DEPLOYMENT
+    description: No production cluster, public-CA TLS, or secret manager
+    risk: CRITICAL
+    impact: Blocks go-live and all production SLOs
+    owner: NOT_AVAILABLE
+    priority: P0
+    status: ASSESSED
+    target: After real cluster exists
+    evidence: P313 G26, P314, P324
+
+  - id: TD-G25-DIRTY-SHA
+    area: RELEASE
+    description: Working tree dirty; cannot attribute an immutable production artifact
+    risk: HIGH
+    impact: Traceability / G25 FAIL
+    owner: NOT_AVAILABLE
+    priority: P0
+    status: ASSESSED
+    target: Tag + CI green on immutable SHA
+    evidence: git describe e941141-dirty
+
+  - id: TD-G27-ROLLBACK
+    area: RELIABILITY
+    description: Live production rollback never exercised
+    risk: HIGH
+    impact: Cannot recover a live release
+    owner: NOT_AVAILABLE
+    priority: P0
+    status: ASSESSED
+    target: After first production deploy
+    evidence: P313 G27, P324 rollback standard
+
+  - id: TD-G23-ALERTING
+    area: OBSERVABILITY
+    description: No production alerting / on-call SLO
+    risk: HIGH
+    impact: Failures undiagnosable in prod
+    owner: NOT_AVAILABLE
+    priority: P1
+    status: IDENTIFIED
+    evidence: P313 G23
+
+  - id: TD-G18-AI-STUB
+    area: AI
+    description: Assist is template echo, not a governed model
+    risk: HIGH
+    impact: Misleading trust if treated as production AI
+    owner: NOT_AVAILABLE
+    priority: P1
+    status: IDENTIFIED
+    evidence: P313 G18
+
+  - id: TD-G19-DSAR
+    area: PRIVACY
+    description: DSAR/erasure not runtime-certified
+    risk: HIGH
+    impact: Privacy rights unproven
+    owner: NOT_AVAILABLE
+    priority: P1
+    status: IDENTIFIED
+    evidence: P313 G19
+
+  - id: TD-G20-E2E
+    area: TESTING
+    description: No Playwright UI E2E
+    risk: MEDIUM
+    impact: UX/regression unproven in browser
+    owner: NOT_AVAILABLE
+    priority: P2
+    status: IDENTIFIED
+    evidence: P313 G20
+
+  - id: TD-G21-A11Y
+    area: ACCESSIBILITY
+    description: No a11y measurement
+    risk: MEDIUM
+    impact: Accessibility unproven
+    owner: NOT_AVAILABLE
+    priority: P2
+    status: IDENTIFIED
+    evidence: P313 G21
+
+  - id: TD-P319-AUTOMATION
+    area: AUTOMATION
+    description: BLOCK_AUTOMATION; 0 ACTIVE automations
+    risk: MEDIUM
+    impact: No production automation value
+    owner: NOT_AVAILABLE
+    priority: P2
+    status: ACCEPTED
+    evidence: P319
+
+  - id: TD-P321-INTEGRATIONS
+    area: INTEGRATION
+    description: 0 ACTIVE external integrations
+    risk: MEDIUM
+    impact: Ecosystem connectivity not live
+    owner: NOT_AVAILABLE
+    priority: P2
+    status: ACCEPTED
+    evidence: P321
+
+  - id: TD-EVENT-PAYLOAD-SCHEMA
+    area: CONTRACTS
+    description: Some event JSON files are payload-only vs envelope validator
+    risk: MEDIUM
+    impact: Full-suite contract tests fail on hospital/accounting events
+    owner: NOT_AVAILABLE
+    priority: P2
+    status: IDENTIFIED
+    evidence: P323 pytest 9 failed envelope vs payload-only schemas
+
+  - id: TD-SDK-STUB-SUCCESS
+    area: DEVELOPER
+    description: Plugin CLI pack/sign/publish previously printed fake success
+    risk: HIGH
+    impact: Could be mistaken for certified publish
+    owner: NOT_AVAILABLE
+    priority: P1
+    status: RESOLVED
+    evidence: P323 CLI exits 2

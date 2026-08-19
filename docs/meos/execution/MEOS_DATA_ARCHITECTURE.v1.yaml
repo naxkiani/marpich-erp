@@ -1,0 +1,175 @@
+# MEOS Data & Information Architecture (machine)
+# Law: overlay on Postgres runtime + data_governance catalogs + P336/P335.
+# Never invent published data products, lineage completeness, quality scores, or SoR.
+schema_version: "1.0"
+generated: "2026-08-19T06:45:00Z"
+source: docs/meos/execution/MEOS_P337_DATA_ARCHITECTURE.md
+application_sor: docs/meos/execution/MEOS_APPLICATION_REGISTRY.v1.yaml
+architecture_sor: docs/meos/execution/MEOS_ARCHITECTURE_RATIONALIZATION.v1.yaml
+debt_sor: docs/meos/execution/MEOS_TECHNICAL_DEBT_REGISTRY.v1.yaml
+decision_sor: docs/meos/execution/MEOS_DECISION_INTELLIGENCE.v1.yaml
+privacy_runbook: docs/meos/execution/MEOS_WAVE04_PRIVACY_ACTIVATION.md
+overall_status: INVENTORIED
+maturity: INVENTORIED
+production_active: false
+data_warehouse: NOT_IMPLEMENTED
+data_lake: NOT_IMPLEMENTED
+data_mesh_context: ABSENT
+data_product_platform_context: ABSENT
+data_governance_schema_in_postgres: ABSENT
+mdm_platform: NOT_IMPLEMENTED
+published_data_product_count: 0
+active_data_product_count: 0
+postgres_schema_count: 54
+postgres_table_count: 223
+rls_table_count: 93
+rls_policy_count: 57
+migration_file_count: 55
+event_schema_file_count: 47
+lineage: LINEAGE_INCOMPLETE
+quality: NOT_MEASURED
+quality_incident_count: 0
+data_product_health: NOT_MEASURED
+retention_policy: POLICY_GAP
+data_value: NOT_MEASURED
+data_cost: NOT_MEASURED
+graphql_runtime: NOT_AVAILABLE
+autonomous_data: BLOCKED
+max_autonomy_level: L0
+ai_data_provenance: NOT_AVAILABLE
+dsar_runtime: FAIL
+recovery_production_rto_rpo: NOT_VERIFIED
+local_backup_g07: PASS
+new_data_platform: FORBIDDEN
+new_data_catalog: FORBIDDEN
+new_data_mesh: FORBIDDEN
+new_data_warehouse: FORBIDDEN
+new_mdm: FORBIDDEN
+inventory_snapshot: "2026-08-19T06:45:00Z"
+inventory_store: postgresql://127.0.0.1:5433/marpich_platform
+inventory_evidence: pg_namespace + information_schema.tables + pg_tables.rowsecurity + pg_policy
+forbidden_sibling_contexts:
+  - data_mesh
+  - data_product_platform
+  - data_marketplace
+  - enterprise_intelligence
+  - data_quality_platform
+  - metadata_governance_platform
+
+forbidden_without_evidence:
+  - PUBLISHED
+  - ACTIVE
+  - HEALTHY
+  - AUTHORITATIVE_WITHOUT_PROOF
+
+# Catalog APIs exist; they are DESIGNED capability catalogs, not published products.
+data_product_runtime: CATALOG_ONLY
+domains_are_groupings_of_existing_schemas: true
+
+domains:
+  - id: identity
+    schema: identity
+    owner: NOT_AVAILABLE
+    purpose: Users, principals, sessions
+    status: SCHEMA_PRESENT
+    criticality: TRUST_CRITICAL
+    evidence: postgres schema identity + RLS
+  - id: tenant_control
+    schema: tenant
+    owner: NOT_AVAILABLE
+    purpose: Tenant registry
+    status: SCHEMA_PRESENT
+    evidence: tenant.tenants
+  - id: commercial
+    schemas: [crm, sales, inventory, accounting, procurement]
+    owner: NOT_AVAILABLE
+    purpose: Wave 02 Q2C money path
+    status: SCHEMA_PRESENT
+    evidence: migrations 046-052
+  - id: workforce
+    schemas: [human_resources, payroll, tax]
+    owner: NOT_AVAILABLE
+    purpose: H2R
+    status: SCHEMA_PRESENT
+    evidence: migrations 053-055
+  - id: healthcare
+    schemas: [hospital, clinic, laboratory, pharmacy]
+    owner: NOT_AVAILABLE
+    purpose: Care events
+    status: SCHEMA_PRESENT
+    evidence: migrations 033/036/038/039
+  - id: platform
+    schemas: [platform, workflow, audit, notifications, documents, search, policy]
+    owner: NOT_AVAILABLE
+    purpose: Control plane
+    status: SCHEMA_PRESENT
+  - id: data_governance_docs
+    schema: data_governance
+    owner: NOT_AVAILABLE
+    purpose: P212 catalogs / mesh overlay
+    status: CONTEXT_WITHOUT_PG_SCHEMA
+    evidence: context.yaml schema data_governance; to_regnamespace empty
+
+products:
+  - id: NONE_PUBLISHED
+    status: NONE
+    note: data_governance.list_catalog returns in-memory capability catalogs. No data_products table.
+
+duplication:
+  - id: DUP-IDENTITY-TS-PY
+    class: LIKELY
+    items: [services/identity-service, contexts.identity]
+    evidence: P336 RD-TS-PYTHON-IDENTITY
+    action: DO_NOT_DELETE
+  - id: DUP-MONEY-SURFACES
+    class: UNKNOWN
+    items: [accounting, finance, financial_kernel, treasury]
+    evidence: separate PG schemas present; no conflict detector
+    action: DO_NOT_CONSOLIDATE
+  - id: DUP-GOVERNANCE-DOCS-VS-OLTP
+    class: CONFIRMED
+    items: [P212/P229/P263/P290 architecture docs, postgres OLTP]
+    evidence: Mesh/MDM docs without data_mesh context or data_products table
+    action: TREAT_DOCS_AS_DESIGNED
+
+sources:
+  - kind: AUTHORITATIVE_CANDIDATE
+    store: postgresql://127.0.0.1:5433/marpich_platform
+    note: Local Wave 01 DB. Not production. Default code persistence is memory.
+  - kind: CACHE
+    store: redis://127.0.0.1:6379
+  - kind: OBJECT
+    store: minio:9000
+  - kind: EVENT
+    store: kafka-native:9092
+    mode: often EVENT_BUS_MODE=direct
+
+rationalization:
+  - class: OLTP_SCHEMAS_IN_USE
+    recommendation: RETAIN
+    evidence: 223 tables; Wave 02 loops TESTED
+    owner: NOT_AVAILABLE
+    risk: R-01
+    value: NOT_MEASURED
+  - class: GOVERNANCE_CATALOGS
+    recommendation: RETAIN_AS_DESIGNED
+    evidence: /api/v1/data-governance/catalog in-memory
+    owner: NOT_AVAILABLE
+    risk: false_published_product
+    value: NOT_MEASURED
+  - class: EMPTY_SCAFFOLD_APPS
+    recommendation: FREEZE
+    evidence: P336 EMPTY_SCAFFOLD
+  - class: DATA_PRODUCTS
+    recommendation: DO_NOT_PUBLISH
+    evidence: published_data_product_count 0
+retirement_candidates: []
+
+p336_feed:
+  initiative_ids:
+    - INIT-G26
+    - INIT-G19
+  debt_ids:
+    - TD-EVENT-PAYLOAD-SCHEMA
+  new_data_platform: FORBIDDEN
+  new_initiative: FORBIDDEN

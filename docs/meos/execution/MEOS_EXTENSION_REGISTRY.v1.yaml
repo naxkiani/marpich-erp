@@ -1,0 +1,123 @@
+# MEOS Extension Registry (machine)
+# Law: never CERTIFIED / AVAILABLE / ACTIVE without evidence.
+schema_version: "1.0"
+generated: "2026-08-18T07:45:00Z"
+source: docs/meos/execution/MEOS_EXTENSION_REGISTRY.md
+plugin_sor: contexts/plugins
+integration_sor: contexts/integration
+application_sor: docs/meos/execution/MEOS_APPLICATION_REGISTRY.v1.yaml
+overall_status: NOT_CERTIFIED
+production_active_count: 0
+certified_count: 0
+
+categories_supported:
+  - APPLICATIONS  # first-party MEOS apps — not marketplace SKUs
+  - PLUGINS       # Plugin Platform listings
+  - CONNECTORS    # Integration Platform types (P321)
+  - INTEGRATIONS  # P321 fabric entries
+  - AUTOMATION_PACKS  # P319 registry — none ACTIVE
+  - REPORTING_PACKS   # one DEMO seed
+categories_empty_or_not_marketplace:
+  - WORKFLOW_TEMPLATES  # Workflow Engine exists; no marketplace pack listings
+  - DASHBOARDS          # plugin type exists; no listings
+  - AI_TOOLS            # plugin type exists; no listings
+  - KNOWLEDGE_EXTENSIONS  # NOT_IMPLEMENTED as marketplace category
+
+extensions:
+  - id: EXT-APP-REGISTRY
+    name: First-party MEOS applications
+    type: APPLICATIONS
+    owner: platform
+    classification: BUILT_IN
+    lifecycle: IMPLEMENTED
+    security_status: TRUST_CRITICAL
+    tenant_scope: platform
+    notes: See MEOS_APPLICATION_REGISTRY — no app ACTIVE
+
+  - id: com.marpich.demo-sales-widget
+    name: Demo Sales KPI Widget
+    type: PLUGINS
+    plugin_type: widget
+    version: 1.0.0
+    owner: com.marpich
+    classification: FIRST_PARTY
+    experimental: true
+    trust_catalog: community
+    lifecycle: IMPLEMENTED_UNVERIFIED
+    security_status: NOT_CERTIFIED
+    capabilities: [ui.dashboard.widget]
+    permissions: [analytics.read, sales.orders.read]
+    sandbox: strict
+    tenant_scope: install-time
+    production_available: false
+    production_active: false
+
+  - id: com.marpich.demo-report-pack
+    name: Demo Financial Reports
+    type: REPORTING_PACKS
+    plugin_type: report
+    version: 2.1.0
+    owner: com.marpich
+    classification: FIRST_PARTY
+    experimental: true
+    trust_catalog: verified
+    lifecycle: IMPLEMENTED_UNVERIFIED
+    security_status: NOT_CERTIFIED
+    capabilities: [analytics.report.template]
+    permissions: [finance.reports.read]
+    sandbox: standard
+    tenant_scope: install-time
+    production_available: false
+    production_active: false
+    notes: Catalog trust "verified" is metadata, not CERTIFIED
+
+  - id: EXT-PLUGIN-SDK
+    name: marpich-plugin SDK
+    type: PLUGINS
+    owner: platform
+    classification: FIRST_PARTY
+    lifecycle: IMPLEMENTED
+    path: packages/plugin-sdk
+    production_active: false
+    notes: Authoring CLI — not an installed tenant extension
+
+  - id: EXT-FED-IDP
+    name: Identity federation provider descriptors
+    type: INTERNAL_EXTENSION
+    owner: identity_federation
+    classification: INTERNAL_EXTENSION
+    lifecycle: IMPLEMENTED_UNVERIFIED
+    security_status: NOT_CERTIFIED
+    production_active: false
+    notes: Protocol descriptors (oidc/saml/ldap/…). Not Plugin Platform listings. External IdP production NOT_AVAILABLE (P321).
+
+  - id: EXT-CONN-TYPES
+    name: Integration connector types
+    type: CONNECTORS
+    owner: integration
+    classification: BUILT_IN
+    lifecycle: DESIGNED
+    catalog: docs/architecture/integration/CONNECTOR_CATALOG.yaml
+    production_active: false
+    notes: Types only — not live bank/payment/gov partners
+
+  - id: EXT-EIS-UI
+    name: EIS Connector marketplace UI
+    type: CONNECTORS
+    owner: enterprise_integration_studio
+    classification: INTERNAL_EXTENSION
+    lifecycle: IMPLEMENTED
+    security_status: NOT_CERTIFIED
+    notes: Fragmented discovery UI. SoR remains Integration Platform + Plugin Platform. Not a second marketplace product.
+
+  - id: EXT-AUTO-P319
+    name: P319 automation registry
+    type: AUTOMATION_PACKS
+    owner: platform
+    classification: BUILT_IN
+    lifecycle: BLOCK_AUTOMATION
+    production_active: false
+
+third_party_listings: []
+partner_listings: []
+deprecated: []

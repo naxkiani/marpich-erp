@@ -1,27 +1,47 @@
-import { clearSessionCookie, setSessionCookie } from "./cookie";
 import { SESSION_STORAGE_KEY } from "./config";
+import { clearSessionCookie, setSessionCookie } from "./cookie";
 import type { AuthSession } from "./types";
+
+export function toPublicSession(session: AuthSession): AuthSession {
+  return {
+    tenantId: session.tenantId,
+    expiresAt: session.expiresAt,
+    userId: session.userId,
+  };
+}
+
+function persistPublic(session: AuthSession): void {
+  window.sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(toPublicSession(session)));
+}
 
 export function loadSession(): AuthSession | null {
   if (typeof window === "undefined") return null;
   try {
     const raw = window.sessionStorage.getItem(SESSION_STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as AuthSession) : null;
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as AuthSession;
+    if (!parsed?.tenantId) return null;
+    if (parsed.accessToken || parsed.refreshToken) {
+      persistPublic(parsed);
+    }
+    return toPublicSession(parsed);
   } catch {
     return null;
   }
 }
 
-export function saveSession(session: AuthSession): void {
+export async function saveSession(session: AuthSession): Promise<void> {
   if (typeof window === "undefined") return;
-  window.sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(session));
-  setSessionCookie(session.accessToken);
+  if (session.accessToken) {
+    await setSessionCookie(session.accessToken, session.refreshToken);
+  }
+  persistPublic(session);
 }
 
-export function clearSession(): void {
+export async function clearSession(): Promise<void> {
   if (typeof window === "undefined") return;
   window.sessionStorage.removeItem(SESSION_STORAGE_KEY);
-  clearSessionCookie();
+  await clearSessionCookie();
 }
 
 export function isSessionExpired(session: AuthSession): boolean {
@@ -33,12 +53,16 @@ export function isAuthFailure(status: number): boolean {
   return status === 401 || status === 403;
 }
 
+/** Browser calls use the BFF; Authorization is attached server-side from the HttpOnly cookie. */
 export function authHeaders(session: AuthSession): HeadersInit {
-  return {
+  const headers: Record<string, string> = {
     "Content-Type": "application/json",
     "X-Tenant-ID": session.tenantId,
-    Authorization: `Bearer ${session.accessToken}`,
   };
+  if (typeof window === "undefined" && session.accessToken) {
+    headers.Authorization = `Bearer ${session.accessToken}`;
+  }
+  return headers;
 }
 
 export function tenantHeaders(tenantId: string): HeadersInit {

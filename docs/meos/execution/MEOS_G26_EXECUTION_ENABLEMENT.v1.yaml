@@ -1,0 +1,131 @@
+# MEOS P340 G26 Execution Enablement (machine)
+# Law: inspect G26 and bind only authorized decisions. Never invent actions, events, benefits, or GO_LIVE.
+schema_version: "1.0"
+generated: "2026-08-19T07:40:00Z"
+source: docs/meos/execution/MEOS_P340_G26_EXECUTION_ENABLEMENT.md
+p339_sor: docs/meos/execution/MEOS_DECISION_EXECUTION.v1.yaml
+decision_sor: docs/meos/execution/MEOS_DECISION_REGISTRY.v1.yaml
+certification_sor: docs/meos/execution/MEOS_P313_PRODUCTION_CERTIFICATION.md
+p341_overlay: docs/meos/execution/MEOS_PRODUCTION_INFRASTRUCTURE_READINESS.v1.yaml
+go_live_sor: docs/meos/execution/MEOS_P314_GO_LIVE_REPORT.md
+debt_sor: docs/meos/execution/MEOS_TECHNICAL_DEBT_REGISTRY.v1.yaml
+overall_status: BLOCKED
+maturity: INVENTORIED
+outcome: OUTCOME_B
+production_certified: false
+go_live: NOT APPROVED
+production_active: false
+closed_loop: BLOCKED
+
+g26:
+  status: BLOCKED
+  class: P0
+  debt_id: TD-G26-PROD-CLUSTER
+  initiative_id: INIT-G26
+  change_id: CHG-G26
+  change_status: ASSESSED
+  compose_profile: EXISTS
+  compose_file: infrastructure/docker/compose/docker-compose.meos-prod.yml
+  compose_note: Workstation production-profile. Self-signed TLS. Not a cloud cluster.
+  meosprod_stack: STOPPED
+  meosprod_evidence: meos-prod-postgres/caddy/redis Exited ~38h
+  cloud_cluster: MISSING
+  public_ca_tls: MISSING
+  secret_manager: MISSING
+  ci_immutable_sha_deploy: BLOCKED
+  git_describe: 47258dfd-dirty
+  workstation_demo: PARTIAL
+
+production_runtime:
+  status: BLOCKED
+  local_api_health: "200"
+  local_ready_database: ok
+  local_postgres: "127.0.0.1:5433"
+  local_kafka: "127.0.0.1:9092"
+  local_minio: "127.0.0.1:9000"
+  meosprod_ports: NOT_RUNNING
+  note: Workstation compose/API is not production.
+
+workflow_binding:
+  status: NOT_AVAILABLE
+  decision_ids_bound: 0
+  workflow_decision_field: ABSENT
+  note: contexts.workflow has no decision_id. Registry workflow_task_id all NOT_AVAILABLE.
+
+task_binding:
+  status: NOT_AVAILABLE
+  bound_task_count: 0
+
+authorized_action_count: 0
+runtime_action_count: 0
+holds_preserved:
+  - DEC-P314-001
+  - DEC-P319-001
+  - DEC-P324-001
+  - DEC-P326-001
+
+event_telemetry:
+  status: BLOCKED
+  local_bus: IMPLEMENTED_UNVERIFIED
+  production_outbox: NOT_EXERCISED
+  fabricated_events: FORBIDDEN
+
+outcome_measurement:
+  status: NOT_MEASURED
+  measured_count: 0
+
+kpi_telemetry:
+  status: BLOCKED
+  production_kpis: DATA_NOT_AVAILABLE
+
+observability:
+  g23: FAIL
+  health_probes: PASS_LOCAL
+  alerting: FAIL
+  tracing_production: NOT_AVAILABLE
+
+audit:
+  status: CONFIGURATION_EVIDENCE
+  runtime_evidence: NOT_AVAILABLE
+
+tenant_isolation:
+  execution_path: IMPLEMENTED_UNVERIFIED
+  cross_tenant_decision_trace: NOT_EXERCISED
+
+security:
+  status: IMPLEMENTED_UNVERIFIED
+  production_hard_gates: CODE_PRESENT
+  production_environment: NOT_ACTIVE
+
+benefit_count: 0
+realized_benefit_count: 0
+value_variance: NOT_MEASURED
+autonomy_level: L0
+ai_execution: STUB
+rollback: BLOCKED
+smoke_path: NOT_EXECUTED
+
+new_pmo: FORBIDDEN
+new_workflow_engine: FORBIDDEN
+new_bpm: FORBIDDEN
+synthetic_tasks: FORBIDDEN
+synthetic_actions: FORBIDDEN
+
+why_g26_not_closed:
+  - No cloud production cluster
+  - meos-prod compose stack STOPPED and is not G26 even if started
+  - Public-CA TLS MISSING
+  - Secret manager MISSING
+  - CI deploy of immutable SHA BLOCKED (dirty tree)
+  - DEC-P314-001 remains NOT APPROVED — no authorized production action
+  - CHG-G26 status ASSESSED not APPROVED
+
+blockers_remaining:
+  - BLK-G26
+  - BLK-G25
+  - BLK-G27
+  - G23-FAIL
+  - G18-STUB
+  - G19-DSAR
+  - DECISION-WORKFLOW-NOT-BOUND
+  - NO-AUTHORIZED-ACTIONS

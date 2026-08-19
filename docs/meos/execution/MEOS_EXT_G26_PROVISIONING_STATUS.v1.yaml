@@ -1,0 +1,157 @@
+# MEOS P350 — EXT-G26 provisioning status (machine)
+# Law: provision only with real credentials and a selected provider.
+# P349 PROVIDER_SELECTION=BLOCKED. Do not simulate. Do not set G26_READY. Do not change P0.
+schema_version: "1.0"
+generated: "2026-08-19T12:20:00Z"
+phase: P350
+p350_status: BLOCKED
+provisioning: BLOCKED
+credentials_required: true
+p349_gate: PASS
+p349_status: REQUIREMENTS_IDENTIFIED
+provider_gate: BLOCKED
+credential_gate: BLOCKED
+provider: NOT_SELECTED
+current_provider: NOT_AVAILABLE
+recommended_provider_class: MANAGED_KUBERNETES_PLUS_MANAGED_POSTGRESQL
+provider_switched: false
+ext_g26_status: UNRESOLVED
+g26_status: BLOCKED
+g26_ready: false
+p0_count: 1
+p0_changed_by_p350: false
+p313: NOT_CERTIFIED
+p313_auto_start: false
+p313_reentry: NOT_STARTED
+p313_reentry_ready: false
+production: false
+production_identity: LOCAL
+production_certified: false
+go_live_ready: false
+go_live_authorization: NOT_APPROVED
+dec_p314_001: NOT APPROVED
+registry_active_count: 0
+production_traffic: NOT_ENABLED
+g23: FAIL
+g23_configured: true
+g23_production_verified: false
+forbidden_sha: 47258dfd-dirty
+git_status_short_empty: false
+forbidden_dirty: true
+deployment_executed: false
+helm_deployed: false
+flux_applied: false
+migrations_executed: false
+applications_activated: false
+p351_created: false
+p350_does_not_start_p313: true
+p350_does_not_execute_golive: true
+p350_does_not_simulate: true
+owner_default: NOT_AVAILABLE
+
+p349_artifacts:
+  compatibility: PRESENT
+  dependencies: PRESENT
+  bom: PRESENT
+  plan: PRESENT
+  overlay: PRESENT
+
+credentials:
+  cloud_account: MISSING
+  cluster_access: MISSING
+  database_access: MISSING
+  dns_access: MISSING
+  secret_manager_access: MISSING
+  cicd_deployment_access: MISSING
+  registry_access: NOT_VERIFIED
+  render_api: INVALID
+  kubeconfig: MISSING
+  kubectl: MISSING
+  helm_cli: MISSING
+  flux_cli: MISSING
+  aws_access_key: MISSING
+  vault_addr: MISSING
+
+local_non_production:
+  pghost: 127.0.0.1
+  pgport: "5433"
+  class: LOCAL
+  compose: NON_PRODUCTION
+  localhost_health: NON_PRODUCTION
+
+gates:
+  G26-01:
+    status: BLOCKED
+    evidence: KUBECONFIG missing; ~/.kube/config absent; kubectl MISSING
+    timestamp: "2026-08-19T12:20:00Z"
+    source: scripts/meos-ext-g26-readiness.py + host inspect
+    blocker: Authorized production cluster
+  G26-02:
+    status: BLOCKED
+    evidence: PGHOST=127.0.0.1 PGPORT=5433 LOCAL NON_PRODUCTION
+    timestamp: "2026-08-19T12:20:00Z"
+    source: scripts/meos-ext-g26-readiness.py
+    blocker: Managed PostgreSQL not localhost/:5433/:5444
+  G26-03:
+    status: BLOCKED
+    evidence: Public CA not evidenced; MEOS_PUBLIC_CA_TLS unset
+    timestamp: "2026-08-19T12:20:00Z"
+    source: scripts/meos-ext-g26-readiness.py
+    blocker: Public DNS + public-CA certificate
+  G26-04:
+    status: BLOCKED
+    evidence: MEOS_SECRET_MANAGER_AVAILABLE unset; not set to force PASS
+    timestamp: "2026-08-19T12:20:00Z"
+    source: scripts/meos-ext-g26-readiness.py
+    blocker: Production secret manager
+  G26-05:
+    status: FAIL
+    evidence: git status --short not empty; 47258dfd-dirty FORBIDDEN
+    timestamp: "2026-08-19T12:20:00Z"
+    source: git describe --always --dirty
+    blocker: Clean working tree then CI digest
+  G26-06:
+    status: BLOCKED
+    evidence: CI workflow DESIGNED; deploy credentials MISSING; no digest
+    timestamp: "2026-08-19T12:20:00Z"
+    source: .github/workflows/identity-federation-enterprise.yml
+    blocker: CI deploy credentials and immutable digest
+  G26-07:
+    status: NOT_AVAILABLE
+    evidence: LIVE_PRODUCTION_HOSTNAME=NOT_DEFINED; MEOS_PRODUCTION_DNS unset
+    timestamp: "2026-08-19T12:20:00Z"
+    source: P349 + validator
+    blocker: Production DNS/ingress
+  G26-08:
+    status: BLOCKED
+    evidence: No production runtime; local /health is not production; no Helm/Flux apply
+    timestamp: "2026-08-19T12:20:00Z"
+    source: host inspect
+    blocker: Production runtime identity
+  G26-09:
+    status: NOT_AVAILABLE
+    evidence: No deployed commit/digest
+    timestamp: "2026-08-19T12:20:00Z"
+    source: validator
+    blocker: Immutable deployment identity
+  G26-10:
+    status: BLOCKED
+    evidence: Helm rollback CONFIGURED; not exercised
+    timestamp: "2026-08-19T12:20:00Z"
+    source: identity-federation-enterprise.yml
+    blocker: Exercised production rollback
+
+failure:
+  external_dependency: AUTHORIZED_PRODUCTION_HOSTING_ACCOUNT
+  owner: NOT_AVAILABLE
+  required_resource: Selected production provider + cluster + managed PostgreSQL + public DNS/TLS + secret manager + CI kube credentials + clean SHA
+  evidence_required: Real kubeconfig, non-local PG, public-CA TLS, secret manager availability, empty git status, CI digest, deployed identity, exercised rollback
+  next_action: Human provides authorized credentials and selects provider; re-enter P350. Do not create P351. Do not start P313.
+
+reuse:
+  helm: infrastructure/kubernetes/helm/marpich-iam/
+  flux: infrastructure/fluxcd/marpich-iam-helmrelease.yaml
+  ci: .github/workflows/identity-federation-enterprise.yml
+  registry: ghcr.io/marpich/marpich-backend
+  new_deployment_platform: FORBIDDEN
+  new_ci_platform: FORBIDDEN
