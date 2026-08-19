@@ -1,0 +1,16 @@
+# Plugin compatibility overlay (P355). Reuses Plugin Platform + plugin-sdk. No second plugin system.
+schema_version: "1"
+runtime: contexts.plugins
+sdk: packages/plugin-sdk
+required_fields:
+  - plugin_id
+  - version
+  - required_meos_version
+  - compatibility
+  - dependencies
+  - license
+  - status
+required_meos_version: "0.1.0"
+compatibility: DESIGNED
+unsigned_production: FORBIDDEN
+g26_ready: false

@@ -1,0 +1,22 @@
+# Canonical environment contract (placeholders only). Never commit secrets.
+# States: CONFIGURED | AVAILABLE | VERIFIED | PRODUCTION_VERIFIED
+schema_version: "1"
+categories:
+  APP_ENV: { configured: true, verified: false, production_verified: false }
+  DATABASE_URL: { configured: true, verified: false, production_verified: false }
+  DATABASE_SSL: { configured: true, verified: false, production_verified: false }
+  REDIS_URL: { configured: true, verified: false, production_verified: false }
+  SECRET_PROVIDER: { configured: true, available: false, production_verified: false }
+  STORAGE_PROVIDER: { configured: true, available: false, production_verified: false }
+  PUBLIC_BASE_URL: { configured: true, verified: false, production_verified: false }
+  TLS_MODE: { configured: true, verified: false, production_verified: false }
+  EMAIL_PROVIDER: { configured: true, available: false, production_verified: false }
+  OBSERVABILITY_PROVIDER: { configured: true, production_verified: false }
+  BACKUP_PROVIDER: { configured: true, production_verified: false }
+  REGISTRY: { configured: true, available: false }
+  IMAGE: { configured: true, class: NON_PRODUCTION_UNTIL_DIGEST }
+  IMAGE_DIGEST: { configured: false, value: NOT_AVAILABLE }
+localhost_is_production: false
+compose_is_production: false
+env_production_flag_is_not_evidence: true
+g26_ready: false

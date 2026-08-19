@@ -27,6 +27,8 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    # P354: immutable identity via valuesFrom ConfigMap marpich-iam-flux-values
+    # (image.digest = CI GHCR digest). Empty digest is NOT_AVAILABLE. Never :latest.
     featureFlags:
       federationEnabled: true
       federationAiEnabled: true

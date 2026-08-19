@@ -28,6 +28,7 @@ REQUIRED_OPENAPI_PATHS = (
     "/api/v1/plugins/marketplace/listings",
     "/api/v1/notifications/inbox",
     "/api/v1/settings/config",
+    "/api/v1/feature-flags/entitlements/evaluate",
     "/api/v1/hospital/patients",
     "/api/v1/accounting/billings",
     "/api/v1/finance/accounts",

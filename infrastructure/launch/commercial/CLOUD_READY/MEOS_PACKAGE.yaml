@@ -1,0 +1,10 @@
+package: CLOUD_READY
+secrets: none
+platforms: [AWS, AZURE, GCP]
+installer: python3 scripts/meos-install.py --platform AWS
+marketplace: docs/meos/execution/MEOS_MARKETPLACE_REQUIREMENTS.v1.yaml
+license_contract: docs/meos/execution/MEOS_LICENSE_MODEL.v1.yaml
+deployment: existing Helm/Flux adapters
+provision: FORBIDDEN_IN_P355
+status: READY_FOR_CREDENTIALS
+payment_execution: READY_FOR_CREDENTIALS

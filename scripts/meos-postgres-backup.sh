@@ -25,8 +25,21 @@ pg_isready -h "$PGHOST" -p "$PGPORT" -U "$PGUSER" >/dev/null
 echo "== pg_dump → ${OUT} =="
 # Prefer the Postgres container's pg_dump so dump dialect matches the server
 # (host pg_dump 18+ emits SET transaction_timeout / \\restrict rejected by PG 16).
-if command -v docker >/dev/null 2>&1 && docker ps --format '{{.Names}}' | grep -qx marpich-postgres; then
-  docker exec -e PGPASSWORD="$PGPASSWORD" marpich-postgres \
+PG_CONTAINER="${MEOS_POSTGRES_CONTAINER:-}"
+if [[ -z "$PG_CONTAINER" ]] && command -v docker >/dev/null 2>&1; then
+  for candidate in marpich-postgres meos-prod-postgres; do
+    if docker ps --format '{{.Names}}' | grep -qx "$candidate"; then
+      PG_CONTAINER="$candidate"
+      [[ "$candidate" == "meos-prod-postgres" && "${PGPORT}" == "5444" ]] && break
+      [[ "$candidate" == "marpich-postgres" && "${PGPORT}" != "5444" ]] && break
+    fi
+  done
+  if [[ "${PGPORT}" == "5444" ]] && docker ps --format '{{.Names}}' | grep -qx meos-prod-postgres; then
+    PG_CONTAINER=meos-prod-postgres
+  fi
+fi
+if [[ -n "$PG_CONTAINER" ]]; then
+  docker exec -e PGPASSWORD="$PGPASSWORD" "$PG_CONTAINER" \
     pg_dump -U "$PGUSER" -d "$PGDATABASE" --no-owner --no-acl --format=plain | gzip -c >"$OUT"
 else
   pg_dump --no-owner --no-acl --format=plain | gzip -c >"$OUT"

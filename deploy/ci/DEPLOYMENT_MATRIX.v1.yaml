@@ -1,0 +1,103 @@
+# CI/CD productization matrix. Reuses existing workflow. No second pipeline.
+# Production deploy remains workflow_dispatch + GitHub environment + G26/P313/human GO-LIVE.
+schema_version: "1"
+workflow: .github/workflows/identity-federation-enterprise.yml
+automatic_production_deploy: false
+g26_gate: required
+p313_gate: required
+go_live_authorization: NOT_APPROVED
+forbidden_identity: 47258dfd-dirty
+image_tag_latest_as_release: FORBIDDEN
+
+matrix:
+  LOCAL:
+    PLATFORM: LOCAL
+    ENVIRONMENT: local
+    BUILD: docker_or_uvicorn
+    TEST: pytest
+    IMAGE: meos/backend:local-build
+    DIGEST: NOT_AVAILABLE
+    DEPLOYMENT: scripts/dev-up.sh
+    VERIFICATION: /api/v1/ready
+    auto_deploy: false
+  DEMO:
+    PLATFORM: DEMO
+    ENVIRONMENT: demo
+    BUILD: docker build backend.Dockerfile
+    TEST: pytest + compose health
+    IMAGE: meos/backend:local-build
+    DIGEST: NOT_AVAILABLE
+    DEPLOYMENT: deploy/scripts/meos-demo.sh start
+    VERIFICATION: /api/v1/health and /api/v1/ready
+    auto_deploy: false
+  VPS:
+    PLATFORM: VPS
+    ENVIRONMENT: vps
+    BUILD: existing CI image
+    TEST: helm lint + unit
+    IMAGE: ghcr.io/marpich/marpich-backend
+    DIGEST: CI_OUTPUT_OR_NOT_AVAILABLE
+    DEPLOYMENT: scripts/meos-vps-bootstrap.sh
+    VERIFICATION: READY_FOR_CREDENTIALS
+    auto_deploy: false
+  HOSTINGER_VPS:
+    PLATFORM: HOSTINGER_VPS
+    ENVIRONMENT: hostinger_vps
+    BUILD: existing CI image
+    TEST: same as VPS
+    IMAGE: ghcr.io/marpich/marpich-backend
+    DIGEST: CI_OUTPUT_OR_NOT_AVAILABLE
+    DEPLOYMENT: deploy/vps
+    VERIFICATION: READY_FOR_CREDENTIALS
+    auto_deploy: false
+  AWS:
+    PLATFORM: AWS
+    ENVIRONMENT: aws
+    BUILD: existing CI
+    TEST: existing CI
+    IMAGE: ghcr.io/marpich/marpich-backend
+    DIGEST: CI_OUTPUT_OR_NOT_AVAILABLE
+    DEPLOYMENT: EC2+Compose or EKS+Helm
+    VERIFICATION: READY_FOR_CREDENTIALS
+    auto_deploy: false
+  AZURE:
+    PLATFORM: AZURE
+    ENVIRONMENT: azure
+    BUILD: existing CI
+    TEST: existing CI
+    IMAGE: ghcr.io/marpich/marpich-backend
+    DIGEST: CI_OUTPUT_OR_NOT_AVAILABLE
+    DEPLOYMENT: VM+Compose or AKS+Helm
+    VERIFICATION: READY_FOR_CREDENTIALS
+    auto_deploy: false
+  GCP:
+    PLATFORM: GCP
+    ENVIRONMENT: gcp
+    BUILD: existing CI
+    TEST: existing CI
+    IMAGE: ghcr.io/marpich/marpich-backend
+    DIGEST: CI_OUTPUT_OR_NOT_AVAILABLE
+    DEPLOYMENT: GCE+Compose or GKE+Helm
+    VERIFICATION: READY_FOR_CREDENTIALS
+    auto_deploy: false
+  KUBERNETES:
+    PLATFORM: KUBERNETES
+    ENVIRONMENT: kubernetes
+    BUILD: existing CI
+    TEST: helm lint
+    IMAGE: ghcr.io/marpich/marpich-backend
+    DIGEST: steps.image.outputs.digest
+    DEPLOYMENT: helm upgrade --install (Flux optional)
+    VERIFICATION: READY_FOR_CREDENTIALS
+    auto_deploy: false
+  PRODUCTION:
+    PLATFORM: PRODUCTION
+    ENVIRONMENT: production
+    BUILD: existing CI
+    TEST: G26 + P313
+    IMAGE: ghcr.io/marpich/marpich-backend
+    DIGEST: REQUIRED
+    DEPLOYMENT: workflow_dispatch environment=production
+    VERIFICATION: BLOCKED
+    auto_deploy: false
+    g26_ready: false

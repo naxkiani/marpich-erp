@@ -23,6 +23,11 @@ class EvaluateRequest(BaseModel):
     context: dict = Field(default_factory=dict)
 
 
+class EntitlementEvaluateRequest(BaseModel):
+    feature_id: str = Field(min_length=2, max_length=128)
+    license: dict | None = None
+
+
 class RolloutRequest(BaseModel):
     percentage: int = Field(ge=0, le=100)
     stage: str = Field(pattern=r"^(off|canary|full)$")

@@ -1,0 +1,54 @@
+# MEOS version compatibility (P355). Reject unsupported combinations. Do not invent versions.
+schema_version: "1"
+application: "0.1.0"
+api: "v1"
+database_schema_min: "000"
+database_schema_current: "055"
+config_version_prefix: "cv-"
+helm_app_version: "7.0.0"
+versioning_gap: "backend 0.1.0 vs helm 7.0.0; do not invent a commercial version"
+
+release_channels:
+  DEV:
+    promotion_to: [ALPHA]
+    silent_promotion: FORBIDDEN
+  ALPHA:
+    promotion_to: [BETA]
+    silent_promotion: FORBIDDEN
+  BETA:
+    promotion_to: [RC]
+    silent_promotion: FORBIDDEN
+  RC:
+    promotion_to: [STABLE]
+    silent_promotion: FORBIDDEN
+  STABLE:
+    promotion_to: [LTS]
+    silent_promotion: FORBIDDEN
+  LTS:
+    promotion_to: []
+    silent_promotion: FORBIDDEN
+
+compatibility:
+  application_to_database:
+    "0.1.0":
+      schema: ["055"]
+  application_to_api:
+    "0.1.0":
+      api: ["v1"]
+  plugins:
+    required_meos_version: "0.1.0"
+    status: DESIGNED
+  tenant_schema:
+    isolation: tenant_id
+    cross_tenant: FORBIDDEN
+
+upgrade:
+  CURRENT_VERSION: "0.1.0"
+  TARGET_VERSION: NOT_AVAILABLE
+  BACKUP_REQUIRED: true
+  ROLLBACK_SUPPORTED: true
+  ROLLBACK_TESTED: false
+  UPGRADE_STATUS: DESIGNED
+
+reject_unsupported: true
+g26_ready: false

@@ -96,7 +96,7 @@ services:
     image: ${MEOS_IMAGE:-meos/backend:local-build}
     build:
       context: ../../../backend
-      dockerfile: ../images/backend.Dockerfile
+      dockerfile: ../infrastructure/docker/images/backend.Dockerfile
     container_name: meos-prod-backend
     restart: unless-stopped
     environment:
@@ -133,7 +133,7 @@ services:
     image: ${MEOS_IMAGE:-meos/backend:local-build}
     build:
       context: ../../../backend
-      dockerfile: ../images/backend.Dockerfile
+      dockerfile: ../infrastructure/docker/images/backend.Dockerfile
     container_name: meos-prod-worker
     restart: unless-stopped
     command: ["python", "-m", "core.presentation.workers.outbox_worker"]

@@ -30,7 +30,9 @@
 **P350:** do not display provisioned cluster, G26_READY, or P313 re-entry. Provisioning **BLOCKED**. See [MEOS_P350_PROVISIONING_REPORT.md](./MEOS_P350_PROVISIONING_REPORT.md).  
 **P351:** do not display production or G26 PASS from launch adapters. Product foundation only. See [MEOS_MULTI_PLATFORM_LAUNCH_MATRIX.md](./MEOS_MULTI_PLATFORM_LAUNCH_MATRIX.md).  
 **P352:** do not display G26_READY from Docker build or local restore. See [MEOS_P352_PRODUCT_INFRASTRUCTURE_HARDENING.md](./MEOS_P352_PRODUCT_INFRASTRUCTURE_HARDENING.md).  
-**P353:** do not display PRODUCTION_CERTIFIED or GHCR digest from a local image id. Local clean SHA ≠ GO-LIVE. See [MEOS_P353_RELEASE_ENGINEERING_REPORT.md](./MEOS_P353_RELEASE_ENGINEERING_REPORT.md).
+**P353:** do not display PRODUCTION_CERTIFIED or GHCR digest from a local image id. Deployment factory adapters and READY_FOR_CREDENTIALS ≠ GO-LIVE. See [MEOS_P353_RELEASE_ENGINEERING_REPORT.md](./MEOS_P353_RELEASE_ENGINEERING_REPORT.md) · [MEOS_P353_PLATFORM_PRODUCTIZATION.md](./MEOS_P353_PLATFORM_PRODUCTIZATION.md).  
+**P354:** do not display PRODUCTION_CERTIFIED from `meos-install.py` or `meos-launch.py`. PLAN_ONLY / READY_FOR_CREDENTIALS ≠ live cluster. `--force` does not exist. See [MEOS_P354_UNIVERSAL_INSTALLATION.md](./MEOS_P354_UNIVERSAL_INSTALLATION.md) · [MEOS_P354_LAUNCH_CONTROL_REPORT.md](./MEOS_P354_LAUNCH_CONTROL_REPORT.md).  
+**P355:** do not display revenue, paid customers, or PRODUCT_READY as G26. See [MEOS_P355_PRODUCTIZATION.md](./MEOS_P355_PRODUCTIZATION.md).
 
 ## Law
 

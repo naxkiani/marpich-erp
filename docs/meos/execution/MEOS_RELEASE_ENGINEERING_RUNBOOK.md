@@ -21,6 +21,8 @@ WORKTREE CLEAN
 
 Forbidden as certification evidence: `latest`, dirty describe, local-only image id, compose `:5444`, localhost `/health`.
 
+See P354 operator CLI: [MEOS_RELEASE_OPERATIONS.md](./MEOS_RELEASE_OPERATIONS.md) · `python3 scripts/meos-release.py inspect`
+
 ## Existing CI (do not replace)
 
 `.github/workflows/identity-federation-enterprise.yml`

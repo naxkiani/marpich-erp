@@ -10,6 +10,7 @@ from contexts.feature_flags.presentation.schemas import (
     AbTestRequest,
     CreateFlagRequest,
     EmergencyDisableRequest,
+    EntitlementEvaluateRequest,
     EvaluateRequest,
     RollbackRequest,
     RolloutRequest,
@@ -38,6 +39,17 @@ async def get_dashboard(
     _user: Annotated[dict, Depends(require_permissions("feature_flags.dashboard.read"))],
 ):
     return {"data": (await get_feature_flag_service().get_dashboard(tenant_id)).unwrap()}
+
+
+@router.post("/entitlements/evaluate")
+async def evaluate_entitlement(
+    body: EntitlementEvaluateRequest,
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    _user: Annotated[dict, Depends(require_permissions("feature_flags.evaluate"))],
+):
+    from contexts.feature_flags.application.product_entitlement import validate_license
+
+    return {"data": validate_license(tenant_id=tenant_id, feature_id=body.feature_id, license=body.license)}
 
 
 @router.get("/{key}")

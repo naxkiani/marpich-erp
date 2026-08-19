@@ -1,0 +1,105 @@
+schema_version: "1"
+phase: P354
+source_of_truth: docs/meos/execution/MEOS_ENVIRONMENT_REGISTRY.v1.yaml
+cli: python3 scripts/meos-launch.py
+g26_ready: false
+p0: 1
+p313: NOT_CERTIFIED
+production_certified: false
+go_live_ready: false
+go_live_authorization: NOT_APPROVED
+active_applications: 0
+production_traffic: NOT_ENABLED
+localhost_is_production: false
+compose_is_production: false
+ready_for_credentials_is_ready: false
+automatic_deploy: false
+forbidden_overrides:
+  - --force
+  - --skip-g26
+  - --production-anyway
+  - --ignore-certification
+
+operator_flow:
+  - SELECT_PLATFORM
+  - CHECK_PREFLIGHT
+  - VIEW_BLOCKERS
+  - GENERATE_PLAN
+  - CONFIRM
+  - DEPLOY
+  - VERIFY
+  - RECEIVE_REPORT
+
+environments:
+  LOCAL:
+    ENVIRONMENT: LOCAL
+    READINESS: READY
+    BLOCKERS: []
+    DEPLOYMENT: NON_PRODUCTION
+    HEALTH: /api/v1/health
+    CERTIFICATION: NOT_APPLICABLE
+    NEXT_ACTION: python3 scripts/meos-launch.py deploy --env local --confirm yes
+  DEMO:
+    ENVIRONMENT: DEMO
+    READINESS: READY
+    BLOCKERS: []
+    DEPLOYMENT: NON_PRODUCTION
+    HEALTH: http://127.0.0.1:8080/api/v1/health
+    CERTIFICATION: NOT_APPLICABLE
+    NEXT_ACTION: python3 scripts/meos-launch.py deploy --env demo --confirm yes
+  VPS:
+    ENVIRONMENT: VPS
+    READINESS: READY_FOR_CREDENTIALS
+    BLOCKERS: [SSH_HOST]
+    DEPLOYMENT: NOT_EXECUTED
+    HEALTH: NOT_AVAILABLE
+    CERTIFICATION: NOT_APPLICABLE
+    NEXT_ACTION: supply VPS SSH then re-run preflight
+  HOSTINGER_VPS:
+    ENVIRONMENT: HOSTINGER_VPS
+    READINESS: READY_FOR_CREDENTIALS
+    BLOCKERS: [HOSTINGER_VPS_SSH]
+    DEPLOYMENT: NOT_EXECUTED
+    HEALTH: NOT_AVAILABLE
+    CERTIFICATION: NOT_APPLICABLE
+    NEXT_ACTION: Hostinger VPS credentials; shared hosting INCOMPATIBLE
+  AWS:
+    ENVIRONMENT: AWS
+    READINESS: READY_FOR_CREDENTIALS
+    BLOCKERS: [AWS_ACCESS_KEY_ID]
+    DEPLOYMENT: NOT_EXECUTED
+    HEALTH: NOT_AVAILABLE
+    CERTIFICATION: NOT_APPLICABLE
+    NEXT_ACTION: supply AWS credentials; do not invent account
+  AZURE:
+    ENVIRONMENT: AZURE
+    READINESS: READY_FOR_CREDENTIALS
+    BLOCKERS: [AZURE_CLIENT_ID]
+    DEPLOYMENT: NOT_EXECUTED
+    HEALTH: NOT_AVAILABLE
+    CERTIFICATION: NOT_APPLICABLE
+    NEXT_ACTION: supply Azure identity
+  GCP:
+    ENVIRONMENT: GCP
+    READINESS: READY_FOR_CREDENTIALS
+    BLOCKERS: [GOOGLE_APPLICATION_CREDENTIALS]
+    DEPLOYMENT: NOT_EXECUTED
+    HEALTH: NOT_AVAILABLE
+    CERTIFICATION: NOT_APPLICABLE
+    NEXT_ACTION: supply GCP identity
+  KUBERNETES:
+    ENVIRONMENT: KUBERNETES
+    READINESS: READY_FOR_CREDENTIALS
+    BLOCKERS: [kubeconfig, image.digest]
+    DEPLOYMENT: NOT_EXECUTED
+    HEALTH: NOT_AVAILABLE
+    CERTIFICATION: NOT_APPLICABLE
+    NEXT_ACTION: supply kubeconfig; set image.digest from CI
+  PRODUCTION:
+    ENVIRONMENT: PRODUCTION
+    READINESS: DEPLOYMENT_BLOCKED
+    BLOCKERS: [G26_READY=FALSE, P313_NOT_CERTIFIED, GO_LIVE_AUTHORIZATION_NOT_APPROVED]
+    DEPLOYMENT: BLOCKED
+    HEALTH: localhost_rejected
+    CERTIFICATION: NOT_CERTIFIED
+    NEXT_ACTION: EXT-G26 evidence only; do not start P313

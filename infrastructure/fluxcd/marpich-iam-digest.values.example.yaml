@@ -1,0 +1,5 @@
+# P354 — optional Flux values overlay. Copy to cluster ConfigMap marpich-iam-flux-values.
+# Never commit real digests invented locally. Never :latest as certification identity.
+# image.digest MUST come from CI steps.image.outputs.digest after GHCR push.
+image:
+  digest: ""

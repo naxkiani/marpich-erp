@@ -12,7 +12,9 @@
 **P347 (2026-08-19):** **EXT-G26 UNRESOLVED**. Do not treat this runbook as a live cluster. See [MEOS_P347_EXTERNAL_HANDOFF.md](./MEOS_P347_EXTERNAL_HANDOFF.md).  
 **P349 (2026-08-19):** Discovery plan only. **G26_READY = FALSE**. Do not treat this runbook as provisioned infrastructure. See [MEOS_EXT_G26_INFRASTRUCTURE_IMPLEMENTATION_PLAN.md](./MEOS_EXT_G26_INFRASTRUCTURE_IMPLEMENTATION_PLAN.md).  
 **P350 (2026-08-19):** Provisioning **BLOCKED**. No production cluster. See [MEOS_P350_PROVISIONING_REPORT.md](./MEOS_P350_PROVISIONING_REPORT.md) · [MEOS_PRODUCTION_ENVIRONMENT_RECORD.md](./MEOS_PRODUCTION_ENVIRONMENT_RECORD.md).  
-**P353 (2026-08-19):** VPS/K8s packages consume `MEOS_IMAGE` / `image.digest`, not `:latest`. No production deploy. See [MEOS_P353_RELEASE_ENGINEERING_REPORT.md](./MEOS_P353_RELEASE_ENGINEERING_REPORT.md).
+**P353 (2026-08-19):** VPS/K8s packages consume `MEOS_IMAGE` / `image.digest`, not `:latest`. Deployment factory adapters are not a production deploy. See [MEOS_P353_RELEASE_ENGINEERING_REPORT.md](./MEOS_P353_RELEASE_ENGINEERING_REPORT.md) · [MEOS_DEPLOYMENT_FACTORY.md](./MEOS_DEPLOYMENT_FACTORY.md).  
+**P354 (2026-08-19):** Use `python3 scripts/meos-install.py` (PLAN_ONLY) or `python3 scripts/meos-launch.py`. Not a production cutover. `--force` cannot bypass G26. See [MEOS_P354_UNIVERSAL_INSTALLATION.md](./MEOS_P354_UNIVERSAL_INSTALLATION.md) · [MEOS_P354_LAUNCH_CONTROL_REPORT.md](./MEOS_P354_LAUNCH_CONTROL_REPORT.md).  
+**P355 (2026-08-19):** Productization is not a production tenant factory. See [MEOS_P355_PRODUCTIZATION.md](./MEOS_P355_PRODUCTIZATION.md).
 
 Companion: [MEOS_WAVE01_POSTGRES_RUNBOOK.md](./MEOS_WAVE01_POSTGRES_RUNBOOK.md) · [MEOS_WAVE04_DR_RUNBOOK.md](./MEOS_WAVE04_DR_RUNBOOK.md)
 

@@ -1,0 +1,180 @@
+schema_version: "1"
+phase: P354_LAUNCH_CONTROL
+authoritative_registries:
+  - docs/meos/execution/MEOS_PLATFORM_READINESS.v1.yaml
+  - docs/meos/execution/MEOS_INSTALLATION_MATRIX.v1.yaml
+  - deploy/environments/CONTRACT.v1.yaml
+g26_ready: false
+p0: 1
+p313: NOT_CERTIFIED
+production_certified: false
+go_live_authorization: NOT_APPROVED
+hostinger_shared: INCOMPATIBLE
+localhost_is_production: false
+compose_is_production: false
+new_deployment_platform: FORBIDDEN
+cli: python3 scripts/meos-launch.py
+
+environments:
+  LOCAL:
+    id: LOCAL
+    name: Local development
+    type: workstation
+    provider: none
+    deployment_method: scripts/dev-up.sh
+    database: "127.0.0.1:5433 NON_PRODUCTION"
+    tls: none
+    secrets: env_file
+    registry: none
+    backup: scripts/meos-postgres-backup.sh
+    restore: scripts/meos-postgres-restore-drill.sh
+    rollback: deploy/scripts/meos-local.sh stop
+    observability: CONFIGURED
+    status: READY
+    requirements: [Docker, Compose]
+    credentials: NOT_REQUIRED
+    production_classification: LOCAL
+  DEMO:
+    id: DEMO
+    name: Docker Compose demo
+    type: compose
+    provider: none
+    deployment_method: deploy/scripts/meos-demo.sh start
+    database: "127.0.0.1:5444 NON_PRODUCTION"
+    tls: none_or_self_signed_NON_PRODUCTION
+    secrets: env_file
+    registry: local
+    backup: deploy/scripts/meos-demo.sh backup
+    restore: deploy/scripts/meos-demo.sh restore
+    rollback: deploy/scripts/meos-demo.sh stop
+    observability: CONFIGURED
+    status: READY
+    requirements: [Docker, Compose]
+    credentials: NOT_REQUIRED
+    production_classification: DEMO
+  VPS:
+    id: VPS
+    name: Generic Linux VPS
+    type: vm
+    provider: generic
+    deployment_method: scripts/meos-vps-bootstrap.sh
+    database: CHANGE_ME
+    tls: public_ca
+    secrets: env_file
+    registry: ghcr.io/marpich/marpich-backend
+    backup: scripts/meos-postgres-backup.sh
+    restore: scripts/meos-postgres-restore-drill.sh
+    rollback: MEOS_PREVIOUS_IMAGE
+    observability: CONFIGURED
+    status: READY_FOR_CREDENTIALS
+    requirements: [SSH, Docker, public hostname]
+    credentials: MISSING
+    production_classification: NON_PRODUCTION
+  HOSTINGER_VPS:
+    id: HOSTINGER_VPS
+    name: Hostinger VPS
+    type: vm
+    provider: hostinger
+    deployment_method: deploy/vps
+    database: CHANGE_ME
+    tls: public_ca
+    secrets: env_file
+    registry: ghcr.io/marpich/marpich-backend
+    backup: scripts/meos-postgres-backup.sh
+    restore: scripts/meos-postgres-restore-drill.sh
+    rollback: MEOS_PREVIOUS_IMAGE
+    observability: CONFIGURED
+    status: READY_FOR_CREDENTIALS
+    requirements: [Hostinger VPS not shared hosting]
+    credentials: MISSING
+    production_classification: NON_PRODUCTION
+  AWS:
+    id: AWS
+    name: Amazon Web Services
+    type: cloud
+    provider: aws
+    deployment_method: EC2 + Compose (EKS uses Helm)
+    database: CHANGE_ME_RDS
+    tls: public_ca
+    secrets: aws_secrets_manager
+    registry: ghcr.io/marpich/marpich-backend
+    backup: rds_or_script
+    restore: READY_FOR_CREDENTIALS
+    rollback: MEOS_PREVIOUS_IMAGE
+    observability: CONFIGURED
+    status: READY_FOR_CREDENTIALS
+    requirements: [AWS credentials, region]
+    credentials: MISSING
+    production_classification: NON_PRODUCTION
+  AZURE:
+    id: AZURE
+    name: Microsoft Azure
+    type: cloud
+    provider: azure
+    deployment_method: VM + Compose (AKS uses Helm)
+    database: CHANGE_ME_AZURE_PG
+    tls: public_ca
+    secrets: azure_key_vault
+    registry: ghcr.io/marpich/marpich-backend
+    backup: azure_or_script
+    restore: READY_FOR_CREDENTIALS
+    rollback: MEOS_PREVIOUS_IMAGE
+    observability: CONFIGURED
+    status: READY_FOR_CREDENTIALS
+    requirements: [Azure identity, subscription]
+    credentials: MISSING
+    production_classification: NON_PRODUCTION
+  GCP:
+    id: GCP
+    name: Google Cloud
+    type: cloud
+    provider: gcp
+    deployment_method: GCE + Compose (GKE uses Helm)
+    database: CHANGE_ME_CLOUDSQL
+    tls: public_ca
+    secrets: gcp_secret_manager
+    registry: ghcr.io/marpich/marpich-backend
+    backup: cloudsql_or_script
+    restore: READY_FOR_CREDENTIALS
+    rollback: MEOS_PREVIOUS_IMAGE
+    observability: CONFIGURED
+    status: READY_FOR_CREDENTIALS
+    requirements: [GCP identity, project]
+    credentials: MISSING
+    production_classification: NON_PRODUCTION
+  KUBERNETES:
+    id: KUBERNETES
+    name: Generic Kubernetes
+    type: kubernetes
+    provider: generic
+    deployment_method: helm upgrade --install (Flux optional)
+    database: CHANGE_ME
+    tls: cert_manager
+    secrets: external_secrets
+    registry: ghcr.io/marpich/marpich-backend
+    backup: READY_FOR_CREDENTIALS
+    restore: READY_FOR_CREDENTIALS
+    rollback: helm rollback marpich-iam 0
+    observability: CONFIGURED
+    status: READY_FOR_CREDENTIALS
+    requirements: [kubeconfig, image.digest]
+    credentials: MISSING
+    production_classification: NON_PRODUCTION
+  PRODUCTION:
+    id: PRODUCTION
+    name: Production
+    type: production
+    provider: NOT_SELECTED
+    deployment_method: BLOCKED
+    database: localhost_rejected
+    tls: public_ca_required
+    secrets: secret_manager_required
+    registry: ghcr.io/marpich/marpich-backend
+    backup: production_evidence_required
+    restore: production_evidence_required
+    rollback: NOT_PRODUCTION_EXERCISED
+    observability: CONFIGURED
+    status: DEPLOYMENT_BLOCKED
+    requirements: [G26_READY, P313 CERTIFIED, GO_LIVE APPROVED]
+    credentials: MISSING
+    production_classification: PRODUCTION

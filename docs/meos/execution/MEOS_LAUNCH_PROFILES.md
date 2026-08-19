@@ -60,6 +60,8 @@ Deploy sequence (when credentials exist): clean SHA → existing CI → GHCR dig
 ## Verification (all profiles)
 
 ```bash
+python3 scripts/meos-install.py --platform LOCAL
+python3 scripts/meos-install-readiness.py LOCAL
 python3 scripts/meos-launch-readiness.py
 python3 scripts/meos-ext-g26-readiness.py
 ```

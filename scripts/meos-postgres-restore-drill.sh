@@ -31,21 +31,41 @@ echo "  target: ${PGHOST}:${PGPORT}/${TARGET_DB}"
 
 pg_isready -h "$PGHOST" -p "$PGPORT" -U "$PGUSER" >/dev/null
 
+PG_CONTAINER="${MEOS_POSTGRES_CONTAINER:-}"
+if [[ -z "$PG_CONTAINER" ]] && command -v docker >/dev/null 2>&1; then
+  if [[ "${PGPORT}" == "5444" ]] && docker ps --format '{{.Names}}' | grep -qx meos-prod-postgres; then
+    PG_CONTAINER=meos-prod-postgres
+  elif docker ps --format '{{.Names}}' | grep -qx marpich-postgres; then
+    PG_CONTAINER=marpich-postgres
+  elif docker ps --format '{{.Names}}' | grep -qx meos-prod-postgres; then
+    PG_CONTAINER=meos-prod-postgres
+  fi
+fi
+
+psql_admin() {
+  if [[ -n "$PG_CONTAINER" ]]; then
+    docker exec -e PGPASSWORD="$PGPASSWORD" "$PG_CONTAINER" \
+      psql -v ON_ERROR_STOP=1 -U "$PGUSER" -d postgres "$@"
+  else
+    psql -h "$PGHOST" -p "$PGPORT" -U "$PGUSER" -v ON_ERROR_STOP=1 -d postgres "$@"
+  fi
+}
+
 # Recreate empty target DB
-psql -v ON_ERROR_STOP=1 -d postgres -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '${TARGET_DB}' AND pid <> pg_backend_pid();" >/dev/null || true
-psql -v ON_ERROR_STOP=1 -d postgres -c "DROP DATABASE IF EXISTS ${TARGET_DB};"
-psql -v ON_ERROR_STOP=1 -d postgres -c "CREATE DATABASE ${TARGET_DB} OWNER ${PGUSER};"
+psql_admin -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '${TARGET_DB}' AND pid <> pg_backend_pid();" >/dev/null || true
+psql_admin -c "DROP DATABASE IF EXISTS ${TARGET_DB};"
+psql_admin -c "CREATE DATABASE ${TARGET_DB} OWNER ${PGUSER};"
 
 echo "== gunzip | psql =="
 # Strip PG 18+ dump tokens that PostgreSQL 16 rejects.
 sanitize_pg_dump() {
   grep -vE '^(SET transaction_timeout|[[:space:]]*\\restrict|[[:space:]]*\\unrestrict)'
 }
-if command -v docker >/dev/null 2>&1 && docker ps --format '{{.Names}}' | grep -qx marpich-postgres; then
-  gunzip -c "$DUMP" | sanitize_pg_dump | docker exec -i -e PGPASSWORD="$PGPASSWORD" marpich-postgres \
+if [[ -n "$PG_CONTAINER" ]]; then
+  gunzip -c "$DUMP" | sanitize_pg_dump | docker exec -i -e PGPASSWORD="$PGPASSWORD" "$PG_CONTAINER" \
     psql -v ON_ERROR_STOP=1 -U "$PGUSER" -d "$TARGET_DB" >/dev/null
 else
-  gunzip -c "$DUMP" | sanitize_pg_dump | psql -v ON_ERROR_STOP=1 -d "$TARGET_DB" >/dev/null
+  gunzip -c "$DUMP" | sanitize_pg_dump | psql -h "$PGHOST" -p "$PGPORT" -U "$PGUSER" -v ON_ERROR_STOP=1 -d "$TARGET_DB" >/dev/null
 fi
 
 echo "== migrations on restore target =="

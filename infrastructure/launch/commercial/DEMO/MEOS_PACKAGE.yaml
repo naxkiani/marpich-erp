@@ -1,0 +1,10 @@
+package: DEMO
+secrets: none
+installer: python3 scripts/meos-install.py --platform DEMO
+compose: infrastructure/docker/compose/docker-compose.dev.yml
+license_contract: docs/meos/execution/MEOS_LICENSE_MODEL.v1.yaml
+upgrade: docs/meos/execution/MEOS_VERSION_COMPATIBILITY.v1.yaml
+backup: scripts/meos-postgres-backup.sh
+support: docs/meos/execution/MEOS_P355_PRODUCTIZATION.md
+class: DEMO
+production: false

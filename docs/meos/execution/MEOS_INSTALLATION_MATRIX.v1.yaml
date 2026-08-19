@@ -1,0 +1,132 @@
+schema_version: "1"
+phase: P354
+g26_ready: false
+production_certified: false
+go_live_authorization: NOT_APPROVED
+p0: 1
+p313: NOT_CERTIFIED
+deployment_mechanism_ready: true
+new_ci: FORBIDDEN
+new_kubernetes_controller: FORBIDDEN
+
+platforms:
+  DEMO:
+    platform: DEMO
+    status: READY
+    preflight: PASS
+    installer: PLAN_ONLY
+    deployment_method: docker-compose.meos-prod.yml
+    database: local_or_compose_5444_NON_PRODUCTION
+    tls: DEVELOPMENT_OR_SELF_SIGNED_ALLOWED
+    secrets: NOT_VERIFIED
+    backup: LOCAL_NON_PRODUCTION
+    rollback: MEOS_PREVIOUS_IMAGE
+    observability: CONFIGURED
+    credentials: NOT_REQUIRED
+    evidence: P352 local docker/restore; COMPOSE_IS_PRODUCTION=FALSE
+    next_action: python3 scripts/meos-install.py --platform DEMO
+  LOCAL:
+    platform: LOCAL
+    status: READY
+    preflight: PASS
+    installer: PLAN_ONLY
+    deployment_method: scripts/dev-up.sh + uvicorn
+    database: "127.0.0.1:5433 NON_PRODUCTION"
+    tls: DEVELOPMENT_OR_SELF_SIGNED_ALLOWED
+    secrets: NOT_VERIFIED
+    backup: LOCAL_NON_PRODUCTION
+    rollback: compose down
+    observability: CONFIGURED
+    credentials: NOT_REQUIRED
+    evidence: existing compose.dev
+    next_action: python3 scripts/meos-install.py --platform LOCAL
+  VPS:
+    platform: VPS
+    status: READY_FOR_CREDENTIALS
+    preflight: READY_FOR_CREDENTIALS
+    installer: PLAN_ONLY
+    deployment_method: scripts/meos-vps-bootstrap.sh + Compose + MEOS_IMAGE@digest
+    database: approved VPS PostgreSQL not published publicly
+    tls: public CA required for production claim
+    secrets: env injection template
+    backup: existing postgres backup scripts on that host
+    rollback: MEOS_PREVIOUS_IMAGE
+    observability: CONFIGURED
+    credentials: MISSING
+    evidence: bootstrap script + Caddyfile.vps.example
+    next_action: supply VPS SSH/Docker then re-run installer
+  HOSTINGER_VPS:
+    platform: HOSTINGER_VPS
+    status: READY_FOR_CREDENTIALS
+    preflight: READY_FOR_CREDENTIALS
+    installer: PLAN_ONLY
+    deployment_method: SSH + Docker + VPS package (not shared hosting)
+    database: VPS PostgreSQL
+    tls: public hostname + public CA
+    secrets: NOT_VERIFIED
+    backup: existing scripts
+    rollback: MEOS_PREVIOUS_IMAGE
+    observability: CONFIGURED
+    credentials: MISSING
+    evidence: Hostinger shared = INCOMPATIBLE
+    next_action: Hostinger VPS credentials or leave READY_FOR_CREDENTIALS
+  AWS:
+    platform: AWS
+    status: READY_FOR_CREDENTIALS
+    preflight: READY_FOR_CREDENTIALS
+    installer: PLAN_ONLY
+    deployment_method: existing Helm/Flux on EKS or Compose on EC2
+    database: RDS PostgreSQL when provisioned
+    tls: ACM or cert-manager
+    secrets: AWS Secrets Manager
+    backup: RDS snapshots when provisioned
+    rollback: helm rollback marpich-iam 0
+    observability: CONFIGURED
+    credentials: MISSING
+    evidence: P351/P353 adapters; no provision in P354
+    next_action: supply AWS credentials; do not invent account
+  AZURE:
+    platform: AZURE
+    status: READY_FOR_CREDENTIALS
+    preflight: READY_FOR_CREDENTIALS
+    installer: PLAN_ONLY
+    deployment_method: existing Helm on AKS or Compose on VM
+    database: Azure Database for PostgreSQL
+    tls: cert-manager or Front Door
+    secrets: Key Vault
+    backup: Azure backups when provisioned
+    rollback: helm rollback marpich-iam 0
+    observability: CONFIGURED
+    credentials: MISSING
+    evidence: P351/P353 adapters; no provision in P354
+    next_action: supply Azure credentials
+  GCP:
+    platform: GCP
+    status: READY_FOR_CREDENTIALS
+    preflight: READY_FOR_CREDENTIALS
+    installer: PLAN_ONLY
+    deployment_method: existing Helm on GKE or Compose on GCE
+    database: Cloud SQL
+    tls: cert-manager
+    secrets: Secret Manager
+    backup: Cloud SQL backups when provisioned
+    rollback: helm rollback marpich-iam 0
+    observability: CONFIGURED
+    credentials: MISSING
+    evidence: P351/P353 adapters; no provision in P354
+    next_action: supply GCP credentials
+  KUBERNETES:
+    platform: KUBERNETES
+    status: READY_FOR_CREDENTIALS
+    preflight: READY_FOR_CREDENTIALS
+    installer: PLAN_ONLY
+    deployment_method: helm upgrade --install + optional Flux HelmRelease
+    database: cluster or managed Postgres (not localhost)
+    tls: ingress + public CA
+    secrets: ExternalSecret template
+    backup: READY_FOR_CREDENTIALS
+    rollback: helm rollback marpich-iam 0 --namespace marpich
+    observability: CONFIGURED
+    credentials: MISSING
+    evidence: existing helm chart + fluxcd/marpich-iam-helmrelease.yaml
+    next_action: supply kubeconfig; set image.digest from CI

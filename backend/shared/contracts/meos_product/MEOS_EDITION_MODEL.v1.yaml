@@ -1,0 +1,61 @@
+schema_version: "1"
+product_id: meos
+law: never_duplicate_codebase
+editions:
+  community:
+    display_name: MEOS Community
+    rank: 10
+    license_requirement: none
+    subscription_requirement: none
+    features:
+      - core.identity
+      - core.organization
+      - core.settings
+      - module.crm
+  professional:
+    display_name: MEOS Professional
+    rank: 20
+    license_requirement: professional
+    subscription_requirement: trial_or_active
+    includes: community
+    features:
+      - module.accounting
+      - module.inventory
+      - analytics.standard
+  business:
+    display_name: MEOS Business
+    rank: 30
+    license_requirement: business
+    subscription_requirement: trial_or_active
+    includes: professional
+    features:
+      - module.hr
+      - module.payroll
+      - analytics.advanced
+      - plugins.marketplace
+  enterprise:
+    display_name: MEOS Enterprise
+    rank: 40
+    license_requirement: enterprise
+    subscription_requirement: active_or_contract
+    includes: business
+    features:
+      - federation
+      - workflow.enterprise
+      - audit.export
+      - ai.platform
+  government:
+    display_name: MEOS Government / Large Enterprise
+    rank: 50
+    license_requirement: government
+    subscription_requirement: enterprise_contract
+    includes: enterprise
+    features:
+      - compliance.pack
+      - sovereignty.controls
+feature_states: [ENABLED, DISABLED, TRIAL, EXPIRED, SUSPENDED, NOT_ENTITLED]
+capability_policy: policy_engine
+runtime_gate: feature_flags.evaluate
+client_side_entitlement_trust: FORBIDDEN
+g26_ready: false
+production_certified: false

@@ -1,0 +1,28 @@
+schema_version: "1"
+product_id: meos
+license_design:
+  dimensions: [tenant, users, modules, usage, seats, period, edition, deployment_type]
+  periods: [trial, monthly, annual, enterprise_contract, self_hosted]
+  deployment_types: [demo, self_hosted, vps, kubernetes, cloud]
+  validation: [license_exists, license_active, edition_valid, tenant_matches, version_allowed, expiration_valid, entitlements_valid]
+  invalid_state: BLOCKED
+  silent_downgrade: FORBIDDEN
+  drm: FORBIDDEN
+  offline_contract: SUPPORTED
+  online_validation: OPTIONAL
+  unusable_without_license_server: false
+subscription_states: [TRIAL, ACTIVE, PAST_DUE, SUSPENDED, CANCELLED, EXPIRED]
+subscription_transitions:
+  TRIAL: [ACTIVE, EXPIRED, CANCELLED]
+  ACTIVE: [PAST_DUE, SUSPENDED, CANCELLED, EXPIRED]
+  PAST_DUE: [ACTIVE, SUSPENDED, CANCELLED, EXPIRED]
+  SUSPENDED: [ACTIVE, CANCELLED, EXPIRED]
+  CANCELLED: [EXPIRED]
+  EXPIRED: []
+trial:
+  configurable: true
+  auto_convert_to_paid: false
+payment_execution: READY_FOR_CREDENTIALS
+billing_adapter: contexts.accounting
+fake_transactions: FORBIDDEN
+g26_ready: false

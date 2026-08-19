@@ -1,0 +1,16 @@
+# Template only. customer_id remains NOT_AVAILABLE until a real customer exists.
+schema_version: "1"
+customer_id: NOT_AVAILABLE
+deployment_type: NOT_AVAILABLE
+platform: NOT_AVAILABLE
+edition: NOT_AVAILABLE
+version: "0.1.0"
+license: NOT_AVAILABLE
+database: NOT_AVAILABLE
+domain: NOT_AVAILABLE
+tls: NOT_AVAILABLE
+backup: NOT_AVAILABLE
+support_level: NOT_AVAILABLE
+upgrade_policy: NOT_AVAILABLE
+fake_customer: FORBIDDEN
+g26_ready: false

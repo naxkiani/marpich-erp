@@ -11,7 +11,9 @@
 **P349 (2026-08-19):** Infrastructure **REQUIREMENTS_IDENTIFIED**. **G26_READY = FALSE**. Do not GO-LIVE. See [MEOS_EXT_G26_PROVIDER_COMPATIBILITY.md](./MEOS_EXT_G26_PROVIDER_COMPATIBILITY.md).  
 **P350 (2026-08-19):** Provisioning **BLOCKED**. Do not GO-LIVE. See [MEOS_P350_PROVISIONING_REPORT.md](./MEOS_P350_PROVISIONING_REPORT.md).  
 **P351 (2026-08-19):** Product launch packages. Adapters ≠ GO-LIVE. See [MEOS_LAUNCH_PROFILES.md](./MEOS_LAUNCH_PROFILES.md).  
-**P353 (2026-08-19):** Clean release engineering. Local clean SHA is **not** GO-LIVE. See [MEOS_P353_RELEASE_ENGINEERING_REPORT.md](./MEOS_P353_RELEASE_ENGINEERING_REPORT.md).
+**P353 (2026-08-19):** Clean release engineering + deployment factory. Adapters and DEMO compose are **not** GO-LIVE. See [MEOS_P353_RELEASE_ENGINEERING_REPORT.md](./MEOS_P353_RELEASE_ENGINEERING_REPORT.md) · [MEOS_P353_PLATFORM_PRODUCTIZATION.md](./MEOS_P353_PLATFORM_PRODUCTIZATION.md).  
+**P354 (2026-08-19):** Installer is **PLAN_ONLY**. Launch control requires `--confirm yes` and cannot bypass G26. Not GO-LIVE. See [MEOS_P354_UNIVERSAL_INSTALLATION.md](./MEOS_P354_UNIVERSAL_INSTALLATION.md) · [MEOS_P354_LAUNCH_CONTROL_REPORT.md](./MEOS_P354_LAUNCH_CONTROL_REPORT.md).  
+**P355 (2026-08-19):** Productization is not GO-LIVE. See [MEOS_P355_PRODUCTIZATION.md](./MEOS_P355_PRODUCTIZATION.md).
 
 Do not declare go-live until every mandatory row is evidence-backed. Demo loops and local pytest are not go-live. Workstation evidence is **not** CERTIFIED for production.
 

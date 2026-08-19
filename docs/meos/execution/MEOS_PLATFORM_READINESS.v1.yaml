@@ -1,0 +1,161 @@
+schema_version: "1"
+phase: P353_PLATFORM_PRODUCTIZATION
+g26_ready: false
+g26_status: BLOCKED
+p0: 1
+p313: NOT_CERTIFIED
+p313_reentry_ready: false
+production_certified: false
+go_live_ready: false
+go_live_authorization: NOT_APPROVED
+active_applications: 0
+production_traffic: NOT_ENABLED
+localhost_is_production: false
+compose_is_production: false
+ready_for_credentials_is_ready: false
+configured_is_verified: false
+dirty_sha_is_release: false
+forbidden_identity: 47258dfd-dirty
+canonical_image: ghcr.io/marpich/marpich-backend
+canonical_dockerfile: infrastructure/docker/images/backend.Dockerfile
+new_ci: FORBIDDEN
+new_kubernetes_architecture: FORBIDDEN
+hostinger_shared: INCOMPATIBLE
+validator: python3 scripts/meos-platform-readiness.py
+
+platforms:
+  LOCAL:
+    status: READY
+    requirements: [compose.dev, dev-up.sh]
+    available: [infrastructure/docker/compose/docker-compose.dev.yml, scripts/dev-up.sh]
+    missing: []
+    validation: python3 scripts/meos-platform-readiness.py
+    deployment_method: scripts/dev-up.sh
+    rollback: compose down
+    backup: scripts/meos-postgres-backup.sh
+    restore: scripts/meos-postgres-restore-drill.sh
+    tls: none
+    secrets: env_file_NON_PRODUCTION
+    database: "127.0.0.1:5433 NON_PRODUCTION"
+    observability: CONFIGURED
+    production_verified: false
+  DEMO:
+    status: READY
+    requirements: [compose.meos-prod, meos-demo.sh]
+    available: [infrastructure/docker/compose/docker-compose.meos-prod.yml, deploy/scripts/meos-demo.sh]
+    missing: []
+    validation: ./deploy/scripts/meos-demo.sh health
+    deployment_method: ./deploy/scripts/meos-demo.sh start
+    rollback: ./deploy/scripts/meos-demo.sh stop
+    backup: ./deploy/scripts/meos-demo.sh backup
+    restore: ./deploy/scripts/meos-demo.sh restore
+    tls: none_http_8080
+    secrets: env_file_NON_PRODUCTION
+    database: "127.0.0.1:5444 NON_PRODUCTION"
+    observability: CONFIGURED
+    production_verified: false
+  VPS:
+    status: READY_FOR_CREDENTIALS
+    requirements: [ubuntu, docker, compose, caddy, ssh]
+    available: [scripts/meos-vps-bootstrap.sh, Caddyfile.vps.example]
+    missing: [SSH_HOST, public_hostname, public_ca_tls]
+    validation: python3 scripts/meos-install.py --platform VPS
+    deployment_method: scripts/meos-vps-bootstrap.sh
+    rollback: MEOS_PREVIOUS_IMAGE
+    backup: scripts/meos-postgres-backup.sh
+    restore: scripts/meos-postgres-restore-drill.sh
+    tls: public_ca_required_for_production_claim
+    secrets: NOT_VERIFIED
+    database: CHANGE_ME
+    observability: CONFIGURED
+    production_verified: false
+  HOSTINGER_VPS:
+    status: READY_FOR_CREDENTIALS
+    requirements: [Hostinger VPS not shared hosting, docker]
+    available: [deploy/hostinger, deploy/vps]
+    missing: [HOSTINGER_VPS_SSH]
+    validation: python3 scripts/meos-install.py --platform HOSTINGER_VPS
+    deployment_method: deploy/vps
+    rollback: MEOS_PREVIOUS_IMAGE
+    backup: scripts/meos-postgres-backup.sh
+    restore: scripts/meos-postgres-restore-drill.sh
+    tls: public_ca_required_for_production_claim
+    secrets: NOT_VERIFIED
+    database: CHANGE_ME
+    observability: CONFIGURED
+    production_verified: false
+  AWS:
+    status: READY_FOR_CREDENTIALS
+    requirements: [AWS account, EC2 or EKS, RDS]
+    available: [deploy/aws, EC2+Compose]
+    missing: [AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, account]
+    validation: python3 scripts/meos-install.py --platform AWS
+    deployment_method: EC2 + Docker Compose
+    rollback: MEOS_PREVIOUS_IMAGE
+    backup: rds_snapshot_or_script
+    restore: READY_FOR_CREDENTIALS
+    tls: public_ca_required_for_production_claim
+    secrets: NOT_VERIFIED
+    database: CHANGE_ME_RDS
+    observability: CONFIGURED
+    production_verified: false
+  AZURE:
+    status: READY_FOR_CREDENTIALS
+    requirements: [Azure subscription, VM or AKS]
+    available: [deploy/azure, VM+Compose]
+    missing: [AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, subscription]
+    validation: python3 scripts/meos-install.py --platform AZURE
+    deployment_method: Azure VM + Docker Compose
+    rollback: MEOS_PREVIOUS_IMAGE
+    backup: azure_backup_or_script
+    restore: READY_FOR_CREDENTIALS
+    tls: public_ca_required_for_production_claim
+    secrets: NOT_VERIFIED
+    database: CHANGE_ME_AZURE_PG
+    observability: CONFIGURED
+    production_verified: false
+  GCP:
+    status: READY_FOR_CREDENTIALS
+    requirements: [GCP project, GCE or GKE]
+    available: [deploy/gcp, GCE+Compose]
+    missing: [GOOGLE_APPLICATION_CREDENTIALS, project]
+    validation: python3 scripts/meos-install.py --platform GCP
+    deployment_method: GCE + Docker Compose
+    rollback: MEOS_PREVIOUS_IMAGE
+    backup: cloudsql_or_script
+    restore: READY_FOR_CREDENTIALS
+    tls: public_ca_required_for_production_claim
+    secrets: NOT_VERIFIED
+    database: CHANGE_ME_CLOUDSQL
+    observability: CONFIGURED
+    production_verified: false
+  KUBERNETES:
+    status: READY_FOR_CREDENTIALS
+    requirements: [kubeconfig, image.digest, ingress]
+    available: [infrastructure/kubernetes/helm/marpich-iam, infrastructure/fluxcd/marpich-iam-helmrelease.yaml]
+    missing: [kubeconfig, image.digest]
+    validation: helm lint infrastructure/kubernetes/helm/marpich-iam
+    deployment_method: helm upgrade --install (Flux optional)
+    rollback: helm rollback marpich-iam 0 --namespace marpich
+    backup: READY_FOR_CREDENTIALS
+    restore: READY_FOR_CREDENTIALS
+    tls: cert_manager_public_ca
+    secrets: ExternalSecret template
+    database: CHANGE_ME_POSTGRES
+    observability: CONFIGURED
+    production_verified: false
+  PRODUCTION:
+    status: BLOCKED
+    requirements: [EXT-G26, P313, human GO-LIVE, immutable digest]
+    available: [Helm chart, CI workflow_dispatch production job]
+    missing: [production cluster, public CA TLS, secret manager, GHCR digest]
+    validation: python3 scripts/meos-ext-g26-readiness.py
+    deployment_method: BLOCKED
+    rollback: NOT_PRODUCTION_VERIFIED
+    backup: CONFIGURED_LOCAL
+    restore: PASS_LOCAL
+    tls: NOT_PRODUCTION_VERIFIED
+    secrets: NOT_VERIFIED
+    database: localhost_rejected
+    observability: CONFIGURED
+    production_verified: false

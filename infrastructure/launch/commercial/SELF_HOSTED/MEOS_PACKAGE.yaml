@@ -1,0 +1,10 @@
+package: SELF_HOSTED
+secrets: none
+installer: python3 scripts/meos-install.py --platform LOCAL
+license_contract: docs/meos/execution/MEOS_LICENSE_MODEL.v1.yaml
+offline_license: SUPPORTED
+drm: FORBIDDEN
+upgrade: scripts/meos-migration-check.sh
+backup: scripts/meos-postgres-backup.sh
+support: docs/meos/execution/MEOS_P355_PRODUCTIZATION.md
+status: DESIGNED

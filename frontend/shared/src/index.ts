@@ -51,6 +51,11 @@ export {
   matchesPermission,
 } from "./platform/permissions";
 export {
+  PRODUCT_ENTITLEMENT_PATH,
+  clientEntitlementIsNotAuthoritative,
+  type EntitlementStatus,
+} from "./platform/productEntitlement";
+export {
   DeskAlert,
   DeskChrome,
   DeskFormRow,

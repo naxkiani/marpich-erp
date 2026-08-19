@@ -1,0 +1,28 @@
+# Marketplace requirements (P355). Design only — no listings, no fake integrations.
+schema_version: "1"
+status: MARKETPLACE_REQUIREMENTS
+implemented_integrations: []
+fake_listings: FORBIDDEN
+
+channels:
+  saas_marketplace: REQUIREMENTS_ONLY
+  enterprise_marketplace: REQUIREMENTS_ONLY
+  private_marketplace: REQUIREMENTS_ONLY
+  cloud_marketplace: REQUIREMENTS_ONLY
+
+providers:
+  AWS:
+    requirements: [AMI_or_EKS_Helm, metering_optional, private_offer]
+    status: READY_FOR_CREDENTIALS
+  Azure:
+    requirements: [Marketplace_offer_or_AKS_Helm, private_offer]
+    status: READY_FOR_CREDENTIALS
+  GCP:
+    requirements: [GKE_Helm_or_VM, private_offer]
+    status: READY_FOR_CREDENTIALS
+  private_enterprise:
+    requirements: [GHCR_or_customer_registry, signed_release_package]
+    status: DESIGNED
+
+payment_execution: READY_FOR_CREDENTIALS
+g26_ready: false

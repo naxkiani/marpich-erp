@@ -1,0 +1,10 @@
+package: VPS
+secrets: none
+installer: python3 scripts/meos-install.py --platform VPS
+bootstrap: scripts/meos-vps-bootstrap.sh
+image: MEOS_IMAGE@digest
+license_contract: docs/meos/execution/MEOS_LICENSE_MODEL.v1.yaml
+upgrade: MEOS_PREVIOUS_IMAGE
+backup: scripts/meos-postgres-backup.sh
+support: docs/meos/execution/MEOS_RELEASE_OPERATIONS.md
+status: READY_FOR_CREDENTIALS

@@ -1,0 +1,50 @@
+release_id: MEOS_RELEASE
+release_version: 0.1.0
+source_commit: e5aaf8b0e8ffe8213a7546066d9b5ded1c6042f1
+build_id: NOT_AVAILABLE
+image: meos/backend:p353-local
+image_digest: NOT_AVAILABLE
+image_id: sha256:bf5aad6542774a7788dadcdc1c37ce7785eb007cb5b32c45184a70933b3c2ae5
+schema_version: '055'
+config_version: cv-2d909a4238ad
+created_at: '2026-08-19T08:16:54Z'
+artifacts:
+- docs/meos/execution/MEOS_RELEASE_MANIFEST.v1.yaml
+- docs/meos/execution/MEOS_RELEASE_OPERATIONS.md
+- docs/meos/execution/MEOS_BACKUP_RESTORE_RUNBOOK.md
+- docs/meos/execution/MEOS_RELEASE_ENGINEERING_RUNBOOK.md
+- infrastructure/docker/compose/docker-compose.dev.yml
+- infrastructure/docker/compose/docker-compose.meos-prod.yml
+- infrastructure/docker/compose/Caddyfile.vps.example
+- infrastructure/docker/compose/env.meos-prod.example
+- infrastructure/docker/images/backend.Dockerfile
+- infrastructure/fluxcd/marpich-iam-helmrelease.yaml
+- infrastructure/launch/env.production.example
+- infrastructure/kubernetes/helm/marpich-iam/Chart.yaml
+- infrastructure/kubernetes/helm/marpich-iam/values.yaml
+- infrastructure/kubernetes/helm/marpich-iam/values-production.yaml
+- infrastructure/kubernetes/helm/marpich-iam/templates/_helpers.tpl
+- infrastructure/kubernetes/helm/marpich-iam/templates/externalsecret.yaml
+- scripts/meos-install.py
+- scripts/meos-release.py
+- scripts/meos-vps-bootstrap.sh
+- scripts/meos-postgres-backup.sh
+- scripts/meos-postgres-restore-drill.sh
+- scripts/meos-migration-check.sh
+- scripts/meos-install-readiness.py
+supported_platforms:
+- DEMO
+- LOCAL
+- VPS
+- HOSTINGER_VPS
+- AWS
+- AZURE
+- GCP
+- KUBERNETES
+verification_status: FORBIDDEN_DIRTY
+registry: ghcr.io/marpich/marpich-backend
+versioning_gap: backend/pyproject.toml is 0.1.0; Helm appVersion is 7.0.0; no CHANGELOG.
+  Do not invent a version.
+production_certified: false
+g26_ready: false
+
