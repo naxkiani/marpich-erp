@@ -1,0 +1,12 @@
+schema_version: "1"
+phase: P354_RELEASE_CANDIDATE_ENGINEERING
+current_migration: "055"
+current_file: 055_tax_liabilities_returns.sql
+migration_count: 55
+pending_migrations: NOT_EXECUTED
+migration_compatibility: INVENTORY_PASS
+apply: NOT_EXECUTED
+production_database: NOT_VERIFIED
+inventory_command: bash scripts/meos-migration-check.sh
+apply_command: bash scripts/run-migrations.sh
+note: "Inventory only. Do not treat COUNT=55 as production schema verification."

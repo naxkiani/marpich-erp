@@ -1,0 +1,16 @@
+target: KUBERNETES
+extends: deploy/targets/base.yaml
+overlay:
+  chart: infrastructure/kubernetes/helm/marpich-iam
+  flux: infrastructure/fluxcd/marpich-iam-helmrelease.yaml
+  flux_required: false
+  probes:
+    liveness: /api/v1/live
+    readiness: /api/v1/ready
+  rollback: helm rollback marpich-iam 0 --namespace marpich
+secrets: ExternalSecret_template
+status:
+  PACKAGE: READY
+  CREDENTIALS: READY_FOR_CREDENTIALS
+  DEPLOYED: false
+  PRODUCTION_VERIFIED: false

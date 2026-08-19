@@ -1,0 +1,13 @@
+target: LOCAL
+extends: deploy/targets/base.yaml
+overlay:
+  compose: infrastructure/docker/compose/docker-compose.dev.yml
+  start: scripts/dev-up.sh
+  database: "127.0.0.1:5433 NON_PRODUCTION"
+classification: LOCAL
+production_verified: false
+status:
+  PACKAGE: READY
+  CREDENTIALS: NOT_REQUIRED
+  DEPLOYED: LOCAL_EVIDENCE
+  PRODUCTION_VERIFIED: false

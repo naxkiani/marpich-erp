@@ -19,4 +19,4 @@ This directory does **not** contain a second application, CI, or Kubernetes cont
 
 `ENV_PRODUCTION` is a **profile**, not a certified environment. G26 remains independent.
 
-Operator: `python3 scripts/meos-platform-readiness.py`
+Target overlays (BASE + overlay, no duplicate manifests): `deploy/targets/`.

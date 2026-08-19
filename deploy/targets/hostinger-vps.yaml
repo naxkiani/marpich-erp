@@ -1,0 +1,13 @@
+target: HOSTINGER_VPS
+extends: deploy/targets/vps.yaml
+overlay:
+  hostinger_shared: INCOMPATIBLE
+  hostinger_vps: SUPPORTED
+  compute: hostinger_vps_ubuntu
+  runtime: docker_compose
+secrets: references_only
+status:
+  PACKAGE: READY
+  CREDENTIALS: READY_FOR_CREDENTIALS
+  DEPLOYED: false
+  PRODUCTION_VERIFIED: false

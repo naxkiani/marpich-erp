@@ -54,6 +54,7 @@ def cmd_build() -> int:
 def cmd_test() -> int:
     tests = [
         str(ROOT / "backend" / "tests" / "contracts" / "test_p354_universal_installation_honesty.py"),
+        str(ROOT / "backend" / "tests" / "contracts" / "test_p354_release_candidate_honesty.py"),
         str(ROOT / "backend" / "tests" / "contracts" / "test_p353_release_engineering_honesty.py"),
         str(ROOT / "backend" / "contexts" / "crm" / "tests" / "test_crm_flow.py::test_crm_tenant_b_cannot_list_tenant_a_contacts"),
     ]

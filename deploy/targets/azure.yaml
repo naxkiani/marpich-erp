@@ -1,0 +1,16 @@
+target: AZURE
+extends: deploy/targets/base.yaml
+chosen_path: Azure_VM_plus_Compose
+kubernetes_path: AKS_uses_deploy/targets/kubernetes.yaml
+overlay:
+  compute: azure_linux_vm
+  database: azure_database_for_postgresql
+  secrets: azure_key_vault
+  storage: blob
+  registry: ghcr
+secrets: references_only
+status:
+  PACKAGE: READY
+  CREDENTIALS: READY_FOR_CREDENTIALS
+  DEPLOYED: false
+  PRODUCTION_VERIFIED: false

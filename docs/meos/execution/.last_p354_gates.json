@@ -1,0 +1,13 @@
+{
+  "honesty": "PASS",
+  "health_live_ready": "PASS",
+  "tenant_isolation_crm": "PASS",
+  "secret_scan": "PASS",
+  "migration": "PASS",
+  "backup_local": "PASS",
+  "restore_local": "PASS",
+  "docker_rebuild_current_sha": "BLOCKED",
+  "g26": "BLOCKED",
+  "full_suite": "NOT_AVAILABLE",
+  "tests": "PASS"
+}

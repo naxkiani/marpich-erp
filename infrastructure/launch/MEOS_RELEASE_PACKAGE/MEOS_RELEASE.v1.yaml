@@ -1,6 +1,6 @@
 release_id: MEOS_RELEASE
 release_version: 0.1.0
-source_commit: e5aaf8b0e8ffe8213a7546066d9b5ded1c6042f1
+source_commit: dd967051ab05c6ff57262502b456ad51b7d748fd
 build_id: NOT_AVAILABLE
 image: meos/backend:p353-local
 image_digest: NOT_AVAILABLE
@@ -25,8 +25,11 @@ artifacts:
 - infrastructure/kubernetes/helm/marpich-iam/values-production.yaml
 - infrastructure/kubernetes/helm/marpich-iam/templates/_helpers.tpl
 - infrastructure/kubernetes/helm/marpich-iam/templates/externalsecret.yaml
+- docs/meos/execution/MEOS_P354_RELEASE_CANDIDATE.md
+- docs/meos/execution/MEOS_MIGRATION_MANIFEST.v1.yaml
 - scripts/meos-install.py
 - scripts/meos-release.py
+- scripts/meos-release-candidate-readiness.py
 - scripts/meos-vps-bootstrap.sh
 - scripts/meos-postgres-backup.sh
 - scripts/meos-postgres-restore-drill.sh

@@ -1,0 +1,114 @@
+schema_version: "1"
+phase: P354_RELEASE_CANDIDATE_ENGINEERING
+timestamp: "2026-08-19T10:00:00Z"
+validator: python3 scripts/meos-release-candidate-readiness.py
+reused_validators:
+  - python3 scripts/meos-launch-readiness.py
+  - python3 scripts/meos-release-readiness.py
+  - python3 scripts/meos-ext-g26-readiness.py
+  - python3 scripts/meos-platform-target-readiness.py
+
+P354_STATUS: BLOCKED
+RELEASE_CANDIDATE: false
+RELEASE_SOURCE: NOT_ELIGIBLE
+BLOCKER: DIRTY_WORKTREE
+BLOCKER_EVIDENCE: git_describe=dd967051-dirty
+BLOCKER_IMPACT: Cannot mint an immutable release candidate from a dirty tree.
+BLOCKER_REMEDIATION: Commit classified INTENTIONAL/REQUIRED files. Never git reset --hard.
+
+VERSION: "0.1.0"
+RELEASE_ID: MEOS-0.1.0-dd967051
+COMMIT_SHA: dd967051ab05c6ff57262502b456ad51b7d748fd
+WORKTREE_STATUS: DIRTY
+BUILD_STATUS: BLOCKED
+DOCKER_STATUS: PASS
+DOCKER_RELEASE_TEST: BLOCKED
+ARTIFACT_STATUS: LOCAL_BUILD
+DIGEST_STATUS: NOT_AVAILABLE
+SBOM_STATUS: DECLARED_DEPENDENCIES_ONLY
+TEST_STATUS: PASS
+SECURITY_STATUS: CONFIGURED
+TENANT_ISOLATION_STATUS: PASS
+MIGRATION_STATUS: "055"
+BACKUP_STATUS: PASS
+BACKUP_CLASS: LOCAL_EVIDENCE
+RESTORE_STATUS: PASS
+RESTORE_CLASS: LOCAL_NON_PRODUCTION
+ROLLBACK_STATUS: CONFIGURED
+VPS_PACKAGE: READY
+HOSTINGER_VPS_PACKAGE: READY
+AWS_PACKAGE: READY
+AZURE_PACKAGE: READY
+GCP_PACKAGE: READY
+KUBERNETES_PACKAGE: READY
+KUBERNETES_VALIDATION: STATIC_VALIDATION_LIMITED
+EXTERNAL_CREDENTIALS: READY_FOR_CREDENTIALS
+REGISTRY_ARTIFACT: READY_FOR_CREDENTIALS
+
+image: meos/backend:p353-local
+image_id: sha256:bf5aad6542774a7788dadcdc1c37ce7785eb007cb5b32c45184a70933b3c2ae5
+image_digest: NOT_AVAILABLE
+local_image_id_is_not_ghcr_digest: true
+
+G26_STATUS: BLOCKED
+G26_READY: false
+P0: 1
+P313: NOT_CERTIFIED
+P313_REENTRY_READY: false
+PRODUCTION_CERTIFIED: false
+GO_LIVE_READY: false
+GO_LIVE_AUTHORIZATION: NOT_APPROVED
+ACTIVE_APPLICATIONS: 0
+PRODUCTION_TRAFFIC: NOT_ENABLED
+
+localhost_is_production: false
+compose_is_production: false
+release_candidate_is_not_production_certified: true
+production_backup: NOT_VERIFIED
+production_database: NOT_VERIFIED
+
+dirty_file_classification:
+  - path: deploy/README.md
+    class: INTENTIONAL
+  - path: docs/meos/execution/MEOS_EXECUTION_MASTER_PLAN.md
+    class: INTENTIONAL
+  - path: docs/meos/execution/MEOS_GO_LIVE_CHECKLIST.md
+    class: INTENTIONAL
+  - path: docs/meos/execution/MEOS_PRODUCTION_RUNBOOK.md
+    class: INTENTIONAL
+  - path: backend/tests/contracts/test_p353_launch_fabric_honesty.py
+    class: REQUIRED
+  - path: deploy/targets/
+    class: REQUIRED
+  - path: docs/meos/execution/MEOS_P353_ENVIRONMENT_CONTRACT.v1.yaml
+    class: INTENTIONAL
+  - path: docs/meos/execution/MEOS_P353_LAUNCH_FABRIC.md
+    class: INTENTIONAL
+  - path: docs/meos/execution/MEOS_P353_PLATFORM_TARGET_MATRIX.md
+    class: INTENTIONAL
+  - path: docs/meos/execution/MEOS_P353_RELEASE_CONTRACT.md
+    class: INTENTIONAL
+  - path: docs/meos/execution/MEOS_P353_TARGET_STATUS.v1.yaml
+    class: INTENTIONAL
+  - path: scripts/meos-platform-target-readiness.py
+    class: REQUIRED
+  - path: scripts/meos-release-candidate-readiness.py
+    class: REQUIRED
+
+cleaning_procedure:
+  forbidden:
+    - git reset --hard
+    - git clean -fd
+    - discarding UNKNOWN user work
+  required:
+    - Classify each dirty path as INTENTIONAL / GENERATED / TEMPORARY / OBSOLETE / REQUIRED
+    - Commit INTENTIONAL and REQUIRED source after operator review
+    - Leave GENERATED untracked or gitignored
+    - Re-run python3 scripts/meos-release-candidate-readiness.py
+  after_clean:
+    RELEASE_SOURCE: ELIGIBLE
+    RELEASE_CANDIDATE: may become true locally without cloud credentials
+    still_false:
+      - PRODUCTION_CERTIFIED
+      - G26_READY
+      - GO_LIVE_READY
