@@ -4,11 +4,11 @@ release_label: P353-LOCAL
 version: "0.1.0"
 versioning_gap: "backend/pyproject.toml is 0.1.0; Helm appVersion is 7.0.0; no CHANGELOG. Do not invent a version."
 helm_app_version: "7.0.0"
-commit_sha: NOT_AVAILABLE
+commit_sha: 565f5b70036c292a53ec7b36ece7446597e5d980
 source_parent: 47258dfd28029e860dcf4d9829c28ac88007ccca
 branch: feature/dashboard-home-complete
-worktree_state: DIRTY
-source_state: DIRTY_THEN_CLEAN_COMMIT_REQUIRED
+worktree_state: CLEAN
+source_state: CLEAN
 build_status: PASS
 test_status: PASS
 secret_scan_status: PASS
@@ -23,7 +23,7 @@ build_timestamp: "2026-08-19T08:16:54Z"
 artifact_status: LOCAL_BUILD
 ci_status: READY_FOR_CREDENTIALS
 deployment_status: READY_FOR_CREDENTIALS
-local_release_ready: PENDING_CLEAN_COMMIT
+local_release_ready: true
 registry_release_ready: READY_FOR_CREDENTIALS
 deployment_release_ready: READY_FOR_CREDENTIALS
 production_release_ready: false

@@ -28,7 +28,7 @@ Do not declare go-live until every mandatory row is evidence-backed. Demo loops 
 | 9 | Operational ownership | **PENDING** | NOT_AVAILABLE. |
 | 10 | Smoke-test plan | **PENDING** | Scripts READY; not production smoke. |
 | 11 | User onboarding readiness | **PENDING** | No production IdP/tenant run. |
-| 12 | Release identification | **PENDING** | P353 local clean SHA (see release manifest). **Not** a production deploy. GHCR digest **NOT_AVAILABLE**. |
+| 12 | Release identification | **PENDING** | Local clean SHA `565f5b70`. **Not** a production deploy. GHCR digest **NOT_AVAILABLE**. |
 | 13 | P0 = 0 | **BLOCKED** | P0 = **1** (G26). |
 | 14 | PRODUCTION_CERTIFIED | **BLOCKED** | **NO** — P343 final gate. |
 | 15 | P314 GO_LIVE | **REQUIRES_HUMAN_APPROVAL** | NOT APPROVED. P344 STOPPED; must not complete this row. |

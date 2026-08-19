@@ -5,7 +5,7 @@
 
 | Field | Value |
 |-------|--------|
-| LOCAL_RELEASE_READY | PENDING until worktree clean commit |
+| LOCAL_RELEASE_READY | TRUE (clean SHA `565f5b70`; not production) |
 | REGISTRY_RELEASE_READY | READY_FOR_CREDENTIALS |
 | DEPLOYMENT_RELEASE_READY | READY_FOR_CREDENTIALS |
 | PRODUCTION_RELEASE_READY | FALSE |

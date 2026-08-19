@@ -7,13 +7,16 @@
 
 P353 removes the product-side `RELEASE_READY = BLOCKED` bottleneck caused by a dirty worktree. It does **not** deploy production, invent a registry digest, start P313, or set `G26_READY`.
 
-`LOCAL_RELEASE_READY` is pending the clean commit and is **not** `PRODUCTION_CERTIFIED`.
+`LOCAL_RELEASE_READY` is TRUE after clean commit `565f5b70036c292a53ec7b36ece7446597e5d980` and is **not** `PRODUCTION_CERTIFIED`.
+
+**CLEAN_COMMIT_SHA:** `565f5b70036c292a53ec7b36ece7446597e5d980`  
+Dirty identity `47258dfd-dirty` is no longer the product release id.
 
 ## Product release state (P353)
 
 | Field | Value |
 |-------|--------|
-| LOCAL_RELEASE_READY | PENDING_CLEAN_COMMIT |
+| LOCAL_RELEASE_READY | TRUE (after clean commit `565f5b70`) |
 | REGISTRY_RELEASE_READY | READY_FOR_CREDENTIALS |
 | DEPLOYMENT_RELEASE_READY | READY_FOR_CREDENTIALS |
 | PRODUCTION_RELEASE_READY | FALSE |
