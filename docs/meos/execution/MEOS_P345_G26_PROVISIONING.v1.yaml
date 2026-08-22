@@ -1,0 +1,106 @@
+# MEOS P345 G26 provisioning (machine)
+# Law: inspect existing G26 path. Do not invent cloud, TLS, secrets, digest, or GO_LIVE.
+# Compose/localhost is not production. Dirty SHA is not deployable.
+schema_version: "1.0"
+generated: "2026-08-19T09:20:00Z"
+source: docs/meos/execution/MEOS_P345_G26_PROVISIONING.md
+p346_overlay: docs/meos/execution/MEOS_P346_G26_BLOCKER_CLOSURE.v1.yaml
+p344_sor: docs/meos/execution/MEOS_P344_GO_LIVE_EXECUTION.v1.yaml
+p343_sor: docs/meos/execution/MEOS_P343_FINAL_CERTIFICATION.v1.yaml
+p341_sor: docs/meos/execution/MEOS_PRODUCTION_INFRASTRUCTURE_READINESS.v1.yaml
+p340_sor: docs/meos/execution/MEOS_G26_EXECUTION_ENABLEMENT.v1.yaml
+p313_report: docs/meos/execution/MEOS_P313_CERTIFICATION_REPORT.md
+outcome: OUTCOME_B
+g26_status: BLOCKED
+g26_ready_for_revalidation: false
+provisioning: BLOCKED
+credentials_required: true
+p344_entry_gate: STOPPED
+p0_count: 1
+production_certified: false
+go_live: NOT APPROVED
+go_live_ready: false
+go_live_authorization: NOT APPROVED
+runtime_status: NOT_LAUNCHED
+production_traffic: NOT_ENABLED
+registry_active_count: 0
+git_describe: 47258dfd-dirty
+immutable_release: FORBIDDEN
+
+production_target:
+  status: MISSING
+  workstation_demo: PARTIAL
+  meosprod_compose_profile: EXISTS
+  meosprod_compose_is_production: false
+  cloud_cluster: MISSING
+  helm_chart: DESIGNED
+  fluxcd_manifest: DESIGNED
+  terraform_dev: STUB
+  ansible: MISSING
+  kubeconfig: MISSING
+  render_account_inspect: UNAUTHORIZED
+
+cloud_hosting:
+  status: CREDENTIALS_REQUIRED
+  kubeconfig: MISSING
+  aws_access_key: MISSING
+  render_api: UNAUTHORIZED
+  kubectl_context: NONE
+
+evidence:
+  production_target: MISSING
+  database: BLOCKED
+  tls: MISSING
+  secrets: BLOCKED
+  registry: IMPLEMENTED_UNVERIFIED
+  clean_commit: FAIL
+  ci_build: IMPLEMENTED_UNVERIFIED
+  artifact_digest: NOT_AVAILABLE
+  deployment_configuration: DESIGNED
+  observability: FAIL
+  backup: IMPLEMENTED_UNVERIFIED
+  restore_procedure: IMPLEMENTED_UNVERIFIED
+  rollback_procedure: BLOCKED
+
+existing_authoritative_path:
+  compose: infrastructure/docker/compose/docker-compose.meos-prod.yml
+  helm: infrastructure/kubernetes/helm/marpich-iam/
+  flux: infrastructure/fluxcd/marpich-iam-helmrelease.yaml
+  ci: .github/workflows/identity-federation-enterprise.yml
+  registry_designed: ghcr.io/marpich/marpich-backend
+  secrets_context: backend/contexts/secrets
+  note: Designed path exists. No live cluster. Do not create a second deploy platform.
+
+p313_gates_affected:
+  G26: BLOCKED
+  G27: BLOCKED
+  G25: FAIL
+  G23: FAIL
+  G05: UNCHANGED_WORKSTATION_PASS
+  G07: UNCHANGED_WORKSTATION_PASS
+  G08: UNCHANGED_WORKSTATION_PASS
+  G01: UNCHANGED_WORKSTATION_PASS
+  note: None declared production PASS. P313 recertification not opened.
+
+blocker:
+  id: BLK-G26
+  status: BLOCKED
+  dependency: External production account + kubeconfig + managed Postgres + public-CA TLS + secret manager + clean SHA
+  required_resource:
+    - authorized_cloud_or_k8s_account
+    - kubeconfig
+    - managed_postgresql
+    - public_ca_certificate
+    - production_secret_manager
+    - ci_deploy_credentials
+    - clean_git_commit
+  owner: NOT_AVAILABLE
+  next_action: Obtain those resources; provision via existing Helm/Flux/CI path; recertify P313. Do not GO-LIVE.
+
+next_operational_action: Obtain authorized production credentials and a real cluster. Then use existing Helm/Flux/CI. Do not start meos-prod as G26. Do not deploy 47258dfd-dirty. Do not declare GO_LIVE.
+new_deployment_platform: FORBIDDEN
+new_observability_platform: FORBIDDEN
+new_secrets_platform: FORBIDDEN
+go_live_declaration: FORBIDDEN
+bind_hold_decisions: FORBIDDEN
+application_activation: FORBIDDEN

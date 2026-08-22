@@ -48,7 +48,13 @@ class JwtTokenService:
 
     def _verify(self, token: str, expected_type: str) -> dict[str, Any]:
         try:
-            payload = jwt.decode(token, self._secret, algorithms=["HS256"])
+            payload = jwt.decode(
+                token,
+                self._secret,
+                algorithms=["HS256"],
+                issuer=self._issuer,
+                options={"require_exp": True, "require_iat": True, "verify_iss": True},
+            )
         except JWTError as exc:
             raise ValueError("Invalid token") from exc
         if payload.get("type") != expected_type:

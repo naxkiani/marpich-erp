@@ -1,4 +1,6 @@
 """CRM contact + opportunity flow tests — CAP-ENT-001."""
+import uuid
+
 import pytest
 from httpx import ASGITransport, AsyncClient
 
@@ -13,7 +15,7 @@ from shared.infrastructure.messaging.event_fabric import EventFabric
 
 
 @pytest.fixture(autouse=True)
-def reset_all():
+async def reset_all():
     identity_container._container = None
     InMemoryStore.reset()
     CrmMemoryStore.reset()
@@ -21,6 +23,9 @@ def reset_all():
     EventFabric.reset_dev_state()
     reset_crm_service()
     yield
+    from shared.infrastructure.database.engine import dispose_engine
+
+    await dispose_engine()
 
 
 @pytest.fixture
@@ -32,15 +37,16 @@ async def client():
         yield ac
 
 
-async def _auth_headers(client: AsyncClient, tenant: str) -> dict[str, str]:
+async def _auth_headers(client: AsyncClient, tenant: str, email: str | None = None) -> dict[str, str]:
+    login_email = email or f"crm-{uuid.uuid4().hex[:8]}@dev.io"
     await client.post(
         "/api/v1/auth/register",
-        json={"email": "crm@dev.io", "password": "SecurePass123!", "display_name": "CRM Admin"},
+        json={"email": login_email, "password": "SecurePass123!", "display_name": "CRM Admin"},
         headers={"X-Tenant-ID": tenant},
     )
     login = await client.post(
         "/api/v1/auth/login",
-        json={"email": "crm@dev.io", "password": "SecurePass123!"},
+        json={"email": login_email, "password": "SecurePass123!"},
         headers={"X-Tenant-ID": tenant},
     )
     assert login.status_code == 200, login.text
@@ -50,13 +56,13 @@ async def _auth_headers(client: AsyncClient, tenant: str) -> dict[str, str]:
 
 @pytest.mark.asyncio
 async def test_crm_contact_opportunity_win_flow(client):
-    tenant = "crm-demo"
+    tenant = f"crm-demo-{uuid.uuid4().hex[:8]}"
     headers = await _auth_headers(client, tenant)
 
     contact = await client.post(
         "/api/v1/crm/contacts",
         json={
-            "email": "buyer@acme.io",
+            "email": f"buyer-{uuid.uuid4().hex[:8]}@acme.io",
             "full_name": "Ada Buyer",
             "company": "Acme",
             "phone": "+1-555-0100",
@@ -96,3 +102,28 @@ async def test_crm_contact_opportunity_win_flow(client):
         headers=headers,
     )
     assert again.status_code == 400
+
+
+@pytest.mark.asyncio
+async def test_crm_tenant_b_cannot_list_tenant_a_contacts(client):
+    headers_a = await _auth_headers(client, f"crm-tenant-a-{uuid.uuid4().hex[:8]}")
+    created = await client.post(
+        "/api/v1/crm/contacts",
+        json={
+            "email": f"secret-{uuid.uuid4().hex[:8]}@a.example",
+            "full_name": "Tenant A Only",
+            "company": "A",
+        },
+        headers=headers_a,
+    )
+    assert created.status_code == 201, created.text
+    contact_id = created.json()["data"]["id"]
+
+    headers_b = await _auth_headers(client, f"crm-tenant-b-{uuid.uuid4().hex[:8]}")
+    listed = await client.get("/api/v1/crm/contacts", headers=headers_b)
+    assert listed.status_code == 200
+    ids = [row.get("id") for row in listed.json()["data"].get("items", [])]
+    assert contact_id not in ids
+
+    leaked = await client.get(f"/api/v1/crm/contacts/{contact_id}", headers=headers_b)
+    assert leaked.status_code in (403, 404)

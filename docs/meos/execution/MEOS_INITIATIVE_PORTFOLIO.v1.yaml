@@ -1,0 +1,106 @@
+# MEOS Initiative Portfolio (machine)
+# Law: map existing P325 technical debt only. Never invent cost, ROI, or capacity.
+schema_version: "1.0"
+generated: "2026-08-18T12:45:00Z"
+source: docs/meos/execution/MEOS_INITIATIVE_PORTFOLIO.md
+debt_sor: docs/meos/execution/MEOS_TECHNICAL_DEBT_REGISTRY.v1.yaml
+overall_status: BACKLOG_ONLY
+in_progress_count: 0
+cost_measured_count: 0
+
+initiatives:
+  - id: INIT-G26
+    debt_id: TD-G26-PROD-CLUSTER
+    objective_id: OBJ-GATE-P314
+    name: Provision real production cluster
+    owner: NOT_AVAILABLE
+    expected_outcome: PRODUCTION_ACTIVE true; G26 recertify P0=0
+    cost: NOT_MEASURED
+    effort: NOT_MEASURED
+    value: NOT_MEASURED
+    risk: CRITICAL
+    timeline: NOT_SET
+    status: ASSESSED
+    category: OPERATIONAL_RESILIENCE
+    release_gate: P324
+    evidence: P313 G26
+
+  - id: INIT-G25
+    debt_id: TD-G25-DIRTY-SHA
+    objective_id: OBJ-GATE-P314
+    name: Immutable production SHA
+    owner: NOT_AVAILABLE
+    expected_outcome: git describe not dirty; G25 pass
+    cost: NOT_MEASURED
+    effort: NOT_MEASURED
+    value: NOT_MEASURED
+    risk: HIGH
+    timeline: NOT_SET
+    status: ASSESSED
+    category: OPERATIONAL_RESILIENCE
+    release_gate: P324
+    evidence: e941141-dirty
+
+  - id: INIT-G27
+    debt_id: TD-G27-ROLLBACK
+    objective_id: OBJ-GATE-P314
+    name: Exercise production rollback
+    owner: NOT_AVAILABLE
+    expected_outcome: G27 exercised after first prod deploy
+    cost: NOT_MEASURED
+    effort: NOT_MEASURED
+    value: NOT_MEASURED
+    risk: HIGH
+    timeline: NOT_SET
+    status: ASSESSED
+    category: OPERATIONAL_RESILIENCE
+    release_gate: P324
+    evidence: P313 G27
+
+  - id: INIT-G23
+    debt_id: TD-G23-ALERTING
+    objective_id: OBJ-GATE-P317
+    name: Production alerting
+    owner: NOT_AVAILABLE
+    expected_outcome: G23 alerting on real cluster
+    cost: NOT_MEASURED
+    effort: NOT_MEASURED
+    value: NOT_MEASURED
+    risk: HIGH
+    timeline: NOT_SET
+    status: IDENTIFIED
+    category: RISK_REDUCTION
+    release_gate: P324
+    evidence: P313 G23
+
+  - id: INIT-G18
+    debt_id: TD-G18-AI-STUB
+    objective_id: OBJ-GATE-P317
+    name: Governed AI model (replace stub)
+    owner: NOT_AVAILABLE
+    expected_outcome: Assist is not a template echo
+    cost: NOT_MEASURED
+    effort: NOT_MEASURED
+    value: NOT_MEASURED
+    risk: HIGH
+    timeline: NOT_SET
+    status: IDENTIFIED
+    category: RISK_REDUCTION
+    release_gate: P324
+    evidence: P313 G18
+
+  - id: INIT-G19
+    debt_id: TD-G19-DSAR
+    objective_id: OBJ-GATE-P317
+    name: Runtime DSAR / erasure path
+    owner: NOT_AVAILABLE
+    expected_outcome: G19 runtime-certified before prod PII
+    cost: NOT_MEASURED
+    effort: NOT_MEASURED
+    value: NOT_MEASURED
+    risk: HIGH
+    timeline: NOT_SET
+    status: IDENTIFIED
+    category: COMPLIANCE
+    release_gate: P324
+    evidence: P313 G19

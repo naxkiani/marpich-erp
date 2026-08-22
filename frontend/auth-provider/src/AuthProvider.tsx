@@ -180,7 +180,7 @@ export function AuthProvider({ children, autoRefresh = true }: AuthProviderProps
       session,
       user,
       permissions,
-      isAuthenticated: Boolean(session?.accessToken),
+      isAuthenticated: Boolean(session?.tenantId),
       isLoading,
       error,
       login,

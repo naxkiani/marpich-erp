@@ -1,0 +1,83 @@
+# MEOS Continuity Playbooks (machine)
+# Law: documented runbook ≠ ACTIVE crisis playbook. Local drill ≠ production failover.
+schema_version: "1.0"
+generated: "2026-08-18T13:20:00Z"
+source: docs/meos/execution/MEOS_CRISIS_PLAYBOOKS.md
+active_count: 0
+
+playbooks:
+  - id: PB-IR-001
+    name: Production incident response
+    hazard: SERVICE_OUTAGE
+    document: docs/meos/execution/MEOS_INCIDENT_RESPONSE.md
+    status: DOCUMENTED
+    production: NOT_ACTIVE
+    automation: NOT_IMPLEMENTED
+
+  - id: PB-DR-001
+    name: Backup and disaster recovery
+    hazard: DATABASE_FAILURE
+    document: docs/meos/execution/MEOS_WAVE04_DR_RUNBOOK.md
+    status: DOCUMENTED
+    production: NOT_VERIFIED
+    automation: MANUAL_SCRIPT
+    local_evidence: P313 G07-G09
+
+  - id: PB-RB-001
+    name: Rollback
+    hazard: SERVICE_OUTAGE
+    document: docs/meos/execution/MEOS_ROLLBACK_STANDARD.md
+    status: DOCUMENTED
+    production: BLOCKED
+    automation: NOT_IMPLEMENTED
+    local_evidence: G27 BLOCKED
+
+  - id: PB-OPS-001
+    name: Workstation production-profile start/smoke
+    hazard: SERVICE_OUTAGE
+    document: docs/meos/execution/MEOS_PRODUCTION_RUNBOOK.md
+    status: DOCUMENTED
+    production: NOT_CERTIFIED_CLUSTER
+    automation: MANUAL_SCRIPT
+
+  - id: PB-SEC-001
+    name: Security / cyber incident
+    hazard: SECURITY_INCIDENT
+    document: docs/meos/execution/MEOS_INCIDENT_RESPONSE.md
+    status: DOCUMENTED
+    production: NOT_ACTIVE
+    automation: NOT_IMPLEMENTED
+
+  - id: PB-DATA-001
+    name: Data / privacy incident
+    hazard: DATA_INCIDENT
+    document: docs/meos/execution/MEOS_WAVE04_PRIVACY_ACTIVATION.md
+    status: DOCUMENTED
+    production: NOT_VERIFIED
+    automation: NOT_IMPLEMENTED
+
+  - id: PB-INT-001
+    name: Third-party / integration failure
+    hazard: THIRD_PARTY_FAILURE
+    document: docs/meos/execution/MEOS_P321_INTEGRATION_FABRIC.md
+    status: DOCUMENTED
+    production: NOT_APPLICABLE
+    automation: NOT_IMPLEMENTED
+    note: 0 ACTIVE integrations
+
+  - id: PB-CAP-001
+    name: Capacity failure
+    hazard: CAPACITY_FAILURE
+    document: docs/meos/execution/MEOS_PRODUCTION_OPTIMIZATION.md
+    status: DOCUMENTED
+    production: NOT_MEASURED
+    automation: NOT_IMPLEMENTED
+
+  - id: PB-AUTO-INC
+    name: Incident to resolution automation
+    hazard: SERVICE_OUTAGE
+    document: docs/meos/execution/MEOS_AUTOMATION_REGISTRY.md
+    status: NOT_IMPLEMENTED
+    production: NOT_ACTIVE
+    automation: NOT_IMPLEMENTED
+    automation_id: AUTO-INC-001

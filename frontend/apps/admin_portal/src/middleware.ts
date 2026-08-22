@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { SESSION_COOKIE_NAME, SESSION_COOKIE_VALUE } from "@marpich/auth-provider";
+import { SESSION_COOKIE_NAME, isJwtSessionCookieValid } from "@marpich/auth-provider";
 
 const PROTECTED_PREFIXES = [
   "/",
@@ -27,16 +27,41 @@ function isProtected(pathname: string): boolean {
   );
 }
 
-export function middleware(request: NextRequest) {
+function jwtSecretFromEnv(): string | undefined {
+  return (
+    process.env.JWT_SECRET?.trim() ||
+    process.env.MARPICH_JWT_SECRET?.trim() ||
+    undefined
+  );
+}
+
+function requireSignature(): boolean {
+  if (process.env.MARPICH_REQUIRE_JWT_VERIFY === "1") return true;
+  if (process.env.MARPICH_REQUIRE_JWT_VERIFY === "0") return false;
+  return process.env.NODE_ENV === "production";
+}
+
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const hasSession = request.cookies.get(SESSION_COOKIE_NAME)?.value === SESSION_COOKIE_VALUE;
+  const raw = request.cookies.get(SESSION_COOKIE_NAME)?.value;
+  const secret = jwtSecretFromEnv();
+  const hasSession = await isJwtSessionCookieValid(raw, {
+    secret,
+    requireSignature: requireSignature(),
+    issuer: process.env.JWT_ISSUER?.trim() || "marpich-identity",
+    tokenType: "access",
+  });
   const protectedPath = isProtected(pathname);
 
   if (protectedPath && !hasSession) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     url.searchParams.set("returnTo", pathname);
-    return NextResponse.redirect(url);
+    const res = NextResponse.redirect(url);
+    if (raw) {
+      res.cookies.set(SESSION_COOKIE_NAME, "", { path: "/", maxAge: 0 });
+    }
+    return res;
   }
 
   if (pathname === "/login" && hasSession) {

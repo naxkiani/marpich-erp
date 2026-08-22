@@ -19,6 +19,8 @@ import {
   fetchInstalledPlugins,
   fetchMarketplaceDashboard,
   fetchMarketplaceListings,
+  disablePlugin,
+  enablePlugin,
   installPlugin,
   invokePlugin,
   loadPluginsSession,
@@ -232,15 +234,17 @@ export function PluginMarketplacePage() {
 
   const lifecycleStep = useMemo(() => {
     if (!listings.length) return 0;
-    if (lastInvoke) return 3;
+    if (lastInvoke) return 4;
+    if (installed.some((i) => i.enabled)) return 3;
     if (installed.length > 0) return 2;
     return 1;
-  }, [installed.length, lastInvoke, listings.length]);
+  }, [installed, lastInvoke, listings.length]);
 
   const workflowSteps = useMemo(
     () => [
       t("plugins.step.browse"),
       t("plugins.step.install"),
+      t("plugins.step.activate"),
       t("plugins.step.invoke"),
       t("plugins.step.monitor"),
     ],
@@ -283,6 +287,34 @@ export function PluginMarketplacePage() {
     } catch (err) {
       push({
         message: err instanceof Error ? err.message : `${t("plugins.install")} ${t("plugins.failed")}`,
+      });
+    }
+  }
+
+  async function onEnable(pluginId: string) {
+    if (!session) return;
+    try {
+      await enablePlugin(session, pluginId);
+      setLastAction(t("plugins.activate"));
+      await loadData(session);
+      push({ message: `${t("plugins.activate")} — ${t("plugins.done")}` });
+    } catch (err) {
+      push({
+        message: err instanceof Error ? err.message : `${t("plugins.activate")} ${t("plugins.failed")}`,
+      });
+    }
+  }
+
+  async function onDisable(pluginId: string) {
+    if (!session) return;
+    try {
+      await disablePlugin(session, pluginId);
+      setLastAction(t("plugins.deactivate"));
+      await loadData(session);
+      push({ message: `${t("plugins.deactivate")} — ${t("plugins.done")}` });
+    } catch (err) {
+      push({
+        message: err instanceof Error ? err.message : `${t("plugins.deactivate")} ${t("plugins.failed")}`,
       });
     }
   }
@@ -361,7 +393,16 @@ export function PluginMarketplacePage() {
                 {t("plugins.install")}
               </button>
             ) : null}
-            {selectedListing && selectedInstall ? (
+            {selectedListing && selectedInstall && !selectedInstall.enabled ? (
+              <button
+                type="button"
+                className="mp-btn mp-btn-primary"
+                onClick={() => void onEnable(selectedListing.plugin_id)}
+              >
+                {t("plugins.activate")}
+              </button>
+            ) : null}
+            {selectedListing && selectedInstall?.enabled ? (
               <button
                 type="button"
                 className="mp-btn mp-btn-primary"
@@ -383,6 +424,9 @@ export function PluginMarketplacePage() {
       }
     >
       <ProgressBar value={progress} label={loading ? t("plugins.loading") : t("plugins.ready")} />
+      <p className="plg-muted" role="note">
+        {t("plugins.notCertified")}
+      </p>
 
       {!session ? (
         <section className="plg-connect" aria-labelledby="connect-heading">
@@ -593,13 +637,32 @@ export function PluginMarketplacePage() {
                           </button>
                         ) : (
                           <>
-                            <button
-                              type="button"
-                              className="mp-btn mp-btn-primary"
-                              onClick={() => void onInvoke(selectedListing)}
-                            >
-                              {t("plugins.invoke")}
-                            </button>
+                            {!selectedInstall.enabled ? (
+                              <button
+                                type="button"
+                                className="mp-btn mp-btn-primary"
+                                onClick={() => void onEnable(selectedListing.plugin_id)}
+                              >
+                                {t("plugins.activate")}
+                              </button>
+                            ) : (
+                              <>
+                                <button
+                                  type="button"
+                                  className="mp-btn mp-btn-primary"
+                                  onClick={() => void onInvoke(selectedListing)}
+                                >
+                                  {t("plugins.invoke")}
+                                </button>
+                                <button
+                                  type="button"
+                                  className="mp-btn"
+                                  onClick={() => void onDisable(selectedListing.plugin_id)}
+                                >
+                                  {t("plugins.deactivate")}
+                                </button>
+                              </>
+                            )}
                             <button
                               type="button"
                               className="mp-btn"

@@ -1,0 +1,89 @@
+# MEOS Outcome Registry (machine)
+# Law: never ACHIEVED / IMPROVING / BASELINED with numbers unless measured.
+schema_version: "1.0"
+generated: "2026-08-18T12:20:00Z"
+source: docs/meos/execution/MEOS_OUTCOME_GOVERNANCE.md
+overall_status: NOT_MEASURED
+measured_count: 0
+achieved_count: 0
+
+outcomes:
+  - id: OUT-Q2C-001
+    name: Quote-to-cash completion
+    process: CRM win → sales order → inventory reserve → AR invoice
+    capability: CAP-ENT-001, CAP-ENT-002, CAP-ENT-042, CAP-ENT-023
+    state: IDENTIFIED
+    baseline: NOT_MEASURED
+    current: NOT_MEASURED
+    target: NOT_SET
+    evidence: Demo loop TESTED (Wave 02). Not production.
+
+  - id: OUT-P2P-001
+    name: Procure-to-stock completion
+    process: Requisition → approve → receive → restock
+    capability: CAP-ENT-040
+    state: IDENTIFIED
+    baseline: NOT_MEASURED
+    current: NOT_MEASURED
+    target: NOT_SET
+    evidence: Demo loop TESTED. Not production.
+
+  - id: OUT-H2R-001
+    name: Hire-to-pay
+    process: HR hire → payroll run → tax liability
+    capability: CAP-ENT-010, CAP-ENT-015, CAP-ENT-026
+    state: IDENTIFIED
+    baseline: NOT_MEASURED
+    current: NOT_MEASURED
+    target: NOT_SET
+    evidence: Demo loop TESTED. Not production.
+
+  - id: OUT-CARE-001
+    name: Encounter-to-care events
+    process: Hospital/clinic encounter → lab/pharmacy
+    capability: CAP-HLT-001, CAP-HLT-002, CAP-HLT-007, CAP-HLT-008
+    state: IDENTIFIED
+    baseline: NOT_MEASURED
+    current: NOT_MEASURED
+    target: NOT_SET
+    evidence: Healthcare loop TESTED. Not production.
+
+  - id: OUT-ADOPT-001
+    name: Production user adoption
+    process: Login → task completion → return use
+    capability: platform
+    state: IDENTIFIED
+    baseline: NOT_MEASURED
+    current: NOT_MEASURED
+    target: NOT_SET
+    evidence: P320 ADOPTED=false
+
+  - id: OUT-AUTO-001
+    name: Automation business value
+    process: Event chains / workflow
+    capability: P319
+    state: IDENTIFIED
+    baseline: NOT_MEASURED
+    current: NOT_MEASURED
+    target: NOT_SET
+    evidence: BLOCK_AUTOMATION · 0 ACTIVE
+
+  - id: OUT-AI-001
+    name: AI decision quality
+    process: Assist → human review → outcome
+    capability: AI platform
+    state: IDENTIFIED
+    baseline: NOT_MEASURED
+    current: NOT_MEASURED
+    target: NOT_SET
+    evidence: G18 stub. Not a governed model.
+
+  - id: OUT-EXT-001
+    name: Extension ecosystem value
+    process: Discover → install → activate → outcome
+    capability: P322/P323
+    state: IDENTIFIED
+    baseline: NOT_MEASURED
+    current: NOT_MEASURED
+    target: NOT_SET
+    evidence: 0 CERTIFIED · 0 production ACTIVE plugins

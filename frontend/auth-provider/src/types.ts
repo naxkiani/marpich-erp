@@ -1,6 +1,8 @@
 export type AuthSession = {
   tenantId: string;
-  accessToken: string;
+  /** Never persisted in sessionStorage. Browser traffic uses the HttpOnly BFF cookie. */
+  accessToken?: string;
+  /** Never persisted in sessionStorage. Refresh uses the HttpOnly BFF cookie. */
   refreshToken?: string;
   expiresAt?: number;
   userId?: string;

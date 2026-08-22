@@ -1,0 +1,36 @@
+# MEOS Autonomy Levels (machine)
+# Law: production must not silently exceed authorized level. L3/L4 are not ACTIVE.
+schema_version: "1.0"
+generated: "2026-08-18T13:35:00Z"
+source: docs/meos/execution/MEOS_AUTONOMY_LEVELS.md
+gate_sor: docs/meos/execution/MEOS_WAVE05_AUTONOMY_GATE.md
+block_automation: true
+max_authorized_level: L0
+production_level: L0
+observe_operational: false
+l1_recommendations_authoritative: false
+l2_hitl_active: false
+l3_policy_automation_active: false
+l4_controlled_autonomous_active: false
+
+levels:
+  L0:
+    name: OBSERVE_ONLY
+    production: AUTHORIZED_BUT_BLOCKED
+    evidence: G23 no production alerting; PRODUCTION_ACTIVE false
+  L1:
+    name: RECOMMEND
+    production: NOT_AUTHORITATIVE
+    evidence: AI assist stub G18; not FACT
+  L2:
+    name: HUMAN_APPROVAL
+    production: NOT_ACTIVE
+    evidence: Workflow Task Center exists; no production HITL loop
+  L3:
+    name: POLICY_APPROVED_AUTOMATION
+    production: NOT_ACTIVE
+    evidence: Outbox retry cap is code-only; dispatcher NOT_AVAILABLE
+  L4:
+    name: CONTROLLED_AUTONOMOUS_OPERATION
+    production: NOT_ACTIVE
+    evidence: AutonomyGate deny-by-default; AUTO-AGENT-001 DISABLED

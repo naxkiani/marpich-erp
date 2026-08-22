@@ -256,9 +256,16 @@ BEGIN
         WHERE schemaname IN ('identity','device','credential','certificate','federation','session_mgmt','consent','trust','ai_identity')
         AND tablename NOT IN ('principals')
     LOOP
-        EXECUTE format(
-            'CREATE POLICY tenant_isolation_%s ON %I.%I USING (tenant_id = identity.current_tenant_id())',
-            tbl.tablename, tbl.schemaname, tbl.tablename
-        );
+        IF NOT EXISTS (
+            SELECT 1 FROM pg_policies
+            WHERE schemaname = tbl.schemaname
+              AND tablename = tbl.tablename
+              AND policyname = format('tenant_isolation_%s', tbl.tablename)
+        ) THEN
+            EXECUTE format(
+                'CREATE POLICY tenant_isolation_%s ON %I.%I USING (tenant_id = identity.current_tenant_id())',
+                tbl.tablename, tbl.schemaname, tbl.tablename
+            );
+        END IF;
     END LOOP;
 END $$;

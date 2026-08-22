@@ -1,6 +1,9 @@
 # MEOS Wave 05 — Autonomy (gated)
 
 **Status:** GATED · **Date:** 2026-08-13  
+**P319 (2026-08-18):** Autonomy remains **GATED**. Production automation **`BLOCK_AUTOMATION`**. See [MEOS_P319_AUTOMATION_FABRIC.md](./MEOS_P319_AUTOMATION_FABRIC.md). `AutonomyGate` now denies when flag or policy ports are missing.  
+**P330:** production ceiling **L0** (`observe_operational: false`). L3/L4 **NOT_ACTIVE**. See [MEOS_AUTONOMY_LEVELS.md](./MEOS_AUTONOMY_LEVELS.md).
+
 **Law:** No high-risk autonomous action without Policy Engine allow + human Workflow approval.
 
 ## Gate conditions (all required)

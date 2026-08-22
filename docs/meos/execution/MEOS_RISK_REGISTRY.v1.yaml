@@ -1,0 +1,139 @@
+# MEOS Enterprise Risk Registry (machine)
+# Law: only R-01…R-07 from the launch register. Never invent scores, owners, or RESOLVED.
+schema_version: "1.0"
+generated: "2026-08-18T13:00:00Z"
+source: docs/meos/execution/MEOS_RISK_REGISTER.md
+overall_status: ASSESSED_LAUNCH
+resolved_count: 0
+monitored_count: 0
+unowned_count: 7
+unowned_critical_count: 1
+risk_appetite: NOT_DECLARED
+numeric_score: NOT_SCORED
+
+risks:
+  - id: R-01
+    name: No production cluster
+    category: INFRASTRUCTURE
+    owner: NOT_AVAILABLE
+    description: No real production cluster (public-CA TLS, secret manager, CI immutable SHA)
+    likelihood: Certain
+    impact: Critical
+    score: NOT_SCORED
+    status: ASSESSED
+    controls: [CTL-TLS-PROD, CTL-SECRETS-PROD]
+    control_result: WEAK
+    dependencies: [G26]
+    response: REDUCE
+    review_date: NOT_SET
+    evidence: P313 G26, P314
+    objective_ids: [OBJ-GATE-P314]
+    initiative_ids: [INIT-G26]
+
+  - id: R-02
+    name: No production rollback exercise
+    category: OPERATIONAL
+    owner: NOT_AVAILABLE
+    description: Live production rollback never exercised
+    likelihood: Certain
+    impact: High
+    score: NOT_SCORED
+    status: ASSESSED
+    controls: [CTL-BACKUP-DRILL]
+    control_result: WEAK
+    dependencies: [G27, R-01]
+    response: REDUCE
+    review_date: NOT_SET
+    evidence: P313 G27
+    objective_ids: [OBJ-GATE-P314]
+    initiative_ids: [INIT-G27]
+
+  - id: R-03
+    name: No production alerting
+    category: TECHNOLOGY
+    owner: NOT_AVAILABLE
+    description: Failures undiagnosable in production
+    likelihood: High_if_launched
+    impact: High
+    score: NOT_SCORED
+    status: ASSESSED
+    controls: [CTL-HEALTH-PROBES, CTL-ALERTING-PROD]
+    control_result: WEAK
+    dependencies: [G23]
+    response: REDUCE
+    review_date: NOT_SET
+    evidence: P313 G23
+    objective_ids: [OBJ-GATE-P317]
+    initiative_ids: [INIT-G23]
+
+  - id: R-04
+    name: Stub assist mistaken for production AI
+    category: AI
+    owner: NOT_AVAILABLE
+    description: Template echo must not be treated as governed model
+    likelihood: Medium
+    impact: High
+    score: NOT_SCORED
+    status: ASSESSED
+    controls: [CTL-AI-ASSIST-AUTH, CTL-AUTONOMY-GATE]
+    control_result: WEAK
+    dependencies: [G18]
+    response: AVOID
+    review_date: NOT_SET
+    evidence: P313 G18, P319 BLOCK_AUTOMATION
+    objective_ids: [OBJ-GATE-P317]
+    initiative_ids: [INIT-G18]
+
+  - id: R-05
+    name: DSAR/erasure not runtime-certified
+    category: PRIVACY
+    owner: NOT_AVAILABLE
+    description: Privacy rights unproven before production PII
+    likelihood: Medium_if_pii
+    impact: High
+    score: NOT_SCORED
+    status: ASSESSED
+    controls: [CTL-DSAR-RUNTIME]
+    control_result: FAILED
+    dependencies: [G19]
+    response: REDUCE
+    review_date: NOT_SET
+    evidence: P313 G19
+    objective_ids: [OBJ-GATE-P317]
+    initiative_ids: [INIT-G19]
+
+  - id: R-06
+    name: Dirty SHA / no immutable production release
+    category: SECURITY
+    owner: NOT_AVAILABLE
+    description: Working tree dirty; production artifact not attributable
+    likelihood: Certain
+    impact: High
+    score: NOT_SCORED
+    status: ASSESSED
+    controls: [CTL-IMMUTABLE-SHA]
+    control_result: FAILED
+    dependencies: [G25]
+    response: REDUCE
+    review_date: NOT_SET
+    evidence: e941141-dirty
+    objective_ids: [OBJ-GATE-P314]
+    initiative_ids: [INIT-G25]
+
+  - id: R-07
+    name: No mapped production jurisdiction
+    category: COMPLIANCE
+    owner: NOT_AVAILABLE
+    description: Cannot claim compliance without deploy region
+    likelihood: Certain
+    impact: High
+    score: NOT_SCORED
+    status: ASSESSED
+    controls: []
+    control_result: UNCONTROLLED
+    dependencies: [R-01]
+    response: REDUCE
+    review_date: NOT_SET
+    evidence: P317
+    objective_ids: [OBJ-GATE-P317]
+    initiative_ids: []

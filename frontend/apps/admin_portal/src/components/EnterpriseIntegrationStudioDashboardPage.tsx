@@ -1,7 +1,15 @@
 "use client";
 
 import { PageLayout } from "@marpich/core";
-import { DataTable, EmptyState, ProgressBar, SkeletonTable, useToast } from "@marpich/shared";
+import {
+  DataTable,
+  EmptyState,
+  KpiStrip,
+  ProgressBar,
+  SkeletonTable,
+  mapDeskStatsToKpiItems,
+  useToast,
+} from "@marpich/shared";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   deployEisArtifact,
@@ -353,14 +361,11 @@ export function EnterpriseIntegrationStudioDashboardPage() {
             {lastAction ? ` · Last action: ${lastAction}` : ""}
           </p>
 
-          <div className="eis-stats">
-            {stats.map((stat) => (
-              <article key={stat.label} className="eis-stat">
-                <span className="eis-stat-value">{stat.value}</span>
-                <span className="eis-stat-label">{stat.label}</span>
-              </article>
-            ))}
-          </div>
+          <KpiStrip
+            label="Integration studio KPIs"
+            loading={loading}
+            items={mapDeskStatsToKpiItems(stats, 6)}
+          />
 
           <section aria-labelledby="designer-heading">
             <h2 id="designer-heading">Visual designers</h2>
@@ -528,10 +533,6 @@ export function EnterpriseIntegrationStudioDashboardPage() {
         label { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.85rem; }
         .eis-muted { color: var(--mp-text-muted, #64748b); margin: 0.5rem 0; }
         .eis-error { color: #b91c1c; margin: 0.75rem 0; }
-        .eis-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 0.75rem; margin: 1rem 0; }
-        .eis-stat { padding: 1rem; border-radius: 8px; background: var(--mp-surface-2, #f8fafc); border: 1px solid var(--mp-border, #e2e8f0); }
-        .eis-stat-value { display: block; font-size: 1.2rem; font-weight: 700; }
-        .eis-stat-label { font-size: 0.75rem; color: var(--mp-text-muted, #64748b); }
         .eis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.5rem; }
         .eis-tabs { display: flex; gap: 0.5rem; margin-bottom: 0.75rem; }
         .eis-tab { padding: 0.4rem 0.75rem; border: 1px solid var(--mp-border, #e2e8f0); border-radius: 6px; background: #fff; cursor: pointer; }

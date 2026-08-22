@@ -1,0 +1,14 @@
+target: VPS
+extends: deploy/targets/base.yaml
+overlay:
+  compute: ubuntu_vm
+  runtime: docker_compose
+  proxy: infrastructure/docker/compose/Caddyfile.vps.example
+  bootstrap: scripts/meos-vps-bootstrap.sh
+  kubernetes: false
+secrets: references_only
+status:
+  PACKAGE: READY
+  CREDENTIALS: READY_FOR_CREDENTIALS
+  DEPLOYED: false
+  PRODUCTION_VERIFIED: false

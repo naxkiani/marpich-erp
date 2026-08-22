@@ -8,6 +8,7 @@ import {
   DataTable,
   EmptyState,
   ExportButton,
+  KpiStrip,
   ProgressBar,
   PrintButton,
   SkeletonTable,
@@ -31,6 +32,12 @@ import {
   type ModuleJewel,
   type PlatformTenant,
 } from "@/lib/platformClient";
+import {
+  fetchHomePulse,
+  homePulseHasDataQualityWarning,
+  homePulseHasPartialErrors,
+  type HomePulseResult,
+} from "@/lib/homePulseClient";
 
 const DRAFT_KEY = "marpich.dashboard.platform.draft";
 
@@ -90,6 +97,8 @@ export function DashboardPage() {
   const [localTenant, setLocalTenant] = useState("platform-demo");
   const [draftReady, setDraftReady] = useState(false);
   const [lastAction, setLastAction] = useState<string | null>(null);
+  const [pulse, setPulse] = useState<HomePulseResult | null>(null);
+  const [pulseLoading, setPulseLoading] = useState(false);
 
   const session = authSession;
 
@@ -190,7 +199,7 @@ export function DashboardPage() {
     }
     setProgress(75);
     try {
-      const list = await fetchPlatformTenants(session);
+      const list = await fetchPlatformTenants(session, { limit: 100, offset: 0 });
       setTenants(Array.isArray(list) ? list : []);
       setSelectedTenantSlug((prev) => {
         if (prev && list.some((x) => x.slug === prev)) return prev;
@@ -202,6 +211,23 @@ export function DashboardPage() {
     }
   }, [session]);
 
+  const loadPulse = useCallback(async () => {
+    if (!session) {
+      setPulse(null);
+      return;
+    }
+    setPulseLoading(true);
+    try {
+      const next = await fetchHomePulse(session);
+      setPulse(next);
+      setLastAction("pulse");
+    } catch {
+      setPulse(null);
+    } finally {
+      setPulseLoading(false);
+    }
+  }, [session]);
+
   const refreshAll = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -209,15 +235,17 @@ export function DashboardPage() {
     try {
       await loadCatalog();
       if (session) {
-        try {
-          await loadTenants();
-        } catch (err) {
+        // Parallel platform + pulse — faster home load
+        const results = await Promise.allSettled([loadTenants(), loadPulse()]);
+        const tenantFail = results[0];
+        if (tenantFail.status === "rejected") {
+          const err = tenantFail.reason;
           setError(
-            err instanceof Error
-              ? err.message
-              : t("dashboard.tenantsLoadFailed"),
+            err instanceof Error ? err.message : t("dashboard.tenantsLoadFailed"),
           );
         }
+      } else {
+        setPulse(null);
       }
       setProgress(100);
     } catch (err) {
@@ -226,7 +254,7 @@ export function DashboardPage() {
     } finally {
       setLoading(false);
     }
-  }, [loadCatalog, loadTenants, session, t]);
+  }, [loadCatalog, loadPulse, loadTenants, session, t]);
 
   useEffect(() => {
     if (authLoading) return;
@@ -264,14 +292,67 @@ export function DashboardPage() {
     const active = tenants.filter((x) => x.status === "active").length;
     const suspended = tenants.filter((x) => x.status === "suspended").length;
     const modules = tenants.reduce((n, x) => n + (x.enabled_modules?.length ?? 0), 0);
+    const locked = !isAuthenticated;
     return [
-      { label: t("dashboard.stat.packs"), value: packs.length },
-      { label: t("dashboard.stat.tenants"), value: tenants.length },
-      { label: t("dashboard.stat.active"), value: active },
-      { label: t("dashboard.stat.suspended"), value: suspended },
-      { label: t("dashboard.stat.modules"), value: modules },
+      { label: t("dashboard.stat.packs"), value: packs.length, locked: false },
+      {
+        label: t("dashboard.stat.tenants"),
+        value: locked ? "—" : tenants.length,
+        locked,
+      },
+      {
+        label: t("dashboard.stat.active"),
+        value: locked ? "—" : active,
+        locked,
+      },
+      {
+        label: t("dashboard.stat.suspended"),
+        value: locked ? "—" : suspended,
+        locked,
+      },
+      {
+        label: t("dashboard.stat.modules"),
+        value: locked ? "—" : modules,
+        locked,
+      },
     ];
-  }, [packs.length, tenants, t]);
+  }, [isAuthenticated, packs.length, tenants, t]);
+
+  const pulseKpis = useMemo(() => {
+    const unread = pulse?.unreadNotifications ?? 0;
+    const tasks = pulse?.openTasks ?? 0;
+    const audit24 = pulse?.auditStats?.last_24h ?? 0;
+    const dashboards = pulse?.analytics?.dashboards_count ?? 0;
+    return [
+      {
+        id: "notifications",
+        label: t("dashboard.pulse.unread"),
+        value: unread,
+        href: "/enterprise/notifications",
+        tone: unread > 0 ? ("warn" as const) : ("ok" as const),
+      },
+      {
+        id: "workflow",
+        label: t("dashboard.pulse.tasks"),
+        value: tasks,
+        href: "/enterprise/workflows",
+        tone: tasks > 0 ? ("warn" as const) : ("default" as const),
+      },
+      {
+        id: "audit",
+        label: t("dashboard.pulse.audit24h"),
+        value: audit24,
+        href: "/enterprise/audit",
+        tone: "default" as const,
+      },
+      {
+        id: "analytics",
+        label: t("dashboard.pulse.dashboards"),
+        value: dashboards,
+        tone: "default" as const,
+      },
+    ];
+  }, [pulse, t]);
 
   const filteredTenants = useMemo(() => {
     const q = filterQ.toLowerCase().trim();
@@ -443,8 +524,8 @@ export function DashboardPage() {
             {t("common.refresh")}
           </button>
           {!isAuthenticated ? (
-            <Link href="/login?returnTo=/" className="mp-btn mp-btn-primary">
-              {t("dashboard.signIn")}
+            <Link href="/login?returnTo=/" className="mp-btn">
+              {t("dashboard.openLogin")}
             </Link>
           ) : null}
         </>
@@ -462,7 +543,11 @@ export function DashboardPage() {
       ) : null}
 
       {!isAuthenticated && !authLoading ? (
-        <section className="mp-dash-session" aria-label={t("dashboard.session")}>
+        <section
+          id="dash-session"
+          className="mp-dash-session"
+          aria-label={t("dashboard.session")}
+        >
           <div className="mp-dash-session-banner">
             <h2>{t("dashboard.sessionHint")}</h2>
             <p>{t("dashboard.sessionHelp")}</p>
@@ -564,7 +649,7 @@ export function DashboardPage() {
                 </div>
                 <div className="mp-dash-status-row">
                   <span className="mp-dash-status-label">{t("dashboard.stat.tenants")}</span>
-                  <strong>{tenants.length}</strong>
+                  <strong>{isAuthenticated ? tenants.length : "—"}</strong>
                 </div>
                 {isAuthenticated && session ? (
                   <p className="mp-field-help mp-dash-status-hint">
@@ -574,9 +659,15 @@ export function DashboardPage() {
                   <p className="mp-field-help">{t("dashboard.authRequiredOps")}</p>
                 )}
                 <div className="mp-dash-actions">
-                  <Link href="/modules" className="mp-btn mp-btn-primary">
-                    {t("modules.title")}
-                  </Link>
+                  {!isAuthenticated ? (
+                    <a href="#dash-session" className="mp-btn mp-btn-primary">
+                      {t("dashboard.signIn")}
+                    </a>
+                  ) : (
+                    <Link href="/modules" className="mp-btn mp-btn-primary">
+                      {t("modules.title")}
+                    </Link>
+                  )}
                   <button
                     type="button"
                     className="mp-btn"
@@ -661,6 +752,8 @@ export function DashboardPage() {
               </section>
             ) : null}
 
+            {isAuthenticated ? (
+              <>
             <section className="mp-dash-panel-card">
               <header className="mp-dash-panel-head mp-dash-jewel-bar--forest">
                 <h2>{t("dashboard.provision")}</h2>
@@ -792,6 +885,8 @@ export function DashboardPage() {
                 </div>
               </div>
             </section>
+              </>
+            ) : null}
           </aside>
 
           <div className="mp-dash-main">
@@ -799,13 +894,84 @@ export function DashboardPage() {
               {stats.map((s, i) => {
                 const jewel = METRIC_JEWELS[i % METRIC_JEWELS.length]!;
                 return (
-                  <div key={s.label} className={`mp-dash-metric mp-dash-metric--${jewel}`}>
+                  <div
+                    key={s.label}
+                    className={`mp-dash-metric mp-dash-metric--${jewel}${s.locked ? " mp-dash-metric--locked" : ""}`}
+                    title={s.locked ? t("dashboard.authRequiredOps") : undefined}
+                  >
                     <span className="mp-dash-metric-label">{s.label}</span>
-                    <strong>{s.value}</strong>
+                    <strong aria-label={s.locked ? t("dashboard.authRequiredOps") : undefined}>
+                      {s.value}
+                    </strong>
                   </div>
                 );
               })}
             </section>
+
+            {isAuthenticated ? (
+              <section
+                className="mp-dash-panel-card mp-dash-pulse"
+                aria-labelledby="dash-pulse-title"
+                aria-busy={pulseLoading || undefined}
+              >
+                <header className="mp-dash-panel-head mp-dash-jewel-bar--royal">
+                  <h2 id="dash-pulse-title">{t("dashboard.pulse.title")}</h2>
+                </header>
+                <div className="mp-dash-panel-body">
+                  <p className="mp-field-help">{t("dashboard.pulse.hint")}</p>
+                  <KpiStrip
+                    label={t("dashboard.pulse.title")}
+                    loading={pulseLoading && !pulse}
+                    items={pulseKpis}
+                  />
+                  {homePulseHasPartialErrors(pulse) ? (
+                    <p className="mp-field-help" role="status">
+                      {t("dashboard.pulse.partial")}
+                    </p>
+                  ) : null}
+                  {homePulseHasDataQualityWarning(pulse) ? (
+                    <p className="mp-field-help" role="status">
+                      {t("dashboard.pulse.dataQuality")}
+                    </p>
+                  ) : null}
+                  {pulse && pulse.recentAudit.length > 0 ? (
+                    <div className="mp-dash-pulse-feed" aria-label={t("dashboard.pulse.recentAudit")}>
+                      <h3 className="mp-dash-pulse-feed-title">{t("dashboard.pulse.recentAudit")}</h3>
+                      <ul className="mp-dash-pulse-list">
+                        {pulse.recentAudit.map((entry) => (
+                          <li key={entry.id}>
+                            <Link href="/enterprise/audit">{entry.event_name || entry.action}</Link>
+                            <span className="mp-field-help">
+                              {entry.source_context} · {entry.severity}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+                  {pulse && pulse.recentTasks.length > 0 ? (
+                    <div className="mp-dash-pulse-feed" aria-label={t("dashboard.pulse.recentTasks")}>
+                      <h3 className="mp-dash-pulse-feed-title">{t("dashboard.pulse.recentTasks")}</h3>
+                      <ul className="mp-dash-pulse-list">
+                        {pulse.recentTasks.map((task) => (
+                          <li key={task.id}>
+                            <Link href="/enterprise/workflows">
+                              {task.title || task.id}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+                  {!pulseLoading && !pulse ? (
+                    <EmptyState
+                      title={t("dashboard.pulse.empty")}
+                      description={t("dashboard.pulse.emptyHint")}
+                    />
+                  ) : null}
+                </div>
+              </section>
+            ) : null}
 
             <AdvancedFilterBar
               filters={[
@@ -1030,11 +1196,9 @@ export function DashboardPage() {
       <style jsx>{`
         .mp-dash-layout {
           display: grid;
-          grid-template-columns: minmax(260px, 300px) minmax(0, 1fr);
-          gap: 1.5rem;
+          grid-template-columns: minmax(300px, 340px) minmax(0, 1fr);
+          gap: 1.25rem 1.5rem;
           align-items: start;
-          /* Keep the control rail on the visual left in LTR and RTL. */
-          direction: ltr;
         }
         .mp-dash-aside,
         .mp-dash-main {
@@ -1042,19 +1206,37 @@ export function DashboardPage() {
           flex-direction: column;
           gap: 0.85rem;
           min-width: 0;
-          direction: inherit;
-        }
-        :global([dir="rtl"]) .mp-dash-aside,
-        :global([dir="rtl"]) .mp-dash-main {
-          direction: rtl;
         }
         .mp-dash-aside {
           position: sticky;
           top: 4.5rem;
+          align-self: start;
           max-height: calc(100vh - 5.5rem);
           overflow: auto;
-          padding-inline-end: 0.25rem;
+          padding-inline-end: 0.15rem;
           scrollbar-gutter: stable;
+        }
+        /* Vertical lifecycle steps — horizontal wrap was crushing the narrow rail */
+        .mp-dash-aside :global(.mp-step-progress) {
+          display: flex;
+          flex-direction: column;
+          flex-wrap: nowrap;
+          align-items: stretch;
+          gap: 0.4rem;
+          margin-block-end: 0.65rem;
+        }
+        .mp-dash-aside :global(.mp-step-progress li) {
+          width: 100%;
+          box-sizing: border-box;
+          padding: 0.4rem 0.5rem;
+          border-radius: var(--mp-radius-sm);
+          background: color-mix(in srgb, var(--mp-bg-muted) 65%, transparent);
+        }
+        .mp-dash-aside :global(.mp-step-active) {
+          background: color-mix(in srgb, var(--mp-forest) 10%, transparent);
+        }
+        .mp-dash-aside :global(.mp-step-index) {
+          flex-shrink: 0;
         }
         .mp-dash-session {
           border: 1px solid var(--mp-border);
@@ -1151,9 +1333,14 @@ export function DashboardPage() {
         }
         .mp-dash-form-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
           gap: 0.65rem 0.75rem;
           margin-block-end: 0.75rem;
+        }
+        @media (max-width: 720px) {
+          .mp-dash-form-grid {
+            grid-template-columns: 1fr;
+          }
         }
         .mp-dash-form-stack {
           display: flex;
@@ -1249,6 +1436,13 @@ export function DashboardPage() {
           border: 1px solid var(--mp-border);
           border-block-start: 3px solid var(--mp-silver);
           box-shadow: var(--mp-shadow);
+        }
+        .mp-dash-metric--locked {
+          opacity: 0.72;
+        }
+        .mp-dash-metric--locked strong {
+          color: var(--mp-fg-muted);
+          font-weight: 600;
         }
         .mp-dash-metric--forest {
           border-block-start-color: var(--mp-forest);
@@ -1439,9 +1633,59 @@ export function DashboardPage() {
           color: var(--mp-orange);
           margin: 0.5rem 0;
         }
+        .mp-dash-pulse {
+          margin-block-end: 0.25rem;
+        }
+        .mp-dash-pulse-feed {
+          margin-block-start: 0.85rem;
+        }
+        .mp-dash-pulse-feed-title {
+          margin: 0 0 0.4rem;
+          font-size: 0.78rem;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          color: var(--mp-fg-muted);
+          font-weight: 650;
+        }
+        .mp-dash-pulse-list {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 0.45rem;
+        }
+        .mp-dash-pulse-list li {
+          display: flex;
+          flex-direction: column;
+          gap: 0.15rem;
+          padding: 0.45rem 0.55rem;
+          border: 1px solid var(--mp-border);
+          border-radius: var(--mp-radius-sm);
+          background: var(--mp-bg-subtle, var(--mp-bg-muted));
+        }
+        .mp-dash-pulse-list a {
+          color: var(--mp-forest);
+          text-decoration: none;
+          font-weight: 600;
+          font-size: 0.88rem;
+        }
+        .mp-dash-pulse-list a:hover,
+        .mp-dash-pulse-list a:focus-visible {
+          text-decoration: underline;
+          outline: none;
+        }
         @media (max-width: 960px) {
           .mp-dash-layout {
             grid-template-columns: 1fr;
+          }
+          .mp-dash-aside {
+            position: static;
+            max-height: none;
+            order: 2;
+          }
+          .mp-dash-main {
+            order: 1;
           }
           .mp-dash-metrics {
             grid-template-columns: repeat(2, minmax(0, 1fr));

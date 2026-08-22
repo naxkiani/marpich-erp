@@ -31,6 +31,7 @@ async def provision_tenant(
     body: ProvisionTenantRequest,
     correlation_id: Annotated[str, Depends(get_correlation_id)],
 ):
+    """Bootstrap-friendly provision (public). List/get remain AuthZ-gated."""
     result = await get_platform_service().provision_tenant(
         name=body.name,
         slug=body.slug,
@@ -50,13 +51,31 @@ async def provision_tenant(
 @router.get("/tenants")
 async def list_tenants(
     _user: Annotated[dict, Depends(require_permissions("platform.tenants.read"))],
+    limit: int = 50,
+    offset: int = 0,
 ):
+    """Paginated tenant list — max 100 per page (PERFORMANCE_STANDARD)."""
+    safe_limit = max(1, min(limit, 100))
+    safe_offset = max(0, offset)
     result = await get_platform_service().list_tenants()
-    return {"data": result.unwrap()}
+    items = result.unwrap()
+    total = len(items)
+    page = items[safe_offset : safe_offset + safe_limit]
+    return {
+        "data": {
+            "items": page,
+            "total": total,
+            "limit": safe_limit,
+            "offset": safe_offset,
+        }
+    }
 
 
 @router.get("/tenants/{slug}")
-async def get_tenant(slug: str):
+async def get_tenant(
+    slug: str,
+    _user: Annotated[dict, Depends(require_permissions("platform.tenants.read"))],
+):
     result = await get_platform_service().get_tenant(slug)
     if not result.succeeded:
         raise HTTPException(status.HTTP_404_NOT_FOUND, result.error)

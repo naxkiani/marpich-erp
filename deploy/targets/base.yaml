@@ -1,0 +1,20 @@
+# Shared base — one MEOS artifact. Overlays add target differences only.
+# Canonical image: infrastructure/docker/images/backend.Dockerfile
+schema_version: "1"
+product: MEOS
+fork: FORBIDDEN
+image_repository: ghcr.io/marpich/marpich-backend
+image_tag_latest_as_certification: FORBIDDEN
+digest: NOT_AVAILABLE
+compose_is_production: false
+localhost_is_production: false
+health: /api/v1/health
+live: /api/v1/live
+ready: /api/v1/ready
+backup: scripts/meos-postgres-backup.sh
+restore: scripts/meos-postgres-restore-drill.sh
+migration_check: scripts/meos-migration-check.sh
+secret_template: infrastructure/launch/env.production.example
+g26: scripts/meos-ext-g26-readiness.py
+observability: CONFIGURED
+production_verified: false

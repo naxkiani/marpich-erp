@@ -1,0 +1,18 @@
+# Operator support metadata (P355). No secrets.
+schema_version: "1"
+identify:
+  - version
+  - environment
+  - tenant
+  - release
+  - database_class
+  - image
+forbid_secrets_in_support_output: true
+health: /api/v1/health
+readiness: /api/v1/ready
+production_readiness: scripts/meos-ext-g26-readiness.py
+incident: docs/meos/execution/MEOS_INCIDENT_RESPONSE.md
+backup: scripts/meos-postgres-backup.sh
+rollback: MEOS_PREVIOUS_IMAGE or helm rollback
+telemetry_production: NOT_AVAILABLE
+g26_ready: false

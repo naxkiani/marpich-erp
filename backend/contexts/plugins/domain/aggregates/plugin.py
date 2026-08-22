@@ -138,7 +138,7 @@ class PluginInstallation(AggregateRoot):
     tenant_id: str
     plugin_id: str
     installed_version: str
-    enabled: bool = True
+    enabled: bool = False
     granted_permissions: list[str] = field(default_factory=list)
     config: dict = field(default_factory=dict)
     sandbox_profile: str = "standard"
@@ -164,11 +164,15 @@ class PluginInstallation(AggregateRoot):
             granted_permissions=granted_permissions,
             config=config or {},
             sandbox_profile=sandbox_profile,
+            enabled=False,
         )
 
     def upgrade(self, version: str) -> None:
         self.installed_version = version
         self.upgraded_at = datetime.now(UTC)
+
+    def enable(self) -> None:
+        self.enabled = True
 
     def disable(self) -> None:
         self.enabled = False

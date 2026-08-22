@@ -1,18 +1,21 @@
 # MEOS Architecture Status
 
-**Date:** 2026-08-12 · **Verdict:** Architecture-rich, execution-incomplete · Drift present
+**Date:** 2026-08-12 · **P336 overlay:** 2026-08-19T06:15:00Z · **P337 overlay:** 2026-08-19T06:45:00Z  
+**Verdict:** Architecture-rich, execution-incomplete · Drift present · **0 ACTIVE**  
+**P336:** [MEOS_P336_ARCHITECTURE_RATIONALIZATION.md](./MEOS_P336_ARCHITECTURE_RATIONALIZATION.md) · drift [MEOS_ARCHITECTURE_DRIFT_REPORT.md](./MEOS_ARCHITECTURE_DRIFT_REPORT.md)  
+**P337:** [MEOS_P337_DATA_ARCHITECTURE.md](./MEOS_P337_DATA_ARCHITECTURE.md) · local PG 54 schemas / 223 tables / 93 RLS · **0** published data products
 
-## Inventory
+## Inventory (P336 reconciled)
 
 | Asset | Count / note |
 |-------|----------------|
-| `backend/contexts/` packages | ~79 |
-| Empty scaffolds | 18 (crm, sales, tax, HR, …) |
-| `registry.py` ALL_CONTEXTS | ~67 (≠ filesystem) |
-| ROUTER_SPECS entries | 200+ |
-| Missing packages in ROUTER_SPECS | **26** (silent skip at startup) |
-| Default persistence | `memory` (`settings.persistence_backend`) |
-| Postgres adapters present | Many Wave 01/healthcare contexts |
+| `backend/contexts/` packages | **79** |
+| Application registry rows | **47** · ACTIVE **0** · overall **NOT_READY** |
+| Empty scaffolds | **12** (`EMPTY_INDUSTRY_SCAFFOLD_IDS`) — **not** crm/sales/HR (those are TESTED) |
+| Blueprint fabrics | **5** (quantum/robotics/biotechnology/space/civilization) |
+| Missing ROUTER packages | P3 **BASELINED** (startup omit — do not advertise live) |
+| Default persistence | `memory` (`settings.persistence_backend`); local `.env` may be postgres |
+| Frontend | `admin_portal` only · `frontend/modules/` **ABSENT** |
 
 ## Missing ROUTER packages (must not advertise as live)
 

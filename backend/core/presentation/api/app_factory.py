@@ -6,6 +6,7 @@ from typing import Any, Protocol
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from core.presentation.api.startup_registry import configure_application
 from core.presentation.middleware.platform_gateway import PlatformGatewayMiddleware
@@ -114,5 +115,36 @@ def create_app(
             "service": "marpich-backend",
             "profile": app_profile,
         }
+
+    @application.get("/live", tags=["Monitoring"])
+    @application.get("/api/v1/live", tags=["Monitoring"])
+    async def live() -> dict[str, str]:
+        return {"status": "live", "service": "marpich-backend"}
+
+    @application.get("/ready", tags=["Monitoring"])
+    @application.get("/api/v1/ready", tags=["Monitoring"])
+    async def ready() -> dict[str, Any]:
+        from shared.infrastructure.settings import use_postgres
+
+        if not use_postgres():
+            return {"status": "ready", "service": "marpich-backend", "database": "not_required"}
+        try:
+            from sqlalchemy import text
+
+            from shared.infrastructure.database.engine import get_engine
+
+            async with get_engine().connect() as conn:
+                await conn.execute(text("SELECT 1"))
+        except Exception as exc:  # noqa: BLE001 — readiness must fail closed
+            return JSONResponse(
+                status_code=503,
+                content={
+                    "status": "not_ready",
+                    "service": "marpich-backend",
+                    "database": "unreachable",
+                    "detail": type(exc).__name__,
+                },
+            )
+        return {"status": "ready", "service": "marpich-backend", "database": "ok"}
 
     return application

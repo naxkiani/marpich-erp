@@ -1,7 +1,8 @@
 # MEOS Wave 04 — Privacy Activation Runbook
 
 **Status:** ACTIVATED (operational pack) · **Date:** 2026-08-13  
-**Law:** Privacy is a platform concern — never fork local privacy tables in business modules. See `ENTERPRISE_COMPLIANCE_FRAMEWORK.md` / P269 roadmap.
+**Law:** Privacy is a platform concern — never fork local privacy tables in business modules. See `ENTERPRISE_COMPLIANCE_FRAMEWORK.md` / P269 roadmap.  
+**P337:** pack ≠ runtime DSAR. G19 remains **FAIL**. Retention periods **not invented** (`POLICY_GAP`). See [MEOS_P337_DATA_ARCHITECTURE.md](./MEOS_P337_DATA_ARCHITECTURE.md).
 
 ## Activation checklist
 

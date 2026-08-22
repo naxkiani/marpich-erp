@@ -1,7 +1,15 @@
 "use client";
 
 import { PageLayout } from "@marpich/core";
-import { DataTable, EmptyState, ProgressBar, SkeletonTable, useToast } from "@marpich/shared";
+import {
+  DataTable,
+  EmptyState,
+  KpiStrip,
+  ProgressBar,
+  SkeletonTable,
+  mapDeskStatsToKpiItems,
+  useToast,
+} from "@marpich/shared";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   executeEcfOperation,
@@ -191,14 +199,11 @@ export function EnterpriseConnectorFrameworkDashboardPage() {
 
         {session && !loading && dashboard ? (
           <>
-            <section className="ecf-stats">
-              {stats.map((s) => (
-                <div key={s.label} className={`ecf-stat ecf-stat--${s.tone}`}>
-                  <span>{s.label}</span>
-                  <strong>{s.value}</strong>
-                </div>
-              ))}
-            </section>
+            <KpiStrip
+              label="Connector framework KPIs"
+              loading={loading}
+              items={mapDeskStatsToKpiItems(stats, 6)}
+            />
 
             <section className="ecf-actions">
               <button type="button" onClick={() => void runSeed()}>Seed connectors</button>

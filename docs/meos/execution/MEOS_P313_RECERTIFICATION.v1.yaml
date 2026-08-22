@@ -1,0 +1,114 @@
+# MEOS P342 P313 recertification overlay (machine)
+# Law: P341 Outcome B. Do not invent production. Do not declare GO_LIVE.
+# Workstation PASS ≠ production certification.
+schema_version: "1.0"
+generated: "2026-08-19T08:10:00Z"
+source: docs/meos/execution/MEOS_P342_PRODUCTION_GATE_CLOSURE.md
+p343_overlay: docs/meos/execution/MEOS_P343_FINAL_CERTIFICATION.v1.yaml
+p341_sor: docs/meos/execution/MEOS_PRODUCTION_INFRASTRUCTURE_READINESS.v1.yaml
+p313_matrix: docs/meos/execution/MEOS_P313_PRODUCTION_CERTIFICATION.md
+p313_report: docs/meos/execution/MEOS_P313_CERTIFICATION_REPORT.md
+go_live_checklist: docs/meos/execution/MEOS_GO_LIVE_CHECKLIST.md
+p341_outcome: B_BLOCKED
+outcome: OUTCOME_B
+production_certified: false
+p313_recertification_ready: false
+go_live: NOT APPROVED
+go_live_ready: false
+p0_count: 1
+environment_for_pass_gates: workstation
+production_target: NOT_AVAILABLE
+git_describe: 47258dfd-dirty
+registry_active_count: 0
+holds_preserved: true
+go_live_declaration: FORBIDDEN
+
+# G01–G28: P313 2026-08-18 states, P342 production recert decision.
+# PASS here is workstation evidence. It does not close G26 or set PRODUCTION_CERTIFIED.
+gates:
+  G01: { status: PASS, env: workstation, owner: NOT_AVAILABLE }
+  G02: { status: PASS, env: workstation, owner: NOT_AVAILABLE }
+  G03: { status: PASS, env: workstation, owner: NOT_AVAILABLE }
+  G04: { status: PASS, env: workstation, owner: NOT_AVAILABLE }
+  G05: { status: PASS, env: workstation, owner: NOT_AVAILABLE }
+  G06: { status: PASS, env: workstation, owner: NOT_AVAILABLE }
+  G07: { status: PASS, env: workstation, owner: NOT_AVAILABLE }
+  G08: { status: PASS, env: workstation, owner: NOT_AVAILABLE }
+  G09: { status: PASS, env: workstation, owner: NOT_AVAILABLE }
+  G10: { status: PASS, env: workstation, owner: NOT_AVAILABLE }
+  G11: { status: PASS, env: workstation, owner: NOT_AVAILABLE }
+  G12: { status: PASS, env: workstation, owner: NOT_AVAILABLE }
+  G13: { status: PASS, env: workstation, owner: NOT_AVAILABLE }
+  G14: { status: PASS, env: workstation, owner: NOT_AVAILABLE }
+  G15: { status: PASS, env: workstation, owner: NOT_AVAILABLE }
+  G16: { status: PASS, env: workstation, owner: NOT_AVAILABLE }
+  G17: { status: PASS, env: workstation, owner: NOT_AVAILABLE }
+  G18: { status: FAIL, env: workstation, owner: NOT_AVAILABLE }
+  G19: { status: FAIL, env: workstation, owner: NOT_AVAILABLE }
+  G20: { status: FAIL, env: workstation, owner: NOT_AVAILABLE }
+  G21: { status: FAIL, env: workstation, owner: NOT_AVAILABLE }
+  G22: { status: PASS, env: workstation, owner: NOT_AVAILABLE }
+  G23: { status: FAIL, env: workstation, owner: NOT_AVAILABLE }
+  G24: { status: PASS, env: workstation, owner: NOT_AVAILABLE }
+  G25: { status: FAIL, env: workstation, owner: NOT_AVAILABLE }
+  G26: { status: BLOCKED, env: production, owner: NOT_AVAILABLE }
+  G27: { status: BLOCKED, env: production, owner: NOT_AVAILABLE }
+  G28: { status: PASS, env: workstation, owner: NOT_AVAILABLE }
+
+totals:
+  PASS: 20
+  FAIL: 6
+  BLOCKED: 2
+  NOT_APPLICABLE: 0
+
+critical_blockers:
+  - id: G26
+    status: BLOCKED
+    evidence: P341 cloud_cluster MISSING; meos-prod STOPPED; public-CA TLS MISSING; secret manager MISSING
+    dependency: Real production cluster
+    remediation: INIT-G26 / CHG-G26 provision managed Postgres + public-CA TLS + secret store + CI immutable SHA deploy
+    next_verification: Re-run P313 G26 on that environment; P0 must become 0
+  - id: G27
+    status: BLOCKED
+    evidence: No production release exists to roll back
+    dependency: G26
+    remediation: After first production deploy, exercise version N→N+1→rollback→health
+    next_verification: P313 G27 with runtime evidence
+  - id: G25
+    status: FAIL
+    evidence: git describe 47258dfd-dirty
+    dependency: Clean tree + CI green; production deploy still needs G26
+    remediation: Immutable SHA/tag; CI green — does not close G26
+    next_verification: git describe --dirty empty; CI on that SHA
+  - id: G23
+    status: FAIL
+    evidence: Local probes only; no SIGNAL→ALERT→DELIVERY
+    dependency: G26 for production alerting
+    remediation: Production logging/metrics/tracing + alerting test
+    next_verification: Controlled non-destructive alert audit
+  - id: G19
+    status: FAIL
+    evidence: DSAR/erasure not runtime-certified
+    dependency: INIT-G19; G26 for prod PII
+    remediation: Workflow privacy.erasure.request runtime + audit
+    next_verification: G19 recert
+  - id: G18
+    status: FAIL
+    evidence: AI assist template echo
+    dependency: INIT-G18; BLOCK_AUTOMATION HOLD
+    remediation: Governed model; HITL; do not add AI platform
+    next_verification: G18 recert
+  - id: G20
+    status: FAIL
+    evidence: No Playwright this recert
+    dependency: UI E2E
+    remediation: INIT/TD-G20
+    next_verification: G20 recert
+  - id: G21
+    status: FAIL
+    evidence: No a11y measurement this recert
+    dependency: A11y tooling
+    remediation: Targeted critical-path a11y
+    next_verification: G21 recert
+
+next_operational_action: Provision a real production cluster (INIT-G26). Then recertify P313. Do not declare GO_LIVE. Do not bind HOLD decisions.

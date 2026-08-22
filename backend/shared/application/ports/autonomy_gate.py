@@ -53,23 +53,24 @@ class AutonomyGate:
         if not tenant_id or not action:
             return AutonomyDecision(False, "autonomy.errors.invalid_request")
 
-        if self._flags is not None:
-            enabled = await self._flags.is_enabled(
-                tenant_id=tenant_id, flag_key=self.FLAG_KEY
-            )
-            if not enabled:
-                return AutonomyDecision(False, "autonomy.errors.flag_disabled")
+        if self._flags is None or self._policies is None:
+            return AutonomyDecision(False, "autonomy.errors.gate_unavailable")
 
-        if self._policies is not None:
-            result = await self._policies.evaluate(
-                tenant_id=tenant_id,
-                domain=self.POLICY_DOMAIN,
-                policy_key=self.POLICY_KEY,
-                facts={"action": action, **(facts or {})},
-            )
-            outcome = str(result.get("outcome") or result.get("decision") or "").lower()
-            if outcome not in {"allow", "allowed", "permit"}:
-                return AutonomyDecision(False, "autonomy.errors.policy_denied")
+        enabled = await self._flags.is_enabled(
+            tenant_id=tenant_id, flag_key=self.FLAG_KEY
+        )
+        if not enabled:
+            return AutonomyDecision(False, "autonomy.errors.flag_disabled")
+
+        result = await self._policies.evaluate(
+            tenant_id=tenant_id,
+            domain=self.POLICY_DOMAIN,
+            policy_key=self.POLICY_KEY,
+            facts={"action": action, **(facts or {})},
+        )
+        outcome = str(result.get("outcome") or result.get("decision") or "").lower()
+        if outcome not in {"allow", "allowed", "permit"}:
+            return AutonomyDecision(False, "autonomy.errors.policy_denied")
 
         if not human_approved:
             return AutonomyDecision(

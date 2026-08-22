@@ -1,0 +1,59 @@
+schema_version: "1"
+contract: MEOS_P353_ENVIRONMENT
+g26_ready: false
+production_certified: false
+localhost_is_production: false
+compose_is_production: false
+never_commit_secret_values: true
+source_templates:
+  - infrastructure/launch/env.production.example
+  - deploy/environments/ENV_*.env.example
+
+# Each variable: name, required, secret, default_allowed, production_required, validation, source
+APPLICATION:
+  - { name: MARPICH_ENVIRONMENT, required: true, secret: false, default_allowed: true, production_required: true, validation: enum_or_string, source: env }
+  - { name: PUBLIC_BASE_URL, required: true, secret: false, default_allowed: false, production_required: true, validation: https_hostname_not_localhost, source: env }
+  - { name: MEOS_IMAGE, required: true, secret: false, default_allowed: true, production_required: true, validation: not_latest_for_certification, source: env_or_helm }
+  - { name: MEOS_IMAGE_DIGEST, required: false, secret: false, default_allowed: true, production_required: true, validation: sha256_or_NOT_AVAILABLE, source: ci }
+DATABASE:
+  - { name: DATABASE_URL, required: true, secret: true, default_allowed: false, production_required: true, validation: postgresql_not_localhost_for_production, source: secret_ref }
+  - { name: DATABASE_SSL, required: true, secret: false, default_allowed: true, production_required: true, validation: require_for_production, source: env }
+  - { name: POSTGRES_USER, required: true, secret: false, default_allowed: false, production_required: true, validation: nonempty, source: secret_ref }
+  - { name: POSTGRES_PASSWORD, required: true, secret: true, default_allowed: false, production_required: true, validation: nonempty, source: secret_ref }
+  - { name: POSTGRES_DB, required: true, secret: false, default_allowed: true, production_required: true, validation: nonempty, source: env }
+CACHE:
+  - { name: REDIS_URL, required: true, secret: true, default_allowed: false, production_required: true, validation: redis_url, source: secret_ref }
+STORAGE:
+  - { name: STORAGE_PROVIDER, required: true, secret: false, default_allowed: true, production_required: true, validation: enum, source: env }
+  - { name: STORAGE_SECRET, required: false, secret: true, default_allowed: false, production_required: true, validation: nonempty_when_provider_set, source: secret_ref }
+EMAIL:
+  - { name: EMAIL_PROVIDER, required: false, secret: false, default_allowed: true, production_required: false, validation: enum_or_none, source: env }
+  - { name: SMTP_PASSWORD, required: false, secret: true, default_allowed: false, production_required: false, validation: nonempty_when_smtp, source: secret_ref }
+DNS:
+  - { name: MEOS_DOMAIN, required: true, secret: false, default_allowed: false, production_required: true, validation: public_hostname, source: env }
+TLS:
+  - { name: TLS_MODE, required: true, secret: false, default_allowed: true, production_required: true, validation: public_ca_for_production, source: env }
+SECRETS:
+  - { name: SECRET_PROVIDER, required: true, secret: false, default_allowed: true, production_required: true, validation: env_file_or_manager, source: env }
+  - { name: JWT_SECRET, required: true, secret: true, default_allowed: false, production_required: true, validation: min_32_chars, source: secret_ref }
+  - { name: SECRET_KEY, required: false, secret: true, default_allowed: false, production_required: false, validation: nonempty, source: secret_ref }
+  - { name: DOCUMENT_SIGNING_SECRET, required: true, secret: true, default_allowed: false, production_required: true, validation: nonempty, source: secret_ref }
+  - { name: PROVIDER_CREDENTIALS, required: false, secret: true, default_allowed: false, production_required: false, validation: never_in_git, source: secret_manager }
+OBSERVABILITY:
+  - { name: OTEL_ENABLED, required: false, secret: false, default_allowed: true, production_required: false, validation: bool, source: env }
+  - { name: OTEL_EXPORTER_OTLP_ENDPOINT, required: false, secret: false, default_allowed: true, production_required: false, validation: url, source: env }
+BACKUP:
+  - { name: MEOS_BACKUP_DIR, required: false, secret: false, default_allowed: true, production_required: true, validation: offsite_uri_for_production, source: env }
+  - { name: BACKUP_PROVIDER, required: false, secret: false, default_allowed: true, production_required: true, validation: nonempty, source: env }
+AUTH:
+  - { name: JWT_SECRET, required: true, secret: true, default_allowed: false, production_required: true, validation: min_32_chars, source: secret_ref }
+TENANCY:
+  - { name: X-Tenant-ID, required: true, secret: false, default_allowed: false, production_required: true, validation: header_from_gateway, source: request }
+EXTERNAL_SERVICES:
+  - { name: INTEGRATION_CONNECTORS, required: false, secret: false, default_allowed: true, production_required: false, validation: via_integration_platform, source: api }
+
+secret_contract:
+  rule: references_only
+  never_commit: [DATABASE_URL, JWT_SECRET, SECRET_KEY, SMTP_PASSWORD, STORAGE_SECRET, PROVIDER_CREDENTIALS, POSTGRES_PASSWORD, DOCUMENT_SIGNING_SECRET]
+  scanner: python3 scripts/meos-secret-scan.py
+  placeholders_allowed: [CHANGE_ME, NOT_AVAILABLE]

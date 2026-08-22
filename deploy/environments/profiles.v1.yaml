@@ -1,0 +1,168 @@
+# Machine-readable environment profiles. Placeholders only. No secrets.
+# CONFIGURED ≠ AVAILABLE ≠ VERIFIED ≠ PRODUCTION_VERIFIED
+schema_version: "1"
+localhost_is_production: false
+compose_is_production: false
+g26_ready: false
+production_certified: false
+
+profiles:
+  ENV_LOCAL:
+    status: READY
+    class: NON_PRODUCTION
+    DATABASE: "127.0.0.1:5433 compose.dev"
+    CACHE: "127.0.0.1:6379"
+    STORAGE: local_or_minio
+    SECRETS: env_file
+    TLS: none
+    DOMAIN: localhost
+    EMAIL: none
+    OBSERVABILITY: otlp_optional
+    BACKUP: scripts/meos-postgres-backup.sh
+    RESTORE: scripts/meos-postgres-restore-drill.sh
+    CONTAINER_REGISTRY: none
+    DEPLOYMENT_METHOD: scripts/dev-up.sh
+    production_verified: false
+  ENV_DEMO:
+    status: READY
+    class: DEMO_NON_PRODUCTION
+    DATABASE: "127.0.0.1:5444 meosprod"
+    CACHE: "127.0.0.1:6380"
+    STORAGE: minio
+    SECRETS: env_file
+    TLS: none_http_8080
+    DOMAIN: localhost
+    EMAIL: none
+    OBSERVABILITY: otlp_optional
+    BACKUP: scripts/meos-postgres-backup.sh
+    RESTORE: scripts/meos-postgres-restore-drill.sh
+    CONTAINER_REGISTRY: local
+    DEPLOYMENT_METHOD: docker-compose.meos-prod.yml
+    production_verified: false
+  ENV_STAGING:
+    status: READY_FOR_CREDENTIALS
+    class: READY_FOR_CREDENTIALS
+    DATABASE: CHANGE_ME_POSTGRES
+    CACHE: CHANGE_ME_REDIS
+    STORAGE: CHANGE_ME
+    SECRETS: CHANGE_ME_SECRET_MANAGER
+    TLS: public_ca
+    DOMAIN: CHANGE_ME_HOSTNAME
+    EMAIL: CHANGE_ME
+    OBSERVABILITY: otlp
+    BACKUP: CHANGE_ME
+    RESTORE: CHANGE_ME
+    CONTAINER_REGISTRY: ghcr.io/marpich/marpich-backend
+    DEPLOYMENT_METHOD: helm_or_compose
+    production_verified: false
+  ENV_VPS:
+    status: READY_FOR_CREDENTIALS
+    DATABASE: CHANGE_ME_POSTGRES
+    CACHE: CHANGE_ME_REDIS
+    STORAGE: CHANGE_ME
+    SECRETS: env_file
+    TLS: public_ca
+    DOMAIN: CHANGE_ME_HOSTNAME
+    EMAIL: CHANGE_ME
+    OBSERVABILITY: otlp
+    BACKUP: scripts/meos-postgres-backup.sh
+    RESTORE: scripts/meos-postgres-restore-drill.sh
+    CONTAINER_REGISTRY: ghcr.io/marpich/marpich-backend
+    DEPLOYMENT_METHOD: scripts/meos-vps-bootstrap.sh
+    production_verified: false
+  ENV_HOSTINGER_VPS:
+    status: READY_FOR_CREDENTIALS
+    hostinger_shared: INCOMPATIBLE
+    DATABASE: CHANGE_ME_POSTGRES
+    CACHE: CHANGE_ME_REDIS
+    STORAGE: CHANGE_ME
+    SECRETS: env_file
+    TLS: public_ca
+    DOMAIN: CHANGE_ME_HOSTNAME
+    EMAIL: CHANGE_ME
+    OBSERVABILITY: otlp
+    BACKUP: scripts/meos-postgres-backup.sh
+    RESTORE: scripts/meos-postgres-restore-drill.sh
+    CONTAINER_REGISTRY: ghcr.io/marpich/marpich-backend
+    DEPLOYMENT_METHOD: deploy/vps
+    production_verified: false
+  ENV_AWS:
+    status: READY_FOR_CREDENTIALS
+    chosen_target: EC2_plus_Compose
+    DATABASE: CHANGE_ME_RDS
+    CACHE: CHANGE_ME_REDIS
+    STORAGE: s3
+    SECRETS: aws_secrets_manager
+    TLS: public_ca
+    DOMAIN: CHANGE_ME_HOSTNAME
+    EMAIL: CHANGE_ME
+    OBSERVABILITY: otlp
+    BACKUP: rds_snapshot_or_script
+    RESTORE: CHANGE_ME
+    CONTAINER_REGISTRY: ghcr.io/marpich/marpich-backend
+    DEPLOYMENT_METHOD: ec2_docker_compose
+    production_verified: false
+  ENV_AZURE:
+    status: READY_FOR_CREDENTIALS
+    chosen_target: Azure_VM_plus_Compose
+    DATABASE: CHANGE_ME_AZURE_PG
+    CACHE: CHANGE_ME_REDIS
+    STORAGE: blob
+    SECRETS: azure_key_vault
+    TLS: public_ca
+    DOMAIN: CHANGE_ME_HOSTNAME
+    EMAIL: CHANGE_ME
+    OBSERVABILITY: otlp
+    BACKUP: azure_backup_or_script
+    RESTORE: CHANGE_ME
+    CONTAINER_REGISTRY: ghcr.io/marpich/marpich-backend
+    DEPLOYMENT_METHOD: azure_vm_docker_compose
+    production_verified: false
+  ENV_GCP:
+    status: READY_FOR_CREDENTIALS
+    chosen_target: GCE_plus_Compose
+    DATABASE: CHANGE_ME_CLOUDSQL
+    CACHE: CHANGE_ME_REDIS
+    STORAGE: gcs
+    SECRETS: gcp_secret_manager
+    TLS: public_ca
+    DOMAIN: CHANGE_ME_HOSTNAME
+    EMAIL: CHANGE_ME
+    OBSERVABILITY: otlp
+    BACKUP: cloudsql_or_script
+    RESTORE: CHANGE_ME
+    CONTAINER_REGISTRY: ghcr.io/marpich/marpich-backend
+    DEPLOYMENT_METHOD: gce_docker_compose
+    production_verified: false
+  ENV_KUBERNETES:
+    status: READY_FOR_CREDENTIALS
+    DATABASE: CHANGE_ME_POSTGRES
+    CACHE: CHANGE_ME_REDIS
+    STORAGE: CHANGE_ME
+    SECRETS: external_secrets
+    TLS: cert_manager_public_ca
+    DOMAIN: CHANGE_ME_HOSTNAME
+    EMAIL: CHANGE_ME
+    OBSERVABILITY: otlp
+    BACKUP: CHANGE_ME
+    RESTORE: CHANGE_ME
+    CONTAINER_REGISTRY: ghcr.io/marpich/marpich-backend
+    DEPLOYMENT_METHOD: helm_upgrade_install
+    production_verified: false
+  ENV_PRODUCTION:
+    status: BLOCKED
+    class: BLOCKED
+    DATABASE: CHANGE_ME
+    CACHE: CHANGE_ME
+    STORAGE: CHANGE_ME
+    SECRETS: CHANGE_ME
+    TLS: public_ca
+    DOMAIN: CHANGE_ME_HOSTNAME
+    EMAIL: CHANGE_ME
+    OBSERVABILITY: otlp
+    BACKUP: CHANGE_ME_OFFSITE
+    RESTORE: CHANGE_ME
+    CONTAINER_REGISTRY: ghcr.io/marpich/marpich-backend
+    DEPLOYMENT_METHOD: blocked_until_g26
+    production_verified: false
+    g26_ready: false

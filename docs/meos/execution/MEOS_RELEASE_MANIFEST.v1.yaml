@@ -1,0 +1,143 @@
+schema_version: "1"
+# Top-level keys remain for P353 validators. Nested blocks are the P354 RC contract.
+release_id: P354-RC-NOT_ELIGIBLE
+release_label: P354-RC-BLOCKED-DIRTY
+version: "0.1.0"
+versioning_gap: "backend/pyproject.toml is 0.1.0; Helm appVersion is 7.0.0; no CHANGELOG. Do not invent a version."
+helm_app_version: "7.0.0"
+commit_sha: dd967051ab05c6ff57262502b456ad51b7d748fd
+source_parent: 47258dfd28029e860dcf4d9829c28ac88007ccca
+last_clean_commit: 565f5b70036c292a53ec7b36ece7446597e5d980
+branch: feature/dashboard-home-complete
+worktree_state: DIRTY
+source_state: DIRTY
+git_describe: dd967051-dirty
+forbidden_identity: 47258dfd-dirty
+build_status: BLOCKED
+test_status: PASS
+secret_scan_status: PASS
+docker_status: PASS
+frontend_build_status: NOT_AVAILABLE
+image: meos/backend:p353-local
+image_id: sha256:bf5aad6542774a7788dadcdc1c37ce7785eb007cb5b32c45184a70933b3c2ae5
+image_digest: NOT_AVAILABLE
+registry: ghcr.io/marpich/marpich-backend
+registry_status: READY_FOR_CREDENTIALS
+build_timestamp: "2026-08-19T08:16:54Z"
+build_id: NOT_AVAILABLE
+artifact_status: LOCAL_BUILD
+ci_status: READY_FOR_CREDENTIALS
+deployment_status: READY_FOR_CREDENTIALS
+local_release_ready: false
+registry_release_ready: READY_FOR_CREDENTIALS
+deployment_release_ready: READY_FOR_CREDENTIALS
+production_release_ready: false
+production_certified: false
+g26_ready: false
+p0: 1
+p313: NOT_CERTIFIED
+go_live_authorization: NOT_APPROVED
+rollback_tested: false
+current_artifact: meos/backend:p353-local
+previous_artifact: NOT_AVAILABLE
+release_candidate: false
+note: "Local image_id is BUILD_VALIDATION only. Docker daemon RepoDigest equals image Id and is NOT a GHCR IMAGE_DIGEST. Dirty worktree cannot become a release candidate."
+
+release:
+  id: P354-RC-NOT_ELIGIBLE
+  version: "0.1.0"
+  commit: dd967051ab05c6ff57262502b456ad51b7d748fd
+  build_id: NOT_AVAILABLE
+  image: meos/backend:p353-local
+  digest: NOT_AVAILABLE
+
+application:
+  services:
+    - name: marpich-backend
+      runtime: fastapi
+      command: "uvicorn core.presentation.api.main:app --host 0.0.0.0 --port 8000"
+      user: app
+      dockerfile: infrastructure/docker/images/backend.Dockerfile
+  migrations:
+    current: "055"
+    file: 055_tax_liabilities_returns.sql
+    count: 55
+    pending: NOT_EXECUTED
+    compatibility: INVENTORY_PASS
+    apply: NOT_EXECUTED
+    production_database: NOT_VERIFIED
+
+validation:
+  tests: PASS
+  security: CONFIGURED
+  tenancy: UNIT_TEST_EXISTS
+  backup: PASS
+  restore: PASS
+  backup_class: LOCAL_EVIDENCE
+  restore_class: LOCAL_NON_PRODUCTION
+  production_backup: NOT_VERIFIED
+
+targets:
+  local:
+    PACKAGE_STATUS: READY
+    CONFIG_STATUS: READY
+    SECRET_STATUS: NOT_REQUIRED
+    DEPLOYMENT_STATUS: LOCAL_EVIDENCE
+    RUNTIME_STATUS: LOCAL_VERIFIED
+    PRODUCTION_STATUS: NOT_VERIFIED
+  docker:
+    PACKAGE_STATUS: READY
+    CONFIG_STATUS: READY
+    SECRET_STATUS: NOT_REQUIRED
+    DEPLOYMENT_STATUS: LOCAL_EVIDENCE
+    RUNTIME_STATUS: LOCAL_VERIFIED
+    PRODUCTION_STATUS: NOT_VERIFIED
+  vps:
+    PACKAGE_STATUS: READY
+    CONFIG_STATUS: READY
+    SECRET_STATUS: READY_FOR_CREDENTIALS
+    DEPLOYMENT_STATUS: NOT_VERIFIED
+    RUNTIME_STATUS: NOT_VERIFIED
+    PRODUCTION_STATUS: NOT_VERIFIED
+  hostinger_vps:
+    PACKAGE_STATUS: READY
+    CONFIG_STATUS: READY
+    SECRET_STATUS: READY_FOR_CREDENTIALS
+    DEPLOYMENT_STATUS: NOT_VERIFIED
+    RUNTIME_STATUS: NOT_VERIFIED
+    PRODUCTION_STATUS: NOT_VERIFIED
+  aws:
+    PACKAGE_STATUS: READY
+    CONFIG_STATUS: READY
+    SECRET_STATUS: READY_FOR_CREDENTIALS
+    DEPLOYMENT_STATUS: NOT_VERIFIED
+    RUNTIME_STATUS: NOT_VERIFIED
+    PRODUCTION_STATUS: NOT_VERIFIED
+  azure:
+    PACKAGE_STATUS: READY
+    CONFIG_STATUS: READY
+    SECRET_STATUS: READY_FOR_CREDENTIALS
+    DEPLOYMENT_STATUS: NOT_VERIFIED
+    RUNTIME_STATUS: NOT_VERIFIED
+    PRODUCTION_STATUS: NOT_VERIFIED
+  gcp:
+    PACKAGE_STATUS: READY
+    CONFIG_STATUS: READY
+    SECRET_STATUS: READY_FOR_CREDENTIALS
+    DEPLOYMENT_STATUS: NOT_VERIFIED
+    RUNTIME_STATUS: NOT_VERIFIED
+    PRODUCTION_STATUS: NOT_VERIFIED
+  kubernetes:
+    PACKAGE_STATUS: READY
+    CONFIG_STATUS: READY
+    SECRET_STATUS: READY_FOR_CREDENTIALS
+    DEPLOYMENT_STATUS: NOT_VERIFIED
+    RUNTIME_STATUS: NOT_VERIFIED
+    PRODUCTION_STATUS: NOT_VERIFIED
+    validation: STATIC_VALIDATION_LIMITED
+
+certification:
+  g26: BLOCKED
+  p313: NOT_CERTIFIED
+  production: false
+  go_live: NOT_APPROVED

@@ -40,6 +40,8 @@ class Settings(BaseSettings):
     outbox_poll_interval_ms: int = 500
     outbox_batch_size: int = 100
     outbox_dispatch_immediate: bool = True
+    # Unpublished rows at or above this retry_count are not re-dispatched (DLQ).
+    outbox_max_retries: int = 8
 
     # Kafka fan-out (optional — external consumers)
     kafka_enabled: bool = False
@@ -170,6 +172,12 @@ class Settings(BaseSettings):
         if self.persistence_backend.lower() != "postgres":
             raise ValueError(
                 "P0: PERSISTENCE_BACKEND=postgres is required when MARPICH_ENVIRONMENT=production"
+            )
+        db_url = (self.database_url or "").strip().lower()
+        if not db_url or "marpich:marpich@" in db_url:
+            raise ValueError(
+                "P0: DATABASE_URL must be set to a non-default Postgres URL when "
+                "MARPICH_ENVIRONMENT=production (reject empty / default marpich:marpich credentials)"
             )
         if self.event_bus_mode.lower() == "direct":
             # Force durable outbox for production — never silent direct bus

@@ -1,0 +1,15 @@
+{
+  "backup_test": "PASS",
+  "restore_test": "PASS",
+  "class": "LOCAL_EVIDENCE",
+  "restore_class": "LOCAL_NON_PRODUCTION",
+  "target_database": "marpich_platform_p354_restore",
+  "host": "127.0.0.1",
+  "port": "5433",
+  "bytes": 741468,
+  "dump": "marpich_marpich_platform_20260819T100301Z.sql.gz",
+  "production_backup": "NOT_VERIFIED",
+  "production_restore": "NOT_VERIFIED",
+  "source": "scripts/meos-postgres-backup.sh + scripts/meos-postgres-restore-drill.sh",
+  "note": "Workstation Postgres :5433 is NON_PRODUCTION. Not PRODUCTION_BACKUP."
+}

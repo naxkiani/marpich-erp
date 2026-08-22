@@ -1,0 +1,168 @@
+# MEOS production-profile stack (operator workstation / DEMO).
+# Distinct from docker-compose.dev.yml (demo credentials).
+# COMPOSE_IS_PRODUCTION = FALSE
+# Not a cloud production cluster — TLS is local self-signed.
+# Postgres host port 5444 is NON_PRODUCTION (same class as :5433).
+#
+# MUST use project name meosprod so it never replaces the demo stack:
+#   docker compose -p meosprod --env-file infrastructure/docker/compose/.env.meos-prod \
+#     -f infrastructure/docker/compose/docker-compose.meos-prod.yml up -d
+
+name: meosprod
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: meos-prod-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5444:5432"
+    volumes:
+      - meos_prod_pg:/var/lib/postgresql/data
+      - ../init-db.sql:/docker-entrypoint-initdb.d/01_init.sql:ro
+    command:
+      - postgres
+      - -c
+      - wal_level=replica
+      - -c
+      - archive_mode=on
+      - -c
+      - archive_command=mkdir -p /var/lib/postgresql/data/meos_wal_archive && cp %p /var/lib/postgresql/data/meos_wal_archive/%f
+      - -c
+      - archive_timeout=60
+      - -c
+      - max_wal_senders=3
+      - -c
+      - hot_standby=on
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: meos-prod-redis
+    restart: unless-stopped
+    ports:
+      - "6380:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  minio:
+    image: minio/minio:latest
+    container_name: meos-prod-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MEOS_S3_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${MEOS_S3_SECRET_KEY}
+    restart: unless-stopped
+    ports:
+      - "9100:9000"
+      - "9101:9001"
+    volumes:
+      - meos_prod_backup_objects:/data
+
+  minio-init:
+    image: minio/mc:latest
+    container_name: meos-prod-minio-init
+    depends_on:
+      minio:
+        condition: service_started
+    environment:
+      MINIO_ROOT_USER: ${MEOS_S3_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${MEOS_S3_SECRET_KEY}
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        i=0
+        until mc alias set local http://minio:9000 "$$MINIO_ROOT_USER" "$$MINIO_ROOT_PASSWORD"; do
+          i=$$((i+1)); [ $$i -gt 30 ] && exit 1; sleep 2
+        done
+        mc mb -p local/meos-backups
+        mc anonymous set none local/meos-backups
+
+  backend:
+    # Immutable release identity: set MEOS_IMAGE to repository@sha256:<digest>.
+    # Never use :latest as certification identity. Local build is BUILD_VALIDATION only.
+    image: ${MEOS_IMAGE:-meos/backend:local-build}
+    build:
+      context: ../../../backend
+      dockerfile: ../infrastructure/docker/images/backend.Dockerfile
+    container_name: meos-prod-backend
+    restart: unless-stopped
+    environment:
+      MARPICH_ENVIRONMENT: production
+      PERSISTENCE_BACKEND: postgres
+      EVENT_BUS_MODE: outbox
+      OTEL_ENABLED: "true"
+      JWT_SECRET: ${JWT_SECRET}
+      DOCUMENT_SIGNING_SECRET: ${DOCUMENT_SIGNING_SECRET:-}
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      REDIS_URL: redis://redis:6379
+      KAFKA_ENABLED: "false"
+    ports:
+      - "8080:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health', timeout=4)",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 45s
+
+  worker:
+    image: ${MEOS_IMAGE:-meos/backend:local-build}
+    build:
+      context: ../../../backend
+      dockerfile: ../infrastructure/docker/images/backend.Dockerfile
+    container_name: meos-prod-worker
+    restart: unless-stopped
+    command: ["python", "-m", "core.presentation.workers.outbox_worker"]
+    environment:
+      MARPICH_ENVIRONMENT: production
+      PERSISTENCE_BACKEND: postgres
+      EVENT_BUS_MODE: outbox
+      OTEL_ENABLED: "true"
+      JWT_SECRET: ${JWT_SECRET}
+      DOCUMENT_SIGNING_SECRET: ${DOCUMENT_SIGNING_SECRET:-}
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      REDIS_URL: redis://redis:6379
+      KAFKA_ENABLED: "false"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: meos-prod-caddy
+    restart: unless-stopped
+    ports:
+      - "8443:8443"
+    volumes:
+      - ./Caddyfile.meos-prod:/etc/caddy/Caddyfile:ro
+      - ./certs:/certs:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  meos_prod_pg:
+  meos_prod_backup_objects:

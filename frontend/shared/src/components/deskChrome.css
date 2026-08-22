@@ -70,6 +70,95 @@
   color: var(--mp-forest);
 }
 
+.mp-desk-chrome-metric-hint {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.7rem;
+  font-style: normal;
+  color: var(--mp-fg-muted);
+}
+
+.mp-desk-chrome-metric--link {
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.mp-desk-chrome-metric--link:hover,
+.mp-desk-chrome-metric--link:focus-visible {
+  border-color: var(--mp-forest);
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--mp-forest) 25%, transparent);
+}
+
+.mp-desk-chrome-metric--ok {
+  border-block-start-color: var(--mp-success, var(--mp-forest));
+}
+
+.mp-desk-chrome-metric--warn {
+  border-block-start-color: var(--mp-warning, #c48a1a);
+}
+
+.mp-desk-chrome-metric--danger {
+  border-block-start-color: var(--mp-danger);
+}
+
+.mp-kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+  gap: 0.75rem;
+  margin-block: 0.85rem 1rem;
+}
+
+.mp-kpi-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid var(--mp-border);
+  border-radius: var(--mp-radius);
+  background: var(--mp-bg-elevated);
+  border-inline-start: 3px solid var(--mp-gold);
+  min-height: 4.5rem;
+}
+
+.mp-kpi-card--link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.mp-kpi-card--link:hover,
+.mp-kpi-card--link:focus-visible {
+  border-color: var(--mp-forest);
+  outline: none;
+}
+
+.mp-kpi-card-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--mp-fg-muted);
+}
+
+.mp-kpi-card-value {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--mp-fg);
+  font-variant-numeric: tabular-nums;
+}
+
+.mp-kpi-card--ok {
+  border-inline-start-color: var(--mp-success, var(--mp-forest));
+}
+
+.mp-kpi-card--warn {
+  border-inline-start-color: var(--mp-warning, #c48a1a);
+}
+
+.mp-kpi-card--danger {
+  border-inline-start-color: var(--mp-danger);
+}
+
 .mp-desk-chrome-toolbar {
   display: flex;
   flex-wrap: wrap;

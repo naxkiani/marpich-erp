@@ -1,0 +1,135 @@
+# MEOS Control Effectiveness (machine)
+# Law: candidate TESTED ≠ production EFFECTIVE. Never mark EFFECTIVE without production monitoring.
+schema_version: "1.0"
+generated: "2026-08-18T13:00:00Z"
+source: docs/meos/execution/MEOS_CONTROL_EFFECTIVENESS.md
+matrix_sor: docs/meos/execution/MEOS_SECURITY_CONTROL_MATRIX.md
+production_effective_count: 0
+monitored_count: 0
+
+controls:
+  - id: CTL-AUTH-JWT
+    name: JWT authentication
+    risk_ids: []
+    type: PREVENT
+    frequency: every_request
+    status: TESTED
+    effectiveness: CANDIDATE
+    evidence: P313 G02
+
+  - id: CTL-AUTHZ-PDP
+    name: Permission PDP
+    risk_ids: []
+    type: PREVENT
+    frequency: every_request
+    status: TESTED
+    effectiveness: CANDIDATE
+    evidence: P313 G03
+
+  - id: CTL-TENANT-ISOLATION
+    name: Tenant isolation
+    risk_ids: []
+    type: PREVENT
+    frequency: every_request
+    status: TESTED
+    effectiveness: CANDIDATE
+    evidence: P313 G04
+
+  - id: CTL-AUDIT-MUTATIONS
+    name: Mutation audit events
+    risk_ids: []
+    type: DETECT
+    frequency: on_mutation
+    status: TESTED
+    effectiveness: CANDIDATE
+    evidence: P313 G17
+
+  - id: CTL-HEALTH-PROBES
+    name: /health /ready probes
+    risk_ids: [R-03]
+    type: DETECT
+    frequency: probe
+    status: IMPLEMENTED
+    effectiveness: WEAK
+    evidence: code exists; G23 no prod alerting
+
+  - id: CTL-ALERTING-PROD
+    name: Production alerting
+    risk_ids: [R-03]
+    type: DETECT
+    frequency: continuous
+    status: FAILED
+    effectiveness: FAILED
+    evidence: P313 G23
+
+  - id: CTL-TLS-PROD
+    name: Public-CA TLS on production
+    risk_ids: [R-01]
+    type: PREVENT
+    frequency: always
+    status: FAILED
+    effectiveness: FAILED
+    evidence: P313 G26
+
+  - id: CTL-SECRETS-PROD
+    name: Production secret manager
+    risk_ids: [R-01]
+    type: PREVENT
+    frequency: always
+    status: FAILED
+    effectiveness: FAILED
+    evidence: P313 G26
+
+  - id: CTL-BACKUP-DRILL
+    name: Workstation backup/restore drill
+    risk_ids: [R-02]
+    type: RECOVER
+    frequency: drill
+    status: TESTED
+    effectiveness: WEAK
+    evidence: P313 G07–G09 LOCAL_ONLY RTO_MS=22762
+
+  - id: CTL-IMMUTABLE-SHA
+    name: Immutable production SHA
+    risk_ids: [R-06]
+    type: PREVENT
+    frequency: release
+    status: FAILED
+    effectiveness: FAILED
+    evidence: e941141-dirty
+
+  - id: CTL-AI-ASSIST-AUTH
+    name: Assist requires permission
+    risk_ids: [R-04]
+    type: PREVENT
+    frequency: request
+    status: TESTED
+    effectiveness: WEAK
+    evidence: G18 stub still returns echo when authorized
+
+  - id: CTL-AUTONOMY-GATE
+    name: AutonomyGate fail-closed
+    risk_ids: [R-04]
+    type: PREVENT
+    frequency: automation
+    status: IMPLEMENTED
+    effectiveness: CANDIDATE
+    evidence: P319 BLOCK_AUTOMATION
+
+  - id: CTL-DSAR-RUNTIME
+    name: DSAR / erasure runtime
+    risk_ids: [R-05]
+    type: DETECT
+    frequency: on_request
+    status: FAILED
+    effectiveness: FAILED
+    evidence: P313 G19
+
+  - id: CTL-CVE-PROGRAM
+    name: Dependency CVE program
+    risk_ids: []
+    type: DETECT
+    frequency: periodic
+    status: FAILED
+    effectiveness: FAILED
+    evidence: control matrix NOT_AVAILABLE

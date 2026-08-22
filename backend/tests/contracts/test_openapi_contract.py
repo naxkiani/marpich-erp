@@ -9,6 +9,8 @@ from core.presentation.api.main import app
 # Stable platform surface — breaking changes require ADR + version bump
 REQUIRED_OPENAPI_PATHS = (
     "/api/v1/health",
+    "/api/v1/ready",
+    "/api/v1/live",
     "/api/v1/auth/register",
     "/api/v1/auth/login",
     "/api/v1/users/me",
@@ -23,8 +25,10 @@ REQUIRED_OPENAPI_PATHS = (
     "/api/v1/analytics/metrics",
     "/api/v1/search/query",
     "/api/v1/search/indices",
+    "/api/v1/plugins/marketplace/listings",
     "/api/v1/notifications/inbox",
     "/api/v1/settings/config",
+    "/api/v1/feature-flags/entitlements/evaluate",
     "/api/v1/hospital/patients",
     "/api/v1/accounting/billings",
     "/api/v1/finance/accounts",
@@ -83,6 +87,22 @@ async def test_health_contract(client):
     body = response.json()
     assert body["status"] == "ok"
     assert body["service"] == "marpich-backend"
+
+
+@pytest.mark.asyncio
+async def test_live_contract(client):
+    response = await client.get("/api/v1/live")
+    assert response.status_code == 200
+    assert response.json()["status"] == "live"
+
+
+@pytest.mark.asyncio
+async def test_ready_contract(client):
+    response = await client.get("/api/v1/ready")
+    assert response.status_code in {200, 503}
+    body = response.json()
+    assert body["service"] == "marpich-backend"
+    assert body["status"] in {"ready", "not_ready"}
 
 
 @pytest.mark.asyncio

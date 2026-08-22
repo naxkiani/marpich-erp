@@ -1,0 +1,16 @@
+target: GCP
+extends: deploy/targets/base.yaml
+chosen_path: GCE_plus_Compose
+kubernetes_path: GKE_uses_deploy/targets/kubernetes.yaml
+overlay:
+  compute: gce_ubuntu
+  database: cloud_sql_postgresql
+  secrets: gcp_secret_manager
+  storage: gcs
+  registry: ghcr
+secrets: references_only
+status:
+  PACKAGE: READY
+  CREDENTIALS: READY_FOR_CREDENTIALS
+  DEPLOYED: false
+  PRODUCTION_VERIFIED: false

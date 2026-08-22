@@ -1,0 +1,12 @@
+package: KUBERNETES
+secrets: none
+installer: python3 scripts/meos-install.py --platform KUBERNETES
+helm: infrastructure/kubernetes/helm/marpich-iam
+flux: infrastructure/fluxcd/marpich-iam-helmrelease.yaml
+image_digest: required_from_CI
+license_contract: docs/meos/execution/MEOS_LICENSE_MODEL.v1.yaml
+upgrade: helm upgrade --install
+rollback: helm rollback marpich-iam 0 --namespace marpich
+backup: READY_FOR_CREDENTIALS
+support: docs/meos/execution/MEOS_RELEASE_OPERATIONS.md
+status: READY_FOR_CREDENTIALS

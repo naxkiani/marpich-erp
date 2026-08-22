@@ -1,0 +1,55 @@
+# MEOS Optimization Candidates (machine)
+# Law: no invented savings, BEFORE/AFTER, or production VERIFIED without telemetry.
+schema_version: "1.0"
+generated: "2026-08-18T13:50:00Z"
+source: docs/meos/execution/MEOS_OPTIMIZATION_RUNBOOK.md
+production_verified_count: 0
+forecast_count: 0
+implemented_this_phase: 0
+autonomy_max: L0
+
+candidates:
+  - id: OPT-EVENT-PAYLOAD-SCHEMA
+    source: TD-EVENT-PAYLOAD-SCHEMA
+    problem: Some event JSON files are payload-only vs envelope contract tests
+    evidence: P323 pytest envelope failures on hospital/accounting schemas
+    expected_gain: NOT_MEASURED
+    risk: MEDIUM
+    owner: NOT_AVAILABLE
+    status: IDENTIFIED
+    production: NOT_VERIFIED
+    reversibility: HIGH
+
+  - id: OPT-OUTBOX-BACKOFF
+    source: P319 dispatcher
+    problem: Outbox dispatcher uses poll interval only; no exponential backoff
+    evidence: MEOS_P319_AUTOMATION_FABRIC.md § failure/recovery
+    expected_gain: NOT_MEASURED
+    risk: MEDIUM
+    owner: NOT_AVAILABLE
+    status: IDENTIFIED
+    production: NOT_MEASURED
+    reversibility: HIGH
+
+  - id: OPT-G23-OBSERVE
+    source: G23 / P330 L0
+    problem: Closed-loop MEASURE cannot start without production alerting
+    evidence: P313 G23 FAIL; observe_operational false
+    expected_gain: NOT_MEASURED
+    risk: HIGH
+    owner: NOT_AVAILABLE
+    status: IDENTIFIED
+    production: BLOCKED
+    reversibility: N/A
+
+  - id: OPT-LOCAL-P95
+    source: P313 G22
+    problem: Workstation p95 is a stale local baseline, not current production SLO
+    evidence: health p95 81.4ms SAMPLES=8 LOCAL_ONLY
+    expected_gain: NOT_MEASURED
+    risk: LOW
+    owner: NOT_AVAILABLE
+    status: REJECTED
+    production: NOT_VERIFIED
+    reversibility: N/A
+    reason: Must not reuse historical local p95 as production performance without re-measure on a real cluster

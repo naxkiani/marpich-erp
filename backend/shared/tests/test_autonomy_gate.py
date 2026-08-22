@@ -47,6 +47,14 @@ async def test_autonomy_denied_without_human_approval():
 
 
 @pytest.mark.asyncio
+async def test_autonomy_denied_when_ports_missing():
+    gate = AutonomyGate()
+    d = await gate.authorize(tenant_id="t1", action="heal.db", human_approved=True)
+    assert d.allowed is False
+    assert "unavailable" in d.reason
+
+
+@pytest.mark.asyncio
 async def test_autonomy_allowed_when_all_gates_pass():
     gate = AutonomyGate(flags=_Flags(True), policies=_Policies("allow"))
     d = await gate.authorize(tenant_id="t1", action="heal.db", human_approved=True)

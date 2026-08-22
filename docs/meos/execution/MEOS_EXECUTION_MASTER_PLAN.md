@@ -3,7 +3,19 @@
 **Status:** ACTIVE · Productization + Execution phase  
 **Governance:** Enterprise Architecture Governance Standard **11.0**  
 **Checkpoint:** P310 complete (architecture) → execution begins here  
-**Overall readiness:** `NOT_READY` (see [MEOS_PRODUCTION_READINESS.md](MEOS_PRODUCTION_READINESS.md))
+**Overall readiness:** `NOT_READY` (see [MEOS_PRODUCTION_READINESS.md](MEOS_PRODUCTION_READINESS.md))  
+**P344 (2026-08-19):** Launch **STOPPED**. Do not deploy. Runtime **NOT_LAUNCHED**. See [MEOS_P344_GO_LIVE_EXECUTION.md](./MEOS_P344_GO_LIVE_EXECUTION.md).  
+**P345 (2026-08-19):** G26 provisioning **BLOCKED**. Credentials required. See [MEOS_P345_G26_PROVISIONING.md](./MEOS_P345_G26_PROVISIONING.md).  
+**P346 (2026-08-19):** G26 evidence **STOPPED**. Do not start P313 recert. See [MEOS_P346_G26_BLOCKER_CLOSURE.md](./MEOS_P346_G26_BLOCKER_CLOSURE.md).  
+**P347 (2026-08-19):** **WAIT** for **EXT-G26**. Do not generate P348+ without new evidence. See [MEOS_P347_EXTERNAL_HANDOFF.md](./MEOS_P347_EXTERNAL_HANDOFF.md).  
+**P348 (2026-08-19):** Validator pack. **G26_READY = FALSE**. Run `python3 scripts/meos-ext-g26-readiness.py`. See [MEOS_EXT_G26_INFRASTRUCTURE_HANDOFF.md](./MEOS_EXT_G26_INFRASTRUCTURE_HANDOFF.md).  
+**P349 (2026-08-19):** Infrastructure discovery. **REQUIREMENTS_IDENTIFIED**. **G26_READY = FALSE**. **PROVIDER_SELECTION = BLOCKED**. Do not start P313. See [MEOS_EXT_G26_PROVIDER_COMPATIBILITY.md](./MEOS_EXT_G26_PROVIDER_COMPATIBILITY.md) · [MEOS_EXT_G26_PRODUCTION_BOM.md](./MEOS_EXT_G26_PRODUCTION_BOM.md) · [MEOS_EXT_G26_INFRASTRUCTURE_IMPLEMENTATION_PLAN.md](./MEOS_EXT_G26_INFRASTRUCTURE_IMPLEMENTATION_PLAN.md).  
+**P350 (2026-08-19):** Provisioning **BLOCKED**. Provider not selected. Credentials missing. **P313_REENTRY_READY = FALSE**. Do not create P351. See [MEOS_P350_PROVISIONING_REPORT.md](./MEOS_P350_PROVISIONING_REPORT.md).  
+**P351 (2026-08-19):** Product-side launch packages. **G26 still BLOCKED**. Do not start P313. See [MEOS_PRODUCT_INFRASTRUCTURE_BLUEPRINT.md](./MEOS_PRODUCT_INFRASTRUCTURE_BLUEPRINT.md).  
+**P352 (2026-08-19):** Product hardening. **G26_READY = FALSE**. Do not start P313. See [MEOS_P352_PRODUCT_INFRASTRUCTURE_HARDENING.md](./MEOS_P352_PRODUCT_INFRASTRUCTURE_HARDENING.md).  
+**P353 (2026-08-19):** Clean release engineering + multi-platform launch fabric. Packages ≠ G26. Do not start P313. Do not create a follow-on phase solely because credentials are missing. See [MEOS_P353_RELEASE_ENGINEERING_REPORT.md](./MEOS_P353_RELEASE_ENGINEERING_REPORT.md) · [MEOS_P353_LAUNCH_FABRIC.md](./MEOS_P353_LAUNCH_FABRIC.md) · [MEOS_P353_PLATFORM_TARGET_MATRIX.md](./MEOS_P353_PLATFORM_TARGET_MATRIX.md).  
+**P354 (2026-08-19):** Universal installer + unified launch CLI + release-candidate engineering. Dirty tree cannot mint RC. **RELEASE_CANDIDATE ≠ PRODUCTION_CERTIFIED**. Launch control does not start P313. See [MEOS_P354_UNIVERSAL_INSTALLATION.md](./MEOS_P354_UNIVERSAL_INSTALLATION.md) · [MEOS_P354_LAUNCH_CONTROL_REPORT.md](./MEOS_P354_LAUNCH_CONTROL_REPORT.md) · [MEOS_P354_RELEASE_CANDIDATE.md](./MEOS_P354_RELEASE_CANDIDATE.md).  
+**P355 (2026-08-19):** Productization. Do not start P313. See [MEOS_P355_PRODUCTIZATION.md](./MEOS_P355_PRODUCTIZATION.md).
 
 ## Principle
 
@@ -45,16 +57,28 @@ Never implement P5 while P0/P1 is broken.
 
 ## Current first slice (this execution)
 
-1. Audit pack (this directory)  
-2. Auth-wired ONE SEARCH / ONE NOTIFICATION / ONE AI  
-3. Registry-driven ONE NAV + Command Palette  
-4. Workflow Task Center UI  
-5. ROUTER_SPECS honesty + Postgres Wave 01 runbook  
-6. Design tokens + Wave 01 CI smoke  
+1. Audit pack (this directory) — **exists; refresh continuously**  
+2. Auth-wired ONE SEARCH / ONE NOTIFICATION / ONE AI — **done**  
+3. Registry-driven ONE NAV + Command Palette — **done**  
+4. Workflow Task Center UI — **done**  
+5. ROUTER_SPECS honesty + Postgres Wave 01 runbook — **done**  
+6. Design tokens + Wave 01 CI smoke — **done**  
 7. **Phase A complete:** Healthcare loop + money-path 038–045 + activate→nav tests  
 8. **Wave 03 activated:** intelligence smoke (search/analytics/AI)  
 9. **Wave 04 activated:** privacy/DR runbooks + policy desk + perf baseline  
 10. **Wave 05 gated:** AutonomyGate deny-by-default + flag/policy/workflow requirements  
+11. **P1 identity/authz SQL + Postgres adapters** — merged (`main`)  
+12. **Executive home Live Pulse + shared KpiStrip desks** — PR #16 (`feature/dashboard-home-complete`)  
+13. **P0 DR scripts** — `meos-postgres-backup.sh` + `meos-postgres-restore-drill.sh`  
+14. **P0 session cookie** — JWT in cookie + middleware exp/shape validation  
+
+## Next dependency-ordered work
+
+1. Land / merge dashboard PR #16 onto `main`  
+2. Ops: schedule backups + `MEOS_BACKUP_S3_URI` + record restore drills  
+3. Edge: HS256 verify session cookie when `JWT_SECRET` available to Next  
+4. Registry YAML sync (nav IDs without app entries)  
+5. Deepen Wave 02 Functional loops (education/banking beyond demo) — only after 1–3
 
 ## Definition of Functional
 

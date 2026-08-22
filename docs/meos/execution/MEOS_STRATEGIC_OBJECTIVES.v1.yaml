@@ -1,0 +1,74 @@
+# MEOS Strategic Objectives (machine)
+# Law: never ACTIVE / ACHIEVED / AT_RISK with invented business OKRs.
+# These rows are PLATFORM_GATE traces from documented P-phases — not customer strategy.
+schema_version: "1.0"
+generated: "2026-08-18T12:45:00Z"
+source: docs/meos/execution/MEOS_STRATEGIC_OBJECTIVES.md
+overall_status: NOT_DECLARED
+active_count: 0
+achieved_count: 0
+class: PLATFORM_GATE
+
+objectives:
+  - id: OBJ-GATE-P314
+    name: Production go-live eligibility
+    description: P314 GO_LIVE = APPROVED on a real production cluster
+    class: PLATFORM_GATE
+    owner: NOT_AVAILABLE
+    timeframe: NOT_SET
+    priority: P0
+    status: DRAFT
+    target: GO_LIVE = APPROVED
+    current: GO_LIVE = NOT APPROVED
+    trend: NOT_MEASURED
+    gap: BLOCKED
+    confidence: NOT_AVAILABLE
+    risk: R-01
+    dependencies:
+      - TD-G26-PROD-CLUSTER
+      - TD-G25-DIRTY-SHA
+    outcome_ids: []
+    kpi_ids: []
+    evidence: docs/meos/execution/MEOS_P314_GO_LIVE_REPORT.md
+
+  - id: OBJ-GATE-P317
+    name: Continuous assurance / trust
+    description: Production trust state no longer TRUST_CRITICAL
+    class: PLATFORM_GATE
+    owner: NOT_AVAILABLE
+    timeframe: NOT_SET
+    priority: P0
+    status: DRAFT
+    target: NOT_SET
+    current: TRUST_CRITICAL
+    trend: NOT_MEASURED
+    gap: BLOCKED
+    confidence: NOT_AVAILABLE
+    risk: R-04,R-05,R-07
+    dependencies:
+      - OBJ-GATE-P314
+    outcome_ids: []
+    kpi_ids: []
+    evidence: docs/meos/execution/MEOS_P317_SECURITY_ASSURANCE.md
+
+  - id: OBJ-GATE-P326
+    name: Evidence-based business value measurement
+    description: At least one production outcome MEASURED (P326)
+    class: PLATFORM_GATE
+    owner: NOT_AVAILABLE
+    timeframe: NOT_SET
+    priority: P1
+    status: DRAFT
+    target: measured_count >= 1
+    current: measured_count = 0
+    trend: NOT_MEASURED
+    gap: BLOCKED
+    confidence: NOT_AVAILABLE
+    risk: R-01
+    dependencies:
+      - OBJ-GATE-P314
+    outcome_ids:
+      - OUT-Q2C-001
+      - OUT-ADOPT-001
+    kpi_ids: []
+    evidence: docs/meos/execution/MEOS_P326_BUSINESS_VALUE.md

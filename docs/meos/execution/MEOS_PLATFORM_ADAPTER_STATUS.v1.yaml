@@ -1,0 +1,69 @@
+# MEOS P351 platform adapter status (product-side). Not production certification.
+schema_version: "1.0"
+generated: "2026-08-19T12:35:00Z"
+phase: P351
+p351_status: PRODUCT_INFRASTRUCTURE_FOUNDATION
+g26_ready: false
+g26_status: BLOCKED
+p0_count: 1
+p313: NOT_CERTIFIED
+p313_reentry_ready: false
+production_certified: false
+go_live_ready: false
+go_live_authorization: NOT_APPROVED
+registry_active_count: 0
+production_traffic: NOT_ENABLED
+localhost_is_production: false
+compose_is_production: false
+demo_is_production: false
+owner_default: NOT_AVAILABLE
+new_deployment_platform: FORBIDDEN
+new_ci_platform: FORBIDDEN
+
+environments:
+  LOCAL: CONFIGURED
+  DEVELOPMENT: CONFIGURED
+  TEST: CONFIGURED
+  STAGING: READY_FOR_CREDENTIALS
+  DEMO: CONFIGURED
+  PRODUCTION: BLOCKED
+
+targets:
+  TARGET-A_LOCAL_DEVELOPMENT: CONFIGURED
+  TARGET-B_SINGLE_SERVER_VPS: READY_FOR_CREDENTIALS
+  TARGET-C_DOCKER_HOST: CONFIGURED
+  TARGET-D_HOSTINGER_VPS: PARTIALLY_COMPATIBLE
+  TARGET-D_HOSTINGER_SHARED: INCOMPATIBLE
+  TARGET-E_AWS: READY_FOR_CREDENTIALS
+  TARGET-F_AZURE: READY_FOR_CREDENTIALS
+  TARGET-G_GCP: READY_FOR_CREDENTIALS
+  TARGET-H_KUBERNETES: READY_FOR_CREDENTIALS
+  TARGET-I_MANAGED_KUBERNETES: READY_FOR_CREDENTIALS
+
+profiles:
+  PROFILE_LOCAL: CONFIGURED
+  PROFILE_DOCKER: IMPLEMENTED
+  PROFILE_VPS: READY_FOR_CREDENTIALS
+  PROFILE_HOSTINGER_VPS: READY_FOR_CREDENTIALS
+  PROFILE_AWS: READY_FOR_CREDENTIALS
+  PROFILE_AZURE: READY_FOR_CREDENTIALS
+  PROFILE_GCP: READY_FOR_CREDENTIALS
+  PROFILE_KUBERNETES: READY_FOR_CREDENTIALS
+
+credentials:
+  cloud_account: NOT_AVAILABLE
+  cluster_access: NOT_AVAILABLE
+  database_access: NOT_AVAILABLE
+  dns_access: NOT_AVAILABLE
+  secret_manager_access: NOT_AVAILABLE
+
+reuse:
+  compose_dev: infrastructure/docker/compose/docker-compose.dev.yml
+  compose_demo: infrastructure/docker/compose/docker-compose.meos-prod.yml
+  dockerfile: infrastructure/docker/images/backend.Dockerfile
+  helm: infrastructure/kubernetes/helm/marpich-iam/
+  flux: infrastructure/fluxcd/marpich-iam-helmrelease.yaml
+  ci: .github/workflows/identity-federation-enterprise.yml
+  backup: scripts/meos-postgres-backup.sh
+  restore: scripts/meos-postgres-restore-drill.sh
+  vps: scripts/meos-vps-bootstrap.sh

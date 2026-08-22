@@ -1,0 +1,17 @@
+target: AWS
+extends: deploy/targets/base.yaml
+chosen_path: EC2_plus_Compose
+rejected_competing_paths: [ECS_task_defs, CDK_app]
+kubernetes_path: EKS_uses_deploy/targets/kubernetes.yaml
+overlay:
+  compute: ec2_ubuntu
+  database: rds_postgresql_when_provisioned
+  secrets: aws_secrets_manager
+  storage: s3
+  registry: ghcr
+secrets: references_only
+status:
+  PACKAGE: READY
+  CREDENTIALS: READY_FOR_CREDENTIALS
+  DEPLOYED: false
+  PRODUCTION_VERIFIED: false

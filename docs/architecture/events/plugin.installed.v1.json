@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "marpich.plugin.installed.v1",
+  "title": "plugin.installed",
+  "allOf": [
+    { "$ref": "_envelope.v1.json" },
+    {
+      "properties": {
+        "event_name": { "const": "plugin.installed" },
+        "event_version": { "const": 1 },
+        "source_context": { "const": "plugins" },
+        "payload": {
+          "type": "object",
+          "required": ["plugin_id", "version", "granted_permissions"],
+          "properties": {
+            "plugin_id": { "type": "string", "minLength": 1 },
+            "version": { "type": "string", "minLength": 1 },
+            "granted_permissions": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

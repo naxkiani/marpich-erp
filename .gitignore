@@ -10,3 +10,19 @@ coverage/
 .DS_Store
 *.tsbuildinfo
 .cursor/
+
+# Generated Python bytecode (never a release artifact)
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# MEOS local Postgres dumps (never commit)
+.meos-backups/
+infrastructure/docker/compose/certs/
+docs/meos/execution/.last_offsite_backup.json
+docs/meos/execution/.last_dr_drill.json
+docs/meos/execution/.last_release_evidence.json
+docs/meos/execution/.last_docker_build.json
+docs/meos/execution/.last_restore_drill.json
+docs/meos/execution/.last_p353_gates.json

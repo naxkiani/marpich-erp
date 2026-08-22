@@ -1,0 +1,85 @@
+# MEOS Integration Registry (machine)
+
+schema_version: "1.0"
+generated: "2026-08-18T06:51:00Z"
+overall_status: NO_PRODUCTION_ACTIVE
+active_count: 0
+source: docs/meos/execution/MEOS_P321_INTEGRATION_FABRIC.md
+connector_types_catalog: docs/architecture/integration/CONNECTOR_CATALOG.yaml
+
+integrations:
+  - id: INT-REST-V1
+    name: Platform REST API
+    type: api
+    protocol: rest
+    status: IMPLEMENTED
+    production_active: false
+    health: NOT_AVAILABLE
+  - id: INT-OPENAPI
+    name: OpenAPI contract tests
+    type: api
+    status: TESTED
+    production_active: false
+  - id: INT-EVENT-OUTBOX
+    name: Event fabric outbox
+    type: event
+    status: TESTED
+    production_active: false
+    health: NOT_AVAILABLE
+  - id: INT-WH-CONSOLE
+    name: Console webhook channel
+    type: webhook
+    status: IMPLEMENTED
+    production_active: false
+    notes: dev print only
+  - id: INT-WH-HTTP
+    name: Partner HTTP webhooks
+    type: webhook
+    status: IMPLEMENTED_UNVERIFIED
+    production_active: false
+  - id: INT-WH-INGRESS
+    name: Inbound webhook ingress
+    type: webhook
+    status: NOT_IMPLEMENTED
+    production_active: false
+  - id: INT-SYNC
+    name: Connector sync jobs
+    type: scheduled
+    status: IMPLEMENTED_UNVERIFIED
+    production_active: false
+  - id: INT-PLUGIN-RT
+    name: Plugin runtime invoke
+    type: plugin
+    status: TESTED
+    production_active: false
+  - id: INT-LIVEKIT
+    name: LiveKit adapter
+    type: external
+    status: IMPLEMENTED_UNVERIFIED
+    production_active: false
+  - id: INT-PAY
+    name: Payment gateway connector type
+    type: payment
+    status: DESIGNED
+    production_active: false
+  - id: INT-BANK
+    name: Bank API connector type
+    type: financial
+    status: DESIGNED
+    production_active: false
+  - id: INT-GOV
+    name: Government or tax rails
+    type: regulatory
+    status: NOT_IMPLEMENTED
+    production_active: false
+  - id: INT-AI-LLM
+    name: External LLM provider
+    type: ai
+    status: DISABLED
+    production_active: false
+  - id: INT-WH-ENT
+    name: enterprise_webhook_platform bounded context
+    type: webhook
+    status: DESIGNED
+    production_active: false
+    notes: not a second SoR; integration context owns webhooks

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useLocale } from "../i18n/LocaleProvider";
-import { API_URL, getPlatformAuthHeaders } from "../platform/session";
+import { getPlatformAuthHeaders, platformApiUrl } from "../platform/session";
 
 type Notification = { id: string; title: string; body?: string; read?: boolean; status?: string };
 
@@ -21,7 +21,7 @@ export function NotificationCenter() {
       return;
     }
     setError(null);
-    fetch(`${API_URL}/api/v1/notifications/inbox`, { headers })
+    fetch(platformApiUrl("/api/v1/notifications/inbox"), { headers, credentials: "same-origin" })
       .then(async (r) => {
         if (!r.ok) throw new Error(`inbox ${r.status}`);
         return r.json();
@@ -43,9 +43,10 @@ export function NotificationCenter() {
   async function markRead(id: string) {
     const headers = getPlatformAuthHeaders();
     if (!headers) return;
-    await fetch(`${API_URL}/api/v1/notifications/inbox/${encodeURIComponent(id)}/read`, {
+    await fetch(platformApiUrl(`/api/v1/notifications/inbox/${encodeURIComponent(id)}/read`), {
       method: "PATCH",
       headers,
+      credentials: "same-origin",
     }).catch(() => undefined);
     setItems((prev) => prev.map((n) => (n.id === id ? { ...n, read: true, status: "read" } : n)));
   }
@@ -127,9 +128,10 @@ export function AIAssistantPanel() {
       if (!headers) {
         throw new Error("Sign in required for AI Copilot.");
       }
-      const res = await fetch(`${API_URL}/api/v1/ai/assist`, {
+      const res = await fetch(platformApiUrl("/api/v1/ai/assist"), {
         method: "POST",
         headers,
+        credentials: "same-origin",
         body: JSON.stringify({
           module_id: "platform",
           surface: "assistant",
@@ -162,11 +164,14 @@ export function AIAssistantPanel() {
       {open ? (
         <aside className="mp-ai-panel mp-animate-in" aria-label={t("shell.ai")}>
           <header>{t("shell.ai")}</header>
+          <p className="mp-field-help" role="note">
+            {t("shell.ai.disclaimer")}
+          </p>
           <textarea
             className="mp-textarea"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            placeholder="Ask Marpich AI…"
+            placeholder={t("shell.ai.placeholder")}
             rows={4}
             disabled={loading}
           />
@@ -176,7 +181,7 @@ export function AIAssistantPanel() {
             disabled={!prompt.trim() || loading}
             onClick={() => void onSend()}
           >
-            {loading ? "Sending…" : "Send"}
+            {loading ? t("shell.ai.sending") : t("shell.ai.send")}
           </button>
           {error ? (
             <p role="alert" className="mp-error">

@@ -2,6 +2,8 @@
 
 **Date:** 2026-08-13 · **Verdict:** ACTIVATED (smoke + reuse Core Search / Analytics / AI)
 
+**P318 (2026-08-18):** This document is **Wave 03 smoke status**, not a production Decision Fabric. Production intelligence maturity is **FOUNDATION** / **NOT_AVAILABLE** — [MEOS_P318_ENTERPRISE_INTELLIGENCE.md](./MEOS_P318_ENTERPRISE_INTELLIGENCE.md).
+
 ## Principle
 
 Intelligence layers **reuse** Enterprise Search (event indexing), Analytics (permissioned dashboards), and AI Platform (`/api/v1/ai/assist`). No module-local LLM, search engine, or metrics store.

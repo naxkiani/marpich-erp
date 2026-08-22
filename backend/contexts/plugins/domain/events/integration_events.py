@@ -85,6 +85,47 @@ class PluginInstalledIntegration(IntegrationEvent):
 
 
 @dataclass(frozen=True, kw_only=True)
+class PluginEnabledIntegration(IntegrationEvent):
+    plugin_id: str
+    version: str
+
+    @property
+    def event_name(self) -> str:
+        return "plugin.enabled"
+
+    @property
+    def source_context(self) -> str:
+        return "plugins"
+
+    @property
+    def event_version(self) -> int:
+        return 1
+
+    def to_payload(self) -> dict:
+        return {"plugin_id": self.plugin_id, "version": self.version}
+
+
+@dataclass(frozen=True, kw_only=True)
+class PluginDisabledIntegration(IntegrationEvent):
+    plugin_id: str
+
+    @property
+    def event_name(self) -> str:
+        return "plugin.disabled"
+
+    @property
+    def source_context(self) -> str:
+        return "plugins"
+
+    @property
+    def event_version(self) -> int:
+        return 1
+
+    def to_payload(self) -> dict:
+        return {"plugin_id": self.plugin_id}
+
+
+@dataclass(frozen=True, kw_only=True)
 class PluginUpgradedIntegration(IntegrationEvent):
     plugin_id: str
     from_version: str

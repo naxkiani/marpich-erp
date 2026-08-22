@@ -1,6 +1,6 @@
 import { API_URL } from "./config";
 import { apiDelete, apiGet, apiPost } from "./api-client";
-import { saveSession, tenantHeaders } from "./session";
+import { saveSession, tenantHeaders, toPublicSession } from "./session";
 import type { AuthSession, LoginCredentials } from "./types";
 
 type TokenPayload = {
@@ -111,8 +111,8 @@ export async function completePasskeyLogin(
   }
   const json = await res.json();
   const session = sessionFromTokens(tenantId, json.data as TokenPayload);
-  saveSession(session);
-  return session;
+  await saveSession(session);
+  return toPublicSession(session);
 }
 
 export async function listPasskeys(session: AuthSession): Promise<PasskeyCredential[]> {

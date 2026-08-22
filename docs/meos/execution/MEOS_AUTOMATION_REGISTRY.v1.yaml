@@ -1,0 +1,79 @@
+# MEOS Automation Registry (machine)
+
+schema_version: "1.0"
+generated: "2026-08-18T06:40:00Z"
+overall_status: BLOCK_AUTOMATION
+active_count: 0
+source: docs/meos/execution/MEOS_P319_AUTOMATION_FABRIC.md
+
+automations:
+  - id: AUTO-Q2C-001
+    name: Quote-to-cash event chain
+    domain: sales
+    trigger: crm.opportunity.won
+    risk: high
+    status: TESTED
+    production_active: false
+  - id: AUTO-P2P-001
+    name: Procure-to-stock
+    domain: procurement
+    trigger: procurement.receive
+    risk: high
+    status: TESTED
+    production_active: false
+  - id: AUTO-H2R-001
+    name: Hire to payroll and tax
+    domain: human_resources
+    trigger: hr.employee.hired
+    risk: high
+    status: TESTED
+    production_active: false
+  - id: AUTO-CARE-001
+    name: Encounter to lab and pharmacy
+    domain: hospital
+    trigger: hospital.encounter.completed
+    risk: critical
+    status: TESTED
+    production_active: false
+    clinical_autonomy: forbidden
+  - id: AUTO-WF-001
+    name: Module activation approval
+    domain: workflow
+    trigger: platform.module.activated
+    risk: medium
+    status: IMPLEMENTED
+    production_active: false
+  - id: AUTO-OUTBOX-001
+    name: Outbox dispatch retry cap
+    domain: platform
+    trigger: outbox.unpublished
+    risk: medium
+    status: IMPLEMENTED
+    production_active: false
+    outbox_max_retries: 8
+  - id: AUTO-AI-001
+    name: AI assist to action
+    domain: ai
+    trigger: ai.assist
+    risk: high
+    status: DISABLED
+    production_active: false
+  - id: AUTO-AGENT-001
+    name: Autonomous agents
+    domain: core_platform
+    trigger: autonomy.propose
+    risk: critical
+    status: DISABLED
+    production_active: false
+  - id: AUTO-INC-001
+    name: Incident to resolution
+    domain: ops
+    status: DESIGNED
+    notes: NOT_IMPLEMENTED
+    production_active: false
+  - id: AUTO-RISK-001
+    name: Risk to remediation
+    domain: risk
+    status: DESIGNED
+    notes: NOT_IMPLEMENTED
+    production_active: false

@@ -1,0 +1,66 @@
+# MEOS Continuity Testing (machine)
+# Law: local drill PASS is not production continuity. No invented failover.
+schema_version: "1.0"
+generated: "2026-08-18T13:20:00Z"
+source: docs/meos/execution/MEOS_CONTINUITY_TESTING.md
+production_validated: false
+simulation_count: 0
+
+tests:
+  - id: CT-G07-BACKUP
+    kind: RESTORE_TEST
+    environment: WORKSTATION
+    result: PASS
+    evidence: P313 G07 MinIO listing dump 373323
+    production: NOT_VERIFIED
+
+  - id: CT-G08-RESTORE
+    kind: RESTORE_TEST
+    environment: WORKSTATION
+    result: PASS
+    evidence: P313 G08 isolated DB restore
+    production: NOT_VERIFIED
+
+  - id: CT-G09-OFFSITE
+    kind: FAILOVER_TEST
+    environment: WORKSTATION
+    result: PASS
+    evidence: P313 G09 RTO_MS=22762 same-host MinIO
+    production: NOT_VERIFIED
+    geographic_failover: NOT_DEMONSTRATED
+
+  - id: CT-G27-LIVE-ROLLBACK
+    kind: FAILOVER_TEST
+    environment: PRODUCTION
+    result: BLOCKED
+    evidence: P313 G27
+    production: BLOCKED
+
+  - id: CT-SMOKE-W01
+    kind: BUSINESS_SMOKE_TEST
+    environment: WORKSTATION
+    result: TESTED
+    evidence: scripts/meos-wave01-user-loop.sh
+    production: NOT_VERIFIED
+
+  - id: CT-SMOKE-Q2C
+    kind: BUSINESS_SMOKE_TEST
+    environment: WORKSTATION
+    result: TESTED
+    evidence: scripts/meos-wave02-q2c-loop.sh
+    production: NOT_VERIFIED
+
+  - id: CT-SMOKE-CARE
+    kind: BUSINESS_SMOKE_TEST
+    environment: WORKSTATION
+    result: TESTED
+    evidence: scripts/meos-healthcare-loop.sh
+    production: NOT_VERIFIED
+
+  - id: CT-SIM-CRISIS
+    kind: FAILURE_SIMULATION
+    environment: DIGITAL_TWIN
+    result: NOT_CREATED
+    evidence: P327/P328 scenarios NOT_CREATED
+    production: NOT_VERIFIED
+    label: SIMULATION

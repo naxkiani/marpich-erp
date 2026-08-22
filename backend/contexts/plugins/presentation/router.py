@@ -196,6 +196,42 @@ async def uninstall_plugin(
     return {"data": result.unwrap(), "meta": {"correlation_id": correlation_id}}
 
 
+@router.post("/{plugin_id}/enable")
+async def enable_plugin(
+    plugin_id: str,
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    correlation_id: Annotated[str, Depends(get_correlation_id)],
+    _user: Annotated[dict, Depends(require_permissions("plugins.install"))],
+):
+    result = await get_plugin_service().set_installation_enabled(
+        tenant_id=tenant_id,
+        plugin_id=plugin_id,
+        enabled=True,
+        correlation_id=correlation_id,
+    )
+    if not result.succeeded:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, result.error)
+    return {"data": result.unwrap(), "meta": {"correlation_id": correlation_id}}
+
+
+@router.post("/{plugin_id}/disable")
+async def disable_plugin(
+    plugin_id: str,
+    tenant_id: Annotated[str, Depends(get_tenant_id)],
+    correlation_id: Annotated[str, Depends(get_correlation_id)],
+    _user: Annotated[dict, Depends(require_permissions("plugins.install"))],
+):
+    result = await get_plugin_service().set_installation_enabled(
+        tenant_id=tenant_id,
+        plugin_id=plugin_id,
+        enabled=False,
+        correlation_id=correlation_id,
+    )
+    if not result.succeeded:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, result.error)
+    return {"data": result.unwrap(), "meta": {"correlation_id": correlation_id}}
+
+
 @router.post("/{plugin_id}/verify")
 async def verify_plugin(
     plugin_id: str,

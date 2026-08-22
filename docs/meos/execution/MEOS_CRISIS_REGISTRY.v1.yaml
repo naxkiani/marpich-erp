@@ -1,0 +1,20 @@
+# MEOS Crisis Registry (machine)
+# Law: no invented incidents or declared crises. G26 is a launch P0, not a live-site crisis.
+schema_version: "1.0"
+generated: "2026-08-18T13:20:00Z"
+source: docs/meos/execution/MEOS_CRISIS_MANAGEMENT.md
+ir_sor: docs/meos/execution/MEOS_INCIDENT_RESPONSE.md
+declared_count: 0
+active_count: 0
+production_ir_active: false
+command_staffed: false
+resilience_score: NOT_SCORED
+continuity_mode: NOT_IN_FORCE
+
+roles:
+  incident_commander: NOT_AVAILABLE
+  technical_lead: NOT_AVAILABLE
+  business_lead: NOT_AVAILABLE
+  security_lead: NOT_AVAILABLE
+  communication_lead: NOT_AVAILABLE
+  recovery_lead: NOT_AVAILABLE

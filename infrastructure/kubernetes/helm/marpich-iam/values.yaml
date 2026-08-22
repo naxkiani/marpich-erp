@@ -6,6 +6,7 @@ global:
 image:
   repository: ghcr.io/marpich/marpich-backend
   tag: "7.0.0"
+  digest: ""
   pullPolicy: IfNotPresent
 
 replicaCount: 2
@@ -97,8 +98,10 @@ secrets:
     role: marpich-iam
     path: secret/data/marpich/iam
   externalSecrets:
-    enabled: true
+    enabled: false
     refreshInterval: 1h
+    secretStoreName: marpich-cluster-secret-store
+    secretStoreKind: ClusterSecretStore
 
 postgresql:
   enabled: false

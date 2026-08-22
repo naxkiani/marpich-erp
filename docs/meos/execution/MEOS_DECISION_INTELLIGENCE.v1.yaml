@@ -1,0 +1,134 @@
+# MEOS Decision Intelligence (machine)
+# Law: overlay on DECISION_REGISTRY + METRIC_GOVERNANCE + analytics home-pulse + P337.
+# Never invent KPI values, trends, forecasts, signals, or decision outcomes.
+schema_version: "1.0"
+generated: "2026-08-19T07:10:00Z"
+source: docs/meos/execution/MEOS_P338_DECISION_INTELLIGENCE.md
+decision_sor: docs/meos/execution/MEOS_DECISION_REGISTRY.v1.yaml
+fabric_sor: docs/meos/execution/MEOS_DECISION_FABRIC.md
+metric_sor: docs/meos/execution/MEOS_METRIC_GOVERNANCE.md
+kpi_sor: docs/meos/execution/MEOS_KPI_GOVERNANCE.md
+data_sor: docs/meos/execution/MEOS_DATA_ARCHITECTURE.v1.yaml
+cockpit_sor: docs/meos/execution/MEOS_EXECUTIVE_COMMAND_CENTER.md
+overall_status: DOCUMENTED
+maturity: FOUNDATION
+production_active: false
+decision_count: 4
+executed_decision_count: 0
+measured_outcome_count: 0
+decision_queue_implemented: false
+runtime_decision_registry: NOT_IMPLEMENTED
+kpi_catalog_count: 12
+kpi_governed_business_count: 0
+kpi_trust: NOT_MEASURED
+executive_signals_count: 0
+early_warning_state: NOT_AVAILABLE
+scenario_count: 0
+forecast_count: 0
+ai_decision_support: STUB
+ai_confidence: NOT_AVAILABLE
+ai_autonomous_approval: FORBIDDEN
+max_autonomy_level: L0
+decision_workflow: IMPLEMENTED_UNVERIFIED
+workflow_task_binding: NOT_AVAILABLE
+decision_rights_runtime: IMPLEMENTED_UNVERIFIED
+business_value: NOT_MEASURED
+strategic_objectives_active: 0
+portfolio_active: 0
+data_trust: NOT_MEASURED
+risk_integration: QUALITATIVE_ONLY
+continuity_integration: DOCUMENTED
+capability_readiness: NOT_MEASURED
+change_production_count: 0
+executive_cockpit_state: WORKSTATION_OPERATOR_HOME
+dashboard_latency_production: NOT_MEASURED
+graphql_runtime: NOT_AVAILABLE
+new_bi_platform: FORBIDDEN
+new_analytics_engine: FORBIDDEN
+new_ai_platform: FORBIDDEN
+new_kpi_engine: FORBIDDEN
+new_executive_erp_module: FORBIDDEN
+
+forbidden_without_evidence:
+  - VERIFIED_KPI
+  - POSITIVE_SIGNAL
+  - NEGATIVE_SIGNAL
+  - ANOMALY
+  - TREND
+  - FORECAST
+  - RECOMMENDATION
+  - REALIZED_VALUE
+  - DECISION_APPROVED_BY_AI
+  - HEALTHY
+  - DECISIONS_AT_RISK
+
+kpi_trust_summary:
+  verified: 0
+  partially_verified: 0
+  stale: 0
+  degraded: 0
+  not_measured: 12
+  not_governed_business: 7
+
+home_pulse:
+  endpoint: GET /api/v1/analytics/home-pulse
+  signal_class: CATALOG_COUNT
+  production_kpis: DATA_NOT_AVAILABLE
+  data_quality_status: DATA_QUALITY_WARNING
+
+decisions:
+  source: MEOS_DECISION_REGISTRY.v1.yaml
+  lifecycle_at: DECIDE
+  statuses_represented:
+    - PROPOSED
+  note: Four phase gate records only. No APPROVED/EXECUTING/COMPLETED runtime decisions.
+
+signals: []
+early_warnings: []
+scenarios: NOT_CREATED
+decision_queue:
+  pending: NOT_IMPLEMENTED
+  at_risk: NOT_IMPLEMENTED
+  overdue: NOT_IMPLEMENTED
+  blocked: NOT_IMPLEMENTED
+  completed: NOT_IMPLEMENTED
+
+integrations:
+  p326: NOT_REALIZED
+  p327: NOT_DECLARED
+  p328: RISK_AWARE
+  p329: DOCUMENTED
+  p330: GATED_L0
+  p331: BLOCKED
+  p332: INVENTORIED
+  p333: NOT_MEASURED
+  p334: INVENTORIED
+  p335: INVENTORIED
+  p336: INVENTORIED
+  p337: INVENTORIED
+
+p337_feed:
+  published_data_product_count: 0
+  lineage: LINEAGE_INCOMPLETE
+  quality: NOT_MEASURED
+  data_value: NOT_MEASURED
+
+execution_sor: docs/meos/execution/MEOS_DECISION_EXECUTION.v1.yaml
+
+p336_feed:
+  initiative_ids:
+    - INIT-G26
+    - INIT-G23
+    - INIT-G18
+  debt_ids:
+    - TD-EVENT-PAYLOAD-SCHEMA
+  new_decision_platform: FORBIDDEN
+  new_initiative: FORBIDDEN
+
+blockers:
+  - BLK-G26
+  - G19-DSAR
+  - G23-ALERTING
+  - NO-PRODUCTION-KPI-TELEMETRY
+  - DECISION-WORKFLOW-NOT-BOUND
+  - AI-STUB-ONLY

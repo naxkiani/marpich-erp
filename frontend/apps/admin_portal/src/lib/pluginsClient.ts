@@ -73,8 +73,12 @@ export async function installPlugin(
   });
 }
 
-export async function uninstallPlugin(session: ApiSession, pluginId: string): Promise<unknown> {
-  return apiDelete(`/api/v1/plugins/${encodeURIComponent(pluginId)}/install`, session);
+export async function enablePlugin(session: ApiSession, pluginId: string): Promise<PluginInstallation> {
+  return apiPost(`/api/v1/plugins/${encodeURIComponent(pluginId)}/enable`, session, {});
+}
+
+export async function disablePlugin(session: ApiSession, pluginId: string): Promise<PluginInstallation> {
+  return apiPost(`/api/v1/plugins/${encodeURIComponent(pluginId)}/disable`, session, {});
 }
 
 export async function invokePlugin(

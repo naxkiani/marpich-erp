@@ -1,7 +1,7 @@
 version: "1.0"
-generated: "2026-08-12"
+generated: "2026-08-17"
 overall_status: NOT_READY
-wave: "01"
+wave: "02"
 applications:
   - id: identity
     name: Identity & Access
@@ -262,6 +262,177 @@ applications:
     backend: true
     api_prefix: /api/v1/civilization
     score: 15
+  - id: messenger
+    name: Messenger
+    domain: platform
+    status: IMPLEMENTED
+    wave: 1
+    frontend: true
+    backend: true
+    routes: ["/enterprise/messenger"]
+    score: 60
+  - id: identity_federation
+    name: Identity Federation
+    domain: platform
+    status: IMPLEMENTED
+    wave: 1
+    frontend: true
+    backend: true
+    routes: ["/enterprise/federation"]
+    score: 62
+  - id: plugins
+    name: Plugin Marketplace
+    domain: platform
+    status: IMPLEMENTED
+    wave: 1
+    frontend: true
+    backend: true
+    routes: ["/enterprise/plugins"]
+    score: 58
+  - id: enterprise_observability
+    name: Enterprise Observability
+    domain: platform
+    status: IMPLEMENTED
+    wave: 1
+    frontend: true
+    backend: true
+    routes: ["/enterprise/observability"]
+    score: 62
+  - id: enterprise_scheduler
+    name: Enterprise Scheduler
+    domain: platform
+    status: IMPLEMENTED
+    wave: 1
+    frontend: true
+    backend: true
+    routes: ["/enterprise/scheduler"]
+    score: 60
+  - id: enterprise_connector_framework
+    name: Connector Framework
+    domain: platform
+    status: IMPLEMENTED
+    wave: 1
+    frontend: true
+    backend: true
+    routes: ["/enterprise/connector-framework"]
+    score: 60
+  - id: enterprise_integration_studio
+    name: Integration Studio
+    domain: platform
+    status: IMPLEMENTED
+    wave: 1
+    frontend: true
+    backend: true
+    routes: ["/enterprise/integration-studio"]
+    score: 60
+  - id: construction
+    name: Construction
+    domain: industry
+    status: SCAFFOLDED
+    wave: null
+    frontend: false
+    backend: false
+    score: 10
+    notes: empty industry scaffold — coming_soon
+  - id: currency_exchange
+    name: Currency Exchange
+    domain: industry
+    status: SCAFFOLDED
+    wave: null
+    frontend: false
+    backend: false
+    score: 10
+    notes: empty industry scaffold — coming_soon
+  - id: government
+    name: Government
+    domain: industry
+    status: SCAFFOLDED
+    wave: null
+    frontend: false
+    backend: false
+    score: 10
+    notes: empty industry scaffold — coming_soon
+  - id: hotel
+    name: Hotel
+    domain: industry
+    status: SCAFFOLDED
+    wave: null
+    frontend: false
+    backend: false
+    score: 10
+    notes: empty industry scaffold — coming_soon
+  - id: islamic_banking
+    name: Islamic Banking
+    domain: industry
+    status: SCAFFOLDED
+    wave: null
+    frontend: false
+    backend: false
+    score: 10
+    notes: empty industry scaffold — coming_soon
+  - id: manufacturing
+    name: Manufacturing
+    domain: industry
+    status: SCAFFOLDED
+    wave: null
+    frontend: false
+    backend: false
+    score: 10
+    notes: empty industry scaffold — coming_soon
+  - id: ngo
+    name: NGO
+    domain: industry
+    status: SCAFFOLDED
+    wave: null
+    frontend: false
+    backend: false
+    score: 10
+    notes: empty industry scaffold — coming_soon
+  - id: projects
+    name: Projects
+    domain: industry
+    status: SCAFFOLDED
+    wave: null
+    frontend: false
+    backend: false
+    score: 10
+    notes: empty industry scaffold — coming_soon
+  - id: real_estate
+    name: Real Estate
+    domain: industry
+    status: SCAFFOLDED
+    wave: null
+    frontend: false
+    backend: false
+    score: 10
+    notes: empty industry scaffold — coming_soon
+  - id: restaurant
+    name: Restaurant
+    domain: industry
+    status: SCAFFOLDED
+    wave: null
+    frontend: false
+    backend: false
+    score: 10
+    notes: empty industry scaffold — coming_soon
+  - id: school
+    name: School
+    domain: industry
+    status: SCAFFOLDED
+    wave: null
+    frontend: false
+    backend: false
+    score: 10
+    notes: empty industry scaffold — coming_soon
+  - id: warehouse
+    name: Warehouse
+    domain: industry
+    status: SCAFFOLDED
+    wave: null
+    frontend: false
+    backend: false
+    score: 10
+    notes: empty industry scaffold — coming_soon
 nav_groups:
   - id: home
     label: Home
@@ -312,6 +483,18 @@ verification:
   p2_empty_scaffolds_coming_soon: verified
   p3_router_package_contracts: verified
   p3_missing_router_baseline: verified
+  registry_nav_ids_reconciled: verified
+  empty_scaffolds_in_yaml: verified
+  postgres_outbox_e2e_test: verified
+  p313_postgres_5433_live: verified
+  p313_migrations_000_055: verified
+  p313_local_backup: verified
+  p313_local_restore_drill: verified
+  p313_postgres_outbox_e2e_executed: verified
+  p313_wave01_user_loop_live: verified
+  p313_q2c_loop_live: verified
+  p313_healthcare_loop_live: verified
+  p313_offsite_backup: blocked
   notes: >
     Shell widgets use marpich_auth_session headers; Workflow Task Center at
     /enterprise/workflows; AuthZ filters nav/command/search; orphan FE clients gated;
@@ -332,5 +515,8 @@ verification:
     12 empty industry scaffolds remain coming_soon / deferred — no catalog inflation.
     P3: missing ROUTER/SERVICE module baseline + CI fail on growth
     (missing_router_packages_baseline.json / meos-p3-router-contracts.yml).
+    P313 (2026-08-17): live Postgres :5433 migrations 000–055, local backup+restore,
+    outbox E2E executed, Wave01/Q2C/healthcare loops PASS — still NOT_READY /
+    NOT_CERTIFIED (offsite backup BLOCKED; no ACTIVE promotions).
     Overall NOT_READY.
 
