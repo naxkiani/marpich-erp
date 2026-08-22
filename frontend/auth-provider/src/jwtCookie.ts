@@ -29,26 +29,22 @@ export function decodeJwtPayload(token: string): Record<string, unknown> | null 
 }
 
 function base64UrlToString(segment: string): string {
-  const padded = segment.replace(/-/g, "+").replace(/_/g, "/");
-  const pad = padded.length % 4 === 0 ? "" : "=".repeat(4 - (padded.length % 4));
-  const b64 = padded + pad;
-  if (typeof atob === "function") {
-    return atob(b64);
-  }
-  return Buffer.from(b64, "base64").toString("utf8");
+  return new TextDecoder().decode(base64UrlToBytes(segment));
 }
 
 function base64UrlToBytes(segment: string): Uint8Array {
   const padded = segment.replace(/-/g, "+").replace(/_/g, "/");
   const pad = padded.length % 4 === 0 ? "" : "=".repeat(4 - (padded.length % 4));
-  const b64 = padded + pad;
-  if (typeof atob === "function") {
-    const bin = atob(b64);
-    const out = new Uint8Array(bin.length);
-    for (let i = 0; i < bin.length; i += 1) out[i] = bin.charCodeAt(i);
-    return out;
-  }
-  return new Uint8Array(Buffer.from(b64, "base64"));
+  const bin = globalThis.atob(padded + pad);
+  const out = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i += 1) out[i] = bin.charCodeAt(i);
+  return out;
+}
+
+function asBufferSource(bytes: Uint8Array): ArrayBuffer {
+  const copy = new ArrayBuffer(bytes.byteLength);
+  new Uint8Array(copy).set(bytes);
+  return copy;
 }
 
 export async function verifyHs256Jwt(token: string, secret: string): Promise<boolean> {
@@ -65,7 +61,7 @@ export async function verifyHs256Jwt(token: string, secret: string): Promise<boo
       ["verify"],
     );
     const data = new TextEncoder().encode(`${header}.${payload}`);
-    const sig = base64UrlToBytes(signature);
+    const sig = asBufferSource(base64UrlToBytes(signature));
     return crypto.subtle.verify("HMAC", key, sig, data);
   } catch {
     return false;
