@@ -1,8 +1,17 @@
 schema_version: "1"
 # Top-level keys remain for P353 validators. Nested blocks are the P354 RC contract.
+# P357 adds target/environment/database_class without claiming PRODUCTION.
 release_id: P354-RC-NOT_ELIGIBLE
 release_label: P354-RC-BLOCKED-DIRTY
 version: "0.1.0"
+commit: dd967051ab05c6ff57262502b456ad51b7d748fd
+digest: NOT_AVAILABLE
+created_at: "2026-08-19T08:16:54Z"
+target: LOCAL
+environment: DEVELOPMENT
+database_class: NON_PRODUCTION
+deployment_method: local_docker_build
+release_status: PACKAGE_READY_NOT_PRODUCTION
 versioning_gap: "backend/pyproject.toml is 0.1.0; Helm appVersion is 7.0.0; no CHANGELOG. Do not invent a version."
 helm_app_version: "7.0.0"
 commit_sha: dd967051ab05c6ff57262502b456ad51b7d748fd
@@ -41,7 +50,114 @@ rollback_tested: false
 current_artifact: meos/backend:p353-local
 previous_artifact: NOT_AVAILABLE
 release_candidate: false
-note: "Local image_id is BUILD_VALIDATION only. Docker daemon RepoDigest equals image Id and is NOT a GHCR IMAGE_DIGEST. Dirty worktree cannot become a release candidate."
+image_class: LOCAL_IMAGE
+p357_phase: MULTI_PLATFORM_LAUNCH_FOUNDATION
+p358_phase: LAUNCH_PACKAGING_EXECUTABLE
+p368_phase: RELEASE_ENGINEERING_STAGING_READINESS
+p368_status: STAGING_BLOCKED
+p368_release_status: SOURCE_DIRTY
+git_tree_clean: false
+source_repository: Marpich ERP
+migration_checksum: NOT_AVAILABLE
+test_summary: DETERMINISTIC_SUBSET
+security_summary: CONFIGURED
+staging_status: STAGING_BLOCKED
+production_status: BLOCKED
+g26_status: BLOCKED
+p313_status: NOT_CERTIFIED
+go_live_status: NOT_APPROVED
+localhost_is_staging: false
+compose_is_staging: false
+staging_is_production: false
+p376_phase: MULTI_PLATFORM_LAUNCH_PACKAGES
+p376_status: MULTI_PLATFORM_LAUNCH_PACKAGES_READY
+p378_phase: MULTI_PLATFORM_LAUNCH_ORCHESTRATION
+p378_status: MULTI_PLATFORM_LAUNCH_PREPARED
+p379_phase: RELEASE_FACTORY
+p379_status: RELEASE_FACTORY_READY
+p380_phase: LAUNCH_ORCHESTRATION
+p380_status: LAUNCH_ORCHESTRATION_PREPARED
+p381_phase: DEPLOYMENT_ADAPTER_PACKAGING
+p381_status: READY_FOR_EXTERNAL_INFRASTRUCTURE
+p382_phase: MULTI_PLATFORM_DEPLOYMENT_READINESS
+p382_status: MULTI_PLATFORM_DEPLOYMENT_READY
+p383_phase: RELEASE_ENGINEERING
+p383_status: RELEASE_ENGINEERING_READY
+p384_phase: RELEASE_ORCHESTRATION
+p384_status: RELEASE_ORCHESTRATION_READY
+p385_phase: SUPPLY_CHAIN
+p385_status: SUPPLY_CHAIN_READY
+p386_phase: LAUNCH_PACKAGE
+p386_status: PRODUCT_LAUNCH_READY_EXTERNAL_INFRASTRUCTURE_BLOCKED
+p387_phase: DEPLOYMENT_ADAPTERS
+p387_status: PRODUCT_LAUNCH_INFRASTRUCTURE_READY_EXTERNAL_CREDENTIALS_REQUIRED
+p388_phase: LAUNCH_FACTORY
+p388_status: LAUNCH_FACTORY_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED
+p389_phase: CONTROL_PLANE
+p389_status: CONTROL_PLANE_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED
+p390_phase: INFRASTRUCTURE_FACTORY
+p390_status: INFRASTRUCTURE_FACTORY_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED
+p391_phase: PROVIDER_BLUEPRINTS
+p391_status: MULTI_PLATFORM_LAUNCH_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED
+p392_phase: DEPLOYMENT_FABRIC
+p392_status: DEPLOYMENT_FABRIC_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED
+p393_phase: UNIVERSAL_LAUNCH_FACTORY
+p393_status: UNIVERSAL_LAUNCH_FACTORY_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED
+p394_phase: ENVIRONMENT_CONTROL
+p394_status: SELF_SERVICE_ENVIRONMENT_PLATFORM_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED
+p395_phase: UNIVERSAL_LAUNCH_CENTER
+p395_status: LAUNCH_CENTER_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED
+p396_phase: DEPLOYMENT_ORCHESTRATION
+p396_status: DEPLOYMENT_ORCHESTRATION_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED
+p397_phase: UNIVERSAL_RELEASE_FACTORY
+p397_status: RELEASE_FACTORY_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED
+p398_phase: UNIVERSAL_ENVIRONMENT_FACTORY
+p398_status: ENVIRONMENT_FACTORY_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED
+p399_phase: UNIVERSAL_CONTROL_PLANE
+p399_status: CONTROL_PLANE_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED
+p400_phase: AUTONOMOUS_PLATFORM_OPERATIONS
+p400_status: AUTONOMOUS_PLATFORM_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED
+version_authority: backend/pyproject.toml
+release_channel: DEV
+promotion_history: []
+sbom: DECLARED_DEPENDENCIES_ONLY
+sbom_digest: NOT_SCANNED
+provenance: NOT_AVAILABLE
+security_scan: CONFIGURED
+secret_scan: CONFIGURED
+signature: READY_FOR_CREDENTIALS
+repository: Marpich ERP
+source_environment: DEVELOPMENT
+target_environment: NOT_PROMOTED
+promotion:
+  tests: CONFIGURED
+  security: CONFIGURED
+  approval: NOT_APPROVED
+  deployment: NOT_EXECUTED
+  rollback: CONFIGURED
+  staging: NOT_AVAILABLE
+  pre_production: NOT_AVAILABLE
+  rebuild: FORBIDDEN
+frontend_version: "0.1.0"
+backend_version: "0.1.0"
+sbom_reference: infrastructure/launch/MEOS_RELEASE_PACKAGE/SBOM.declared.json
+provenance_reference: NOT_AVAILABLE
+p372_phase: MULTI_PLATFORM_LAUNCH_ORCHESTRATION
+p372_status: PRODUCT_LAUNCH_PACKAGE_READY
+p369_phase: MULTI_PLATFORM_LAUNCH_PACKAGING
+p369_status: PRODUCT_LAUNCH_INFRASTRUCTURE_READY
+source_commit: dd967051ab05c6ff57262502b456ad51b7d748fd
+source_tree_status: DIRTY
+artifact: infrastructure/launch/MEOS_RELEASE_PACKAGE
+runtime: fastapi/uvicorn
+database_schema: "055"
+api_version: v1
+deployment_targets: [LOCAL, DEMO, VPS, HOSTINGER_VPS, AWS, AZURE, GCP, KUBERNETES]
+security_profile: CONFIGURED
+configuration_profile: REFERENCE_ONLY
+product_ready_for_external_deployment: true
+canonical_package_is_not_repo_root_release: true
+note: "Local image_id is BUILD_VALIDATION only. Docker daemon RepoDigest equals image Id and is NOT a GHCR IMAGE_DIGEST. Dirty worktree cannot become a release candidate. release_status must never be PRODUCTION without G26+P313 evidence."
 
 release:
   id: P354-RC-NOT_ELIGIBLE
@@ -135,6 +251,13 @@ targets:
     RUNTIME_STATUS: NOT_VERIFIED
     PRODUCTION_STATUS: NOT_VERIFIED
     validation: STATIC_VALIDATION_LIMITED
+  managed_container:
+    PACKAGE_STATUS: READY
+    CONFIG_STATUS: READY
+    SECRET_STATUS: READY_FOR_CREDENTIALS
+    DEPLOYMENT_STATUS: NOT_VERIFIED
+    RUNTIME_STATUS: NOT_VERIFIED
+    PRODUCTION_STATUS: NOT_VERIFIED
 
 certification:
   g26: BLOCKED

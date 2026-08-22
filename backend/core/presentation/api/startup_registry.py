@@ -341,6 +341,7 @@ ROUTER_SPECS: list[tuple[str, str]] = [
     ("contexts.identity_lifecycle.presentation.router", "identity_lifecycle_router"),
     ("contexts.identity_lifecycle.presentation.registration_router", "registration_router"),
     ("contexts.core_platform.presentation.router", "router"),
+    ("contexts.core_platform.presentation.launch_center_router", "launch_center_router"),
     ("contexts.hospital.presentation.router", "router"),
     ("contexts.accounting.presentation.router", "router"),
     ("contexts.finance.presentation.router", "router"),

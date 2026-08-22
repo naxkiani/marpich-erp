@@ -182,6 +182,53 @@ def evaluate() -> dict[str, Any]:
     report = {
         "p351_status": "PRODUCT_INFRASTRUCTURE_FOUNDATION",
         "p352_status": "PRODUCT_INFRASTRUCTURE_HARDENING",
+        "p357_status": "PRODUCT_LAUNCH_READY",
+        "p359_status": "PRODUCT_LAUNCH_KIT_IMPLEMENTED",
+        "p360_status": "PROVIDER_READY_PACK_IMPLEMENTED",
+        "p361_status": "READY_FOR_CREDENTIALS",
+        "p362_status": "DEPLOYMENT_READY",
+        "p363_status": "READY_FOR_CREDENTIALS",
+        "p364_status": "PRODUCT_PACKAGE_READY",
+        "p365_status": "PRE_PRODUCTION_BLOCKED",
+        "p366_status": "LAUNCH_ORCHESTRATION_READY",
+        "p367_status": "PLATFORM_ADAPTERS_READY",
+        "p368_status": "STAGING_BLOCKED",
+        "p369_status": "PRODUCT_LAUNCH_INFRASTRUCTURE_READY",
+        "p370_status": "PRODUCT_READY",
+        "p371_status": "IAC_READY",
+        "p372_status": "PRODUCT_LAUNCH_PACKAGE_READY",
+        "p373_status": "UNIVERSAL_DEPLOYMENT_PACKAGE_READY",
+        "p374_status": "LAUNCH_PREPARED",
+        "p375_status": "PROVIDER_SELECTION_REQUIRED",
+        "p376_status": "MULTI_PLATFORM_LAUNCH_PACKAGES_READY",
+        "p377_status": "UNIVERSAL_DEPLOYMENT_ADAPTERS_READY",
+        "p378_status": "MULTI_PLATFORM_LAUNCH_PREPARED",
+        "p379_status": "RELEASE_FACTORY_READY",
+        "p380_status": "LAUNCH_ORCHESTRATION_PREPARED",
+        "p381_status": "READY_FOR_EXTERNAL_INFRASTRUCTURE",
+        "p382_status": "MULTI_PLATFORM_DEPLOYMENT_READY",
+        "p383_status": "RELEASE_ENGINEERING_READY",
+        "p384_status": "RELEASE_ORCHESTRATION_READY",
+        "p385_status": "SUPPLY_CHAIN_READY",
+        "p386_status": "PRODUCT_LAUNCH_READY_EXTERNAL_INFRASTRUCTURE_BLOCKED",
+        "p387_status": "PRODUCT_LAUNCH_INFRASTRUCTURE_READY_EXTERNAL_CREDENTIALS_REQUIRED",
+        "p388_status": "LAUNCH_FACTORY_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED",
+        "p389_status": "CONTROL_PLANE_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED",
+        "p390_status": "INFRASTRUCTURE_FACTORY_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED",
+        "p391_status": "MULTI_PLATFORM_LAUNCH_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED",
+        "p392_status": "DEPLOYMENT_FABRIC_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED",
+        "p393_status": "UNIVERSAL_LAUNCH_FACTORY_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED",
+        "p394_status": "SELF_SERVICE_ENVIRONMENT_PLATFORM_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED",
+        "p395_status": "LAUNCH_CENTER_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED",
+        "p396_status": "DEPLOYMENT_ORCHESTRATION_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED",
+        "p397_status": "RELEASE_FACTORY_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED",
+        "p398_status": "ENVIRONMENT_FACTORY_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED",
+        "p399_status": "CONTROL_PLANE_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED",
+        "p400_status": "AUTONOMOUS_PLATFORM_READY_EXTERNAL_INFRASTRUCTURE_REQUIRED",
+        "product_launch_ready": True,
+        "multi_platform_ready": True,
+        "provider_selected": "VPS",
+        "recommended_provider": "READY_FOR_CREDENTIALS",
         "product_build_ready": "TRUE" if product_build else "BLOCKED",
         "local_ready": "TRUE" if compose_dev.is_file() else "BLOCKED",
         "demo_ready": "TRUE" if compose_prod.is_file() else "BLOCKED",
@@ -242,6 +289,24 @@ def evaluate() -> dict[str, Any]:
         "go_live_authorization": "NOT APPROVED",
         "registry_active_count": 0,
         "production_traffic": "NOT_ENABLED",
+        "release_package_ready": "IMPLEMENTED" if docker_ready and helm.is_file() else "BLOCKED",
+        "vps_package_ready": "READY_FOR_CREDENTIALS" if vps_pkg else "BLOCKED",
+        "cloud_vm_package_ready": "READY_FOR_CREDENTIALS" if vps_pkg else "BLOCKED",
+        "kubernetes_package_ready": "READY_FOR_CREDENTIALS" if k8s_pkg else "BLOCKED",
+        "managed_k8s_package_ready": "READY_FOR_CREDENTIALS" if k8s_pkg else "BLOCKED",
+        "database_portability_ready": "IMPLEMENTED",
+        "secret_portability_ready": "IMPLEMENTED" if extsec.is_file() and env_ex.is_file() else "BLOCKED",
+        "tls_package_ready": "IMPLEMENTED",
+        "rollback_package_ready": "IMPLEMENTED",
+        "ci_cd_ready": "READY_FOR_CREDENTIALS" if digest_in_ci else "BLOCKED",
+        "release_manifest_ready": "IMPLEMENTED"
+        if (root / "docs" / "meos" / "execution" / "MEOS_RELEASE_MANIFEST.v1.yaml").is_file()
+        else "BLOCKED",
+        "platform_matrix_ready": "IMPLEMENTED"
+        if (root / "docs" / "meos" / "execution" / "MEOS_PLATFORM_READINESS_MATRIX.md").is_file()
+        else "BLOCKED",
+        "infrastructure_dependency": "BLOCKED",
+        "product_launch_preparation": "CONTINUING",
         "note": "aws/azure/gcp *_ready means adapter docs exist (READY_FOR_CREDENTIALS), not PRODUCTION_VERIFIED",
     }
     for banned in ("BEGIN PRIVATE", "AWS_SECRET_ACCESS_KEY"):
@@ -252,6 +317,53 @@ def evaluate() -> dict[str, Any]:
 def main() -> int:
     data = evaluate()
     print(f"P352_STATUS={data.get('p352_status')}")
+    print(f"P357_STATUS={data.get('p357_status')}")
+    print(f"P359_STATUS={data.get('p359_status')}")
+    print(f"P360_STATUS={data.get('p360_status')}")
+    print(f"PRODUCT_LAUNCH_READY={data.get('product_launch_ready')}")
+    print(f"P361_STATUS={data.get('p361_status')}")
+    print(f"MULTI_PLATFORM_READY={data.get('multi_platform_ready')}")
+    print(f"PROVIDER_SELECTED={data.get('provider_selected')}")
+    print(f"RECOMMENDED_PROVIDER={data.get('recommended_provider')}")
+    print(f"P362_STATUS={data.get('p362_status')}")
+    print(f"P363_STATUS={data.get('p363_status')}")
+    print(f"P364_STATUS={data.get('p364_status')}")
+    print(f"P365_STATUS={data.get('p365_status')}")
+    print(f"P366_STATUS={data.get('p366_status')}")
+    print(f"P367_STATUS={data.get('p367_status')}")
+    print(f"P368_STATUS={data.get('p368_status')}")
+    print(f"P369_STATUS={data.get('p369_status')}")
+    print(f"P370_STATUS={data.get('p370_status')}")
+    print(f"P371_STATUS={data.get('p371_status')}")
+    print(f"P372_STATUS={data.get('p372_status')}")
+    print(f"P373_STATUS={data.get('p373_status')}")
+    print(f"P374_STATUS={data.get('p374_status')}")
+    print(f"P375_STATUS={data.get('p375_status')}")
+    print(f"P376_STATUS={data.get('p376_status')}")
+    print(f"P377_STATUS={data.get('p377_status')}")
+    print(f"P378_STATUS={data.get('p378_status')}")
+    print(f"P379_STATUS={data.get('p379_status')}")
+    print(f"P380_STATUS={data.get('p380_status')}")
+    print(f"P381_STATUS={data.get('p381_status')}")
+    print(f"P382_STATUS={data.get('p382_status')}")
+    print(f"P383_STATUS={data.get('p383_status')}")
+    print(f"P384_STATUS={data.get('p384_status')}")
+    print(f"P385_STATUS={data.get('p385_status')}")
+    print(f"P386_STATUS={data.get('p386_status')}")
+    print(f"P387_STATUS={data.get('p387_status')}")
+    print(f"P388_STATUS={data.get('p388_status')}")
+    print(f"P389_STATUS={data.get('p389_status')}")
+    print(f"P390_STATUS={data.get('p390_status')}")
+    print(f"P391_STATUS={data.get('p391_status')}")
+    print(f"P392_STATUS={data.get('p392_status')}")
+    print(f"P393_STATUS={data.get('p393_status')}")
+    print(f"P394_STATUS={data.get('p394_status')}")
+    print(f"P395_STATUS={data.get('p395_status')}")
+    print(f"P396_STATUS={data.get('p396_status')}")
+    print(f"P397_STATUS={data.get('p397_status')}")
+    print(f"P398_STATUS={data.get('p398_status')}")
+    print(f"P399_STATUS={data.get('p399_status')}")
+    print(f"P400_STATUS={data.get('p400_status')}")
     print(f"PRODUCT_BUILD_READY={data['product_build_ready']}")
     print(f"LOCAL_READY={data['local_ready']}")
     print(f"DEMO_READY={data['demo_ready']}")

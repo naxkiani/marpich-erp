@@ -16,6 +16,11 @@ export type NavGroupId =
 
 export type AppNavItem = {
   id: string;
+  /**
+   * MEOS application registry id when the shell nav id differs
+   * (dashboard → core_platform). Omit when id equals the registry id.
+   */
+  registryId?: string;
   label: string;
   /** i18n key — falls back to label */
   labelKey?: string;
@@ -155,8 +160,8 @@ export const PACK_LAUNCH_CATALOG: PackLaunchEntry[] = [
 ];
 
 export const APPLICATION_NAV: AppNavItem[] = [
-  { id: "dashboard", label: "Dashboard", labelKey: "nav.app.dashboard", href: "/", group: "home", keywords: ["home"] },
-  { id: "modules", label: "Modules", labelKey: "nav.app.modules", href: "/modules", group: "home" },
+  { id: "dashboard", registryId: "core_platform", label: "Dashboard", labelKey: "nav.app.dashboard", href: "/", group: "home", keywords: ["home"] },
+  { id: "modules", registryId: "core_platform", label: "Modules", labelKey: "nav.app.modules", href: "/modules", group: "home" },
   {
     id: "hospital",
     label: "Hospital",
@@ -345,13 +350,14 @@ export const APPLICATION_NAV: AppNavItem[] = [
   },
   {
     id: "federation",
+    registryId: "identity_federation",
     label: "Federation",
     labelKey: "nav.app.federation",
     href: "/enterprise/federation",
     group: "security",
     permission: "federation.read",
   },
-  { id: "security", label: "My Security", labelKey: "nav.mySecurity", href: "/account/security", group: "account" },
+  { id: "security", registryId: "identity", label: "My Security", labelKey: "nav.mySecurity", href: "/account/security", group: "account" },
   {
     id: "plugins",
     label: "Plugins",
@@ -362,6 +368,7 @@ export const APPLICATION_NAV: AppNavItem[] = [
   },
   {
     id: "connectors",
+    registryId: "enterprise_connector_framework",
     label: "Connectors",
     labelKey: "nav.app.connectors",
     href: "/enterprise/connector-framework",
@@ -370,6 +377,7 @@ export const APPLICATION_NAV: AppNavItem[] = [
   },
   {
     id: "observability",
+    registryId: "enterprise_observability",
     label: "Observability",
     labelKey: "nav.app.observability",
     href: "/enterprise/observability",
@@ -378,6 +386,7 @@ export const APPLICATION_NAV: AppNavItem[] = [
   },
   {
     id: "scheduler",
+    registryId: "enterprise_scheduler",
     label: "Scheduler",
     labelKey: "nav.app.scheduler",
     href: "/enterprise/scheduler",
@@ -386,11 +395,20 @@ export const APPLICATION_NAV: AppNavItem[] = [
   },
   {
     id: "integration-studio",
+    registryId: "enterprise_integration_studio",
     label: "Integration Studio",
     labelKey: "nav.app.integrationStudio",
     href: "/enterprise/integration-studio",
     group: "administration",
     permission: "enterprise_integration_studio.read",
+  },
+  {
+    id: "launch-center",
+    registryId: "launch_center",
+    label: "Launch Center",
+    labelKey: "nav.app.launchCenter",
+    href: "/enterprise/launch-center",
+    group: "administration",
   },
 ];
 
@@ -409,6 +427,10 @@ export const NAV_GROUP_ORDER: NavGroupId[] = [
 
 const MODULE_LAUNCH_BY_ID = new Map(MODULE_LAUNCH_CATALOG.map((e) => [e.moduleId, e]));
 const PACK_LAUNCH_BY_ID = new Map(PACK_LAUNCH_CATALOG.map((e) => [e.packId, e]));
+
+export function registryApplicationId(item: AppNavItem): string {
+  return item.registryId ?? item.id;
+}
 
 export function launchEntryForModule(moduleId: string): ModuleLaunchEntry | undefined {
   return MODULE_LAUNCH_BY_ID.get(moduleId);

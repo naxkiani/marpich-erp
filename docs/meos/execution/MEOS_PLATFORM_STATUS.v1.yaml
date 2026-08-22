@@ -1,0 +1,146 @@
+schema_version: "1"
+phase: P400
+timestamp: NOT_A_RUNTIME_CLOCK
+g26_ready: false
+p0: 1
+image_digest: NOT_AVAILABLE
+owner: NOT_AVAILABLE
+localhost_is_production: false
+compose_is_production: false
+
+targets:
+  LOCAL:
+    provider: LOCAL
+    environment: LOCAL
+    status: READY
+    credentials: NOT_REQUIRED
+    infrastructure: workstation
+    release: LOCAL_IMAGE
+    database: NON_PRODUCTION
+    dns: NOT_APPLICABLE
+    tls: NOT_APPLICABLE
+    secrets: optional_env
+    runtime: LOCAL
+    backup: LOCAL_ONLY
+    rollback: CONFIGURED
+    blockers: []
+  STAGING:
+    provider: NOT_SELECTED
+    environment: STAGING
+    status: READY_FOR_CREDENTIALS
+    credentials: MISSING
+    infrastructure: MISSING
+    release: NOT_AVAILABLE
+    database: NOT_VERIFIED
+    dns: MISSING
+    tls: MISSING
+    secrets: MISSING
+    runtime: NOT_AVAILABLE
+    backup: CONFIGURED
+    rollback: CONFIGURED
+    blockers: [credentials, host]
+  VPS:
+    provider: VPS
+    environment: NOT_SELECTED
+    status: READY_FOR_CREDENTIALS
+    credentials: MISSING
+    infrastructure: MISSING
+    release: NOT_AVAILABLE
+    database: NON_PRODUCTION
+    dns: MISSING
+    tls: MISSING
+    secrets: MISSING
+    runtime: NOT_AVAILABLE
+    backup: CONFIGURED
+    rollback: CONFIGURED
+    blockers: [ssh, dns, tls]
+  HOSTINGER_VPS:
+    provider: HOSTINGER_VPS
+    environment: NOT_SELECTED
+    status: READY_FOR_CREDENTIALS
+    credentials: MISSING
+    infrastructure: MISSING
+    release: NOT_AVAILABLE
+    database: NON_PRODUCTION
+    dns: MISSING
+    tls: MISSING
+    secrets: MISSING
+    runtime: NOT_AVAILABLE
+    backup: CONFIGURED
+    rollback: CONFIGURED
+    blockers: [ssh, dns, tls]
+  AWS:
+    provider: AWS
+    environment: NOT_SELECTED
+    status: READY_FOR_CREDENTIALS
+    credentials: MISSING
+    infrastructure: MISSING
+    release: NOT_AVAILABLE
+    database: NON_PRODUCTION
+    dns: MISSING
+    tls: MISSING
+    secrets: MISSING
+    runtime: NOT_AVAILABLE
+    backup: CONFIGURED
+    rollback: CONFIGURED
+    blockers: [account, dns, tls]
+  AZURE:
+    provider: AZURE
+    environment: NOT_SELECTED
+    status: READY_FOR_CREDENTIALS
+    credentials: MISSING
+    infrastructure: MISSING
+    release: NOT_AVAILABLE
+    database: NON_PRODUCTION
+    dns: MISSING
+    tls: MISSING
+    secrets: MISSING
+    runtime: NOT_AVAILABLE
+    backup: CONFIGURED
+    rollback: CONFIGURED
+    blockers: [subscription, dns, tls]
+  GCP:
+    provider: GCP
+    environment: NOT_SELECTED
+    status: READY_FOR_CREDENTIALS
+    credentials: MISSING
+    infrastructure: MISSING
+    release: NOT_AVAILABLE
+    database: NON_PRODUCTION
+    dns: MISSING
+    tls: MISSING
+    secrets: MISSING
+    runtime: NOT_AVAILABLE
+    backup: CONFIGURED
+    rollback: CONFIGURED
+    blockers: [project, dns, tls]
+  KUBERNETES:
+    provider: KUBERNETES
+    environment: NOT_SELECTED
+    status: READY_FOR_CREDENTIALS
+    credentials: MISSING
+    infrastructure: MISSING
+    release: NOT_AVAILABLE
+    database: NON_PRODUCTION
+    dns: MISSING
+    tls: MISSING
+    secrets: MISSING
+    runtime: NOT_AVAILABLE
+    backup: CONFIGURED
+    rollback: CONFIGURED
+    blockers: [kubeconfig, cluster]
+  MANAGED_K8S:
+    provider: MANAGED_K8S
+    environment: NOT_SELECTED
+    status: READY_FOR_CREDENTIALS
+    credentials: MISSING
+    infrastructure: MISSING
+    release: NOT_AVAILABLE
+    database: NON_PRODUCTION
+    dns: MISSING
+    tls: MISSING
+    secrets: MISSING
+    runtime: NOT_AVAILABLE
+    backup: CONFIGURED
+    rollback: CONFIGURED
+    blockers: [cloud_account, cluster]

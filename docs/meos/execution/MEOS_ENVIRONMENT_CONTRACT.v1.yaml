@@ -1,0 +1,130 @@
+# P364 environment contract. Values are references only. Never store secrets.
+schema_version: "1"
+phase: P364
+g26_ready: false
+p0: 1
+localhost_is_production: false
+compose_is_production: false
+self_signed_is_production: false
+dirty_sha_is_release: false
+production_values: REFERENCE_ONLY
+
+fields:
+  APP_ENV: { type: PUBLIC, required: true, secret: false }
+  ENVIRONMENT_ID: { type: PUBLIC, required: true, allowed: [LOCAL, DEMO, STAGING, PRE_PRODUCTION, PRODUCTION] }
+  DEPLOYMENT_MODE: { type: PUBLIC, required: true }
+  DATABASE_URL_REFERENCE: { type: SECRET_REFERENCE, required: true, value: NOT_STORED }
+  REDIS_URL_REFERENCE: { type: SECRET_REFERENCE, required: false, value: NOT_STORED }
+  SECRET_PROVIDER: { type: PUBLIC, required: true, examples: [VPS_SECRET_STORE, AWS_Secrets_Manager, Azure_Key_Vault, GCP_Secret_Manager, ExternalSecret] }
+  SECRET_REFERENCE: { type: SECRET_REFERENCE, required: true, value: NOT_STORED }
+  APP_DOMAIN: { type: PUBLIC, required: true, placeholder: app.example.com }
+  API_DOMAIN: { type: PUBLIC, required: true, placeholder: api.example.com }
+  AUTH_DOMAIN: { type: PUBLIC, required: true, placeholder: auth.example.com }
+  ADMIN_DOMAIN: { type: PUBLIC, required: false, placeholder: admin.example.com }
+  STORAGE_PROVIDER: { type: PUBLIC, required: false }
+  TLS_PROVIDER: { type: PUBLIC, required: true, production: [PUBLIC_CA, HTTPS, CERTIFICATE_CHAIN, RENEWAL, HTTP_TO_HTTPS] }
+  IMAGE: { type: PUBLIC, required: true, default: ghcr.io/marpich/marpich-backend }
+  IMAGE_DIGEST: { type: PUBLIC, required: true, current: NOT_AVAILABLE }
+  LOG_LEVEL: { type: PUBLIC, required: false, default: INFO }
+  OBSERVABILITY_PROVIDER: { type: PUBLIC, required: true, default: G23_CONFIGURED }
+
+tls_production:
+  PUBLIC_CA: REQUIRED
+  HTTPS: REQUIRED
+  CERTIFICATE_CHAIN: REQUIRED
+  RENEWAL: REQUIRED
+  HTTP_TO_HTTPS: REQUIRED
+  self_signed: NON_PRODUCTION
+  localhost: NON_PRODUCTION
+
+categories:
+  APPLICATION: { required: true, secret: false }
+  DATABASE: { required: true, secret: true }
+  CACHE: { required: false, secret: true }
+  STORAGE: { required: false, secret: false }
+  QUEUE: { required: false, secret: false }
+  EMAIL: { required: false, secret: true }
+  DOMAIN: { required: true, secret: false, current: DOMAIN_REQUIRED }
+  TLS: { required: true, secret: false }
+  SECRETS: { required: true, secret: true, values: NOT_STORED }
+  AUTHENTICATION: { required: true, secret: true }
+  OBSERVABILITY: { required: true, secret: false }
+  BACKUP: { required: true, secret: false }
+  RESTORE: { required: true, secret: false }
+  REGISTRY: { required: true, secret: false }
+  DEPLOYMENT: { required: true, secret: false }
+  FEATURE_FLAGS: { required: false, secret: false }
+
+field_schema:
+  - name
+  - type
+  - required
+  - environment
+  - secret
+  - default
+  - validation
+  - description
+
+expanded_fields:
+  APP_ENV:
+    name: APP_ENV
+    type: PUBLIC
+    required: true
+    environment: ALL
+    secret: false
+    default: local
+    validation: LOCAL|DEMO|STAGING|PRE_PRODUCTION|PRODUCTION
+    description: Claimed environment. PRODUCTION claim is not certification.
+  IMAGE_DIGEST:
+    name: IMAGE_DIGEST
+    type: PUBLIC
+    required: true
+    environment: ALL
+    secret: false
+    default: NOT_AVAILABLE
+    validation: sha256:* or NOT_AVAILABLE
+    description: Immutable digest. Local image id is not GHCR evidence.
+  APP_DOMAIN:
+    name: APP_DOMAIN
+    type: PUBLIC
+    required: true
+    environment: STAGING,PRODUCTION
+    secret: false
+    default: DOMAIN_REQUIRED
+    validation: real hostname or DOMAIN_REQUIRED
+    description: Do not invent a domain.
+
+dns:
+  APP_DOMAIN: DOMAIN_REQUIRED
+  API_DOMAIN: DOMAIN_REQUIRED
+  ADMIN_DOMAIN: DOMAIN_REQUIRED
+  AUTH_DOMAIN: DOMAIN_REQUIRED
+  STORAGE_DOMAIN: DOMAIN_REQUIRED
+storage_abstraction:
+  backends: [local_filesystem, s3_compatible, aws_s3, azure_blob, gcp_cloud_storage]
+  note: No provider-specific business logic.
+p372_required_categories:
+  APP_ENV: CONFIGURED
+  APP_URL: CONFIGURED
+  DATABASE_URL: SECRET_REFERENCE
+  DATABASE_SSL: CONFIGURED
+  SECRET_MANAGER: CONFIGURED
+  IMAGE: CONFIGURED
+  IMAGE_DIGEST: NOT_AVAILABLE
+  COMMIT_SHA: BLOCKED
+  LOG_LEVEL: CONFIGURED
+  OBSERVABILITY: CONFIGURED
+  BACKUP: CONFIGURED
+  TLS: CONFIGURED
+  TENANCY: CONFIGURED
+p372_phase: MULTI_PLATFORM_LAUNCH_ORCHESTRATION
+p370_phase: PROVIDER_READY_PACKAGING
+canonical_template: infrastructure/launch/env.production.example
+env_example: .env.example
+env_production_committed: FORBIDDEN
+factory: scripts/meos-environment-factory.py
+validator: scripts/meos-environment-validator.py
+p388_identity_environments: [LOCAL, DEMO, TEST, STAGING, PRODUCTION]
+p388_production_lock: ACTIVE
+p388_identity_inferred_from_localhost: false
+p388_blueprints: deploy/environments/{local,demo,test,staging}.yaml

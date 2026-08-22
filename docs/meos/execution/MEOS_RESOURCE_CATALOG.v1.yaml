@@ -1,0 +1,80 @@
+# P399 resource catalog. Metadata only. No invented IDs. No secret values.
+schema_version: "1"
+phase: P399
+provider: NOT_SELECTED
+g26_ready: false
+values: NOT_STORED
+terraform_for_meos: FORBIDDEN
+canonical_cli: scripts/meos-control-plane.py
+canonical_api: /api/v1/launch-center/control-plane
+second_deployment_engine: false
+states:
+  - PLANNED
+  - PENDING_APPROVAL
+  - PROVISIONING
+  - READY
+  - DEGRADED
+  - DRIFTED
+  - BLOCKED
+  - FAILED
+  - DECOMMISSIONING
+  - DECOMMISSIONED
+  - UNKNOWN
+resource_fields:
+  - RESOURCE_ID
+  - RESOURCE_TYPE
+  - PROVIDER
+  - ENVIRONMENT
+  - STATUS
+  - OWNER
+  - LIFECYCLE
+  - CREATED_AT
+  - UPDATED_AT
+catalog:
+  ENVIRONMENTS: {status: LOCAL_ONLY, owner: platform, lifecycle: catalog}
+  PROVIDERS: {status: NOT_CONFIGURED, owner: platform, lifecycle: catalog}
+  CLUSTERS: {status: UNKNOWN, owner: NOT_AVAILABLE, lifecycle: not_provisioned}
+  NODES: {status: UNKNOWN, owner: NOT_AVAILABLE, lifecycle: not_provisioned}
+  DATABASES: {status: NON_PRODUCTION, owner: platform, lifecycle: local_optional}
+  STORAGE: {status: PLANNED, owner: platform, lifecycle: catalog}
+  NETWORKS: {status: CONFIGURED, owner: platform, lifecycle: plan_only}
+  DOMAINS: {status: NOT_AVAILABLE, owner: NOT_AVAILABLE, lifecycle: not_fabricated}
+  CERTIFICATES: {status: CONFIGURED, owner: platform, lifecycle: self_signed_non_production}
+  APPLICATIONS: {status: IMPLEMENTED, owner: platform, lifecycle: not_active}
+  RELEASES: {status: RELEASE_BLOCKED, owner: platform, lifecycle: dirty_or_unverified}
+  DEPLOYMENTS: {status: LOCKED, owner: platform, lifecycle: orchestrator}
+  BACKUPS: {status: CONFIGURED, owner: platform, lifecycle: local_optional}
+  RESTORES: {status: NOT_EXECUTED, owner: platform, lifecycle: authorization_required}
+  OBSERVABILITY: {status: CONFIGURED, owner: platform, lifecycle: g23_not_production_verified}
+  SECURITY: {status: CONFIGURED, owner: platform, lifecycle: fail_closed}
+  COST: {status: COST_NOT_AVAILABLE, owner: platform, lifecycle: not_invented}
+  CAPACITY: {status: UNKNOWN, owner: platform, lifecycle: not_verified}
+graph:
+  application_path:
+    - APPLICATION
+    - RELEASE
+    - DEPLOYMENT
+    - ENVIRONMENT
+    - CLUSTER
+    - NETWORK
+    - DATABASE
+    - STORAGE
+  ingress_path:
+    - DOMAIN
+    - TLS
+    - INGRESS
+    - APPLICATION
+  backup_path:
+    - BACKUP
+    - DATABASE
+    - ENVIRONMENT
+roles:
+  - PLATFORM_ADMIN
+  - INFRASTRUCTURE_OPERATOR
+  - RELEASE_MANAGER
+  - SECURITY_OPERATOR
+  - DATABASE_OPERATOR
+  - AUDITOR
+  - VIEWER
+wildcard_production: FORBIDDEN
+tenant_isolation: REQUIRED

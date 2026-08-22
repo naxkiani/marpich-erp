@@ -16,6 +16,51 @@
 **P353 (2026-08-19):** Clean release engineering + deployment factory. **LOCAL_RELEASE_READY ≠ PRODUCTION_CERTIFIED**. **READY_FOR_CREDENTIALS ≠ READY**. **G26_READY = FALSE**. See [MEOS_P353_RELEASE_ENGINEERING_REPORT.md](./MEOS_P353_RELEASE_ENGINEERING_REPORT.md) · [MEOS_PLATFORM_READINESS.v1.yaml](./MEOS_PLATFORM_READINESS.v1.yaml).  
 **P354 (2026-08-19):** Installer/release engine + launch CLI. **DEPLOYMENT_MECHANISM_READY**. Production launch **BLOCKED**. **G26_READY = FALSE**. See [MEOS_P354_UNIVERSAL_INSTALLATION.md](./MEOS_P354_UNIVERSAL_INSTALLATION.md) · [MEOS_P354_LAUNCH_CONTROL_REPORT.md](./MEOS_P354_LAUNCH_CONTROL_REPORT.md).  
 **P355 (2026-08-19):** Productization layer. Not GO-LIVE. See [MEOS_P355_PRODUCTIZATION.md](./MEOS_P355_PRODUCTIZATION.md).  
+**P357 (2026-08-22):** Multi-platform launch package. **G26_READY = FALSE**. VPS/cloud/k8s remain **READY_FOR_CREDENTIALS**. See [MEOS_PLATFORM_READINESS_MATRIX.md](./MEOS_PLATFORM_READINESS_MATRIX.md).  
+**P358 (2026-08-22):** Executable packaging. **G26_READY = FALSE**. See [MEOS_LAUNCH_OPERATIONS_RUNBOOK.md](./MEOS_LAUNCH_OPERATIONS_RUNBOOK.md).  
+**P359 (2026-08-22):** Operator launch kit. **G26_READY = FALSE**. Production install **BLOCKED**. See [MEOS_PRODUCT_INSTALLER_GUIDE.md](./MEOS_PRODUCT_INSTALLER_GUIDE.md).  
+**P360 (2026-08-22):** Provider-ready packs. **PRODUCT_LAUNCH_READY ≠ G26_READY**. See [MEOS_MULTI_PLATFORM_DEPLOYMENT_GUIDE.md](./MEOS_MULTI_PLATFORM_DEPLOYMENT_GUIDE.md).  
+**P361 (2026-08-22):** VPS selected as launch pack only. **G26_READY = FALSE**. See [MEOS_PROVIDER_SELECTION.v1.yaml](./MEOS_PROVIDER_SELECTION.v1.yaml).  
+**P362 (2026-08-22):** Deployment operator pack. **G26_READY = FALSE**. See [../deployment/MEOS_MULTI_PLATFORM_DEPLOYMENT_MATRIX.md](../deployment/MEOS_MULTI_PLATFORM_DEPLOYMENT_MATRIX.md).  
+**P363 (2026-08-22):** Release candidate + deploy command contract. **G26_READY = FALSE**. Dirty tree cannot become a certified release. See [MEOS_P363_RELEASE_CANDIDATE.md](./MEOS_P363_RELEASE_CANDIDATE.md).  
+**P364 (2026-08-22):** Universal package + environment factory. **G26_READY = FALSE**. See [MEOS_P364_DEPLOYMENT_PACKAGING.md](./MEOS_P364_DEPLOYMENT_PACKAGING.md).  
+**P365 (2026-08-22):** Pre-production rehearsal blocked (no dedicated infra). **G26_READY = FALSE**. See [MEOS_P365_PREPRODUCTION_REHEARSAL.md](./MEOS_P365_PREPRODUCTION_REHEARSAL.md).  
+**P366 (2026-08-22):** Launch orchestration index. **G26_READY = FALSE**. See [MEOS_P366_LAUNCH_ORCHESTRATION.md](./MEOS_P366_LAUNCH_ORCHESTRATION.md).  
+**P367 (2026-08-22):** Platform adapters. **G26_READY = FALSE**. See [MEOS_P367_PLATFORM_READINESS.md](./MEOS_P367_PLATFORM_READINESS.md).  
+**P368 (2026-08-22):** Staging blocked. **G26_READY = FALSE**. See [MEOS_P368_RELEASE_ENGINEERING.md](./MEOS_P368_RELEASE_ENGINEERING.md).  
+**P369 (2026-08-22):** Product packages ready. **G26_READY = FALSE**. See [MEOS_P369_MULTI_PLATFORM_RELEASE.md](./MEOS_P369_MULTI_PLATFORM_RELEASE.md).  
+**P370 (2026-08-22):** Provider-ready packaging. **G26_READY = FALSE**. See [MEOS_P370_MULTI_PLATFORM_LAUNCH.md](./MEOS_P370_MULTI_PLATFORM_LAUNCH.md).  
+**P371 (2026-08-22):** IaC wrappers. **G26_READY = FALSE**. See [MEOS_P371_INFRASTRUCTURE_AUTOMATION.md](./MEOS_P371_INFRASTRUCTURE_AUTOMATION.md).
+**P372 (2026-08-22):** Launch package orchestration. **G26_READY = FALSE**. See [MEOS_P372_MULTI_PLATFORM_LAUNCH.md](./MEOS_P372_MULTI_PLATFORM_LAUNCH.md).
+**P373 (2026-08-22):** Universal packaging. **G26_READY = FALSE**. See [MEOS_P373_UNIVERSAL_DEPLOYMENT.md](./MEOS_P373_UNIVERSAL_DEPLOYMENT.md).
+**P374 (2026-08-22):** Launch prepared. **G26_READY = FALSE**. See [MEOS_P374_MULTIPLATFORM_LAUNCH_READINESS.md](./MEOS_P374_MULTIPLATFORM_LAUNCH_READINESS.md).
+**P375 (2026-08-22):** Provider selection required. **G26_READY = FALSE**. See [MEOS_P375_PROVIDER_SELECTION_AND_ACCESS.md](./MEOS_P375_PROVIDER_SELECTION_AND_ACCESS.md).
+**P376 (2026-08-22):** Launch packages ready. **G26_READY = FALSE**. See [MEOS_P376_MULTI_PLATFORM_LAUNCH.md](./MEOS_P376_MULTI_PLATFORM_LAUNCH.md).
+**P377 (2026-08-22):** Adapters ready offline. **G26_READY = FALSE**. See [MEOS_P377_UNIVERSAL_DEPLOYMENT.md](./MEOS_P377_UNIVERSAL_DEPLOYMENT.md).
+**P378 (2026-08-22):** Multi-platform launch prepared. **MULTI_PLATFORM_READY = FALSE**. **G26_READY = FALSE**. See [MEOS_P378_MULTI_PLATFORM_LAUNCH.md](./MEOS_P378_MULTI_PLATFORM_LAUNCH.md).
+**P379 (2026-08-22):** Release factory ready. **PRODUCTION_CANDIDATE = FALSE**. **G26_READY = FALSE**. See [MEOS_P379_RELEASE_FACTORY.md](./MEOS_P379_RELEASE_FACTORY.md).
+**P380 (2026-08-22):** Launch orchestration prepared. **DEPLOYMENT_READY = PARTIAL**. **G26_READY = FALSE**. See [MEOS_P380_LAUNCH_ORCHESTRATION_REPORT.md](./MEOS_P380_LAUNCH_ORCHESTRATION_REPORT.md).
+**P381 (2026-08-22):** Deployment packages ready for external infra. **G26_READY = FALSE**. See [MEOS_P381_DEPLOYMENT_ADAPTER_REPORT.md](./MEOS_P381_DEPLOYMENT_ADAPTER_REPORT.md).
+**P382 (2026-08-22):** Product-side multi-platform launch package complete. **G26_READY = FALSE**. Safety lock active. See [MEOS_P382_MULTI_PLATFORM_DEPLOYMENT_READINESS.md](./MEOS_P382_MULTI_PLATFORM_DEPLOYMENT_READINESS.md).
+**P383 (2026-08-22):** Release engineering package complete. **PACKAGE_VALID = TRUE**. **G26_READY = FALSE**. See [MEOS_P383_RELEASE_ENGINEERING.md](./MEOS_P383_RELEASE_ENGINEERING.md).
+**P384 (2026-08-22):** Release orchestration ready. **RELEASE_READY = FALSE**. **G26_READY = FALSE**. See [MEOS_RELEASE_PROMOTION_REPORT.md](./MEOS_RELEASE_PROMOTION_REPORT.md).
+**P385 (2026-08-22):** Supply-chain factory ready. **ARTIFACT_VALID = FALSE**. **G26_READY = FALSE**. See [MEOS_P385_RELEASE_FACTORY.md](./MEOS_P385_RELEASE_FACTORY.md).
+**P386 (2026-08-22):** Launch package prepared. **P386_RELEASE = BLOCKED**. **G26_READY = FALSE**. See [MEOS_PRODUCTION_LAUNCH_PACKAGE.md](./MEOS_PRODUCTION_LAUNCH_PACKAGE.md).
+**P387 (2026-08-22):** Deployment adapters prepared. **PRODUCTION_LOCK = ACTIVE**. **G26_READY = FALSE**. See [MEOS_MULTI_PLATFORM_LAUNCH_PACKAGE.md](./MEOS_MULTI_PLATFORM_LAUNCH_PACKAGE.md).
+**P388 (2026-08-22):** Launch factory prepared. **LAUNCH_FACTORY_READY = TRUE**. **G26_READY = FALSE**.
+**P389 (2026-08-22):** Control plane prepared. **DEPLOYMENT_CONTROL_PLANE = READY**. **G26_READY = FALSE**.
+**P390 (2026-08-22):** Infrastructure factory prepared. **INFRASTRUCTURE_CONTROL_READY = TRUE**. **G26_READY = FALSE**.
+**P391 (2026-08-22):** Provider blueprints prepared. **PROVIDER_BLUEPRINTS_READY = TRUE**. **G26_READY = FALSE**.
+**P392 (2026-08-22):** Deployment fabric prepared. **DEPLOYMENT_FABRIC_READY = TRUE**. **G26_READY = FALSE**.
+**P393 (2026-08-22):** Universal launch factory prepared. **LAUNCH_FACTORY_READY = TRUE**. **G26_READY = FALSE**.
+**P394 (2026-08-22):** Self-service environment platform prepared. **ENVIRONMENT_CONTROL_READY = TRUE**. **G26_READY = FALSE**.
+**P395 (2026-08-22):** Universal Launch Center prepared. **LAUNCH_CENTER_READY = TRUE**. **G26_READY = FALSE**.
+**P396 (2026-08-22):** Deployment orchestration prepared. **DEPLOYMENT_ORCHESTRATOR_READY = TRUE**. **G26_READY = FALSE**.
+**P397 (2026-08-22):** Release Factory prepared. **RELEASE_FACTORY_READY = TRUE**. **G26_READY = FALSE**.
+**P398 (2026-08-22):** Environment Factory prepared. **ENVIRONMENT_FACTORY_READY = TRUE**. **G26_READY = FALSE**.
+**P399 (2026-08-22):** Control Plane prepared. **CONTROL_PLANE_READY = TRUE**. **G26_READY = FALSE**.
+**P400 (2026-08-22):** Autonomous operations prepared. **AUTONOMOUS_OPERATIONS_READY = TRUE**. **G26_READY = FALSE**.
+ 
 **P314:** Go-live **not approved**. Demo loops ≠ deploy.  
 **P340:** G26 **BLOCKED** (Outcome B). Workstation health ≠ production cluster. See [MEOS_P340_G26_EXECUTION_ENABLEMENT.md](./MEOS_P340_G26_EXECUTION_ENABLEMENT.md).  
 **P341:** Infrastructure **OUTCOME_B**. P0 remains **1**. See [MEOS_P341_PRODUCTION_INFRASTRUCTURE_READINESS.md](./MEOS_P341_PRODUCTION_INFRASTRUCTURE_READINESS.md).  
@@ -83,6 +128,10 @@
 | Audit pack `docs/meos/execution/` | verified |
 | Auth-wired search / notifications / AI | verified |
 | Registry nav + command palette + mobile drawer | verified |
+| Registry YAML `nav_groups` ↔ `APPLICATION_NAV` | verified (48 apps, 0 ACTIVE) |
+| G26 production boot fail-closed (SM + public-CA DNS + non-local PG) | verified in code; live cluster **BLOCKED** |
+| G27 rollback after first deploy (Helm N→N+1→N) | contract verified; live exercise **BLOCKED** |
+| G23 real alerting on the same cluster | contract verified; live fire **FAIL** |
 | Permission-aware nav / palette / search | verified |
 | Workflow Task Center | verified |
 | ROUTER honesty filter | verified |

@@ -152,6 +152,9 @@ platform_routes:
   - prefix: /api/v1/platform
     context_id: core_platform
     module: core_platform
+  - prefix: /api/v1/launch-center
+    context_id: core_platform
+    module: core_platform
   - prefix: /api/v1/organizations
     context_id: organization
     module: organization

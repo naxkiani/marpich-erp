@@ -1,0 +1,77 @@
+# P398 provider matrix. Do not treat CONDITIONALLY_SUPPORTED as provisioned.
+schema_version: "1"
+phase: P398
+provider: NOT_SELECTED
+g26_ready: false
+values: NOT_STORED
+providers:
+  VPS:
+    compute: SUPPORTED
+    network: CONDITIONALLY_SUPPORTED
+    managed_database: NOT_AVAILABLE
+    object_storage: NOT_AVAILABLE
+    secret_manager: CONDITIONALLY_SUPPORTED
+    load_balancer: NOT_AVAILABLE
+    dns: NOT_AVAILABLE
+    tls: CONDITIONALLY_SUPPORTED
+    kubernetes: NOT_AVAILABLE
+    observability: CONFIGURED
+    backup: CONFIGURED
+    restore: CONFIGURED
+    status: READY_FOR_CREDENTIALS
+  AWS:
+    compute: SUPPORTED
+    network: CONDITIONALLY_SUPPORTED
+    managed_database: CONDITIONALLY_SUPPORTED
+    object_storage: CONDITIONALLY_SUPPORTED
+    secret_manager: SUPPORTED
+    load_balancer: CONDITIONALLY_SUPPORTED
+    dns: NOT_AVAILABLE
+    tls: CONDITIONALLY_SUPPORTED
+    kubernetes: CONDITIONALLY_SUPPORTED
+    observability: CONFIGURED
+    backup: CONFIGURED
+    restore: CONFIGURED
+    status: READY_FOR_CREDENTIALS
+  AZURE:
+    compute: SUPPORTED
+    network: CONDITIONALLY_SUPPORTED
+    managed_database: CONDITIONALLY_SUPPORTED
+    object_storage: CONDITIONALLY_SUPPORTED
+    secret_manager: SUPPORTED
+    load_balancer: CONDITIONALLY_SUPPORTED
+    dns: NOT_AVAILABLE
+    tls: CONDITIONALLY_SUPPORTED
+    kubernetes: CONDITIONALLY_SUPPORTED
+    observability: CONFIGURED
+    backup: CONFIGURED
+    restore: CONFIGURED
+    status: READY_FOR_CREDENTIALS
+  GCP:
+    compute: SUPPORTED
+    network: CONDITIONALLY_SUPPORTED
+    managed_database: CONDITIONALLY_SUPPORTED
+    object_storage: CONDITIONALLY_SUPPORTED
+    secret_manager: SUPPORTED
+    load_balancer: CONDITIONALLY_SUPPORTED
+    dns: NOT_AVAILABLE
+    tls: CONDITIONALLY_SUPPORTED
+    kubernetes: CONDITIONALLY_SUPPORTED
+    observability: CONFIGURED
+    backup: CONFIGURED
+    restore: CONFIGURED
+    status: READY_FOR_CREDENTIALS
+  KUBERNETES:
+    compute: CONDITIONALLY_SUPPORTED
+    network: CONDITIONALLY_SUPPORTED
+    managed_database: NOT_AVAILABLE
+    object_storage: NOT_AVAILABLE
+    secret_manager: CONDITIONALLY_SUPPORTED
+    load_balancer: CONDITIONALLY_SUPPORTED
+    dns: NOT_AVAILABLE
+    tls: CONDITIONALLY_SUPPORTED
+    kubernetes: CONDITIONALLY_SUPPORTED
+    observability: CONFIGURED
+    backup: CONFIGURED
+    restore: CONFIGURED
+    status: READY_FOR_CREDENTIALS

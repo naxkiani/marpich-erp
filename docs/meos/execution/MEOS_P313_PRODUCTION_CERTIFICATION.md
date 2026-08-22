@@ -14,7 +14,50 @@
 **P347:** **EXT-G26 UNRESOLVED**. **WAIT**. See [MEOS_P347_EXTERNAL_HANDOFF.md](./MEOS_P347_EXTERNAL_HANDOFF.md).  
 **P348:** **G26_READY = FALSE**. See [MEOS_EXT_G26_INFRASTRUCTURE_HANDOFF.md](./MEOS_EXT_G26_INFRASTRUCTURE_HANDOFF.md).  
 **P349:** Discovery **REQUIREMENTS_IDENTIFIED**. **G26 still BLOCKED**. Provider **not** selected. See [MEOS_EXT_G26_PROVIDER_COMPATIBILITY.md](./MEOS_EXT_G26_PROVIDER_COMPATIBILITY.md).  
-**P350:** Provisioning **BLOCKED**. Credentials missing. **P313_REENTRY_READY = FALSE**. See [MEOS_P350_PROVISIONING_REPORT.md](./MEOS_P350_PROVISIONING_REPORT.md).
+**P350:** Provisioning **BLOCKED**. Credentials missing. **P313_REENTRY_READY = FALSE**. See [MEOS_P350_PROVISIONING_REPORT.md](./MEOS_P350_PROVISIONING_REPORT.md).  
+**P357:** Launch foundation packages only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P357_LAUNCH_FOUNDATION.md](./MEOS_P357_LAUNCH_FOUNDATION.md).  
+**P359:** Installer/CLI packaging only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P359_PRODUCT_LAUNCH_KIT.md](./MEOS_P359_PRODUCT_LAUNCH_KIT.md).  
+**P360:** Provider packs only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P360_PROVIDER_READY.md](./MEOS_P360_PROVIDER_READY.md).  
+**P361:** Provider selection only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P361_DEPLOYMENT_VALIDATION.md](./MEOS_P361_DEPLOYMENT_VALIDATION.md).  
+**P362:** Operator pack only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P362_MULTI_PLATFORM_LAUNCH.md](./MEOS_P362_MULTI_PLATFORM_LAUNCH.md).  
+**P363:** Release-candidate object only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P363_RELEASE_CANDIDATE.md](./MEOS_P363_RELEASE_CANDIDATE.md).  
+**P364:** Packaging only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P364_DEPLOYMENT_PACKAGING.md](./MEOS_P364_DEPLOYMENT_PACKAGING.md).  
+**P365:** Rehearsal only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P365_PREPRODUCTION_REHEARSAL.md](./MEOS_P365_PREPRODUCTION_REHEARSAL.md).  
+**P366:** Orchestration index only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P366_LAUNCH_ORCHESTRATION.md](./MEOS_P366_LAUNCH_ORCHESTRATION.md).  
+**P367:** Adapters only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P367_PLATFORM_READINESS.md](./MEOS_P367_PLATFORM_READINESS.md).  
+**P368:** Staging blocked. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P368_RELEASE_ENGINEERING.md](./MEOS_P368_RELEASE_ENGINEERING.md).  
+**P369:** Packages only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P369_MULTI_PLATFORM_RELEASE.md](./MEOS_P369_MULTI_PLATFORM_RELEASE.md).  
+**P370:** Profiles only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P370_MULTI_PLATFORM_LAUNCH.md](./MEOS_P370_MULTI_PLATFORM_LAUNCH.md).  
+**P371:** IaC only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P371_INFRASTRUCTURE_AUTOMATION.md](./MEOS_P371_INFRASTRUCTURE_AUTOMATION.md).
+**P372:** Launch package only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P372_MULTI_PLATFORM_LAUNCH.md](./MEOS_P372_MULTI_PLATFORM_LAUNCH.md).
+**P373:** Universal packaging only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P373_UNIVERSAL_DEPLOYMENT.md](./MEOS_P373_UNIVERSAL_DEPLOYMENT.md).
+**P374:** Launch prepared only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P374_MULTIPLATFORM_LAUNCH_READINESS.md](./MEOS_P374_MULTIPLATFORM_LAUNCH_READINESS.md).
+**P375:** Provider selection required. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P375_PROVIDER_SELECTION_AND_ACCESS.md](./MEOS_P375_PROVIDER_SELECTION_AND_ACCESS.md).
+**P376:** Launch packages only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P376_MULTI_PLATFORM_LAUNCH.md](./MEOS_P376_MULTI_PLATFORM_LAUNCH.md).
+**P377:** Adapters only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P377_UNIVERSAL_DEPLOYMENT.md](./MEOS_P377_UNIVERSAL_DEPLOYMENT.md).
+**P378:** Launch preparation only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P378_MULTI_PLATFORM_LAUNCH.md](./MEOS_P378_MULTI_PLATFORM_LAUNCH.md).
+**P379:** Release factory only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P379_RELEASE_FACTORY.md](./MEOS_P379_RELEASE_FACTORY.md).
+**P380:** Launch orchestration only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P380_LAUNCH_ORCHESTRATION_REPORT.md](./MEOS_P380_LAUNCH_ORCHESTRATION_REPORT.md).
+**P381:** Adapter packaging only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P381_DEPLOYMENT_ADAPTER_REPORT.md](./MEOS_P381_DEPLOYMENT_ADAPTER_REPORT.md).
+**P382:** Product-side launch package only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P382_MULTI_PLATFORM_DEPLOYMENT_READINESS.md](./MEOS_P382_MULTI_PLATFORM_DEPLOYMENT_READINESS.md).
+**P383:** Release packaging only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P383_RELEASE_ENGINEERING.md](./MEOS_P383_RELEASE_ENGINEERING.md).
+**P384:** Promotion orchestration only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_RELEASE_PROMOTION_REPORT.md](./MEOS_RELEASE_PROMOTION_REPORT.md).
+**P385:** Supply-chain factory only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_P385_RELEASE_FACTORY.md](./MEOS_P385_RELEASE_FACTORY.md).
+**P386:** Launch package only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_PRODUCTION_LAUNCH_PACKAGE.md](./MEOS_PRODUCTION_LAUNCH_PACKAGE.md).
+**P387:** Deployment adapters only. **G26_READY = FALSE**. P313 not re-entered. See [MEOS_MULTI_PLATFORM_LAUNCH_PACKAGE.md](./MEOS_MULTI_PLATFORM_LAUNCH_PACKAGE.md).
+**P388:** Launch factory only. **G26_READY = FALSE**. P313 not re-entered. `python3 scripts/meos-launch-factory.py`.
+**P389:** Control plane only. **G26_READY = FALSE**. P313 not re-entered. `python3 scripts/meos-control.py g26`.
+**P390:** Infrastructure factory only. **G26_READY = FALSE**. P313 not re-entered. `python3 scripts/meos-infra-plan.py --dry-run`.
+**P391:** Provider blueprints only. **G26_READY = FALSE**. P313 not re-entered. `python3 scripts/meos-launch.py prepare`.
+**P392:** Deployment fabric only. **G26_READY = FALSE**. P313 not re-entered. `python3 scripts/meos-promote.py status`.
+**P393:** Universal launch factory only. **G26_READY = FALSE**. P313 not re-entered. `python3 scripts/meos-launch-factory.py status`.
+**P394:** Environment control only. **G26_READY = FALSE**. P313 not re-entered. `python3 scripts/meos-environment-control.py status`.
+**P395:** Launch Center only. **G26_READY = FALSE**. P313 not re-entered. `python3 scripts/meos-launch-center.py`.
+**P396:** Deployment orchestration only. **G26_READY = FALSE**. P313 not re-entered. `python3 scripts/meos-deployment-orchestrator.py status`.
+**P397:** Release Factory only. **G26_READY = FALSE**. P313 not re-entered. `python3 scripts/meos-release-factory.py status`.
+**P398:** Environment Factory only. **G26_READY = FALSE**. P313 not re-entered. `python3 scripts/meos-environment-factory.py status`.
+**P399:** Control Plane only. **G26_READY = FALSE**. P313 not re-entered. `python3 scripts/meos-control-plane.py status`.
+**P400:** Autonomous operations only. **G26_READY = FALSE**. P313 not re-entered. `python3 scripts/meos-autonomous-operations.py status`.
 
 Allowed states: `PASS` | `FAIL` | `BLOCKED` | `NOT_APPLICABLE`.
 

@@ -1,0 +1,24 @@
+# P398 provider-neutral environment specification. No secret values. No Terraform fork.
+schema_version: "1"
+phase: P398
+environment_version: v1
+terraform_for_meos: FORBIDDEN
+provider: NOT_SELECTED
+region: NOT_SELECTED
+g26_ready: false
+values: NOT_STORED
+environment:
+  types: [LOCAL, DEMO, TEST, STAGING, PRODUCTION, DISASTER_RECOVERY]
+compute: {status: SPECIFIED, sizing: catalog}
+network: {vpc: SPECIFIED, public_database: FORBIDDEN_FOR_PRODUCTION}
+database: {engine: postgresql, local: NON_PRODUCTION, production: REMOTE_MANAGED_REQUIRED}
+storage: {status: SPECIFIED}
+secrets: {values: NOT_STORED, references: REQUIRED}
+dns: {status: NOT_AVAILABLE, fabricated: false}
+tls: {production: PUBLIC_CA_REQUIRED, self_signed: NON_PRODUCTION}
+observability: {status: CONFIGURED, verified: false}
+backup: {production: mandatory, local: LOCAL_ONLY}
+security: {least_privilege: REQUIRED}
+deployment: {orchestrator: scripts/meos-deployment-orchestrator.py}
+naming: meos-<environment>-<resource>
+tags: [project=meos, managed_by=meos, owner=platform]

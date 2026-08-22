@@ -1,0 +1,109 @@
+# P400 remediation library. Commands are references only. No credentials. No invented executors.
+schema_version: "1"
+phase: P400
+values: NOT_STORED
+credentials: NOT_STORED
+second_rollback_engine: false
+canonical_rollback: scripts/meos-deployment-orchestrator.py
+canonical_control: scripts/meos-control-plane.py
+g26_ready: false
+classes_supported:
+  ROLLBACK: {engine: P396, status: CONFIGURED}
+  REDEPLOY: {engine: P396, status: LOCKED}
+  CONFIGURATION_REPAIR: {engine: P398, status: PLAN_ONLY}
+  CERTIFICATE_RENEWAL: {engine: NOT_AVAILABLE, status: NOT_AVAILABLE}
+  NETWORK_REPAIR: {engine: P393, status: PLAN_ONLY}
+  DATABASE_RECONNECT: {engine: P393, status: LOCAL_ONLY}
+  BACKUP_RETRY: {engine: P388, status: CONFIGURED}
+  RESTORE: {engine: P388, status: AUTHORIZATION_REQUIRED}
+  FAILOVER: {engine: P399, status: PRODUCTION_LOCKED}
+  FAILBACK: {engine: P399, status: PRODUCTION_LOCKED}
+classes_not_implemented:
+  RESTART: no_runtime_restart_engine
+  RESCALE: no_second_scaling_engine
+  CACHE_REBUILD: no_cache_rebuild_engine
+remediations:
+  REM-ROLLBACK:
+    REMEDIATION_ID: REM-ROLLBACK
+    NAME: rollback_release
+    DESCRIPTION: Roll back through P396 existing rollback. Not a second engine.
+    TARGET: DEPLOYMENT
+    PRECONDITIONS: [approved_previous_digest, environment_known]
+    RISK: HIGH
+    POLICY: REQUIRES_APPROVAL
+    COMMAND: scripts/meos-deployment-orchestrator.py rollback
+    EXPECTED_RESULT: ROLLED_BACK_OR_LOCKED
+    VERIFICATION: [health, readiness, digest]
+    ROLLBACK: none
+  REM-REDEPLOY:
+    REMEDIATION_ID: REM-REDEPLOY
+    NAME: redeploy_approved_release
+    DESCRIPTION: Redeploy only an approved immutable release through P396.
+    TARGET: DEPLOYMENT
+    PRECONDITIONS: [immutable_digest, environment_validated]
+    RISK: HIGH
+    POLICY: REQUIRES_APPROVAL
+    COMMAND: scripts/meos-deployment-orchestrator.py deploy
+    EXPECTED_RESULT: LOCKED_WITHOUT_GOVERNANCE
+    VERIFICATION: [digest, health]
+    ROLLBACK: REM-ROLLBACK
+  REM-BACKUP-RETRY:
+    REMEDIATION_ID: REM-BACKUP-RETRY
+    NAME: retry_backup
+    DESCRIPTION: Retry backup check through existing backup manager.
+    TARGET: BACKUP
+    PRECONDITIONS: [backup_script_present]
+    RISK: LOW
+    POLICY: ALLOW_NON_PRODUCTION
+    COMMAND: scripts/meos-backup-manager.py
+    EXPECTED_RESULT: CONFIGURED
+    VERIFICATION: [backup_id_not_invented]
+    ROLLBACK: none
+  REM-RESTORE:
+    REMEDIATION_ID: REM-RESTORE
+    NAME: restore_database
+    DESCRIPTION: Restore requires authorization. Production restore stays locked.
+    TARGET: DATABASE
+    PRECONDITIONS: [backup_verified, target_known]
+    RISK: CRITICAL
+    POLICY: PRODUCTION_LOCKED
+    COMMAND: scripts/meos-postgres-restore-drill.sh
+    EXPECTED_RESULT: AUTHORIZATION_REQUIRED
+    VERIFICATION: [integrity, tenant_isolation]
+    ROLLBACK: none
+  REM-DRIFT-PLAN:
+    REMEDIATION_ID: REM-DRIFT-PLAN
+    NAME: plan_configuration_repair
+    DESCRIPTION: Report and plan only. Do not overwrite unknown production state.
+    TARGET: CONFIGURATION
+    PRECONDITIONS: [expected_and_actual]
+    RISK: HIGH
+    POLICY: REPORT_AND_PLAN
+    COMMAND: scripts/meos-environment-factory.py drift
+    EXPECTED_RESULT: PLAN_ONLY
+    VERIFICATION: [drift_status]
+    ROLLBACK: none
+  REM-FAILOVER:
+    REMEDIATION_ID: REM-FAILOVER
+    NAME: disaster_recovery_failover
+    DESCRIPTION: Failover plan only. Never automatic production failover.
+    TARGET: DISASTER_RECOVERY
+    PRECONDITIONS: [dr_environment, backup_source, approval]
+    RISK: CRITICAL
+    POLICY: PRODUCTION_LOCKED
+    COMMAND: scripts/meos-control-plane.py plan
+    EXPECTED_RESULT: FAILOVER_PLAN
+    VERIFICATION: [NOT_TESTED]
+    ROLLBACK: REM-FAILBACK
+  REM-FAILBACK:
+    REMEDIATION_ID: REM-FAILBACK
+    NAME: disaster_recovery_failback
+    DESCRIPTION: Failback plan only.
+    TARGET: DISASTER_RECOVERY
+    PRECONDITIONS: [failover_verified, approval]
+    RISK: CRITICAL
+    POLICY: PRODUCTION_LOCKED
+    COMMAND: scripts/meos-control-plane.py plan
+    EXPECTED_RESULT: FAILBACK_PLAN
+    VERIFICATION: [NOT_TESTED]
+    ROLLBACK: none

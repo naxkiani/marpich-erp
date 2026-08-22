@@ -1,7 +1,9 @@
 version: "1.0"
-generated: "2026-08-17"
+generated: "2026-08-22"
 overall_status: NOT_READY
 wave: "02"
+# nav_groups items are shell APPLICATION_NAV ids. When a nav id differs from
+# the application id, list it on the app as nav_ids. Do not invent ACTIVE apps.
 applications:
   - id: identity
     name: Identity & Access
@@ -11,6 +13,7 @@ applications:
     frontend: true
     backend: true
     routes: ["/login", "/account/security", "/account/mfa", "/account/passkeys", "/account/change-password"]
+    nav_ids: [security]
     api_prefix: /api/v1/auth
     score: 78
   - id: authorization
@@ -30,7 +33,20 @@ applications:
     frontend: true
     backend: true
     routes: ["/", "/modules"]
+    nav_ids: [dashboard, modules]
     score: 75
+  - id: launch_center
+    name: MEOS Universal Launch Center
+    domain: platform
+    status: IMPLEMENTED
+    wave: 1
+    frontend: true
+    backend: true
+    routes: ["/enterprise/launch-center"]
+    nav_ids: [launch-center]
+    api_prefix: /api/v1/launch-center
+    score: 55
+    notes: P395 control-plane UI. Not GO-LIVE. Not ACTIVE.
   - id: notifications
     name: Notifications
     domain: platform
@@ -71,6 +87,17 @@ applications:
     routes: ["/enterprise/workflows"]
     api_prefix: /api/v1/workflow
     score: 68
+  - id: policy
+    name: Policy Engine
+    domain: platform
+    status: IMPLEMENTED
+    wave: 4
+    frontend: true
+    backend: true
+    routes: ["/enterprise/policies"]
+    api_prefix: /api/v1/policies
+    score: 62
+    notes: Wave 04 policy desk — evaluate/simulate exist; not ACTIVE
   - id: ai
     name: AI Platform
     domain: platform
@@ -279,6 +306,7 @@ applications:
     frontend: true
     backend: true
     routes: ["/enterprise/federation"]
+    nav_ids: [federation]
     score: 62
   - id: plugins
     name: Plugin Marketplace
@@ -297,6 +325,7 @@ applications:
     frontend: true
     backend: true
     routes: ["/enterprise/observability"]
+    nav_ids: [observability]
     score: 62
   - id: enterprise_scheduler
     name: Enterprise Scheduler
@@ -306,6 +335,7 @@ applications:
     frontend: true
     backend: true
     routes: ["/enterprise/scheduler"]
+    nav_ids: [scheduler]
     score: 60
   - id: enterprise_connector_framework
     name: Connector Framework
@@ -315,6 +345,7 @@ applications:
     frontend: true
     backend: true
     routes: ["/enterprise/connector-framework"]
+    nav_ids: [connectors]
     score: 60
   - id: enterprise_integration_studio
     name: Integration Studio
@@ -324,6 +355,7 @@ applications:
     frontend: true
     backend: true
     routes: ["/enterprise/integration-studio"]
+    nav_ids: [integration-studio]
     score: 60
   - id: construction
     name: Construction
@@ -433,22 +465,49 @@ applications:
     backend: false
     score: 10
     notes: empty industry scaffold — coming_soon
+  - id: smart_infrastructure_intelligence
+    name: Smart Infrastructure Intelligence
+    domain: platform
+    status: IMPLEMENTED
+    wave: 4
+    frontend: false
+    backend: true
+    api_prefix: /api/v1/smart-infrastructure-intelligence
+    score: 58
+    notes: >
+      P256 intelligence slice — memory SoR, flag default DISABLED, autonomy L0.
+      Not a second twin/CMMS/IoT/GIS/workflow/AI engine. Not ACTIVE.
 nav_groups:
   - id: home
     label: Home
-    items: [core_platform]
-  - id: applications
-    label: Applications
-    items: [hospital, clinic, pharmacy, laboratory, university, banking, documents, messenger]
+    items: [dashboard, modules]
+  - id: healthcare
+    label: Healthcare
+    items: [hospital, clinic, pharmacy, laboratory]
+  - id: education
+    label: Education
+    items: [university]
+  - id: commerce
+    label: Commerce & Finance
+    items: [banking, crm, sales, inventory, accounting, procurement]
+  - id: workforce
+    label: Workforce
+    items: [human_resources, payroll, tax]
+  - id: collaboration
+    label: Collaboration
+    items: [documents, messenger]
   - id: platform
     label: Platform
-    items: [notifications, audit, workflow, search, ai]
+    items: [notifications, audit, workflow, policy]
   - id: security
     label: Security
-    items: [identity, identity_federation]
+    items: [federation]
   - id: administration
     label: Administration
-    items: [plugins, enterprise_observability, enterprise_scheduler, enterprise_connector_framework, enterprise_integration_studio]
+    items: [plugins, connectors, observability, scheduler, integration-studio, launch-center]
+  - id: account
+    label: Account
+    items: [security]
 verification:
   wave01_shell_auth: verified
   wave01_workflow_ui: verified
@@ -484,6 +543,7 @@ verification:
   p3_router_package_contracts: verified
   p3_missing_router_baseline: verified
   registry_nav_ids_reconciled: verified
+  registry_shell_nav_sync: verified
   empty_scaffolds_in_yaml: verified
   postgres_outbox_e2e_test: verified
   p313_postgres_5433_live: verified
@@ -515,6 +575,11 @@ verification:
     12 empty industry scaffolds remain coming_soon / deferred — no catalog inflation.
     P3: missing ROUTER/SERVICE module baseline + CI fail on growth
     (missing_router_packages_baseline.json / meos-p3-router-contracts.yml).
+    2026-08-22: nav_groups match frontend APPLICATION_NAV (aliases via nav_ids;
+    policy added IMPLEMENTED — Wave 04 desk, not ACTIVE).
+    P256 smart_infrastructure_intelligence added IMPLEMENTED (API+events+tests,
+    flag default DISABLED, L0). Search/AI remain shell surfaces, not sidebar apps.
+    Count 49 applications, 0 ACTIVE.
     P313 (2026-08-17): live Postgres :5433 migrations 000–055, local backup+restore,
     outbox E2E executed, Wave01/Q2C/healthcare loops PASS — still NOT_READY /
     NOT_CERTIFIED (offsite backup BLOCKED; no ACTIVE promotions).

@@ -1,0 +1,38 @@
+# P395/P396 Launch Center API contract. Overlay on Core Platform. No secrets.
+schema_version: "1"
+phase: P400
+prefix: /api/v1/launch-center
+auth: required
+tenant: required
+second_api: false
+orchestrator: scripts/meos-deployment-orchestrator.py
+control_plane: scripts/meos-control-plane.py
+operations:
+  GET /status: {authz: authenticated, mutates: false}
+  GET /control-plane: {authz: authenticated, mutates: false}
+  GET /resources: {authz: authenticated, mutates: false}
+  GET /graph: {authz: authenticated, mutates: false}
+  GET /providers: {authz: authenticated, mutates: false}
+  GET /environments: {authz: authenticated, mutates: false}
+  GET /releases: {authz: authenticated, mutates: false}
+  GET /jobs: {authz: authenticated, mutates: false}
+  GET /drift: {authz: authenticated, mutates: false}
+  GET /security: {authz: authenticated, mutates: false}
+  GET /cost: {authz: authenticated, mutates: false}
+  GET /capacity: {authz: authenticated, mutates: false}
+  GET /backups: {authz: authenticated, mutates: false}
+  GET /restores: {authz: authenticated, mutates: false}
+  GET /autonomous-operations: {authz: authenticated, mutates: false}
+  POST /plan: {authz: authenticated, mutates: false, result: VALIDATION_ONLY}
+  POST /validate: {authz: authenticated, mutates: false, result: VALIDATION_ONLY}
+  POST /provision: {authz: authenticated, mutates: false, result: LOCKED}
+  POST /deployments/plan: {authz: authenticated, mutates: false, result: VALIDATION_ONLY}
+  POST /deployments/validate: {authz: authenticated, mutates: false, result: VALIDATION_ONLY}
+  POST /deployments/approve: {authz: authenticated, mutates: false, result: NOT_APPROVED}
+  POST /deployments: {authz: authenticated, mutates: false, result: LOCKED}
+  POST /deployments/verify: {authz: authenticated, mutates: false, result: LOCAL_ONLY}
+  POST /deployments/rollback: {authz: authenticated, mutates: false, result: LOCKED}
+  GET /deployments/history: {authz: authenticated, mutates: false}
+production_lock: ACTIVE
+g26_ready: false
+values: NOT_STORED
