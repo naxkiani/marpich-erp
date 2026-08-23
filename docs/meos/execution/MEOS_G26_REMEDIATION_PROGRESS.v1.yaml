@@ -1,0 +1,131 @@
+# MEOS G26 Remediation Progress — Targeted Remediation Phase 1
+# One gate at a time. No fake PASS. Updated after each attempt.
+schema_version: "1.0"
+updated_at: "2026-08-23T07:50:00Z"
+baseline: docs/meos/execution/MEOS_G26_REMEDIATION_BASELINE.v1.yaml
+validator: scripts/meos-ext-g26-readiness.py
+remediation_order_applied:
+  - G26-05  # SOURCE/RELEASE INTEGRITY first per instruction §16
+  - then STOP: remaining gates EXTERNAL_DEPENDENCY / infra missing
+
+absolute_stop:
+  triggered: true
+  reasons:
+    - CREDENTIAL_MISSING
+    - PRODUCTION_INFRASTRUCTURE_MISSING
+    - DATABASE_TARGET_UNKNOWN
+    - RELEASE_UNKNOWN  # dirty + no digest
+    - ROLLBACK_UNKNOWN
+  fake_actions_forbidden_and_not_done:
+    - invent_kubeconfig
+    - invent_credentials
+    - set_MEOS_PUBLIC_CA_TLS_without_cert
+    - set_MEOS_SECRET_MANAGER_AVAILABLE_without_SM
+    - invent_image_digest
+    - invent_deployed_commit
+
+progress:
+  G26-01:
+    before: BLOCKED
+    action: "Probed KUBECONFIG, ~/.kube/config, cloud CLI dirs — all absent"
+    after: BLOCKED
+    evidence: "environment_probe kube_absent; EXT-G26-D01/D02"
+    status: BLOCKED_EXTERNAL_DEPENDENCY
+    root_cause: NO_PRODUCTION_CLUSTER
+    remediable_here: false
+
+  G26-02:
+    before: BLOCKED
+    action: "Probed MEOS_PRODUCTION_PGHOST/PGHOST — default localhost:5433 LOCAL class"
+    after: BLOCKED
+    evidence: "validator class=LOCAL port=5433"
+    status: BLOCKED_EXTERNAL_DEPENDENCY
+    root_cause: NO_MANAGED_PRODUCTION_POSTGRES
+    remediable_here: false
+
+  G26-03:
+    before: BLOCKED
+    action: "Probed MEOS_PUBLIC_CA_TLS / MEOS_PRODUCTION_DNS — unset; no fake cert"
+    after: BLOCKED
+    evidence: "public_ca false; dns empty"
+    status: BLOCKED_EXTERNAL_DEPENDENCY
+    root_cause: NO_PUBLIC_CA_TLS
+    remediable_here: false
+
+  G26-04:
+    before: BLOCKED
+    action: "Probed MEOS_SECRET_MANAGER_AVAILABLE / backend — unset/env; no fake SM"
+    after: BLOCKED
+    evidence: "secret_mgr false"
+    status: BLOCKED_EXTERNAL_DEPENDENCY
+    root_cause: NO_PRODUCTION_SECRET_MANAGER
+    remediable_here: false
+
+  G26-05:
+    before: FAIL
+    action: >
+      Classified dirty tree (118 M / 380 ??). Root cause = accumulated uncommitted
+      P401–P410 + prior work, not a single missing flag. Did NOT delete UNKNOWN.
+      Did NOT mass-commit (requires Human_release_owner authorization).
+      Docker down ⇒ digest path also unavailable even if tree cleaned.
+    after: FAIL
+    evidence: "DIRTY_COUNT=498; ed1a037a-dirty; docker_down"
+    status: OPEN
+    root_cause: DIRTY_WORKTREE_PLUS_NO_CI_DIGEST
+    remediable_here: PARTIAL_HUMAN_TRIAGE_REQUIRED
+    closed: false
+
+  G26-06:
+    before: BLOCKED
+    action: "CI workflow file exists; PASS needs clean tree + digest + cluster — not set"
+    after: BLOCKED
+    evidence: "identity-federation-enterprise.yml present; image_digest empty; docker_down"
+    status: BLOCKED
+    root_cause: NO_VERIFIED_CI_DIGEST_AND_DEPLOY_CREDS
+    remediable_here: false
+    dependency: [G26-05, G26-01]
+
+  G26-07:
+    before: NOT_AVAILABLE
+    action: "MEOS_PRODUCTION_DNS unset; no invented domain"
+    after: NOT_AVAILABLE
+    evidence: "production_dns empty"
+    status: BLOCKED_EXTERNAL_DEPENDENCY
+    root_cause: NO_PRODUCTION_DNS_HOSTNAME
+    remediable_here: false
+
+  G26-08:
+    before: BLOCKED
+    action: "No deploy identity; health default localhost — not production"
+    after: BLOCKED
+    evidence: "deployed_commit/digest unset; health_is_local"
+    status: BLOCKED
+    root_cause: NO_PRODUCTION_RUNTIME
+    remediable_here: false
+    dependency: [G26-01, G26-05, G26-06, G26-09]
+
+  G26-09:
+    before: NOT_AVAILABLE
+    action: "No matching deployed commit/digest to clean SHA"
+    after: NOT_AVAILABLE
+    evidence: "identity_ok=false"
+    status: BLOCKED
+    root_cause: NO_IMMUTABLE_DEPLOYMENT_IDENTITY
+    remediable_here: false
+    dependency: [G26-05, G26-06]
+
+  G26-10:
+    before: BLOCKED
+    action: "Helm+CI configured; MEOS_ROLLBACK_EXERCISED not set; no fake exercise"
+    after: BLOCKED
+    evidence: "rollback_exercised=false; needs two prod revisions"
+    status: BLOCKED
+    root_cause: NO_EXERCISED_PRODUCTION_ROLLBACK
+    remediable_here: false
+    dependency: [G26-08]
+
+recheck_after_first_attempt:
+  command: "python3 scripts/meos-ext-g26-readiness.py"
+  timestamp: "2026-08-23T07:50:00Z"
+  G26_READY: false
+  note: "Unchanged from baseline — no gate closed; absolute stop honored"

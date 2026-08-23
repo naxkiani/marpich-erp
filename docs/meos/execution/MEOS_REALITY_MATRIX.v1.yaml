@@ -1,0 +1,36 @@
+# MEOS Reality Matrix — post G26 Targeted Remediation attempt 1
+schema_version: "1.10"
+phase: G26_TARGETED_REMEDIATION
+architecture:
+  baseline: "P001-P400"
+  frozen: true
+  architecture_changed: false
+project:
+  status: G26_REMEDIATION_STOPPED_EXTERNAL
+  commit: ed1a037a19ce237a3ea651b6348d0fd9a08c5609
+  describe: ed1a037a-dirty
+  dirty_worktree: true
+  dirty_path_count: 498
+  branch: feature/dashboard-home-complete
+p410_status: COMPLETED_CONSOLIDATION
+g26_remediation:
+  attempt: 1
+  closed_blockers: 0
+  absolute_stop: true
+  first_blocker: G26-05
+  first_blocker_closed: false
+g26:
+  G26_READY: false
+  G26_STATUS: BLOCKED
+  G26_CLASSIFICATION: G26_BLOCKED_INFRASTRUCTURE
+  P313_STATUS: NOT_READY
+  P313_READY: false
+  production_traffic: NOT_ENABLED
+  go_live_authorization: NOT_APPROVED
+decision_gate: C_G26_BLOCKED_BY_EXTERNAL_INFRASTRUCTURE
+path: CONTINUE_TARGETED_REMEDIATION_WHEN_CREDENTIALS_AVAILABLE
+artifacts:
+  - docs/meos/execution/MEOS_G26_REMEDIATION_BASELINE.v1.yaml
+  - docs/meos/execution/MEOS_G26_GATE_DOSSIERS.v1.yaml
+  - docs/meos/execution/MEOS_G26_REMEDIATION_PROGRESS.v1.yaml
+  - docs/meos/execution/MEOS_G26_TARGETED_REMEDIATION_FINAL_REPORT.md

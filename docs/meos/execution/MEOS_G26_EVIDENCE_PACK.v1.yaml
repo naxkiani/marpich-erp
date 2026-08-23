@@ -1,0 +1,248 @@
+# MEOS G26 Evidence Pack — consolidated through P410
+schema_version: "1.2"
+generated_at: "2026-08-23T07:38:00Z"
+p408_status: BLOCKED_BY_P407
+p409_status: BLOCKED
+p410_status: COMPLETED_CONSOLIDATION
+activation_executed: false
+formal_execution_executed: false
+g26_ready: false
+g26_status: BLOCKED
+g26_classification: G26_BLOCKED_INFRASTRUCTURE
+final_evidence: docs/meos/execution/MEOS_G26_FINAL_EVIDENCE.v1.yaml
+blocker_matrix: docs/meos/execution/MEOS_G26_BLOCKER_MATRIX.v1.yaml
+validator: scripts/meos-ext-g26-readiness.py
+baseline_command: "python3 scripts/meos-ext-g26-readiness.py"
+baseline_timestamp: "2026-08-23T08:30:00Z"
+p409_recheck_command: "python3 scripts/meos-ext-g26-readiness.py"
+p409_recheck_timestamp: "2026-08-23T08:35:00Z"
+p409_recheck_result: "G26_READY=FALSE unchanged"
+p410_recheck_command: "python3 scripts/meos-ext-g26-readiness.py"
+p410_recheck_timestamp: "2026-08-23T07:35:00Z"
+p410_recheck_result: "G26_READY=FALSE unchanged; decision F_G26_NOT_PASSED"
+
+g26_evidence:
+  release:
+    commit: ed1a037a19ce237a3ea651b6348d0fd9a08c5609
+    describe: ed1a037a-dirty
+    artifact: NOT_VERIFIED
+    image: meos/backend:p406-rc
+    digest: NOT_AVAILABLE
+    worktree_short_count: 490
+
+  blockers:
+    - id: BLK-G26-01
+      gate: G26-01
+      category: INFRASTRUCTURE
+      description: "No authorized production cluster/account"
+      impact: "Cannot deploy production runtime"
+      required_action: "Obtain AUTHORIZED_PROVIDER + account + kubeconfig"
+      evidence_required: "Live kubeconfig for non-local cluster"
+      owner: NOT_AVAILABLE
+      status: OPEN
+      dependency: null
+      stop_condition: "No credential → PROVISIONING=NOT_EXECUTED"
+    - id: BLK-G26-02
+      gate: G26-02
+      category: INFRASTRUCTURE
+      description: "No managed production PostgreSQL"
+      impact: "Local :5433 cannot satisfy G26"
+      required_action: "Provision managed Postgres non-localhost"
+      evidence_required: "MEOS_PRODUCTION_PGHOST not local; port not 5433/5444"
+      owner: NOT_AVAILABLE
+      status: OPEN
+      dependency: BLK-G26-04
+      stop_condition: "No credential → DO NOT CONNECT/MIGRATE/WRITE"
+    - id: BLK-G26-03
+      gate: G26-03
+      category: INFRASTRUCTURE
+      description: "No public CA TLS"
+      impact: "HTTPS production evidence missing"
+      required_action: "Issue public CA cert for production hostname"
+      evidence_required: "MEOS_PUBLIC_CA_TLS=1 after real issuance"
+      owner: NOT_AVAILABLE
+      status: OPEN
+      dependency: BLK-G26-07
+      stop_condition: "Self-signed ≠ production evidence"
+    - id: BLK-G26-04
+      gate: G26-04
+      category: SECURITY
+      description: "No production secret manager"
+      impact: "Cannot materialize production secrets safely"
+      required_action: "Provision secret manager; never commit values"
+      evidence_required: "Secret manager available flag without printing values"
+      owner: NOT_AVAILABLE
+      status: OPEN
+      dependency: null
+      stop_condition: "Secrets must not enter git/logs/reports"
+    - id: BLK-G26-05
+      gate: G26-05
+      category: EVIDENCE
+      description: "Dirty worktree (~490 paths); describe dirty"
+      impact: "Clean release identity FAIL"
+      required_action: "Human triage commit/stash — agents must not reset --hard"
+      evidence_required: "git status --short empty; describe without dirty"
+      owner: Human_release_owner
+      status: OPEN
+      dependency: null
+      stop_condition: "Do not delete files solely to greenwash gate"
+    - id: BLK-G26-06
+      gate: G26-06
+      category: INFRASTRUCTURE
+      description: "CI/registry deploy not verified; Docker daemon down"
+      impact: "No authenticated push/digest"
+      required_action: "Start Docker; build backend context; CI registry auth"
+      evidence_required: "Recorded image digest from CI/registry"
+      owner: NOT_AVAILABLE
+      status: OPEN
+      dependency: BLK-G26-05
+      stop_condition: "YAML alone = CONFIGURED_NOT_VERIFIED"
+    - id: BLK-G26-07
+      gate: G26-07
+      category: INFRASTRUCTURE
+      description: "No public production DNS hostname"
+      impact: "Cannot prove non-local production DNS"
+      required_action: "Define PRODUCTION_DOMAIN + DNS records that resolve"
+      evidence_required: "Resolving non-localhost hostname"
+      owner: NOT_AVAILABLE
+      status: OPEN
+      dependency: null
+      stop_condition: "localhost evidence rejected"
+    - id: BLK-G26-08
+      gate: G26-08
+      category: INFRASTRUCTURE
+      description: "No production runtime identity"
+      impact: "Local uvicorn ≠ production"
+      required_action: "Deploy verified artifact to production cluster"
+      evidence_required: "Production health/ready not on localhost class"
+      owner: NOT_AVAILABLE
+      status: OPEN
+      dependency: "BLK-G26-01,BLK-G26-06,BLK-G26-09"
+      stop_condition: "No fake runtime"
+    - id: BLK-G26-09
+      gate: G26-09
+      category: EVIDENCE
+      description: "Immutable digest matching SOURCE_COMMIT missing"
+      impact: "Cannot prove artifact provenance"
+      required_action: "Build→push→record digest linked to commit"
+      evidence_required: "Validator-required digest evidence (from repo scripts)"
+      owner: NOT_AVAILABLE
+      status: OPEN
+      dependency: BLK-G26-06
+      stop_condition: "Never invent digest"
+    - id: BLK-G26-10
+      gate: G26-10
+      category: INFRASTRUCTURE
+      description: "Production rollback not exercised"
+      impact: "Rollback documented only"
+      required_action: "After two revisions, exercise N→N+1→N in authorized env"
+      evidence_required: "Rollback exercise report"
+      owner: NOT_AVAILABLE
+      status: OPEN
+      dependency: BLK-G26-08
+      stop_condition: "Script≠verified"
+    - id: BLK-SW-FE-BUILD
+      gate: packaging
+      category: SOFTWARE
+      description: "Next.js production build failed with kill EACCES on host"
+      impact: "Frontend static artifact incomplete"
+      required_action: "Rebuild on CI/agent with sufficient permissions"
+      evidence_required: "next build exit 0 + artifact"
+      owner: CI_or_release_engineer
+      status: OPEN
+      dependency: null
+      stop_condition: "Host EACCES is environment not fake PASS"
+
+  gates:
+    G26-01:
+      status: BLOCKED
+      evidence: "validator; no kube production access"
+      verified_at: "2026-08-23T08:35:00Z"
+      source: scripts/meos-ext-g26-readiness.py
+    G26-02:
+      status: BLOCKED
+      evidence: "workstation Postgres class :5433 NON_PRODUCTION"
+      verified_at: "2026-08-23T08:35:00Z"
+      source: scripts/meos-ext-g26-readiness.py
+    G26-03:
+      status: BLOCKED
+      evidence: "no public CA TLS"
+      verified_at: "2026-08-23T08:35:00Z"
+      source: scripts/meos-ext-g26-readiness.py
+    G26-04:
+      status: BLOCKED
+      evidence: "no secret manager"
+      verified_at: "2026-08-23T08:35:00Z"
+      source: scripts/meos-ext-g26-readiness.py
+    G26-05:
+      status: FAIL
+      evidence: "git status short≈493; ed1a037a-dirty"
+      verified_at: "2026-08-23T08:35:00Z"
+      source: "git status --short; git describe --always --dirty"
+    G26-06:
+      status: BLOCKED
+      evidence: "DOCKER_DOWN; no registry digest"
+      verified_at: "2026-08-23T08:35:00Z"
+      source: scripts/meos-ext-g26-readiness.py
+    G26-07:
+      status: NOT_AVAILABLE
+      evidence: "PRODUCTION_DOMAIN not defined"
+      verified_at: "2026-08-23T08:35:00Z"
+      source: scripts/meos-ext-g26-readiness.py
+    G26-08:
+      status: BLOCKED
+      evidence: "no production runtime"
+      verified_at: "2026-08-23T08:35:00Z"
+      source: scripts/meos-ext-g26-readiness.py
+    G26-09:
+      status: NOT_AVAILABLE
+      evidence: "IMAGE_DIGEST=NOT_AVAILABLE"
+      verified_at: "2026-08-23T08:35:00Z"
+      source: MEOS_RELEASE_MANIFEST.v1.yaml
+    G26-10:
+      status: BLOCKED
+      evidence: "ROLLBACK_TESTED=FALSE"
+      verified_at: "2026-08-23T08:35:00Z"
+      source: scripts/meos-ext-g26-readiness.py
+
+  before_after:
+    - gate: G26-01
+      before: BLOCKED
+      after: BLOCKED
+      evidence: "no change — activation not executed"
+    - gate: G26-02
+      before: BLOCKED
+      after: BLOCKED
+      evidence: "no change"
+    - gate: G26-03
+      before: BLOCKED
+      after: BLOCKED
+      evidence: "no change"
+    - gate: G26-04
+      before: BLOCKED
+      after: BLOCKED
+      evidence: "no change"
+    - gate: G26-05
+      before: FAIL
+      after: FAIL
+      evidence: "no change"
+    - gate: G26-06
+      before: BLOCKED
+      after: BLOCKED
+      evidence: "no change"
+    - gate: G26-07
+      before: NOT_AVAILABLE
+      after: NOT_AVAILABLE
+      evidence: "no change"
+    - gate: G26-08
+      before: BLOCKED
+      after: BLOCKED
+      evidence: "no change"
+    - gate: G26-09
+      before: NOT_AVAILABLE
+      after: NOT_AVAILABLE
+      evidence: "no change"
+    - gate: G26-10
+      before: BLOCKED
+      after: BLOCKED
+      evidence: "no change"

@@ -1,0 +1,199 @@
+# MEOS G26 Gate Dossiers — Targeted Remediation (extractor + RCA)
+# Source hierarchy: validator → governance → P410 evidence → runtime → config → docs → prompts
+schema_version: "1.0"
+generated_at: "2026-08-23T07:50:00Z"
+validator_source: scripts/meos-ext-g26-readiness.py
+
+gates:
+  - GATE_ID: G26-01
+    CURRENT_STATUS: BLOCKED
+    FAILURE_REASON: "KUBECONFIG missing; ~/.kube/config absent"
+    SOURCE_FILE: scripts/meos-ext-g26-readiness.py
+    SOURCE_LINE: "106-110"
+    VALIDATOR_CONDITION: "cluster_present = (KUBECONFIG file) OR (~/.kube/config)"
+    EXPECTED_STATE: "Authorized production kubeconfig present"
+    ACTUAL_STATE: "No kubeconfig; no cloud account credentials on host"
+    SYMPTOM: "KUBECONFIG missing"
+    ROOT_CAUSE: "NO_PRODUCTION_CLUSTER (no authorized hosting account / cluster provisioned)"
+    CATEGORY: EXTERNAL_DEPENDENCY
+    SEVERITY: CRITICAL
+    REMEDIATION: "Provision real provider account + cluster; export real KUBECONFIG — DO NOT invent"
+    REQUIRED_EVIDENCE: "Live kubeconfig path for non-local cluster"
+    DEPENDENCY: null
+    STATUS: OPEN
+
+  - GATE_ID: G26-02
+    CURRENT_STATUS: BLOCKED
+    FAILURE_REASON: "class=LOCAL port=5433"
+    SOURCE_FILE: scripts/meos-ext-g26-readiness.py
+    SOURCE_LINE: "73-116"
+    VALIDATOR_CONDITION: "MEOS_PRODUCTION_PGHOST/PGHOST not localhost; port not in {5433,5444,8000,8080}"
+    EXPECTED_STATE: "Managed PostgreSQL non-local endpoint"
+    ACTUAL_STATE: "Default 127.0.0.1:5433 workstation class"
+    SYMPTOM: "LOCAL postgres classification"
+    ROOT_CAUSE: "NO_MANAGED_PRODUCTION_POSTGRES"
+    CATEGORY: EXTERNAL_DEPENDENCY
+    SEVERITY: CRITICAL
+    REMEDIATION: "Provision managed Postgres; set MEOS_PRODUCTION_PGHOST to real host — no localhost"
+    REQUIRED_EVIDENCE: "Non-local host+port; TLS/connect without printing password"
+    DEPENDENCY: G26-04
+    STATUS: OPEN
+
+  - GATE_ID: G26-03
+    CURRENT_STATUS: BLOCKED
+    FAILURE_REASON: "Public CA not evidenced"
+    SOURCE_FILE: scripts/meos-ext-g26-readiness.py
+    SOURCE_LINE: "78,124-131"
+    VALIDATOR_CONDITION: "MEOS_PUBLIC_CA_TLS=1 AND MEOS_PRODUCTION_DNS non-local"
+    EXPECTED_STATE: "Public-CA TLS for production hostname"
+    ACTUAL_STATE: "Flags unset; compose self-signed rejected by governance"
+    SYMPTOM: "MEOS_PUBLIC_CA_TLS unset"
+    ROOT_CAUSE: "NO_PUBLIC_CA_TLS (no issued production certificate)"
+    CATEGORY: EXTERNAL_DEPENDENCY
+    SEVERITY: CRITICAL
+    REMEDIATION: "Issue real public-CA cert after DNS exists; set flag only after issuance"
+    REQUIRED_EVIDENCE: "Issuer + hostname + expiry (no private key in docs)"
+    DEPENDENCY: G26-07
+    STATUS: OPEN
+
+  - GATE_ID: G26-04
+    CURRENT_STATUS: BLOCKED
+    FAILURE_REASON: "Secret manager unset or env backend"
+    SOURCE_FILE: scripts/meos-ext-g26-readiness.py
+    SOURCE_LINE: "79-144"
+    VALIDATOR_CONDITION: "MEOS_SECRET_MANAGER_AVAILABLE=1 AND backend not in {env,dotenv,file}"
+    EXPECTED_STATE: "Production secret manager"
+    ACTUAL_STATE: "env/.env class only"
+    SYMPTOM: "MEOS_SECRET_MANAGER_AVAILABLE unset"
+    ROOT_CAUSE: "NO_PRODUCTION_SECRET_MANAGER"
+    CATEGORY: EXTERNAL_DEPENDENCY
+    SEVERITY: CRITICAL
+    REMEDIATION: "Provision AWS SM / GCP SM / Vault etc.; never commit values"
+    REQUIRED_EVIDENCE: "SM available flag + backend class without secret values"
+    DEPENDENCY: null
+    STATUS: OPEN
+
+  - GATE_ID: G26-05
+    CURRENT_STATUS: FAIL
+    FAILURE_REASON: "Dirty worktree; describe dirty"
+    SOURCE_FILE: scripts/meos-ext-g26-readiness.py
+    SOURCE_LINE: "68-70,146-163"
+    VALIDATOR_CONDITION: "git status --short empty AND describe without dirty AND later MEOS_IMAGE_DIGEST set"
+    EXPECTED_STATE: "Clean SHA + CI image digest"
+    ACTUAL_STATE: "498 dirty paths; docker_down; digest unset"
+    SYMPTOM: "ed1a037a-dirty"
+    ROOT_CAUSE: "DIRTY_WORKTREE from accumulated uncommitted work (P401–P410+) AND no CI digest path"
+    CATEGORY: RELEASE
+    SEVERITY: CRITICAL
+    REMEDIATION: >
+      Human triage: classify REQUIRED/GENERATED/USER/TEMPORARY/UNKNOWN;
+      commit only authorized release set; then CI build digest.
+      Agents must not reset --hard or delete UNKNOWN to greenwash.
+    REQUIRED_EVIDENCE: "Empty git status --short; describe clean; MEOS_IMAGE_DIGEST from registry"
+    DEPENDENCY: null
+    STATUS: OPEN
+    FIRST_ATTEMPT: "Classification only — CLOSED=false (human authorization required for commit)"
+
+  - GATE_ID: G26-06
+    CURRENT_STATUS: BLOCKED
+    FAILURE_REASON: "CI DESIGNED but digest/cluster/clean missing"
+    SOURCE_FILE: scripts/meos-ext-g26-readiness.py
+    SOURCE_LINE: "165-173"
+    VALIDATOR_CONDITION: "ci file AND image_digest AND not dirty AND cluster_present"
+    EXPECTED_STATE: "Verified CI→digest with clean tree + cluster"
+    ACTUAL_STATE: "Workflow file exists; other conditions false; docker_down"
+    SYMPTOM: "CI workflow DESIGNED"
+    ROOT_CAUSE: "NO_VERIFIED_CI_DIGEST_AND_DEPLOY_CREDS"
+    CATEGORY: CI_CD
+    SEVERITY: CRITICAL
+    REMEDIATION: "Clean tree + Docker/CI credentials + push digest + cluster"
+    REQUIRED_EVIDENCE: "Immutable digest from CI/registry linked to commit"
+    DEPENDENCY: [G26-05, G26-01]
+    STATUS: OPEN
+
+  - GATE_ID: G26-07
+    CURRENT_STATUS: NOT_AVAILABLE
+    FAILURE_REASON: "No production DNS hostname"
+    SOURCE_FILE: scripts/meos-ext-g26-readiness.py
+    SOURCE_LINE: "90,175-182"
+    VALIDATOR_CONDITION: "MEOS_PRODUCTION_DNS set and not localhost"
+    EXPECTED_STATE: "Public resolving production hostname"
+    ACTUAL_STATE: "DNS flag empty"
+    SYMPTOM: "MEOS_PRODUCTION_DNS unset"
+    ROOT_CAUSE: "NO_PRODUCTION_DNS_HOSTNAME"
+    CATEGORY: EXTERNAL_DEPENDENCY
+    SEVERITY: CRITICAL
+    REMEDIATION: "Register real domain/records; set flag to resolving hostname"
+    REQUIRED_EVIDENCE: "dig/resolve + public access"
+    DEPENDENCY: null
+    STATUS: OPEN
+
+  - GATE_ID: G26-08
+    CURRENT_STATUS: BLOCKED
+    FAILURE_REASON: "No production runtime identity"
+    SOURCE_FILE: scripts/meos-ext-g26-readiness.py
+    SOURCE_LINE: "184-195"
+    VALIDATOR_CONDITION: "MEOS_DEPLOYED_COMMIT + MEOS_DEPLOYED_DIGEST + cluster + non-local health URL"
+    EXPECTED_STATE: "Deployed production runtime"
+    ACTUAL_STATE: "Local health default; no deploy identity"
+    SYMPTOM: "local /health is not production"
+    ROOT_CAUSE: "NO_PRODUCTION_RUNTIME (depends on cluster+digest+deploy)"
+    CATEGORY: INFRASTRUCTURE
+    SEVERITY: CRITICAL
+    REMEDIATION: "Deploy verified artifact to authorized cluster; non-local health"
+    REQUIRED_EVIDENCE: "Health/ready on production URL + deploy IDs"
+    DEPENDENCY: [G26-01, G26-06, G26-09]
+    STATUS: OPEN
+
+  - GATE_ID: G26-09
+    CURRENT_STATUS: NOT_AVAILABLE
+    FAILURE_REASON: "No matching deployed commit/digest"
+    SOURCE_FILE: scripts/meos-ext-g26-readiness.py
+    SOURCE_LINE: "197-212"
+    VALIDATOR_CONDITION: "deployed_commit==HEAD AND deployed_digest==image_digest AND not dirty AND digests set"
+    EXPECTED_STATE: "Immutable deployment identity matching clean SHA"
+    ACTUAL_STATE: "All identity fields unmet"
+    SYMPTOM: "identity_ok=false"
+    ROOT_CAUSE: "NO_IMMUTABLE_DEPLOYMENT_IDENTITY"
+    CATEGORY: EVIDENCE
+    SEVERITY: CRITICAL
+    REMEDIATION: "Clean SHA → CI digest → deploy same digest; set MEOS_DEPLOYED_* to match"
+    REQUIRED_EVIDENCE: "Matching commit+digest chain"
+    DEPENDENCY: [G26-05, G26-06]
+    STATUS: OPEN
+
+  - GATE_ID: G26-10
+    CURRENT_STATUS: BLOCKED
+    FAILURE_REASON: "Rollback not exercised"
+    SOURCE_FILE: scripts/meos-ext-g26-readiness.py
+    SOURCE_LINE: "214-228"
+    VALIDATOR_CONDITION: "MEOS_ROLLBACK_EXERCISED=1 AND identity_ok AND cluster AND non-local health"
+    EXPECTED_STATE: "Exercised N→N+1→N on production identity"
+    ACTUAL_STATE: "Helm+CI configured only"
+    SYMPTOM: "Helm rollback CONFIGURED"
+    ROOT_CAUSE: "NO_EXERCISED_PRODUCTION_ROLLBACK"
+    CATEGORY: INFRASTRUCTURE
+    SEVERITY: CRITICAL
+    REMEDIATION: "After two revisions, run scripts/meos-g27-rollback.py for real"
+    REQUIRED_EVIDENCE: "Rollback exercise report + env flag after real exercise"
+    DEPENDENCY: G26-08
+    STATUS: OPEN
+
+dependency_order:
+  - G26-05
+  - G26-01
+  - G26-04
+  - G26-02
+  - G26-07
+  - G26-03
+  - G26-06
+  - G26-09
+  - G26-08
+  - G26-10
+
+first_blocker_selected: G26-05
+first_blocker_outcome: NOT_CLOSED
+stop_reason: >
+  G26-05 requires human dirty-tree triage/commit (not agent mass-commit).
+  Upstream infra gates G26-01/02/03/04/07 require real credentials/cluster absent on host.
+  Absolute stop conditions met — no fake remediation.

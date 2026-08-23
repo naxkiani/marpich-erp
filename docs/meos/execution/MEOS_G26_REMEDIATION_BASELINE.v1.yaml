@@ -1,0 +1,53 @@
+# MEOS G26 Remediation Baseline — Targeted Remediation Phase 1
+# Captured before any remediation attempt. Do not rewrite after the fact.
+schema_version: "1.0"
+captured_at: "2026-08-23T07:47:00Z"
+phase: G26_TARGETED_REMEDIATION
+source_of_truth: scripts/meos-ext-g26-readiness.py
+
+remediation_baseline:
+  timestamp: "2026-08-23T07:47:00Z"
+  repository: "/home/nax/projects/Marpich ERP"
+  commit: ed1a037a19ce237a3ea651b6348d0fd9a08c5609
+  describe: ed1a037a-dirty
+  dirty: true
+  dirty_path_count: 498
+  dirty_breakdown:
+    modified: 118
+    untracked: 380
+  environment_probe:
+    KUBECONFIG: unset
+    home_kube_config: absent
+    docker: down
+    AWS_ACCESS_KEY_ID: unset
+    GOOGLE_APPLICATION_CREDENTIALS: unset
+    aws_dir: absent
+    gcloud_dir: absent
+    MEOS_*_production_flags: unset
+  validator:
+    command: "python3 scripts/meos-ext-g26-readiness.py"
+    exit_implied: 2
+    G26_READY: false
+    G26_STATUS: BLOCKED
+    P0: 1
+    G26-01: BLOCKED
+    G26-02: BLOCKED
+    G26-03: BLOCKED
+    G26-04: BLOCKED
+    G26-05: FAIL
+    G26-06: BLOCKED
+    G26-07: NOT_AVAILABLE
+    G26-08: BLOCKED
+    G26-09: NOT_AVAILABLE
+    G26-10: BLOCKED
+  gate_evidence_snapshot:
+    G26-01: "KUBECONFIG missing; ~/.kube/config absent"
+    G26-02: "class=LOCAL port=5433 (workstation :5433/:5444 and localhost are NON_PRODUCTION)"
+    G26-03: "Public CA not evidenced; compose self-signed is not production TLS"
+    G26-04: "MEOS_SECRET_MANAGER_AVAILABLE unset or backend is env/.env"
+    G26-05: "git status --short not empty; describe=ed1a037a-dirty"
+    G26-06: "CI workflow DESIGNED"
+    G26-07: "No production DNS hostname evidenced"
+    G26-08: "PRODUCTION_RUNTIME not evidenced; local /health is not production"
+    G26-09: "No matching deployed commit/digest"
+    G26-10: "Helm rollback CONFIGURED; G27 needs two revisions after first deploy"

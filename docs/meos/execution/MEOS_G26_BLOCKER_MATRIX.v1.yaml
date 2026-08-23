@@ -1,0 +1,163 @@
+# MEOS G26 Blocker Matrix — post Targeted Remediation attempt 1
+schema_version: "1.1"
+generated_at: "2026-08-23T07:50:00Z"
+phase: G26_TARGETED_REMEDIATION
+g26_ready: false
+g26_status: BLOCKED
+g26_classification: G26_BLOCKED_INFRASTRUCTURE
+decision: C_G26_BLOCKED_BY_EXTERNAL_INFRASTRUCTURE
+p313_ready: false
+verified_commit: ed1a037a19ce237a3ea651b6348d0fd9a08c5609
+git_describe: ed1a037a-dirty
+dirty_path_count: 498
+validator: "python3 scripts/meos-ext-g26-readiness.py"
+validator_result: "G26_READY=FALSE unchanged after first remediation attempt"
+baseline: docs/meos/execution/MEOS_G26_REMEDIATION_BASELINE.v1.yaml
+dossiers: docs/meos/execution/MEOS_G26_GATE_DOSSIERS.v1.yaml
+progress: docs/meos/execution/MEOS_G26_REMEDIATION_PROGRESS.v1.yaml
+
+g26_blockers:
+  - id: BLK-G26-01
+    gate: G26-01
+    category: EXTERNAL_DEPENDENCY
+    description: "No authorized production cluster"
+    severity: CRITICAL
+    status: OPEN
+    symptom: "KUBECONFIG missing"
+    root_cause: NO_PRODUCTION_CLUSTER
+    evidence: "kube_absent; aws/gcp creds unset"
+    owner: NOT_AVAILABLE
+    dependency: null
+    next_action: "Provide AUTHORIZED_PROVIDER account + real kubeconfig"
+
+  - id: BLK-G26-02
+    gate: G26-02
+    category: EXTERNAL_DEPENDENCY
+    description: "No managed production PostgreSQL"
+    severity: CRITICAL
+    status: OPEN
+    symptom: "class=LOCAL port=5433"
+    root_cause: NO_MANAGED_PRODUCTION_POSTGRES
+    evidence: "default localhost:5433"
+    owner: NOT_AVAILABLE
+    dependency: BLK-G26-04
+    next_action: "Provision managed Postgres non-localhost"
+
+  - id: BLK-G26-03
+    gate: G26-03
+    category: EXTERNAL_DEPENDENCY
+    description: "No public-CA TLS"
+    severity: CRITICAL
+    status: OPEN
+    symptom: "MEOS_PUBLIC_CA_TLS unset"
+    root_cause: NO_PUBLIC_CA_TLS
+    evidence: "no certificate issuance"
+    owner: NOT_AVAILABLE
+    dependency: BLK-G26-07
+    next_action: "Issue public CA cert after DNS exists"
+
+  - id: BLK-G26-04
+    gate: G26-04
+    category: EXTERNAL_DEPENDENCY
+    description: "No production secret manager"
+    severity: CRITICAL
+    status: OPEN
+    symptom: "SM available flag unset / env backend"
+    root_cause: NO_PRODUCTION_SECRET_MANAGER
+    evidence: "MEOS_SECRET_MANAGER_AVAILABLE unset"
+    owner: NOT_AVAILABLE
+    dependency: null
+    next_action: "Provision real secret manager"
+
+  - id: BLK-G26-05
+    gate: G26-05
+    category: RELEASE
+    description: "Dirty worktree; no CI digest"
+    severity: CRITICAL
+    status: OPEN
+    symptom: "ed1a037a-dirty (~498 paths)"
+    root_cause: DIRTY_WORKTREE_PLUS_NO_CI_DIGEST
+    evidence: "classification done; commit not authorized; docker_down"
+    owner: Human_release_owner
+    dependency: null
+    next_action: "Human triage + authorized commit set; then CI digest"
+
+  - id: BLK-G26-06
+    gate: G26-06
+    category: CI_CD
+    description: "CI designed; digest/deploy not verified"
+    severity: CRITICAL
+    status: OPEN
+    symptom: "CI workflow DESIGNED"
+    root_cause: NO_VERIFIED_CI_DIGEST_AND_DEPLOY_CREDS
+    evidence: "docker_down; digest empty"
+    owner: NOT_AVAILABLE
+    dependency: BLK-G26-05
+    next_action: "Docker/CI auth + push immutable digest"
+
+  - id: BLK-G26-07
+    gate: G26-07
+    category: EXTERNAL_DEPENDENCY
+    description: "No public production DNS"
+    severity: CRITICAL
+    status: OPEN
+    symptom: "MEOS_PRODUCTION_DNS empty"
+    root_cause: NO_PRODUCTION_DNS_HOSTNAME
+    evidence: "hostname not defined"
+    owner: NOT_AVAILABLE
+    dependency: null
+    next_action: "Define and resolve PRODUCTION_DOMAIN"
+
+  - id: BLK-G26-08
+    gate: G26-08
+    category: INFRASTRUCTURE
+    description: "No production runtime"
+    severity: CRITICAL
+    status: OPEN
+    symptom: "local health not production"
+    root_cause: NO_PRODUCTION_RUNTIME
+    evidence: "no deploy identity"
+    owner: NOT_AVAILABLE
+    dependency: "BLK-G26-01,BLK-G26-06,BLK-G26-09"
+    next_action: "Deploy verified artifact to authorized cluster"
+
+  - id: BLK-G26-09
+    gate: G26-09
+    category: EVIDENCE
+    description: "Immutable digest/commit match missing"
+    severity: CRITICAL
+    status: OPEN
+    symptom: "identity_ok=false"
+    root_cause: NO_IMMUTABLE_DEPLOYMENT_IDENTITY
+    evidence: "IMAGE_DIGEST=NOT_AVAILABLE"
+    owner: NOT_AVAILABLE
+    dependency: BLK-G26-06
+    next_action: "Link clean SHA → digest → deployment"
+
+  - id: BLK-G26-10
+    gate: G26-10
+    category: INFRASTRUCTURE
+    description: "Production rollback not exercised"
+    severity: CRITICAL
+    status: OPEN
+    symptom: "CONFIGURED ≠ exercised"
+    root_cause: NO_EXERCISED_PRODUCTION_ROLLBACK
+    evidence: "MEOS_ROLLBACK_EXERCISED unset"
+    owner: NOT_AVAILABLE
+    dependency: BLK-G26-08
+    next_action: "Exercise N→N+1→N after two revisions"
+
+  - id: BLK-SW-FE-BUILD
+    gate: packaging
+    category: SOFTWARE
+    description: "Next.js production build EACCES (prior)"
+    severity: HIGH
+    status: OPEN
+    evidence: "P406/P408 evidence"
+    owner: CI_or_release_engineer
+    dependency: null
+    next_action: "Rebuild on CI with permissions"
+
+critical_count: 10
+closed_count: 0
+p313_gate: "Any CRITICAL open ⇒ P313_READY=FALSE"

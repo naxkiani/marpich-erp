@@ -1,0 +1,104 @@
+# MEOS Execution Backlog — post G26 Targeted Remediation attempt 1
+schema_version: "1.10"
+phase: G26_TARGETED_REMEDIATION
+generated: "2026-08-23"
+decision_gate: C_G26_BLOCKED_BY_EXTERNAL_INFRASTRUCTURE
+g26_ready: false
+p313_ready: false
+closed_blockers: 0
+next_phase_recommendation: "Continue targeted remediation only. No P411. Need human dirty-tree triage + real provider credentials."
+
+tasks:
+  - id: G26R-01
+    title: "Remediation baseline + gate RCA"
+    status: DONE
+    priority: P0
+    owner: execution
+    next_action: null
+    dependency: null
+    evidence: "MEOS_G26_REMEDIATION_BASELINE.v1.yaml; MEOS_G26_GATE_DOSSIERS.v1.yaml"
+
+  - id: G26R-05
+    title: "Close G26-05 clean release (human triage + digest)"
+    status: BLOCKED
+    priority: P0
+    owner: Human_release_owner
+    next_action: "Classify/commit authorized release set; then CI digest when Docker/CI available"
+    dependency: null
+    evidence: "DIRTY_COUNT=498; docker_down"
+
+  - id: G26R-01-CLUSTER
+    title: "Close G26-01 production cluster"
+    status: BLOCKED
+    priority: P0
+    owner: NOT_AVAILABLE
+    next_action: "AUTHORIZED_PROVIDER + real KUBECONFIG"
+    dependency: null
+    evidence: "EXTERNAL_DEPENDENCY"
+
+  - id: G26R-04-SM
+    title: "Close G26-04 secret manager"
+    status: BLOCKED
+    priority: P0
+    owner: NOT_AVAILABLE
+    next_action: "Provision production SM"
+    dependency: null
+    evidence: "EXTERNAL_DEPENDENCY"
+
+  - id: G26R-02-PG
+    title: "Close G26-02 managed Postgres"
+    status: BLOCKED
+    priority: P0
+    owner: NOT_AVAILABLE
+    next_action: "Managed non-localhost Postgres"
+    dependency: G26R-04-SM
+    evidence: "EXTERNAL_DEPENDENCY"
+
+  - id: G26R-07-DNS
+    title: "Close G26-07/03 DNS+TLS"
+    status: BLOCKED
+    priority: P0
+    owner: NOT_AVAILABLE
+    next_action: "Public DNS + public-CA cert"
+    dependency: null
+    evidence: "EXTERNAL_DEPENDENCY"
+
+  - id: G26R-06-CI
+    title: "Close G26-06/09 CI digest identity"
+    status: BLOCKED
+    priority: P0
+    owner: NOT_AVAILABLE
+    next_action: "CI push digest matching clean SHA"
+    dependency: G26R-05
+    evidence: "docker_down"
+
+  - id: G26R-08-RT
+    title: "Close G26-08/10 runtime + rollback"
+    status: BLOCKED
+    priority: P0
+    owner: NOT_AVAILABLE
+    next_action: "Deploy then exercise N→N+1→N"
+    dependency: "G26R-01-CLUSTER,G26R-06-CI"
+    evidence: "no production runtime"
+
+  - id: P410-01
+    title: "G26 consolidation"
+    status: DONE
+    priority: P0
+    owner: execution
+    next_action: null
+    dependency: null
+    evidence: "P410_G26_CONSOLIDATION_REPORT.md"
+
+priorities:
+  P0:
+    - G26R-05
+    - G26R-01-CLUSTER
+    - G26R-04-SM
+    - G26R-02-PG
+    - G26R-07-DNS
+    - G26R-06-CI
+    - G26R-08-RT
+  P1: []
+  P2: []
+  P3: []

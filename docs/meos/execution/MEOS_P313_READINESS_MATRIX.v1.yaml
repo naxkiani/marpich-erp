@@ -1,0 +1,87 @@
+# MEOS P313 Readiness Matrix — P410 (consolidation only; not certification)
+# Official P313 SoR: MEOS_P313_PRODUCTION_CERTIFICATION.md + MEOS_P313_CERTIFICATION_REPORT.md
+# + MEOS_P313_RECERTIFICATION.v1.yaml
+# Law: P410 must NOT set P313=CERTIFIED. G26_READY must be TRUE before READY_FOR_CERTIFICATION.
+schema_version: "1.0"
+generated_at: "2026-08-23T07:38:00Z"
+phase: P410
+p313_source_of_truth:
+  matrix: docs/meos/execution/MEOS_P313_PRODUCTION_CERTIFICATION.md
+  report: docs/meos/execution/MEOS_P313_CERTIFICATION_REPORT.md
+  recert_yaml: docs/meos/execution/MEOS_P313_RECERTIFICATION.v1.yaml
+  honesty_contract: backend/tests/contracts/test_p313_recertification_honesty.py
+  note: "Historical workstation G01–G28 PASS claims are STALE for production and do not close G26"
+
+p313_readiness:
+  status: NOT_READY
+  p313_ready: false
+  certification_performed_by_p410: false
+  production_certified: false
+  go_live_ready: false
+  go_live_authorization: NOT_APPROVED
+  production_traffic: OFF
+
+  prerequisites:
+    g26:
+      required: true
+      status: NOT_VERIFIED
+      g26_ready: false
+      evidence: "python3 scripts/meos-ext-g26-readiness.py → G26_READY=FALSE"
+    release:
+      status: NOT_VERIFIED
+      source_commit: ed1a037a19ce237a3ea651b6348d0fd9a08c5609
+      release_tag: NOT_AVAILABLE
+      image: meos/backend:p406-rc
+      image_digest: NOT_AVAILABLE
+      build_id: NOT_AVAILABLE
+      worktree: DIRTY
+      evidence: "ed1a037a-dirty; ~494 short paths"
+    infrastructure:
+      status: NOT_VERIFIED
+      cluster: NOT_AVAILABLE
+      managed_postgres: NOT_AVAILABLE
+      dns: NOT_AVAILABLE
+      tls: NOT_PROVISIONED
+      registry: NOT_VERIFIED
+    security:
+      status: PARTIAL_REPO_ONLY
+      secret_manager: NOT_PROVISIONED
+      production_tls: NOT_PROVISIONED
+      auth_prod: NOT_EXECUTED
+      note: "Repo secret scan / local Auth SoR ≠ production security cert"
+    evidence:
+      status: INSUFFICIENT
+      formal_g26_execution: NOT_EXECUTED
+      freshness: "P409/P410 recheck current; prior P313 workstation PASS = STALE for prod"
+    rollback:
+      status: NOT_VERIFIED
+      rollback_tested: false
+    monitoring:
+      status: NOT_PROVISIONED
+    backup:
+      status: SCRIPTS_CONFIGURED_NOT_PROD_VERIFIED
+      restore_tested_prod: false
+
+  blockers:
+    - BLK-G26-01
+    - BLK-G26-02
+    - BLK-G26-03
+    - BLK-G26-04
+    - BLK-G26-05
+    - BLK-G26-06
+    - BLK-G26-07
+    - BLK-G26-08
+    - BLK-G26-09
+    - BLK-G26-10
+
+  evidence:
+    - docs/meos/execution/P409_G26_FORMAL_EXECUTION_REPORT.md
+    - docs/meos/execution/MEOS_G26_EVIDENCE_PACK.v1.yaml
+    - docs/meos/execution/MEOS_G26_FINAL_EVIDENCE.v1.yaml
+    - docs/meos/execution/MEOS_G26_BLOCKER_MATRIX.v1.yaml
+    - command: "python3 scripts/meos-ext-g26-readiness.py"
+      timestamp: "2026-08-23T07:35:00Z"
+      result: "G26_READY=FALSE"
+
+  decision: F_G26_NOT_PASSED
+  next: "TARGETED_REMEDIATION until G26_READY=TRUE; then formal P313 certification gate (not auto)"

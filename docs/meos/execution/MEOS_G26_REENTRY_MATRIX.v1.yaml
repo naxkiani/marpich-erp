@@ -1,0 +1,165 @@
+# MEOS G26 Re-Entry Matrix — P407
+schema_version: "1.0"
+generated_at: "2026-08-23T08:00:00Z"
+source_commit: ed1a037a19ce237a3ea651b6348d0fd9a08c5609
+p406_decision_gate: D_RELEASE_BLOCKED_BY_INFRASTRUCTURE
+p407_status: BLOCKED_BY_P406
+g26_ready: false
+g26_status: BLOCKED
+validator: scripts/meos-ext-g26-readiness.py
+note: "P407 did not provision infrastructure. Matrix maps required evidence only."
+
+g26_reentry:
+  G26-01:
+    requirement: "Authorized production hosting account + production Kubernetes-compatible cluster"
+    current_status: BLOCKED
+    evidence: "Validator BLOCKED; no KUBECONFIG/production cluster evidenced"
+    missing: "Named hosting account; live cluster kubeconfig"
+    owner: NOT_AVAILABLE
+  G26-02:
+    requirement: "Managed production PostgreSQL (non-localhost, non-5433/5444)"
+    current_status: BLOCKED
+    evidence: "Local/workstation Postgres class only (:5433 NON_PRODUCTION)"
+    missing: "Managed Postgres host/credentials via secret manager"
+    owner: NOT_AVAILABLE
+  G26-03:
+    requirement: "Public CA TLS for production hostname"
+    current_status: BLOCKED
+    evidence: "No MEOS_PUBLIC_CA_TLS=1; compose self-signed ≠ production"
+    missing: "Public CA certificate issuance"
+    owner: NOT_AVAILABLE
+  G26-04:
+    requirement: "Production secret manager + K8s secret objects (values never in git)"
+    current_status: BLOCKED
+    evidence: ".env.example placeholders only; secret scan PASS on repo"
+    missing: "Secret manager availability; production secret objects"
+    owner: NOT_AVAILABLE
+  G26-05:
+    requirement: "Clean releasable git worktree / immutable release identity"
+    current_status: FAIL
+    evidence: "git status --short count≈485; describe ed1a037a-dirty; validator G26-05=FAIL"
+    missing: "Human triage → clean SHA (do not reset --hard from agents)"
+    owner: Human_release_owner
+  G26-06:
+    requirement: "CI deploy credentials + registry authenticated push/pull with digest"
+    current_status: BLOCKED
+    evidence: "Workflow YAML present; Docker daemon DOWN; IMAGE_DIGEST=NOT_AVAILABLE"
+    missing: "Registry auth; CI deploy secrets; recorded digest"
+    owner: NOT_AVAILABLE
+  G26-07:
+    requirement: "Non-local production DNS hostname that resolves"
+    current_status: NOT_AVAILABLE
+    evidence: "No LIVE_PRODUCTION_HOSTNAME evidenced"
+    missing: "Public DNS zone + hostname"
+    owner: NOT_AVAILABLE
+  G26-08:
+    requirement: "Production runtime identity (not localhost uvicorn/compose)"
+    current_status: BLOCKED
+    evidence: "Local runtime only when up; not production"
+    missing: "Deployed production runtime"
+    owner: NOT_AVAILABLE
+  G26-09:
+    requirement: "Immutable deployment identity matching commit/digest"
+    current_status: NOT_AVAILABLE
+    evidence: "No registry digest; prior local tags not re-verified"
+    missing: "Immutable image digest linked to SOURCE_COMMIT"
+    owner: NOT_AVAILABLE
+  G26-10:
+    requirement: "Exercised production rollback N→N+1→N"
+    current_status: BLOCKED
+    evidence: "Helm/rollback config documented; ROLLBACK_TESTED=FALSE"
+    missing: "Exercised production rollback with two revisions"
+    owner: NOT_AVAILABLE
+
+infrastructure_inventory:
+  - category: COMPUTE
+    status: NOT_PROVISIONED
+    owner: NOT_AVAILABLE
+    access: NOT_AVAILABLE
+    evidence: "No production cluster"
+    blocker: "G26-01"
+  - category: DATABASE
+    status: LOCAL_ONLY
+    owner: workstation
+    access: local
+    evidence: ":5433 class NON_PRODUCTION"
+    blocker: "G26-02"
+  - category: CACHE
+    status: LOCAL_CONFIGURED
+    owner: workstation
+    access: local
+    evidence: "REDIS_URL in .env.example"
+    blocker: null
+  - category: QUEUE
+    status: OPTIONAL_LOCAL
+    owner: workstation
+    access: local
+    evidence: "KAFKA_ENABLED=false default"
+    blocker: null
+  - category: REGISTRY
+    status: NOT_VERIFIED
+    owner: NOT_AVAILABLE
+    access: CREDENTIAL_REQUIRED
+    evidence: "GHCR design in docs; no digest this session"
+    blocker: "G26-06/G26-09"
+  - category: DNS
+    status: NOT_AVAILABLE
+    owner: NOT_AVAILABLE
+    access: NOT_AVAILABLE
+    evidence: "No public hostname"
+    blocker: "G26-07"
+  - category: TLS
+    status: NOT_PROVISIONED
+    owner: NOT_AVAILABLE
+    access: NOT_AVAILABLE
+    evidence: "No public CA TLS"
+    blocker: "G26-03"
+  - category: SECRETS
+    status: PLACEHOLDER_ONLY
+    owner: NOT_AVAILABLE
+    access: CREDENTIAL_REQUIRED
+    evidence: "secret scan PASS; no production SM"
+    blocker: "G26-04"
+  - category: STORAGE
+    status: NOT_PROVISIONED_PROD
+    owner: NOT_AVAILABLE
+    access: NOT_AVAILABLE
+    evidence: "Local/MinIO class only if used"
+    blocker: null
+  - category: MONITORING
+    status: NOT_PROVISIONED
+    owner: NOT_AVAILABLE
+    access: NOT_AVAILABLE
+    evidence: "OTEL optional locally"
+    blocker: "production monitoring"
+  - category: BACKUP
+    status: SCRIPTS_CONFIGURED
+    owner: ops
+    access: CREDENTIAL_REQUIRED_FOR_PROD
+    evidence: "scripts/meos-postgres-backup.sh + restore drill"
+    blocker: "RESTORE_TESTED=FALSE"
+  - category: CI/CD
+    status: CONFIGURED_NOT_VERIFIED
+    owner: NOT_AVAILABLE
+    access: CREDENTIAL_REQUIRED
+    evidence: ".github/workflows present"
+    blocker: "G26-06"
+
+credential_readiness:
+  production_cluster:
+    CREDENTIAL_REQUIRED: true
+    CREDENTIAL_PRESENT: false
+    CREDENTIAL_VERIFIED: false
+  managed_postgres:
+    CREDENTIAL_REQUIRED: true
+    CREDENTIAL_PRESENT: false
+    CREDENTIAL_VERIFIED: false
+  registry:
+    CREDENTIAL_REQUIRED: true
+    CREDENTIAL_PRESENT: false
+    CREDENTIAL_VERIFIED: false
+  secret_manager:
+    CREDENTIAL_REQUIRED: true
+    CREDENTIAL_PRESENT: false
+    CREDENTIAL_VERIFIED: false
+  note: "No credential values recorded in this file."

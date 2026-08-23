@@ -1,0 +1,100 @@
+# MEOS G26 Final Evidence — P410 consolidation snapshot
+# Not a PASS claim. Reflects actual verifier output after P409.
+schema_version: "1.0"
+generated_at: "2026-08-23T07:50:00Z"
+phase: G26_TARGETED_REMEDIATION_ATTEMPT_1
+source_of_truth: ACTUAL_VERIFIED_STATE
+validator_command: "python3 scripts/meos-ext-g26-readiness.py"
+validator_timestamp: "2026-08-23T07:50:00Z"
+remediation_note: "Attempt 1 closed 0 blockers; absolute stop on external infra + dirty tree"
+
+g26_final:
+  status: BLOCKED
+  ready: false
+  classification: G26_BLOCKED_INFRASTRUCTURE
+  verified_commit: ed1a037a19ce237a3ea651b6348d0fd9a08c5609
+  git_describe: ed1a037a-dirty
+  image_digest: NOT_AVAILABLE
+  release_tag: NOT_AVAILABLE
+  image: meos/backend:p406-rc
+  build_id: NOT_AVAILABLE
+  formal_execution: NOT_EXECUTED
+  production_deployment: NOT_EXECUTED
+  production_traffic: NOT_ENABLED
+  p313: NOT_CERTIFIED
+  p0_count: 1
+
+  gates:
+    G26-01:
+      status: BLOCKED
+      evidence: "KUBECONFIG missing; ~/.kube/config absent"
+      verified_at: "2026-08-23T07:35:00Z"
+      source: scripts/meos-ext-g26-readiness.py
+    G26-02:
+      status: BLOCKED
+      evidence: "class=LOCAL port=5433 (NON_PRODUCTION)"
+      verified_at: "2026-08-23T07:35:00Z"
+      source: scripts/meos-ext-g26-readiness.py
+    G26-03:
+      status: BLOCKED
+      evidence: "Public CA not evidenced; compose self-signed is not production TLS"
+      verified_at: "2026-08-23T07:35:00Z"
+      source: scripts/meos-ext-g26-readiness.py
+    G26-04:
+      status: BLOCKED
+      evidence: "MEOS_SECRET_MANAGER_AVAILABLE unset or backend is env/.env"
+      verified_at: "2026-08-23T07:35:00Z"
+      source: scripts/meos-ext-g26-readiness.py
+    G26-05:
+      status: FAIL
+      evidence: "git status --short not empty (~494); describe=ed1a037a-dirty"
+      verified_at: "2026-08-23T07:35:00Z"
+      source: "git status --short; git describe --always --dirty"
+    G26-06:
+      status: BLOCKED
+      evidence: "CI workflow DESIGNED; deploy credentials/digest not verified"
+      verified_at: "2026-08-23T07:35:00Z"
+      source: scripts/meos-ext-g26-readiness.py
+    G26-07:
+      status: NOT_AVAILABLE
+      evidence: "No production DNS hostname evidenced"
+      verified_at: "2026-08-23T07:35:00Z"
+      source: scripts/meos-ext-g26-readiness.py
+    G26-08:
+      status: BLOCKED
+      evidence: "PRODUCTION_RUNTIME not evidenced; local /health is not production"
+      verified_at: "2026-08-23T07:35:00Z"
+      source: scripts/meos-ext-g26-readiness.py
+    G26-09:
+      status: NOT_AVAILABLE
+      evidence: "No matching deployed commit/digest"
+      verified_at: "2026-08-23T07:35:00Z"
+      source: scripts/meos-ext-g26-readiness.py
+    G26-10:
+      status: BLOCKED
+      evidence: "Helm rollback CONFIGURED; exercised N→N+1→N missing"
+      verified_at: "2026-08-23T07:35:00Z"
+      source: scripts/meos-ext-g26-readiness.py
+
+  evidence_chain_note: >
+    No G26 gate has a production PASS claim→command→output→artifact→timestamp chain.
+    Local/workstation evidence from earlier phases is STALE for G26 certification.
+
+  integrity_snapshots:
+    dependency_graph:
+      command: "python3 scripts/check-dependency-graph.py"
+      result: PASS
+      note: "812 known violation(s) unchanged (baseline)"
+      timestamp: "2026-08-23T07:36:00Z"
+    frontend_typecheck:
+      command: "npm run typecheck (frontend/apps/admin_portal)"
+      result: PASS
+      timestamp: "2026-08-23T07:36:00Z"
+    contract_tests:
+      command: "backend/.venv/bin/pytest tests/contracts/test_p313_recertification_honesty.py tests/architecture/test_dependency_graph.py tests/contracts/test_ext_g26_readiness.py -q"
+      result: "16 passed"
+      timestamp: "2026-08-23T07:38:00Z"
+    local_runtime_probe:
+      backend_health: NOT_AVAILABLE
+      frontend: NOT_AVAILABLE
+      note: "Local down at probe time; local ≠ production regardless"
